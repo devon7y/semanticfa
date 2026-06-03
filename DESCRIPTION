@@ -2,7 +2,7 @@ Package: semanticfa
 Title: Semantic Factor Analysis of Language Model Embeddings
 Version: 0.1.0
 Authors@R: c(
-    person("Devon", "Yanitski", , "devon7y@gmail.com", role = c("aut", "cre"),
+    person("Devon", "Yanitski", , "dyanitsk@ualberta.ca", role = c("aut", "cre"),
            comment = c(ORCID = "0009-0006-1568-3387")),
     person("Chris", "Westbury", role = "aut")
     )
