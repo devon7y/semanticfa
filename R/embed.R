@@ -110,7 +110,15 @@ sfa_clear_cache <- function() {
       )
     }
   )
-  encoder <- st$SentenceTransformer(model)
+  torch <- reticulate::import("torch")
+  device <- if (torch$cuda$is_available()) {
+    "cuda"
+  } else if (torch$backends$mps$is_available()) {
+    "mps"
+  } else {
+    "cpu"
+  }
+  encoder <- st$SentenceTransformer(model, device = device)
   emb <- encoder$encode(items, show_progress_bar = FALSE)
   emb_r <- reticulate::py_to_r(emb)
   if (!is.matrix(emb_r)) emb_r <- as.matrix(emb_r)
