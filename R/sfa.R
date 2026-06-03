@@ -1,0 +1,240 @@
+#' Semantic Factor Analysis
+#'
+#' Performs exploratory factor analysis on language model embeddings of scale
+#' items. Given item text, \code{sfa} embeds each item, transforms embeddings
+#' into a similarity matrix, and runs EFA to recover latent factor structure
+#' entirely from the text.
+#'
+#' @param items Character vector of item text, or a data.frame with an
+#'   \code{item} (or \code{text}) column and optional \code{code},
+#'   \code{factor}, \code{scoring} columns.
+#' @param nfactors Integer number of factors to extract, or \code{NULL} for
+#'   automatic determination via \code{n_factors_method}.
+#' @param rotate Rotation method passed to \code{\link[psych]{fa}}. Default
+#'   \code{"oblimin"} (requires \pkg{GPArotation}, which is in Imports).
+#' @param fm Extraction method passed to \code{\link[psych]{fa}}. Default
+#'   \code{"minres"}.
+#' @param encoding Similarity transform: \code{"atomic_reversed"} (default),
+#'   \code{"atomic"}, \code{"squid"}, or \code{"mean_centered_pearson"}. See
+#'   \code{\link{sfa_similarity}}.
+#' @param embed Embedding backend: \code{"sbert"}, \code{"openai"}, or a
+#'   function. Ignored when \code{embeddings} is provided.
+#' @param model Model name for the embedding backend.
+#' @param embeddings Optional precomputed numeric matrix (n_items x
+#'   embedding_dim). When supplied, skips the embedding step entirely.
+#' @param scoring Numeric vector of +1/-1 per item. If \code{NULL}, defaults
+#'   to all +1 with an informative message for encoding methods that use it.
+#' @param n_factors_method Retention rule when \code{nfactors = NULL}:
+#'   \code{"parallel"} (embedding-adapted, default), \code{"kaiser"},
+#'   \code{"EGA"}, or \code{"TEFI"}.
+#' @param n.obs Sample size passed to \code{\link[psych]{fa}}. \code{NA}
+#'   (default) suppresses sample-size-dependent fit indices.
+#' @param parallel_iter Iterations for embedding parallel analysis.
+#' @param seed Random seed for stochastic operations, used via
+#'   \code{\link[withr]{with_seed}} without touching the global RNG state.
+#' @param calibrate Logical: run Monte Carlo null calibration (Pokropek 2026)?
+#' @param calibrate_iter Iterations for calibration.
+#' @param ... Additional arguments passed to \code{\link[psych]{fa}}.
+#'
+#' @returns An object of class \code{"sfa"} containing factor loadings,
+#'   communalities, eigenvalues, variance accounted for, and embedding-specific
+#'   diagnostics (KMO, TEFI, RMSR, CAF, McDonald's omega). The \code{$loadings}
+#'   component has class \code{"loadings"} and works with
+#'   \code{\link[psych]{factor.congruence}} and \code{\link[psych]{fa.sort}}.
+#'   Use \code{\link{as_psych}} to obtain the underlying \code{psych::fa}
+#'   object.
+#'
+#' @examples
+#' data(big5)
+#' fit <- sfa(big5$items, embeddings = big5$embeddings, scoring = big5$scoring)
+#' print(fit)
+#' plot(fit, type = "scree")
+#'
+#' @references
+#' Guenole, N., D'Urso, E. D., Samo, A., & Sun, T. (2024). Pseudo Factor
+#' Analysis of Language Embedding Similarity Matrices.
+#'
+#' Pellert, M., et al. (2026). SQuID.
+#'
+#' Pokropek, A. (2026). CFA with word embeddings.
+#'
+#' @seealso \code{\link{sfa_similarity}}, \code{\link{sfa_parallel}},
+#'   \code{\link{sfa_nfactors}}, \code{\link{sfa_embed}},
+#'   \code{\link{sfa_congruence}}, \code{\link{as_psych}}
+#'
+#' @export
+sfa <- function(items,
+                nfactors         = NULL,
+                rotate           = "oblimin",
+                fm               = "minres",
+                encoding         = "atomic_reversed",
+                embed            = "sbert",
+                model            = "all-MiniLM-L6-v2",
+                embeddings       = NULL,
+                scoring          = NULL,
+                n_factors_method = "parallel",
+                n.obs            = NA,
+                parallel_iter    = 100L,
+                seed             = 42L,
+                calibrate        = FALSE,
+                calibrate_iter   = 100L,
+                ...) {
+  cl <- match.call()
+
+  encoding <- match.arg(encoding,
+    c("atomic_reversed", "atomic", "squid", "mean_centered_pearson"))
+  n_factors_method <- match.arg(n_factors_method,
+    c("parallel", "kaiser", "EGA", "TEFI"))
+
+  resolved <- .resolve_items(items, scoring = scoring, embeddings = embeddings)
+  item_text <- resolved$items
+  codes     <- resolved$codes
+  factors   <- resolved$factors
+  scoring   <- resolved$scoring
+  n_items   <- length(item_text)
+
+  scoring <- .resolve_scoring(scoring, n_items, encoding)
+
+  # --- Step 1: Obtain embeddings ---
+  if (is.null(embeddings)) {
+    embeddings <- sfa_embed(item_text, embed = embed, model = model)
+    embed_method <- if (is.function(embed)) "custom" else embed
+    embed_model <- model
+  } else {
+    embed_method <- "precomputed"
+    embed_model <- NULL
+  }
+  embed_dim <- ncol(embeddings)
+  rownames(embeddings) <- codes
+
+  # --- Step 2: Build similarity matrix ---
+  sim_matrix <- sfa_similarity(embeddings, encoding = encoding, scoring = scoring)
+  transformed <- attr(sim_matrix, "transformed_embeddings")
+  attr(sim_matrix, "transformed_embeddings") <- NULL
+  dimnames(sim_matrix) <- list(codes, codes)
+
+  sim_matrix <- .check_psd(sim_matrix)
+
+  # --- Step 3: Determine nfactors ---
+  pa_result <- NULL
+  if (is.null(nfactors)) {
+    nfactors <- switch(n_factors_method,
+      parallel = {
+        pa_result <- sfa_parallel(sim_matrix, transformed,
+                                  n_iter = parallel_iter, seed = seed)
+        pa_result$n_factors
+      },
+      kaiser = .retention_kaiser(
+        eigen(sim_matrix, symmetric = TRUE, only.values = TRUE)$values
+      ),
+      EGA = .retention_ega(sim_matrix),
+      TEFI = .retention_tefi(sim_matrix, max_factors = NULL,
+                             rotate = rotate, fm = fm)
+    )
+  }
+  nfactors <- max(1L, as.integer(nfactors))
+
+  # --- Step 4: Factor analysis via psych ---
+  fa_obj <- psych::fa(sim_matrix, nfactors = nfactors, rotate = rotate,
+                      fm = fm, n.obs = n.obs, warnings = FALSE, ...)
+
+  # --- Step 5: Heywood check ---
+  hw <- .check_heywood(fa_obj$communality)
+
+  # --- Step 6: Diagnostics ---
+  kmo <- tryCatch(.compute_kmo(sim_matrix), error = function(e) {
+    list(total = NA_real_, per_item = rep(NA_real_, n_items))
+  })
+  tefi <- .compute_tefi(sim_matrix)
+  rmsr_caf <- tryCatch(.compute_rmsr_caf(sim_matrix, fa_obj),
+                        error = function(e) list(rmsr = NA_real_, caf = NA_real_,
+                                                 residual = NULL))
+
+  factor_names <- colnames(unclass(fa_obj$loadings))
+  omega <- NULL
+  if (!is.null(factors)) {
+    omega <- tryCatch(
+      .compute_omega(as.data.frame(unclass(fa_obj$loadings)),
+                     factor_names, factors, codes),
+      error = function(e) NULL
+    )
+  } else {
+    omega <- tryCatch(
+      .compute_omega(as.data.frame(unclass(fa_obj$loadings)),
+                     factor_names),
+      error = function(e) NULL
+    )
+  }
+
+  daal <- NULL
+  if (!is.null(factors)) {
+    daal <- tryCatch(.compute_daal(unclass(fa_obj$loadings), factors),
+                     error = function(e) NULL)
+  }
+
+  calibration <- NULL
+  if (calibrate) {
+    calibration <- .random_item_calibration(
+      n_items = n_items, embed_dim = embed_dim, n_factors = nfactors,
+      rotate = rotate, fm = fm, n_iter = calibrate_iter, seed = seed
+    )
+  }
+
+  # --- Step 7: Assemble return object ---
+  item_data <- data.frame(
+    code = codes,
+    item = item_text,
+    scoring = scoring,
+    stringsAsFactors = FALSE
+  )
+  if (!is.null(factors)) item_data$factor <- factors
+
+  out <- list(
+    # psych-compatible
+    loadings      = fa_obj$loadings,
+    Phi           = fa_obj$Phi,
+    communality   = fa_obj$communality,
+    communalities = fa_obj$communality,
+    uniquenesses  = fa_obj$uniquenesses,
+    values        = fa_obj$values,
+    e.values      = fa_obj$e.values,
+    Vaccounted    = fa_obj$Vaccounted,
+    rotation      = rotate,
+    fm            = fm,
+    factors       = nfactors,
+    residual      = rmsr_caf$residual,
+    fit           = fa_obj$fit,
+    fit.off       = fa_obj$fit.off,
+    complexity    = fa_obj$complexity,
+    Structure     = fa_obj$Structure,
+    rot.mat       = fa_obj$rot.mat,
+    weights       = fa_obj$weights,
+    scores        = NULL,
+    n.obs         = n.obs,
+    Call          = cl,
+
+    # embedding-specific
+    encoding      = encoding,
+    embed_method  = embed_method,
+    embed_model   = embed_model,
+    embedding_dim = embed_dim,
+    sim_matrix    = sim_matrix,
+    embeddings    = transformed,
+    kmo           = kmo,
+    tefi          = tefi,
+    rmsr          = rmsr_caf$rmsr,
+    caf           = rmsr_caf$caf,
+    omega         = omega,
+    daal          = daal,
+    parallel      = pa_result,
+    calibration   = calibration,
+    heywood       = hw,
+    item_data     = item_data,
+
+    # internal
+    .fa           = fa_obj
+  )
+
+  class(out) <- "sfa"
+  out
+}

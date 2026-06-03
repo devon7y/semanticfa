@@ -1,0 +1,11 @@
+bibentry(
+  bibtype  = "Manual",
+  title    = "semanticfa: Semantic Factor Analysis of Language Model Embeddings",
+  author   = c(
+    person("Devon", "Yanitski"),
+    person("Chris", "Westbury")
+  ),
+  year     = "2025",
+  note     = "R package version 0.1.0",
+  url      = "https://github.com/devon7y/semanticfa"
+)

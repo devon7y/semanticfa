@@ -1,0 +1,130 @@
+---
+title: "Getting Started with semanticfa"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting Started with semanticfa}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7,
+  fig.height = 5
+)
+```
+
+## Overview
+
+`semanticfa` performs exploratory factor analysis on language model embeddings
+of psychological scale items. Given item text, it embeds each item, computes a
+similarity matrix, and extracts latent factors — entirely from the text, with
+no human response data required.
+
+The package is designed to feel familiar to `psych` and `EFAtools` users.
+
+## Quick start with bundled data
+
+The package ships with the 50-item IPIP Big Five inventory and precomputed
+sentence-BERT embeddings, so you can try it with zero setup:
+
+```{r quickstart}
+library(semanticfa)
+data(big5)
+
+fit <- sfa(
+  big5$items,
+  nfactors    = 5,
+  embeddings  = big5$embeddings,
+  scoring     = big5$scoring
+)
+print(fit)
+```
+
+## Factor retention
+
+When you omit `nfactors`, `sfa()` uses embedding-adapted parallel analysis
+(random unit vectors in the embedding dimension as the null):
+```{r retention}
+fit_auto <- sfa(
+  big5$items,
+  embeddings = big5$embeddings,
+  scoring    = big5$scoring
+)
+cat("Auto-detected factors:", fit_auto$factors, "\n")
+```
+
+For a multi-method comparison, use `sfa_nfactors()`:
+```{r nfactors}
+sim <- sfa_similarity(big5$embeddings, encoding = "atomic_reversed",
+                      scoring = big5$scoring)
+nf <- sfa_nfactors(sim, big5$embeddings,
+                   methods = c("parallel", "kaiser"),
+                   parallel_iter = 50)
+print(nf)
+```
+
+## Encoding methods
+
+The `encoding` argument controls how embeddings become a similarity matrix:
+
+```{r encoding}
+sim_ar  <- sfa_similarity(big5$embeddings, "atomic_reversed", big5$scoring)
+sim_sq  <- sfa_similarity(big5$embeddings, "squid", big5$scoring)
+sim_mcp <- sfa_similarity(big5$embeddings, "mean_centered_pearson", big5$scoring)
+
+cat("atomic_reversed range:", range(sim_ar[lower.tri(sim_ar)]), "\n")
+cat("squid range:          ", range(sim_sq[lower.tri(sim_sq)]), "\n")
+cat("mean_centered_pearson:", range(sim_mcp[lower.tri(sim_mcp)]), "\n")
+```
+
+SQuID and mean-centered Pearson recover negative correlations between
+reverse-keyed dimensions — atomic_reversed does not.
+
+## Visualization
+
+```{r scree, fig.cap="Scree plot with parallel analysis threshold"}
+plot(fit, type = "scree")
+```
+
+```{r loadings, fig.cap="Factor loading heatmap"}
+plot(fit, type = "loadings")
+```
+
+## Comparing with empirical factor analysis
+
+The `$loadings` component works directly with `psych` functions:
+
+```{r psych-compat, eval=FALSE}
+# Run human-data EFA (not run — requires response data)
+human_fit <- psych::fa(response_data, nfactors = 5, rotate = "oblimin")
+
+# Compare
+psych::factor.congruence(fit$loadings, human_fit$loadings)
+```
+
+For NMI, ARI, Frobenius, and disattenuated correlation:
+
+```{r congruence}
+cong <- sfa_congruence(fit, big5$factors, metrics = c("nmi", "ari"))
+print(cong)
+```
+
+## Using your own embeddings
+
+Pass any embedding model's output via `embeddings=`:
+
+```{r custom, eval=FALSE}
+# With sentence-transformers (requires reticulate + Python)
+emb <- sfa_embed(my_items, embed = "sbert", model = "all-MiniLM-L6-v2")
+fit <- sfa(my_items, embeddings = emb, scoring = my_scoring)
+
+# Or bring your own function
+my_embedder <- function(texts) {
+  # ... your embedding logic ...
+  # must return a numeric matrix (n_items x dim)
+}
+fit <- sfa(my_items, embed = my_embedder, scoring = my_scoring)
+```

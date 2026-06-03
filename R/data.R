@@ -1,0 +1,28 @@
+#' IPIP Big Five 50-Item Inventory with Sentence-BERT Embeddings
+#'
+#' A bundled example dataset containing the 50-item IPIP Big Five personality
+#' inventory with precomputed sentence-BERT embeddings. The scale has 5 factors
+#' (Extraversion, Agreeableness, Conscientiousness, Neuroticism, Openness) with
+#' 10 items each, including 18 reverse-keyed items, making it suitable for
+#' demonstrating all encoding methods.
+#'
+#' @format A list with components:
+#' \describe{
+#'   \item{items}{Character vector (length 50): item text.}
+#'   \item{codes}{Character vector (length 50): item codes (E1, E2, ..., O10).}
+#'   \item{factors}{Character vector (length 50): theoretical factor labels.}
+#'   \item{scoring}{Numeric vector (length 50): +1 or -1 keying direction.}
+#'   \item{embeddings}{Numeric matrix (50 x 384): precomputed embeddings from
+#'     the \code{all-MiniLM-L6-v2} sentence-BERT model.}
+#' }
+#'
+#' @source Items from the International Personality Item Pool (IPIP;
+#'   \url{https://ipip.ori.org/}), which is in the public domain.
+#'   Embeddings generated with the \code{all-MiniLM-L6-v2} model from the
+#'   \code{sentence-transformers} Python package.
+#'
+#' @examples
+#' data(big5)
+#' str(big5)
+#' table(big5$factors, big5$scoring)
+"big5"

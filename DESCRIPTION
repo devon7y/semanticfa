@@ -1,0 +1,44 @@
+Package: semanticfa
+Title: Semantic Factor Analysis of Language Model Embeddings
+Version: 0.1.0
+Authors@R: c(
+    person("Devon", "Yanitski", , "devon7y@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0009-0006-1568-3387")),
+    person("Chris", "Westbury", role = "aut")
+    )
+Description: Performs exploratory factor analysis on language model embeddings
+    of psychological scale items. Embeds item text with sentence transformers
+    or other language models, transforms embeddings into similarity matrices
+    using published methods (Guenole et al., Pellert et al. 2026, Pokropek
+    2026), and extracts latent factor structure via standard EFA routines.
+    Supports embedding-adapted parallel analysis, multiple similarity
+    transforms (atomic reversed, SQuID centering, mean-centered Pearson), and
+    fit diagnostics designed for embedding matrices (TEFI, RMSR, CAF,
+    McDonald's omega). Returns objects compatible with 'psych' and 'EFAtools'
+    workflows.
+License: GPL (>= 3)
+URL: https://github.com/devon7y/semanticfa
+BugReports: https://github.com/devon7y/semanticfa/issues
+Depends:
+    R (>= 4.1.0)
+Imports:
+    GPArotation,
+    psych,
+    stats,
+    utils,
+    withr
+Suggests:
+    digest,
+    EFAtools,
+    EGAnet,
+    httr2,
+    knitr,
+    reticulate,
+    rmarkdown,
+    testthat (>= 3.0.0)
+VignetteBuilder: knitr
+Config/testthat/edition: 3
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
