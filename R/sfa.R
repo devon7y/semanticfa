@@ -19,14 +19,29 @@
 #'   \code{\link{sfa_similarity}}.
 #' @param embed Embedding backend: \code{"sbert"}, \code{"openai"}, or a
 #'   function. Ignored when \code{embeddings} is provided.
-#' @param model Model name for the embedding backend.
+#' @param model Model name for the embedding backend. Defaults to
+#'   \code{"Qwen/Qwen3-Embedding-0.6B"} (about 1.2 GB), chosen to run on any
+#'   machine. Larger embedding models recover factor structure more accurately;
+#'   for higher fidelity pass \code{"Qwen/Qwen3-Embedding-4B"} (about 8 GB RAM)
+#'   or \code{"Qwen/Qwen3-Embedding-8B"} (about 16 GB RAM). When the default
+#'   model is used, \code{print()} reminds you of these options.
 #' @param embeddings Optional precomputed numeric matrix (n_items x
 #'   embedding_dim). When supplied, skips the embedding step entirely.
+#' @param similarity Optional precomputed symmetric item-by-item similarity
+#'   matrix (n_items x n_items). When supplied, embedding and the encoding
+#'   transform are skipped and this matrix is used directly --- e.g. a signed
+#'   NLI matrix from \code{\link{sfa_nli_matrix}}. Parallel analysis is
+#'   unavailable in this mode (no embeddings), so retention falls back to
+#'   \code{"kaiser"} unless \code{nfactors} is set.
 #' @param scoring Numeric vector of +1/-1 per item. If \code{NULL}, defaults
 #'   to all +1 with an informative message for encoding methods that use it.
 #' @param n_factors_method Retention rule when \code{nfactors = NULL}:
 #'   \code{"parallel"} (embedding-adapted, default), \code{"kaiser"},
 #'   \code{"EGA"}, or \code{"TEFI"}.
+#' @param dim_select Embedding-dimension selection before analysis:
+#'   \code{"none"} (default, use the full vector) or \code{"dynega"} (select the
+#'   leading-coordinate depth that best recovers structure via Dynamic EGA; see
+#'   \code{\link{sfa_dimselect}}). Requires \pkg{EGAnet}.
 #' @param n.obs Sample size passed to \code{\link[psych]{fa}}. \code{NA}
 #'   (default) suppresses sample-size-dependent fit indices.
 #' @param parallel_iter Iterations for embedding parallel analysis.
@@ -69,10 +84,12 @@ sfa <- function(items,
                 fm               = "minres",
                 encoding         = "atomic_reversed",
                 embed            = "sbert",
-                model            = "all-MiniLM-L6-v2",
+                model            = "Qwen/Qwen3-Embedding-0.6B",
                 embeddings       = NULL,
+                similarity       = NULL,
                 scoring          = NULL,
                 n_factors_method = "parallel",
+                dim_select       = c("none", "dynega"),
                 n.obs            = NA,
                 parallel_iter    = 100L,
                 seed             = 42L,
@@ -85,6 +102,7 @@ sfa <- function(items,
     c("atomic_reversed", "atomic", "squid", "mean_centered_pearson"))
   n_factors_method <- match.arg(n_factors_method,
     c("parallel", "kaiser", "EGA", "TEFI"))
+  dim_select <- match.arg(dim_select)
 
   resolved <- .resolve_items(items, scoring = scoring, embeddings = embeddings)
   item_text <- resolved$items
@@ -95,25 +113,54 @@ sfa <- function(items,
 
   scoring <- .resolve_scoring(scoring, n_items, encoding)
 
-  # --- Step 1: Obtain embeddings ---
-  if (is.null(embeddings)) {
-    embeddings <- sfa_embed(item_text, embed = embed, model = model)
-    embed_method <- if (is.function(embed)) "custom" else embed
-    embed_model <- model
+  dimsel <- NULL
+  if (!is.null(similarity)) {
+    # --- Precomputed item-by-item similarity (e.g. from sfa_nli_matrix()) ---
+    sim_matrix <- as.matrix(similarity)
+    if (nrow(sim_matrix) != n_items || ncol(sim_matrix) != n_items) {
+      stop("'similarity' must be an ", n_items, " x ", n_items,
+           " matrix matching the items.", call. = FALSE)
+    }
+    transformed   <- NULL
+    embeddings    <- NULL
+    embed_method  <- "precomputed_similarity"
+    embed_model   <- NULL
+    embed_dim     <- NA_integer_
+    dimnames(sim_matrix) <- list(codes, codes)
+    sim_matrix <- .check_psd(sim_matrix)
+    if (is.null(nfactors) && n_factors_method == "parallel") {
+      message("Embedding-adapted parallel analysis needs embeddings; with ",
+              "'similarity' supplied, using 'kaiser' retention instead.")
+      n_factors_method <- "kaiser"
+    }
   } else {
-    embed_method <- "precomputed"
-    embed_model <- NULL
+    # --- Step 1: Obtain embeddings ---
+    if (is.null(embeddings)) {
+      embeddings <- sfa_embed(item_text, embed = embed, model = model)
+      embed_method <- if (is.function(embed)) "custom" else embed
+      embed_model <- model
+    } else {
+      embed_method <- "precomputed"
+      embed_model <- NULL
+    }
+    rownames(embeddings) <- codes
+
+    # --- Step 1b: Optional embedding-dimension selection (DynEGA) ---
+    if (dim_select == "dynega") {
+      dimsel <- sfa_dimselect(embeddings, factors = factors, scoring = scoring,
+                              encoding = encoding)
+      embeddings <- embeddings[, seq_len(dimsel$optimal_depth), drop = FALSE]
+    }
+    embed_dim <- ncol(embeddings)
+
+    # --- Step 2: Build similarity matrix ---
+    sim_matrix <- sfa_similarity(embeddings, encoding = encoding, scoring = scoring)
+    transformed <- attr(sim_matrix, "transformed_embeddings")
+    attr(sim_matrix, "transformed_embeddings") <- NULL
+    dimnames(sim_matrix) <- list(codes, codes)
+
+    sim_matrix <- .check_psd(sim_matrix)
   }
-  embed_dim <- ncol(embeddings)
-  rownames(embeddings) <- codes
-
-  # --- Step 2: Build similarity matrix ---
-  sim_matrix <- sfa_similarity(embeddings, encoding = encoding, scoring = scoring)
-  transformed <- attr(sim_matrix, "transformed_embeddings")
-  attr(sim_matrix, "transformed_embeddings") <- NULL
-  dimnames(sim_matrix) <- list(codes, codes)
-
-  sim_matrix <- .check_psd(sim_matrix)
 
   # --- Step 3: Determine nfactors ---
   pa_result <- NULL
@@ -220,6 +267,8 @@ sfa <- function(items,
     embedding_dim = embed_dim,
     sim_matrix    = sim_matrix,
     embeddings    = transformed,
+    input_embeddings = embeddings,
+    dim_select    = dimsel,
     kmo           = kmo,
     tefi          = tefi,
     rmsr          = rmsr_caf$rmsr,

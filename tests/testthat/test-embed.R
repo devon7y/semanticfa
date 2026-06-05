@@ -9,9 +9,11 @@ test_that("custom embedding function works", {
   expect_equal(ncol(emb), 10)
 })
 
-test_that("sbert backend errors informatively without reticulate", {
-  skip_if(requireNamespace("reticulate", quietly = TRUE))
-  expect_error(sfa_embed("test", embed = "sbert"), "reticulate")
+test_that("sfa_install_python is exported and declares Python requirements", {
+  expect_true(is.function(sfa_install_python))
+  expect_true("packages" %in% names(formals(sfa_install_python)))
+  # .sfa_py_require must not error even before Python is initialized
+  expect_silent(semanticfa:::.sfa_py_require("sentence-transformers"))
 })
 
 test_that("openai backend errors without API key", {

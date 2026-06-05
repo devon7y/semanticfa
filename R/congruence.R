@@ -46,7 +46,7 @@ sfa_congruence <- function(sfa_fit, target,
   } else if (is.character(target) || is.factor(target)) {
     target_labels <- as.character(target)
   } else if (is.matrix(target) && nrow(target) == ncol(target)) {
-    # similarity/correlation matrix — for disattenuated only
+    # similarity/correlation matrix - for disattenuated only
   }
 
   sfa_loadings <- unclass(sfa_fit$loadings)
@@ -111,6 +111,19 @@ sfa_congruence <- function(sfa_fit, target,
   structure(result, class = "sfa_congruence")
 }
 
+# Rough rule-of-thumb label for partition-agreement indices (NMI, ARI): bounded,
+# higher is better, but with no single universal cutoff (cf. Steinley, 2004, for
+# ARI). These bands are a coarse guide, not a validated threshold.
+#' @keywords internal
+.label_agreement <- function(x) {
+  if (is.null(x) || is.na(x)) return("")
+  lab <- if (x >= 0.80) "strong"
+         else if (x >= 0.50) "moderate"
+         else if (x >= 0.30) "weak"
+         else "poor"
+  paste0(" (", lab, " - higher is better)")
+}
+
 #' @export
 print.sfa_congruence <- function(x, ...) {
   cat("Factor structure congruence\n\n")
@@ -120,13 +133,15 @@ print.sfa_congruence <- function(x, ...) {
     cat("\n")
   }
   if (!is.null(x$nmi))
-    cat(sprintf("  NMI:            %.3f\n", x$nmi))
+    cat(sprintf("  NMI:            %.3f%s\n", x$nmi, .label_agreement(x$nmi)))
   if (!is.null(x$ari))
-    cat(sprintf("  ARI:            %.3f\n", x$ari))
+    cat(sprintf("  ARI:            %.3f%s\n", x$ari, .label_agreement(x$ari)))
   if (!is.null(x$frobenius))
-    cat(sprintf("  Frobenius:      %.3f\n", x$frobenius))
+    cat(sprintf("  Frobenius:      %.3f%s\n", x$frobenius,
+                .label_agreement(x$frobenius)))
   if (!is.null(x$disattenuated))
-    cat(sprintf("  Disattenuated:  %.3f\n", x$disattenuated))
+    cat(sprintf("  Disattenuated:  %.3f%s\n", x$disattenuated,
+                .label_agreement(x$disattenuated)))
   invisible(x)
 }
 

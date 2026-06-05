@@ -24,6 +24,7 @@ Depends:
 Imports:
     GPArotation,
     psych,
+    reticulate (>= 1.41.0),
     stats,
     utils,
     withr
@@ -33,7 +34,6 @@ Suggests:
     EGAnet,
     httr2,
     knitr,
-    reticulate,
     rmarkdown,
     testthat (>= 3.0.0)
 VignetteBuilder: knitr

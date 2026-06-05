@@ -2,6 +2,9 @@
 #' @importFrom utils head
 #' @importFrom stats cor quantile rnorm runif setNames
 #' @keywords internal
+`%||%` <- function(a, b) if (is.null(a)) b else a
+
+#' @keywords internal
 .regularize_corr <- function(corr_matrix, alpha = 1e-6) {
   n <- nrow(corr_matrix)
   reg <- corr_matrix + alpha * diag(n)

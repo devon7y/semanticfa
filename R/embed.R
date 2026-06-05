@@ -1,24 +1,42 @@
+# Default sbert embedding model. Keep in sync with the `model =` defaults in
+# sfa() and sfa_embed(); print.sfa() uses this to decide whether to show the
+# "larger model" upgrade hint.
+.SFA_DEFAULT_MODEL <- "Qwen/Qwen3-Embedding-0.6B"
+
 #' Embed Item Text with a Language Model
 #'
 #' Computes embeddings for a vector of item text using a sentence-transformer
 #' or other embedding backend.
 #'
-#' @param items Character vector of item text.
 #' @param embed Embedding backend: \code{"sbert"} (default, via
 #'   \code{reticulate}), \code{"openai"} (via \code{httr2}), or a function
 #'   taking a character vector and returning a numeric matrix.
 #' @param model Model name passed to the backend (default
-#'   \code{"all-MiniLM-L6-v2"} for sbert).
+#'   \code{"Qwen/Qwen3-Embedding-0.6B"} for sbert). Larger embedding models
+#'   recover factor structure more accurately; see \code{\link{sfa}}.
 #' @param cache Logical: cache embeddings in
 #'   \code{tools::R_user_dir("semanticfa", "cache")}? Default \code{TRUE}.
 #' @param ... Additional arguments passed to the embedding backend function.
 #'
-#' @returns A numeric matrix (n_items x embedding_dim) with item text as
-#'   rownames.
+#' @returns A numeric matrix (n_items x embedding_dim). Rownames are the item
+#'   codes when \code{items} is a data frame with a \code{code} column,
+#'   otherwise the item text.
 #'
+#' @param items Character vector of item text, or a data frame with an
+#'   \code{item}/\code{text} column (and optionally a \code{code} column, used
+#'   as rownames so short codes flow through to plots such as
+#'   \code{\link{sfa_corplot}}).
 #' @export
-sfa_embed <- function(items, embed = "sbert", model = "all-MiniLM-L6-v2",
+sfa_embed <- function(items, embed = "sbert", model = "Qwen/Qwen3-Embedding-0.6B",
                       cache = TRUE, ...) {
+  row_labels <- NULL
+  if (is.data.frame(items)) {
+    resolved   <- .resolve_items(items)
+    row_labels <- resolved$codes        # the 'code' column, when present
+    items      <- resolved$items        # the item text
+  }
+  if (is.null(row_labels)) row_labels <- items
+
   if (is.function(embed)) {
     emb <- embed(items, ...)
     if (!is.matrix(emb) || !is.numeric(emb)) {
@@ -28,7 +46,7 @@ sfa_embed <- function(items, embed = "sbert", model = "all-MiniLM-L6-v2",
       stop("Custom embed function returned ", nrow(emb), " rows for ",
            length(items), " items.", call. = FALSE)
     }
-    rownames(emb) <- items
+    rownames(emb) <- row_labels
     return(emb)
   }
 
@@ -41,6 +59,7 @@ sfa_embed <- function(items, embed = "sbert", model = "all-MiniLM-L6-v2",
     if (file.exists(cache_file)) {
       cached <- readRDS(cache_file)
       if (is.matrix(cached) && nrow(cached) == length(items)) {
+        rownames(cached) <- row_labels    # honor codes vs text for this call
         return(cached)
       }
     }
@@ -51,7 +70,7 @@ sfa_embed <- function(items, embed = "sbert", model = "all-MiniLM-L6-v2",
     openai = .embed_openai(items, model, ...)
   )
 
-  rownames(emb) <- items
+  rownames(emb) <- row_labels
 
   if (cache) {
     if (!dir.exists(cache_dir)) dir.create(cache_dir, recursive = TRUE)
@@ -87,25 +106,53 @@ sfa_clear_cache <- function() {
   }
 }
 
+#' Provision the Python Environment for Embedding
+#'
+#' Declares and installs the Python packages needed by the \code{"sbert"}
+#' embedding backend and the default \code{\link{sfa_nli_matrix}} classifier
+#' (\code{sentence-transformers}, which pulls in \code{torch} and
+#' \code{transformers}). With \pkg{reticulate} (>= 1.41) these requirements are
+#' also declared automatically on first use via \code{reticulate::py_require()},
+#' so calling this is optional --- it is handy for provisioning ahead of time
+#' (e.g. on a machine with internet before running offline) or into a specific
+#' environment.
+#'
+#' @param packages Character vector of Python packages to require/install.
+#' @param ... Passed to \code{reticulate::py_install()} (e.g. \code{envname},
+#'   \code{method}).
+#'
+#' @returns Invisible \code{NULL}.
+#' @examples
+#' \dontrun{
+#' # one-time setup of the Python embedding environment
+#' sfa_install_python()
+#' }
+#' @export
+sfa_install_python <- function(packages = "sentence-transformers", ...) {
+  .sfa_py_require(packages)
+  reticulate::py_install(packages, ...)
+  invisible(NULL)
+}
+
+#' @keywords internal
+.sfa_py_require <- function(packages) {
+  if ("py_require" %in% getNamespaceExports("reticulate")) {
+    try(reticulate::py_require(packages), silent = TRUE)
+  }
+  invisible(NULL)
+}
+
 #' @keywords internal
 .embed_sbert <- function(items, model, ...) {
-  if (!requireNamespace("reticulate", quietly = TRUE)) {
-    stop(
-      "The 'sbert' embedding backend requires the 'reticulate' package and\n",
-      "Python 'sentence-transformers'. Install with:\n",
-      "  install.packages('reticulate')\n",
-      "  reticulate::py_install('sentence-transformers')\n",
-      "Or pass precomputed embeddings: sfa(items, embeddings = your_matrix)",
-      call. = FALSE
-    )
-  }
+  .sfa_py_require("sentence-transformers")
   st <- tryCatch(
     reticulate::import("sentence_transformers"),
     error = function(e) {
       stop(
-        "Python 'sentence-transformers' not found. Install with:\n",
-        "  reticulate::py_install('sentence-transformers')\n",
-        "Or pass precomputed embeddings: sfa(items, embeddings = your_matrix)",
+        "Python 'sentence-transformers' could not be loaded (",
+        conditionMessage(e), ").\n",
+        "Provision the Python environment with sfa_install_python(), or pass ",
+        "precomputed embeddings: sfa(items, embeddings = your_matrix)",
         call. = FALSE
       )
     }

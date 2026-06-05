@@ -11,10 +11,12 @@ sfa(
   fm = "minres",
   encoding = "atomic_reversed",
   embed = "sbert",
-  model = "all-MiniLM-L6-v2",
+  model = "Qwen/Qwen3-Embedding-0.6B",
   embeddings = NULL,
+  similarity = NULL,
   scoring = NULL,
   n_factors_method = "parallel",
+  dim_select = c("none", "dynega"),
   n.obs = NA,
   parallel_iter = 100L,
   seed = 42L,
@@ -44,10 +46,22 @@ automatic determination via \code{n_factors_method}.}
 \item{embed}{Embedding backend: \code{"sbert"}, \code{"openai"}, or a
 function. Ignored when \code{embeddings} is provided.}
 
-\item{model}{Model name for the embedding backend.}
+\item{model}{Model name for the embedding backend. Defaults to
+\code{"Qwen/Qwen3-Embedding-0.6B"} (about 1.2 GB), chosen to run on any
+machine. Larger embedding models recover factor structure more accurately;
+for higher fidelity pass \code{"Qwen/Qwen3-Embedding-4B"} (about 8 GB RAM)
+or \code{"Qwen/Qwen3-Embedding-8B"} (about 16 GB RAM). When the default
+model is used, \code{print()} reminds you of these options.}
 
 \item{embeddings}{Optional precomputed numeric matrix (n_items x
 embedding_dim). When supplied, skips the embedding step entirely.}
+
+\item{similarity}{Optional precomputed symmetric item-by-item similarity
+matrix (n_items x n_items). When supplied, embedding and the encoding
+transform are skipped and this matrix is used directly --- e.g. a signed
+NLI matrix from \code{\link{sfa_nli_matrix}}. Parallel analysis is
+unavailable in this mode (no embeddings), so retention falls back to
+\code{"kaiser"} unless \code{nfactors} is set.}
 
 \item{scoring}{Numeric vector of +1/-1 per item. If \code{NULL}, defaults
 to all +1 with an informative message for encoding methods that use it.}
@@ -55,6 +69,11 @@ to all +1 with an informative message for encoding methods that use it.}
 \item{n_factors_method}{Retention rule when \code{nfactors = NULL}:
 \code{"parallel"} (embedding-adapted, default), \code{"kaiser"},
 \code{"EGA"}, or \code{"TEFI"}.}
+
+\item{dim_select}{Embedding-dimension selection before analysis:
+\code{"none"} (default, use the full vector) or \code{"dynega"} (select the
+leading-coordinate depth that best recovers structure via Dynamic EGA; see
+\code{\link{sfa_dimselect}}). Requires \pkg{EGAnet}.}
 
 \item{n.obs}{Sample size passed to \code{\link[psych]{fa}}. \code{NA}
 (default) suppresses sample-size-dependent fit indices.}

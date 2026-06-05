@@ -7,20 +7,24 @@
 sfa_embed(
   items,
   embed = "sbert",
-  model = "all-MiniLM-L6-v2",
+  model = "Qwen/Qwen3-Embedding-0.6B",
   cache = TRUE,
   ...
 )
 }
 \arguments{
-\item{items}{Character vector of item text.}
+\item{items}{Character vector of item text, or a data frame with an
+\code{item}/\code{text} column (and optionally a \code{code} column, used
+as rownames so short codes flow through to plots such as
+\code{\link{sfa_corplot}}).}
 
 \item{embed}{Embedding backend: \code{"sbert"} (default, via
 \code{reticulate}), \code{"openai"} (via \code{httr2}), or a function
 taking a character vector and returning a numeric matrix.}
 
 \item{model}{Model name passed to the backend (default
-\code{"all-MiniLM-L6-v2"} for sbert).}
+\code{"Qwen/Qwen3-Embedding-0.6B"} for sbert). Larger embedding models
+recover factor structure more accurately; see \code{\link{sfa}}.}
 
 \item{cache}{Logical: cache embeddings in
 \code{tools::R_user_dir("semanticfa", "cache")}? Default \code{TRUE}.}
@@ -28,8 +32,9 @@ taking a character vector and returning a numeric matrix.}
 \item{...}{Additional arguments passed to the embedding backend function.}
 }
 \value{
-A numeric matrix (n_items x embedding_dim) with item text as
-rownames.
+A numeric matrix (n_items x embedding_dim). Rownames are the item
+codes when \code{items} is a data frame with a \code{code} column,
+otherwise the item text.
 }
 \description{
 Computes embeddings for a vector of item text using a sentence-transformer

@@ -117,8 +117,11 @@ print(cong)
 Pass any embedding model's output via `embeddings=`:
 
 ```{r custom, eval=FALSE}
-# With sentence-transformers (requires reticulate + Python)
-emb <- sfa_embed(my_items, embed = "sbert", model = "all-MiniLM-L6-v2")
+# With sentence-transformers (requires reticulate + Python).
+# The default model is "Qwen/Qwen3-Embedding-0.6B"; larger models such as
+# "Qwen/Qwen3-Embedding-4B" (8 GB RAM) or "Qwen/Qwen3-Embedding-8B" (16 GB RAM)
+# recover factor structure more accurately.
+emb <- sfa_embed(my_items, embed = "sbert", model = "Qwen/Qwen3-Embedding-0.6B")
 fit <- sfa(my_items, embeddings = emb, scoring = my_scoring)
 
 # Or bring your own function

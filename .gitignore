@@ -4,3 +4,10 @@
 .Ruserdata
 Rplots.pdf
 inst/doc
+
+# local project materials (not part of the public package repo)
+method_papers/
+*.tar.gz
+*.Rcheck/
+DASS_walkthrough.html
+semfa/

@@ -14,13 +14,50 @@ as_psych.sfa <- function(x, ...) {
   x$.fa
 }
 
+# Rule-of-thumb label for the root-mean-square residual (smaller is better;
+# conventional residual-fit bands, cf. SRMR guidelines).
+#' @keywords internal
+.label_rmsr <- function(x) {
+  if (is.na(x)) return("")
+  lab <- if (x <= 0.05) "good"
+         else if (x <= 0.08) "acceptable"
+         else if (x <= 0.10) "mediocre"
+         else "poor"
+  paste0(" (", lab, " - lower is better)")
+}
+
+# Rule-of-thumb label for the common-part-accounted-for index (bounded 0-1,
+# higher is better: residuals hold less common variance).
+#' @keywords internal
+.label_caf <- function(x) {
+  if (is.na(x)) return("")
+  lab <- if (x >= 0.50) "adequate"
+         else if (x >= 0.30) "marginal"
+         else "low"
+  paste0(" (", lab, " - higher is better)")
+}
+
 #' @export
 print.sfa <- function(x, cutoff = 0.3, sort = TRUE, ...) {
   cat("Semantic Factor Analysis\n")
   cat("  Encoding:", x$encoding, "\n")
-  if (!is.null(x$embed_model)) cat("  Model:", x$embed_model, "\n")
+  is_default_model <- identical(x$embed_model, .SFA_DEFAULT_MODEL)
+  if (!is.null(x$embed_model)) {
+    cat("  Model:", x$embed_model, if (is_default_model) "(default)" else "", "\n")
+  }
   if (!is.null(x$embedding_dim)) cat("  Embedding dim:", x$embedding_dim, "\n")
+  if (!is.null(x$dim_select)) {
+    cat(sprintf("  Dim-select: DynEGA chose %d of %d coordinates\n",
+                x$dim_select$optimal_depth, x$dim_select$full_dim))
+  }
   cat("  Factors:", x$factors, " (", x$fm, " + ", x$rotation, ")\n", sep = "")
+  if (is_default_model) {
+    cat("  Note: larger embedding models recover factor structure more",
+        "accurately.\n",
+        "        For higher fidelity, set",
+        "model = \"Qwen/Qwen3-Embedding-4B\" (8 GB RAM)\n",
+        "        or model = \"Qwen/Qwen3-Embedding-8B\" (16 GB RAM).\n")
+  }
   cat("\n")
 
   cat("Diagnostics:\n")
@@ -33,15 +70,15 @@ print.sfa <- function(x, cutoff = 0.3, sort = TRUE, ...) {
              else if (kmo_val >= 0.7) "middling"
              else if (kmo_val >= 0.6) "mediocre"
              else "poor"
-    cat(paste0(" (", label, ")"))
+    cat(paste0(" (", label, " - higher is better)"))
   }
   cat("\n")
   if (!is.null(x$tefi))
-    cat(sprintf("  TEFI: %.4f\n", x$tefi))
-  if (!is.null(x$rmsr))
-    cat(sprintf("  RMSR: %.4f\n", x$rmsr))
+    cat(sprintf("  TEFI: %.4f (lower is better)\n", x$tefi))
+  if (!is.null(x$rmsr) && !is.na(x$rmsr))
+    cat(sprintf("  RMSR: %.4f%s\n", x$rmsr, .label_rmsr(x$rmsr)))
   if (!is.null(x$caf) && !is.na(x$caf))
-    cat(sprintf("  CAF:  %.4f\n", x$caf))
+    cat(sprintf("  CAF:  %.4f%s\n", x$caf, .label_caf(x$caf)))
 
   if (any(x$heywood)) {
     n_hw <- sum(x$heywood)
@@ -108,13 +145,15 @@ summary.sfa <- function(object, ...) {
 }
 
 #' @export
-plot.sfa <- function(x, type = c("scree", "loadings", "residuals"), ...) {
+plot.sfa <- function(x, type = c("scree", "loadings", "residuals",
+                                 "similarity"), ...) {
   type <- match.arg(type)
 
   switch(type,
     scree = .plot_scree(x, ...),
     loadings = .plot_loadings(x, ...),
-    residuals = .plot_residuals(x, ...)
+    residuals = .plot_residuals(x, ...),
+    similarity = sfa_corplot(x, ...)
   )
 }
 

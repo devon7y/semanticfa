@@ -105,8 +105,13 @@ sfa_parallel <- function(sim_matrix, embeddings, n_iter = 100L,
       call. = FALSE
     )
   }
-  ega_result <- EGAnet::EGA(sim_matrix, n = NA, model = "glasso",
-                             plot.EGA = FALSE)
+  # Response-free similarity matrix: use TMFG (a correlation-matrix filtering
+  # method that needs no sample size), with a numeric 'n' placeholder (EGAnet
+  # requires numeric n; TMFG does not use it to build the graph).
+  ega_result <- suppressWarnings(suppressMessages(
+    EGAnet::EGA(data = sim_matrix, n = nrow(sim_matrix), model = "TMFG",
+                plot.EGA = FALSE, verbose = FALSE)
+  ))
   n_factors <- ega_result$n.dim
   if (is.null(n_factors) || is.na(n_factors)) n_factors <- 1L
   as.integer(n_factors)

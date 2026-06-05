@@ -4,7 +4,13 @@
 \alias{sfa_similarity}
 \title{Compute Embedding Similarity Matrix}
 \usage{
-sfa_similarity(embeddings, encoding = "atomic_reversed", scoring = NULL)
+sfa_similarity(
+  embeddings,
+  encoding = "atomic_reversed",
+  scoring = NULL,
+  factors = NULL,
+  codes = NULL
+)
 }
 \arguments{
 \item{embeddings}{Numeric matrix (n_items x embedding_dim).}
@@ -16,6 +22,17 @@ sfa_similarity(embeddings, encoding = "atomic_reversed", scoring = NULL)
 \item{scoring}{Numeric vector of +1/-1 per item (keying direction). If
 \code{NULL}, defaults to all +1 with an informative message when
 \code{encoding} is \code{"atomic_reversed"} or \code{"squid"}.}
+
+\item{factors}{Optional character/factor vector of per-item subscale labels.
+When supplied it is \emph{recorded} on the returned matrix (as a
+\code{"factors"} attribute) so that \code{\link{sfa_corplot}} can group the
+items; it does \strong{not} reorder the matrix (rows stay aligned with the
+input items).}
+
+\item{codes}{Optional character vector of short item codes (e.g.
+\code{"D3"}, \code{"A2"}). Recorded on the returned matrix (as a
+\code{"codes"} attribute) and used as axis labels by
+\code{\link{sfa_corplot}}.}
 }
 \value{
 A symmetric numeric matrix (n_items x n_items) with 1s on the

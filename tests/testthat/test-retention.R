@@ -10,6 +10,15 @@ test_that("sfa_parallel returns valid structure", {
   expect_length(pa$percentiles, 50)
 })
 
+test_that("EGA retention runs on a response-free matrix (no sample size)", {
+  skip_if_not_installed("EGAnet")
+  data(big5)
+  sim <- sfa_similarity(big5$embeddings, encoding = "atomic_reversed",
+                        scoring = big5$scoring)
+  nf <- semanticfa:::.retention_ega(sim)
+  expect_true(is.integer(nf) && length(nf) == 1L && nf >= 1L)
+})
+
 test_that("sfa_nfactors returns consensus", {
   data(big5)
   sim <- sfa_similarity(big5$embeddings, encoding = "atomic_reversed",

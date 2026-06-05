@@ -6,3 +6,10 @@
 ^DESIGN\.md$
 ^data-raw$
 ^\.github$
+^Rplots\.pdf$
+^method_papers$
+^semfa$
+^DASS_walkthrough\.md$
+^.*\.tar\.gz$
+^.*\.Rcheck$
+^DASS_walkthrough\.html$

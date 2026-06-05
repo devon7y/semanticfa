@@ -10,6 +10,15 @@
 #' @param scoring Numeric vector of +1/-1 per item (keying direction). If
 #'   \code{NULL}, defaults to all +1 with an informative message when
 #'   \code{encoding} is \code{"atomic_reversed"} or \code{"squid"}.
+#' @param factors Optional character/factor vector of per-item subscale labels.
+#'   When supplied it is \emph{recorded} on the returned matrix (as a
+#'   \code{"factors"} attribute) so that \code{\link{sfa_corplot}} can group the
+#'   items; it does \strong{not} reorder the matrix (rows stay aligned with the
+#'   input items).
+#' @param codes Optional character vector of short item codes (e.g.
+#'   \code{"D3"}, \code{"A2"}). Recorded on the returned matrix (as a
+#'   \code{"codes"} attribute) and used as axis labels by
+#'   \code{\link{sfa_corplot}}.
 #'
 #' @details
 #' \describe{
@@ -42,12 +51,20 @@
 #'
 #' @export
 sfa_similarity <- function(embeddings, encoding = "atomic_reversed",
-                           scoring = NULL) {
+                           scoring = NULL, factors = NULL, codes = NULL) {
   encoding <- match.arg(encoding,
     c("atomic_reversed", "atomic", "squid", "mean_centered_pearson"))
 
   n_items <- nrow(embeddings)
   scoring <- .resolve_scoring(scoring, n_items, encoding)
+  if (!is.null(factors) && length(factors) != n_items) {
+    stop("'factors' must have one entry per item (", n_items, ").",
+         call. = FALSE)
+  }
+  if (!is.null(codes) && length(codes) != n_items) {
+    stop("'codes' must have one entry per item (", n_items, ").",
+         call. = FALSE)
+  }
 
   if (encoding == "atomic") {
     scoring <- rep(1, n_items)
@@ -65,6 +82,8 @@ sfa_similarity <- function(embeddings, encoding = "atomic_reversed",
   sim <- (sim + t(sim)) / 2
 
   attr(sim, "transformed_embeddings") <- transformed
+  if (!is.null(factors)) attr(sim, "factors") <- as.character(factors)
+  if (!is.null(codes)) attr(sim, "codes") <- as.character(codes)
   sim
 }
 
