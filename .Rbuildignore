@@ -13,3 +13,4 @@
 ^.*\.tar\.gz$
 ^.*\.Rcheck$
 ^DASS_walkthrough\.html$
+^paper_prompt\.txt$

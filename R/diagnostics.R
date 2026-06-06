@@ -37,20 +37,25 @@
   phi <- fa_obj$Phi
   if (is.null(phi)) phi <- diag(ncol(loadings))
 
-  reproduced <- loadings %*% phi %*% t(loadings) + diag(uniquenesses)
-  residual <- observed_corr - reproduced
+  common <- loadings %*% phi %*% t(loadings)
+  reproduced <- common + diag(uniquenesses)
+  residual <- observed_corr - reproduced            # full residual (diagonal ~ 0)
 
-  n <- nrow(residual)
   off_diag <- residual[upper.tri(residual)]
   rmsr <- sqrt(mean(off_diag^2))
 
+  # CAF (Common part Accounted For; Lorenzo-Seva, Timmerman & Kiers, 2011):
+  # 1 - KMO of the residual *correlation* matrix after removing the common part
+  # only (uniquenesses retained on the diagonal). Subtracting the uniquenesses
+  # too -- as the RMSR residual does -- zeroes the diagonal, so the
+  # standardization divides by ~0 and KMO degenerates to 1 (CAF == 0). Keeping
+  # Psi on the diagonal gives KMO a valid correlation matrix.
   caf <- tryCatch({
-    res_corr <- residual
-    d <- sqrt(pmax(diag(res_corr), 1e-12))
-    res_corr <- res_corr / outer(d, d)
-    diag(res_corr) <- 1
-    kmo_res <- .compute_kmo(res_corr)
-    1 - kmo_res$total
+    res_caf <- observed_corr - common               # diagonal = uniquenesses
+    d <- sqrt(pmax(diag(res_caf), 1e-12))
+    res_caf <- res_caf / outer(d, d)
+    diag(res_caf) <- 1
+    1 - .compute_kmo(res_caf)$total
   }, error = function(e) NA_real_)
 
   list(rmsr = rmsr, caf = caf, residual = residual)

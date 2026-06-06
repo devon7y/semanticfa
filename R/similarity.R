@@ -52,6 +52,15 @@
 #' @export
 sfa_similarity <- function(embeddings, encoding = "atomic_reversed",
                            scoring = NULL, factors = NULL, codes = NULL) {
+  # accept a loaded sfa_embeddings object (from sfa_load_npz); explicit
+  # scoring/factors/codes args still take precedence
+  if (inherits(embeddings, "sfa_embeddings")) {
+    obj <- embeddings
+    if (is.null(scoring)) scoring <- obj$scoring
+    if (is.null(factors)) factors <- obj$factors
+    if (is.null(codes))   codes   <- obj$codes
+    embeddings <- obj$embeddings
+  }
   encoding <- match.arg(encoding,
     c("atomic_reversed", "atomic", "squid", "mean_centered_pearson"))
 

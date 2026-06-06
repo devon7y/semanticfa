@@ -104,6 +104,22 @@ sfa <- function(items,
     c("parallel", "kaiser", "EGA", "TEFI"))
   dim_select <- match.arg(dim_select)
 
+  # accept a loaded sfa_embeddings object (from sfa_load_npz) as the first
+  # argument: unpack its embeddings/scoring/codes/factors/items
+  if (inherits(items, "sfa_embeddings")) {
+    obj <- items
+    if (is.null(embeddings)) embeddings <- obj$embeddings
+    if (is.null(scoring) && !is.null(obj$scoring)) scoring <- obj$scoring
+    n <- nrow(obj$embeddings)
+    df <- data.frame(item = obj$items %||% obj$codes %||%
+                            sprintf("item_%02d", seq_len(n)),
+                     stringsAsFactors = FALSE)
+    if (!is.null(obj$codes))   df$code   <- obj$codes
+    if (!is.null(obj$factors)) df$factor <- obj$factors
+    if (!is.null(obj$scoring)) df$scoring <- obj$scoring
+    items <- df
+  }
+
   resolved <- .resolve_items(items, scoring = scoring, embeddings = embeddings)
   item_text <- resolved$items
   codes     <- resolved$codes

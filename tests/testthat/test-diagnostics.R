@@ -7,6 +7,31 @@ test_that("KMO computes on a correlation matrix", {
   expect_length(kmo$per_item, 50)
 })
 
+test_that("CAF is non-degenerate (not pinned at 0) on an embedding matrix", {
+  data(big5)
+  sim <- sfa_similarity(big5$embeddings, encoding = "atomic_reversed",
+                        scoring = big5$scoring)
+  fa5 <- suppressWarnings(psych::fa(sim, nfactors = 5, rotate = "oblimin",
+                                    fm = "minres", warnings = FALSE))
+  rc <- semanticfa:::.compute_rmsr_caf(sim, fa5)
+  expect_true(is.finite(rc$caf))
+  expect_gt(rc$caf, 0.1)          # would be exactly 0 under the old (buggy) code
+  expect_lt(rc$caf, 1)
+})
+
+test_that("CAF matches the EFAtools reference on psych::bfi", {
+  skip_if_not_installed("EFAtools")
+  data(bfi, package = "psych")
+  R <- stats::cor(bfi[, 1:25], use = "pairwise")
+  fa5 <- suppressWarnings(psych::fa(R, nfactors = 5, rotate = "oblimin",
+                                    fm = "ml", warnings = FALSE))
+  caf <- semanticfa:::.compute_rmsr_caf(R, fa5)$caf
+  ref <- suppressWarnings(suppressMessages(
+    EFAtools::EFA(R, n_factors = 5, N = 2800, method = "ML",
+                  rotation = "oblimin")$fit_indices$CAF))
+  expect_equal(caf, ref, tolerance = 0.1)   # ours ~0.40 vs EFAtools ~0.42
+})
+
 test_that("TEFI returns a finite value", {
   data(big5)
   sim <- sfa_similarity(big5$embeddings, encoding = "atomic_reversed",
