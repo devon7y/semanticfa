@@ -89,3 +89,23 @@ test_that("sfa() errors clearly on similarity + calibrate, and stays quiet on sc
   expect_no_message(suppressWarnings(
     sfa(big5$items, similarity = sim, nfactors = 5)))
 })
+
+test_that("print.sfa handles non-finite KMO without erroring (degenerate similarity)", {
+  fit <- suppressWarnings(suppressMessages(
+    sfa(paste0("i", 1:5), similarity = diag(5), nfactors = 1)))
+  expect_output(print(fit), "KMO")   # must not error even when KMO is NaN
+})
+
+test_that("zero-norm embedding rows yield finite (cosine 0) similarities, not NaN", {
+  emb <- matrix(c(0, 0, 1, 0, 0, 1), nrow = 3, byrow = TRUE)  # row 1 all-zero
+  s <- suppressWarnings(sfa_similarity(emb))
+  expect_false(any(is.nan(s)))
+  expect_true(all(is.finite(s)))
+})
+
+test_that("invalid numeric controls error with clear messages", {
+  expect_error(sfa(letters[1:5], similarity = diag(5), nfactors = "x"), "whole number")
+  expect_error(sfa(letters[1:5], similarity = diag(5), nfactors = 0), "whole number")
+  expect_error(sfa_parallel(diag(5), diag(5), n_iter = 0), "whole number")
+  expect_error(sfa_parallel(diag(5), diag(5), percentile = 150), "0, 100")
+})

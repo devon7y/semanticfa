@@ -61,20 +61,23 @@ print.sfa <- function(x, cutoff = 0.3, sort = TRUE, ...) {
   cat("\n")
 
   cat("Diagnostics:\n")
-  if (!is.null(x$kmo))
-    cat(sprintf("  KMO:  %.3f", x$kmo$total))
-  kmo_val <- x$kmo$total
+  kmo_val <- if (!is.null(x$kmo)) x$kmo$total else NULL
   if (!is.null(kmo_val)) {
-    label <- if (kmo_val >= 0.9) "marvelous"
-             else if (kmo_val >= 0.8) "meritorious"
-             else if (kmo_val >= 0.7) "middling"
-             else if (kmo_val >= 0.6) "mediocre"
-             else "poor"
-    cat(paste0(" (", label, " - higher is better)"))
+    if (is.finite(kmo_val)) {
+      label <- if (kmo_val >= 0.9) "marvelous"
+               else if (kmo_val >= 0.8) "meritorious"
+               else if (kmo_val >= 0.7) "middling"
+               else if (kmo_val >= 0.6) "mediocre"
+               else "poor"
+      cat(sprintf("  KMO:  %.3f (%s - higher is better)\n", kmo_val, label))
+    } else {
+      cat("  KMO:  unavailable\n")
+    }
   }
-  cat("\n")
-  if (!is.null(x$tefi))
-    cat(sprintf("  TEFI: %.4f (lower is better)\n", x$tefi))
+  if (!is.null(x$tefi)) {
+    if (is.finite(x$tefi)) cat(sprintf("  TEFI: %.4f (lower is better)\n", x$tefi))
+    else cat("  TEFI: unavailable\n")
+  }
   if (!is.null(x$rmsr) && !is.na(x$rmsr))
     cat(sprintf("  RMSR: %.4f%s\n", x$rmsr, .label_rmsr(x$rmsr)))
   if (!is.null(x$caf) && !is.na(x$caf))

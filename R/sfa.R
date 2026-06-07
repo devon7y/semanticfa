@@ -115,6 +115,11 @@ sfa <- function(items,
     c("parallel", "kaiser", "EGA", "TEFI"))
   dim_select <- match.arg(dim_select)
 
+  # validate numeric controls up front for clear error messages
+  if (!is.null(nfactors)) nfactors <- .assert_count(nfactors, "nfactors")
+  parallel_iter <- .assert_count(parallel_iter, "parallel_iter")
+  if (isTRUE(calibrate)) calibrate_iter <- .assert_count(calibrate_iter, "calibrate_iter")
+
   # accept a loaded sfa_embeddings object (from sfa_load_npz) as the first
   # argument: unpack its embeddings/scoring/codes/factors/items
   if (inherits(items, "sfa_embeddings")) {
@@ -160,6 +165,11 @@ sfa <- function(items,
     }
     if (!isSymmetric(unname(sim_matrix), tol = 1e-6)) {
       stop("'similarity' must be symmetric.", call. = FALSE)
+    }
+    if (any(abs(diag(sim_matrix) - 1) > 1e-6)) {
+      message("'similarity' diagonal was not all 1; setting the diagonal to 1 ",
+              "(treating it as a correlation-like matrix).")
+      diag(sim_matrix) <- 1
     }
     transformed   <- NULL
     embeddings    <- NULL

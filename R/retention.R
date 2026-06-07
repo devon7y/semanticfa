@@ -40,6 +40,11 @@ sfa_parallel <- function(sim_matrix, embeddings, n_iter = 100L,
            call. = FALSE)
     }
   }
+  n_iter <- .assert_count(n_iter, "n_iter")
+  if (!is.numeric(percentile) || length(percentile) != 1L ||
+      !is.finite(percentile) || percentile <= 0 || percentile >= 100) {
+    stop("'percentile' must be a single number in (0, 100).", call. = FALSE)
+  }
   n_items <- nrow(sim_matrix)
   embed_dim <- ncol(embeddings)
 
@@ -166,6 +171,7 @@ sfa_nfactors <- function(sim_matrix, embeddings = NULL,
   }
   methods <- match.arg(methods, c("parallel", "kaiser", "TEFI", "EGA"),
                        several.ok = TRUE)
+  parallel_iter <- .assert_count(parallel_iter, "parallel_iter")
 
   eigs <- eigen(sim_matrix, symmetric = TRUE, only.values = TRUE)$values
   eigs <- sort(eigs, decreasing = TRUE)

@@ -6,16 +6,18 @@ This is a new submission (semanticfa 0.1.0).
 
 ## R CMD check results
 
-Local `R CMD check --as-cran` (macOS, R release), run without building the PDF
-reference manual (the local TeX install lacks `inconsolata.sty`):
+Local `R CMD check --as-cran` (macOS, R release) was run *without* building the
+PDF reference manual or the vignette, because the local toolchain lacks
+`pdflatex` and Pandoc. With those steps skipped it reports:
 
 ```
 0 errors | 0 warnings | 0 notes
 ```
 
-The PDF manual builds on systems with a complete TeX installation. Cross-platform
-checks that include the manual (win-builder R-devel/R-release and R-hub Windows /
-macOS / Linux) are run prior to submission and their results appended here.
+This is diagnostic only -- not a submission-grade result. Before submission the
+full `R CMD build` + `R CMD check --as-cran` (with manual and vignette), plus
+win-builder (R-devel/R-release) and R-hub (Windows / macOS / Linux), will be run
+on a Pandoc- and TeX-equipped machine, and their results appended here.
 
 ## Notes for the reviewer
 
@@ -32,7 +34,7 @@ macOS / Linux) are run prior to submission and their results appended here.
 * **Optional, gracefully-degrading functionality.** Some features require
   Suggests packages and check for them with `requireNamespace()`, erroring
   informatively when absent:
-  - `EGAnet` — `sfa_dimselect()` (Dynamic EGA dimension selection) and
+  - `EGAnet` — `sfa_dimselect()` (EGA-based embedding-dimension selection) and
     `n_factors_method = "EGA"` retention.
   - `httr2` — the OpenAI embedding backend.
 
@@ -51,7 +53,9 @@ macOS / Linux) are run prior to submission and their results appended here.
   precomputed sentence-transformer embeddings, so all runnable examples and
   tests execute without network access or Python.
 
-* No examples write to the user's home filesystem, the package library, or
-  other restricted locations; the embedding cache uses
-  `tools::R_user_dir("semanticfa", "cache")` and is only written when caching
-  is explicitly enabled.
+* **Embedding cache.** The cache uses `tools::R_user_dir("semanticfa", "cache")`.
+  `sfa_embed()` caches by default (`cache = TRUE`); users can disable it with
+  `cache = FALSE` or clear it with `sfa_clear_cache()`. No examples or tests
+  write to the user's home filesystem, the package library, or other restricted
+  locations (the bundled-data examples/tests do not embed text, so they do not
+  write to the cache).

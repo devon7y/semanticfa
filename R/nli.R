@@ -48,7 +48,12 @@
 #'   (default \code{TRUE}).
 #'
 #' @returns A symmetric numeric matrix (n_items x n_items) of signed relations
-#'   in the range -1 to 1 with 1 on the diagonal and item text as dimnames.
+#'   with 1 on the diagonal and item text as dimnames. With a probability
+#'   classifier (the default) the off-diagonal values lie in \eqn{[-1, 1]}
+#'   (1 = same direction, -1 = opposite). A custom classifier returning raw
+#'   (non-probability) scores may yield values outside \eqn{[-1, 1]}; these are
+#'   passed through unchanged, so such a matrix may not be correlation-like and
+#'   may need rescaling before \code{sfa(similarity = ...)}.
 #'
 #' @references
 #' Bowman, S. R., Angeli, G., Potts, C., & Manning, C. D. (2015). A large

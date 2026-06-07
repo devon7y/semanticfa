@@ -54,5 +54,4 @@
 #'   \item Chris Westbury (author)
 #' }
 #'
-#' @keywords internal
 "_PACKAGE"

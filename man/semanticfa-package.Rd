@@ -76,4 +76,3 @@ Authors:
 \item Chris Westbury (author)
 }
 }
-\keyword{internal}

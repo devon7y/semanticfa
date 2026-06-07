@@ -136,6 +136,10 @@ sfa_similarity <- function(embeddings, encoding = "atomic",
   sim <- tcrossprod(transformed)
   diag(sim) <- 1.0
   sim <- (sim + t(sim)) / 2
+  if (any(!is.finite(sim))) {
+    stop("Similarity matrix contains non-finite values; check for degenerate ",
+         "(e.g. all-zero or collinear) item embeddings.", call. = FALSE)
+  }
 
   attr(sim, "transformed_embeddings") <- transformed
   if (!is.null(factors)) attr(sim, "factors") <- as.character(factors)
@@ -150,12 +154,12 @@ sfa_similarity <- function(embeddings, encoding = "atomic",
   scoring_vec <- as.numeric(scoring)
   signed <- embeddings * scoring_vec
   norms <- sqrt(rowSums(signed^2))
-  zero_norm <- norms == 0
+  zero_norm <- !is.finite(norms) | norms == 0
   if (any(zero_norm)) {
-    warning(sum(zero_norm), " item(s) have zero norm after sign-flipping; ",
-            "using original embeddings for those items.", call. = FALSE)
-    signed[zero_norm, ] <- embeddings[zero_norm, ]
-    norms[zero_norm] <- sqrt(rowSums(embeddings[zero_norm, , drop = FALSE]^2))
+    warning(sum(zero_norm), " item(s) have a zero-norm embedding; they are ",
+            "returned as zero vectors (cosine 0 to all other items).",
+            call. = FALSE)
+    norms[zero_norm] <- 1   # leave the row as a zero vector -> cosine 0, not NaN
   }
   signed / norms
 }

@@ -5,6 +5,17 @@
 `%||%` <- function(a, b) if (is.null(a)) b else a
 
 #' @keywords internal
+# Validate that x is a single whole number >= min; return it as integer.
+.assert_count <- function(x, name, min = 1L) {
+  if (!is.numeric(x) || length(x) != 1L || !is.finite(x) ||
+      x < min || x != round(x)) {
+    stop("'", name, "' must be a single whole number >= ", min, ".",
+         call. = FALSE)
+  }
+  as.integer(x)
+}
+
+#' @keywords internal
 .regularize_corr <- function(corr_matrix, alpha = 1e-6) {
   n <- nrow(corr_matrix)
   reg <- corr_matrix + alpha * diag(n)
