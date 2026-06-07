@@ -17,9 +17,11 @@
 #' }
 #'
 #' @source Items from the International Personality Item Pool (IPIP;
-#'   \url{https://ipip.ori.org/}), which is in the public domain.
-#'   Embeddings generated with the \code{all-MiniLM-L6-v2} model from the
-#'   \code{sentence-transformers} Python package.
+#'   \url{https://ipip.ori.org/}), which is in the public domain. Embeddings were
+#'   generated with the \code{sentence-transformers/all-MiniLM-L6-v2} model
+#'   (\url{https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2}),
+#'   released under the Apache License 2.0. The regeneration script is in
+#'   \code{data-raw/big5.R}.
 #'
 #' @examples
 #' data(big5)

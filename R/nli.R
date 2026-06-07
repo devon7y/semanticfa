@@ -38,10 +38,12 @@
 #'   \code{classifier}.
 #' @param classifier Optional function taking two equal-length character vectors
 #'   \code{(premises, hypotheses)} and returning a matrix/data frame with numeric
-#'   columns \code{entailment} and \code{contradiction} (probabilities, one row
-#'   per pair). Supply this to use a custom NLI backend (or for testing); the
-#'   default uses a \pkg{sentence-transformers} \code{CrossEncoder} via
-#'   \pkg{reticulate}.
+#'   columns \code{entailment} and \code{contradiction} (one row per pair). These
+#'   are typically probabilities, but any finite numeric scores are accepted ---
+#'   only the signed difference \code{entailment - contradiction} is used, so the
+#'   values need not lie in \code{[0, 1]}. Supply this to use a custom NLI backend
+#'   (or for testing); the default uses a \pkg{sentence-transformers}
+#'   \code{CrossEncoder} via \pkg{reticulate}.
 #' @param symmetric Logical: average the two directions (i,j) and (j,i)
 #'   (default \code{TRUE}).
 #'

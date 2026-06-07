@@ -5,7 +5,7 @@
 #'
 #' @param embeddings Numeric matrix (n_items x embedding_dim).
 #' @param encoding Character string specifying the similarity transform:
-#'   \code{"atomic_reversed"} (default), \code{"atomic"}, \code{"squid"}, or
+#'   \code{"atomic"} (default), \code{"atomic_reversed"}, \code{"squid"}, or
 #'   \code{"mean_centered_pearson"}. See Details.
 #' @param scoring Numeric vector of +1/-1 per item (keying direction). Applies
 #'   only to the atomic encodings (Guenole et al.); \code{"squid"} and
@@ -25,10 +25,11 @@
 #'
 #' @details
 #' \describe{
-#'   \item{\code{"atomic_reversed"}}{Multiply each embedding by its scoring
-#'     direction, L2-normalize, then compute cosine similarity (Guenole et al.).}
-#'   \item{\code{"atomic"}}{L2-normalize without sign-flipping, then cosine
+#'   \item{\code{"atomic"}}{(default) L2-normalize each embedding, then cosine
 #'     similarity. Equivalent to \code{"atomic_reversed"} with all +1 scoring.}
+#'   \item{\code{"atomic_reversed"}}{Multiply each embedding by its scoring
+#'     direction (+1/-1) first, L2-normalize, then cosine similarity (Guenole et
+#'     al.). Use this for scales with reverse-keyed items.}
 #'   \item{\code{"squid"}}{Subtract the questionnaire-mean embedding (SQuID;
 #'     Pellert et al. 2026), L2-normalize, then cosine similarity. The centering
 #'     alone recovers negative between-dimension correlations, so this encoding
@@ -54,8 +55,21 @@
 #' Kmetty, Z., et al. (2021). Mean-centered cosine as Pearson correlation.
 #'
 #' @export
-sfa_similarity <- function(embeddings, encoding = "atomic_reversed",
+sfa_similarity <- function(embeddings, encoding = "atomic",
                            scoring = NULL, factors = NULL, codes = NULL) {
+  # accept a fitted sfa object: return its already-built similarity matrix, with
+  # factor/code attributes attached for grouping/labelling in plots
+  if (inherits(embeddings, "sfa")) {
+    fit <- embeddings
+    sim <- fit$sim_matrix
+    if (!is.null(fit$item_data$factor)) {
+      attr(sim, "factors") <- as.character(fit$item_data$factor)
+    }
+    if (!is.null(fit$item_data$code)) {
+      attr(sim, "codes") <- as.character(fit$item_data$code)
+    }
+    return(sim)
+  }
   # accept a loaded sfa_embeddings object (from sfa_load_npz); explicit
   # scoring/factors/codes args still take precedence
   if (inherits(embeddings, "sfa_embeddings")) {
@@ -67,6 +81,18 @@ sfa_similarity <- function(embeddings, encoding = "atomic_reversed",
   }
   encoding <- match.arg(encoding,
     c("atomic_reversed", "atomic", "squid", "mean_centered_pearson"))
+
+  embeddings <- as.matrix(embeddings)
+  if (!is.numeric(embeddings) || length(dim(embeddings)) != 2L) {
+    stop("'embeddings' must be a numeric matrix (n_items x dim).", call. = FALSE)
+  }
+  if (nrow(embeddings) < 2L || ncol(embeddings) < 1L) {
+    stop("'embeddings' must have at least 2 rows and 1 column (got ",
+         nrow(embeddings), " x ", ncol(embeddings), ").", call. = FALSE)
+  }
+  if (anyNA(embeddings) || any(!is.finite(embeddings))) {
+    stop("'embeddings' contains non-finite values (NA/NaN/Inf).", call. = FALSE)
+  }
 
   n_items <- nrow(embeddings)
   if (!is.null(factors) && length(factors) != n_items) {

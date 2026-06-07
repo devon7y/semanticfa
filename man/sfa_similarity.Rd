@@ -6,7 +6,7 @@
 \usage{
 sfa_similarity(
   embeddings,
-  encoding = "atomic_reversed",
+  encoding = "atomic",
   scoring = NULL,
   factors = NULL,
   codes = NULL
@@ -16,7 +16,7 @@ sfa_similarity(
 \item{embeddings}{Numeric matrix (n_items x embedding_dim).}
 
 \item{encoding}{Character string specifying the similarity transform:
-\code{"atomic_reversed"} (default), \code{"atomic"}, \code{"squid"}, or
+\code{"atomic"} (default), \code{"atomic_reversed"}, \code{"squid"}, or
 \code{"mean_centered_pearson"}. See Details.}
 
 \item{scoring}{Numeric vector of +1/-1 per item (keying direction). Applies
@@ -47,10 +47,11 @@ of several published methods.
 }
 \details{
 \describe{
-\item{\code{"atomic_reversed"}}{Multiply each embedding by its scoring
-direction, L2-normalize, then compute cosine similarity (Guenole et al.).}
-\item{\code{"atomic"}}{L2-normalize without sign-flipping, then cosine
+\item{\code{"atomic"}}{(default) L2-normalize each embedding, then cosine
 similarity. Equivalent to \code{"atomic_reversed"} with all +1 scoring.}
+\item{\code{"atomic_reversed"}}{Multiply each embedding by its scoring
+direction (+1/-1) first, L2-normalize, then cosine similarity (Guenole et
+al.). Use this for scales with reverse-keyed items.}
 \item{\code{"squid"}}{Subtract the questionnaire-mean embedding (SQuID;
 Pellert et al. 2026), L2-normalize, then cosine similarity. The centering
 alone recovers negative between-dimension correlations, so this encoding

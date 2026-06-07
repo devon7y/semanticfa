@@ -35,13 +35,20 @@
 .check_psd <- function(mat, alpha = 1e-6) {
   eig <- eigen(mat, symmetric = TRUE)
   min_eig <- min(eig$values)
-  if (min_eig < -1e-10) {
-    message(
-      "Similarity matrix was not positive semi-definite (min eigenvalue = ",
-      format(min_eig, digits = 3),
-      "); projected to a nearby positive semi-definite correlation matrix ",
-      "(negative eigenvalues clipped, diagonal rescaled to 1)."
-    )
+  # Ensure positive *definiteness*: ridge any eigenvalue below the floor. This
+  # also covers merely singular matrices (min eigenvalue ~ 0), such as the
+  # rank-deficient matrix that centering encodings like "squid" produce, which
+  # would otherwise make psych::fa() smooth and warn. Only flag a *materially*
+  # negative eigenvalue; a tiny rank deficiency is silently regularized.
+  if (min_eig < alpha) {
+    if (min_eig < -1e-6) {
+      message(
+        "Similarity matrix was not positive semi-definite (min eigenvalue = ",
+        format(min_eig, digits = 3),
+        "); projected to a nearby positive definite correlation matrix ",
+        "(eigenvalues floored, diagonal rescaled to 1)."
+      )
+    }
     # Clip negative eigenvalues to a small positive floor and reconstruct
     # (V diag(vals) V'), then rescale the diagonal back to 1. A fixed ridge
     # cannot repair a matrix whose minimum eigenvalue is far below zero.

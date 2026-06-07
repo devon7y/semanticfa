@@ -21,7 +21,8 @@ Stress (14 items each) — all **positively keyed** (a higher rating always mean
 > wrong, or missing:
 >
 > - **New functions:** `sfa_load_npz()` (§3), `sfa_corplot()` +
->   `sfa_itemplot()` (§5), `sfa_item_fit()` (§10); plus the `calibrate=` knob (§15).
+>   `sfa_itemplot()` (§5 — item map via t-SNE / UMAP / PCA / MDS),
+>   `sfa_item_fit()` (§10); plus the `calibrate=` knob (§15).
 > - **🔧 Fixed diagnostics:** `CAF` now reports a real value, and `TEFI` is now
 >   the genuine partition-based index (it is **negative** — lower is better) (§7).
 > - **🔧 Faithful redundancy:** `sfa_redundancy()` now matches Unique Variable
@@ -55,11 +56,11 @@ This installs `sentence-transformers` into an environment `reticulate` manages
 for you. (On first real use the package also auto-declares this requirement, so
 in many setups it "just works" without calling the line above.)
 
-A few optional R packages unlock specific features: **`Rtsne`** (t-SNE) and
-**`uwot`** (UMAP) for the item map (§5 — PCA/MDS there need nothing), and
-**`EGAnet`** for EGA-based factor retention / dimension selection and the
-faithful UVA redundancy method (§6, §11, §15). Install them only if you use those
-parts.
+The item map (§5) works out of the box — all four methods (t-SNE, UMAP, PCA,
+MDS) are ready to use (`Rtsne` and `uwot` are bundled with the package; PCA/MDS
+are base R). One optional package, **`EGAnet`**, powers EGA-based factor
+retention / dimension selection and the faithful UVA redundancy method
+(§6, §11, §15) — install it only if you use those parts.
 
 ---
 
@@ -84,10 +85,10 @@ head(dass)
 ```
 
 **DASS note.** Every `scoring` value is `+1` — the DASS has no reverse-worded
-items. That matters later: the default `"atomic_reversed"` encoding (which
-flips reverse items) behaves exactly like plain `"atomic"` here, and the
-sign-handling machinery elsewhere is effectively a no-op. Scales *with* reverse
-items (e.g. Big Five) exercise more of the package.
+items. So the default `"atomic"` encoding (plain cosine) is all you need here;
+the keying-aware `"atomic_reversed"` would give the *same* result. Scales *with*
+reverse items (e.g. Big Five) need `encoding = "atomic_reversed"` plus a
+`scoring` vector so the reverse items get sign-flipped.
 
 ---
 
@@ -111,7 +112,7 @@ The printout starts like this (numbers will vary by model):
 
 ```
 Semantic Factor Analysis
-  Encoding: atomic_reversed
+  Encoding: atomic
   Model: Qwen/Qwen3-Embedding-0.6B (default)
   Note: larger embedding models recover factor structure more accurately.
         For higher fidelity, set model = "Qwen/Qwen3-Embedding-4B" (8 GB RAM)
@@ -120,9 +121,10 @@ Semantic Factor Analysis
   Factors: 4  (minres + oblimin)
 
 Diagnostics:
-  KMO:  0.84 (meritorious)
-  TEFI: ...
-  ...
+  KMO:  0.97 (marvelous - higher is better)
+  TEFI: -44.1 (lower is better)
+  RMSR: 0.03 (good - lower is better)
+  CAF:  0.34 (marginal - higher is better)
 Factor loadings:
   ...
 ```
@@ -196,10 +198,9 @@ without paying its RAM cost in R: embed the 42 DASS items once into
 `DASS_items_8B.npz` (bundling the `code`/`factor`/`scoring` arrays so they ride
 along), and every analysis below loads in one line.
 
-> Reading `.npz` needs Python `numpy`. **Test feedback wanted:** in my review the
-> `.npz` path could trigger reticulate to download Python during tests — please
-> note if `sfa_load_npz()` ever tries to install Python when you just want to
-> read a file.
+> Reading `.npz` needs Python `numpy` (it only reads the file — it does not embed
+> text). **Test feedback wanted:** note if `sfa_load_npz()` ever tries to
+> install/download Python when you only want to read an existing file.
 
 ---
 
@@ -208,7 +209,7 @@ along), and every analysis below loads in one line.
 This is the heart of the method: how item meanings get turned into "correlations."
 
 ```r
-sim <- sfa_similarity(emb, encoding = "atomic_reversed", scoring = dass$scoring)
+sim <- sfa_similarity(emb)                 # default 'atomic' encoding
 sim[1:4, 1:4]
 ```
 
@@ -216,8 +217,8 @@ There are four **encodings** (ways to turn embeddings into a similarity matrix):
 
 | encoding | what it does | when to use for DASS |
 |---|---|---|
-| `atomic_reversed` (default) | cosine after flipping reverse items | fine — DASS has no reverse items, so same as `atomic` |
-| `atomic` | plain cosine | equivalent here |
+| `atomic` (default) | plain cosine | fine for the DASS (no reverse items) |
+| `atomic_reversed` | cosine after sign-flipping reverse items via `scoring` | use for scales with reverse-keyed items |
 | `squid` | subtract the questionnaire's mean item first | **useful**: removes the "everything-is-distress" baseline so the *differences* between Depression/Anxiety/Stress stand out |
 | `mean_centered_pearson` | makes cosine equal a true Pearson correlation | use if you want a genuine correlation matrix to hand to other SEM tools |
 
@@ -272,8 +273,7 @@ argument lets you arrange the blocks the way the manual presents them.
 ### Item map — `sfa_itemplot()`
 
 A 2-D scatter — one point per item, **colored by subscale** and labeled with its
-code. The projection method is selectable (the function name is kept for
-continuity):
+code. The projection method is selectable via `method`:
 
 ```r
 sfa_itemplot(fit)                              # t-SNE (default; needs 'Rtsne')
@@ -285,16 +285,16 @@ sfa_itemplot(fit, perplexity = 8, seed = 1)    # tune t-SNE layout / fix randomn
 
 | `method` | needs | character |
 |---|---|---|
-| `"tsne"` (default) | `Rtsne` | local clusters; stochastic (set `seed`) |
-| `"umap"` | `uwot` (pure R, no Python) | clusters + more global structure; stochastic |
+| `"tsne"` (default) | `Rtsne` (bundled) | local clusters; stochastic (set `seed`) |
+| `"umap"` | `uwot` (bundled) | clusters + more global structure; stochastic |
 | `"pca"` | — (base R) | linear, deterministic; works out of the box |
 | `"mds"` | — (base R) | distance-preserving; deterministic |
 
 **DASS payoff.** The geometric companion to the heatmap: Depression items land
 in their own cloud, while several **Stress** points sit out among the
 **Anxiety** cloud — the subscale boundary blur, as a map. t-SNE/UMAP are
-stochastic (set `seed`) and need ≥ 5 items; **PCA/MDS need no extra package** and
-are deterministic, so they're the quickest first look. For ~42 items the four
+stochastic (set `seed`) and need ≥ 5 items; **PCA/MDS are deterministic and the
+lightest** (base R), so they're the quickest first look. For ~42 items the four
 methods look broadly similar — UMAP's edge shows up mainly at larger scales.
 **Test feedback wanted:** try a couple of methods and tell me which is clearest.
 
@@ -437,9 +437,10 @@ items you're **thinking of adding** — a response-free quality check on draft
 wording, *before* it ever goes into a questionnaire. Each candidate is scored on
 two complementary axes per construct:
 
-- **similarity to the construct *name*** ("does it *sound* like Depression?"), and
-- **similarity to the construct's *existing items*** ("does it *look* like the
-  other Depression items?").
+- **Similarity to name** ("does it *sound* like Depression?" — cosine to the
+  construct-name embedding), and
+- **Similarity to other items** ("does it *look* like the other Depression
+  items?" — cosine to the construct's existing-item centroid).
 
 ```r
 sfa_item_fit(fit, "I felt there was nothing to look forward to",
@@ -659,7 +660,7 @@ build yourself.
 | Clear the embedding cache | `sfa_clear_cache()` |
 | Build the similarity matrix | `sfa_similarity()` |
 | Heatmap of the similarity matrix 🆕 | `sfa_corplot()` |
-| t-SNE map of items 🆕 | `sfa_itemplot()` |
+| Item map (t-SNE/UMAP/PCA/MDS) 🆕 | `sfa_itemplot()` |
 | Decide # of factors | `sfa_parallel()`, `sfa_nfactors()` |
 | Pick embedding dimensions | `sfa_dimselect()` |
 | Check items vs their subscale | `sfa_anchor()` |

@@ -71,7 +71,7 @@ sfa_embed <- function(items, embed = "sbert", model = NULL,
   model <- .resolve_embed_model(embed, model)
 
   if (cache) {
-    key <- .cache_key(items, model)
+    key <- .cache_key(items, model, embed)
     cache_dir <- tools::R_user_dir("semanticfa", "cache")
     cache_file <- file.path(cache_dir, paste0(key, ".rds"))
     if (file.exists(cache_file)) {
@@ -114,12 +114,12 @@ sfa_clear_cache <- function() {
 }
 
 #' @keywords internal
-.cache_key <- function(items, model) {
-  payload <- list(items = items, model = model)
+.cache_key <- function(items, model, backend = "sbert") {
+  payload <- list(items = items, model = model, backend = backend)
   if (requireNamespace("digest", quietly = TRUE)) {
     digest::digest(payload, algo = "sha256")
   } else {
-    txt <- paste(c(items, model), collapse = "\x1f")
+    txt <- paste(c(items, model, backend), collapse = "\x1f")
     sprintf("sfa_%d_%d", nchar(txt), sum(utf8ToInt(txt)) %% 1000000007L)
   }
 }

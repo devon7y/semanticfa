@@ -78,21 +78,26 @@ sfa_anchor <- function(x, anchor = c("centroid", "label", "both"),
     stop("sfa_anchor() needs theoretical factor labels. Refit sfa() from a ",
          "data.frame with a 'factor' column (or named items).", call. = FALSE)
   }
-  emb <- x$embeddings
-  if (is.null(emb)) stop("'x' has no stored (transformed) embeddings.", call. = FALSE)
+  emb <- x$input_embeddings
+  if (is.null(emb)) {
+    stop("'x' has no stored embeddings (it was fit from a precomputed ",
+         "similarity matrix); sfa_anchor() needs item embeddings.",
+         call. = FALSE)
+  }
   emb <- as.matrix(emb)
+  emb <- emb / sqrt(rowSums(emb^2))         # unit-norm raw embeddings
   codes <- x$item_data$code
   rownames(emb) <- codes
   constructs <- unique(factors)
 
-  # Sign-align: the stored embeddings are sign-flipped by the encoding, so a
-  # reverse-keyed item points opposite its construct (embeddings encode topic,
-  # not valence). Multiplying back by scoring orients every item to its
-  # construct's pole, making each cell a *belonging strength* in [-1, 1] where
-  # high = belongs (for forward and reverse items alike) and low = remove.
+  # Belonging is topical relatedness to each construct's centroid, measured in
+  # the raw (un-flipped) embedding space. Embeddings encode topic, not valence,
+  # so a reverse-keyed item is still topically close to its construct; belonging
+  # is therefore positive for forward and reverse items alike, and -- because it
+  # uses the raw embeddings -- does not depend on the chosen encoding.
   scoring <- x$item_data$scoring
   if (is.null(scoring)) scoring <- rep(1, length(codes))
-  aligned <- emb * scoring
+  aligned <- emb
 
   out <- list(constructs = constructs, factors = factors, codes = codes,
               items = x$item_data$item, scoring = scoring, anchor = anchor)

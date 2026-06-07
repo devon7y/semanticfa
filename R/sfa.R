@@ -14,8 +14,10 @@
 #'   \code{"oblimin"} (requires \pkg{GPArotation}, which is in Imports).
 #' @param fm Extraction method passed to \code{\link[psych]{fa}}. Default
 #'   \code{"minres"}.
-#' @param encoding Similarity transform: \code{"atomic_reversed"} (default),
-#'   \code{"atomic"}, \code{"squid"}, or \code{"mean_centered_pearson"}. See
+#' @param encoding Similarity transform: \code{"atomic"} (default),
+#'   \code{"atomic_reversed"}, \code{"squid"}, or \code{"mean_centered_pearson"}.
+#'   Use \code{"atomic_reversed"} with a \code{scoring} vector to sign-flip
+#'   reverse-keyed items. See
 #'   \code{\link{sfa_similarity}}.
 #' @param embed Embedding backend: \code{"sbert"}, \code{"openai"}, or a
 #'   function. Ignored when \code{embeddings} is provided.
@@ -85,7 +87,7 @@ sfa <- function(items,
                 nfactors         = NULL,
                 rotate           = "oblimin",
                 fm               = "minres",
-                encoding         = "atomic_reversed",
+                encoding         = "atomic",
                 embed            = "sbert",
                 model            = NULL,
                 embeddings       = NULL,
@@ -123,14 +125,20 @@ sfa <- function(items,
     items <- df
   }
 
+  # accept a bare numeric embedding matrix as the first argument: treat it as the
+  # embeddings, using its rownames (or generated codes) as the item labels
+  if (is.matrix(items) && is.numeric(items)) {
+    if (is.null(embeddings)) embeddings <- items
+    rn <- rownames(items)
+    items <- if (!is.null(rn)) rn else sprintf("item_%02d", seq_len(nrow(items)))
+  }
+
   resolved <- .resolve_items(items, scoring = scoring, embeddings = embeddings)
   item_text <- resolved$items
   codes     <- resolved$codes
   factors   <- resolved$factors
   scoring   <- resolved$scoring
   n_items   <- length(item_text)
-
-  scoring <- .resolve_scoring(scoring, n_items, encoding)
 
   dimsel <- NULL
   if (!is.null(similarity)) {
@@ -139,6 +147,13 @@ sfa <- function(items,
     if (nrow(sim_matrix) != n_items || ncol(sim_matrix) != n_items) {
       stop("'similarity' must be an ", n_items, " x ", n_items,
            " matrix matching the items.", call. = FALSE)
+    }
+    if (!is.numeric(sim_matrix) || anyNA(sim_matrix) ||
+        any(!is.finite(sim_matrix))) {
+      stop("'similarity' must be a finite numeric matrix.", call. = FALSE)
+    }
+    if (!isSymmetric(unname(sim_matrix), tol = 1e-6)) {
+      stop("'similarity' must be symmetric.", call. = FALSE)
     }
     transformed   <- NULL
     embeddings    <- NULL
@@ -152,7 +167,18 @@ sfa <- function(items,
               "'similarity' supplied, using 'kaiser' retention instead.")
       n_factors_method <- "kaiser"
     }
+    # scoring is not used for a precomputed matrix; default silently (the matrix
+    # already encodes whatever keying convention was applied)
+    if (is.null(scoring)) scoring <- rep(1, n_items)
+    # calibration generates random embeddings, which a precomputed matrix lacks
+    if (calibrate) {
+      warning("Monte Carlo calibration needs item embeddings; ignoring ",
+              "calibrate = TRUE for a precomputed 'similarity' matrix.",
+              call. = FALSE)
+      calibrate <- FALSE
+    }
   } else {
+    scoring <- .resolve_scoring(scoring, n_items, encoding)
     # --- Step 1: Obtain embeddings ---
     if (is.null(embeddings)) {
       embeddings <- sfa_embed(item_text, embed = embed, model = model)
@@ -200,6 +226,10 @@ sfa <- function(items,
     )
   }
   nfactors <- max(1L, as.integer(nfactors))
+  if (nfactors > n_items - 1L) {
+    stop("nfactors (", nfactors, ") must be at most n_items - 1 (",
+         n_items - 1L, ").", call. = FALSE)
+  }
 
   # --- Step 4: Factor analysis via psych ---
   fa_obj <- psych::fa(sim_matrix, nfactors = nfactors, rotate = rotate,

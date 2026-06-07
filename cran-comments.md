@@ -6,22 +6,28 @@ This is a new submission (semanticfa 0.1.0).
 
 ## R CMD check results
 
-Local `R CMD check --as-cran` (macOS, R release):
+Local `R CMD check --as-cran` (macOS, R release), run without building the PDF
+reference manual (the local TeX install lacks `inconsolata.sty`):
 
 ```
 0 errors | 0 warnings | 0 notes
 ```
 
-Cross-platform checks (win-builder R-devel/R-release and R-hub Windows / macOS /
-Linux) are run prior to submission; results to be appended here.
+The PDF manual builds on systems with a complete TeX installation. Cross-platform
+checks that include the manual (win-builder R-devel/R-release and R-hub Windows /
+macOS / Linux) are run prior to submission and their results appended here.
 
 ## Notes for the reviewer
 
-* **Core workflow needs no Python and no Suggests.** The package's central
-  functionality — turning a supplied embedding matrix or item-by-item
-  similarity matrix into a factor solution with diagnostics — depends only on
-  the Imports (`psych`, `GPArotation`, `reticulate`, `withr`, `stats`,
-  `utils`).
+* **Core workflow runs without initializing Python.** Turning a supplied
+  embedding matrix or item-by-item similarity matrix into a factor solution with
+  diagnostics uses only R code; the runnable examples and tests use the bundled
+  precomputed embeddings and never load `reticulate`/Python. The package imports
+  `reticulate (>= 1.41.0)` so it can declare Python requirements via
+  `py_require()` for the optional on-device embedding backend, but Python is
+  initialized only when the user explicitly calls a text-embedding path
+  (`sfa_embed(embed = "sbert")`, `sfa_install_python()`, or the default
+  `sfa_nli_matrix()` classifier).
 
 * **Optional, gracefully-degrading functionality.** Some features require
   Suggests packages and check for them with `requireNamespace()`, erroring

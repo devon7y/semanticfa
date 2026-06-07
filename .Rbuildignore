@@ -6,7 +6,7 @@
 ^DESIGN\.md$
 ^data-raw$
 ^\.github$
-^Rplots\.pdf$
+Rplots\.pdf$
 ^method_papers$
 ^semfa$
 ^DASS_walkthrough\.md$
@@ -15,3 +15,5 @@
 ^DASS_walkthrough\.html$
 ^paper_prompt\.txt$
 ^feedback\.txt$
+^CRAN_READINESS_REVIEW\.md$
+^temp_walkthrough\.R$

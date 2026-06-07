@@ -26,10 +26,10 @@ sfa_tsneplot(x, method = c("tsne", "umap", "pca", "mds"), ...)
 \item{x}{An \code{"sfa"} object (uses its item embeddings) or a symmetric
 numeric item-by-item similarity matrix.}
 
-\item{method}{Projection: \code{"tsne"} (default, needs \pkg{Rtsne}),
-\code{"umap"} (needs \pkg{uwot}), \code{"pca"} (base R), or \code{"mds"}
-(classical multidimensional scaling, base R). PCA and MDS need no extra
-package; t-SNE and UMAP are better at showing local clusters but are only
+\item{method}{Projection: \code{"tsne"} (default), \code{"umap"},
+\code{"pca"}, or \code{"mds"} (classical multidimensional scaling). All four
+work out of the box (\pkg{Rtsne} and \pkg{uwot} are dependencies; PCA and MDS
+are base R). t-SNE and UMAP are better at showing local clusters but are only
 sensible above a handful of items.}
 
 \item{factors, labels}{Optional per-item factor labels and point labels
@@ -71,15 +71,15 @@ The projection method is selectable via \code{method};
 is a deprecated alias kept for back-compatibility.
 }
 \examples{
-\dontrun{
 data(big5)
 fit <- sfa(
   data.frame(code = big5$codes, item = big5$items,
              factor = big5$factors, scoring = big5$scoring),
   embeddings = big5$embeddings, scoring = big5$scoring, nfactors = 5)
+sfa_itemplot(fit, method = "pca")    # runnable: bundled data, base-R PCA
+\dontrun{
 sfa_itemplot(fit)                    # t-SNE (default)
 sfa_itemplot(fit, method = "umap")   # UMAP
-sfa_itemplot(fit, method = "pca")    # PCA, no extra package
 }
 }
 \references{

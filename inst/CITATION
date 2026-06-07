@@ -5,7 +5,7 @@ bibentry(
     person("Devon", "Yanitski"),
     person("Chris", "Westbury")
   ),
-  year     = "2025",
+  year     = "2026",
   note     = "R package version 0.1.0",
   url      = "https://github.com/devon7y/semanticfa"
 )

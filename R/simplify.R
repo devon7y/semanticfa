@@ -114,9 +114,11 @@ sfa_simplify <- function(x, target_n, method = c("anchor", "medoid"),
   )
   ref_labels <- theo %||% grouping        # structure target for the fidelity report
 
-  # --- selection (within each group, in sign-aligned embedding space) ---
+  # --- selection in the raw (un-flipped) embedding space, matching sfa_anchor;
+  #     independent of the encoding the fit happened to use ---
   sc <- if (is.null(scoring)) rep(1, length(codes)) else scoring
-  aligned <- as.matrix(x$embeddings) * sc
+  aligned <- as.matrix(raw)
+  aligned <- aligned / sqrt(rowSums(aligned^2))
   own_sim <- NULL
   if (method == "anchor") {
     M <- .anchor_centroid(aligned, grouping, unique(grouping))

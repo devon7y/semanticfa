@@ -29,6 +29,17 @@
 #' @export
 sfa_parallel <- function(sim_matrix, embeddings, n_iter = 100L,
                          percentile = 95, seed = 42L) {
+  # accept a fitted sfa object: pull its similarity matrix and embeddings
+  if (inherits(sim_matrix, "sfa")) {
+    fit <- sim_matrix
+    if (missing(embeddings) || is.null(embeddings)) embeddings <- fit$embeddings
+    sim_matrix <- fit$sim_matrix
+    if (is.null(embeddings)) {
+      stop("This 'sfa' object has no embeddings (it was fit from a precomputed ",
+           "similarity matrix); parallel analysis needs embeddings.",
+           call. = FALSE)
+    }
+  }
   n_items <- nrow(sim_matrix)
   embed_dim <- ncol(embeddings)
 
@@ -147,6 +158,12 @@ sfa_nfactors <- function(sim_matrix, embeddings = NULL,
                          seed = 42L, parallel_iter = 100L,
                          max_factors = NULL,
                          rotate = "oblimin", fm = "minres", ...) {
+  # accept a fitted sfa object: pull its similarity matrix and embeddings
+  if (inherits(sim_matrix, "sfa")) {
+    fit <- sim_matrix
+    if (is.null(embeddings)) embeddings <- fit$embeddings
+    sim_matrix <- fit$sim_matrix
+  }
   methods <- match.arg(methods, c("parallel", "kaiser", "TEFI", "EGA"),
                        several.ok = TRUE)
 

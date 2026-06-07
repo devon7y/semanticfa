@@ -13,10 +13,10 @@
 #'
 #' @param x An \code{"sfa"} object (uses its item embeddings) or a symmetric
 #'   numeric item-by-item similarity matrix.
-#' @param method Projection: \code{"tsne"} (default, needs \pkg{Rtsne}),
-#'   \code{"umap"} (needs \pkg{uwot}), \code{"pca"} (base R), or \code{"mds"}
-#'   (classical multidimensional scaling, base R). PCA and MDS need no extra
-#'   package; t-SNE and UMAP are better at showing local clusters but are only
+#' @param method Projection: \code{"tsne"} (default), \code{"umap"},
+#'   \code{"pca"}, or \code{"mds"} (classical multidimensional scaling). All four
+#'   work out of the box (\pkg{Rtsne} and \pkg{uwot} are dependencies; PCA and MDS
+#'   are base R). t-SNE and UMAP are better at showing local clusters but are only
 #'   sensible above a handful of items.
 #' @param factors,labels Optional per-item factor labels and point labels
 #'   (codes). Default to those carried on \code{x} (or the matrix's
@@ -44,15 +44,15 @@
 #'
 #' @seealso \code{\link{sfa_corplot}}
 #' @examples
-#' \dontrun{
 #' data(big5)
 #' fit <- sfa(
 #'   data.frame(code = big5$codes, item = big5$items,
 #'              factor = big5$factors, scoring = big5$scoring),
 #'   embeddings = big5$embeddings, scoring = big5$scoring, nfactors = 5)
+#' sfa_itemplot(fit, method = "pca")    # runnable: bundled data, base-R PCA
+#' \dontrun{
 #' sfa_itemplot(fit)                    # t-SNE (default)
 #' sfa_itemplot(fit, method = "umap")   # UMAP
-#' sfa_itemplot(fit, method = "pca")    # PCA, no extra package
 #' }
 #' @export
 sfa_itemplot <- function(x, method = c("tsne", "umap", "pca", "mds"),
@@ -140,10 +140,6 @@ sfa_tsneplot <- function(x, method = c("tsne", "umap", "pca", "mds"), ...) {
 .project_2d <- function(vecs, sim, method, perplexity, n_neighbors, n, seed) {
   withr::with_seed(seed, {
     if (method == "tsne") {
-      if (!requireNamespace("Rtsne", quietly = TRUE)) {
-        stop("method = \"tsne\" needs the 'Rtsne' package. ",
-             "Install it, or use method = \"pca\" / \"mds\".", call. = FALSE)
-      }
       if (is.null(perplexity)) perplexity <- max(1, min(30, floor((n - 1) / 3)))
       ts <- if (!is.null(vecs)) {
         Rtsne::Rtsne(as.matrix(vecs), perplexity = perplexity, pca = TRUE,
@@ -154,10 +150,6 @@ sfa_tsneplot <- function(x, method = c("tsne", "umap", "pca", "mds"), ...) {
       }
       Y <- ts$Y
     } else if (method == "umap") {
-      if (!requireNamespace("uwot", quietly = TRUE)) {
-        stop("method = \"umap\" needs the 'uwot' package. ",
-             "Install it, or use method = \"pca\" / \"mds\".", call. = FALSE)
-      }
       if (is.null(n_neighbors)) n_neighbors <- min(15L, n - 1L)
       input <- if (!is.null(vecs)) as.matrix(vecs) else stats::as.dist(1 - sim)
       Y <- as.matrix(uwot::umap(input, n_neighbors = n_neighbors,

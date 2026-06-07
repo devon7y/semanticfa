@@ -65,3 +65,27 @@ test_that("omega returns one row per factor", {
   expect_equal(nrow(fit$omega), 5)
   expect_true("omega_assigned" %in% names(fit$omega))
 })
+
+test_that(".check_psd repairs a strongly indefinite matrix to PSD with unit diagonal", {
+  M <- matrix(c(1, 0.9, 0.9, 0.9, 1, 0.9, 0.9, 0.9, 1), 3)
+  M[1, 3] <- M[3, 1] <- -0.95
+  expect_lt(min(eigen(M, symmetric = TRUE, only.values = TRUE)$values), -0.5)
+  fixed <- suppressMessages(semanticfa:::.check_psd(M))
+  expect_gt(min(eigen(fixed, symmetric = TRUE, only.values = TRUE)$values), -1e-8)
+  expect_equal(unname(diag(fixed)), rep(1, 3))
+})
+
+test_that("sfa() errors clearly on similarity + calibrate, and stays quiet on scoring", {
+  data(big5)
+  sim <- sfa_similarity(big5$embeddings, scoring = big5$scoring)
+  attr(sim, "transformed_embeddings") <- NULL
+  # #7: calibrate with a precomputed matrix warns and proceeds (no crash)
+  expect_warning(
+    fit <- suppressMessages(sfa(big5$items, similarity = sim, nfactors = 5,
+                                calibrate = TRUE)),
+    "calibration needs item embeddings")
+  expect_s3_class(fit, "sfa")
+  # #8: no spurious "No scoring provided" message in the similarity path
+  expect_no_message(suppressWarnings(
+    sfa(big5$items, similarity = sim, nfactors = 5)))
+})

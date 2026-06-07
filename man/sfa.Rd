@@ -9,7 +9,7 @@ sfa(
   nfactors = NULL,
   rotate = "oblimin",
   fm = "minres",
-  encoding = "atomic_reversed",
+  encoding = "atomic",
   embed = "sbert",
   model = NULL,
   embeddings = NULL,
@@ -39,8 +39,10 @@ automatic determination via \code{n_factors_method}.}
 \item{fm}{Extraction method passed to \code{\link[psych]{fa}}. Default
 \code{"minres"}.}
 
-\item{encoding}{Similarity transform: \code{"atomic_reversed"} (default),
-\code{"atomic"}, \code{"squid"}, or \code{"mean_centered_pearson"}. See
+\item{encoding}{Similarity transform: \code{"atomic"} (default),
+\code{"atomic_reversed"}, \code{"squid"}, or \code{"mean_centered_pearson"}.
+Use \code{"atomic_reversed"} with a \code{scoring} vector to sign-flip
+reverse-keyed items. See
 \code{\link{sfa_similarity}}.}
 
 \item{embed}{Embedding backend: \code{"sbert"}, \code{"openai"}, or a

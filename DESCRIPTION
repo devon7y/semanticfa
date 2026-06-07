@@ -8,14 +8,14 @@ Authors@R: c(
     )
 Description: Performs exploratory factor analysis on language model embeddings
     of psychological scale items. Embeds item text with sentence transformers
-    or other language models, transforms embeddings into similarity matrices
-    using published methods (Guenole et al., Pellert et al. 2026, Pokropek
-    2026), and extracts latent factor structure via standard EFA routines.
-    Supports embedding-adapted parallel analysis, multiple similarity
-    transforms (atomic reversed, SQuID centering, mean-centered Pearson), and
-    fit diagnostics designed for embedding matrices (TEFI, RMSR, CAF,
-    McDonald's omega). Returns objects compatible with 'psych' and 'EFAtools'
-    workflows.
+    or other language models, transforms the embeddings into item-by-item
+    similarity matrices, and extracts latent factor structure via standard
+    exploratory factor analysis. Supports embedding-adapted parallel analysis,
+    several similarity transforms (atomic reversed, SQuID centering,
+    mean-centered Pearson), and fit diagnostics tailored to embedding matrices
+    (TEFI, RMSR, CAF, McDonald's omega). The underlying methods are documented
+    with full citations in the corresponding function help pages. Returns
+    objects compatible with 'psych' and 'EFAtools' workflows.
 License: GPL (>= 3)
 URL: https://github.com/devon7y/semanticfa
 BugReports: https://github.com/devon7y/semanticfa/issues
@@ -27,8 +27,10 @@ Imports:
     graphics,
     psych,
     reticulate (>= 1.41.0),
+    Rtsne,
     stats,
     utils,
+    uwot,
     withr
 Suggests:
     digest,
@@ -37,9 +39,7 @@ Suggests:
     httr2,
     knitr,
     rmarkdown,
-    Rtsne,
-    testthat (>= 3.0.0),
-    uwot
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Encoding: UTF-8
