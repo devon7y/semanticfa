@@ -195,11 +195,14 @@ sfa_anchor <- function(x, anchor = c("centroid", "label", "both"),
   embed <- embed %||% (if (!is.null(x$embed_method) &&
                            x$embed_method %in% c("sbert", "openai"))
                        x$embed_method else "sbert")
-  model <- model %||% x$embed_model
-  if (is.null(model)) {
-    stop("Label anchoring needs an embedding model, but this 'sfa' object used ",
-         "precomputed embeddings. Pass label_embeddings=, or embed=/model=.",
-         call. = FALSE)
+  # a string backend needs a model; a custom embed function does not
+  if (!is.function(embed)) {
+    model <- model %||% x$embed_model
+    if (is.null(model)) {
+      stop("Label anchoring needs an embedding model, but this 'sfa' object used ",
+           "precomputed embeddings. Pass label_embeddings=, a custom embed ",
+           "function, or embed=/model=.", call. = FALSE)
+    }
   }
   le <- sfa_embed(lab_text, embed = embed, model = model)
   storage.mode(le) <- "double"

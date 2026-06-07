@@ -148,10 +148,14 @@ sfa_project <- function(x, axes, normalize = TRUE, pole_embeddings = NULL,
   embed <- embed %||% (if (inherits(x, "sfa") && !is.null(x$embed_method) &&
                            x$embed_method %in% c("sbert", "openai"))
                        x$embed_method else "sbert")
-  model <- model %||% (if (inherits(x, "sfa")) x$embed_model else NULL)
-  if (is.null(model)) {
-    stop("Semantic projection needs an embedding model to embed the poles. ",
-         "Pass pole_embeddings=, or embed=/model=.", call. = FALSE)
+  # a string backend needs a model; a custom embed function does not
+  if (!is.function(embed)) {
+    model <- model %||% (if (inherits(x, "sfa")) x$embed_model else NULL)
+    if (is.null(model)) {
+      stop("Semantic projection needs an embedding model to embed the poles. ",
+           "Pass pole_embeddings=, a custom embed function, or embed=/model=.",
+           call. = FALSE)
+    }
   }
   list(low = sfa_embed(axis$low, embed = embed, model = model),
        high = sfa_embed(axis$high, embed = embed, model = model))

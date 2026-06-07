@@ -17,3 +17,4 @@ Rplots\.pdf$
 ^feedback\.txt$
 ^CRAN_READINESS_REVIEW\.md$
 ^temp_walkthrough\.R$
+^comprehensive_test\.R$

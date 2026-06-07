@@ -115,10 +115,14 @@ sfa_item_fit <- function(x, item, construct = NULL, reverse_key = FALSE,
   embed <- embed %||% (if (!is.null(x$embed_method) &&
                            x$embed_method %in% c("sbert", "openai"))
                        x$embed_method else "sbert")
-  model <- model %||% x$embed_model
-  if (is.null(model)) {
-    stop("sfa_item_fit() needs an embedding model, but this 'sfa' object used ",
-         "precomputed embeddings. Pass embed=/model=.", call. = FALSE)
+  # a string backend needs a model; a custom embed function does not
+  if (!is.function(embed)) {
+    model <- model %||% x$embed_model
+    if (is.null(model)) {
+      stop("sfa_item_fit() needs an embedding model, but this 'sfa' object used ",
+           "precomputed embeddings. Pass a custom embed function, or embed=/model=.",
+           call. = FALSE)
+    }
   }
   cand <- as.matrix(sfa_embed(item, embed = embed, model = model))
   storage.mode(cand) <- "double"
