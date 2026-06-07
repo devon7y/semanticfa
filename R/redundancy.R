@@ -23,12 +23,16 @@
 #'   Analysis cut-off) and 0.80 for \code{"cosine"}.
 #' @param method Overlap measure:
 #'   \describe{
-#'     \item{\code{"wto"}}{(default) Weighted topological overlap computed on a
-#'       \strong{sparsified} (Triangulated Maximally Filtered Graph) network, as
-#'       in Unique Variable Analysis (Christensen et al. 2023). Requires the
-#'       \pkg{EGAnet} package. Sparsifying first is what gives wTO its
-#'       discriminating power; computing it on the dense similarity matrix
-#'       compresses every pair into a narrow band.}
+#'     \item{\code{"wto"}}{(default) Unique Variable Analysis (Christensen et al.
+#'       2023): absolute weighted topological overlap on an \strong{EBICglasso}
+#'       network, the paper's estimator. Requires the \pkg{EGAnet} package.
+#'       Because an embedding similarity matrix has no response sample, the
+#'       network is estimated with a nominal sample size large enough to keep
+#'       the EBIC model selection in its stable regime (EBIC over-shrinks to an
+#'       empty graph when the sample size equals the item count). Estimating a
+#'       sparse network first is what gives wTO its discriminating power;
+#'       computing it on the dense matrix compresses every pair into a narrow
+#'       band.}
 #'     \item{\code{"cosine"}}{Direct pairwise similarity. Dependency-free and
 #'       well spread for dense embedding matrices.}
 #'   }
@@ -104,22 +108,25 @@ sfa_redundancy <- function(x, threshold = NULL, method = c("wto", "cosine")) {
 }
 
 #' @keywords internal
-# Weighted topological overlap on a sparsified network (faithful UVA): estimate
-# a Triangulated Maximally Filtered Graph from the similarity matrix, then take
-# wTO on that sparse network -- both via EGAnet, the reference implementation of
-# Christensen et al. (2023). (Computing wTO on the dense matrix instead
-# compresses every pair into a narrow band and makes the cutoff knife-edged.)
+# Faithful Unique Variable Analysis (Christensen et al. 2023): absolute weighted
+# topological overlap on an EBICglasso network -- the paper's estimator, and the
+# one EGAnet::UVA uses (abs(wto(network))). An embedding similarity matrix has no
+# response sample, so the network is estimated with a nominal sample size large
+# enough to keep EBIC selection in its stable regime: EBIC over-shrinks the
+# glasso to an empty graph when n equals the item count, but the selected model
+# is stable for n well above that, so the result is effectively n-independent.
 .uva_wto <- function(sim) {
   if (!requireNamespace("EGAnet", quietly = TRUE)) {
     stop("method = \"wto\" follows Unique Variable Analysis (Christensen et ",
-         "al., 2023), which sparsifies the network first; that step needs the ",
+         "al., 2023), which estimates a network first; that step needs the ",
          "'EGAnet' package. Install EGAnet, or use method = \"cosine\".",
          call. = FALSE)
   }
+  n_nom <- max(1000L, 20L * nrow(sim))    # nominal sample size (stable EBIC regime)
   net <- suppressWarnings(suppressMessages(
-    EGAnet::network.estimation(data = sim, n = nrow(sim), model = "TMFG",
+    EGAnet::network.estimation(data = sim, n = n_nom, model = "glasso",
                                verbose = FALSE)))
-  w <- as.matrix(suppressWarnings(suppressMessages(EGAnet::wto(net))))
+  w <- abs(as.matrix(suppressWarnings(suppressMessages(EGAnet::wto(net)))))
   w <- (w + t(w)) / 2
   diag(w) <- 0
   w

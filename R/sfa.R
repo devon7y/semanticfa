@@ -71,6 +71,16 @@
 #' plot(fit, type = "scree")
 #'
 #' @references
+#' Milano, N., Luongo, M., Ponticorvo, M., & Marocco, D. (2025). Semantic
+#' analysis of test items through large language model embeddings predicts
+#' a-priori factorial structure of personality tests. \emph{Current Research in
+#' Behavioral Sciences}, 8, 100168. \doi{10.1016/j.crbeha.2025.100168}
+#'
+#' Casella, M., Luongo, M., Marocco, D., Milano, N., & Ponticorvo, M. (2024).
+#' LLM embeddings on test items predict post hoc loadings in personality tests.
+#' \emph{Ital-IA 2024: 4th National Conference on Artificial Intelligence},
+#' CEUR Workshop Proceedings.
+#'
 #' Guenole, N., D'Urso, E. D., Samo, A., Sun, T., & Haslbeck, J. M. B.
 #' (Preprint). Enhancing Scale Development: Pseudo Factor Analysis of Language
 #' Embedding Similarity Matrices. OSF. \url{https://osf.io/3mpzb/}

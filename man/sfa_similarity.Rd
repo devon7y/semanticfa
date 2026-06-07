@@ -60,11 +60,22 @@ reverse-keyed items as a residual challenge that centering mitigates but
 does not fully neutralize.}
 \item{\code{"mean_centered_pearson"}}{Mean-center each embedding across its
 dimensions, L2-normalize. Cosine similarity then equals Pearson
-correlation, yielding a true correlation matrix (Pokropek 2026; Kmetty et
-al. 2021). Keying-free.}
+correlation, yielding a true correlation matrix (the centered-cosine =
+Pearson identity is noted by Pokropek 2026; Kmetty et al. 2021; and
+Casella et al. 2024). Keying-free.}
 }
 }
 \references{
+Milano, N., Luongo, M., Ponticorvo, M., & Marocco, D. (2025). Semantic
+analysis of test items through large language model embeddings predicts
+a-priori factorial structure of personality tests. \emph{Current Research in
+Behavioral Sciences}, 8, 100168. \doi{10.1016/j.crbeha.2025.100168}
+
+Casella, M., Luongo, M., Marocco, D., Milano, N., & Ponticorvo, M. (2024).
+LLM embeddings on test items predict post hoc loadings in personality tests.
+\emph{Ital-IA 2024: 4th National Conference on Artificial Intelligence},
+CEUR Workshop Proceedings.
+
 Guenole, N., D'Urso, E. D., Samo, A., Sun, T., & Haslbeck, J. M. B.
 (Preprint). Enhancing Scale Development: Pseudo Factor Analysis of Language
 Embedding Similarity Matrices. OSF. \url{https://osf.io/3mpzb/}

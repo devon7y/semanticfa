@@ -56,12 +56,30 @@ plot(fit, type = "scree")
 
 ## References
 
-- Guenole, N., et al. (2024). Pseudo Factor Analysis of Language Embedding
-  Similarity Matrices.
-- Pellert, M., et al. (2026). SQuID: Semantic Questionnaire Item Decomposition.
-- Pokropek, A. (2026). CFA with word embeddings.
-- Kmetty, Z., et al. (2021). Mean-centered cosine as Pearson correlation.
-- Golino, H. (preprint). TEFI and EGA on LLM embeddings.
+- Milano, N., Luongo, M., Ponticorvo, M., & Marocco, D. (2025). Semantic
+  analysis of test items through large language model embeddings predicts
+  a-priori factorial structure of personality tests. *Current Research in
+  Behavioral Sciences*, 8, 100168. doi:10.1016/j.crbeha.2025.100168
+- Casella, M., Luongo, M., Marocco, D., Milano, N., & Ponticorvo, M. (2024).
+  LLM embeddings on test items predict post hoc loadings in personality tests.
+  *Ital-IA 2024*, CEUR Workshop Proceedings.
+- Guenole, N., D'Urso, E. D., Samo, A., Sun, T., & Haslbeck, J. M. B. (preprint).
+  Enhancing Scale Development: Pseudo Factor Analysis of Language Embedding
+  Similarity Matrices. OSF: https://osf.io/3mpzb/
+- Pellert, M., Lechner, C. M., Sen, I., & Strohmaier, M. (2026). Neural network
+  embeddings recover value dimensions from psychometric survey items on par with
+  human data (SQuID). *Findings of the ACL: EACL 2026*, 5738–5752.
+- Pokropek, A. (2026). From keyword-based text measures to latent variables:
+  Confirmatory factor analysis with word embeddings. *EPJ Data Science*.
+  doi:10.1140/epjds/s13688-026-00654-1
+- Kmetty, Z., Koltai, J., & Rudas, T. (2021). The presence of occupational
+  structure in online texts based on word embedding NLP models. *EPJ Data
+  Science*, 10, 55. doi:10.1140/epjds/s13688-021-00311-9
+- Christensen, A. P., Garrido, L. E., & Golino, H. (2023). Unique Variable
+  Analysis. *Multivariate Behavioral Research*, 58(6), 1165–1182.
+  doi:10.1080/00273171.2023.2194606
+- Golino, H. (2026). Optimizing the landscape of LLM embeddings with Dynamic
+  Exploratory Graph Analysis for generative psychometrics. arXiv:2601.17010.
 
 ## License
 

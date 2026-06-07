@@ -16,12 +16,16 @@ Analysis cut-off) and 0.80 for \code{"cosine"}.}
 
 \item{method}{Overlap measure:
 \describe{
-\item{\code{"wto"}}{(default) Weighted topological overlap computed on a
-\strong{sparsified} (Triangulated Maximally Filtered Graph) network, as
-in Unique Variable Analysis (Christensen et al. 2023). Requires the
-\pkg{EGAnet} package. Sparsifying first is what gives wTO its
-discriminating power; computing it on the dense similarity matrix
-compresses every pair into a narrow band.}
+\item{\code{"wto"}}{(default) Unique Variable Analysis (Christensen et al.
+2023): absolute weighted topological overlap on an \strong{EBICglasso}
+network, the paper's estimator. Requires the \pkg{EGAnet} package.
+Because an embedding similarity matrix has no response sample, the
+network is estimated with a nominal sample size large enough to keep
+the EBIC model selection in its stable regime (EBIC over-shrinks to an
+empty graph when the sample size equals the item count). Estimating a
+sparse network first is what gives wTO its discriminating power;
+computing it on the dense matrix compresses every pair into a narrow
+band.}
 \item{\code{"cosine"}}{Direct pairwise similarity. Dependency-free and
 well spread for dense embedding matrices.}
 }}

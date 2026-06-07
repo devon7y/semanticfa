@@ -480,7 +480,7 @@ information (different from "weak" items). There are two methods:
 
 | method | what it does | default `threshold` | needs |
 |---|---|---|---|
-| `"wto"` (default) | **Unique Variable Analysis** (Christensen et al. 2023): builds a *sparsified* network first, then weighted topological overlap | `0.25` (the UVA cut-off) | `EGAnet` |
+| `"wto"` (default) | **Unique Variable Analysis** (Christensen et al. 2023): absolute weighted topological overlap on an **EBICglasso** network — the paper's own estimator | `0.25` (the UVA cut-off) | `EGAnet` |
 | `"cosine"` | direct pairwise similarity | `0.80` | nothing extra |
 
 ```r
@@ -488,24 +488,22 @@ sfa_redundancy(fit)                                   # UVA (wto), threshold 0.2
 sfa_redundancy(fit, method = "cosine", threshold = 0.85)
 ```
 
-> **🔧 What changed.** Weighted topological overlap is only meaningful on a
-> *sparse* network, so `wto` now sparsifies first (via `EGAnet`), matching the
-> real UVA method. Previously it ran on the dense matrix, which compressed every
-> pair into a narrow band and made the cutoff knife-edged (a 0.01 change flipped
-> dozens of pairs). If you ran `sfa_redundancy(fit, threshold = 0.8)` before and
-> got nothing, that's why — `wto` values now live on a different scale, hence the
-> new `0.25` default.
+> **🔧 What changed.** `wto` now runs the paper's actual UVA pipeline —
+> absolute weighted topological overlap on an **EBICglasso** network (via
+> `EGAnet`), not a dense-matrix or TMFG approximation. Because an embedding
+> similarity matrix has no response sample, the network is estimated with a
+> nominal sample size (the EBIC selection is stable once it's above the item
+> count). This is both faithful to Christensen et al. (2023) *and* gives a
+> sharper result.
 
-**DASS payoff — and a caveat to test.** The Anxiety subscale has several
-physical-symptom items (trembling, racing heart, sweating, dry mouth) that are
-semantically close — exactly what a short form prunes. But the DASS's strong
-general-distress factor means **`wto` flags a *lot*** (its sparsified network
-still links most items into one big cluster — that's a property of the scale, not
-a bug). For a cleaner read of *specific* duplicate pairs on such a homogeneous
-scale, prefer **`method = "cosine"`** with a high threshold (~0.85). **Please
-test both** and tell me which is more useful in practice. (`sfa_item_fit()` in
-§10 runs the same redundancy check the *other* direction: is a brand-new item a
-duplicate of something already in the scale?)
+**DASS payoff.** The Anxiety subscale has several physical-symptom items
+(trembling, racing heart, sweating, dry mouth) that are semantically close —
+exactly what a short form prunes. With the EBICglasso UVA, `wto` flags a small,
+focused set of genuinely redundant pairs (e.g. ~7 on the DASS at the 0.25
+cut-off) rather than collapsing the homogeneous scale into one big cluster.
+`method = "cosine"` (threshold ~0.85) is still a quick dependency-free
+alternative. (`sfa_item_fit()` in §10 runs the same redundancy check the *other*
+direction: is a brand-new item a duplicate of something already in the scale?)
 
 ---
 

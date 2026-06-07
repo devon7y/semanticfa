@@ -8,7 +8,7 @@
 #
 #   Wulff, D. U., & Mata, R. (2026). Escaping the jingle-jangle jungle:
 #     Increasing conceptual clarity in psychology using large language models.
-#     Current Directions in Psychological Science. Advance online publication.
+#     Current Directions in Psychological Science, 35(2), 59-65.
 #     https://doi.org/10.1177/09637214251382083
 # =============================================================================
 
@@ -49,8 +49,8 @@
 #'
 #' Wulff, D. U., & Mata, R. (2026). Escaping the jingle-jangle jungle:
 #' Increasing conceptual clarity in psychology using large language models.
-#' \emph{Current Directions in Psychological Science}. Advance online
-#' publication. \doi{10.1177/09637214251382083}
+#' \emph{Current Directions in Psychological Science}, 35(2), 59--65.
+#' \doi{10.1177/09637214251382083}
 #'
 #' @seealso \code{\link{sfa_anchor}}
 #' @examples
