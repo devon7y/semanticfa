@@ -16,5 +16,6 @@ Rplots\.pdf$
 ^paper_prompt\.txt$
 ^feedback\.txt$
 ^CRAN_READINESS_REVIEW\.md$
+^CRAN_READINESS_REVIEW_2026-06-07\.md$
 ^temp_walkthrough\.R$
 ^comprehensive_test\.R$

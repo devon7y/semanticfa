@@ -32,8 +32,10 @@
 #'     al.). Use this for scales with reverse-keyed items.}
 #'   \item{\code{"squid"}}{Subtract the questionnaire-mean embedding (SQuID;
 #'     Pellert et al. 2026), L2-normalize, then cosine similarity. The centering
-#'     alone recovers negative between-dimension correlations, so this encoding
-#'     is keying-free (no scoring/sign-flip).}
+#'     recovers negative between-dimension correlations, so this encoding is
+#'     keying-free (no scoring/sign-flip). Note that Pellert et al. flag
+#'     reverse-keyed items as a residual challenge that centering mitigates but
+#'     does not fully neutralize.}
 #'   \item{\code{"mean_centered_pearson"}}{Mean-center each embedding across its
 #'     dimensions, L2-normalize. Cosine similarity then equals Pearson
 #'     correlation, yielding a true correlation matrix (Pokropek 2026; Kmetty et
@@ -44,15 +46,23 @@
 #'   diagonal.
 #'
 #' @references
-#' Guenole, N., D'Urso, E. D., Samo, A., & Sun, T. (2024). Pseudo Factor
-#' Analysis of Language Embedding Similarity Matrices.
+#' Guenole, N., D'Urso, E. D., Samo, A., Sun, T., & Haslbeck, J. M. B.
+#' (Preprint). Enhancing Scale Development: Pseudo Factor Analysis of Language
+#' Embedding Similarity Matrices. OSF. \url{https://osf.io/3mpzb/}
 #'
-#' Pellert, M., et al. (2026). SQuID: Semantic Questionnaire Item
-#' Decomposition.
+#' Pellert, M., Lechner, C. M., Sen, I., & Strohmaier, M. (2026). Neural network
+#' embeddings recover value dimensions from psychometric survey items on par with
+#' human data (Survey and Questionnaire Item Embeddings Differentials, SQuID).
+#' \emph{Findings of the Association for Computational Linguistics: EACL 2026},
+#' 5738--5752.
 #'
-#' Pokropek, A. (2026). CFA with word embeddings.
+#' Pokropek, A. (2026). From keyword-based text measures to latent variables:
+#' Confirmatory factor analysis with word embeddings. \emph{EPJ Data Science}.
+#' \doi{10.1140/epjds/s13688-026-00654-1}
 #'
-#' Kmetty, Z., et al. (2021). Mean-centered cosine as Pearson correlation.
+#' Kmetty, Z., Koltai, J., & Rudas, T. (2021). The presence of occupational
+#' structure in online texts based on word embedding NLP models. \emph{EPJ Data
+#' Science}, 10, 55. \doi{10.1140/epjds/s13688-021-00311-9}
 #'
 #' @export
 sfa_similarity <- function(embeddings, encoding = "atomic",

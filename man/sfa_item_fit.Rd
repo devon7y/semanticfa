@@ -73,7 +73,7 @@ sfa_item_fit(fit, c("I feel calm and relaxed",
 \references{
 Wulff, D. U., & Mata, R. (2025). Semantic embeddings reveal and address
 taxonomic incommensurability in psychological measurement. \emph{Nature Human
-Behaviour}, 9(1), 1--14. \doi{10.1038/s41562-024-02089-y}
+Behaviour}, 9(5), 944--954. \doi{10.1038/s41562-024-02089-y}
 }
 \seealso{
 \code{\link{sfa_anchor}}, \code{\link{sfa_redundancy}}

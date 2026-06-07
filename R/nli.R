@@ -9,13 +9,13 @@
 #     (pp. 632-642). Association for Computational Linguistics.
 #     https://doi.org/10.18653/v1/D15-1075
 #
-# The use of NLI models to recover dimensional structure from psychometric
-# survey items (NLI-tuned encoders outperforming plain similarity) is reported
-# by:
+# Assigning a NEGATIVE sign to contradictory item pairs to make item similarity
+# valence-aware (polarity calibration of NLI relations) follows:
 #
-#   Pellert, M., Lechner, C. M., Sen, I., & Strohmaier, M. (2026). Neural
-#     network embeddings recover value dimensions from psychometric survey
-#     items on par with human data. [Manuscript]. (SQuID).
+#   Hommel, B. E., & Arslan, R. C. (2025). Language Models Accurately Infer
+#     Correlations Between Psychological Items and Scales From Text Alone.
+#     Advances in Methods and Practices in Psychological Science, 8(4).
+#     https://doi.org/10.1177/25152459251377093
 # =============================================================================
 
 #' Signed Item Similarity from Natural Language Inference
@@ -27,7 +27,7 @@
 #' -1 = opposite). Unlike plain embeddings --- which place antonyms close
 #' because they share a topic --- NLI separates "means the same" from "means the
 #' opposite", so reverse-keyed items are handled directly (Bowman et al., 2015;
-#' Pellert et al., 2026).
+#' Hommel & Arslan, 2025).
 #'
 #' The resulting matrix can be passed straight to \code{\link{sfa}} via its
 #' \code{similarity} argument.
@@ -57,9 +57,10 @@
 #' (pp. 632--642). Association for Computational Linguistics.
 #' \doi{10.18653/v1/D15-1075}
 #'
-#' Pellert, M., Lechner, C. M., Sen, I., & Strohmaier, M. (2026). Neural network
-#' embeddings recover value dimensions from psychometric survey items on par
-#' with human data. Manuscript.
+#' Hommel, B. E., & Arslan, R. C. (2025). Language models accurately infer
+#' correlations between psychological items and scales from text alone.
+#' \emph{Advances in Methods and Practices in Psychological Science}, 8(4).
+#' \doi{10.1177/25152459251377093}
 #'
 #' @seealso \code{\link{sfa}}, \code{\link{sfa_similarity}}
 #' @examples

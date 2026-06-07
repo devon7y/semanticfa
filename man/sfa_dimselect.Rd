@@ -2,7 +2,7 @@
 % Please edit documentation in R/dimselect.R
 \name{sfa_dimselect}
 \alias{sfa_dimselect}
-\title{Embedding-Dimension Selection via Dynamic EGA (DynEGA)}
+\title{Embedding-Dimension Selection by EGA Depth Optimization}
 \usage{
 sfa_dimselect(
   embeddings,
@@ -36,7 +36,8 @@ imposed for TMFG stability).}
 dimension).}
 
 \item{step}{Depth increment. Default chooses a step giving at most
-\code{max_eval} evaluations (Golino used 5).}
+\code{max_eval} evaluations. (Golino 2026 swept depths in increments of 5
+coordinates over a large range, not 5 total evaluations.)}
 
 \item{max_eval}{Soft cap on the number of depths evaluated when \code{step}
 is left at its default (default 150).}
@@ -55,14 +56,18 @@ nmi, tefi, and normalized/composite columns), the \code{weights} used, and
 }
 \description{
 Selects how many leading embedding coordinates ("depth") to use before
-factor analysis, instead of defaulting to the full vector. Following Golino
+factor analysis, instead of defaulting to the full vector. This \strong{adapts
+the depth-optimization objective} of Golino (2026); it is \emph{not} a
+reimplementation of Dynamic EGA (DynEGA) -- it does not perform DynEGA's
+time-delay embedding or derivative (GLLA) estimation, but applies static EGA
+at each depth and optimizes Golino's composite. Following Golino
 (2026), the embedding is treated as a searchable landscape: structural
 information is not uniformly distributed across coordinates, so a sub-range
 of dimensions can recover the construct structure more cleanly than the whole
 vector (and denoise the over-factoring seen with some embedding models).
 }
 \details{
-The coordinate index is treated as a pseudo-time axis. The function sweeps
+The coordinate index is swept as an ordered depth axis. The function sweeps
 increasing depths \eqn{d}; at each depth it builds the item-by-item
 association matrix from the first \eqn{d} coordinates, estimates the network
 with the Triangulated Maximally Filtered Graph (TMFG) and detects communities

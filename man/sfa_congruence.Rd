@@ -29,9 +29,14 @@ Computes agreement metrics between a semantic factor analysis result and a
 reference factor structure (from empirical data or theory).
 }
 \references{
-Garrido, L. E., et al. (preprint). NMI and ARI for factor partition agreement.
+Hubert, L., & Arabie, P. (1985). Comparing partitions (adjusted Rand index).
+\emph{Journal of Classification}, 2, 193--218. \doi{10.1007/BF01908075}
 
-Wang, Y. (preprint). Frobenius similarity of inter-factor correlations.
+Strehl, A., & Ghosh, J. (2002). Cluster ensembles --- a knowledge reuse
+framework for combining multiple partitions (geometric-mean normalized mutual
+information). \emph{Journal of Machine Learning Research}, 3, 583--617.
 
-Hommel, B. E. & Arslan, R. C. (2025). Disattenuated latent correlation.
+Spearman, C. (1904). The proof and measurement of association between two
+things (disattenuation for unreliability). \emph{The American Journal of
+Psychology}, 15(1), 72--101. \doi{10.2307/1412159}
 }

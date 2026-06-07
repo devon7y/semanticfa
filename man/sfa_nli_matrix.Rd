@@ -42,7 +42,7 @@ the signed relation is \eqn{E - C} (near +1 = same meaning/direction, near
 -1 = opposite). Unlike plain embeddings --- which place antonyms close
 because they share a topic --- NLI separates "means the same" from "means the
 opposite", so reverse-keyed items are handled directly (Bowman et al., 2015;
-Pellert et al., 2026).
+Hommel & Arslan, 2025).
 }
 \details{
 The resulting matrix can be passed straight to \code{\link{sfa}} via its
@@ -72,9 +72,10 @@ of the 2015 Conference on Empirical Methods in Natural Language Processing}
 (pp. 632--642). Association for Computational Linguistics.
 \doi{10.18653/v1/D15-1075}
 
-Pellert, M., Lechner, C. M., Sen, I., & Strohmaier, M. (2026). Neural network
-embeddings recover value dimensions from psychometric survey items on par
-with human data. Manuscript.
+Hommel, B. E., & Arslan, R. C. (2025). Language models accurately infer
+correlations between psychological items and scales from text alone.
+\emph{Advances in Methods and Practices in Psychological Science}, 8(4).
+\doi{10.1177/25152459251377093}
 }
 \seealso{
 \code{\link{sfa}}, \code{\link{sfa_similarity}}

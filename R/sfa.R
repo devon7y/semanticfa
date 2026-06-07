@@ -71,12 +71,18 @@
 #' plot(fit, type = "scree")
 #'
 #' @references
-#' Guenole, N., D'Urso, E. D., Samo, A., & Sun, T. (2024). Pseudo Factor
-#' Analysis of Language Embedding Similarity Matrices.
+#' Guenole, N., D'Urso, E. D., Samo, A., Sun, T., & Haslbeck, J. M. B.
+#' (Preprint). Enhancing Scale Development: Pseudo Factor Analysis of Language
+#' Embedding Similarity Matrices. OSF. \url{https://osf.io/3mpzb/}
 #'
-#' Pellert, M., et al. (2026). SQuID.
+#' Pellert, M., Lechner, C. M., Sen, I., & Strohmaier, M. (2026). Neural network
+#' embeddings recover value dimensions from psychometric survey items on par with
+#' human data. \emph{Findings of the Association for Computational Linguistics:
+#' EACL 2026}, 5738--5752.
 #'
-#' Pokropek, A. (2026). CFA with word embeddings.
+#' Pokropek, A. (2026). From keyword-based text measures to latent variables:
+#' Confirmatory factor analysis with word embeddings. \emph{EPJ Data Science}.
+#' \doi{10.1140/epjds/s13688-026-00654-1}
 #'
 #' @seealso \code{\link{sfa_similarity}}, \code{\link{sfa_parallel}},
 #'   \code{\link{sfa_nfactors}}, \code{\link{sfa_embed}},
@@ -191,7 +197,7 @@ sfa <- function(items,
     }
     rownames(embeddings) <- codes
 
-    # --- Step 1b: Optional embedding-dimension selection (DynEGA) ---
+    # --- Step 1b: Optional embedding-dimension selection (EGA depth opt.) ---
     if (dim_select == "dynega") {
       dimsel <- sfa_dimselect(embeddings, factors = factors, scoring = scoring,
                               encoding = encoding)

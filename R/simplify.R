@@ -1,6 +1,7 @@
 # =============================================================================
-# Method reference. Response-free, embedding-based short-form item selection
-# implements the approach of:
+# Method reference. Response-free, embedding-based short-form item selection is
+# in the spirit of (but not a reimplementation of) the response-free
+# simplification work of:
 #
 #   Wang, B., Zhang, Y., Hu, Y., Hou, H., Peng, K., & Ni, S. (2026).
 #     Discovering semantic latent structures in psychological scales: A
@@ -11,16 +12,24 @@
 #     developing short-form psychological measures. Frontiers in Psychology, 16,
 #     Article 1640864. https://doi.org/10.3389/fpsyg.2025.1640864
 #
-# The groups = "fitted" option (let the groups emerge from the items rather than
-# a supplied key) follows Jung & Seo (2025).
+# Note on faithfulness: this function selects items by centroid/medoid proximity
+# within a supplied or fitted grouping. It does NOT implement Wang et al.'s
+# specific pipeline (LLM embedding -> UMAP -> HDBSCAN density clustering ->
+# c-TF-IDF), which discovers the number and composition of factors with no
+# predefined count; nor Jung & Seo's K-Means partitioning. The shared idea is
+# response-free, embedding-based item reduction. Per Wang et al., outputs are
+# CANDIDATE short forms that still require psychometric validation.
 # =============================================================================
 
 #' Response-Free Scale Simplification
 #'
 #' Selects a reduced (short-form) item set per group using only the items'
 #' semantic structure --- no human response data --- and reports how well the
-#' reduced set preserves the factor structure of the full scale (Wang et al.,
-#' 2026; Jung & Seo, 2025).
+#' reduced set preserves the factor structure of the full scale (in the spirit of
+#' Wang et al., 2026; Jung & Seo, 2025). It selects items by centroid/medoid
+#' proximity within a grouping, rather than reimplementing those papers' specific
+#' clustering pipelines. The output is a \strong{candidate} short form that
+#' should be validated psychometrically before use.
 #'
 #' Two selection strategies are offered:
 #' \describe{
@@ -216,7 +225,9 @@ sfa_simplify <- function(x, target_n, method = c("anchor", "medoid"),
 print.sfa_simplify <- function(x, ...) {
   f <- x$fidelity
   cat("Scale simplification (response-free)\n")
-  cat("  Method: Wang et al. (2026); Jung & Seo (2025)\n")
+  cat("  Method: centroid/medoid item selection",
+      "(in the spirit of Wang et al. 2026; Jung & Seo 2025)\n")
+  cat("  Note: candidate short form -- validate psychometrically before use\n")
   cat(sprintf("  Selection: %s | groups: %s | target_n = %d per group\n",
               x$method, x$groups, x$target_n))
   cat(sprintf("  Items: %d -> %d\n", f$n_full, f$n_reduced))

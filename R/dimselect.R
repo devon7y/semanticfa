@@ -1,26 +1,35 @@
 # =============================================================================
 # Method reference. Selecting embedding-dimension "depth" by traversing
-# coordinates and optimizing a composite of NMI and TEFI implements:
+# coordinates and optimizing a composite of NMI and TEFI ADAPTS the
+# embedding-depth optimization objective of:
 #
 #   Golino, H. (2026). Optimizing the landscape of LLM embeddings with Dynamic
 #     Exploratory Graph Analysis for generative psychometrics: A Monte Carlo
 #     study [Manuscript under review, Proceedings of the 90th Annual
 #     International Meeting of the Psychometric Society]. arXiv:2601.17010.
 #
-# TMFG network estimation, Walktrap community detection, and TEFI are provided
-# by the EGAnet package (Christensen, Golino, & colleagues).
+# It is NOT a reimplementation of Dynamic EGA (DynEGA): it does not perform
+# DynEGA's time-delay embedding or Generalized Local Linear Approximation
+# derivative estimation. It applies STATIC EGA (TMFG + Walktrap) at each depth
+# and optimizes Golino's depth-selection composite. TMFG network estimation,
+# Walktrap community detection, and TEFI are provided by the EGAnet package
+# (Christensen, Golino, & colleagues).
 # =============================================================================
 
-#' Embedding-Dimension Selection via Dynamic EGA (DynEGA)
+#' Embedding-Dimension Selection by EGA Depth Optimization
 #'
 #' Selects how many leading embedding coordinates ("depth") to use before
-#' factor analysis, instead of defaulting to the full vector. Following Golino
+#' factor analysis, instead of defaulting to the full vector. This \strong{adapts
+#' the depth-optimization objective} of Golino (2026); it is \emph{not} a
+#' reimplementation of Dynamic EGA (DynEGA) -- it does not perform DynEGA's
+#' time-delay embedding or derivative (GLLA) estimation, but applies static EGA
+#' at each depth and optimizes Golino's composite. Following Golino
 #' (2026), the embedding is treated as a searchable landscape: structural
 #' information is not uniformly distributed across coordinates, so a sub-range
 #' of dimensions can recover the construct structure more cleanly than the whole
 #' vector (and denoise the over-factoring seen with some embedding models).
 #'
-#' The coordinate index is treated as a pseudo-time axis. The function sweeps
+#' The coordinate index is swept as an ordered depth axis. The function sweeps
 #' increasing depths \eqn{d}; at each depth it builds the item-by-item
 #' association matrix from the first \eqn{d} coordinates, estimates the network
 #' with the Triangulated Maximally Filtered Graph (TMFG) and detects communities
@@ -60,7 +69,8 @@
 #' @param max_depth Largest depth to evaluate (default: full embedding
 #'   dimension).
 #' @param step Depth increment. Default chooses a step giving at most
-#'   \code{max_eval} evaluations (Golino used 5).
+#'   \code{max_eval} evaluations. (Golino 2026 swept depths in increments of 5
+#'   coordinates over a large range, not 5 total evaluations.)
 #' @param max_eval Soft cap on the number of depths evaluated when \code{step}
 #'   is left at its default (default 150).
 #' @param weights Named numeric vector \code{c(nmi=, tefi=)} for the composite
@@ -165,8 +175,8 @@ sfa_dimselect <- function(embeddings, factors = NULL, scoring = NULL,
   traj$composite <- composite
 
   if (!any(is.finite(composite))) {
-    stop("DynEGA failed at every depth (network estimation did not converge).",
-         call. = FALSE)
+    stop("Depth selection failed at every depth (network estimation did not ",
+         "converge).", call. = FALSE)
   }
   opt <- depths[which.max(replace(composite, !is.finite(composite), -Inf))]
 
@@ -236,8 +246,8 @@ sfa_dimselect <- function(embeddings, factors = NULL, scoring = NULL,
 
 #' @export
 print.sfa_dimselect <- function(x, ...) {
-  cat("DynEGA embedding-dimension selection\n")
-  cat("  Method: Golino (2026)\n")
+  cat("EGA-based embedding-dimension selection\n")
+  cat("  Method: EGA depth optimization (adapts Golino 2026)\n")
   cat(sprintf("  Full embedding dim: %d\n", x$full_dim))
   cat(sprintf("  Depths evaluated:   %d (range %d-%d)\n",
               nrow(x$trajectory), min(x$trajectory$depth),

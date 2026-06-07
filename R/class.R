@@ -47,7 +47,7 @@ print.sfa <- function(x, cutoff = 0.3, sort = TRUE, ...) {
   }
   if (!is.null(x$embedding_dim)) cat("  Embedding dim:", x$embedding_dim, "\n")
   if (!is.null(x$dim_select)) {
-    cat(sprintf("  Dim-select: DynEGA chose %d of %d coordinates\n",
+    cat(sprintf("  Dim-select: EGA depth optimization chose %d of %d coordinates\n",
                 x$dim_select$optimal_depth, x$dim_select$full_dim))
   }
   cat("  Factors:", x$factors, " (", x$fm, " + ", x$rotation, ")\n", sep = "")

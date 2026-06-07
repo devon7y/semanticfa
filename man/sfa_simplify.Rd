@@ -37,8 +37,11 @@ An object of class \code{"sfa_simplify"}: a list with \code{keep}
 \description{
 Selects a reduced (short-form) item set per group using only the items'
 semantic structure --- no human response data --- and reports how well the
-reduced set preserves the factor structure of the full scale (Wang et al.,
-2026; Jung & Seo, 2025).
+reduced set preserves the factor structure of the full scale (in the spirit of
+Wang et al., 2026; Jung & Seo, 2025). It selects items by centroid/medoid
+proximity within a grouping, rather than reimplementing those papers' specific
+clustering pipelines. The output is a \strong{candidate} short form that
+should be validated psychometrically before use.
 }
 \details{
 Two selection strategies are offered:

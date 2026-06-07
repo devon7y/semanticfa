@@ -6,7 +6,7 @@
 #
 #   Wulff, D. U., & Mata, R. (2025). Semantic embeddings reveal and address
 #     taxonomic incommensurability in psychological measurement. Nature Human
-#     Behaviour, 9(1), 1-14. https://doi.org/10.1038/s41562-024-02089-y
+#     Behaviour, 9(5), 944-954. https://doi.org/10.1038/s41562-024-02089-y
 # =============================================================================
 
 #' Vet a Candidate Scale Item Before Data Collection
@@ -54,7 +54,7 @@
 #' @references
 #' Wulff, D. U., & Mata, R. (2025). Semantic embeddings reveal and address
 #' taxonomic incommensurability in psychological measurement. \emph{Nature Human
-#' Behaviour}, 9(1), 1--14. \doi{10.1038/s41562-024-02089-y}
+#' Behaviour}, 9(5), 944--954. \doi{10.1038/s41562-024-02089-y}
 #'
 #' @seealso \code{\link{sfa_anchor}}, \code{\link{sfa_redundancy}}
 #' @examples

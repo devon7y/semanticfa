@@ -76,7 +76,7 @@ head(round(a$centroid, 2))
 \references{
 Wulff, D. U., & Mata, R. (2025). Semantic embeddings reveal and address
 taxonomic incommensurability in psychological measurement. \emph{Nature Human
-Behaviour}, 9(1), 1--14. \doi{10.1038/s41562-024-02089-y}
+Behaviour}, 9(5), 944--954. \doi{10.1038/s41562-024-02089-y}
 }
 \seealso{
 \code{\link{sfa_simplify}}, \code{\link{sfa}}
