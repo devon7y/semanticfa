@@ -21,7 +21,7 @@ Stress (14 items each) — all **positively keyed** (a higher rating always mean
 > wrong, or missing:
 >
 > - **New functions:** `sfa_load_npz()` (§3), `sfa_corplot()` +
->   `sfa_tsneplot()` (§5), `sfa_item_fit()` (§10); plus the `calibrate=` knob (§15).
+>   `sfa_itemplot()` (§5), `sfa_item_fit()` (§10); plus the `calibrate=` knob (§15).
 > - **🔧 Fixed diagnostics:** `CAF` now reports a real value, and `TEFI` is now
 >   the genuine partition-based index (it is **negative** — lower is better) (§7).
 > - **🔧 Faithful redundancy:** `sfa_redundancy()` now matches Unique Variable
@@ -55,9 +55,11 @@ This installs `sentence-transformers` into an environment `reticulate` manages
 for you. (On first real use the package also auto-declares this requirement, so
 in many setups it "just works" without calling the line above.)
 
-Two optional R packages unlock specific features: **`Rtsne`** for the t-SNE map
-(§5) and **`EGAnet`** for EGA-based factor retention / dimension selection
-(§6, §15). Install them only if you use those parts.
+A few optional R packages unlock specific features: **`Rtsne`** (t-SNE) and
+**`uwot`** (UMAP) for the item map (§5 — PCA/MDS there need nothing), and
+**`EGAnet`** for EGA-based factor retention / dimension selection and the
+faithful UVA redundancy method (§6, §11, §15). Install them only if you use those
+parts.
 
 ---
 
@@ -239,7 +241,7 @@ fit_squid <- sfa(dass, encoding = "squid")
 
 ---
 
-## 5. 🆕 New — see the structure: `sfa_corplot()` & `sfa_tsneplot()`
+## 5. 🆕 New — see the structure: `sfa_corplot()` & `sfa_itemplot()`
 
 Two pictures of the *input* side — the meanings themselves — **before** any
 factor extraction. They make the abstract similarity matrix concrete, and for
@@ -267,21 +269,37 @@ similar to every other), a crisp **Depression** block on the diagonal, and
 **Anxiety/Stress blocks that bleed into each other**. The `order = c("D","A","S")`
 argument lets you arrange the blocks the way the manual presents them.
 
-### Item map — `sfa_tsneplot()`
+### Item map — `sfa_itemplot()`
 
-A 2-D t-SNE scatter — one point per item, **colored by subscale** and labeled
-with its code:
+A 2-D scatter — one point per item, **colored by subscale** and labeled with its
+code. The projection method is selectable (the function name is kept for
+continuity):
 
 ```r
-sfa_tsneplot(fit)                              # needs the 'Rtsne' package
-sfa_tsneplot(fit, perplexity = 8, seed = 1)    # tune layout / fix randomness
+sfa_itemplot(fit)                              # t-SNE (default; needs 'Rtsne')
+sfa_itemplot(fit, method = "umap")             # UMAP (needs 'uwot', no Python)
+sfa_itemplot(fit, method = "pca")              # PCA  — base R, no extra package
+sfa_itemplot(fit, method = "mds")              # classical MDS — base R
+sfa_itemplot(fit, perplexity = 8, seed = 1)    # tune t-SNE layout / fix randomness
 ```
+
+| `method` | needs | character |
+|---|---|---|
+| `"tsne"` (default) | `Rtsne` | local clusters; stochastic (set `seed`) |
+| `"umap"` | `uwot` (pure R, no Python) | clusters + more global structure; stochastic |
+| `"pca"` | — (base R) | linear, deterministic; works out of the box |
+| `"mds"` | — (base R) | distance-preserving; deterministic |
 
 **DASS payoff.** The geometric companion to the heatmap: Depression items land
 in their own cloud, while several **Stress** points sit out among the
-**Anxiety** cloud — the subscale boundary blur, as a map. t-SNE is stochastic,
-so set `seed` for a reproducible layout, and `perplexity` lower for a small item
-set. (Install once: `install.packages("Rtsne")`.)
+**Anxiety** cloud — the subscale boundary blur, as a map. t-SNE/UMAP are
+stochastic (set `seed`) and need ≥ 5 items; **PCA/MDS need no extra package** and
+are deterministic, so they're the quickest first look. For ~42 items the four
+methods look broadly similar — UMAP's edge shows up mainly at larger scales.
+**Test feedback wanted:** try a couple of methods and tell me which is clearest.
+
+> The old name `sfa_tsneplot()` still works as a **deprecated alias** for
+> `sfa_itemplot()` (it warns and forwards), so existing code won't break.
 
 ---
 
@@ -641,7 +659,7 @@ build yourself.
 | Clear the embedding cache | `sfa_clear_cache()` |
 | Build the similarity matrix | `sfa_similarity()` |
 | Heatmap of the similarity matrix 🆕 | `sfa_corplot()` |
-| t-SNE map of items 🆕 | `sfa_tsneplot()` |
+| t-SNE map of items 🆕 | `sfa_itemplot()` |
 | Decide # of factors | `sfa_parallel()`, `sfa_nfactors()` |
 | Pick embedding dimensions | `sfa_dimselect()` |
 | Check items vs their subscale | `sfa_anchor()` |
