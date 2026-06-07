@@ -11,3 +11,5 @@ method_papers/
 *.Rcheck/
 DASS_walkthrough.html
 semfa/
+semanticfa_*.tar.gz
+semanticfa.Rcheck/

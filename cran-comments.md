@@ -6,18 +6,21 @@ This is a new submission (semanticfa 0.1.0).
 
 ## R CMD check results
 
-Local `R CMD check --as-cran` (macOS, R release) was run *without* building the
-PDF reference manual or the vignette, because the local toolchain lacks
-`pdflatex` and Pandoc. With those steps skipped it reports:
+`R CMD check --as-cran` on the built tarball (macOS, R release; full check with
+PDF manual and vignette, Pandoc 2.12 + TeX Live):
 
 ```
-0 errors | 0 warnings | 0 notes
+0 errors | 0 warnings | 2 notes
 ```
 
-This is diagnostic only -- not a submission-grade result. Before submission the
-full `R CMD build` + `R CMD check --as-cran` (with manual and vignette), plus
-win-builder (R-devel/R-release) and R-hub (Windows / macOS / Linux), will be run
-on a Pandoc- and TeX-equipped machine, and their results appended here.
+* NOTE: "New submission" (this is the package's first submission to CRAN).
+* NOTE: "checking HTML version of manual" -- the check skips HTML validation and
+  math rendering because the local machine's HTML Tidy is too old and the `V8`
+  package is unavailable. This is a property of the local check environment, not
+  the package, and does not occur on CRAN's check machines.
+
+`urlchecker::url_check()` reports all URLs correct. win-builder (R-devel and
+R-release) results will be appended when available.
 
 ## Notes for the reviewer
 
