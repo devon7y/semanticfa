@@ -76,10 +76,22 @@ plot(fit, type = "scree")
   structure in online texts based on word embedding NLP models. *EPJ Data
   Science*, 10, 55. doi:10.1140/epjds/s13688-021-00311-9
 - Christensen, A. P., Garrido, L. E., & Golino, H. (2023). Unique Variable
-  Analysis. *Multivariate Behavioral Research*, 58(6), 1165–1182.
+  Analysis: A network psychometrics method to detect local dependence.
+  *Multivariate Behavioral Research*, 58(6), 1165–1182.
   doi:10.1080/00273171.2023.2194606
 - Golino, H. (2026). Optimizing the landscape of LLM embeddings with Dynamic
   Exploratory Graph Analysis for generative psychometrics. arXiv:2601.17010.
+- Wulff, D. U., & Mata, R. (2025). Semantic embeddings reveal and address
+  taxonomic incommensurability in psychological measurement. *Nature Human
+  Behaviour*, 9(5), 944–954. doi:10.1038/s41562-024-02089-y
+- Wulff, D. U., & Mata, R. (2026). Escaping the jingle-jangle jungle: Increasing
+  conceptual clarity in psychology using large language models. *Current
+  Directions in Psychological Science*, 35(2), 59–65.
+  doi:10.1177/09637214251382083
+- Hommel, B. E., & Arslan, R. C. (2025). Language models accurately infer
+  correlations between psychological items and scales from text alone. *Advances
+  in Methods and Practices in Psychological Science*, 8(4).
+  doi:10.1177/25152459251377093
 
 ## License
 

@@ -521,7 +521,8 @@ short$drop      # what was dropped, and why
 
 ```
 Scale simplification (response-free)
-  Method: Wang et al. (2026); Jung & Seo (2025)
+  Method: centroid/medoid item selection (in the spirit of Wang et al. 2026; Jung & Seo 2025)
+  Note: candidate short form -- validate psychometrically before use
   Selection: anchor | groups: theoretical | target_n = 7 per group
   Items: 42 -> 21
   Factors retained (parallel analysis): 4 -> 3

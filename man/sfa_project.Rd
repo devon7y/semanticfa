@@ -48,6 +48,13 @@ along a named dimension} the item falls --- useful for checking that a scale's
 items span a full range of intensity/severity, ordering items, or locating
 items on an interpretable axis.
 }
+\details{
+This uses the \strong{cosine} of each item against the pole-difference axis (a
+length-normalized variant of Grand et al.'s raw inner-product projection),
+so scores are comparable across items of differing embedding norm. As in
+Grand et al., a \emph{bipolar} (two-pole) axis is what gives a diagnostic
+direction; a single pole is far less informative.
+}
 \examples{
 data(big5)
 fit <- sfa(

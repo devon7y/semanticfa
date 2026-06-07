@@ -45,14 +45,18 @@
 #'   \code{"EGA"}, or \code{"TEFI"}.
 #' @param dim_select Embedding-dimension selection before analysis:
 #'   \code{"none"} (default, use the full vector) or \code{"dynega"} (select the
-#'   leading-coordinate depth that best recovers structure via Dynamic EGA; see
-#'   \code{\link{sfa_dimselect}}). Requires \pkg{EGAnet}.
+#'   leading-coordinate depth that best recovers structure by EGA-based depth
+#'   optimization, adapting Golino 2026; see \code{\link{sfa_dimselect}}).
+#'   Requires \pkg{EGAnet}.
 #' @param n.obs Sample size passed to \code{\link[psych]{fa}}. \code{NA}
 #'   (default) suppresses sample-size-dependent fit indices.
 #' @param parallel_iter Iterations for embedding parallel analysis.
 #' @param seed Random seed for stochastic operations, used via
 #'   \code{\link[withr]{with_seed}} without touching the global RNG state.
-#' @param calibrate Logical: run Monte Carlo null calibration (Pokropek 2026)?
+#' @param calibrate Logical: run an isotropic random-embedding Monte Carlo null
+#'   calibration of the fit diagnostics? (Inspired by Pokropek 2026, but using a
+#'   random-Gaussian unit-vector null rather than Pokropek's corpus-word
+#'   resampling.)
 #' @param calibrate_iter Iterations for calibration.
 #' @param ... Additional arguments passed to \code{\link[psych]{fa}}.
 #'

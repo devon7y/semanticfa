@@ -33,14 +33,15 @@
 #'   \item{\code{"squid"}}{Subtract the questionnaire-mean embedding (SQuID;
 #'     Pellert et al. 2026), L2-normalize, then cosine similarity. The centering
 #'     recovers negative between-dimension correlations, so this encoding is
-#'     keying-free (no scoring/sign-flip). Note that Pellert et al. flag
-#'     reverse-keyed items as a residual challenge that centering mitigates but
-#'     does not fully neutralize.}
+#'     keying-free (no scoring/sign-flip). Pellert et al. note that reverse-keyed
+#'     items remain an open challenge -- they state that meaningfully "reversing"
+#'     a semantic embedding is conceptually unclear and needs further
+#'     methodological work, not that centering resolves it.}
 #'   \item{\code{"mean_centered_pearson"}}{Mean-center each embedding across its
 #'     dimensions, L2-normalize. Cosine similarity then equals Pearson
 #'     correlation, yielding a true correlation matrix (the centered-cosine =
-#'     Pearson identity is noted by Pokropek 2026; Kmetty et al. 2021; and
-#'     Casella et al. 2024). Keying-free.}
+#'     Pearson identity is attributed by Pokropek (2026) to Chen et al. (2020);
+#'     see also Kmetty et al. 2021 and Casella et al. 2024). Keying-free.}
 #' }
 #'
 #' @returns A symmetric numeric matrix (n_items x n_items) with 1s on the
@@ -70,6 +71,11 @@
 #' Pokropek, A. (2026). From keyword-based text measures to latent variables:
 #' Confirmatory factor analysis with word embeddings. \emph{EPJ Data Science}.
 #' \doi{10.1140/epjds/s13688-026-00654-1}
+#'
+#' Chen, X., Ding, N., Levinboim, T., & Soricut, R. (2020). Improving text
+#' generation evaluation with batch centering and tempered word mover distance.
+#' \emph{Proceedings of the First Workshop on Evaluation and Comparison of NLP
+#' Systems (Eval4NLP)}, 51--59.
 #'
 #' Kmetty, Z., Koltai, J., & Rudas, T. (2021). The presence of occupational
 #' structure in online texts based on word embedding NLP models. \emph{EPJ Data

@@ -77,8 +77,9 @@ to all +1 with an informative message for encoding methods that use it.}
 
 \item{dim_select}{Embedding-dimension selection before analysis:
 \code{"none"} (default, use the full vector) or \code{"dynega"} (select the
-leading-coordinate depth that best recovers structure via Dynamic EGA; see
-\code{\link{sfa_dimselect}}). Requires \pkg{EGAnet}.}
+leading-coordinate depth that best recovers structure by EGA-based depth
+optimization, adapting Golino 2026; see \code{\link{sfa_dimselect}}).
+Requires \pkg{EGAnet}.}
 
 \item{n.obs}{Sample size passed to \code{\link[psych]{fa}}. \code{NA}
 (default) suppresses sample-size-dependent fit indices.}
@@ -88,7 +89,10 @@ leading-coordinate depth that best recovers structure via Dynamic EGA; see
 \item{seed}{Random seed for stochastic operations, used via
 \code{\link[withr]{with_seed}} without touching the global RNG state.}
 
-\item{calibrate}{Logical: run Monte Carlo null calibration (Pokropek 2026)?}
+\item{calibrate}{Logical: run an isotropic random-embedding Monte Carlo null
+calibration of the fit diagnostics? (Inspired by Pokropek 2026, but using a
+random-Gaussian unit-vector null rather than Pokropek's corpus-word
+resampling.)}
 
 \item{calibrate_iter}{Iterations for calibration.}
 

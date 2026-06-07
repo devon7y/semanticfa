@@ -19,6 +19,12 @@
 #' items span a full range of intensity/severity, ordering items, or locating
 #' items on an interpretable axis.
 #'
+#' This uses the \strong{cosine} of each item against the pole-difference axis (a
+#' length-normalized variant of Grand et al.'s raw inner-product projection),
+#' so scores are comparable across items of differing embedding norm. As in
+#' Grand et al., a \emph{bipolar} (two-pole) axis is what gives a diagnostic
+#' direction; a single pole is far less informative.
+#'
 #' @param x An \code{"sfa"} object, or a numeric item-embedding matrix
 #'   (n_items x dim) with item rownames.
 #' @param axes A named list of axes. Each element defines the two poles, as
