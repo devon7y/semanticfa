@@ -21,13 +21,33 @@
 }
 
 #' @keywords internal
-.compute_tefi <- function(corr_matrix) {
-  tr <- sum(diag(corr_matrix))
-  if (tr <= 0) return(NA_real_)
-  rho <- corr_matrix / tr
-  eigs <- eigen(rho, symmetric = TRUE, only.values = TRUE)$values
-  eigs <- pmax(eigs, 1e-12)
-  -sum(eigs * log(eigs))
+# Entropy of a density matrix, matching EGAnet's matrix_entropy:
+# -sum(diag(M %*% log(M))) = -sum_{ij} M_ij log(M_ij) for symmetric M.
+.matrix_entropy <- function(density_matrix) {
+  -sum(diag(density_matrix %*% log(density_matrix)), na.rm = TRUE)
+}
+
+#' @keywords internal
+# Total Entropy Fit Index (Golino, Moulder, et al. 2021), partition-based.
+# Faithful reimplementation of EGAnet::tefi: uses |R|, normalizes by the number
+# of variables, and combines per-dimension vs total entropy with a sqrt(NF)
+# complexity penalty. Lower (more negative) is better.
+.compute_tefi <- function(corr_matrix, structure) {
+  R <- abs(corr_matrix)
+  n <- ncol(R)
+  if (n == 0L || is.null(structure)) return(NA_real_)
+  structure <- as.character(structure)
+  H_total <- .matrix_entropy(R / n)
+  comms <- unique(structure)
+  NF <- length(comms)
+  H_within <- vapply(comms, function(g) {
+    idx <- structure == g
+    Rg <- R[idx, idx, drop = FALSE]
+    .matrix_entropy(Rg / ncol(Rg))
+  }, numeric(1))
+  mean_within <- mean(H_within, na.rm = TRUE)
+  sum_within <- mean_within * NF
+  (mean_within - H_total) + (H_total - sum_within) * sqrt(NF)
 }
 
 #' @keywords internal
@@ -154,8 +174,6 @@
       sim <- tcrossprod(rand)
       diag(sim) <- 1.0
 
-      tefi_null <- c(tefi_null, .compute_tefi(sim))
-
       tryCatch({
         fa_rand <- psych::fa(sim, nfactors = max(1L, n_factors),
                              rotate = rotate, fm = fm,
@@ -163,6 +181,8 @@
         rc <- .compute_rmsr_caf(sim, fa_rand)
         rmsr_null <- c(rmsr_null, rc$rmsr)
         caf_null <- c(caf_null, rc$caf)
+        tefi_null <- c(tefi_null,
+                       .compute_tefi(sim, .assign_items(unclass(fa_rand$loadings))))
       }, error = function(e) NULL)
     }
   })

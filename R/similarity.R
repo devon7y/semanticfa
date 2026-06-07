@@ -7,9 +7,12 @@
 #' @param encoding Character string specifying the similarity transform:
 #'   \code{"atomic_reversed"} (default), \code{"atomic"}, \code{"squid"}, or
 #'   \code{"mean_centered_pearson"}. See Details.
-#' @param scoring Numeric vector of +1/-1 per item (keying direction). If
-#'   \code{NULL}, defaults to all +1 with an informative message when
-#'   \code{encoding} is \code{"atomic_reversed"} or \code{"squid"}.
+#' @param scoring Numeric vector of +1/-1 per item (keying direction). Applies
+#'   only to the atomic encodings (Guenole et al.); \code{"squid"} and
+#'   \code{"mean_centered_pearson"} are keying-free by design, and passing
+#'   \code{scoring} with real reverse-keyed (\code{-1}) items to them is ignored
+#'   with a warning. If \code{NULL}, defaults to all +1 (with a message for
+#'   \code{"atomic_reversed"}).
 #' @param factors Optional character/factor vector of per-item subscale labels.
 #'   When supplied it is \emph{recorded} on the returned matrix (as a
 #'   \code{"factors"} attribute) so that \code{\link{sfa_corplot}} can group the
@@ -27,12 +30,13 @@
 #'   \item{\code{"atomic"}}{L2-normalize without sign-flipping, then cosine
 #'     similarity. Equivalent to \code{"atomic_reversed"} with all +1 scoring.}
 #'   \item{\code{"squid"}}{Subtract the questionnaire-mean embedding (SQuID;
-#'     Pellert et al. 2026), apply scoring sign-flip, L2-normalize, then cosine
-#'     similarity. Recovers negative between-dimension correlations.}
-#'   \item{\code{"mean_centered_pearson"}}{Apply scoring, mean-center each
-#'     embedding across its dimensions, L2-normalize. Cosine similarity then
-#'     equals Pearson correlation, yielding a true correlation matrix (Pokropek
-#'     2026; Kmetty et al. 2021).}
+#'     Pellert et al. 2026), L2-normalize, then cosine similarity. The centering
+#'     alone recovers negative between-dimension correlations, so this encoding
+#'     is keying-free (no scoring/sign-flip).}
+#'   \item{\code{"mean_centered_pearson"}}{Mean-center each embedding across its
+#'     dimensions, L2-normalize. Cosine similarity then equals Pearson
+#'     correlation, yielding a true correlation matrix (Pokropek 2026; Kmetty et
+#'     al. 2021). Keying-free.}
 #' }
 #'
 #' @returns A symmetric numeric matrix (n_items x n_items) with 1s on the
@@ -65,7 +69,6 @@ sfa_similarity <- function(embeddings, encoding = "atomic_reversed",
     c("atomic_reversed", "atomic", "squid", "mean_centered_pearson"))
 
   n_items <- nrow(embeddings)
-  scoring <- .resolve_scoring(scoring, n_items, encoding)
   if (!is.null(factors) && length(factors) != n_items) {
     stop("'factors' must have one entry per item (", n_items, ").",
          call. = FALSE)
@@ -75,15 +78,23 @@ sfa_similarity <- function(embeddings, encoding = "atomic_reversed",
          call. = FALSE)
   }
 
-  if (encoding == "atomic") {
-    scoring <- rep(1, n_items)
-    encoding <- "atomic_reversed"
+  # Item keying (scoring) applies only to the atomic encodings (Guenole et al.).
+  # SQuID and mean-centered Pearson are keying-free by design. Only warn when
+  # real reverse-keyed items (-1) would be silently ignored.
+  if (!is.null(scoring) && any(as.numeric(scoring) < 0) &&
+      !encoding %in% c("atomic", "atomic_reversed")) {
+    warning("'scoring' has reverse-keyed items but is ignored for encoding = \"",
+            encoding, "\": this method is keying-free by design. Use ",
+            "\"atomic_reversed\" for keyed sign-flipping.", call. = FALSE)
   }
 
   transformed <- switch(encoding,
-    atomic_reversed = .apply_atomic_reversed(embeddings, scoring),
-    squid           = .apply_squid(embeddings, scoring),
-    mean_centered_pearson = .apply_mean_centered_pearson(embeddings, scoring)
+    atomic          = .apply_atomic_reversed(embeddings, rep(1, n_items)),
+    atomic_reversed = .apply_atomic_reversed(
+                        embeddings,
+                        .resolve_scoring(scoring, n_items, "atomic_reversed")),
+    squid           = .apply_squid(embeddings),
+    mean_centered_pearson = .apply_mean_centered_pearson(embeddings)
   )
 
   sim <- tcrossprod(transformed)
@@ -114,22 +125,24 @@ sfa_similarity <- function(embeddings, encoding = "atomic_reversed",
 }
 
 #' @keywords internal
-.apply_squid <- function(embeddings, scoring) {
+# SQuID (Pellert et al. 2026): subtract the questionnaire-mean embedding from
+# each item, then cosine. Keying-free by design -- the centering is what
+# recovers negative correlations, so no scoring/sign-flip is applied.
+.apply_squid <- function(embeddings) {
   centroid <- colMeans(embeddings)
   centered <- sweep(embeddings, 2, centroid)
-  scoring_vec <- as.numeric(scoring)
-  centered <- centered * scoring_vec
   norms <- sqrt(rowSums(centered^2))
   norms[norms == 0] <- 1
   centered / norms
 }
 
 #' @keywords internal
-.apply_mean_centered_pearson <- function(embeddings, scoring) {
-  x <- embeddings * as.numeric(scoring)
-  storage.mode(x) <- "double"
-  row_means <- rowMeans(x)
-  x_centered <- x - row_means
+# Mean-centered cosine = Pearson correlation between item embedding vectors
+# (Pokropek 2026; Kmetty et al. 2021). Keying-free: no scoring/sign-flip.
+.apply_mean_centered_pearson <- function(embeddings) {
+  storage.mode(embeddings) <- "double"
+  row_means <- rowMeans(embeddings)
+  x_centered <- embeddings - row_means
   norms <- sqrt(rowSums(x_centered^2))
   norms[norms == 0] <- 1
   x_centered / norms

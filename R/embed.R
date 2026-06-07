@@ -3,6 +3,21 @@
 # "larger model" upgrade hint.
 .SFA_DEFAULT_MODEL <- "Qwen/Qwen3-Embedding-0.6B"
 
+#' @keywords internal
+# Resolve a NULL model to the right default for the chosen backend, so that
+# embed = "openai" does not inherit the sbert (Qwen) default.
+.resolve_embed_model <- function(embed, model) {
+  if (!is.null(model)) return(model)
+  if (is.character(embed)) {
+    switch(embed,
+           sbert  = .SFA_DEFAULT_MODEL,
+           openai = "text-embedding-3-small",
+           .SFA_DEFAULT_MODEL)
+  } else {
+    .SFA_DEFAULT_MODEL
+  }
+}
+
 #' Embed Item Text with a Language Model
 #'
 #' Computes embeddings for a vector of item text using a sentence-transformer
@@ -11,9 +26,11 @@
 #' @param embed Embedding backend: \code{"sbert"} (default, via
 #'   \code{reticulate}), \code{"openai"} (via \code{httr2}), or a function
 #'   taking a character vector and returning a numeric matrix.
-#' @param model Model name passed to the backend (default
-#'   \code{"Qwen/Qwen3-Embedding-0.6B"} for sbert). Larger embedding models
-#'   recover factor structure more accurately; see \code{\link{sfa}}.
+#' @param model Model name passed to the backend. If \code{NULL} (default), a
+#'   backend-appropriate default is used: \code{"Qwen/Qwen3-Embedding-0.6B"} for
+#'   \code{"sbert"} and \code{"text-embedding-3-small"} for \code{"openai"}.
+#'   Larger embedding models recover factor structure more accurately; see
+#'   \code{\link{sfa}}.
 #' @param cache Logical: cache embeddings in
 #'   \code{tools::R_user_dir("semanticfa", "cache")}? Default \code{TRUE}.
 #' @param ... Additional arguments passed to the embedding backend function.
@@ -27,7 +44,7 @@
 #'   as rownames so short codes flow through to plots such as
 #'   \code{\link{sfa_corplot}}).
 #' @export
-sfa_embed <- function(items, embed = "sbert", model = "Qwen/Qwen3-Embedding-0.6B",
+sfa_embed <- function(items, embed = "sbert", model = NULL,
                       cache = TRUE, ...) {
   row_labels <- NULL
   if (is.data.frame(items)) {
@@ -51,6 +68,7 @@ sfa_embed <- function(items, embed = "sbert", model = "Qwen/Qwen3-Embedding-0.6B
   }
 
   embed <- match.arg(embed, c("sbert", "openai"))
+  model <- .resolve_embed_model(embed, model)
 
   if (cache) {
     key <- .cache_key(items, model)
@@ -168,7 +186,11 @@ sfa_install_python <- function(packages = "sentence-transformers", ...) {
   encoder <- st$SentenceTransformer(model, device = device)
   emb <- encoder$encode(items, show_progress_bar = FALSE)
   emb_r <- reticulate::py_to_r(emb)
-  if (!is.matrix(emb_r)) emb_r <- as.matrix(emb_r)
+  # a single item is returned as a 1-D array/vector; reshape to 1 x dim
+  # (length(dim) is 0 for a vector and 1 for a 1-D array -- both != 2)
+  if (length(dim(emb_r)) != 2L) {
+    emb_r <- matrix(as.numeric(emb_r), nrow = length(items), byrow = TRUE)
+  }
   storage.mode(emb_r) <- "double"
   emb_r
 }

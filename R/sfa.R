@@ -19,9 +19,12 @@
 #'   \code{\link{sfa_similarity}}.
 #' @param embed Embedding backend: \code{"sbert"}, \code{"openai"}, or a
 #'   function. Ignored when \code{embeddings} is provided.
-#' @param model Model name for the embedding backend. Defaults to
-#'   \code{"Qwen/Qwen3-Embedding-0.6B"} (about 1.2 GB), chosen to run on any
-#'   machine. Larger embedding models recover factor structure more accurately;
+#' @param model Model name for the embedding backend. If \code{NULL} (default),
+#'   resolves to a backend-appropriate default:
+#'   \code{"Qwen/Qwen3-Embedding-0.6B"} (about 1.2 GB) for \code{"sbert"} and
+#'   \code{"text-embedding-3-small"} for \code{"openai"}. The sbert default is
+#'   chosen to run on any machine. Larger embedding models recover factor
+#'   structure more accurately;
 #'   for higher fidelity pass \code{"Qwen/Qwen3-Embedding-4B"} (about 8 GB RAM)
 #'   or \code{"Qwen/Qwen3-Embedding-8B"} (about 16 GB RAM). When the default
 #'   model is used, \code{print()} reminds you of these options.
@@ -84,7 +87,7 @@ sfa <- function(items,
                 fm               = "minres",
                 encoding         = "atomic_reversed",
                 embed            = "sbert",
-                model            = "Qwen/Qwen3-Embedding-0.6B",
+                model            = NULL,
                 embeddings       = NULL,
                 similarity       = NULL,
                 scoring          = NULL,
@@ -154,7 +157,8 @@ sfa <- function(items,
     if (is.null(embeddings)) {
       embeddings <- sfa_embed(item_text, embed = embed, model = model)
       embed_method <- if (is.function(embed)) "custom" else embed
-      embed_model <- model
+      embed_model <- if (is.function(embed)) NULL
+                     else .resolve_embed_model(embed, model)
     } else {
       embed_method <- "precomputed"
       embed_model <- NULL
@@ -208,7 +212,9 @@ sfa <- function(items,
   kmo <- tryCatch(.compute_kmo(sim_matrix), error = function(e) {
     list(total = NA_real_, per_item = rep(NA_real_, n_items))
   })
-  tefi <- .compute_tefi(sim_matrix)
+  tefi <- tryCatch(
+    .compute_tefi(sim_matrix, .assign_items(unclass(fa_obj$loadings))),
+    error = function(e) NA_real_)
   rmsr_caf <- tryCatch(.compute_rmsr_caf(sim_matrix, fa_obj),
                         error = function(e) list(rmsr = NA_real_, caf = NA_real_,
                                                  residual = NULL))

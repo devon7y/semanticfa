@@ -14,3 +14,4 @@
 ^.*\.Rcheck$
 ^DASS_walkthrough\.html$
 ^paper_prompt\.txt$
+^feedback\.txt$

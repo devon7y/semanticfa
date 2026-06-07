@@ -15,6 +15,23 @@ Stress (14 items each) — all **positively keyed** (a higher rating always mean
 > needed**. It's a tool for inspecting and refining a scale before (or without)
 > collecting data.
 
+> **What's new to test.** This round added new functions *and* changed some
+> existing behavior. Both are folded into the sections below and flagged
+> **🆕 New** / **🔧 Changed**. Please test them and tell me what's confusing,
+> wrong, or missing:
+>
+> - **New functions:** `sfa_load_npz()` (§3), `sfa_corplot()` +
+>   `sfa_tsneplot()` (§5), `sfa_item_fit()` (§10); plus the `calibrate=` knob (§15).
+> - **🔧 Fixed diagnostics:** `CAF` now reports a real value, and `TEFI` is now
+>   the genuine partition-based index (it is **negative** — lower is better) (§7).
+> - **🔧 Faithful redundancy:** `sfa_redundancy()` now matches Unique Variable
+>   Analysis (it sparsifies the network first); the default `threshold` is now
+>   `0.25`, and there's a `method = "cosine"` alternative (§11).
+> - **🔧 Keying-free encodings:** `squid` and `mean_centered_pearson` no longer
+>   apply a scoring sign-flip — they recover negatives from the centering itself (§4).
+> - **🔧 `order` accepts abbreviations** in `sfa_corplot()`, e.g.
+>   `order = c("D","A","S")` (§5).
+
 ---
 
 ## 0. Install
@@ -37,6 +54,10 @@ sfa_install_python()
 This installs `sentence-transformers` into an environment `reticulate` manages
 for you. (On first real use the package also auto-declares this requirement, so
 in many setups it "just works" without calling the line above.)
+
+Two optional R packages unlock specific features: **`Rtsne`** for the t-SNE map
+(§5) and **`EGAnet`** for EGA-based factor retention / dimension selection
+(§6, §15). Install them only if you use those parts.
 
 ---
 
@@ -110,11 +131,12 @@ and share a lot of vocabulary (Stress and Anxiety items both describe
 arousal/tension). Semantically, the package often lands on **4-ish** factors and
 a strong shared "general distress" dimension. That's not a bug — it's the
 well-known overlap of the DASS subscales showing up in the language itself. We'll
-measure exactly how well it matches the 3-factor theory in §7.
+measure exactly how well it matches the 3-factor theory in §8.
 
 > **Tip for repeat runs.** Embedding is the slow part. If you already have
 > embeddings (a 42×d numeric matrix in item order), skip Python entirely:
-> `sfa(dass, embeddings = my_matrix)`.
+> `sfa(dass, embeddings = my_matrix)` — or load them from a `.npz` file in one
+> line (§3).
 
 ---
 
@@ -136,10 +158,46 @@ emb_custom <- sfa_embed(dass$item, embed = function(txt) my_encoder(txt))
 Embeddings are cached, so re-embedding the same items is instant. `sfa_clear_cache()`
 wipes the cache.
 
+> **Backends.** The default is on-device `sbert` (Qwen). To use OpenAI instead,
+> `sfa_embed(dass$item, embed = "openai")` — with `model = NULL` it now defaults
+> to `text-embedding-3-small` (not the Qwen name) and reads your `OPENAI_API_KEY`;
+> pass `model =` for a different OpenAI model.
+
 **Why model size matters for the DASS.** Smaller models tend to *over-split*
 the DASS (every cluster of physical-symptom items becomes its own factor);
 larger Qwen models give cleaner, more theory-like structure. If your machine can
 afford it, `model = "Qwen/Qwen3-Embedding-4B"` is a good step up.
+
+### 🆕 New — load pre-made embeddings: `sfa_load_npz()`
+
+The high-fidelity 4B/8B models are heavy to run inside R. The practical pattern
+is to embed **once** elsewhere (e.g. a Python/GPU job) and save a NumPy `.npz`,
+then load it instantly in every R session:
+
+```r
+emb <- sfa_load_npz("DASS_items_8B.npz")
+emb            # prints what was found: embeddings + any codes/items/factors/scoring
+```
+
+The archive's `embeddings` array is required; `codes`, `items`, `factor` labels,
+and `scoring` are picked up automatically **if present** (override the key names
+with the `*_key` arguments). The result is an `sfa_embeddings` object the rest
+of the pipeline accepts **directly** — no separate data frame needed:
+
+```r
+fit <- sfa(emb)                       # full analysis straight from the file
+sfa_corplot(sfa_similarity(emb))      # or just look at the structure (§5)
+```
+
+**DASS payoff.** This is how you get the accuracy of `Qwen3-Embedding-8B`
+without paying its RAM cost in R: embed the 42 DASS items once into
+`DASS_items_8B.npz` (bundling the `code`/`factor`/`scoring` arrays so they ride
+along), and every analysis below loads in one line.
+
+> Reading `.npz` needs Python `numpy`. **Test feedback wanted:** in my review the
+> `.npz` path could trigger reticulate to download Python during tests — please
+> note if `sfa_load_npz()` ever tries to install Python when you just want to
+> read a file.
 
 ---
 
@@ -171,9 +229,63 @@ separate more cleanly:
 fit_squid <- sfa(dass, encoding = "squid")
 ```
 
+> **🔧 Changed — keying-free encodings.** `squid` and `mean_centered_pearson`
+> recover negative correlations from the centering itself, so they now **ignore
+> `scoring`** entirely (passing a `scoring` with reverse-keyed `-1` items to them
+> warns and drops it). Only the `atomic` encodings use the keying direction. For
+> the all-positive DASS nothing changes; this matters for scales *with* reverse
+> items. **Test feedback wanted:** confirm `sfa_similarity(emb, encoding="squid")`
+> and `...scoring=dass$scoring` give the *same* matrix.
+
 ---
 
-## 5. How many factors? — `sfa_parallel()` and `sfa_nfactors()`
+## 5. 🆕 New — see the structure: `sfa_corplot()` & `sfa_tsneplot()`
+
+Two pictures of the *input* side — the meanings themselves — **before** any
+factor extraction. They make the abstract similarity matrix concrete, and for
+the DASS they show its overlap problem at a glance.
+
+### Similarity heatmap — `sfa_corplot()`
+
+Draws the item-by-item similarity matrix as a heatmap, with items **grouped into
+subscale blocks down the diagonal**:
+
+```r
+sfa_corplot(fit)                               # from a fitted object
+sfa_corplot(sim)                               # or straight from sfa_similarity()
+sfa_corplot(fit, order = c("D", "A", "S"))     # control block order (prefix match)
+```
+
+It accepts an `sfa` object or a bare similarity matrix. Grouping is **display
+only** — the underlying matrix keeps its original item order (the rest of the
+package relies on that). By default it shows short item codes, no in-cell
+numbers, and the upper triangle; pass `group = FALSE` to keep the native order.
+
+**DASS payoff.** You can literally *see* the DASS's structure: a warm haze over
+the **whole** matrix (the general-distress factor — every item is somewhat
+similar to every other), a crisp **Depression** block on the diagonal, and
+**Anxiety/Stress blocks that bleed into each other**. The `order = c("D","A","S")`
+argument lets you arrange the blocks the way the manual presents them.
+
+### Item map — `sfa_tsneplot()`
+
+A 2-D t-SNE scatter — one point per item, **colored by subscale** and labeled
+with its code:
+
+```r
+sfa_tsneplot(fit)                              # needs the 'Rtsne' package
+sfa_tsneplot(fit, perplexity = 8, seed = 1)    # tune layout / fix randomness
+```
+
+**DASS payoff.** The geometric companion to the heatmap: Depression items land
+in their own cloud, while several **Stress** points sit out among the
+**Anxiety** cloud — the subscale boundary blur, as a map. t-SNE is stochastic,
+so set `seed` for a reproducible layout, and `perplexity` lower for a small item
+set. (Install once: `install.packages("Rtsne")`.)
+
+---
+
+## 6. How many factors? — `sfa_parallel()` and `sfa_nfactors()`
 
 `sfa()` decides this for you, but you can inspect it directly.
 
@@ -196,7 +308,7 @@ differently. Theory's answer (3) is a reasonable target to hold these against.
 
 ---
 
-## 6. Reading the solution — `print()`, `summary()`, `plot()`, `as_psych()`
+## 7. Reading the solution — `print()`, `summary()`, `plot()`, `as_psych()`
 
 ```r
 summary(fit)        # loadings + omega reliability + communalities + (any) Heywood cases
@@ -214,16 +326,33 @@ Anxiety, and Stress items. For the DASS you'll typically see Depression separate
 cleanly, while **Anxiety and Stress bleed into each other** — again, the real
 overlap of those constructs.
 
-**Diagnostics to read (all printed by `summary`):**
+> `plot(fit, "loadings")` is the heatmap of the **solution** (items × factors);
+> `sfa_corplot()` in §5 is the heatmap of the **input** (item × item). Looking at
+> both is the fastest way to see where the recovered factors came from.
+
+**Diagnostics to read (all printed by `summary`, each with a plain-language
+grade in parentheses):**
 - **KMO** — is there enough shared structure to factor at all? (DASS: usually
-  "meritorious," ~0.8+.)
-- **TEFI** — entropy-based fit; lower is better.
-- **RMSR** — average residual; smaller is better.
+  "marvelous," ~0.95+.)
+- **🔧 TEFI** — the Total Entropy Fit Index (Golino), now computed properly
+  against the factor partition. It is **negative**, and **more negative = better**
+  — use it to *compare* solutions, not as an absolute. (Previously this printed a
+  positive number that wasn't really TEFI; if you saw `+1.9` before and `−44` now,
+  that's the fix, not a regression.)
+- **RMSR** — average residual; smaller is better (good ≤ 0.05).
+- **🔧 CAF** — Common part Accounted For; **higher = better**. For the DASS expect
+  a *marginal* value (~0.3): the strong general-distress factor leaves shared
+  variance in the residuals, which is exactly what CAF detects. (This used to be
+  stuck at `0.0000` for every scale — that bug is fixed.)
 - **McDonald's ω** — reliability of each recovered factor.
+
+> **Test feedback wanted.** CAF and TEFI were both recently corrected. Please
+> sanity-check that CAF is non-zero and TEFI is negative on your DASS run, and
+> flag anything that looks off.
 
 ---
 
-## 7. Does the semantic structure match DASS theory? — `sfa_congruence()`
+## 8. Does the semantic structure match DASS theory? — `sfa_congruence()`
 
 This is where having the `factor` column pays off. Compare the *recovered*
 structure to the *theoretical* Depression/Anxiety/Stress grouping:
@@ -253,7 +382,7 @@ sfa_congruence(fit, target = my_empirical_fa)     # a psych::fa object
 
 ---
 
-## 8. Which items belong where? — `sfa_anchor()`
+## 9. Which items belong where? — `sfa_anchor()`
 
 Think of this as a **semantic loading table**: each cell is how strongly an item
 "belongs" to each subscale.
@@ -283,33 +412,85 @@ sfa_anchor(fit, anchor = "label",
 
 ---
 
-## 9. Are any items redundant? — `sfa_redundancy()`
+## 10. 🆕 New — vet a *candidate* item: `sfa_item_fit()`
 
-Finds **near-duplicate** items — pairs so similar they add length without
-information (different from "weak" items).
+§9 scores the items you **already have**. `sfa_item_fit()` does the same for
+items you're **thinking of adding** — a response-free quality check on draft
+wording, *before* it ever goes into a questionnaire. Each candidate is scored on
+two complementary axes per construct:
+
+- **similarity to the construct *name*** ("does it *sound* like Depression?"), and
+- **similarity to the construct's *existing items*** ("does it *look* like the
+  other Depression items?").
 
 ```r
-sfa_redundancy(fit, threshold = 0.8)
+sfa_item_fit(fit, "I felt there was nothing to look forward to",
+             construct = "Depression")
+
+# vet several at once:
+sfa_item_fit(fit, c("I feel calm and relaxed",
+                    "My heart was pounding for no reason"))
 ```
 
-```
-Redundant-item detection
-  Method: Christensen et al. (2023)
-  Redundant pairs: ...
-  Top redundant pairs:
-    A2 ~ A19   overlap=0.8x      # "dryness of my mouth" ~ "perspired noticeably"
-    ...
-  Suggested removals (keep one per cluster): ...
-```
+The printout gives, per candidate: the best-matching construct, the
+**cross-loading gap** to the runner-up, whether it's stronger/weaker than the
+construct's average item, its **nearest existing item** (with a redundancy
+flag), and a one-line **verdict** — `good fit`, `weak match`, `cross-loads`, or
+`redundant`.
 
-**DASS payoff.** The Anxiety subscale has several physical-symptom items
-(trembling, racing heart, sweating, dry mouth) that are semantically close. This
-flags which ones are doing duplicate work — exactly the items a short form would
-prune.
+**DASS payoff.** Before fielding a revised DASS, draft a candidate Depression
+item and confirm it (a) reads as Depression rather than Stress, (b) isn't a
+near-duplicate of "I felt that life was meaningless," and (c) fits at least as
+well as the items already there — all with no respondents. When the two axes
+**disagree** they're informative: high name + low items = a *gap-filler*
+(on-topic but covering new ground); low name + high items = *drift* (looks like
+the items but off-construct). Set `reverse_key = TRUE` to vet a reverse-worded
+candidate, and `redundancy_cutoff` to tune the near-duplicate threshold
+(default 0.90).
+
+> Needs the `factor` column **and** stored embeddings — i.e. a fit made from item
+> text or from `sfa(..., embeddings = ...)`, not one built from a precomputed
+> similarity matrix.
 
 ---
 
-## 10. Build a short form — `sfa_simplify()`
+## 11. 🔧 Changed — are any items redundant? — `sfa_redundancy()`
+
+Finds **near-duplicate** items — pairs so similar they add length without
+information (different from "weak" items). There are two methods:
+
+| method | what it does | default `threshold` | needs |
+|---|---|---|---|
+| `"wto"` (default) | **Unique Variable Analysis** (Christensen et al. 2023): builds a *sparsified* network first, then weighted topological overlap | `0.25` (the UVA cut-off) | `EGAnet` |
+| `"cosine"` | direct pairwise similarity | `0.80` | nothing extra |
+
+```r
+sfa_redundancy(fit)                                   # UVA (wto), threshold 0.25
+sfa_redundancy(fit, method = "cosine", threshold = 0.85)
+```
+
+> **🔧 What changed.** Weighted topological overlap is only meaningful on a
+> *sparse* network, so `wto` now sparsifies first (via `EGAnet`), matching the
+> real UVA method. Previously it ran on the dense matrix, which compressed every
+> pair into a narrow band and made the cutoff knife-edged (a 0.01 change flipped
+> dozens of pairs). If you ran `sfa_redundancy(fit, threshold = 0.8)` before and
+> got nothing, that's why — `wto` values now live on a different scale, hence the
+> new `0.25` default.
+
+**DASS payoff — and a caveat to test.** The Anxiety subscale has several
+physical-symptom items (trembling, racing heart, sweating, dry mouth) that are
+semantically close — exactly what a short form prunes. But the DASS's strong
+general-distress factor means **`wto` flags a *lot*** (its sparsified network
+still links most items into one big cluster — that's a property of the scale, not
+a bug). For a cleaner read of *specific* duplicate pairs on such a homogeneous
+scale, prefer **`method = "cosine"`** with a high threshold (~0.85). **Please
+test both** and tell me which is more useful in practice. (`sfa_item_fit()` in
+§10 runs the same redundancy check the *other* direction: is a brand-new item a
+duplicate of something already in the scale?)
+
+---
+
+## 12. Build a short form — `sfa_simplify()`
 
 The DASS-21 is a famous half-length version of the DASS-42. You can construct a
 response-free short form the same way, and **see what it costs**:
@@ -350,7 +531,7 @@ fidelity report telling you whether the structure survived the cut.
 
 ---
 
-## 11. Put items on a clinical-severity scale — `sfa_project()`
+## 13. Put items on a clinical-severity scale — `sfa_project()`
 
 `sfa_anchor` tells you *which* subscale an item is in; **projection** tells you
 *where along a named dimension* it sits. For a clinical scale, the obvious axis
@@ -379,7 +560,7 @@ simply can't show you.
 
 ---
 
-## 12. Compare the DASS to *other* instruments — `sfa_jinglejangle()`
+## 14. Compare the DASS to *other* instruments — `sfa_jinglejangle()`
 
 The DASS Anxiety subscale and the **Beck Anxiety Inventory (BAI)** both claim to
 measure "anxiety"; DASS Depression and the **Beck Depression Inventory (BDI)**
@@ -410,7 +591,7 @@ landscape.
 
 ---
 
-## 13. Advanced knobs
+## 15. Advanced knobs
 
 **Pick the best slice of the embedding — `sfa_dimselect()` / `dim_select`.**
 Instead of using the whole 1024-dim vector, search for the sub-range of
@@ -419,6 +600,19 @@ dimensions that recovers the cleanest structure (needs `EGAnet`):
 ```r
 sfa(dass, dim_select = "dynega", n_factors_method = "EGA")
 ```
+
+**🆕 New — null-model calibration — `calibrate`.** By default the diagnostics
+read off the raw semantic solution. `calibrate = TRUE` runs a Monte-Carlo null
+(Pokropek 2026): it refits under many random-embedding nulls of the same shape
+and calibrates the fit indices against what *chance* structure would produce.
+
+```r
+sfa(dass, calibrate = TRUE, calibrate_iter = 200)
+```
+
+It's slower (one refit per iteration), but it tells you how much of the
+recovered structure actually beats chance — worth it for a borderline,
+high-overlap scale like the DASS.
 
 **Contradiction-aware similarity — `sfa_nli_matrix()`.**
 Plain embeddings call opposites "similar" because they share a topic. An NLI
@@ -436,17 +630,22 @@ build yourself.
 
 ---
 
-## 14. Cheat-sheet
+## 16. Cheat-sheet
 
 | You want to… | Function |
 |---|---|
 | Run the whole thing | `sfa()` |
 | Get embeddings | `sfa_embed()` |
+| Load saved embeddings (`.npz`) 🆕 | `sfa_load_npz()` |
 | Set up Python | `sfa_install_python()` |
+| Clear the embedding cache | `sfa_clear_cache()` |
 | Build the similarity matrix | `sfa_similarity()` |
+| Heatmap of the similarity matrix 🆕 | `sfa_corplot()` |
+| t-SNE map of items 🆕 | `sfa_tsneplot()` |
 | Decide # of factors | `sfa_parallel()`, `sfa_nfactors()` |
 | Pick embedding dimensions | `sfa_dimselect()` |
 | Check items vs their subscale | `sfa_anchor()` |
+| Vet a candidate / new item 🆕 | `sfa_item_fit()` |
 | Find duplicate items | `sfa_redundancy()` |
 | Make a short form | `sfa_simplify()` |
 | Rate items on a named axis | `sfa_project()` |
@@ -457,7 +656,7 @@ build yourself.
 
 ---
 
-## 15. One honest caveat
+## 17. One honest caveat
 
 Semantic structure is **the structure implied by the item wording**, not the
 structure of how real people respond. The two usually agree closely (that's why

@@ -11,7 +11,7 @@ sfa(
   fm = "minres",
   encoding = "atomic_reversed",
   embed = "sbert",
-  model = "Qwen/Qwen3-Embedding-0.6B",
+  model = NULL,
   embeddings = NULL,
   similarity = NULL,
   scoring = NULL,
@@ -46,9 +46,12 @@ automatic determination via \code{n_factors_method}.}
 \item{embed}{Embedding backend: \code{"sbert"}, \code{"openai"}, or a
 function. Ignored when \code{embeddings} is provided.}
 
-\item{model}{Model name for the embedding backend. Defaults to
-\code{"Qwen/Qwen3-Embedding-0.6B"} (about 1.2 GB), chosen to run on any
-machine. Larger embedding models recover factor structure more accurately;
+\item{model}{Model name for the embedding backend. If \code{NULL} (default),
+resolves to a backend-appropriate default:
+\code{"Qwen/Qwen3-Embedding-0.6B"} (about 1.2 GB) for \code{"sbert"} and
+\code{"text-embedding-3-small"} for \code{"openai"}. The sbert default is
+chosen to run on any machine. Larger embedding models recover factor
+structure more accurately;
 for higher fidelity pass \code{"Qwen/Qwen3-Embedding-4B"} (about 8 GB RAM)
 or \code{"Qwen/Qwen3-Embedding-8B"} (about 16 GB RAM). When the default
 model is used, \code{print()} reminds you of these options.}

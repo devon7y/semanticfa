@@ -14,17 +14,24 @@
 #' duplicates --- they add length without adding information. This is distinct
 #' from \code{\link{sfa_simplify}}, which removes \emph{weak} items (far from
 #' their construct); redundancy targets \emph{near-twin} items (very close to
-#' \emph{each other}). Detecting local dependence this way mirrors Unique
-#' Variable Analysis (Christensen et al. 2023) on the embedding similarity
-#' structure.
+#' \emph{each other}).
 #'
 #' @param x An \code{"sfa"} object (uses its similarity matrix) or a symmetric
 #'   numeric item-by-item similarity matrix.
 #' @param threshold Redundancy cutoff. Item pairs with overlap at or above this
-#'   value are flagged. Default 0.80.
-#' @param method Overlap measure: \code{"wto"} (weighted topological overlap ---
-#'   counts shared neighbours, the Unique Variable Analysis criterion;
-#'   default) or \code{"cosine"} (direct pairwise similarity).
+#'   value are flagged. Defaults to 0.25 for \code{"wto"} (the Unique Variable
+#'   Analysis cut-off) and 0.80 for \code{"cosine"}.
+#' @param method Overlap measure:
+#'   \describe{
+#'     \item{\code{"wto"}}{(default) Weighted topological overlap computed on a
+#'       \strong{sparsified} (Triangulated Maximally Filtered Graph) network, as
+#'       in Unique Variable Analysis (Christensen et al. 2023). Requires the
+#'       \pkg{EGAnet} package. Sparsifying first is what gives wTO its
+#'       discriminating power; computing it on the dense similarity matrix
+#'       compresses every pair into a narrow band.}
+#'     \item{\code{"cosine"}}{Direct pairwise similarity. Dependency-free and
+#'       well spread for dense embedding matrices.}
+#'   }
 #'
 #' @returns An object of class \code{"sfa_redundancy"}: a list with the flagged
 #'   \code{pairs} (data frame: item_i, item_j, overlap), redundant \code{clusters}
@@ -48,7 +55,7 @@
 #' # flag near-duplicate item pairs
 #' sfa_redundancy(fit, threshold = 0.8, method = "cosine")
 #' @export
-sfa_redundancy <- function(x, threshold = 0.80, method = c("wto", "cosine")) {
+sfa_redundancy <- function(x, threshold = NULL, method = c("wto", "cosine")) {
   method <- match.arg(method)
   sim <- if (inherits(x, "sfa")) x$sim_matrix else as.matrix(x)
   if (is.null(sim) || nrow(sim) != ncol(sim)) {
@@ -57,8 +64,9 @@ sfa_redundancy <- function(x, threshold = 0.80, method = c("wto", "cosine")) {
   codes <- rownames(sim)
   if (is.null(codes)) codes <- sprintf("item_%02d", seq_len(nrow(sim)))
   n <- nrow(sim)
+  if (is.null(threshold)) threshold <- if (method == "wto") 0.25 else 0.80
 
-  overlap <- if (method == "wto") .weighted_topological_overlap(sim) else abs(sim)
+  overlap <- if (method == "wto") .uva_wto(sim) else abs(sim)
   dimnames(overlap) <- list(codes, codes)
 
   # flag pairs at/above threshold
@@ -96,23 +104,25 @@ sfa_redundancy <- function(x, threshold = 0.80, method = c("wto", "cosine")) {
 }
 
 #' @keywords internal
-.weighted_topological_overlap <- function(sim) {
-  a <- abs(sim)
-  diag(a) <- 0
-  k <- rowSums(a)
-  shared <- a %*% a                     # shared-neighbour strength
-  n <- nrow(a)
-  wto <- matrix(0, n, n)
-  for (i in seq_len(n)) {
-    for (j in seq_len(n)) {
-      if (i == j) next
-      num <- shared[i, j] + a[i, j]
-      den <- min(k[i], k[j]) + 1 - a[i, j]
-      wto[i, j] <- if (den > 0) num / den else 0
-    }
+# Weighted topological overlap on a sparsified network (faithful UVA): estimate
+# a Triangulated Maximally Filtered Graph from the similarity matrix, then take
+# wTO on that sparse network -- both via EGAnet, the reference implementation of
+# Christensen et al. (2023). (Computing wTO on the dense matrix instead
+# compresses every pair into a narrow band and makes the cutoff knife-edged.)
+.uva_wto <- function(sim) {
+  if (!requireNamespace("EGAnet", quietly = TRUE)) {
+    stop("method = \"wto\" follows Unique Variable Analysis (Christensen et ",
+         "al., 2023), which sparsifies the network first; that step needs the ",
+         "'EGAnet' package. Install EGAnet, or use method = \"cosine\".",
+         call. = FALSE)
   }
-  diag(wto) <- 1
-  (wto + t(wto)) / 2
+  net <- suppressWarnings(suppressMessages(
+    EGAnet::network.estimation(data = sim, n = nrow(sim), model = "TMFG",
+                               verbose = FALSE)))
+  w <- as.matrix(suppressWarnings(suppressMessages(EGAnet::wto(net))))
+  w <- (w + t(w)) / 2
+  diag(w) <- 0
+  w
 }
 
 #' @keywords internal

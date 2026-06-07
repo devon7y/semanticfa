@@ -36,7 +36,11 @@ available, compact codes are generated from the factors (e.g. \code{A1},
 (default \code{TRUE}). Ignored when no \code{factors} are available.}
 
 \item{order}{Optional character vector giving the order of the factor blocks
-(default: alphabetical).}
+(default: alphabetical). Entries are matched to the factor labels by exact,
+case-insensitive, or unique-prefix match, so for Depression/Anxiety/Stress
+both \code{c("Depression","Anxiety","Stress")} and \code{c("D","A","S")}
+work. A non-matching or ambiguous entry is an error; any factors omitted
+from \code{order} are appended after the listed ones.}
 
 \item{numbers, upper, gap.axis, cex.axis, xlas}{Passed to
 \code{\link[psych]{cor.plot}}; defaults are tuned for a many-item matrix

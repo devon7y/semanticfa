@@ -93,7 +93,19 @@ sfa_nli_matrix <- function(items, model = "cross-encoder/nli-deberta-v3-base",
     stop("'classifier' must return columns 'entailment' and 'contradiction'.",
          call. = FALSE)
   }
+  if (nrow(probs) != nrow(grid)) {
+    stop("'classifier' returned ", nrow(probs), " rows for ", nrow(grid),
+         " item pairs; it must return one row per pair.", call. = FALSE)
+  }
+  if (!is.numeric(probs$entailment) || !is.numeric(probs$contradiction)) {
+    stop("'classifier' columns 'entailment'/'contradiction' must be numeric.",
+         call. = FALSE)
+  }
   signed <- probs$entailment - probs$contradiction
+  if (any(!is.finite(signed))) {
+    stop("'classifier' produced non-finite entailment/contradiction values.",
+         call. = FALSE)
+  }
 
   M <- matrix(0, n, n)
   M[cbind(grid$i, grid$j)] <- signed

@@ -19,19 +19,29 @@ test_that("atomic encoding ignores scoring", {
   expect_equal(sim_atomic, sim_ar_all1, tolerance = 1e-10)
 })
 
-test_that("squid recovers negative off-diagonals with reverse items", {
+test_that("squid recovers negative off-diagonals via centering (keying-free)", {
   data(big5)
-  sim <- sfa_similarity(big5$embeddings, encoding = "squid",
-                        scoring = big5$scoring)
+  # SQuID (Pellert et al. 2026) recovers negatives from the centering alone,
+  # without any scoring/sign-flip
+  sim <- sfa_similarity(big5$embeddings, encoding = "squid")
   off_diag <- sim[lower.tri(sim)]
   expect_true(any(off_diag < 0))
+})
+
+test_that("squid is keying-free: scoring does not change it, and warns", {
+  data(big5)
+  sim_plain <- sfa_similarity(big5$embeddings, encoding = "squid")
+  expect_warning(
+    sim_scored <- sfa_similarity(big5$embeddings, encoding = "squid",
+                                 scoring = big5$scoring),
+    "keying-free")
+  expect_equal(sim_plain, sim_scored, tolerance = 1e-12)
 })
 
 test_that("mean_centered_pearson yields a proper correlation matrix", {
   data(big5)
   sim <- sfa_similarity(big5$embeddings,
-                        encoding = "mean_centered_pearson",
-                        scoring = big5$scoring)
+                        encoding = "mean_centered_pearson")
   expect_equal(unname(diag(sim)), rep(1, 50))
   expect_true(all(sim >= -1 - 1e-10))
   expect_true(all(sim <= 1 + 1e-10))

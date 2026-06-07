@@ -4,13 +4,7 @@
 \alias{sfa_embed}
 \title{Embed Item Text with a Language Model}
 \usage{
-sfa_embed(
-  items,
-  embed = "sbert",
-  model = "Qwen/Qwen3-Embedding-0.6B",
-  cache = TRUE,
-  ...
-)
+sfa_embed(items, embed = "sbert", model = NULL, cache = TRUE, ...)
 }
 \arguments{
 \item{items}{Character vector of item text, or a data frame with an
@@ -22,9 +16,11 @@ as rownames so short codes flow through to plots such as
 \code{reticulate}), \code{"openai"} (via \code{httr2}), or a function
 taking a character vector and returning a numeric matrix.}
 
-\item{model}{Model name passed to the backend (default
-\code{"Qwen/Qwen3-Embedding-0.6B"} for sbert). Larger embedding models
-recover factor structure more accurately; see \code{\link{sfa}}.}
+\item{model}{Model name passed to the backend. If \code{NULL} (default), a
+backend-appropriate default is used: \code{"Qwen/Qwen3-Embedding-0.6B"} for
+\code{"sbert"} and \code{"text-embedding-3-small"} for \code{"openai"}.
+Larger embedding models recover factor structure more accurately; see
+\code{\link{sfa}}.}
 
 \item{cache}{Logical: cache embeddings in
 \code{tools::R_user_dir("semanticfa", "cache")}? Default \code{TRUE}.}

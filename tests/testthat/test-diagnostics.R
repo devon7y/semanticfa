@@ -32,13 +32,17 @@ test_that("CAF matches the EFAtools reference on psych::bfi", {
   expect_equal(caf, ref, tolerance = 0.1)   # ours ~0.40 vs EFAtools ~0.42
 })
 
-test_that("TEFI returns a finite value", {
+test_that("TEFI (partition-based) matches the EGAnet reference", {
   data(big5)
   sim <- sfa_similarity(big5$embeddings, encoding = "atomic_reversed",
                         scoring = big5$scoring)
-  tefi <- semanticfa:::.compute_tefi(sim)
+  dimnames(sim) <- list(big5$codes, big5$codes)
+  tefi <- semanticfa:::.compute_tefi(sim, big5$factors)
   expect_true(is.finite(tefi))
-  expect_true(tefi > 0)
+  skip_if_not_installed("EGAnet")
+  ref <- suppressWarnings(suppressMessages(
+    EGAnet::tefi(sim, structure = big5$factors)$VN.Entropy.Fit))
+  expect_equal(tefi, as.numeric(ref), tolerance = 1e-6)
 })
 
 test_that("DAAL matrix has correct dimensions", {

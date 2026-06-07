@@ -82,12 +82,9 @@ sfa_parallel <- function(sim_matrix, embeddings, n_iter = 100L,
       fa_k <- suppressWarnings(psych::fa(sim_matrix, nfactors = k,
                         rotate = rotate, fm = fm,
                         n.obs = NA, warnings = FALSE))
-      reproduced <- unclass(fa_k$loadings)
-      phi <- fa_k$Phi
-      if (is.null(phi)) phi <- diag(ncol(reproduced))
-      rep_corr <- reproduced %*% phi %*% t(reproduced) + diag(fa_k$uniquenesses)
-      diag(rep_corr) <- 1
-      tefi_vals[k] <- .compute_tefi(rep_corr)
+      # real TEFI of the observed matrix under the k-factor item partition
+      membership <- .assign_items(unclass(fa_k$loadings))
+      tefi_vals[k] <- .compute_tefi(sim_matrix, membership)
     }, error = function(e) NULL)
   }
 

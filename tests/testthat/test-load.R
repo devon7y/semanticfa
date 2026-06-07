@@ -17,6 +17,7 @@ test_that("sfa_similarity and sfa accept an sfa_embeddings object", {
 })
 
 test_that("sfa_load_npz round-trips a .npz archive", {
+  skip_on_cran()                                   # importing numpy may provision Python
   skip_if_not_installed("reticulate")
   np <- tryCatch(reticulate::import("numpy"), error = function(e) NULL)
   skip_if(is.null(np), "numpy not available")
@@ -38,4 +39,28 @@ test_that("sfa_load_npz round-trips a .npz archive", {
 
 test_that("sfa_load_npz errors clearly on a missing file / missing key", {
   expect_error(sfa_load_npz("/no/such/file.npz"), "not found")
+})
+
+test_that("sfa_corplot 'order' accepts abbreviations and errors on no-match", {
+  data(big5)
+  emb_obj <- structure(
+    list(embeddings = big5$embeddings, codes = big5$codes,
+         factors = big5$factors, scoring = big5$scoring),
+    class = "sfa_embeddings")
+  sim <- sfa_similarity(emb_obj)
+
+  lv <- semanticfa:::.resolve_group_order(c("E", "N", "A", "C", "O"),
+                                          unique(big5$factors))
+  expect_equal(lv[1], "Extraversion")
+  expect_equal(lv[2], "Neuroticism")
+  expect_setequal(lv, unique(big5$factors))
+
+  # unmentioned factors are appended
+  lv2 <- semanticfa:::.resolve_group_order("Open", unique(big5$factors))
+  expect_equal(lv2[1], "Openness")
+  expect_length(lv2, length(unique(big5$factors)))
+
+  # no-match errors
+  expect_error(semanticfa:::.resolve_group_order("Zzz", unique(big5$factors)),
+               "matches no factor")
 })

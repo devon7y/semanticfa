@@ -33,15 +33,24 @@
 
 #' @keywords internal
 .check_psd <- function(mat, alpha = 1e-6) {
-  eigs <- eigen(mat, symmetric = TRUE, only.values = TRUE)$values
-  min_eig <- min(eigs)
+  eig <- eigen(mat, symmetric = TRUE)
+  min_eig <- min(eig$values)
   if (min_eig < -1e-10) {
     message(
       "Similarity matrix was not positive semi-definite (min eigenvalue = ",
       format(min_eig, digits = 3),
-      "); regularized with alpha = ", alpha, "."
+      "); projected to a nearby positive semi-definite correlation matrix ",
+      "(negative eigenvalues clipped, diagonal rescaled to 1)."
     )
-    mat <- .regularize_corr(mat, alpha = alpha)
+    # Clip negative eigenvalues to a small positive floor and reconstruct
+    # (V diag(vals) V'), then rescale the diagonal back to 1. A fixed ridge
+    # cannot repair a matrix whose minimum eigenvalue is far below zero.
+    vals <- pmax(eig$values, alpha)
+    psd <- eig$vectors %*% (vals * t(eig$vectors))
+    d <- sqrt(diag(psd))
+    psd <- psd / outer(d, d)
+    dimnames(psd) <- dimnames(mat)
+    mat <- psd
   }
   mat
 }
@@ -93,10 +102,10 @@
 .resolve_scoring <- function(scoring, n_items, encoding) {
 
   if (is.null(scoring)) {
-    if (encoding %in% c("atomic_reversed", "squid")) {
+    if (encoding == "atomic_reversed") {
       message(
         "No scoring provided; defaulting to all +1 ",
-        "(equivalent to '", sub("_reversed", "", encoding), "' encoding)."
+        "(equivalent to 'atomic' encoding)."
       )
     }
     return(rep(1, n_items))

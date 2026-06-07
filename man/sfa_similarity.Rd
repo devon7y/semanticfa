@@ -19,9 +19,12 @@ sfa_similarity(
 \code{"atomic_reversed"} (default), \code{"atomic"}, \code{"squid"}, or
 \code{"mean_centered_pearson"}. See Details.}
 
-\item{scoring}{Numeric vector of +1/-1 per item (keying direction). If
-\code{NULL}, defaults to all +1 with an informative message when
-\code{encoding} is \code{"atomic_reversed"} or \code{"squid"}.}
+\item{scoring}{Numeric vector of +1/-1 per item (keying direction). Applies
+only to the atomic encodings (Guenole et al.); \code{"squid"} and
+\code{"mean_centered_pearson"} are keying-free by design, and passing
+\code{scoring} with real reverse-keyed (\code{-1}) items to them is ignored
+with a warning. If \code{NULL}, defaults to all +1 (with a message for
+\code{"atomic_reversed"}).}
 
 \item{factors}{Optional character/factor vector of per-item subscale labels.
 When supplied it is \emph{recorded} on the returned matrix (as a
@@ -49,12 +52,13 @@ direction, L2-normalize, then compute cosine similarity (Guenole et al.).}
 \item{\code{"atomic"}}{L2-normalize without sign-flipping, then cosine
 similarity. Equivalent to \code{"atomic_reversed"} with all +1 scoring.}
 \item{\code{"squid"}}{Subtract the questionnaire-mean embedding (SQuID;
-Pellert et al. 2026), apply scoring sign-flip, L2-normalize, then cosine
-similarity. Recovers negative between-dimension correlations.}
-\item{\code{"mean_centered_pearson"}}{Apply scoring, mean-center each
-embedding across its dimensions, L2-normalize. Cosine similarity then
-equals Pearson correlation, yielding a true correlation matrix (Pokropek
-2026; Kmetty et al. 2021).}
+Pellert et al. 2026), L2-normalize, then cosine similarity. The centering
+alone recovers negative between-dimension correlations, so this encoding
+is keying-free (no scoring/sign-flip).}
+\item{\code{"mean_centered_pearson"}}{Mean-center each embedding across its
+dimensions, L2-normalize. Cosine similarity then equals Pearson
+correlation, yielding a true correlation matrix (Pokropek 2026; Kmetty et
+al. 2021). Keying-free.}
 }
 }
 \references{

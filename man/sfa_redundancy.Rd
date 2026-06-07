@@ -4,18 +4,27 @@
 \alias{sfa_redundancy}
 \title{Detect Redundant (Near-Duplicate) Items}
 \usage{
-sfa_redundancy(x, threshold = 0.8, method = c("wto", "cosine"))
+sfa_redundancy(x, threshold = NULL, method = c("wto", "cosine"))
 }
 \arguments{
 \item{x}{An \code{"sfa"} object (uses its similarity matrix) or a symmetric
 numeric item-by-item similarity matrix.}
 
 \item{threshold}{Redundancy cutoff. Item pairs with overlap at or above this
-value are flagged. Default 0.80.}
+value are flagged. Defaults to 0.25 for \code{"wto"} (the Unique Variable
+Analysis cut-off) and 0.80 for \code{"cosine"}.}
 
-\item{method}{Overlap measure: \code{"wto"} (weighted topological overlap ---
-counts shared neighbours, the Unique Variable Analysis criterion;
-default) or \code{"cosine"} (direct pairwise similarity).}
+\item{method}{Overlap measure:
+\describe{
+\item{\code{"wto"}}{(default) Weighted topological overlap computed on a
+\strong{sparsified} (Triangulated Maximally Filtered Graph) network, as
+in Unique Variable Analysis (Christensen et al. 2023). Requires the
+\pkg{EGAnet} package. Sparsifying first is what gives wTO its
+discriminating power; computing it on the dense similarity matrix
+compresses every pair into a narrow band.}
+\item{\code{"cosine"}}{Direct pairwise similarity. Dependency-free and
+well spread for dense embedding matrices.}
+}}
 }
 \value{
 An object of class \code{"sfa_redundancy"}: a list with the flagged
@@ -28,9 +37,7 @@ Finds pairs of items that are so semantically similar they are effectively
 duplicates --- they add length without adding information. This is distinct
 from \code{\link{sfa_simplify}}, which removes \emph{weak} items (far from
 their construct); redundancy targets \emph{near-twin} items (very close to
-\emph{each other}). Detecting local dependence this way mirrors Unique
-Variable Analysis (Christensen et al. 2023) on the embedding similarity
-structure.
+\emph{each other}).
 }
 \examples{
 data(big5)

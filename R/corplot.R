@@ -24,7 +24,11 @@
 #' @param group Logical: reorder items so each factor forms a contiguous block
 #'   (default \code{TRUE}). Ignored when no \code{factors} are available.
 #' @param order Optional character vector giving the order of the factor blocks
-#'   (default: alphabetical).
+#'   (default: alphabetical). Entries are matched to the factor labels by exact,
+#'   case-insensitive, or unique-prefix match, so for Depression/Anxiety/Stress
+#'   both \code{c("Depression","Anxiety","Stress")} and \code{c("D","A","S")}
+#'   work. A non-matching or ambiguous entry is an error; any factors omitted
+#'   from \code{order} are appended after the listed ones.
 #' @param numbers,upper,gap.axis,cex.axis,xlas Passed to
 #'   \code{\link[psych]{cor.plot}}; defaults are tuned for a many-item matrix
 #'   (no in-cell numbers, upper triangle, every label shown, small label text).
@@ -81,7 +85,7 @@ sfa_corplot <- function(x, factors = NULL, labels = NULL, group = TRUE,
            "number of items (", nrow(sim), ").", call. = FALSE)
     }
     f <- as.character(factors)
-    lv <- if (is.null(order)) sort(unique(f)) else order
+    lv <- if (is.null(order)) sort(unique(f)) else .resolve_group_order(order, unique(f))
     ord <- order(match(f, lv))                          # group; stable within block
     sim <- sim[ord, ord]
   }
@@ -95,6 +99,30 @@ sfa_corplot <- function(x, factors = NULL, labels = NULL, group = TRUE,
 .looks_like_codes <- function(l) {
   !is.null(l) && length(l) > 0 && !any(is.na(l)) &&
     !any(grepl("\\s", l)) && max(nchar(l)) <= 12
+}
+
+#' @keywords internal
+# Map each entry of a user-supplied block order to a factor level, accepting
+# exact, case-insensitive, and unique-prefix/abbreviation matches (so
+# order = c("D","A","S") resolves to Depression/Anxiety/Stress). Errors on a
+# non-match or an ambiguous prefix; unmentioned levels are appended in order.
+.resolve_group_order <- function(order, levels) {
+  levels <- unique(as.character(levels))
+  resolved <- unname(vapply(as.character(order), function(o) {
+    hit <- which(levels == o)                                   # exact
+    if (length(hit) != 1L) hit <- which(tolower(levels) == tolower(o))  # case-insensitive
+    if (length(hit) != 1L) hit <- which(startsWith(tolower(levels), tolower(o)))  # prefix
+    if (length(hit) > 1L) {
+      stop("'order' entry \"", o, "\" is ambiguous; matches: ",
+           paste(levels[hit], collapse = ", "), ".", call. = FALSE)
+    }
+    if (length(hit) == 0L) {
+      stop("'order' entry \"", o, "\" matches no factor. Factors are: ",
+           paste(levels, collapse = ", "), ".", call. = FALSE)
+    }
+    levels[hit]
+  }, character(1)))
+  c(resolved, setdiff(levels, resolved))     # append any factors not listed
 }
 
 #' @keywords internal

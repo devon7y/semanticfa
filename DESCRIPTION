@@ -23,6 +23,8 @@ Depends:
     R (>= 4.1.0)
 Imports:
     GPArotation,
+    grDevices,
+    graphics,
     psych,
     reticulate (>= 1.41.0),
     stats,
@@ -35,6 +37,7 @@ Suggests:
     httr2,
     knitr,
     rmarkdown,
+    Rtsne,
     testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Config/testthat/edition: 3

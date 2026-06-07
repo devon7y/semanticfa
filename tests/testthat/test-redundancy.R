@@ -25,10 +25,13 @@ test_that("wto and cosine methods both run and return clusters", {
           nfactors = 5, seed = 42L)))
   })
   rc <- sfa_redundancy(fit, threshold = 0.5, method = "cosine")
-  rw <- sfa_redundancy(fit, threshold = 0.5, method = "wto")
   expect_true(is.list(rc$clusters))
-  expect_true(is.list(rw$clusters))
   expect_true(is.data.frame(rc$pairs))
+
+  skip_if_not_installed("EGAnet")          # wto sparsifies via EGAnet (faithful UVA)
+  rw <- sfa_redundancy(fit, threshold = 0.25, method = "wto")
+  expect_s3_class(rw, "sfa_redundancy")
+  expect_true(is.list(rw$clusters))
 })
 
 test_that("a square similarity matrix can be passed directly", {
