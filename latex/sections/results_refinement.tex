@@ -1,0 +1,132 @@
+% results_refinement.tex
+\subsection{Response-Free Refinement}
+
+Three functions refine a scale before any respondent is recruited.
+\texttt{sfa\_redundancy()} detects locally dependent item pairs with
+Unique Variable Analysis---wTO on an EBICglasso
+network \citep{christensen-etal-2023}:
+
+{\scriptsize
+\begin{verbatim}
+> red_uva <- sfa_redundancy(fit)                     # UVA / wTO (EGAnet)
+> red_uva
+Redundant-item detection
+  Method: Christensen et al. (2023)
+  Measure: wto | threshold: 0.25
+  Redundant pairs: 11 | redundant clusters: 10
+
+  Top redundant pairs:
+    A24        ~ A29         overlap=0.462
+    N17        ~ N18         overlap=0.402
+    O45        ~ O50         overlap=0.374
+    N16        ~ N19         overlap=0.361
+    E2         ~ E6          overlap=0.339
+    A25        ~ A27         overlap=0.331
+    A21        ~ A27         overlap=0.320
+    C32        ~ C36         overlap=0.309
+    C33        ~ C40         overlap=0.286
+    O41        ~ O48         overlap=0.268
+
+  Suggested removals (keep one per cluster): E6, N19, N18, A25, A27, A29,
+    C36, C40, O41, O44, O45
+\end{verbatim}
+}
+
+Every displayed pair among the eleven (in ten clusters) joins items from
+one domain; the simpler cosine criterion (threshold 0.85) flagged a
+largely overlapping set of seven pairs in five clusters, led by
+N16~$\sim$~N19 (.938) and A24~$\sim$~A29 (.933)---near-paraphrases, the
+``cheating by repeating'' that inflates internal consistency without
+broadening coverage \citep{christensen-etal-2023}.
+
+\texttt{sfa\_simplify()} builds candidate short forms from the items
+nearest each construct anchor \citep{jung-seo-2025, wang-etal-2026}:
+
+{\scriptsize
+\begin{verbatim}
+> short <- sfa_simplify(fit, target_n = 5, method = "anchor")   # 50 -> 25 items
+> short
+Scale simplification (response-free)
+  Method: centroid/medoid item selection (in the spirit of Wang et al. 2026;
+    Jung & Seo 2025)
+  Note: candidate short form -- validate psychometrically before use
+  Selection: anchor | groups: theoretical | target_n = 5 per group
+  Items: 50 -> 25
+  Factors retained (parallel analysis): 5 -> 3
+  Structure recovery vs theory (NMI / ARI):
+    full:    NMI=0.527  ARI=0.402
+    reduced: NMI=0.810  ARI=0.571
+  Items kept per construct:
+    Extraversion         5
+    Neuroticism          5
+    Agreeableness        5
+    Conscientiousness    5
+    Openness             5
+
+  Dropped 25 item(s); see $drop. Reduced fit in $reduced_fit.
+> short$keep
+ [1] "E2"  "E3"  "E5"  "E8"  "E10" "N11" "N15" "N16" "N17" "N19" "A21" "A22"
+[13] "A24" "A28" "A29" "C33" "C34" "C35" "C37" "C40" "O42" "O43" "O45" "O48"
+[25] "O50"
+\end{verbatim}
+}
+
+Halving the scale to 25 items \emph{improved} theoretical-partition
+recovery (NMI .527 to .810; ARI .402 to .571): pruning semantically
+peripheral items sharpens boundaries the full pool blurs. Parallel
+analysis now suggested three factors; per the printed caveat, a semantic
+short form is a candidate for psychometric validation, not a finished
+instrument.
+
+\texttt{sfa\_item\_fit()} vets newly written items against an existing
+fit, extending \citet{wulff-mata-2025}. Live
+embedding confines the demonstration to the default-model (0.6B) space;
+the reference fit omits the scoring column for the \emph{anti-topic}
+reasons given in the Method section.
+
+{\scriptsize
+\begin{verbatim}
+> fit06 <- sfa(big5_df[, c("code", "item", "factor")],
++              embeddings = ref06$embeddings,
++              encoding = "mean_centered_pearson", nfactors = 5)
+> cand <- c("I make friends easily.",
++           "I am the life of every party.",
++           "I rarely feel anxious or depressed.")
+> ifit <- sfa_item_fit(fit06, cand, model = "Qwen/Qwen3-Embedding-0.6B",
++                      redundancy_cutoff = 0.85)
+> ifit
+Candidate item fit
+  Method: Wulff & Mata (2025), extended
+
+Candidate 1: "I make friends easily."
+  [similarity-by-construct table omitted]
+  Best construct : Extraversion
+  Cross-loading  : gap to 2nd (Neuroticism) = 0.01  ->  ambiguous -
+    cross-loads with Neuroticism
+  Strength       : about typical for Extraversion (items 0.74 vs avg 0.75)
+  Redundancy     : closest item E3 "I feel comfortable around people."
+    (0.78) -> distinct
+  Verdict        : cross-loads (Extraversion vs Neuroticism) - poor
+    discrimination
+
+Candidate 2: "I am the life of every party."
+  [similarity-by-construct table omitted]
+  Best construct : Extraversion
+  Redundancy     : closest item E1 "I am the life of the party." (0.90)
+    -> near-duplicate
+  Verdict        : redundant (near-duplicate of an existing item)
+
+Candidate 3: "I rarely feel anxious or depressed."
+  [similarity-by-construct table omitted]
+  Best construct : Neuroticism
+  Strength       : weaker than average for Neuroticism (items 0.75 vs
+    avg 0.81)
+  Verdict        : weak match - fits Neuroticism worse than its existing
+    items (may not belong to this scale)
+\end{verbatim}
+}
+
+All three planted candidates drew the intended verdicts: cross-loading
+(Extraversion vs.\ Neuroticism gap .01), near-duplication of E1 (cosine
+.90, above the .85 cutoff), and a weaker match to its best construct
+than that construct's existing items.

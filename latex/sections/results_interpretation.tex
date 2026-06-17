@@ -1,0 +1,103 @@
+% results_interpretation.tex
+\subsection{Interpretation Tools}
+
+After \citet{wulff-mata-2025}, \texttt{sfa\_anchor()} scores each item's
+cosine to every construct centroid or construct-name embedding, flagging
+items weak or beaten on their own construct:
+
+{\scriptsize
+\begin{verbatim}
+> anc <- sfa_anchor(fit, anchor = "centroid")
+> anc
+Semantic anchoring
+  Method: Wulff & Mata (2025)
+  Anchor: centroid
+  Constructs: 5 | Items: 50
+
+[50 x 5 item-by-construct cosine matrix omitted]
+
+  Weakest own-construct similarity (review/removal candidates):
+    N12          Neuroticism        own=0.69   <-- higher on Extraversion (0.72)
+        "I am relaxed most of the time."
+    O44          Openness           own=0.69
+        "I am not interested in abstract ideas."
+    A23          Agreeableness      own=0.71   <-- higher on Extraversion (0.71)
+        "I insult people."
+    A25          Agreeableness      own=0.71
+        "I am not interested in other people's problems."
+    [list abridged]
+\end{verbatim}
+}
+
+Centroid anchoring mostly flags reverse-keyed items worded nearer another
+domain---N12 sits nearer the Extraversion centroid (.72) than its own
+(.69); label anchoring (same Qwen3-Embedding-8B space) flagged an
+overlapping set, A25 lowest (own .36 vs.\ .37 on Neuroticism), then E6,
+A27, C36, N12, and C32.
+
+\texttt{sfa\_project()} applies the semantic projection of
+\citet{grand-etal-2022}, placing items on bipolar axes via antonym-pole
+difference vectors from the same 8B space:
+
+{\scriptsize
+\begin{verbatim}
+> prj <- sfa_project(fit,
++                    axes = list(stability   = c(low = "anxious",  high = "calm"),
++                                sociability = c(low = "solitary", high = "sociable")),
++                    pole_embeddings = poles)
+> prj
+Semantic projection onto 2 axis/axes
+  Method: Grand et al. (2022)
+  Scale: 0 = low pole, 1 = high pole
+
+Axis 'stability'  [anxious <-> calm]
+  lowest: N13=0.28  N11=0.33  N16=0.37  N19=0.38  N15=0.42
+  highest: N12=0.82  A30=0.72  E3=0.65  E4=0.64  C37=0.62
+
+Axis 'sociability'  [solitary <-> sociable]
+  lowest: O46=0.37  A27=0.38  A21=0.38  N20=0.39  E4=0.41
+  highest: E3=0.82  E7=0.81  A22=0.68  E5=0.68  A30=0.65
+\end{verbatim}
+}
+
+The projections track content, not scoring key: Neuroticism items fill the
+anxious pole, yet the most calm-pole item (.82) is again reverse-keyed
+N12, while party- and conversation-themed E3 and E7, and other-oriented
+A22 and A30, top the sociable pole.
+
+Versus the theoretical Big Five assignment, \texttt{sfa\_congruence()}
+scored agreement as moderate by NMI and weak by the chance-corrected ARI
+\citep{hubert-arabie-1985}:
+
+{\scriptsize
+\begin{verbatim}
+> cong_theory <- sfa_congruence(fit, target = big5$factors,
++                               metrics = c("nmi", "ari"))
+> cong_theory
+Factor structure congruence
+
+  NMI:            0.527 (moderate - higher is better)
+  ARI:            0.402 (weak - higher is better)
+\end{verbatim}
+}
+
+\texttt{sfa\_jinglejangle()} compares label--label with content--content
+similarities \citep{wulff-mata-2025, wulff-mata-2026}, here treating the
+five 10-item subscales as separate scales (8B item and label vectors):
+
+{\scriptsize
+\begin{verbatim}
+> jj <- sfa_jinglejangle(sub_items, item_embeddings = sub_emb,
++                        label_embeddings = jj_lab_emb)
+> jj
+Jingle-jangle detection across 5 scales
+  Method: Wulff & Mata (2025, 2026)
+  Flag threshold |content - label| >= 0.20
+
+  No jingle/jangle pairs flagged.
+\end{verbatim}
+}
+
+Within this single, well-constructed instrument, label and content
+similarities align; its habitat is cross-instrument screening, where such
+fallacies are common \citep{wulff-mata-2025}.

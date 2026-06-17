@@ -1,0 +1,56 @@
+% discussion_use_cases.tex
+\subsection{Applications}
+
+The package's natural home is the stage \citet{clark-watson-2019} place
+first and weight most heavily---pre-data item-pool refinement---and its
+clinical analogues: screening large candidate pools, flagging redundancy
+early, reaching populations and settings where large validation samples
+are impractical \citep{kambeitz-etal-2025}. The demonstration models
+that pass: redundancy screening exposed eleven within-domain
+near-paraphrase pairs (A24~$\sim$~A29 leading, wTO .462)---repetition
+inflating internal consistency and wording-driven correlations, not
+content \citep{christensen-etal-2023,kojima-etal-2026}; vetting correctly
+typed three new items as cross-loader (gap .01), near-duplicate (cosine
+.90), and weak match (.75 vs.\ domain average .81); and response-free
+shortening halved the instrument yet \emph{improved} theoretical-partition
+recovery (NMI .527 to .810; ARI .402 to .571)---peripheral, not central,
+items had blurred construct boundaries
+\citep{huang-etal-2025, kojima-etal-2026}. The attenuation paradox
+(\citealp{clark-watson-2019}) transfers: maximizing semantic homogeneity,
+like internal consistency, can prune breadth the construct requires, so
+an anchor-centrality-optimized short form still owes response-based
+validation---a caveat the package itself prints
+\citep{jung-seo-2025,wang-etal-2026}.
+
+Second, response data may be scarce, absent, or compromised:
+\citet{muller-2026} recovered semantic structure at $n = 55$ after the
+same instrument's confirmatory factor analysis collapsed, and
+\texttt{semanticfa}, needing no responses, lets structural screening
+precede recruitment. The synthetic respondents of
+\citet{westwood-2025}---passing 99.8\% of attention checks, biasing
+results toward inferred hypotheses---argue for analysis that touches no
+response pool and against model-derived structure passing as human
+evidence; hence the congruence machinery: semantic--behavioral coherence
+is demonstrated, never presumed---no current language model reproduces
+the human ability distribution \citep{liu-etal-2025}, and
+virtual-respondent frameworks disclaim replicating human psychological
+processes \citep{lim-etal-2025}.
+
+Third, the tools scale across instruments: the jingle--jangle screen,
+rightly silent on the deliberately well-constructed Big-Five Factor
+Markers, targets cross-instrument screening, where label--content
+misalignment is endemic \citep{wulff-mata-2025,wulff-mata-2026}, and
+\texttt{semanticfa}'s evaluation-time auditing of existing instruments
+complements AIGENIE's generation-time vetting of new item pools
+\citep{russell-lasalandra-etal-2026}. Finally, the design choices are
+methodological commitments: an explicit, programmatic embedding pipeline
+recovers structure that prompted chatbots do not \citep{huang-etal-2025};
+open, locally run models make sensitive-item analysis transparent and
+privacy-respecting \citep{hussain-etal-2024,low-etal-preprint}; pinned
+model identity freezes the measurement instrument across reanalyses; and
+the pure-R, offline factor-analytic core (only the NLI matrix and
+live-embedding demonstrations need Python or the network) runs
+identically in a data-sovereignty-constrained clinic and a teaching
+laboratory. We commend the transcript-anchored reporting used
+here---every number checkable against a captured console transcript---to
+software papers.

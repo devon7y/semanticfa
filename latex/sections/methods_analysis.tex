@@ -1,0 +1,24 @@
+% methods_analysis.tex
+\subsection{Analysis Plan}
+
+One master script (\texttt{reproduce.R}, seed 42) ran the nine demonstration stages; its \texttt{R CMD BATCH} transcript supplies every number in the Results.
+
+\emph{Similarity construction.} The four embedding encodings came from the $50 \times 4096$ Qwen3-Embedding-8B matrix, the signed NLI matrix from the item texts; we inspected each encoding's off-diagonal range and, to probe reverse-keying, the similarities among Extraversion item E1, its reverse-keyed sibling E2, and same-keyed E5.
+
+\emph{Live-embedding check.} The cache was cleared, all 50 items re-embedded with the default Qwen3-Embedding-0.6B model via \texttt{sfa\_embed()}, and per-item cosines to the \texttt{sfa\_load\_npz()} reference vectors summarized.
+
+\emph{Retention.} On the mean-centered Pearson matrix we ran parallel analysis (100 iterations, 95th percentile), the four-method \texttt{sfa\_nfactors()} consensus (parallel, latent-root-one, TEFI, EGA), and the EGA-based depth optimization of \texttt{sfa\_dimselect()}.
+
+\emph{Main fit.} \texttt{sfa()} fit the primary model on the keying-free \texttt{mean\_centered\_pearson} encoding, chosen before interpretation for its genuine correlation matrix and for matching theory and human data at least as well as every alternative in the encoding comparison. The factor number, first left to parallel analysis, was fixed at five throughout, with minimum-residual extraction, oblimin rotation, and the full diagnostic battery; \texttt{calibrate = TRUE} re-estimation (100 Monte Carlo replicates) supplied null reference distributions \citep{pokropek-2026}, and \texttt{as\_psych()} handed the fit to psych.
+
+\emph{Interpretation.} \texttt{sfa\_anchor()} ran with both centroid and label anchors, the latter from the 8B construct-name vectors; \texttt{sfa\_project()} placed all items on two bipolar 8B pole-word axes, stability (\emph{anxious}--\emph{calm}) and sociability (\emph{solitary}--\emph{sociable}) \citep{grand-etal-2022}; theoretical-partition congruence was scored by NMI and ARI; and \texttt{sfa\_jinglejangle()} screened the five subscales (8B item and label vectors, flag threshold 0.20).
+
+\emph{Refinement.} Redundancy screening used Unique Variable Analysis (threshold 0.25) and, as a check, the direct cosine criterion (threshold 0.85); \texttt{sfa\_simplify()} built a short form (anchor selection, five items per construct, 50 to 25 items); and \texttt{sfa\_item\_fit()} vetted three new candidate items. Vetting embeds new text, so it ran in the default on-device model's 0.6B space, with the reference model deliberately fit \emph{without} the scoring column (rationale in the Results); the keying-free similarity side is unaffected.
+
+\emph{Model-size comparison.} The mean-centered Pearson matrix and four-criterion retention comparison were recomputed from same-family 0.6B (1,024-dimensional) and 4B (2,560-dimensional) embeddings of the same items alongside the 8B used throughout.
+
+\emph{Visualization.} The script regenerates the mean-centered Pearson and NLI similarity heatmaps, item maps under all four projection methods, the scree plot with parallel-analysis overlay, and the loadings heatmap.
+
+\emph{Human benchmark.} After the Materials cleaning, the 18 reverse-keyed items were rescored ($6 - x$, the standard direction), yielding the keyed $50 \times 50$ Pearson matrix; the verbatim (unkeyed) matrix was kept for the keying-free comparisons. The human EFA used \texttt{psych::fa} \citep{revelle-2026} on the keyed correlations (minimum residual, oblimin, $n = 874{,}434$), factors fixed a priori at the theoretical five \citep{goldberg-1990}; the Results add a conventional parallel-analysis recommendation for context.
+
+\emph{Semantic--behavioral comparison.} Coherence was operationalized at three levels. (a) \texttt{sfa\_congruence()} gave structural congruence of the main fit with the human EFA on all five metrics, the disattenuated one computed separately at the item-pair level and reported as missing rather than suppressed where the keying flip leaves split-half reliability undefined (see the Results). (b) Item-pair agreement was the Pearson correlation of each of the five semantic matrices with the two human matrices over all 1,225 unique item pairs. (c) For the encoding comparison, a five-factor model was fit under every encoding (and the NLI matrix) and scored against theory, the human EFA (mean best-match $|\phi|$ congruence; oblimin factors are sign-indeterminate), the human matrices, and the internal diagnostics, on the metrics defined in the Results.

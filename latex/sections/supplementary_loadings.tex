@@ -1,0 +1,151 @@
+% supplementary_loadings.tex
+\subsection{Full Loading Matrices}
+
+Tables~\ref{tab:s-semantic-loadings} and~\ref{tab:s-human-loadings} report
+the complete oblimin-rotated loading matrices for the five-factor semantic
+solution (mean-centered Pearson encoding of the Qwen3-Embedding-8B item
+vectors) and the five-factor human-response solution
+(minres/oblimin on keyed response correlations, $N = 874{,}434$),
+as written by the reproduction script to
+\texttt{output/semantic\_loadings.csv} and
+\texttt{output/human\_loadings.csv}.
+
+{\renewcommand{\baselinestretch}{1}\footnotesize
+\begin{longtable}{llrrrrr}
+\caption{Semantic factor loadings for the 50 IPIP Big-Five Factor Marker
+items (mean-centered Pearson encoding, minres extraction, oblimin
+rotation)}
+\label{tab:s-semantic-loadings}\\
+\toprule
+Item & Domain & MR3 & MR1 & MR2 & MR5 & MR4 \\
+\midrule
+\endfirsthead
+\multicolumn{7}{l}{Table~\ref{tab:s-semantic-loadings} (continued)}\\
+\toprule
+Item & Domain & MR3 & MR1 & MR2 & MR5 & MR4 \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+E1 & Extraversion & .093 & .308 & .076 & .354 & .148 \\
+E2 & Extraversion & .051 & .196 & .449 & .203 & .122 \\
+E3 & Extraversion & .084 & .061 & .127 & .752 & .013 \\
+E4 & Extraversion & $-$.001 & .546 & .206 & .161 & .008 \\
+E5 & Extraversion & .037 & .205 & .117 & .385 & .257 \\
+E6 & Extraversion & .093 & .175 & .432 & .065 & .190 \\
+E7 & Extraversion & .005 & .110 & .120 & .509 & .182 \\
+E8 & Extraversion & .062 & .220 & .570 & .169 & $-$.044 \\
+E9 & Extraversion & $-$.001 & .232 & .225 & .450 & .066 \\
+E10 & Extraversion & .094 & .034 & .408 & .390 & .014 \\
+N11 & Neuroticism & .817 & .073 & $-$.001 & .013 & .023 \\
+N12 & Neuroticism & .176 & .395 & .079 & .347 & $-$.093 \\
+N13 & Neuroticism & .490 & .177 & .154 & .022 & .157 \\
+N14 & Neuroticism & .297 & .170 & .319 & .141 & .022 \\
+N15 & Neuroticism & .801 & .074 & .069 & .054 & $-$.042 \\
+N16 & Neuroticism & 1.003 & $-$.020 & .010 & $-$.053 & $-$.029 \\
+N17 & Neuroticism & .790 & .034 & $-$.009 & .058 & .053 \\
+N18 & Neuroticism & .860 & .027 & $-$.087 & .019 & .029 \\
+N19 & Neuroticism & .871 & .057 & .055 & $-$.071 & $-$.012 \\
+N20 & Neuroticism & .574 & .086 & .104 & .096 & .082 \\
+A21 & Agreeableness & .149 & .039 & .718 & .128 & $-$.043 \\
+A22 & Agreeableness & .041 & .030 & .230 & .485 & .261 \\
+A23 & Agreeableness & .267 & .193 & .146 & .211 & .113 \\
+A24 & Agreeableness & .453 & $-$.082 & .069 & .425 & .141 \\
+A25 & Agreeableness & .084 & .000 & .786 & .025 & $-$.031 \\
+A26 & Agreeableness & .390 & .106 & .043 & .303 & .100 \\
+A27 & Agreeableness & $-$.023 & .030 & .895 & .072 & $-$.029 \\
+A28 & Agreeableness & .077 & .459 & .171 & .308 & $-$.026 \\
+A29 & Agreeableness & .553 & $-$.158 & .073 & .390 & .119 \\
+A30 & Agreeableness & .179 & .203 & .046 & .596 & $-$.001 \\
+C31 & Conscientiousness & .050 & .626 & $-$.056 & .159 & .139 \\
+C32 & Conscientiousness & .091 & .617 & .144 & .070 & $-$.029 \\
+C33 & Conscientiousness & .064 & .566 & .041 & .091 & .233 \\
+C34 & Conscientiousness & .354 & .503 & .081 & $-$.046 & .070 \\
+C35 & Conscientiousness & .103 & .716 & .004 & $-$.001 & .050 \\
+C36 & Conscientiousness & .207 & .566 & .125 & $-$.103 & .022 \\
+C37 & Conscientiousness & .082 & .567 & .048 & .121 & .103 \\
+C38 & Conscientiousness & .085 & .567 & .336 & $-$.094 & $-$.048 \\
+C39 & Conscientiousness & .082 & .677 & $-$.034 & .093 & .066 \\
+C40 & Conscientiousness & .074 & .605 & .046 & $-$.032 & .207 \\
+O41 & Openness & .063 & .263 & $-$.034 & .222 & .450 \\
+O42 & Openness & .244 & $-$.122 & .350 & $-$.095 & .563 \\
+O43 & Openness & .181 & .155 & $-$.027 & .169 & .554 \\
+O44 & Openness & $-$.045 & .071 & .615 & $-$.128 & .403 \\
+O45 & Openness & .012 & .300 & $-$.036 & .126 & .582 \\
+O46 & Openness & .155 & $-$.003 & .438 & $-$.093 & .437 \\
+O47 & Openness & .220 & .205 & $-$.009 & .217 & .332 \\
+O48 & Openness & .162 & .235 & .070 & .086 & .425 \\
+O49 & Openness & .164 & .351 & .100 & .098 & .250 \\
+O50 & Openness & .069 & .249 & $-$.024 & .150 & .606 \\
+\end{longtable}
+}
+
+{\renewcommand{\baselinestretch}{1}\footnotesize
+\begin{longtable}{llrrrrr}
+\caption{Human-response factor loadings for the same 50 items
+(keyed correlations, $N = 874{,}434$; minres extraction, oblimin
+rotation)}
+\label{tab:s-human-loadings}\\
+\toprule
+Item & Domain & MR4 & MR1 & MR3 & MR2 & MR5 \\
+\midrule
+\endfirsthead
+\multicolumn{7}{l}{Table~\ref{tab:s-human-loadings} (continued)}\\
+\toprule
+Item & Domain & MR4 & MR1 & MR3 & MR2 & MR5 \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+E1 & Extraversion & .712 & .042 & $-$.010 & $-$.015 & $-$.012 \\
+E2 & Extraversion & .713 & .086 & .053 & $-$.026 & .008 \\
+E3 & Extraversion & .623 & $-$.189 & .179 & .061 & $-$.068 \\
+E4 & Extraversion & .755 & $-$.023 & $-$.039 & .018 & $-$.027 \\
+E5 & Extraversion & .714 & .012 & .123 & .067 & .034 \\
+E6 & Extraversion & .522 & .005 & .073 & .010 & .235 \\
+E7 & Extraversion & .721 & $-$.004 & .069 & .012 & $-$.019 \\
+E8 & Extraversion & .618 & .039 & $-$.109 & $-$.070 & .026 \\
+E9 & Extraversion & .653 & .027 & $-$.105 & $-$.050 & .103 \\
+E10 & Extraversion & .684 & $-$.079 & $-$.018 & .014 & $-$.019 \\
+N11 & Neuroticism & $-$.074 & .708 & .125 & .061 & $-$.055 \\
+N12 & Neuroticism & $-$.064 & .559 & .013 & .101 & $-$.004 \\
+N13 & Neuroticism & $-$.125 & .611 & .208 & .092 & .017 \\
+N14 & Neuroticism & $-$.129 & .349 & .059 & $-$.069 & .092 \\
+N15 & Neuroticism & .005 & .505 & .004 & $-$.029 & $-$.095 \\
+N16 & Neuroticism & .027 & .746 & .031 & .005 & $-$.068 \\
+N17 & Neuroticism & .077 & .719 & $-$.021 & $-$.091 & .008 \\
+N18 & Neuroticism & .063 & .741 & $-$.035 & $-$.096 & .005 \\
+N19 & Neuroticism & .055 & .719 & $-$.175 & .041 & $-$.017 \\
+N20 & Neuroticism & $-$.219 & .574 & .017 & $-$.135 & .114 \\
+A21 & Agreeableness & $-$.049 & $-$.056 & .499 & $-$.006 & .061 \\
+A22 & Agreeableness & .282 & $-$.041 & .522 & $-$.040 & .060 \\
+A23 & Agreeableness & $-$.180 & $-$.240 & .418 & .144 & $-$.071 \\
+A24 & Agreeableness & $-$.055 & .033 & .807 & $-$.007 & $-$.004 \\
+A25 & Agreeableness & .060 & $-$.027 & .661 & $-$.038 & $-$.002 \\
+A26 & Agreeableness & $-$.063 & .131 & .618 & .001 & $-$.074 \\
+A27 & Agreeableness & .225 & $-$.084 & .613 & $-$.035 & .015 \\
+A28 & Agreeableness & .077 & $-$.014 & .559 & .061 & .001 \\
+A29 & Agreeableness & .019 & .100 & .700 & .019 & .033 \\
+A30 & Agreeableness & .260 & $-$.100 & .362 & .086 & .062 \\
+C31 & Conscientiousness & .015 & .000 & $-$.032 & .648 & .091 \\
+C32 & Conscientiousness & $-$.051 & $-$.035 & $-$.069 & .573 & $-$.105 \\
+C33 & Conscientiousness & $-$.068 & .075 & .062 & .405 & .251 \\
+C34 & Conscientiousness & .012 & $-$.279 & $-$.010 & .556 & $-$.003 \\
+C35 & Conscientiousness & .073 & .009 & $-$.002 & .632 & $-$.079 \\
+C36 & Conscientiousness & $-$.024 & $-$.088 & $-$.037 & .614 & $-$.043 \\
+C37 & Conscientiousness & $-$.049 & .160 & $-$.004 & .581 & .040 \\
+C38 & Conscientiousness & .006 & $-$.152 & .097 & .465 & .049 \\
+C39 & Conscientiousness & .053 & .111 & .058 & .634 & $-$.054 \\
+C40 & Conscientiousness & .002 & .052 & .009 & .456 & .249 \\
+O41 & Openness & $-$.015 & $-$.011 & $-$.058 & .035 & .596 \\
+O42 & Openness & $-$.068 & $-$.189 & .014 & $-$.030 & .579 \\
+O43 & Openness & $-$.014 & .107 & .091 & $-$.099 & .545 \\
+O44 & Openness & $-$.095 & $-$.109 & .114 & $-$.100 & .518 \\
+O45 & Openness & .166 & $-$.027 & $-$.069 & .122 & .575 \\
+O46 & Openness & .011 & $-$.032 & .091 & $-$.052 & .499 \\
+O47 & Openness & .019 & $-$.115 & $-$.044 & .154 & .474 \\
+O48 & Openness & $-$.006 & .076 & $-$.126 & $-$.024 & .564 \\
+O49 & Openness & $-$.185 & .115 & .187 & .037 & .396 \\
+O50 & Openness & .122 & .017 & .008 & .000 & .662 \\
+\end{longtable}
+}

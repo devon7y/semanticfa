@@ -1,0 +1,59 @@
+% Requires apa7.cls in the latex/ directory (bundled with the write-paper skill, copied at init).
+\documentclass[man,floatsintext,natbib]{apa7}
+
+% amsmath for any inline math (congruence coefficients, equations, etc.)
+\usepackage{amsmath}
+
+% longtable for the multi-page supplementary loading matrices (apa7's man
+% mode does not load it itself).
+\usepackage{longtable}
+
+% Missing-citation flag — renders red in the PDF (xcolor is provided by apa7).
+% \MISSINGCITE{description}  use in-text when a reference is unknown.
+\newcommand{\MISSINGCITE}[1]{\textcolor{red}{\textbf{[??? #1]}}}
+
+% apa7's `natbib` option loads apacite in natbibapa mode, so \citep/\citet/\citealp
+% are available and render APA-style. apa7 SETS THE BIBLIOGRAPHY STYLE ITSELF — do NOT
+% add \bibliographystyle (no apalike, no apacite line); doing so breaks APA formatting.
+
+\title{semanticfa: An R Package for Response-Free Semantic Factor Analysis of Psychometric Scales}
+\shorttitle{SEMANTIC FACTOR ANALYSIS IN R}
+
+% Author names + affiliations. The optional []-list maps each author to affiliation
+% number(s); the \authorsaffiliations braces list the affiliations in order.
+\authorsnames[{1}, {1}]{Devon Yanitski, Chris Westbury}
+\authorsaffiliations{%
+  {Department of Psychology, University of Alberta, Edmonton, Alberta, Canada}}
+
+\authornote{%
+Correspondence concerning this article should be addressed to Devon Yanitski,
+Department of Psychology, University of Alberta, Edmonton, Alberta, Canada.
+E-mail: dyanitsk@ualberta.ca}
+
+% APA 7 IN-TEXT et al.: for every work with 3+ authors, APA 7 uses "First et al."
+% from the FIRST citation. apacite defaults to the older APA-6 "list all authors on
+% first cite" rule, so you MUST force the short form by listing every cited 3-or-more-
+% author bibkey in \shortcites. Keep this list in sync as citations are added.
+\shortcites{bowman-etal-2015,grand-etal-2022,christensen-etal-2023,pellert-etal-2026,garrido-etal-2025,wang-etal-2026,guenole-etal-2025,%
+borsboom-etal-2004,stanghellini-etal-2024,%
+milano-etal-2025a,milano-etal-2025b,casella-etal-2024,schoenegger-etal-2025,ravenda-etal-2025,maharjan-etal-2025,lara-etal-1992,%
+huang-etal-2025,kambeitz-etal-2025,kojima-etal-2026,russell-lasalandra-etal-2026,%
+mikolov-etal-2013,pennington-etal-2014,vaswani-etal-2017,devlin-etal-2019,karimimahabadi-etal-2019,gunther-etal-2019,mandera-etal-2017,buchanan-etal-2001,kmetty-etal-2021,hussain-etal-2024,low-etal-preprint,%
+liu-etal-2025,lim-etal-2025,han-etal-2025,peters-etal-2025,bunt-etal-2025,eberhardt-etal-2025,suarez-alvarez-etal-2026,grobelny-etal-2025}
+
+% Abstract + keywords live in the preamble for apa7 (read before \maketitle).
+\input{sections/abstract}
+
+\begin{document}
+\maketitle
+
+\input{sections/introduction}
+\input{sections/methods}
+\input{sections/results}
+\input{sections/discussion}
+\input{sections/conclusion}
+
+\bibliography{references}
+
+\input{sections/supplementary}   % appended after the references
+\end{document}
