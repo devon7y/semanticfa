@@ -14,13 +14,13 @@ transfers to the semantic matrix because shared semantic reference drives such
 dependence.
 
 A parallel line transports network-psychometric retention onto the embedding matrix.
-Exploratory Graph Analysis (EGA) estimates dimensionality before data by community
-detection \citep{golino-2026, garrido-etal-2025}. Benchmarking six facets,
-\citet{garrido-etal-2025} found component pipelines with Kaiser's rule
-\citep{kaiser-1960} or parallel analysis \citep{horn-1965} severely overestimated
-dimensionality, whereas EGA recovered it, and EGA after
-weighted-topological-overlap filtering \citep{christensen-etal-2023} approached
-near-perfect recovery. \citet{golino-2026} uses Dynamic EGA to optimize recovery.
+Exploratory Graph Analysis (EGA) estimates dimensionality by community detection
+\citep{golino-2026, garrido-etal-2025}: benchmarking six facets,
+\citet{garrido-etal-2025} found Kaiser's rule \citep{kaiser-1960} and parallel
+analysis \citep{horn-1965} overestimated dimensionality while EGA recovered it,
+near-perfectly after weighted-topological-overlap filtering
+\citep{christensen-etal-2023}; \citet{golino-2026} adds Dynamic EGA to optimize
+recovery.
 The geometry also supports response-free screening: \citet{jung-seo-2025}
 selected centroid-proximal IPIP markers by $k$-means, recovering a 30-item form
 matching response-based reductions \citep{openpsychometrics-2018}; and
@@ -32,10 +32,11 @@ showing item cosines track response correlations; and \citet{low-etal-preprint},
 flagging a ``psychometric bias'' judging models only by label prediction, name
 embedding-based factor analysis as open.
 
-The generative wave drafts items rather than dissecting them.
-\citet{russell-lasalandra-etal-2026} have a model write a pool pruned in silico
-(EGA, UVA, bootstrap EGA), its community structure matching representative samples.
-\citet{huang-etal-2025} cluster item embeddings to flag redundancy, recovering
+A generative wave drafts items rather than dissecting them: the AI-GENIE framework
+\citep{russell-lasalandra-etal-2026} has a model write a pool pruned in silico
+(EGA, UVA, bootstrap EGA), reported to match representative samples for the
+best-performing models. Others dissect existing items: \citet{huang-etal-2025}
+cluster item embeddings to flag redundancy, recovering in a preliminary study
 Grit--Conscientiousness overlap while keeping gratitude separate. A parallel strand
 uses models as respondents: \citet{liu-etal-2025} calibrate LLM responses with item
 response theory, obtaining difficulties correlating with human values but narrow
@@ -54,11 +55,10 @@ $\sim$1M Reddit posts. Urgency comes from a threat to response data:
 checks, so text-only checks are immune to synthetic-respondent fraud.
 
 A further line asks whether item language carries item-response-theory parameters.
-Synthesizing 37 studies, \citet{peters-etal-2025} find text recovers
+Synthesizing 37 articles, \citet{peters-etal-2025} find text recovers
 \emph{difficulty} usefully ($r$ up to $.87$); \citet{han-etal-2025} find
 \emph{discrimination} largely text-resistant; and \citet{ormerod-2026} recover it
-better by simulating graded-ability responses with fine-tuned models
-\citep[Qwen-3;][]{qwen-2025}. The case is sharpened by critique: \citet{uher-2025}
+better by simulating graded-ability responses with fine-tuned generative models. The case is sharpened by critique: \citet{uher-2025}
 argues statistics is not measurement and warns of a \emph{cardinal error}---mistaking
 judgments of verbal statements for measurements of what they describe; yet this same
 critique supplies the divergence mechanism, items' inbuilt semantics accounting for
