@@ -1,0 +1,35 @@
+% introduction_meaning.tex
+\subsection{Meaning as Use, Distributional Semantics, and Embeddings}
+
+A theory of word meaning is the natural starting point for analyzing a scale's
+language. \citet[\S43]{wittgenstein-1953} holds, for ``a large class of cases,''
+that ``the meaning of a word is its use in the language''; and a category like
+\emph{games} shares no single essence, only ``a complicated network of
+similarities''---\emph{family resemblance} \citep[\S\S66--67]{wittgenstein-1953}. A
+construct, likewise, can cohere through graded, overlapping resemblances rather than
+a hidden shared property---the relational picture distributional similarity makes
+measurable.
+
+Meaning-as-use supplies no method; \emph{distributional} theory narrows it to a
+claim about co-occurrence. \citet{joos-1950} defined a unit's meaning as the
+conditional probabilities of its occurrence with all others, and
+\citet{harris-1954} the distribution of an element as the sum of its environments---
+``difference of meaning correlates with difference of distribution.'' Modern
+embeddings make this computable: \citet{mikolov-etal-2013} learn word vectors whose
+offsets encode relations as arithmetic
+($\mathrm{king}-\mathrm{man}+\mathrm{woman}\approx\mathrm{queen}$), and
+\citet{pennington-etal-2014} factorize global word--word co-occurrence directly.
+Such spaces implement a theory of semantic memory, predicting human categorization,
+synonymy, similarity, and priming at near-interrater levels, with interpretable
+structure recoverable post hoc \citep{gunther-etal-2019}; a complementary
+prediction-based line matched human norms and released precomputed spaces behind a
+query interface \citep{mandera-etal-2017}.
+
+Scale items are sentences. The same intuition was scaled by the \emph{transformer}
+\citep{vaswani-etal-2017}, whose self-attention makes each token a function of its
+context, and by BERT's deep bidirectional \emph{contextual} embeddings
+\citep{devlin-etal-2019}. Because averaged BERT tokens compare worse than averaged
+static vectors, \citet{reimers-gurevych-2019} fine-tune a siamese Sentence-BERT
+placing similar sentences close, relatedness read off as cosine similarity. This
+capability---whole items in a metric space where proximity tracks meaning, alongside
+validated lexical co-occurrence spaces \citep{westbury-preprint}---is what SFA uses.

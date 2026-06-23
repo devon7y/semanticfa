@@ -1,4 +1,26 @@
-% introduction_overview.tex — un-headed opening passage. In apa7 man mode the
-% repeated title above serves as the Introduction heading.
+% introduction_overview.tex
+\subsection{The Question and the Thesis}
 
-A psychometric scale is two things at once: to the respondent, prompts to be answered; to the discipline, a theory in miniature, each item a public, ordinary-language commitment about what the target construct involves. Classical factor analysis examines the first---the covariance structure of responses---and can begin only after people answer. This article concerns the second: the structure of the items' meaning, which predates any respondent and which language-model embeddings now make measurable. We introduce \texttt{semanticfa}, an R package for semantic factor analysis (SFA)---exploratory factor analysis of the similarity structure of such embeddings, with no response data at any stage---and demonstrate the complete workflow on the 50-item International Personality Item Pool (IPIP) Big-Five Factor Markers, validating the semantic structure against a conventional factor analysis of more than 870{,}000 respondents. The Introduction gives a theoretical account of analyzing a scale's language, proposing semantic--behavioral coherence---agreement between the two structures---as a relation in the construct's nomological network; reviews the consolidating literature on language models and psychometrics by what each line of work does; and introduces the package and the demonstration.
+Every factor analysis of a rating scale begins with items written in ordinary
+language, and we take that wording seriously as data. A scale's items constitute a
+\emph{semantic proposal}---a deliberate attempt, in language, to sample the
+content that constitutes a construct---and modern language-model embeddings make
+that proposal measurable before any respondent answers, mapping each item to a
+point in a vector space whose geometry encodes its meaning. We introduce
+\texttt{semanticfa} \citep{yanitski-westbury-2026}, an R package for
+\emph{semantic factor analysis} (SFA): exploratory factor analysis of the
+similarity structure of language-model embeddings of scale items, requiring no
+human response data at any stage.
+
+The motivating distinction is between two relational structures over the same
+items. Classical factor analysis recovers a scale's \emph{behavioral} structure,
+the latent dimensions of person-by-item response covariance; SFA recovers its
+\emph{semantic} structure, the geometry of item meaning. These are structurally
+parallel analyses on different data sources, and their agreement,
+\emph{semantic--behavioral coherence}, is an estimable relation in a construct's
+nomological network: convergence is intranetwork validity evidence, while
+divergence is itself informative, locating where the linguistic and behavioral
+renderings of a construct come apart. Throughout, SFA \emph{complements}, never
+replaces, response-based factor analysis. We develop this in three movements---the
+theory of analyzing a scale's language, a review of language models in
+psychometrics, and the positioning of \texttt{semanticfa} and its demonstration.

@@ -1,10 +1,36 @@
 % introduction_package.tex
-\subsection{The \texttt{semanticfa} Package}
+\subsection{The Present Package}
 
-Decades before embeddings, \citet{lara-etal-1992} held factor interpretation to be at bottom a semantic problem, proposed predicates and multivalued modal logic to mechanize it, and predicted such automation would become a practical necessity for large problems; language models now supply the empirical geometry of meaning that program lacked. ``Semantic factor analysis'' was coined twice, independently: by \citet{muller-2026}, whose pipeline---static Word2Vec vectors of the 50 IPIP marker adjectives weighted by sample mean responses, reduced by principal components, $k$-means-clustered---recovered all five Big Five dimensions at 62.5\% average cluster purity in 55 respondents whose confirmatory factor analysis had collapsed; and by us, for the response-free framework presented here \citep{yanitski-westbury-2026}. The package generalizes the label in three ways: full item stems and contextual sentence encoders rather than single adjectives; no response data at any stage; and the complete exploratory workflow detailed below rather than cluster-purity assignment.
+These threads converge on one opportunity. Item geometry encodes relational
+knowledge---ordering items between antonymic anchors recovers human feature
+judgements from the embedding alone, though intra-linguistically
+\citep{grand-etal-2022}, which is why a scale's \emph{wording}, not the attribute,
+is what embeddings make measurable \citep{westbury-preprint}. What has been missing
+is a single, general-purpose, response-free toolkit bringing the full discipline of
+exploratory factor analysis to that structure in one reproducible workflow.
 
-What separates these demonstrations from a usable methodology is infrastructure. Psycholinguists have long supplied it---witness \citet{mandera-etal-2017}'s precomputed, queryable English and Dutch spaces for colleagues who cannot train their own---and the concern persists: \citet{hussain-etal-2024}'s tutorial holds open, locally runnable models to be a precondition for transparency, reproducibility, and data protection, and shows cosine similarities among personality-item embeddings tracking inter-item and inter-construct response correlations (more closely for larger models) and a low-dimensional projection of construct embeddings largely recovering the Big Five grouping. Psychometric discipline is still missing: \citet{low-etal-preprint} note that language-based assessment rarely faces the validity and reliability evaluation demanded of any rating scale, and flag factor analysis on embeddings in place of rating-scale responses as an open direction.
+\texttt{semanticfa} \citep{yanitski-westbury-2026} is that toolkit. Built on R
+\citep{rcoreteam-2025} and interoperating with the factor-analytic and
+network-psychometric ecosystem \citep{revelle-2026, golino-christensen-2026}, it
+implements SFA in five stages: \emph{similarity construction} under keyed,
+keying-free, and natural-language-inference encodings; \emph{retention} by
+multi-criterion consensus; \emph{extraction} with Monte Carlo--calibrated
+diagnostics; \emph{interpretation} by anchoring, semantic projection, congruence,
+and jingle--jangle screening; and response-free \emph{refinement}. Semantic and
+behavioral solutions are compared by the chance-corrected adjusted Rand index
+\citep{hubert-arabie-1985}.
 
-The most complete toolkit to date, the AIGENIE R package \citep{russell-lasalandra-etal-2026}, implements the AI-GENIE framework for generative psychometrics: a large language model drafts a candidate item pool, the items are embedded, and the EGA and UVA machinery introduced above (plus bootstrap EGA for stability) prunes the pool into a structurally vetted set entirely in silico; a companion function applies the same reduction to user-supplied items.
+Positioning clarifies what is new. The name \emph{semantic factor analysis} was
+coined independently by \citet{muller-2026} for a Word2Vec recovery of Big-Five
+structure from adjectives \citep{mikolov-etal-2013, goldberg-1990}, each scaled by
+its mean response and partitioned. Our use denotes a distinct, broader method: a
+fully response-free factor analysis of the embedding similarity structure, not
+restricted to adjectives---answering, rather than committing, the cardinal error
+\citet{uher-2025} identifies.
 
-AIGENIE is generation-centric; its analysis-centric complement, a general-purpose toolkit uniting the methods reviewed above in one reproducible workflow for the exploratory factor analysis of existing scales in semantic space, is the \texttt{semanticfa} package \citep{yanitski-westbury-2026}: five documented stages in R \citep{rcoreteam-2025}---similarity (keyed, keying-free, and entailment-based encodings, including a signed cross-encoder-scored NLI matrix), retention (embedding-adapted parallel analysis with a multi-criterion consensus), extraction (the expected adequacy and fit diagnostics, plus optional Monte Carlo calibration of every index against matched null embeddings), interpretation (construct anchors, researcher-defined bipolar axes, congruence with theoretical partitions or fitted human solutions, and jingle--jangle screening), and refinement (redundancy flagging, response-free candidate short forms, and vetting of new items against an existing fit)---each detailed with its published basis in the Method section. The pipeline accepts raw item text or a precomputed embedding or similarity matrix; fitted models convert to \texttt{psych} objects \citep{revelle-2026}; and the package ships on CRAN with a worked example for every exported function.
+We demonstrate the package by exercising every exported function on the 50-item
+IPIP Big-Five Factor Markers, embedding them with Qwen3-Embedding-8B
+\citep{qwen-2025} and validating the semantic structure against a conventional
+factor analysis of 874,434 Open-Source Psychometrics respondents
+\citep{openpsychometrics-2018}, asking whether consensus retention recovers the Big
+Five and how the factors congrue. We turn now to the method.

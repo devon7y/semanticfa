@@ -1,6 +1,45 @@
 % introduction_taxonomy.tex
-\subsection{Taxonomy, Jingle--Jangle Fallacies, and Construct Redundancy}
+\subsection{Taxonomy, Jingle--Jangle, and Clinical Structure}
 
-Embeddings also probe the field's taxonomy: scales with different content share a label (the jingle fallacy); near-interchangeable ones bear different labels (the jangle fallacy). \citet{wulff-mata-2025} co-embedded 4{,}452 IPIP items, 459 scales, and 277 construct labels with a fine-tuned sentence transformer whose similarities predicted empirical internal consistencies ($r = .75$ in sample, $.61$ out of sample), recovered most inventories' factor structures, tracked item and scale intercorrelations, and made misalignment measurable---an automated audit flagged 340 jingle and 164 jangle candidates among IPIP scale pairs, a count that clustering and relabeling more than halved with roughly a quarter as many labels. \citet{wulff-mata-2026} add three applications---mapping measure relations, relabeling taxonomies, and generating new items or constructs vetted in the same space---cautioning that semantic proximity does not settle theoretical identity (subjective and physiological stress may remain conceptually distinct) and that automated consolidation should inform, not replace, expert judgment.
+Embedding analyses also address \emph{taxonomic incommensurability}, the difficulty
+of comparing constructs across traditions that map theory onto measurement
+incompatibly \citep{wulff-mata-2025}. \citet{wulff-mata-2025} placed 4,452 IPIP
+items, 459 scales, and 277 labels in a shared space, recovering known psychometric
+properties, and used the joint content--label embedding to automate
+\emph{jingle--jangle} detection---a jingle when same-labeled scales differ
+semantically, a jangle when similar scales carry distinct labels---flagging 504
+fallacies and a taxonomy with $\approx75\%$ fewer labels.
+\citet{wulff-mata-2026} generalize this as scalable \emph{conceptual
+engineering}, insisting it inform rather than replace expert judgment, since
+embeddings inherit training biases.
 
-The same geometry detects construct redundancy: \citet{huang-etal-2025} embedded items with a large proprietary model, treated cosine similarities as ``synthetic correlations,'' and applied agglomerative clustering, collecting no responses. Against theory-based benchmarks it separated unrelated constructs---conscientiousness from gratitude, within-cluster similarities far exceeding between-cluster ones---and reproduced a documented redundancy: grit's perseverance-of-effort facet joined conscientiousness, not its own scale, where meta-analytic response data locate the overlap. Output was stable across input configurations and closer to the expected structure than prompted chatbots---reproducible semantic analysis requires an explicit embedding-plus-clustering pipeline, not ad hoc prompting.
+The logic extends to clinical items, themselves verbal symptom descriptions.
+\citet{kambeitz-etal-2025} embedded four psychopathology scales (DASS, O-LIFE, AQ,
+Prodromal Questionnaire), found cosines tracking empirical item-pair correlations,
+and showed $k$-means clustering reproduced the established subdomains, scored by the
+adjusted Rand index \citep{hubert-arabie-1985}---better than chance, worse than the
+data. The contrast is sharpest against an external criterion: across 145 symptom
+items, \citet{kojima-etal-2026} extracted factors from item-embedding cosines and
+from
+response polychorics, finding the general psychopathology factor nearly
+interchangeable (congruence $=.97$) yet specific factors diverging of non-semantic
+origin---insomnia and somatic items fused only in responses, the syndromic factor
+predicting diagnostic histories better than the semantic one. On the same corpus we
+revisit \citep{openpsychometrics-2018}, \citet{stanghellini-etal-2024} introduced
+\emph{semantic loadings}---overlaps between cognitive-network communities of item
+concepts and exploratory-graph factors of responses---resolving emotional from
+physical anxiety facets EFA left merged.
+
+The relation is construct-dependent: modeling 463 item pairs,
+\citet{zhang-qiu-2026} found cosine similarity predicted inter-item correlations
+but with large random-slope variance and a negative intercept--slope
+correlation---where baseline cohesion is high, similarity adds less. The same logic
+recovers social structure:
+\citet{kmetty-etal-2021} factor-analyzed a similarity matrix over 234 occupation
+terms, extracting dimensions correlating $r\approx.71$--$.78$ with the survey-based
+socio-economic index, with informative divergences (health-care occupations
+under-ranked, an organizational-power dimension emerging from text alone). That word
+meaning is itself a measurable resource is long established: \citet{buchanan-etal-2001}
+showed semantic-neighborhood measures from a co-occurrence space predict word
+recognition, with a precisely quantifiable advantage over feature-based
+measures.\looseness=-1

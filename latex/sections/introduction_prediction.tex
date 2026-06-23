@@ -1,10 +1,44 @@
 % introduction_prediction.tex
-\subsection{Predicting Response Structure From Item Language}
+\subsection{Embeddings Predict Factor Structure and Item Correlations}
 
-Empirical inter-item correlations can be predicted from item text alone. \citet{hommel-arslan-2025} fine-tuned a sentence transformer to make contradictions negatively similar, adapted it to roughly 90,000 public-survey item pairs, and preregistered predictions for 246 novel personality, clinical, social, occupational, and attitude items; disattenuated accuracy was .71 (pilot holdout) and .59 (validation) for item-pair correlations, .84 for scale intercorrelations and reliabilities alike---pilot-study error margins at zero cost and delay. Even general-purpose embeddings carry much of the signal: OpenAI text-embedding cosines correlated .77 with the 42-item Depression Anxiety Stress Scales' inter-item correlations and put the empirically most correlated partner in an item's three nearest neighbors for 95\% of items \citep{ravenda-etal-2025}; a personality-tuned MPNet encoder reached .67 on the 96 VIA Inventory of Strengths items (31,697 respondents) \citep{feraco-toffalini-2025}. The relation is uneven: multilevel analysis of 463 item pairs in nine construct dimensions found prediction on average but substantial variation, weakest where baseline cohesion was strongest \citep{zhang-qiu-2026}.
+A growing literature shows embedding similarity recovers inventories' a-priori
+factor structure without responses. \citet{milano-etal-2025a} embedded four scales
+(Big-Five markers, RIASEC, Humor Styles, DASS), and a principal component analysis
+of cosines loaded over 70\% of items on their predicted construct, loadings
+correlating with response loadings; \citet{casella-etal-2024} report the same for
+the Big Five. \citet{guenole-etal-2025} formalize a \emph{substitutability
+assumption}---an item's embedding stands in for its response vector---and run
+\emph{pseudo-factor analysis} on the cosine matrix, recovering the five- and
+six-factor IPIP NEO-300 and HEXACO-240 structures.
 
-If embedding similarities approximate correlations, the factor-analytic toolbox applies before any respondent is recruited: principal components of a RoBERTa cosine matrix grouped the 50-item Big Five markers questionnaire analyzed here by intended construct, with embedding--response loading correlations above .40 (Spearman) within constructs \citep{casella-etal-2024}. In four inventories (Big Five markers, RIASEC, Humor Styles Questionnaire, DASS-42), \citet{milano-etal-2025a} found over 70\% of items on average loading highest on the assigned construct's component---within-construct correspondence moderate for the Big Five (.40--.65), strong for the DASS (.80--.90)---and termed this ``ex ante'' validation. Formalizing the premise---embeddings substituting for response vectors---\citet{guenole-etal-2025} found exploratory ``pseudo-factor analysis'' of facet-level cosine matrices recovering IPIP-NEO-300 and HEXACO-240 configural structure, though Tucker congruence with empirical loadings generally fell short of equivalence even where factors correlated strongly. Confirmatory variants are conservative: every scale model that fit the semantic matrix in \citet{feraco-toffalini-2025} also fit the empirical one, but roughly half of semantic misfit verdicts were false alarms---still a useful pre-collection screen.
+The convergence comes with informative divergence, not equivalence:
+\citet{guenole-etal-2025} find Tucker congruence often below conventional
+thresholds even as matched factors correlate and non-matched do not, and both
+\citet{milano-etal-2025a} and \citet{casella-etal-2024} report agreeableness and
+extraversion items bleeding together, mirroring their elevated behavioral
+correlation---semantic compression of distinct dimensions, an estimable feature.
+\citet{guenole-etal-2025} bound substitutability by how closely
+training and responding populations resemble each other and intend pseudo-factor
+analysis to check a pool \emph{before} trialing---the response-free use case also
+stated by \citet{milano-etal-2025a} and \citet{milano-etal-2025b}.
 
-A recurring obstacle is reverse keying: pretrained embeddings almost never assign negative similarities---before fine-tuning, \citet{hommel-arslan-2025} found ``I am the life of the party'' no less similar to its polar opposite than to a paraphrase. Some rescore reverse-keyed human responses before comparing structures \citep{milano-etal-2025a, casella-etal-2024}; others adjust the semantic side: contradiction training in \citet{hommel-arslan-2025} improved negatively worded items but left a positive-sign bias (67\% of synthetic correlations positive vs.\ 59\% empirical), and sign-flipping embeddings by theoretical key in \citet{guenole-etal-2025} improved configural recovery for the NEO but fared worst for the HEXACO, consistently blending Emotionality into Honesty--Humility. These partly contradictory remedies make keying a substantive modeling choice, not a nuisance parameter; the demonstration below tests keying-free, sign-flipped, and entailment-based encodings against the same human benchmark.
-
-Machine judgments also rival the experts who would otherwise supply them: \citet{schoenegger-etal-2025} had 254 laypeople, 272 psychology experts, GPT-4o, Claude 3 Opus, and a deep network trained on empirical personality correlations predict 249 SAPA item-pair correlations; every artificial system beat most individual humans---the network topped over 99\% of experts head to head---though median-aggregated expert predictions were statistically indistinguishable from it, and the two general-purpose models trailed both. Humans keep an edge in content validation: embedding models beat a graduate-level panel at assigning items to constructs on the lexically phrased Big Five Inventory (up to 97.5\% for a personality-tuned encoder vs.\ 72\%) but not on the behaviorally phrased Big Five Questionnaire (best model 80\% vs.\ 82\%) \citep{milano-etal-2025b}---how surface language carries content conditions what embeddings recover. Throughout, what is embedded is the scale's language, not the people who answer it; a parallel literature predicts Big Five traits from roughly a million Reddit posts \citep{maharjan-etal-2025}.
+The most direct evidence predicts the empirical inter-item correlations.
+\citet{hommel-arslan-2025} fine-tuned a sentence transformer so cosine proximity
+estimates behavioral correlation, recovering out of sample, across 79 scales,
+interitem correlations at $r=.59$ and scale intercorrelations and reliabilities at
+$r=.84$. To overcome polarity---cosines rarely turn negative---they relabeled the
+SNLI corpus with signed magnitudes, training the model to return negative
+similarities for contradiction, letting a similarity matrix stand in for a
+covariance matrix \citep{hommel-arslan-2025, bowman-etal-2015}.
+This is not confined to fine-tuned encoders: \citet{ravenda-etal-2025} found an
+item's strongest empirical partner among its three nearest semantic neighbors in
+82\% of Big-Five and 95\% of DASS cases, an EFA reproducing the response structure.
+It even rivals expertise: \citet{schoenegger-etal-2025} found AI outpredicted most
+individual humans, experts included, on item-pair correlations, though the residual
+gap cautions these approximate rather than replace empirical values. It is also
+partial: fitting confirmatory models to the cosine matrix (SEMbeddings) against
+31,697 VIA-IS-P respondents, \citet{feraco-toffalini-2025} found semantic and
+empirical correlations agreeing only moderately ($r=.67$), every semantically
+fitting model fitting the data but only half of misfits actually misfitting---so
+coherence is evidence, not identity, and SFA a complement to, not a substitute for,
+data collection.

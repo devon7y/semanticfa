@@ -1,6 +1,42 @@
 % introduction_two_structures.tex
-\subsection{Two Relational Structures Over the Same Items}
+\subsection{Two Structures Over the Same Items}
 
-Psychology's statistical machinery for such relational webs predates construct-validity vocabulary by half a century. Holding character ``a definite and durable `something'\,'' and so measurable, \citet[p.~181]{galton-1884} mapped it from the dictionary, not behavior, estimating in Roget's Thesaurus ``fully one thousand words expressive of character,'' distinct yet overlapping in meaning---founding the lexical tradition and anticipating the semantic-similarity analyses below. \citet{spearman-1904} supplied the inferential engine of ``correlational psychology'': diverse intellectual performances correlate positively; their common variance marks a single general function, estimable with its per-measure saturation from the intercorrelation matrix. Factor analysis---low-dimensional structure from a high-dimensional relational matrix---descends from this move; \citet{joreskog-1969} made it confirmatory---any subset of loadings, factor correlations, and uniquenesses fixed in advance, the rest maximum-likelihood estimated with a likelihood-ratio test of fit---and measurement models testable hypotheses. \citet{goldberg-1990} rejoined the threads: virtually identical five-factor structures emerged across 1{,}431 trait adjectives, ten extraction--rotation combinations, and self- and peer ratings, establishing the Big Five as a robust summary of the English trait lexicon. The object was always a relational matrix whose variables, in the lexical tradition, were language; semantic factor analysis changes the source, not the logic.
+A scale's items support two relational structures. The \emph{behavioral} one has
+a long lineage. \citet{galton-1884} proposed measuring character by tabulating
+``carefully recorded acts,'' and counted some thousand character words, each with
+``a separate shade of meaning, while each shares a large part of its meaning with
+some of the rest.'' \citet{spearman-1904} made it a method: correlated series
+``may be forthwith assumed to indicate and measure something common to both.''
+Pursuing Galton's second reading, \citet{goldberg-1990} showed factor analyses of
+trait-adjective pools recover the Big Five across raters and procedures. SFA pursues
+the first reading, from item-meaning geometry; that the two often coincide is the
+coherence relation we estimate.
 
-A construct enters empirical practice through its items---the researcher's most concrete public commitment, in ordinary language, to the experiences, behaviors, and situations it involves: for \citet{messick-1995}, the content aspect of validity. Reflective or formative \citep{bollen-lennox-1991}, items encode the intended meaning more exactly than any definition. If, as \citet[\S43]{wittgenstein-1953} held for a large class of cases, ``the meaning of a word is its use in the language,'' that meaning is public and analyzable---regularities of use across the language community, prior to and independent of any respondent sample; and a concept needs no sharp boundaries or common essence to do scientific work, its instances sharing only family resemblances \citep[\S\S66--67]{wittgenstein-1953}---apt for constructs whose items cohere without one shared feature. Two relational structures over the same items follow: items cluster behaviorally in the person-by-item response matrix because the same people endorse them, and semantically in the language itself because their words are used alike---recovered, respectively, by classical and semantic factor analysis. Nor is wording behaviorally peripheral: \citet{clark-watson-2019} observe that exact phrasing can greatly influence the construct measured---almost any negative mood term virtually guarantees a substantial negative-affectivity component---and that a single item carries interpretable variance at several construct-hierarchy levels; a method analyzing wording directly is thus a missing instrument.
+The behavioral machinery transfers. Dimensionality long rested on the
+latent-root-one rule, Guttman's weakest lower bound on the correlation matrix's
+rank \citep{kaiser-1960}, with interpretation by rotation invariant to the items
+sampled \citep{kaiser-1958}; because that rule capitalizes on chance, parallel
+analysis retains only eigenvalues exceeding those of random data \citep{horn-1965}.
+We adopt parallel analysis for SFA because it transfers unchanged from a respondent
+correlation matrix to an embedding similarity matrix \citep{horn-1965}.
+Confirmatory factor analysis, fixing loadings and testing whether a structure
+reproduces covariances \citep{joreskog-1969}, furnishes the coherence template: a
+pattern from one source becomes a hypothesis another can corroborate, divergence
+localizing which relations fail. Reading meaning off a solution is an old
+aspiration: \citet{lara-etal-1992} called factor interpretation the method's
+chronic, analyst-dependent bottleneck and sketched assigning factor meanings from
+high-loading variables' predicates---anticipating SFA's computable treatment of the
+items' language.
+
+Coherence thus adds a response-free strand: agreement between item-meaning and
+response-covariance structure is intranetwork validity evidence
+\citep{cronbach-meehl-1955}, the convergent--discriminant logic of the external
+aspect \citep{messick-1995} frames divergence as information, and even a close match
+corroborates rather than constitutes validity \citep{borsboom-etal-2004}. One
+divergence source is well specified:
+\citet{borsboom-2008} shows items can covary through direct causal relations rather
+than a common cause (panic's attack$\rightarrow$worry$\rightarrow$avoidance chain),
+so causal-network domains should show lower coherence, the causal arrow applying
+cleanly only to reflective models \citep{borsboom-etal-2004}. Recovering structure
+from items also echoes Loevinger's structural validity---internal structure should
+parallel external manifestations \citep{clark-watson-2019}.
