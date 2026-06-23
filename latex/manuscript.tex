@@ -44,6 +44,12 @@ liu-etal-2025,lim-etal-2025,han-etal-2025,peters-etal-2025,bunt-etal-2025,eberha
 % Abstract + keywords live in the preamble for apa7 (read before \maketitle).
 \input{sections/abstract}
 
+% apa7's man mode sets \flushbottom, which vertically justifies each page by
+% stretching inter-paragraph glue; on a page with a single paragraph break this
+% strands all the slack in one large mid-page gap. \raggedbottom lets pages end
+% naturally (slack falls to the page bottom) — appropriate for a manuscript draft.
+\raggedbottom
+
 \begin{document}
 \maketitle
 
