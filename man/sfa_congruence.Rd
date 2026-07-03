@@ -28,6 +28,16 @@ requested metric.
 Computes agreement metrics between a semantic factor analysis result and a
 reference factor structure (from empirical data or theory).
 }
+\details{
+The disattenuated metric applies Spearman's (1904) correction
+\eqn{r/\sqrt{r_{xx'}r_{yy'}}} to the correlation between the two matrices'
+item-pair values, estimating each matrix's reliability by a
+Spearman--Brown-corrected odd/even split-half of its lower-triangle entries.
+That reliability construction is this package's own device (values are
+capped at 1). When either split-half reliability is not positive --- as the
+checkerboard sign pattern of \code{"atomic_reversed"} produces --- the
+correction is undefined and \code{NA} is returned with a warning.
+}
 \references{
 Hubert, L., & Arabie, P. (1985). Comparing partitions (adjusted Rand index).
 \emph{Journal of Classification}, 2, 193--218. \doi{10.1007/BF01908075}

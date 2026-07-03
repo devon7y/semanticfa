@@ -64,7 +64,7 @@ sfa_itemplot <- function(x, method = c("tsne", "umap", "pca", "mds"),
   vecs <- NULL
   sim <- NULL
   if (inherits(x, "sfa")) {
-    vecs <- x$embeddings
+    vecs <- x$transformed_embeddings
     if (is.null(vecs)) sim <- x$sim_matrix
     if (is.null(factors)) factors <- x$item_data$factor
     if (is.null(labels))  labels  <- x$item_data$code
@@ -141,6 +141,11 @@ sfa_tsneplot <- function(x, method = c("tsne", "umap", "pca", "mds"), ...) {
   withr::with_seed(seed, {
     if (method == "tsne") {
       if (is.null(perplexity)) perplexity <- max(1, min(30, floor((n - 1) / 3)))
+      if (3 * perplexity > n - 1) {
+        stop("'perplexity' (", perplexity, ") is too large for ", n,
+             " items; t-SNE requires 3 * perplexity <= n - 1 (max here: ",
+             floor((n - 1) / 3), ").", call. = FALSE)
+      }
       ts <- if (!is.null(vecs)) {
         Rtsne::Rtsne(as.matrix(vecs), perplexity = perplexity, pca = TRUE,
                      check_duplicates = FALSE)

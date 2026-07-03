@@ -10,7 +10,10 @@
 #     https://doi.org/10.18653/v1/D15-1075
 #
 # Assigning a NEGATIVE sign to contradictory item pairs to make item similarity
-# valence-aware (polarity calibration of NLI relations) follows:
+# valence-aware adapts the sign convention of (Hommel & Arslan fine-tuned an
+# embedding model on SNLI relabeled with signed cosine magnitudes; here the
+# convention is applied at inference to an off-the-shelf NLI classifier's
+# entailment/contradiction probabilities, with no fine-tuning):
 #
 #   Hommel, B. E., & Arslan, R. C. (2025). Language Models Accurately Infer
 #     Correlations Between Psychological Items and Scales From Text Alone.
@@ -31,6 +34,12 @@
 #'
 #' The resulting matrix can be passed straight to \code{\link{sfa}} via its
 #' \code{similarity} argument.
+#'
+#' The negative-sign-for-contradiction convention adapts Hommel and Arslan
+#' (2025), who fine-tuned a sentence-embedding model on SNLI pairs relabeled
+#' with signed similarity magnitudes. This function applies the sign
+#' convention directly at inference --- entailment minus contradiction from an
+#' off-the-shelf NLI classifier --- with no fine-tuning.
 #'
 #' @param items Character vector of item texts.
 #' @param model NLI cross-encoder model name (default
@@ -132,13 +141,52 @@ sfa_nli_matrix <- function(items, model = "cross-encoder/nli-deberta-v3-base",
                    conditionMessage(e), "). Run sfa_install_python(), or pass ",
                    "a 'classifier' function.", call. = FALSE))
   ce <- st$CrossEncoder(model)
+  # NLI models order their output labels differently (e.g. the cross-encoder/
+  # nli-* family uses contradiction, entailment, neutral, but MNLI-family
+  # models differ), so read the label order from the model's own config rather
+  # than assuming it.
+  idx <- .nli_label_indices(ce, model)
   function(premises, hypotheses) {
     pairs <- reticulate::r_to_py(lapply(seq_along(premises),
                                         function(k) list(premises[k], hypotheses[k])))
     logits <- ce$predict(pairs, apply_softmax = TRUE)
     logits <- reticulate::py_to_r(logits)
     logits <- matrix(as.numeric(logits), nrow = length(premises))
-    # cross-encoder/nli-* label order: 0 = contradiction, 1 = entailment, 2 = neutral
-    data.frame(contradiction = logits[, 1], entailment = logits[, 2])
+    if (ncol(logits) < max(idx$contradiction, idx$entailment)) {
+      stop("NLI model '", model, "' returned ", ncol(logits), " score column(s); ",
+           "expected class probabilities including entailment and contradiction. ",
+           "Pass a custom 'classifier' function for this model.", call. = FALSE)
+    }
+    data.frame(contradiction = logits[, idx$contradiction],
+               entailment = logits[, idx$entailment])
   }
+}
+
+#' @keywords internal
+# Resolve which output columns hold the contradiction and entailment scores by
+# reading id2label from the cross-encoder's transformers config. Falls back,
+# with a warning, to the cross-encoder/nli-* order (0 = contradiction,
+# 1 = entailment, 2 = neutral) when the config exposes no usable labels.
+.nli_label_indices <- function(ce, model) {
+  labels <- tryCatch({
+    id2label <- ce$config$id2label
+    ids <- suppressWarnings(as.integer(names(id2label)))
+    lab <- tolower(as.character(unlist(id2label, use.names = FALSE)))
+    lab[order(ids)]
+  }, error = function(e) NULL)
+  if (!is.null(labels) && length(labels) >= 2L) {
+    ci <- which(grepl("contradiction", labels))
+    ei <- which(grepl("entailment", labels))
+    if (length(ci) == 1L && length(ei) == 1L) {
+      return(list(contradiction = ci, entailment = ei))
+    }
+    stop("NLI model '", model, "' has labels [",
+         paste(labels, collapse = ", "), "], which do not include exactly one ",
+         "'contradiction' and one 'entailment' class. Pass a custom ",
+         "'classifier' function for this model.", call. = FALSE)
+  }
+  warning("Could not read id2label from the '", model, "' config; assuming ",
+          "the cross-encoder/nli-* label order (contradiction, entailment, ",
+          "neutral).", call. = FALSE)
+  list(contradiction = 1L, entailment = 2L)
 }

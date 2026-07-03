@@ -56,7 +56,10 @@
 #' @param calibrate Logical: run an isotropic random-embedding Monte Carlo null
 #'   calibration of the fit diagnostics? (Inspired by Pokropek 2026, but using a
 #'   random-Gaussian unit-vector null rather than Pokropek's corpus-word
-#'   resampling.)
+#'   resampling. The two nulls differ in kind: corpus resampling preserves the
+#'   baseline thematic similarity that all words in a topic-specific corpus
+#'   share, whereas the Gaussian unit-vector null has zero expected inter-item
+#'   similarity and is therefore a stricter, structure-free reference.)
 #' @param calibrate_iter Iterations for calibration.
 #' @param ... Additional arguments passed to \code{\link[psych]{fa}}.
 #'
@@ -70,7 +73,10 @@
 #'
 #' @examples
 #' data(big5)
-#' fit <- sfa(big5$items, embeddings = big5$embeddings, scoring = big5$scoring)
+#' # nfactors = 5 keeps this example fast; omit it to let embedding-adapted
+#' # parallel analysis (sfa_parallel) choose the number of factors.
+#' fit <- sfa(big5$items, embeddings = big5$embeddings, scoring = big5$scoring,
+#'            nfactors = 5)
 #' print(fit)
 #' plot(fit, type = "scree")
 #'
@@ -348,7 +354,7 @@ sfa <- function(items,
     embed_model   = embed_model,
     embedding_dim = embed_dim,
     sim_matrix    = sim_matrix,
-    embeddings    = transformed,
+    transformed_embeddings = transformed,
     input_embeddings = embeddings,
     dim_select    = dimsel,
     kmo           = kmo,

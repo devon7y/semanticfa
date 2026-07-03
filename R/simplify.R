@@ -34,7 +34,7 @@
 #' Two selection strategies are offered:
 #' \describe{
 #'   \item{\code{"anchor"}}{(default) Keep the items most similar to their own
-#'     group's centroid (sign-aligned, leave-one-out; see \code{\link{sfa_anchor}});
+#'     group's centroid (un-flipped, leave-one-out; see \code{\link{sfa_anchor}});
 #'     drop the weakest. Simple and interpretable, but can retain near-duplicate
 #'     items (see \code{\link{sfa_redundancy}}).}
 #'   \item{\code{"medoid"}}{Within each group, greedily select items that are

@@ -13,6 +13,16 @@
 #' @returns A list of class \code{"sfa_congruence"} with one component per
 #'   requested metric.
 #'
+#' @details
+#' The disattenuated metric applies Spearman's (1904) correction
+#' \eqn{r/\sqrt{r_{xx'}r_{yy'}}} to the correlation between the two matrices'
+#' item-pair values, estimating each matrix's reliability by a
+#' Spearman--Brown-corrected odd/even split-half of its lower-triangle entries.
+#' That reliability construction is this package's own device (values are
+#' capped at 1). When either split-half reliability is not positive --- as the
+#' checkerboard sign pattern of \code{"atomic_reversed"} produces --- the
+#' correction is undefined and \code{NA} is returned with a warning.
+#'
 #' @references
 #' Hubert, L., & Arabie, P. (1985). Comparing partitions (adjusted Rand index).
 #' \emph{Journal of Classification}, 2, 193--218. \doi{10.1007/BF01908075}
@@ -246,8 +256,22 @@ print.sfa_congruence <- function(x, ...) {
   rel_x <- .split_half_reliability(lt_x)
   rel_y <- .split_half_reliability(lt_y)
 
+  # The correction formula r / sqrt(rel_x * rel_y) follows Spearman (1904).
+  # Estimating each matrix's "reliability" as a Spearman-Brown-corrected
+  # odd/even split-half of its lower-triangle entries is this package's own
+  # device (Spearman's reliabilities came from repeated gradings of subjects),
+  # and the odd/even split depends on the storage order of the entries.
+  # A non-positive split-half reliability (e.g. the checkerboard sign pattern
+  # that keyed sign-flipping imposes) leaves the correction undefined: report
+  # NA rather than a spurious value.
+  if (!is.finite(rel_x) || !is.finite(rel_y) || rel_x <= 0 || rel_y <= 0) {
+    warning("Disattenuated congruence is undefined: a similarity matrix's ",
+            "split-half reliability is not positive (reliabilities ",
+            round(rel_x, 3), " and ", round(rel_y, 3),
+            "). Reporting NA.", call. = FALSE)
+    return(NA_real_)
+  }
   denom <- sqrt(rel_x * rel_y)
-  if (denom <= 0) return(r_obs)
   min(r_obs / denom, 1.0)
 }
 

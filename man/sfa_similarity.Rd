@@ -47,13 +47,20 @@ of several published methods.
 }
 \details{
 \describe{
-\item{\code{"atomic"}}{(default) L2-normalize each embedding, then cosine
-similarity. Equivalent to \code{"atomic_reversed"} with all +1 scoring.}
+\item{\code{"atomic"}}{(default) Cosine similarity of the item embeddings
+(computed by L2-normalizing internally). Equivalent to
+\code{"atomic_reversed"} with all +1 scoring. Named for the atomic
+encoding of Guenole et al., who additionally embed items separately and
+average within facet; this function operates on the per-item embeddings
+it is given.}
 \item{\code{"atomic_reversed"}}{Multiply each embedding by its scoring
-direction (+1/-1) first, L2-normalize, then cosine similarity (Guenole et
+direction (+1/-1) first, then cosine similarity (Guenole et
 al.). Use this for scales with reverse-keyed items.}
 \item{\code{"squid"}}{Subtract the questionnaire-mean embedding (SQuID;
-Pellert et al. 2026), L2-normalize, then cosine similarity. The centering
+Pellert et al. 2026), then cosine similarity (the L2-normalization is
+this package's similarity step; Pellert et al. define SQuID as the
+mean-subtraction and measure similarity by cosine or Pearson
+afterwards). The centering
 recovers negative between-dimension correlations, so this encoding is
 keying-free (no scoring/sign-flip). Pellert et al. note that reverse-keyed
 items remain an open challenge -- they state that meaningfully "reversing"

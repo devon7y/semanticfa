@@ -24,7 +24,9 @@ phrases per pole are averaged, which is more robust).}
 
 \item{normalize}{Logical. If \code{TRUE} (default), rescale each item's
 projection so 0 = the low pole and 1 = the high pole (values may fall
-outside 0 to 1). If \code{FALSE}, return the raw cosine projection in
+outside 0 to 1). The 0-to-1 pole convention is this package's
+convenience, not from Grand et al., whose projections are unbounded
+inner products. If \code{FALSE}, return the raw cosine projection in
 the range -1 to 1.}
 
 \item{pole_embeddings}{Optional named list (one entry per axis) of precomputed

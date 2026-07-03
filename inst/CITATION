@@ -6,6 +6,6 @@ bibentry(
     person("Chris", "Westbury")
   ),
   year     = "2026",
-  note     = "R package version 0.1.0",
+  note     = sprintf("R package version %s", meta$Version),
   url      = "https://github.com/devon7y/semanticfa"
 )

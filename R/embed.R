@@ -114,14 +114,11 @@ sfa_clear_cache <- function() {
 }
 
 #' @keywords internal
+# SHA-256 over the items + model + backend (digest is in Imports): a cache hit
+# must identify the exact request, so no weaker fallback hash is offered.
 .cache_key <- function(items, model, backend = "sbert") {
-  payload <- list(items = items, model = model, backend = backend)
-  if (requireNamespace("digest", quietly = TRUE)) {
-    digest::digest(payload, algo = "sha256")
-  } else {
-    txt <- paste(c(items, model, backend), collapse = "\x1f")
-    sprintf("sfa_%d_%d", nchar(txt), sum(utf8ToInt(txt)) %% 1000000007L)
-  }
+  digest::digest(list(items = items, model = model, backend = backend),
+                 algo = "sha256")
 }
 
 #' Provision the Python Environment for Embedding

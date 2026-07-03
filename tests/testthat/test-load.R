@@ -30,7 +30,7 @@ test_that("sfa_load_npz round-trips a .npz archive", {
 
   e <- sfa_load_npz(tmp)
   expect_s3_class(e, "sfa_embeddings")
-  expect_equal(dim(e$embeddings), c(50L, 384L))
+  expect_equal(dim(e$embeddings), dim(big5$embeddings))
   expect_equal(e$codes, big5$codes)
   expect_equal(e$factors, big5$factors)
   expect_equal(e$scoring, as.integer(big5$scoring))

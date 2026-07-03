@@ -42,7 +42,9 @@ An object of class \code{"sfa_nfactors"} with:
 \describe{
 \item{methods}{Data frame with one row per method: method name, suggested
 \code{n_factors}.}
-\item{consensus}{Integer: modal recommendation across methods.}
+\item{consensus}{Integer: modal recommendation across methods. When two
+or more recommendations tie for the mode, the smallest tied value is
+returned (the more parsimonious solution).}
 \item{eigenvalues}{Numeric vector: observed eigenvalues.}
 \item{parallel}{Parallel analysis result (if run), or \code{NULL}.}
 }

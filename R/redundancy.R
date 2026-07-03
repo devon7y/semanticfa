@@ -40,7 +40,11 @@
 #' @returns An object of class \code{"sfa_redundancy"}: a list with the flagged
 #'   \code{pairs} (data frame: item_i, item_j, overlap), redundant \code{clusters}
 #'   (connected groups of mutually redundant items), and \code{suggest_remove}
-#'   (all-but-one item per cluster --- keep one representative).
+#'   (all-but-one item per cluster --- keep one representative). Unique
+#'   Variable Analysis is a \emph{detection} method: Christensen et al. (2023)
+#'   leave the handling of flagged redundancies to the researcher, so the
+#'   keep-the-most-central-item suggestion (highest mean absolute similarity)
+#'   is this package's convenience rule, not part of UVA.
 #'
 #' @references
 #' Christensen, A. P., Garrido, L. E., & Golino, H. (2023). Unique Variable

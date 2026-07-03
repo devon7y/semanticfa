@@ -25,7 +25,10 @@ per scale, overriding the list names.}
 sbert model).}
 
 \item{flag}{Absolute content-minus-label similarity difference at which to
-flag a pair (default 0.20).}
+flag a pair (default 0.20). The single-difference rule and its 0.20
+default are this package's convenience heuristic, not Wulff & Mata's
+criterion (they flag pairs with quantile-derived dual cutoffs on the two
+similarities separately); tune it to your scale set.}
 
 \item{item_embeddings, label_embeddings}{Optional precomputed embeddings: a
 named list of per-scale item-embedding matrices, and a matrix of label

@@ -52,6 +52,12 @@ Hommel & Arslan, 2025).
 \details{
 The resulting matrix can be passed straight to \code{\link{sfa}} via its
 \code{similarity} argument.
+
+The negative-sign-for-contradiction convention adapts Hommel and Arslan
+(2025), who fine-tuned a sentence-embedding model on SNLI pairs relabeled
+with signed similarity magnitudes. This function applies the sign
+convention directly at inference --- entailment minus contradiction from an
+off-the-shelf NLI classifier --- with no fine-tuning.
 }
 \examples{
 data(big5)

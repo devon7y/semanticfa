@@ -4,6 +4,23 @@
 #' matrix using random unit vectors as the null distribution, avoiding the need
 #' for a participant-level sample size.
 #'
+#' The adaptation keeps Horn's (1965) logic --- retain leading eigenvalues that
+#' exceed those of structureless data of the same size --- but replaces the
+#' respondent-level null with similarity matrices of random Gaussian unit
+#' vectors in the item count and embedding dimension of the data. Retention
+#' follows Horn's sequential rule: leading eigenvalues are counted until the
+#' first falls at or below its null percentile (against the 95th null
+#' percentile by default, a common modern choice; Horn compared against the
+#' null mean). Two caveats follow from the
+#' null. First, random unit vectors in a high-dimensional space are nearly
+#' orthogonal, so the null similarity matrix is near-identity and the
+#' eigenvalue thresholds concentrate just above one. Second, the null carries
+#' none of the general positive similarity component that real item embeddings
+#' share, so it is a structureless baseline, not a matched one. Benchmarking
+#' on embedding similarity matrices, Garrido et al. (2025) found conventional
+#' parallel analysis systematically overextracted; corroborate retention with
+#' the other criteria in [sfa_nfactors()].
+#'
 #' @param sim_matrix Numeric similarity matrix (n_items x n_items).
 #' @param embeddings Numeric embedding matrix (n_items x embedding_dim).
 #' @param n_iter Number of random iterations (default 100).
@@ -23,8 +40,10 @@
 #' Horn, J. L. (1965). A rationale and test for the number of factors in factor
 #' analysis. \emph{Psychometrika}, 30(2), 179--185.
 #'
-#' Yanitski, D. & Westbury, C. (2025). Embedding-adapted parallel analysis for
-#' semantic factor analysis.
+#' Garrido, L. E., Russell-Lasalandra, L. L., & Golino, H. (2025). Estimating
+#' dimensional structure in generative psychometrics: Comparing PCA and network
+#' methods using large language model item embeddings. PsyArXiv preprint.
+#' \doi{10.31234/osf.io/2s7pw_v1}
 #'
 #' @export
 sfa_parallel <- function(sim_matrix, embeddings, n_iter = 100L,
@@ -32,7 +51,9 @@ sfa_parallel <- function(sim_matrix, embeddings, n_iter = 100L,
   # accept a fitted sfa object: pull its similarity matrix and embeddings
   if (inherits(sim_matrix, "sfa")) {
     fit <- sim_matrix
-    if (missing(embeddings) || is.null(embeddings)) embeddings <- fit$embeddings
+    if (missing(embeddings) || is.null(embeddings)) {
+      embeddings <- fit$transformed_embeddings
+    }
     sim_matrix <- fit$sim_matrix
     if (is.null(embeddings)) {
       stop("This 'sfa' object has no embeddings (it was fit from a precomputed ",
@@ -65,7 +86,10 @@ sfa_parallel <- function(sim_matrix, embeddings, n_iter = 100L,
   })
 
   pctiles <- apply(random_eigs, 2, stats::quantile, probs = percentile / 100)
-  n_factors <- sum(obs_eigs > pctiles)
+  # Horn's sequential rule: count leading eigenvalues until the first falls at
+  # or below its null percentile (not all eigenvalues anywhere above theirs).
+  below <- which(obs_eigs <= pctiles)
+  n_factors <- if (length(below) == 0L) length(obs_eigs) else below[1L] - 1L
   n_factors <- max(1L, as.integer(n_factors))
 
   structure(
@@ -120,7 +144,10 @@ sfa_parallel <- function(sim_matrix, embeddings, n_iter = 100L,
   }
   # Response-free similarity matrix: use TMFG (a correlation-matrix filtering
   # method that needs no sample size), with a numeric 'n' placeholder (EGAnet
-  # requires numeric n; TMFG does not use it to build the graph).
+  # requires numeric n; TMFG does not use it to build the graph). Note the
+  # embedding benchmark of Garrido et al. (2025) validated EGA with EBICglasso
+  # networks; TMFG is this package's sample-size-free substitute, so their
+  # accuracy evidence transfers to it only indirectly.
   ega_result <- suppressWarnings(suppressMessages(
     EGAnet::EGA(data = sim_matrix, n = nrow(sim_matrix), model = "TMFG",
                 plot.EGA = FALSE, verbose = FALSE)
@@ -152,7 +179,9 @@ sfa_parallel <- function(sim_matrix, embeddings, n_iter = 100L,
 #' \describe{
 #'   \item{methods}{Data frame with one row per method: method name, suggested
 #'     \code{n_factors}.}
-#'   \item{consensus}{Integer: modal recommendation across methods.}
+#'   \item{consensus}{Integer: modal recommendation across methods. When two
+#'     or more recommendations tie for the mode, the smallest tied value is
+#'     returned (the more parsimonious solution).}
 #'   \item{eigenvalues}{Numeric vector: observed eigenvalues.}
 #'   \item{parallel}{Parallel analysis result (if run), or \code{NULL}.}
 #' }
@@ -166,7 +195,7 @@ sfa_nfactors <- function(sim_matrix, embeddings = NULL,
   # accept a fitted sfa object: pull its similarity matrix and embeddings
   if (inherits(sim_matrix, "sfa")) {
     fit <- sim_matrix
-    if (is.null(embeddings)) embeddings <- fit$embeddings
+    if (is.null(embeddings)) embeddings <- fit$transformed_embeddings
     sim_matrix <- fit$sim_matrix
   }
   methods <- match.arg(methods, c("parallel", "kaiser", "TEFI", "EGA"),
@@ -204,8 +233,10 @@ sfa_nfactors <- function(sim_matrix, embeddings = NULL,
 
   valid_nf <- results$n_factors[!is.na(results$n_factors)]
   consensus <- if (length(valid_nf) > 0) {
+    # modal recommendation; ties resolve to the smallest tied value (table()
+    # names sort as character, so compare numerically, not lexically)
     tab <- table(valid_nf)
-    as.integer(names(tab)[which.max(tab)])
+    min(as.integer(names(tab)[tab == max(tab)]))
   } else {
     NA_integer_
   }

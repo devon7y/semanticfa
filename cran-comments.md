@@ -2,25 +2,42 @@
 
 ## Submission
 
-This is a new submission (semanticfa 0.1.0).
+This is an update (semanticfa 0.1.1; previous release 0.1.0, 2026-06-15).
+
+We are aware this update comes shortly after the initial release. It corrects
+the bundled example dataset (the 0.1.0 data did not match the dataset analyzed
+in the accompanying methods manuscript) and fixes several user-facing bugs
+found in an intensive post-release review; we considered the correction too
+important to hold.
+
+Main changes (see NEWS.md for the full list):
+
+* The bundled `big5` example dataset now ships `Qwen3-Embedding-8B` item
+  embeddings (50 x 4096, rounded to 4 decimal places), replacing the smaller
+  `all-MiniLM-L6-v2` embeddings of 0.1.0, so the bundled data matches the
+  dataset analyzed in the accompanying methods manuscript. The installed
+  package grows by roughly 220 KB.
+* Bug fixes: `sfa_congruence()`'s disattenuated metric returns `NA` with a
+  warning instead of erroring when a split-half reliability is not positive;
+  `sfa_item_fit()` compares candidates against unflipped (topical) construct
+  centroids, consistent with `sfa_anchor()`; `sfa_nli_matrix()` reads the
+  entailment/contradiction label order from the model config instead of
+  assuming it; `sfa_parallel()` applies Horn's sequential retention rule.
+* `digest` moved from Suggests to Imports (embedding cache keys are always
+  SHA-256).
 
 ## R CMD check results
 
-`R CMD check --as-cran` on the built tarball (macOS, R release; full check with
-PDF manual and vignette, Pandoc 2.12 + TeX Live):
+`R CMD check --as-cran` on the built tarball (macOS, R release):
 
 ```
-0 errors | 0 warnings | 2 notes
+0 errors | 0 warnings | 1 note
 ```
 
-* NOTE: "New submission" (this is the package's first submission to CRAN).
-* NOTE: "checking HTML version of manual" -- the check skips HTML validation and
-  math rendering because the local machine's HTML Tidy is too old and the `V8`
-  package is unavailable. This is a property of the local check environment, not
-  the package, and does not occur on CRAN's check machines.
-
-`urlchecker::url_check()` reports all URLs correct. win-builder (R-devel and
-R-release) results will be appended when available.
+* NOTE: "checking HTML version of manual" -- the check skips HTML validation
+  and math rendering because the local machine's HTML Tidy is too old and the
+  `V8` package is unavailable. This is a property of the local check
+  environment, not the package, and does not occur on CRAN's check machines.
 
 ## Notes for the reviewer
 
@@ -37,8 +54,9 @@ R-release) results will be appended when available.
 * **Optional, gracefully-degrading functionality.** Some features require
   Suggests packages and check for them with `requireNamespace()`, erroring
   informatively when absent:
-  - `EGAnet` — `sfa_dimselect()` (EGA-based embedding-dimension selection) and
-    `n_factors_method = "EGA"` retention.
+  - `EGAnet` — `sfa_dimselect()` (EGA-based embedding-dimension selection),
+    `n_factors_method = "EGA"` retention, and the default `sfa_redundancy()`
+    method.
   - `httr2` — the OpenAI embedding backend.
 
 * **Python-backed paths are not exercised on the check machines.** The `"sbert"`

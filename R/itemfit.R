@@ -28,6 +28,13 @@
 #' \emph{gap-filler} (on-topic but covering new ground); low name + high items is
 #' \emph{drift} (looks like the items but not the construct).
 #'
+#' All comparisons run in the raw, un-flipped embedding space, matching
+#' \code{\link{sfa_anchor}} and \code{\link{sfa_simplify}}: reference items are
+#' never sign-flipped by their scoring key, so belonging reflects topic. (A
+#' sign-flipped embedding is an anti-topic vector, not a reverse-scored
+#' meaning, and flipping reference items depresses the item-similarity profile
+#' of constructs with many reverse-keyed items.)
+#'
 #' @param x An object of class \code{"sfa"} carrying theoretical factor labels
 #'   and stored (raw) embeddings.
 #' @param item Character vector of one or more candidate items to vet.
@@ -35,9 +42,10 @@
 #'   (matched to the factor labels by exact, case-insensitive, or unique-prefix
 #'   match). When supplied, the verdict is reported relative to that construct as
 #'   well as the best-matching one.
-#' @param reverse_key Logical; set \code{TRUE} if the candidate is a
-#'   reverse-keyed item (its embedding is flipped before comparison). Default
-#'   \code{FALSE}.
+#' @param reverse_key Logical; set \code{TRUE} to sign-flip the candidate's
+#'   embedding before comparison. Against the un-flipped reference space this
+#'   negates the candidate's similarities (the anti-topic direction), so it is
+#'   a diagnostic contrast, not an assignment mode. Default \code{FALSE}.
 #' @param redundancy_cutoff Similarity to the nearest existing item at or above
 #'   which the candidate is flagged as a near-duplicate. Default 0.90.
 #' @param embed,model Embedding backend and model used to embed the candidate(s)
@@ -59,10 +67,16 @@
 #' @seealso \code{\link{sfa_anchor}}, \code{\link{sfa_redundancy}}
 #' @examples
 #' \dontrun{
-#' fit <- sfa(dass_df, nfactors = 3)            # fit with a real embedding model
-#' sfa_item_fit(fit, "I am sad all the time", construct = "Depression")
-#' sfa_item_fit(fit, c("I feel calm and relaxed",
-#'                     "My heart was racing"))   # vet several at once
+#' # embeds the candidates live, so this needs the Python backend (or embed=)
+#' data(big5)
+#' fit <- sfa(data.frame(code = big5$codes, item = big5$items,
+#'                       factor = big5$factors),
+#'            embeddings = big5$embeddings, nfactors = 5)
+#' sfa_item_fit(fit, "I make friends easily.",
+#'              model = "Qwen/Qwen3-Embedding-8B")
+#' sfa_item_fit(fit, c("I am the life of every party.",
+#'                     "I rarely feel anxious or depressed."),
+#'              model = "Qwen/Qwen3-Embedding-8B")   # vet several at once
 #' }
 #' @export
 sfa_item_fit <- function(x, item, construct = NULL, reverse_key = FALSE,
@@ -86,16 +100,17 @@ sfa_item_fit <- function(x, item, construct = NULL, reverse_key = FALSE,
   codes  <- x$item_data$code
   if (is.null(codes)) codes <- sprintf("item_%02d", seq_len(nrow(raw)))
   texts  <- x$item_data$item
-  scoring <- x$item_data$scoring
-  if (is.null(scoring)) scoring <- rep(1, nrow(raw))
   constructs <- unique(factors)
 
   if (!is.null(construct)) construct <- .match_construct(construct, constructs)
 
-  # Work in raw, unit-norm, forward-aligned space (reverse-keyed items flipped to
-  # their construct's pole) so cosine reflects semantic + valence agreement.
-  raw_norm <- .row_normalize(raw)         # zero-norm rows stay zero (no NaN)
-  aligned  <- raw_norm * scoring
+  # Work in the raw, unit-norm (un-flipped) embedding space, matching
+  # sfa_anchor() and sfa_simplify(): embeddings encode topic, not valence, so a
+  # reverse-keyed reference item is still topically close to its construct.
+  # Sign-flipping reference items would turn them into anti-topic vectors and
+  # depress the item-similarity profile of constructs with many reverse-keyed
+  # items (the anti-topic pathology of keyed sign-flipping).
+  aligned <- .row_normalize(raw)          # zero-norm rows stay zero (no NaN)
 
   # construct centroids (unit-norm) from the aligned existing items; a construct
   # whose items cancel to a zero centroid stays zero (cosine 0, not NaN)

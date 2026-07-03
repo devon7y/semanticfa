@@ -1,20 +1,26 @@
 # =============================================================================
 # Method reference. Embedding construct labels and comparing items/scales to
-# their construct anchors implements the approach of:
+# their construct anchors adapts the approach of:
 #
 #   Wulff, D. U., & Mata, R. (2025). Semantic embeddings reveal and address
 #     taxonomic incommensurability in psychological measurement. Nature Human
 #     Behaviour, 9(5), 944-954. https://doi.org/10.1038/s41562-024-02089-y
+#
+# Wulff & Mata embed construct labels directly and build scale vectors as plain
+# item-embedding averages. The item-by-construct belonging matrix, the
+# leave-one-out own-construct centroid (corrected item-total analogue), and the
+# un-flipped topical-space handling are this package's extensions.
 # =============================================================================
 
 #' Construct-Label and Centroid Anchoring
 #'
 #' Produces an item-by-construct similarity matrix --- the embedding analogue of
-#' a factor-loading table. Items are sign-aligned by their scoring direction
-#' first (embeddings encode topic, not valence, so a reverse-keyed item would
-#' otherwise point away from its construct), so each cell is a \emph{belonging
-#' strength}: high means the item belongs to that construct (for forward and
-#' reverse items alike), low means it does not. Read it like a loadings matrix
+#' a factor-loading table. Similarities are computed in the raw, un-flipped
+#' embedding space: embeddings encode topic, not valence, so a reverse-keyed
+#' item is still topically close to its construct and no sign-alignment is
+#' applied. Each cell is a \emph{belonging strength}: high means the item
+#' belongs to that construct (for forward and reverse items alike), low means
+#' it does not. Read it like a loadings matrix
 #' --- a well-behaved item is high in its own construct's column and low in the
 #' others; an item whose largest value lands on a different construct is a
 #' semantic cross-loader and a candidate for review.
@@ -22,14 +28,15 @@
 #' Two anchor types are available:
 #' \describe{
 #'   \item{\code{"centroid"}}{(default) Each construct's anchor is the mean of
-#'     its own (sign-aligned) item embeddings. An item's similarity to its own
+#'     its own (un-flipped) item embeddings. An item's similarity to its own
 #'     construct is computed leave-one-out (the item is excluded from its own
 #'     anchor), mirroring a corrected item-total correlation. Self-contained ---
 #'     needs no construct text and works for any \code{sfa} object.}
 #'   \item{\code{"label"}}{Each construct's anchor is the embedding of the
 #'     construct's name (or a richer gloss supplied via \code{labels}). Requires
-#'     an embedding backend or precomputed \code{label_embeddings}. Cleanest for
-#'     the default \code{"atomic_reversed"} and \code{"atomic"} encodings.}
+#'     an embedding backend or precomputed \code{label_embeddings}. Because it
+#'     uses the raw item embeddings, it is independent of the encoding the fit
+#'     happened to use.}
 #' }
 #'
 #' @param x An object of class \code{"sfa"} carrying theoretical factor labels

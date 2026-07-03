@@ -8,7 +8,7 @@ sfa_dimselect(
   embeddings,
   factors = NULL,
   scoring = NULL,
-  encoding = "atomic_reversed",
+  encoding = "atomic",
   min_depth = 3L,
   max_depth = NULL,
   step = NULL,
@@ -27,7 +27,8 @@ per item, enabling the NMI term. If \code{NULL}, TEFI-only selection.}
 similarity transform.}
 
 \item{encoding}{Similarity transform used at each depth (default
-\code{"atomic_reversed"}). See \code{\link{sfa_similarity}}.}
+\code{"atomic"}, matching \code{\link{sfa}}). See
+\code{\link{sfa_similarity}}.}
 
 \item{min_depth}{Smallest depth to evaluate (default 3, with a minimum of 3
 imposed for TMFG stability).}
@@ -92,9 +93,9 @@ When the chosen depth then feeds \code{\link[psych]{fa}}-based extraction
 (the default in \code{\link{sfa}}), the subspace that is best for EGA
 recovery is not guaranteed to be best for the EFA solution. For results that
 match the selection criterion, pair \code{dim_select = "dynega"} with
-\code{n_factors_method = "EGA"}. Golino (2026) also reports the largest gains
-for richer item pools (more than ~15 items per dimension); short scales may
-see little or no benefit.
+\code{n_factors_method = "EGA"}. Golino (2026) also reports the largest
+gains for moderate-to-large item pools (roughly 10--20+ items per
+dimension); short scales may see little or no benefit.
 }
 
 \examples{

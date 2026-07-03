@@ -25,9 +25,10 @@ and stored (raw) embeddings.}
 match). When supplied, the verdict is reported relative to that construct as
 well as the best-matching one.}
 
-\item{reverse_key}{Logical; set \code{TRUE} if the candidate is a
-reverse-keyed item (its embedding is flipped before comparison). Default
-\code{FALSE}.}
+\item{reverse_key}{Logical; set \code{TRUE} to sign-flip the candidate's
+embedding before comparison. Against the un-flipped reference space this
+negates the candidate's similarities (the anti-topic direction), so it is
+a diagnostic contrast, not an assignment mode. Default \code{FALSE}.}
 
 \item{redundancy_cutoff}{Similarity to the nearest existing item at or above
 which the candidate is flagged as a near-duplicate. Default 0.90.}
@@ -62,12 +63,26 @@ When the two disagree they are informative: high name + low items is a
 \emph{gap-filler} (on-topic but covering new ground); low name + high items is
 \emph{drift} (looks like the items but not the construct).
 }
+\details{
+All comparisons run in the raw, un-flipped embedding space, matching
+\code{\link{sfa_anchor}} and \code{\link{sfa_simplify}}: reference items are
+never sign-flipped by their scoring key, so belonging reflects topic. (A
+sign-flipped embedding is an anti-topic vector, not a reverse-scored
+meaning, and flipping reference items depresses the item-similarity profile
+of constructs with many reverse-keyed items.)
+}
 \examples{
 \dontrun{
-fit <- sfa(dass_df, nfactors = 3)            # fit with a real embedding model
-sfa_item_fit(fit, "I am sad all the time", construct = "Depression")
-sfa_item_fit(fit, c("I feel calm and relaxed",
-                    "My heart was racing"))   # vet several at once
+# embeds the candidates live, so this needs the Python backend (or embed=)
+data(big5)
+fit <- sfa(data.frame(code = big5$codes, item = big5$items,
+                      factor = big5$factors),
+           embeddings = big5$embeddings, nfactors = 5)
+sfa_item_fit(fit, "I make friends easily.",
+             model = "Qwen/Qwen3-Embedding-8B")
+sfa_item_fit(fit, c("I am the life of every party.",
+                    "I rarely feel anxious or depressed."),
+             model = "Qwen/Qwen3-Embedding-8B")   # vet several at once
 }
 }
 \references{

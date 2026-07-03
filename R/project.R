@@ -1,6 +1,6 @@
 # =============================================================================
 # Method reference. Projecting item/word vectors onto an axis defined by two
-# opposing poles implements the approach of:
+# opposing poles adapts the approach of:
 #
 #   Grand, G., Blank, I. A., Pereira, F., & Fedorenko, E. (2022). Semantic
 #     projection recovers rich human knowledge of multiple object features from
@@ -33,7 +33,9 @@
 #'   phrases per pole are averaged, which is more robust).
 #' @param normalize Logical. If \code{TRUE} (default), rescale each item's
 #'   projection so 0 = the low pole and 1 = the high pole (values may fall
-#'   outside 0 to 1). If \code{FALSE}, return the raw cosine projection in
+#'   outside 0 to 1). The 0-to-1 pole convention is this package's
+#'   convenience, not from Grand et al., whose projections are unbounded
+#'   inner products. If \code{FALSE}, return the raw cosine projection in
 #'   the range -1 to 1.
 #' @param pole_embeddings Optional named list (one entry per axis) of precomputed
 #'   pole embeddings, each a list with \code{low} and \code{high} numeric
@@ -116,7 +118,7 @@ sfa_project <- function(x, axes, normalize = TRUE, pole_embeddings = NULL,
 #' @keywords internal
 .item_embeddings <- function(x) {
   if (inherits(x, "sfa")) {
-    emb <- x$input_embeddings %||% x$embeddings
+    emb <- x$input_embeddings %||% x$transformed_embeddings
     if (is.null(emb)) stop("'x' has no stored embeddings.", call. = FALSE)
     emb <- as.matrix(emb)
     if (is.null(rownames(emb))) rownames(emb) <- x$item_data$code

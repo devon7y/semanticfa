@@ -40,7 +40,7 @@ you use those parts.
 
 ```r
 library(semanticfa)
-data(big5)   # 50 IPIP Big-Five items + precomputed sentence-BERT embeddings
+data(big5)   # 50 IPIP Big-Five items + precomputed Qwen3-Embedding-8B embeddings
 
 # one call: embed -> similarity -> retain -> extract -> diagnose
 fit <- sfa(
@@ -66,7 +66,7 @@ No respondents are involved at any step.
 
 | Function | Purpose |
 |---|---|
-| `sfa_embed()` | Embed item text — on-device sentence-BERT (Qwen, default), the OpenAI API, or any custom function. Results are cached. |
+| `sfa_embed()` | Embed item text — on-device sentence-transformers (Qwen3 models, default), the OpenAI API, or any custom function. Results are cached. |
 | `sfa_load_npz()` | Load pre-generated embeddings (e.g. a GPU job) from a NumPy `.npz`, no Python needed. |
 | `sfa_similarity()` | Item-by-item similarity matrix with a choice of four encodings (below). |
 | `sfa_nli_matrix()` | **Signed**, valence-aware similarity from natural-language inference (entailment − contradiction), so reverse-keyed items are handled directly. |
@@ -119,7 +119,7 @@ Carlo null reference for the diagnostics.
 
 | Method | Description | Keying |
 |---|---|---|
-| `"atomic"` (default) | L2-normalize, cosine similarity | uses `scoring` sign-flip |
+| `"atomic"` (default) | L2-normalize, cosine similarity | keying-free (`scoring` ignored) |
 | `"atomic_reversed"` | Sign-flip reverse-keyed items, L2-normalize, cosine | uses `scoring` sign-flip |
 | `"squid"` | Subtract the questionnaire-mean embedding, then cosine | keying-free |
 | `"mean_centered_pearson"` | Mean-center → cosine = Pearson correlation | keying-free |
@@ -127,14 +127,13 @@ Carlo null reference for the diagnostics.
 ## Bundled data
 
 `data(big5)` — the 50-item IPIP Big-Five markers (public domain) with precomputed
-`sentence-transformers/all-MiniLM-L6-v2` embeddings, so every example runs
+`Qwen3-Embedding-8B` embeddings (rounded to 4 decimal places), so every example runs
 without Python or network access.
 
 ## Learn more
 
-A full guided tour — every function, worked end-to-end on the Depression Anxiety
-Stress Scales — is in the package vignette (`vignette("introduction",
-package = "semanticfa")`).
+A getting-started tour, worked end-to-end on the bundled Big Five inventory, is
+in the package vignette (`vignette("introduction", package = "semanticfa")`).
 
 ## References
 

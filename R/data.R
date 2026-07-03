@@ -1,7 +1,7 @@
-#' IPIP Big Five 50-Item Inventory with Sentence-BERT Embeddings
+#' IPIP Big Five 50-Item Inventory with Qwen3 Embeddings
 #'
 #' A bundled example dataset containing the 50-item IPIP Big Five personality
-#' inventory with precomputed sentence-BERT embeddings. The scale has 5 factors
+#' inventory with precomputed sentence-embedding vectors. The scale has 5 factors
 #' (Extraversion, Agreeableness, Conscientiousness, Neuroticism, Openness) with
 #' 10 items each, including 18 reverse-keyed items, making it suitable for
 #' demonstrating all encoding methods.
@@ -9,19 +9,19 @@
 #' @format A list with components:
 #' \describe{
 #'   \item{items}{Character vector (length 50): item text.}
-#'   \item{codes}{Character vector (length 50): item codes (E1, E2, ..., O10).}
+#'   \item{codes}{Character vector (length 50): item codes (E1, E2, ..., O50).}
 #'   \item{factors}{Character vector (length 50): theoretical factor labels.}
 #'   \item{scoring}{Numeric vector (length 50): +1 or -1 keying direction.}
-#'   \item{embeddings}{Numeric matrix (50 x 384): precomputed embeddings from
-#'     the \code{all-MiniLM-L6-v2} sentence-BERT model.}
+#'   \item{embeddings}{Numeric matrix (50 x 4096): precomputed embeddings from
+#'     the \code{Qwen3-Embedding-8B} model, rounded to 4 decimal places.}
 #' }
 #'
 #' @source Items from the International Personality Item Pool (IPIP;
 #'   \url{https://ipip.ori.org/}), which is in the public domain. Embeddings were
-#'   generated with the \code{sentence-transformers/all-MiniLM-L6-v2} model
-#'   (\url{https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2}),
-#'   released under the Apache License 2.0. The regeneration script is in
-#'   \code{data-raw/big5.R}.
+#'   generated with the \code{Qwen/Qwen3-Embedding-8B} model
+#'   (\url{https://huggingface.co/Qwen/Qwen3-Embedding-8B})
+#'   and rounded to 4 decimal places to reduce file size. The regeneration
+#'   script is in \code{data-raw/big5.R}.
 #'
 #' @examples
 #' data(big5)

@@ -38,10 +38,30 @@ Determines the number of factors to retain from an embedding similarity
 matrix using random unit vectors as the null distribution, avoiding the need
 for a participant-level sample size.
 }
+\details{
+The adaptation keeps Horn's (1965) logic --- retain leading eigenvalues that
+exceed those of structureless data of the same size --- but replaces the
+respondent-level null with similarity matrices of random Gaussian unit
+vectors in the item count and embedding dimension of the data. Retention
+follows Horn's sequential rule: leading eigenvalues are counted until the
+first falls at or below its null percentile (against the 95th null
+percentile by default, a common modern choice; Horn compared against the
+null mean). Two caveats follow from the
+null. First, random unit vectors in a high-dimensional space are nearly
+orthogonal, so the null similarity matrix is near-identity and the
+eigenvalue thresholds concentrate just above one. Second, the null carries
+none of the general positive similarity component that real item embeddings
+share, so it is a structureless baseline, not a matched one. Benchmarking
+on embedding similarity matrices, Garrido et al. (2025) found conventional
+parallel analysis systematically overextracted; corroborate retention with
+the other criteria in \code{\link[=sfa_nfactors]{sfa_nfactors()}}.
+}
 \references{
 Horn, J. L. (1965). A rationale and test for the number of factors in factor
 analysis. \emph{Psychometrika}, 30(2), 179--185.
 
-Yanitski, D. & Westbury, C. (2025). Embedding-adapted parallel analysis for
-semantic factor analysis.
+Garrido, L. E., Russell-Lasalandra, L. L., & Golino, H. (2025). Estimating
+dimensional structure in generative psychometrics: Comparing PCA and network
+methods using large language model item embeddings. PsyArXiv preprint.
+\doi{10.31234/osf.io/2s7pw_v1}
 }
