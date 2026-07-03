@@ -48,10 +48,10 @@ mean_centered_pearson  0.394 0.938
 }
 
 Off-diagonals confirm raw cosines' narrow positive band
-\citep{hommel-arslan-2025, pellert-etal-2026}: .394--.938 over all
-1,225 pairs, even opposite-keyed ones (Figure~\ref{fig:corplot},
-left); negatives must be manufactured (sign-flipping, $-.777$;
-\texttt{squid}, $-.267$), whereas \texttt{mean\_centered\_pearson}
+\citep{hommel-arslan-2025, pellert-etal-2026}: \valRangeCosMin--\valRangeCosMax{} over all
+\valNPairs{} pairs, even opposite-keyed ones (Figure~\ref{fig:corplot},
+left); negatives must be manufactured (sign-flipping, $\valRangeArMin$;
+\texttt{squid}, $\valRangeSqMin$), whereas \texttt{mean\_centered\_pearson}
 matched the raw-cosine range to three decimals.
 
 \begin{figure}[H]
@@ -62,7 +62,7 @@ matched the raw-cosine range to three decimals.
 \caption{Left: cosine similarity (\texttt{atomic} encoding) among the 50
 IPIP Big-Five Factor Marker items, grouped by domain
 (\texttt{sfa\_corplot()}). All pairwise similarities are positive
-(range = .394--.938), with darker within-domain blocks (most visibly the
+(range = \valRangeCosMin--\valRangeCosMax), with darker within-domain blocks (most visibly the
 Neuroticism items N15--N19) superimposed on a uniformly positive field.
 Right: signed NLI similarity (entailment minus contradiction) among the 50
 items. In contrast to the left panel, contradictions between
@@ -81,7 +81,7 @@ contradiction (cf.\ \citealp{hommel-arslan-2025}):
 > t_nli <- system.time(
 +   sim_nli <- sfa_nli_matrix(big5$items)   # cross-encoder/nli-deberta-v3-base
 + )
-NLI matrix: 50 x 50 in 78 s
+NLI matrix: 50 x 50 in 4103.2 s
 > round(sim_nli[c("E1", "E2", "E5"), c("E1", "E2", "E5")], 2)
       E1    E2    E5
 E1  1.00 -1.00  0.03
@@ -95,8 +95,8 @@ E5  0.67 -0.65  1.00
 \end{verbatim}
 }
 
-NLI scores E1 and its reverse-keyed sibling E2 at $-1.00$,
-near-perfect contradiction, versus $-.63$ under sign-flipping, which
+NLI scores E1 and its reverse-keyed sibling E2 at $\valNliOpp$,
+near-perfect contradiction, versus $\valArOpp$ under sign-flipping, which
 reverses vectors without making opposite paraphrases maximally
 dissimilar (Figure~\ref{fig:corplot}, right).
 
@@ -115,12 +115,12 @@ Loaded embeddings (sfa_embeddings)
   Codes:   E1 E2 E3 E4 E5 E6 E7 E8 ...
 > sfa_clear_cache()
 > t_emb <- system.time(emb06 <- sfa_embed(big5$items))
-sfa_embed: 50 x 1024 in 189.3 s
+sfa_embed: 50 x 1024 in 128.2 s
 > print(summary(round(cos_live_ref, 4)))
    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.
- 0.9999  0.9999  0.9999  0.9999  0.9999  0.9999
+ 0.9998  0.9999  0.9999  0.9999  0.9999  0.9999
 \end{verbatim}
 }
 
 Every live re-embedding matched its same-model offline reference at
-cosine $\geq .9999$, reproducing the archived output on-device.
+cosine $\geq \valLiveCosMin$, reproducing the archived output on-device.

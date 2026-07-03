@@ -16,6 +16,12 @@
 % are available and render APA-style. apa7 SETS THE BIBLIOGRAPHY STYLE ITSELF — do NOT
 % add \bibliographystyle (no apalike, no apacite line); doing so breaks APA formatting.
 
+% Analysis-generated values. reproduce/make_paper_assets.R writes
+% generated/values.tex (one macro per reported number) from the reproduction
+% outputs; EVERY data-derived value in the prose is one of these macros —
+% never a hand-typed number.
+\input{generated/values}
+
 \title{semanticfa: An R Package for Response-Free Semantic Factor Analysis of Psychometric Scales}
 \shorttitle{SEMANTIC FACTOR ANALYSIS IN R}
 
@@ -35,6 +41,7 @@ E-mail: dyanitsk@ualberta.ca}
 % first cite" rule, so you MUST force the short form by listing every cited 3-or-more-
 % author bibkey in \shortcites. Keep this list in sync as citations are added.
 \shortcites{bowman-etal-2015,grand-etal-2022,christensen-etal-2023,pellert-etal-2026,garrido-etal-2025,wang-etal-2026,guenole-etal-2025,%
+arnulf-etal-2014,arnulf-etal-2018,arnulf-etal-2021,rosenbusch-etal-2020,nimon-etal-2016,%
 borsboom-etal-2004,stanghellini-etal-2024,%
 milano-etal-2025a,milano-etal-2025b,casella-etal-2024,schoenegger-etal-2025,ravenda-etal-2025,maharjan-etal-2025,lara-etal-1992,%
 huang-etal-2025,kambeitz-etal-2025,kojima-etal-2026,russell-lasalandra-etal-2026,%

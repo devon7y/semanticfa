@@ -10,11 +10,12 @@ items grouped by domain: the five diagonal blocks sharpen visibly with model
 size, with the 0.6B matrix showing the haziest block boundaries and the 8B
 matrix the crispest separation of within-domain from between-domain
 similarity. Retention sharpens correspondingly. Under the 0.6B and 4B
-embeddings the criteria disagree---parallel analysis retains four factors,
-EGA six, for a modal consensus of six---whereas under the 8B embeddings
-parallel analysis and EGA converge on the theoretical five, and the
-consensus is five (the eigenvalue-greater-than-one rule reports six and TEFI
-two at every size). Larger models of the same family thus yield semantic
+embeddings the criteria disagree---parallel analysis retains \valPaKSmallWord{} and
+\valPaKMediumWord{} factors, EGA \valEgaKSmallWord{} and \valEgaKMediumWord, for modal consensuses of
+\valConsSmallWord{} and \valConsMediumWord---whereas under the 8B embeddings
+parallel analysis and EGA converge on the theoretical \valPaKWord, and the
+consensus is \valConsensusKWord{} (the eigenvalue-greater-than-one rule reports \valKaiserKWord{} and TEFI
+\valTefiKWord{} at every size). Larger models of the same family thus yield semantic
 structure that is both visibly cleaner and dimensionally closer to theory,
 which is why the demonstration's main analyses use the 8B embeddings while
 the package's on-device default remains the lighter 0.6B model.

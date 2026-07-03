@@ -24,12 +24,53 @@ were false alarms---confidence better grounded than condemnation.
 High coherence prices rather than rebuts the critique of
 \citet{uher-2025}, simultaneously grounding pre-data screening and
 measuring the share of ``nomological'' structure from ratings already in
-the items' inbuilt semantics---here $r = .46$ at the pair level,
-$\bar{\phi} = .744$ for factor shapes. Meaning-as-use also bounds the
+the items' inbuilt semantics, the quantity the semantic theory of survey
+response first estimated with LSA-era tools
+\citep{arnulf-etal-2014, arnulf-etal-2018}---here $r = \valPairR$ at the
+pair level, $\bar{\phi} = \valPhiMean$ for factor shapes. Meaning-as-use also bounds the
 method: embeddings summarize a community's conventionalized regularities
 of use \citep[\S43]{wittgenstein-1953}, not the local construals raters
 form, so the idiosyncratic share of response variance is missed by design
 and perfect coherence is unexpected even from a flawless instrument.
+
+A further limitation is specific to the demonstration corpus. The IPIP
+Big-Five Factor Markers are among the most widely reproduced psychometric
+texts on the public web, frequently listed together with their domain
+labels, including in the codebook of the very benchmark used here
+\citep{openpsychometrics-2018}, and the pretraining corpus of the
+embedding model is not public \citep{qwen-2025}. Embedding proximity for
+these items may therefore partly encode documented scale co-membership
+rather than the compositional meaning of the sentences, which would
+inflate agreement with the human structure. The reorganization of
+Agreeableness and Extraversion (Table~\ref{tab:tucker}) argues against
+pure memorization of the published key, but contamination cannot be
+excluded without deliberately reworded materials, so coherence estimated
+on canonical inventories should be read as an upper bound. The package's
+central use case, vetting new and unpublished items, is precisely the
+case a memorized taxonomy cannot cover, and paraphrase-based robustness
+probes (re-embedding systematically reworded items) are a natural
+response-free check left to future work.
+
+The Monte Carlo machinery carries a related caveat. The
+parallel-analysis and calibration nulls use random unit vectors, which
+are nearly orthogonal in high dimension, so the null similarity matrix is
+close to an identity matrix: its eigenvalue thresholds concentrate just
+above one, and beating a structureless baseline is a weak test for
+matrices whose defining feature is a large shared positive component.
+The corpus-resampled null of \citet{pokropek-2026} retains the baseline
+thematic similarity that real items share, and the one benchmark of
+eigenvalue methods on embedding similarity matrices found parallel
+analysis systematically overextracting \citep{garrido-etal-2025}.
+Retention conclusions here therefore lean on the multi-criterion
+consensus rather than on any single rule, and reference distributions
+matched on the observed general similarity component are the needed
+refinement (see Future Directions). The human benchmark is likewise a
+convenience sample: an open, self-selected internet administration
+\citep{openpsychometrics-2018} cleaned only by response-range screening,
+so its factor structure need not match that of a probability sample, and
+the substitutability bound of \citet{guenole-etal-2025}, the match
+between the embedding model's training population and the respondent
+population, applies to this comparison as to any other.
 
 Measurement is also model-dependent: corpus register, training window,
 and architecture change which human behaviors embedding similarities
@@ -38,7 +79,7 @@ explain, none optimal across tasks
 whose robustness merits reporting. The results rest on one model family
 (Qwen3-Embedding) and English items; even default full vectors can be
 suboptimal, signal concentrating in coordinate subsets
-\citep{golino-2026}---witness the optimal depth of 1{,}431 of 4{,}096
+\citep{golino-2026}---witness the optimal depth of \valDepthOpt{} of \valDepthFull
 here. Embedding methods trail human validators on behaviorally but not
 lexically phrased items \citep{milano-etal-2025b}, so behavioral
 instruments may recover less well than the trait-adjacent Big-Five Factor

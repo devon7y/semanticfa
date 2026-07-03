@@ -40,9 +40,9 @@ Eigenvalues: 29.63   1.92   1.74   1.48   1.27   1.01   0.93   0.88   0.78   0.7
 \end{verbatim}
 }
 
-Parallel analysis and EGA indicated five factors, Kaiser six, TEFI
-two; the consensus of five matches the theoretical Big Five, and the
-dominant first eigenvalue (29.63), the general positivity of embedding
+Parallel analysis and EGA indicated \valPaKWord{} factors, Kaiser \valKaiserKWord, TEFI
+\valTefiKWord; the consensus of \valConsensusKWord{} matches the theoretical Big Five, and the
+dominant first eigenvalue (\valEigFirst), the general positivity of embedding
 similarities, precedes a shallow elbow (Figure~\ref{fig:scree}).
 
 \begin{figure}[H]
@@ -51,8 +51,8 @@ similarities, precedes a shallow elbow (Figure~\ref{fig:scree}).
 \includegraphics[width=0.6\textwidth]{figures/scree.pdf}
 \caption{Scree plot of the mean-centered Pearson similarity matrix with the
 embedding-adapted parallel-analysis threshold (dotted line), produced by
-\texttt{plot(fit, type = "scree")}. The first eigenvalue (29.63) dwarfs the
-rest; five eigenvalues clear the parallel-analysis threshold.}
+\texttt{plot(fit, type = "scree")}. The first eigenvalue (\valEigFirst) dwarfs the
+rest; \valPaKWord{} eigenvalues clear the parallel-analysis threshold.}
 \label{fig:scree}
 \end{figure}
 
@@ -75,11 +75,11 @@ EGA-based embedding-dimension selection
   Optimal depth:      1431 of 4096 coordinates
     at optimum: n_dim=5  NMI=0.704  TEFI=-23.291
 > cat("sfa_dimselect elapsed:", round(t_ds["elapsed"], 1), "s\n")
-sfa_dimselect elapsed: 13.6 s
+sfa_dimselect elapsed: 1.9 s
 \end{verbatim}
 }
 
-The optimum---roughly the first third, 1{,}431 of 4{,}096
-coordinates---recovered five EGA dimensions (NMI = .704), the
-five-factor answer by a different route; the 148-depth sweep took
-13.6~s.
+The optimum---roughly the first third, \valDepthOpt{} of \valDepthFull
+coordinates---recovered \valDepthNDimWord{} EGA dimensions (NMI = \valDepthNmi), the
+\valDepthNDimWord-factor answer by a different route; the \valDepthEval-depth sweep took
+\valTimeDimselect~s.

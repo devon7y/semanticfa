@@ -1,6 +1,25 @@
 % introduction_prediction.tex
 \subsection{Embeddings Predict Factor Structure and Item Correlations}
 
+The idea that survey statistics are partly written into the items predates
+transformer embeddings by a decade. Using latent semantic analysis (LSA) and a
+WordNet-based algorithm, \citet{arnulf-etal-2014} predicted the response
+statistics of organizational-behavior surveys from item semantics alone,
+explaining 60--86\% of the variance in observed correlation patterns, and
+proposed the \emph{semantic theory of survey response}. Follow-up work located
+the effect in the statistics themselves: sample correlation matrices converged
+on the items' semantic structure while individual attitude strength was
+filtered out as noise \citep{arnulf-etal-2018}, the measurement model of the
+technology acceptance model was reproduced from lexical co-occurrence in
+unrelated text corpora \citep{gefen-larsen-2017}, and the overlap of employee
+engagement with job satisfaction was traced in part to semantic equivalence
+\citep{nimon-etal-2016} (for the program's own summary, see
+\citealp{arnulf-etal-2021}). Two boundaries of that era matter here. The tools
+worked at the lexical and word-co-occurrence level, and the founding studies'
+one clear failure was the domain this demonstration targets: semantics had
+negligible predictive value for a five-factor personality inventory
+\citep{arnulf-etal-2014, arnulf-etal-2018}. Sentence embeddings changed both.
+
 A growing literature shows embedding similarity recovers inventories' a-priori
 factor structure without responses. \citet{milano-etal-2025a} embedded four scales
 (Big-Five markers, RIASEC, Humor Styles, DASS), and a principal component analysis
