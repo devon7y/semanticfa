@@ -1,7 +1,7 @@
 
 R version 4.5.0 (2025-04-11) -- "How About a Twenty-Six"
 Copyright (C) 2025 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu
+Platform: aarch64-apple-darwin20
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -149,10 +149,10 @@ mean_centered_pearson  0.394 0.938
 > t_nli <- system.time(
 +   sim_nli <- sfa_nli_matrix(big5$items)   # cross-encoder/nli-deberta-v3-base
 + )
-Loading weights:   0%|          | 0/202 [00:00<?, ?it/s]Loading weights: 100%|██████████| 202/202 [00:00<00:00, 9227.99it/s]
+Loading weights:   0%|          | 0/202 [00:00<?, ?it/s]Loading weights: 100%|##########| 202/202 [00:00<00:00, 3908.36it/s]
 > cat("NLI matrix:", nrow(sim_nli), "x", ncol(sim_nli),
 +     "in", round(t_nli["elapsed"], 1), "s\n")
-NLI matrix: 50 x 50 in 4103.2 s
+NLI matrix: 50 x 50 in 70 s
 > dimnames(sim_nli) <- list(big5$codes, big5$codes)
 > 
 > ## the canonical example: an extraversion item vs. its reverse-keyed sibling
@@ -195,10 +195,10 @@ Loaded embeddings (sfa_embeddings)
 > 
 > sfa_clear_cache()
 > t_emb <- system.time(emb06 <- sfa_embed(big5$items))
-Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   1%|          | 3/310 [00:07<13:31,  2.64s/it]Loading weights:   2%|▏         | 5/310 [00:08<07:00,  1.38s/it]Loading weights:   2%|▏         | 7/310 [00:08<04:16,  1.18it/s]Loading weights:   5%|▍         | 15/310 [00:08<01:17,  3.82it/s]Loading weights:   5%|▍         | 15/310 [00:22<01:17,  3.82it/s]Loading weights:   5%|▌         | 16/310 [00:34<15:33,  3.18s/it]Loading weights:   5%|▌         | 17/310 [00:35<13:36,  2.79s/it]Loading weights:   9%|▊         | 27/310 [00:35<04:30,  1.05it/s]Loading weights:  10%|█         | 31/310 [00:36<03:39,  1.27it/s]Loading weights:  14%|█▎        | 42/310 [00:38<02:04,  2.15it/s]Loading weights:  15%|█▍        | 46/310 [00:38<01:38,  2.69it/s]Loading weights:  17%|█▋        | 54/310 [00:39<01:12,  3.54it/s]Loading weights:  20%|██        | 63/310 [00:40<00:54,  4.52it/s]Loading weights:  21%|██▏       | 66/310 [00:40<00:47,  5.13it/s]Loading weights:  24%|██▍       | 74/310 [00:41<00:31,  7.40it/s]Loading weights:  36%|███▌      | 112/310 [00:41<00:08, 24.32it/s]Loading weights:  40%|███▉      | 123/310 [00:46<00:24,  7.59it/s]Loading weights:  42%|████▏     | 131/310 [00:49<00:32,  5.51it/s]Loading weights:  44%|████▍     | 137/310 [00:49<00:26,  6.51it/s]Loading weights:  46%|████▌     | 143/310 [00:50<00:24,  6.82it/s]Loading weights:  49%|████▊     | 151/310 [00:50<00:17,  8.92it/s]Loading weights:  54%|█████▍    | 168/310 [00:52<00:16,  8.66it/s]Loading weights:  58%|█████▊    | 180/310 [00:52<00:10, 11.87it/s]Loading weights:  60%|█████▉    | 185/310 [00:54<00:18,  6.67it/s]Loading weights:  61%|██████    | 188/310 [00:56<00:22,  5.43it/s]Loading weights:  67%|██████▋   | 207/310 [00:56<00:11,  9.36it/s]Loading weights:  69%|██████▊   | 213/310 [00:57<00:09, 10.16it/s]Loading weights:  74%|███████▎  | 228/310 [00:57<00:05, 15.36it/s]Loading weights:  78%|███████▊  | 242/310 [00:57<00:03, 22.02it/s]Loading weights:  80%|████████  | 248/310 [00:57<00:02, 23.61it/s]Loading weights:  83%|████████▎ | 257/310 [00:58<00:02, 23.17it/s]Loading weights:  87%|████████▋ | 270/310 [00:58<00:01, 32.02it/s]Loading weights:  92%|█████████▏| 286/310 [00:58<00:00, 41.11it/s]Loading weights: 100%|██████████| 310/310 [00:58<00:00,  5.29it/s]
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:  23%|##3       | 72/310 [00:00<00:00, 694.83it/s]Loading weights:  60%|######    | 187/310 [00:00<00:00, 958.41it/s]Loading weights: 100%|##########| 310/310 [00:00<00:00, 1146.65it/s]
 > cat("sfa_embed:", nrow(emb06), "x", ncol(emb06),
 +     "in", round(t_emb["elapsed"], 1), "s\n")
-sfa_embed: 50 x 1024 in 128.2 s
+sfa_embed: 50 x 1024 in 114.3 s
 > cos_live_ref <- sapply(seq_len(nrow(emb06)), function(i) {
 +   a <- emb06[i, ]; b <- ref06$embeddings[i, ]
 +   sum(a * b) / sqrt(sum(a^2) * sum(b^2))
@@ -207,7 +207,7 @@ sfa_embed: 50 x 1024 in 128.2 s
 cosine(live re-embedding, offline reference) per item:
 > print(summary(round(cos_live_ref, 4)))
    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
- 0.9998  0.9999  0.9999  0.9999  0.9999  0.9999 
+ 0.9999  0.9999  0.9999  0.9999  0.9999  0.9999 
 > results$embed_live_vs_reference <- summary(cos_live_ref)
 > 
 > ## ---------------------------------------------------------------------------
@@ -229,7 +229,7 @@ Embedding-adapted parallel analysis
 > results$parallel <- pa
 > 
 > nf <- sfa_nfactors(sim_mcp, embeddings = E8,
-+                    methods = c("parallel", "kaiser", "TEFI", "EGA"))
++                    methods = c("parallel", "kaiser", "TEFI", "EGA", "EKC"))
 > nf
 Factor retention analysis (embedding-adapted)
 
@@ -238,11 +238,32 @@ Factor retention analysis (embedding-adapted)
   kaiser       6
   TEFI         2
   EGA          5
+  EKC          6
   ------------------------
   Consensus    5
 
 Eigenvalues: 29.63   1.92   1.74   1.48   1.27   1.01   0.93   0.88   0.78   0.70  ... 
 > results$nfactors <- nf
+> 
+> ## The empirical Kaiser criterion on its own, for its reference series
+> ekc <- sfa_ekc(sim_mcp, E8)
+> ekc
+Empirical Kaiser criterion (embedding-adapted)
+  Suggested factors: 6 
+  Sample size used: 4096 
+  First reference: 1.233 
+> results$ekc <- ekc
+> 
+> ## Velicer's MAP, available but not a default consensus vote: on embedding
+> ## similarity matrices it tracks reliable minor structure well past the
+> ## interpretable factor count (see ?sfa_map)
+> mp <- sfa_map(sim_mcp)
+> mp
+Velicer's minimum average partial
+  Suggested factors: 10 
+  MAP at minimum: 0.0147 
+  Baseline (0 components): 0.3451 
+> results$map <- mp
 > 
 > t_ds <- system.time(
 +   ds <- sfa_dimselect(E8, factors = big5$factors,
@@ -257,7 +278,7 @@ EGA-based embedding-dimension selection
   Optimal depth:      1431 of 4096 coordinates
     at optimum: n_dim=5  NMI=0.704  TEFI=-23.291
 > cat("sfa_dimselect elapsed:", round(t_ds["elapsed"], 1), "s\n")
-sfa_dimselect elapsed: 1.9 s
+sfa_dimselect elapsed: 28 s
 > results$dimselect <- ds
 > 
 > ## ---------------------------------------------------------------------------
@@ -299,7 +320,7 @@ Diagnostics:
 Factor loadings:
 
 Loadings:
-    MR3    MR2    MR5    MR4    MR1   
+    MR3    MR1    MR2    MR5    MR4   
 N16  1.003                            
 N19  0.871                            
 N18  0.860                            
@@ -351,21 +372,21 @@ O41                              0.450
 O48                              0.425
 O47                              0.332
 
-                 MR3   MR2   MR5   MR4   MR1
+                 MR3   MR1   MR2   MR5   MR4
 SS loadings    6.421 5.330 4.111 3.193 2.736
 Proportion Var 0.128 0.107 0.082 0.064 0.055
 Cumulative Var 0.128 0.235 0.317 0.381 0.436
 
 Factor correlations (Phi):
-      MR3   MR2   MR5   MR4   MR1
+      MR3   MR1   MR2   MR5   MR4
 MR3 1.000 0.685 0.606 0.577 0.539
-MR2 0.685 1.000 0.538 0.582 0.555
-MR5 0.606 0.538 1.000 0.465 0.446
-MR4 0.577 0.582 0.465 1.000 0.398
-MR1 0.539 0.555 0.446 0.398 1.000
+MR1 0.685 1.000 0.538 0.582 0.555
+MR2 0.606 0.538 1.000 0.465 0.446
+MR5 0.577 0.582 0.465 1.000 0.398
+MR4 0.539 0.555 0.446 0.398 1.000
 
 Variance accounted for:
-                        MR3   MR2   MR5   MR4   MR1
+                        MR3   MR1   MR2   MR5   MR4
 SS loadings           9.238 8.632 6.279 5.619 4.831
 Proportion Var        0.185 0.173 0.126 0.112 0.097
 Cumulative Var        0.185 0.357 0.483 0.595 0.692
@@ -386,7 +407,7 @@ Diagnostics:
 Factor loadings:
 
 Loadings:
-    MR3    MR2    MR5    MR4    MR1   
+    MR3    MR1    MR2    MR5    MR4   
 N16  1.003                            
 N19  0.871                            
 N18  0.860                            
@@ -438,21 +459,21 @@ O41                              0.450
 O48                              0.425
 O47                              0.332
 
-                 MR3   MR2   MR5   MR4   MR1
+                 MR3   MR1   MR2   MR5   MR4
 SS loadings    6.421 5.330 4.111 3.193 2.736
 Proportion Var 0.128 0.107 0.082 0.064 0.055
 Cumulative Var 0.128 0.235 0.317 0.381 0.436
 
 Factor correlations (Phi):
-      MR3   MR2   MR5   MR4   MR1
+      MR3   MR1   MR2   MR5   MR4
 MR3 1.000 0.685 0.606 0.577 0.539
-MR2 0.685 1.000 0.538 0.582 0.555
-MR5 0.606 0.538 1.000 0.465 0.446
-MR4 0.577 0.582 0.465 1.000 0.398
-MR1 0.539 0.555 0.446 0.398 1.000
+MR1 0.685 1.000 0.538 0.582 0.555
+MR2 0.606 0.538 1.000 0.465 0.446
+MR5 0.577 0.582 0.465 1.000 0.398
+MR4 0.539 0.555 0.446 0.398 1.000
 
 Variance accounted for:
-                        MR3   MR2   MR5   MR4   MR1
+                        MR3   MR1   MR2   MR5   MR4
 SS loadings           9.238 8.632 6.279 5.619 4.831
 Proportion Var        0.185 0.173 0.126 0.112 0.097
 Cumulative Var        0.185 0.357 0.483 0.595 0.692
@@ -462,10 +483,10 @@ Cumulative Proportion 0.267 0.516 0.698 0.860 1.000
 McDonald's omega per factor:
  factor omega_assigned omega_theoretical matched_theoretical
     MR3          0.908             0.902         Neuroticism
-    MR2          0.863             0.850   Conscientiousness
-    MR5          0.830             0.560       Agreeableness
-    MR4          0.709             0.583        Extraversion
-    MR1          0.704             0.732            Openness
+    MR1          0.863             0.850   Conscientiousness
+    MR2          0.830             0.560       Agreeableness
+    MR5          0.709             0.583        Extraversion
+    MR4          0.704             0.732            Openness
 
 Communalities:
     communality uniqueness
@@ -526,42 +547,9 @@ O50       0.796      0.204
 +   fit_cal <- sfa(big5_df, embeddings = E8, encoding = "mean_centered_pearson",
 +                  nfactors = 5, calibrate = TRUE, calibrate_iter = 100)
 + )
-Warning messages:
-1: 'scoring' has reverse-keyed items but is ignored for encoding = "mean_centered_pearson": this method is keying-free by design. Use "atomic_reversed" for keyed sign-flipping. 
-2: In engine(A, Tmat = current_Tmat, normalize = normalize, eps = eps,  :
-  Convergence not obtained in GPFoblq. 2000 iterations used.
-Algorithm stopped at s = 1.125e-05 (target eps = 1e-05).
-Consider: increase maxit or increase fwindow.
-3: In engine(A, Tmat = current_Tmat, normalize = normalize, eps = eps,  :
-  Convergence not obtained in GPFoblq. 2000 iterations used.
-Algorithm stopped at s = 1.361e-05 (target eps = 1e-05).
-Consider: increase maxit or increase fwindow.
-4: In engine(A, Tmat = current_Tmat, normalize = normalize, eps = eps,  :
-  Convergence not obtained in GPFoblq. 2000 iterations used.
-Algorithm stopped at s = 1.413e-05 (target eps = 1e-05).
-Consider: increase maxit or increase fwindow.
-5: In engine(A, Tmat = current_Tmat, normalize = normalize, eps = eps,  :
-  Convergence not obtained in GPFoblq. 2000 iterations used.
-Algorithm stopped at s = 1.032e-05 (target eps = 1e-05).
-Consider: increase maxit or increase fwindow.
-6: In engine(A, Tmat = current_Tmat, normalize = normalize, eps = eps,  :
-  Convergence not obtained in GPFoblq. 2000 iterations used.
-Algorithm stopped at s = 1.052e-05 (target eps = 1e-05).
-Consider: increase maxit or increase fwindow.
-7: In engine(A, Tmat = current_Tmat, normalize = normalize, eps = eps,  :
-  Convergence not obtained in GPFoblq. 2000 iterations used.
-Algorithm stopped at s = 3.141e-05 (target eps = 1e-05).
-Consider: increase maxit or increase fwindow.
-8: In engine(A, Tmat = current_Tmat, normalize = normalize, eps = eps,  :
-  Convergence not obtained in GPFoblq. 2000 iterations used.
-Algorithm stopped at s = 1.755e-05 (target eps = 1e-05).
-Consider: increase maxit or increase fwindow.
-9: In engine(A, Tmat = current_Tmat, normalize = normalize, eps = eps,  :
-  Convergence not obtained in GPFoblq. 2000 iterations used.
-Algorithm stopped at s = 3.141e-05 (target eps = 1e-05).
-Consider: increase maxit or increase fwindow.
+There were 21 warnings (use warnings() to see them)
 > cat("calibrate=TRUE elapsed:", round(t_cal["elapsed"], 1), "s\n")
-calibrate=TRUE elapsed: 59.5 s
+calibrate=TRUE elapsed: 123.9 s
 > fit_cal$calibration
 $rmsr
   [1] 0.01260340 0.01295874 0.01305377 0.01254414 0.01245968 0.01286010
@@ -603,17 +591,17 @@ $tefi
   [1] -20.80379 -20.31119 -21.46456 -21.04747 -21.13757 -21.07585 -21.66231
   [8] -21.42295 -21.07419 -21.39009 -21.41297 -20.84532 -21.12462 -20.81418
  [15] -20.79570 -20.79863 -20.55493 -20.41702 -20.74199 -21.27588 -21.11420
- [22] -21.09727 -20.91369 -21.48261 -20.62473 -21.20981 -21.37617 -20.90515
- [29] -20.79843 -21.19055 -20.81966 -21.32259 -21.40180 -21.02178 -20.98601
+ [22] -20.98640 -20.91369 -21.48261 -20.62473 -21.20981 -21.37617 -20.90515
+ [29] -20.79843 -21.17027 -20.81966 -21.15492 -21.40180 -21.02178 -20.98601
  [36] -20.79265 -21.24889 -20.02860 -20.39212 -20.50653 -21.01130 -21.18025
- [43] -21.10229 -20.73140 -21.11847 -21.45416 -20.89901 -20.99709 -20.78458
- [50] -18.97776 -20.79764 -20.96383 -20.31212 -19.91394 -21.05477 -21.46548
- [57] -20.94405 -20.67696 -21.29100 -20.96610 -20.20973 -21.00195 -20.31547
+ [43] -21.10229 -20.73140 -21.11847 -21.45416 -20.89901 -20.99709 -20.68985
+ [50] -18.79730 -20.79764 -20.96383 -20.31212 -19.91394 -21.05477 -21.46548
+ [57] -20.94405 -20.67696 -21.35341 -20.96610 -20.20973 -21.00195 -20.31547
  [64] -20.13908 -21.29150 -21.30709 -21.19954 -20.95934 -20.77345 -20.88807
- [71] -20.61956 -21.28171 -20.79500 -19.77867 -17.98377 -20.92197 -21.07421
- [78] -21.11769 -20.89107 -20.32804 -19.83678 -20.96227 -20.60462 -21.19893
+ [71] -20.61956 -21.28171 -20.79500 -19.77867 -17.82077 -20.92197 -21.07421
+ [78] -21.11769 -20.89107 -20.32804 -19.83678 -21.14191 -20.60462 -21.19893
  [85] -21.37879 -20.35751 -20.70855 -20.91303 -20.70903 -20.58706 -20.20895
- [92] -20.84281 -20.65811 -21.29800 -21.15901 -20.92296 -20.65116 -21.28264
+ [92] -20.66062 -20.65811 -21.29800 -21.15901 -20.92296 -20.65116 -21.28264
  [99] -21.05355 -20.95187
 
 > results$calibration <- fit_cal$calibration
@@ -621,7 +609,7 @@ $tefi
 > ## hand-off to the psych ecosystem
 > ps <- as_psych(fit)
 > print(psych::fa.sort(unclass(ps$loadings)), digits = 2, cutoff = 0.3)
-        MR3      MR2     MR5     MR4     MR1
+        MR3      MR1     MR2     MR5     MR4
 N16  1.0031 -0.01958  0.0097 -0.0527 -0.0290
 N19  0.8706  0.05681  0.0553 -0.0709 -0.0123
 N18  0.8604  0.02707 -0.0874  0.0195  0.0293
@@ -660,7 +648,7 @@ E10  0.0937  0.03356  0.4075  0.3900  0.0142
 N14  0.2971  0.17039  0.3194  0.1413  0.0224
 E3   0.0842  0.06138  0.1270  0.7517  0.0133
 A30  0.1790  0.20310  0.0456  0.5961 -0.0012
-E7   0.0049  0.11006  0.1198  0.5092  0.1824
+E7   0.0049  0.11007  0.1198  0.5092  0.1824
 A22  0.0410  0.02955  0.2299  0.4848  0.2612
 E9  -0.0011  0.23154  0.2249  0.4503  0.0656
 E5   0.0369  0.20507  0.1168  0.3850  0.2565
@@ -670,7 +658,7 @@ O45  0.0118  0.30020 -0.0365  0.1260  0.5818
 O42  0.2438 -0.12202  0.3504 -0.0954  0.5629
 O43  0.1807  0.15483 -0.0271  0.1694  0.5539
 O41  0.0626  0.26320 -0.0338  0.2220  0.4495
-O48  0.1622  0.23479  0.0698  0.0859  0.4245
+O48  0.1622  0.23480  0.0698  0.0859  0.4245
 O47  0.2200  0.20547 -0.0092  0.2172  0.3324
 > 
 > ## ---------------------------------------------------------------------------
@@ -1015,8 +1003,8 @@ Scale simplification (response-free)
 > ## candidates should be embedded with (the same model as the bundled vectors)
 > ifit <- sfa_item_fit(fit06, cand, model = "Qwen/Qwen3-Embedding-0.6B",
 +                      redundancy_cutoff = 0.85)
-Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights: 100%|██████████| 310/310 [00:00<00:00, 10573.50it/s]
-Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights: 100%|██████████| 310/310 [00:00<00:00, 9710.27it/s]
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:  45%|####4     | 138/310 [00:00<00:00, 1355.41it/s]Loading weights: 100%|##########| 310/310 [00:00<00:00, 1959.50it/s]
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:  43%|####2     | 132/310 [00:00<00:00, 1240.40it/s]Loading weights:  83%|########2 | 257/310 [00:00<00:00, 799.71it/s] Loading weights: 100%|##########| 310/310 [00:00<00:00, 980.05it/s]
 > ifit
 Candidate item fit
   Method: Wulff & Mata (2025), extended
@@ -1024,7 +1012,7 @@ Candidate item fit
 Candidate 1: "I make friends easily."
   Similarity to (name | other items), by construct:
     Extraversion     name  0.53   items  0.74
-    Neuroticism      name  0.48   items  0.73
+    Neuroticism      name  0.49   items  0.73
     Agreeableness    name  0.55   items  0.72
     Openness         name  0.53   items  0.68
     Conscientiousness name  0.45   items  0.66
@@ -1036,11 +1024,11 @@ Candidate 1: "I make friends easily."
 
 Candidate 2: "I am the life of every party."
   Similarity to (name | other items), by construct:
-    Extraversion     name  0.44   items  0.77
-    Conscientiousness name  0.43   items  0.71
-    Agreeableness    name  0.42   items  0.70
+    Extraversion     name  0.43   items  0.77
+    Conscientiousness name  0.42   items  0.71
+    Agreeableness    name  0.41   items  0.70
     Openness         name  0.47   items  0.65
-    Neuroticism      name  0.39   items  0.64
+    Neuroticism      name  0.39   items  0.63
   Best construct : Extraversion
   Cross-loading  : gap to 2nd (Conscientiousness) = 0.06  ->  ambiguous - cross-loads with Conscientiousness
   Strength       : about typical for Extraversion (items 0.77 vs avg 0.75)
@@ -1135,7 +1123,7 @@ null device
 +   sfa_corplot(sim_m, order = c("E", "N", "A", "C", "O"))
 +   dev.off()
 +   nf_m <- sfa_nfactors(sim_m, embeddings = emb_by_model[[m]],
-+                        methods = c("parallel", "kaiser", "TEFI", "EGA"))
++                        methods = c("parallel", "kaiser", "TEFI", "EGA", "EKC"))
 +   cat(sprintf("\nQwen3-Embedding-%s (%d dims):\n", m, ncol(emb_by_model[[m]])))
 +   print(nf_m)
 +   model_nf[[m]] <- nf_m
@@ -1149,6 +1137,7 @@ Factor retention analysis (embedding-adapted)
   kaiser       6
   TEFI         2
   EGA          6
+  EKC          6
   ------------------------
   Consensus    6
 
@@ -1162,6 +1151,7 @@ Factor retention analysis (embedding-adapted)
   kaiser       6
   TEFI         2
   EGA          6
+  EKC          6
   ------------------------
   Consensus    6
 
@@ -1175,6 +1165,7 @@ Factor retention analysis (embedding-adapted)
   kaiser       6
   TEFI         2
   EGA          5
+  EKC          6
   ------------------------
   Consensus    5
 
@@ -1220,7 +1211,7 @@ E2   0.7126  8.6e-02  0.0531 -0.02594  0.00824
 E1   0.7121  4.2e-02 -0.0100 -0.01463 -0.01241
 E10  0.6841 -7.9e-02 -0.0180  0.01415 -0.01909
 E9   0.6535  2.7e-02 -0.1053 -0.05011  0.10312
-E3   0.6233 -1.9e-01  0.1785  0.06097 -0.06828
+E3   0.6233 -1.9e-01  0.1785  0.06097 -0.06829
 E8   0.6179  3.9e-02 -0.1088 -0.07020  0.02637
 E6   0.5220  4.9e-03  0.0735  0.00986  0.23545
 N16  0.0268  7.5e-01  0.0306  0.00501 -0.06770
@@ -1239,7 +1230,7 @@ A25  0.0601 -2.7e-02  0.6615 -0.03811 -0.00234
 A26 -0.0634  1.3e-01  0.6180  0.00126 -0.07436
 A27  0.2250 -8.4e-02  0.6135 -0.03495  0.01505
 A28  0.0771 -1.4e-02  0.5585  0.06131  0.00072
-A22  0.2820 -4.1e-02  0.5219 -0.04010  0.06018
+A22  0.2820 -4.1e-02  0.5219 -0.04010  0.06017
 A21 -0.0492 -5.6e-02  0.4988 -0.00639  0.06142
 A23 -0.1804 -2.4e-01  0.4181  0.14380 -0.07124
 A30  0.2602 -1.0e-01  0.3619  0.08593  0.06185
@@ -1260,10 +1251,190 @@ O45  0.1656 -2.7e-02 -0.0685  0.12154  0.57462
 O48 -0.0063  7.6e-02 -0.1263 -0.02352  0.56432
 O43 -0.0139  1.1e-01  0.0906 -0.09924  0.54467
 O44 -0.0945 -1.1e-01  0.1143 -0.09989  0.51754
-O46  0.0105 -3.2e-02  0.0909 -0.05168  0.49939
+O46  0.0105 -3.2e-02  0.0909 -0.05167  0.49939
 O47  0.0191 -1.2e-01 -0.0442  0.15356  0.47350
-O49 -0.1848  1.1e-01  0.1867  0.03663  0.39566
+O49 -0.1848  1.1e-01  0.1867  0.03664  0.39566
 > results$n_human <- n_human
+> 
+> ## ---------------------------------------------------------------------------
+> ## 10b. Comparison-data misfit profiles: crisp versus graded structure
+> ## ---------------------------------------------------------------------------
+> banner("10b. Comparison-data profiles (sfa_cd)")
+
+
+===== 10b. Comparison-data profiles (sfa_cd) =====
+
+> 
+> ## For each candidate factor count k, the comparison-data profile records how
+> ## well bootstrap samples from a k-factor comparison population reproduce the
+> ## observed eigenvalue spectrum (Ruscio & Roche 2012, adapted; see ?sfa_cd).
+> ## Response data with a real factor boundary show a sharp elbow at that
+> ## boundary; embedding similarity matrices decline smoothly instead. The
+> ## sequential significance rule is run at its conventional alpha = .30 here
+> ## deliberately, to document that it saturates at the cap on embedding
+> ## matrices (each added factor keeps reproducing the anisotropic spectrum
+> ## reliably better) and therefore carries no retention information for them.
+> 
+> cd_emb <- list()
+> for (m in names(emb_by_model)) {
++   t_cd <- system.time(
++     cd_m <- sfa_cd(emb_by_model[[m]], n_factors_max = 10, alpha = .30)
++   )
++   cat(sprintf("\nQwen3-Embedding-%s comparison-data profile (%.0f s):\n",
++               m, t_cd["elapsed"]))
++   print(cd_m)
++   cd_emb[[m]] <- cd_m
++ }
+
+Qwen3-Embedding-0.6B comparison-data profile (22 s):
+Comparison-data misfit profile (Ruscio & Roche, adapted)
+  Cases: 1024, samples per k: 500, population: 10000
+
+  k median_RMSR normalized improvement_pct
+  1       0.345      1.000              NA
+  2       0.282      0.818            18.2
+  3       0.228      0.662            19.2
+  4       0.197      0.570            13.8
+  5       0.169      0.490            14.1
+  6       0.147      0.426            13.0
+  7       0.132      0.383            10.1
+  8       0.121      0.350             8.7
+  9       0.108      0.314            10.3
+ 10       0.095      0.276            12.1
+
+Sequential rule (alpha = 0.3): 10 factors
+  (Read alongside the profile: this rule saturates on embedding
+   similarity matrices; see ?sfa_cd.)
+
+Qwen3-Embedding-4B comparison-data profile (45 s):
+Comparison-data misfit profile (Ruscio & Roche, adapted)
+  Cases: 2560, samples per k: 500, population: 10000
+
+  k median_RMSR normalized improvement_pct
+  1       0.322      1.000              NA
+  2       0.270      0.839            16.1
+  3       0.223      0.692            17.5
+  4       0.183      0.569            17.8
+  5       0.157      0.487            14.4
+  6       0.134      0.415            14.7
+  7       0.119      0.369            11.1
+  8       0.105      0.324            12.2
+  9       0.094      0.292             9.8
+ 10       0.084      0.261            10.8
+
+Sequential rule (alpha = 0.3): 10 factors
+  (Read alongside the profile: this rule saturates on embedding
+   similarity matrices; see ?sfa_cd.)
+
+Qwen3-Embedding-8B comparison-data profile (71 s):
+Comparison-data misfit profile (Ruscio & Roche, adapted)
+  Cases: 4096, samples per k: 500, population: 10000
+
+  k median_RMSR normalized improvement_pct
+  1       0.358      1.000              NA
+  2       0.303      0.847            15.3
+  3       0.236      0.659            22.2
+  4       0.198      0.553            16.1
+  5       0.168      0.470            14.9
+  6       0.144      0.404            14.2
+  7       0.127      0.356            11.8
+  8       0.112      0.312            12.5
+  9       0.095      0.265            15.2
+ 10       0.082      0.228            13.9
+
+Sequential rule (alpha = 0.3): 10 factors
+  (Read alongside the profile: this rule saturates on embedding
+   similarity matrices; see ?sfa_cd.)
+> 
+> ## The human anchor: the same profile on real responses (n = 2,500 keyed
+> ## subsample), plus the sequential rule across subsample sizes. Within the
+> ## sample sizes where the comparison-data method was validated the rule
+> ## terminates; as n grows the test has power against any nonzero improvement
+> ## and the verdict inflates, mirroring the full-sample parallel analysis of
+> ## the human benchmark reported in Section 11.
+> set.seed(42)
+> cd_human <- sfa_cd(as.matrix(human_keyed[sample(n_human, 2500), ]),
++                    input = "data", n_factors_max = 10, alpha = .30)
+> cat("\nHuman responses (n = 2500) comparison-data profile:\n")
+
+Human responses (n = 2500) comparison-data profile:
+> print(cd_human)
+Comparison-data misfit profile (Ruscio & Roche, adapted)
+  Cases: 2500, samples per k: 500, population: 10000
+
+  k median_RMSR normalized improvement_pct
+  1       0.829      1.000              NA
+  2       0.643      0.775            22.5
+  3       0.468      0.564            27.2
+  4       0.318      0.384            32.0
+  5       0.136      0.164            57.2
+  6       0.109      0.132            19.7
+  7       0.089      0.107            18.9
+  8       0.076      0.091            14.8
+  9       0.065      0.078            14.4
+ 10       0.059      0.071             9.0
+
+Sequential rule (alpha = 0.3): 10 factors
+  (Read alongside the profile: this rule saturates on embedding
+   similarity matrices; see ?sfa_cd.)
+> 
+> cd_cross <- vapply(c(250, 500, 1000), function(n_sub) {
++   set.seed(42)
++   sfa_cd(as.matrix(human_keyed[sample(n_human, n_sub), ]), input = "data",
++          n_factors_max = 10, alpha = .30)$n_factors
++ }, integer(1))
+> names(cd_cross) <- c("n250", "n500", "n1000")
+> cd_cross <- c(cd_cross, n2500 = cd_human$n_factors)
+> cat("\nSequential-rule verdicts on human subsamples (alpha = .30):\n")
+
+Sequential-rule verdicts on human subsamples (alpha = .30):
+> print(cd_cross)
+ n250  n500 n1000 n2500 
+    7    10    10    10 
+> 
+> results$cd <- list(
++   embeddings = lapply(cd_emb, function(x)
++     x[c("median_rmsr", "profile", "improvement", "n_factors", "n")]),
++   human = cd_human[c("median_rmsr", "profile", "improvement",
++                      "n_factors", "n")],
++   crossover = cd_cross)
+> 
+> ## profile table + two-panel figure
+> cd_tab <- do.call(rbind, c(
++   lapply(names(cd_emb), function(m) data.frame(
++     dataset = m, k = seq_along(cd_emb[[m]]$median_rmsr),
++     median_rmsr = cd_emb[[m]]$median_rmsr,
++     normalized = cd_emb[[m]]$profile,
++     improvement = c(NA, cd_emb[[m]]$improvement))),
++   list(data.frame(
++     dataset = "human", k = seq_along(cd_human$median_rmsr),
++     median_rmsr = cd_human$median_rmsr,
++     normalized = cd_human$profile,
++     improvement = c(NA, cd_human$improvement)))))
+> write.csv(cd_tab, "output/cd_profiles.csv", row.names = FALSE)
+> 
+> pdf("figures/fig_cd_profiles.pdf", width = 9, height = 4.2)
+> par(mfrow = c(1, 2), mar = c(4.2, 4.4, 2.4, 1))
+> cd_cols <- c(`0.6B` = "#8ecae6", `4B` = "#219ebc", `8B` = "#023047",
++              human = "#d62828")
+> plot(NULL, xlim = c(1, 10), ylim = c(0, 1), xlab = "Factors (k)",
++      ylab = "Median RMSR / one-factor RMSR", main = "Misfit profile")
+> for (d in names(cd_cols)) {
++   y <- if (d == "human") cd_human$profile else cd_emb[[d]]$profile
++   lines(seq_along(y), y, type = "b", pch = 19, lwd = 2, col = cd_cols[d])
++ }
+> legend("topright", legend = names(cd_cols), col = cd_cols, lwd = 2,
++        pch = 19, bty = "n")
+> plot(NULL, xlim = c(2, 10), ylim = c(0, 62), xlab = "Factors (k)",
++      ylab = "Improvement over k - 1 (%)", main = "Relative improvement")
+> for (d in names(cd_cols)) {
++   y <- if (d == "human") cd_human$improvement else cd_emb[[d]]$improvement
++   lines(1 + seq_along(y), 100 * y, type = "b", pch = 19, lwd = 2,
++         col = cd_cols[d])
++ }
+> dev.off()
+null device 
+          1 
 > 
 > ## ---------------------------------------------------------------------------
 > ## 11. Semantic-behavioral coherence: SFA vs. the human structure
@@ -1286,10 +1457,10 @@ Factor structure congruence
 Tucker phi (factor-by-factor):
      MR4   MR1  MR3  MR2  MR5
 MR3 0.03  0.80 0.30 0.13 0.12
-MR2 0.27  0.11 0.10 0.84 0.28
-MR5 0.41 -0.01 0.52 0.05 0.27
-MR4 0.64  0.07 0.52 0.11 0.16
-MR1 0.18  0.02 0.17 0.14 0.92
+MR1 0.27  0.11 0.10 0.84 0.28
+MR2 0.41 -0.01 0.52 0.05 0.27
+MR5 0.64  0.07 0.52 0.11 0.16
+MR4 0.18  0.02 0.17 0.14 0.92
 
   NMI:            0.527 (moderate - higher is better)
   ARI:            0.402 (weak - higher is better)
@@ -1301,10 +1472,10 @@ MR1 0.18  0.02 0.17 0.14 0.92
 > round(phi, 2)
      MR4   MR1  MR3  MR2  MR5
 MR3 0.03  0.80 0.30 0.13 0.12
-MR2 0.27  0.11 0.10 0.84 0.28
-MR5 0.41 -0.01 0.52 0.05 0.27
-MR4 0.64  0.07 0.52 0.11 0.16
-MR1 0.18  0.02 0.17 0.14 0.92
+MR1 0.27  0.11 0.10 0.84 0.28
+MR2 0.41 -0.01 0.52 0.05 0.27
+MR5 0.64  0.07 0.52 0.11 0.16
+MR4 0.18  0.02 0.17 0.14 0.92
 > results$tucker_matrix <- phi
 > 
 > ## (b) item-pair-level agreement: semantic similarity vs. human inter-item r.
@@ -1428,38 +1599,37 @@ Wrote output/results.rds and CSV tables.
 > 
 > sessionInfo()
 R version 4.5.0 (2025-04-11)
-Platform: x86_64-pc-linux-gnu
-Running under: AlmaLinux 9.8 (Olive Jaguar)
+Platform: aarch64-apple-darwin20
+Running under: macOS 26.2
 
 Matrix products: default
-BLAS/LAPACK: FlexiBLAS NETLIB;  LAPACK version 3.11.0
+BLAS:   /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1
 
 locale:
- [1] LC_CTYPE=en_CA.UTF-8       LC_NUMERIC=C              
- [3] LC_TIME=en_CA.UTF-8        LC_COLLATE=en_CA.UTF-8    
- [5] LC_MONETARY=en_CA.UTF-8    LC_MESSAGES=en_CA.UTF-8   
- [7] LC_PAPER=en_CA.UTF-8       LC_NAME=C                 
- [9] LC_ADDRESS=C               LC_TELEPHONE=C            
-[11] LC_MEASUREMENT=en_CA.UTF-8 LC_IDENTIFICATION=C       
+[1] en_CA/C/en_CA/C/en_CA/en_CA
 
-time zone: EST5EDT
-tzcode source: system (glibc)
+time zone: America/Edmonton
+tzcode source: internal
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] semanticfa_0.1.1
+[1] semanticfa_0.1.2
 
 loaded via a namespace (and not attached):
- [1] igraph_2.3.3         digest_0.6.39        EGAnet_2.4.1        
- [4] Rtsne_0.17           Matrix_1.7-4         lattice_0.22-7      
- [7] magrittr_2.0.5       GPArotation_2026.6-1 reticulate_1.46.0   
-[10] parallel_4.5.0       glasso_1.11          pkgconfig_2.0.3     
-[13] png_0.1-9            lifecycle_1.0.5      cli_3.6.6           
-[16] grid_4.5.0           withr_3.0.3          mnormt_2.1.2        
-[19] compiler_4.5.0       psych_2.6.5          tools_4.5.0         
-[22] RSpectra_0.16-2      uwot_0.2.4           nlme_3.1-168        
-[25] Rcpp_1.1.1-1.1       FNN_1.1.4.1          rlang_1.2.0         
-[28] jsonlite_2.0.0      
+ [1] nlme_3.1-168         cli_3.6.5            rlang_1.1.6         
+ [4] GPArotation_2026.4-1 EGAnet_2.4.1         png_0.1-8           
+ [7] jsonlite_2.0.0       glasso_1.11          glue_1.8.0          
+[10] Rtsne_0.17           rprojroot_2.1.1      uwot_0.2.4          
+[13] grid_4.5.0           psych_2.6.5          lifecycle_1.0.4     
+[16] FNN_1.1.4.1          compiler_4.5.0       RSpectra_0.16-2     
+[19] igraph_2.1.4         Rcpp_1.1.0           pkgconfig_2.0.3     
+[22] here_1.0.2           lattice_0.22-6       digest_0.6.37       
+[25] reticulate_1.43.0    mnormt_2.1.2         parallel_4.5.0      
+[28] magrittr_2.0.3       Matrix_1.7-3         tools_4.5.0         
+[31] withr_3.0.2         
 > 
+/Users/devon7y/.local/share/uv/python/cpython-3.11.13-macos-aarch64-none/lib/python3.11/multiprocessing/resource_tracker.py:254: UserWarning: resource_tracker: There appear to be 1 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '

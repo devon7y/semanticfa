@@ -153,9 +153,21 @@ pa
 results$parallel <- pa
 
 nf <- sfa_nfactors(sim_mcp, embeddings = E8,
-                   methods = c("parallel", "kaiser", "TEFI", "EGA"))
+                   methods = c("parallel", "kaiser", "TEFI", "EGA", "EKC"))
 nf
 results$nfactors <- nf
+
+## The empirical Kaiser criterion on its own, for its reference series
+ekc <- sfa_ekc(sim_mcp, E8)
+ekc
+results$ekc <- ekc
+
+## Velicer's MAP, available but not a default consensus vote: on embedding
+## similarity matrices it tracks reliable minor structure well past the
+## interpretable factor count (see ?sfa_map)
+mp <- sfa_map(sim_mcp)
+mp
+results$map <- mp
 
 t_ds <- system.time(
   ds <- sfa_dimselect(E8, factors = big5$factors,
@@ -351,7 +363,7 @@ for (m in names(emb_by_model)) {
   sfa_corplot(sim_m, order = c("E", "N", "A", "C", "O"))
   dev.off()
   nf_m <- sfa_nfactors(sim_m, embeddings = emb_by_model[[m]],
-                       methods = c("parallel", "kaiser", "TEFI", "EGA"))
+                       methods = c("parallel", "kaiser", "TEFI", "EGA", "EKC"))
   cat(sprintf("\nQwen3-Embedding-%s (%d dims):\n", m, ncol(emb_by_model[[m]])))
   print(nf_m)
   model_nf[[m]] <- nf_m
@@ -384,6 +396,96 @@ human_fa <- psych::fa(R_human, nfactors = 5, n.obs = n_human,
                       rotate = "oblimin", fm = "minres")
 print(psych::fa.sort(unclass(human_fa$loadings)), digits = 2, cutoff = 0.3)
 results$n_human <- n_human
+
+## ---------------------------------------------------------------------------
+## 10b. Comparison-data misfit profiles: crisp versus graded structure
+## ---------------------------------------------------------------------------
+banner("10b. Comparison-data profiles (sfa_cd)")
+
+## For each candidate factor count k, the comparison-data profile records how
+## well bootstrap samples from a k-factor comparison population reproduce the
+## observed eigenvalue spectrum (Ruscio & Roche 2012, adapted; see ?sfa_cd).
+## Response data with a real factor boundary show a sharp elbow at that
+## boundary; embedding similarity matrices decline smoothly instead. The
+## sequential significance rule is run at its conventional alpha = .30 here
+## deliberately, to document that it saturates at the cap on embedding
+## matrices (each added factor keeps reproducing the anisotropic spectrum
+## reliably better) and therefore carries no retention information for them.
+
+cd_emb <- list()
+for (m in names(emb_by_model)) {
+  t_cd <- system.time(
+    cd_m <- sfa_cd(emb_by_model[[m]], n_factors_max = 10, alpha = .30)
+  )
+  cat(sprintf("\nQwen3-Embedding-%s comparison-data profile (%.0f s):\n",
+              m, t_cd["elapsed"]))
+  print(cd_m)
+  cd_emb[[m]] <- cd_m
+}
+
+## The human anchor: the same profile on real responses (n = 2,500 keyed
+## subsample), plus the sequential rule across subsample sizes. Within the
+## sample sizes where the comparison-data method was validated the rule
+## terminates; as n grows the test has power against any nonzero improvement
+## and the verdict inflates, mirroring the full-sample parallel analysis of
+## the human benchmark reported in Section 11.
+set.seed(42)
+cd_human <- sfa_cd(as.matrix(human_keyed[sample(n_human, 2500), ]),
+                   input = "data", n_factors_max = 10, alpha = .30)
+cat("\nHuman responses (n = 2500) comparison-data profile:\n")
+print(cd_human)
+
+cd_cross <- vapply(c(250, 500, 1000), function(n_sub) {
+  set.seed(42)
+  sfa_cd(as.matrix(human_keyed[sample(n_human, n_sub), ]), input = "data",
+         n_factors_max = 10, alpha = .30)$n_factors
+}, integer(1))
+names(cd_cross) <- c("n250", "n500", "n1000")
+cd_cross <- c(cd_cross, n2500 = cd_human$n_factors)
+cat("\nSequential-rule verdicts on human subsamples (alpha = .30):\n")
+print(cd_cross)
+
+results$cd <- list(
+  embeddings = lapply(cd_emb, function(x)
+    x[c("median_rmsr", "profile", "improvement", "n_factors", "n")]),
+  human = cd_human[c("median_rmsr", "profile", "improvement",
+                     "n_factors", "n")],
+  crossover = cd_cross)
+
+## profile table + two-panel figure
+cd_tab <- do.call(rbind, c(
+  lapply(names(cd_emb), function(m) data.frame(
+    dataset = m, k = seq_along(cd_emb[[m]]$median_rmsr),
+    median_rmsr = cd_emb[[m]]$median_rmsr,
+    normalized = cd_emb[[m]]$profile,
+    improvement = c(NA, cd_emb[[m]]$improvement))),
+  list(data.frame(
+    dataset = "human", k = seq_along(cd_human$median_rmsr),
+    median_rmsr = cd_human$median_rmsr,
+    normalized = cd_human$profile,
+    improvement = c(NA, cd_human$improvement)))))
+write.csv(cd_tab, "output/cd_profiles.csv", row.names = FALSE)
+
+pdf("figures/fig_cd_profiles.pdf", width = 9, height = 4.2)
+par(mfrow = c(1, 2), mar = c(4.2, 4.4, 2.4, 1))
+cd_cols <- c(`0.6B` = "#8ecae6", `4B` = "#219ebc", `8B` = "#023047",
+             human = "#d62828")
+plot(NULL, xlim = c(1, 10), ylim = c(0, 1), xlab = "Factors (k)",
+     ylab = "Median RMSR / one-factor RMSR", main = "Misfit profile")
+for (d in names(cd_cols)) {
+  y <- if (d == "human") cd_human$profile else cd_emb[[d]]$profile
+  lines(seq_along(y), y, type = "b", pch = 19, lwd = 2, col = cd_cols[d])
+}
+legend("topright", legend = names(cd_cols), col = cd_cols, lwd = 2,
+       pch = 19, bty = "n")
+plot(NULL, xlim = c(2, 10), ylim = c(0, 62), xlab = "Factors (k)",
+     ylab = "Improvement over k - 1 (%)", main = "Relative improvement")
+for (d in names(cd_cols)) {
+  y <- if (d == "human") cd_human$improvement else cd_emb[[d]]$improvement
+  lines(1 + seq_along(y), 100 * y, type = "b", pch = 19, lwd = 2,
+        col = cd_cols[d])
+}
+dev.off()
 
 ## ---------------------------------------------------------------------------
 ## 11. Semantic-behavioral coherence: SFA vs. the human structure

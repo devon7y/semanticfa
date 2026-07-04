@@ -19,7 +19,23 @@ similarity matrices, not inherited from response-data simulation
 community null baselines indexed by item count, embedding dimension, and
 encoding, and matched on the observed general similarity component, so
 calibrated reporting \citep{pokropek-2026} costs a lookup,
-not a simulation.
+not a simulation. The retention null deserves to be singled out within
+that program, because no adequate replacement exists yet. The isotropic
+null reduces the adapted parallel analysis to a slightly elevated
+latent-root criterion, and the natural candidates fail in complementary
+ways on embedding matrices: permutation-style resampling overextracts
+\citep{garrido-etal-2025}, and model-based comparison data saturate
+because factor models with diagonal uniqueness cannot reproduce the
+anisotropic spectral tail (Supplementary Materials;
+\citealp{ruscio-roche-2012}). A usable retention test for this data
+class needs reference populations that are generative over item
+embeddings themselves, with known structure planted in a realistic
+embedding geometry, a benchmark a machine-learning extension in the
+spirit of the comparison data forest could then be trained against
+\citep{goretzko-ruscio-2024}. Until that exists, retention on embedding
+similarity matrices is best reported as the consensus of complementary
+criteria alongside the misfit profile, with congruence tracked across
+candidate counts.
 
 A third extends the pre-data use case across languages: structured
 generative adaptation performs at or near human benchmarks

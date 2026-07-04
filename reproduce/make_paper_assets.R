@@ -181,6 +181,42 @@ add("valEgaKSmallWord",   wd(mc_get("0.6B", "EGA")),      "results$model_compari
 add("valEgaKMediumWord",  wd(mc_get("4B", "EGA")),        "results$model_comparison 4B EGA")
 add("valConsSmallWord",   wd(mc[["0.6B"]]$consensus),     "results$model_comparison 0.6B consensus")
 add("valConsMediumWord",  wd(mc[["4B"]]$consensus),       "results$model_comparison 4B consensus")
+add("valEkcK",           nfm[["EKC"]],     "results$nfactors EKC")
+add("valEkcKWord",       wd(nfm[["EKC"]]), "as word")
+add("valEkcKSmallWord",  wd(mc_get("0.6B", "EKC")), "results$model_comparison 0.6B EKC")
+add("valEkcKMediumWord", wd(mc_get("4B", "EKC")),   "results$model_comparison 4B EKC")
+add("valEkcKLargeWord",  wd(mc_get("8B", "EKC")),   "results$model_comparison 8B EKC")
+# prose says EKC (like kaiser and TEFI) is constant "at every size"
+stopifnot(mc_get("0.6B", "EKC") == mc_get("8B", "EKC"),
+          mc_get("4B", "EKC") == mc_get("8B", "EKC"))
+add("valMapK",           res$map$n_factors, "results$map n_factors")
+## comparison-data misfit profiles (Section 10b of reproduce.R)
+cdp    <- res$cd
+cd_hum <- cdp$human
+pct1 <- function(x) sprintf("%.1f", 100 * x)
+add("valCdHumanN",       cm(cd_hum$n), "results$cd human n")
+add("valCdHumanImpFive", pct1(cd_hum$improvement[4]), "results$cd human improvement into k=5")
+add("valCdHumanImpSix",  pct1(cd_hum$improvement[5]), "results$cd human improvement into k=6")
+add("valCdHumanNormFive", sprintf("%.0f\\%%", 100 * cd_hum$profile[5]),
+    "results$cd human normalized RMSR at k=5")
+emb_n5  <- vapply(cdp$embeddings, function(x) x$profile[5], 0)
+add("valCdEmbNormFiveRange",
+    if (diff(range(round(100 * emb_n5))) < 1) sprintf("%.0f\\%%", 100 * min(emb_n5))
+    else sprintf("%.0f--%.0f\\%%", 100 * min(emb_n5), 100 * max(emb_n5)),
+    "results$cd embeddings normalized RMSR at k=5, range")
+emb_imp <- unlist(lapply(cdp$embeddings, function(x) x$improvement))
+add("valCdEmbImpLow",  sprintf("%.0f", 100 * min(emb_imp)), "results$cd embeddings min step improvement")
+add("valCdEmbImpHigh", sprintf("%.0f", 100 * max(emb_imp)), "results$cd embeddings max step improvement")
+add("valCdCrossTwoFiftyWord", wd(cdp$crossover[["n250"]]),
+    "results$cd crossover verdict n=250")
+# prose says the sequential rule saturates to the cap from n = 500 up
+stopifnot(cdp$crossover[["n500"]] == 10L, cdp$crossover[["n1000"]] == 10L,
+          cdp$crossover[["n2500"]] == 10L)
+add("valCdCrossSatWord", wd(cdp$crossover[["n2500"]]),
+    "results$cd crossover verdicts n>=500 (at the cap)")
+emb_verd <- vapply(cdp$embeddings, function(x) x$n_factors, 0L)
+stopifnot(all(emb_verd == 10L))  # prose claims saturation at the ten-factor cap
+add("valCdEmbVerdictWord", wd(emb_verd[[1]]), "results$cd embeddings sequential-rule verdict (cap)")
 ## main fit
 add("valKmo",     r3(fitd$kmo$total), "results$fit_diagnostics kmo total")
 add("valTefiMain", f2(fitd$tefi),     "results$fit_diagnostics tefi")
@@ -383,7 +419,8 @@ fig_map <- c(fig_corplot.pdf          = "corplot.pdf",
              fig_itemmap.pdf          = "itemmap.pdf",
              fig_scree.pdf            = "scree.pdf",
              fig_loadings.pdf         = "loadings.pdf",
-             fig_semantic_vs_human.pdf = "semantic_vs_human.pdf")
+             fig_semantic_vs_human.pdf = "semantic_vs_human.pdf",
+             fig_cd_profiles.pdf      = "cd_profiles.pdf")
 for (src in names(fig_map)) {
   from <- file.path("figures", src)
   if (!file.exists(from)) stop("missing figure: ", from)

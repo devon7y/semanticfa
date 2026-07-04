@@ -17,14 +17,16 @@ Embedding-adapted parallel analysis
 \end{verbatim}
 }
 
-\texttt{sfa\_nfactors()} adds three criteria: eigenvalues greater than
-one \citep{kaiser-1960}, TEFI \citep[following][]{golino-2026}, and
+\texttt{sfa\_nfactors()} adds four criteria: eigenvalues greater than
+one \citep{kaiser-1960}, the empirical Kaiser criterion, whose reference
+eigenvalues correct for the variance preceding factors already absorbed
+\citep{braeken-vanassen-2017}, TEFI \citep[following][]{golino-2026}, and
 EGA, validated for embeddings by \citet{garrido-etal-2025}:
 
 {\scriptsize
 \begin{verbatim}
 > nf <- sfa_nfactors(sim_mcp, embeddings = E8,
-+                    methods = c("parallel", "kaiser", "TEFI", "EGA"))
++                    methods = c("parallel", "kaiser", "TEFI", "EGA", "EKC"))
 > nf
 Factor retention analysis (embedding-adapted)
 
@@ -33,6 +35,7 @@ Factor retention analysis (embedding-adapted)
   kaiser       6
   TEFI         2
   EGA          5
+  EKC          6
   ------------------------
   Consensus    5
 
@@ -40,7 +43,8 @@ Eigenvalues: 29.63   1.92   1.74   1.48   1.27   1.01   0.93   0.88   0.78   0.7
 \end{verbatim}
 }
 
-Parallel analysis and EGA indicated \valPaKWord{} factors, Kaiser \valKaiserKWord, TEFI
+Parallel analysis and EGA indicated \valPaKWord{} factors, Kaiser \valKaiserKWord, the
+empirical Kaiser criterion \valEkcKWord, TEFI
 \valTefiKWord; the consensus of \valConsensusKWord{} matches the theoretical Big Five, and the
 dominant first eigenvalue (\valEigFirst), the general positivity of embedding
 similarities, precedes a shallow elbow (Figure~\ref{fig:scree}).
@@ -75,7 +79,7 @@ EGA-based embedding-dimension selection
   Optimal depth:      1431 of 4096 coordinates
     at optimum: n_dim=5  NMI=0.704  TEFI=-23.291
 > cat("sfa_dimselect elapsed:", round(t_ds["elapsed"], 1), "s\n")
-sfa_dimselect elapsed: 1.9 s
+sfa_dimselect elapsed: 28 s
 \end{verbatim}
 }
 

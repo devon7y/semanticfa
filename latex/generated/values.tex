@@ -10,8 +10,8 @@
 \newcommand{\valRangeSqMin}{-.267}% results$encoding_ranges squid min
 \newcommand{\valNliOpp}{-1.00}% results$nli_example E1-E2
 \newcommand{\valArOpp}{-.63}% recomputed sign-flipped E1-E2 cosine, data(big5)
-\newcommand{\valLiveCosMin}{.9998}% results$embed_live_vs_reference min
-\newcommand{\valTimeNli}{4103.2}% reproduce.Rout, NLI matrix timing (s)
+\newcommand{\valLiveCosMin}{.9999}% results$embed_live_vs_reference min
+\newcommand{\valTimeNli}{70}% reproduce.Rout, NLI matrix timing (s)
 \newcommand{\valEigFirst}{29.63}% results$nfactors eigenvalue 1
 \newcommand{\valPaK}{5}% results$nfactors parallel
 \newcommand{\valKaiserK}{6}% results$nfactors kaiser
@@ -28,13 +28,29 @@
 \newcommand{\valDepthNmi}{.704}% results$dimselect trajectory nmi at optimum
 \newcommand{\valDepthNDimWord}{five}% results$dimselect n_dim at optimum
 \newcommand{\valDepthEval}{148}% results$dimselect depths evaluated
-\newcommand{\valTimeDimselect}{1.9}% reproduce.Rout, sfa_dimselect timing (s)
+\newcommand{\valTimeDimselect}{28}% reproduce.Rout, sfa_dimselect timing (s)
 \newcommand{\valPaKSmallWord}{three}% results$model_comparison 0.6B parallel
 \newcommand{\valPaKMediumWord}{four}% results$model_comparison 4B parallel
 \newcommand{\valEgaKSmallWord}{six}% results$model_comparison 0.6B EGA
 \newcommand{\valEgaKMediumWord}{six}% results$model_comparison 4B EGA
 \newcommand{\valConsSmallWord}{six}% results$model_comparison 0.6B consensus
 \newcommand{\valConsMediumWord}{six}% results$model_comparison 4B consensus
+\newcommand{\valEkcK}{6}% results$nfactors EKC
+\newcommand{\valEkcKWord}{six}% as word
+\newcommand{\valEkcKSmallWord}{six}% results$model_comparison 0.6B EKC
+\newcommand{\valEkcKMediumWord}{six}% results$model_comparison 4B EKC
+\newcommand{\valEkcKLargeWord}{six}% results$model_comparison 8B EKC
+\newcommand{\valMapK}{10}% results$map n_factors
+\newcommand{\valCdHumanN}{2{,}500}% results$cd human n
+\newcommand{\valCdHumanImpFive}{57.2}% results$cd human improvement into k=5
+\newcommand{\valCdHumanImpSix}{19.7}% results$cd human improvement into k=6
+\newcommand{\valCdHumanNormFive}{16\%}% results$cd human normalized RMSR at k=5
+\newcommand{\valCdEmbNormFiveRange}{47--49\%}% results$cd embeddings normalized RMSR at k=5, range
+\newcommand{\valCdEmbImpLow}{9}% results$cd embeddings min step improvement
+\newcommand{\valCdEmbImpHigh}{22}% results$cd embeddings max step improvement
+\newcommand{\valCdCrossTwoFiftyWord}{seven}% results$cd crossover verdict n=250
+\newcommand{\valCdCrossSatWord}{ten}% results$cd crossover verdicts n>=500 (at the cap)
+\newcommand{\valCdEmbVerdictWord}{ten}% results$cd embeddings sequential-rule verdict (cap)
 \newcommand{\valKmo}{.971}% results$fit_diagnostics kmo total
 \newcommand{\valTefiMain}{-27.71}% results$fit_diagnostics tefi
 \newcommand{\valRmsr}{.032}% results$fit_diagnostics rmsr
@@ -45,11 +61,11 @@
 \newcommand{\valCommMinItem}{A23}% reproduce.Rout, item at communality minimum
 \newcommand{\valCommMax}{.905}% reproduce.Rout, communality maximum
 \newcommand{\valCommMaxItem}{N16}% reproduce.Rout, item at communality maximum
-\newcommand{\valMrA}{MR5}% results omega, factor matched to Agreeableness
-\newcommand{\valMrE}{MR4}% results omega, factor matched to Extraversion
+\newcommand{\valMrA}{MR2}% results omega, factor matched to Agreeableness
+\newcommand{\valMrE}{MR5}% results omega, factor matched to Extraversion
 \newcommand{\valMrN}{MR3}% results omega, factor matched to Neuroticism
-\newcommand{\valMrC}{MR2}% results omega, factor matched to Conscientiousness
-\newcommand{\valMrO}{MR1}% results omega, factor matched to Openness
+\newcommand{\valMrC}{MR1}% results omega, factor matched to Conscientiousness
+\newcommand{\valMrO}{MR4}% results omega, factor matched to Openness
 \newcommand{\valOmegaAsgnA}{.830}% results omega, A-matched factor assigned
 \newcommand{\valOmegaTheoA}{.560}% results omega, A-matched factor theoretical
 \newcommand{\valOmegaAsgnE}{.709}% results omega, E-matched factor assigned
@@ -59,8 +75,8 @@
 \newcommand{\valCalCafMin}{.501}% results$calibration caf min
 \newcommand{\valCalCafMax}{.532}% results$calibration caf max
 \newcommand{\valCalTefiMin}{-21.66}% results$calibration tefi min
-\newcommand{\valCalTefiMax}{-17.98}% results$calibration tefi max
-\newcommand{\valTimeCal}{59.5}% reproduce.Rout, calibrate=TRUE timing (s)
+\newcommand{\valCalTefiMax}{-17.82}% results$calibration tefi max
+\newcommand{\valTimeCal}{123.9}% reproduce.Rout, calibrate=TRUE timing (s)
 \newcommand{\valAnchorNTwOwn}{.69}% results$anchor_centroid N12 own
 \newcommand{\valAnchorNTwRival}{.72}% results$anchor_centroid N12 rival
 \newcommand{\valAnchorATwFiveOwn}{.36}% results$anchor_label A25 own

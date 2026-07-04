@@ -81,7 +81,7 @@ contradiction (cf.\ \citealp{hommel-arslan-2025}):
 > t_nli <- system.time(
 +   sim_nli <- sfa_nli_matrix(big5$items)   # cross-encoder/nli-deberta-v3-base
 + )
-NLI matrix: 50 x 50 in 4103.2 s
+NLI matrix: 50 x 50 in 70 s
 > round(sim_nli[c("E1", "E2", "E5"), c("E1", "E2", "E5")], 2)
       E1    E2    E5
 E1  1.00 -1.00  0.03
@@ -115,10 +115,10 @@ Loaded embeddings (sfa_embeddings)
   Codes:   E1 E2 E3 E4 E5 E6 E7 E8 ...
 > sfa_clear_cache()
 > t_emb <- system.time(emb06 <- sfa_embed(big5$items))
-sfa_embed: 50 x 1024 in 128.2 s
+sfa_embed: 50 x 1024 in 114.3 s
 > print(summary(round(cos_live_ref, 4)))
    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.
- 0.9998  0.9999  0.9999  0.9999  0.9999  0.9999
+ 0.9999  0.9999  0.9999  0.9999  0.9999  0.9999
 \end{verbatim}
 }
 
