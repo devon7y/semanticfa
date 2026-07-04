@@ -57,15 +57,22 @@ fit_auto <- sfa(
 cat("Auto-detected factors:", fit_auto$factors, "\n")
 ```
 
-For a multi-method comparison, use `sfa_nfactors()`:
+For a multi-method comparison, use `sfa_nfactors()` (the default method set
+also includes TEFI and the empirical Kaiser criterion; `"EGA"` and `"MAP"`
+are available on request):
 ```{r nfactors}
 sim <- sfa_similarity(big5$embeddings, encoding = "atomic_reversed",
                       scoring = big5$scoring)
 nf <- sfa_nfactors(sim, big5$embeddings,
-                   methods = c("parallel", "kaiser"),
+                   methods = c("parallel", "kaiser", "EKC"),
                    parallel_iter = 50)
 print(nf)
 ```
+
+When you want to see whether the matrix carries a crisp factor count at all,
+`sfa_cd()` computes a comparison-data misfit profile (see `?sfa_cd`): a sharp
+elbow marks a real boundary, while embedding similarity matrices typically
+decline smoothly instead.
 
 ## Encoding methods
 

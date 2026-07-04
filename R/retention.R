@@ -110,6 +110,186 @@ sfa_parallel <- function(sim_matrix, embeddings, n_iter = 100L,
   max(1L, as.integer(sum(eigenvalues > 1)))
 }
 
+#' Empirical Kaiser Criterion for Embedding Similarity Matrices
+#'
+#' Applies the empirical Kaiser criterion (EKC; Braeken & van Assen, 2017) to
+#' an embedding similarity matrix, with the embedding dimension playing the
+#' role of the sample size.
+#'
+#' The EKC replaces Kaiser's fixed threshold of one with a series of reference
+#' eigenvalues. The first reference is the asymptotic maximum sample
+#' eigenvalue of a null-model correlation matrix, \eqn{(1 + \sqrt{\gamma})^2}
+#' with \eqn{\gamma} the variables-to-sample-size ratio (Marchenko-Pastur
+#' upper edge). Each subsequent reference applies Braeken and van Assen's
+#' proportional correction for the variance already absorbed by preceding
+#' observed eigenvalues, floored at one. Retention follows the same sequential
+#' first-crossing rule as [sfa_parallel()]: leading eigenvalues are counted
+#' until the first falls at or below its reference. The serial correction
+#' addresses the classical parallel-analysis weakness that reference values
+#' ignore variance captured by real factors.
+#'
+#' Adaptation note: with similarity matrices computed across embedding
+#' dimensions (see [sfa_similarity()]), the sample size is the embedding
+#' dimension, so \eqn{\gamma} is items over dimensions. Embedding dimensions
+#' are coordinates rather than sampled respondents, so the Marchenko-Pastur
+#' bound is a heuristic reference here, not a sampling-theoretic one; treat
+#' the result as one voice among the criteria in [sfa_nfactors()].
+#'
+#' @param sim_matrix Numeric similarity matrix (n_items x n_items), or a
+#'   fitted \code{"sfa"} object.
+#' @param embeddings Numeric embedding matrix (n_items x embedding_dim), used
+#'   only for its column count. Optional if \code{n} is given.
+#' @param n Sample size to use in place of \code{ncol(embeddings)}: the
+#'   embedding dimension for similarity matrices, or the respondent count when
+#'   applying the criterion to a conventional correlation matrix.
+#'
+#' @returns A list of class \code{"sfa_ekc"} with components:
+#' \describe{
+#'   \item{n_factors}{Integer: suggested number of factors.}
+#'   \item{observed}{Numeric vector: observed eigenvalues (descending).}
+#'   \item{references}{Numeric vector: EKC reference eigenvalues.}
+#'   \item{n}{The sample size used.}
+#' }
+#'
+#' @references
+#' Braeken, J., & van Assen, M. A. L. M. (2017). An empirical Kaiser
+#' criterion. \emph{Psychological Methods}, 22(3), 450--466.
+#' \doi{10.1037/met0000074}
+#'
+#' @examples
+#' data(big5)
+#' sim <- sfa_similarity(big5$embeddings, "mean_centered_pearson")
+#' sfa_ekc(sim, big5$embeddings)
+#'
+#' @export
+sfa_ekc <- function(sim_matrix, embeddings = NULL, n = NULL) {
+  if (inherits(sim_matrix, "sfa")) {
+    fit <- sim_matrix
+    if (is.null(embeddings)) embeddings <- fit$transformed_embeddings
+    sim_matrix <- fit$sim_matrix
+  }
+  if (is.null(n)) {
+    if (is.null(embeddings)) {
+      stop("Supply 'embeddings' (for its dimension) or 'n'.", call. = FALSE)
+    }
+    n <- ncol(embeddings)
+  }
+  if (!is.numeric(n) || length(n) != 1L || !is.finite(n) || n < 2) {
+    stop("'n' must be a single number >= 2.", call. = FALSE)
+  }
+  J <- nrow(sim_matrix)
+  l <- sort(eigen(sim_matrix, symmetric = TRUE, only.values = TRUE)$values,
+            decreasing = TRUE)
+  up <- (1 + sqrt(J / n))^2
+  # Braeken & van Assen (2017): reference_j = max(remaining-average-variance
+  # correction times the null upper edge, 1), with l_0 = 0
+  prior <- c(0, cumsum(l)[-J])
+  refs <- pmax(((J - prior) / (J - seq_len(J) + 1)) * up, 1)
+  below <- which(l <= refs)
+  n_factors <- if (length(below) == 0L) J else below[1L] - 1L
+
+  structure(
+    list(
+      n_factors = max(1L, as.integer(n_factors)),
+      observed = l,
+      references = refs,
+      n = n
+    ),
+    class = "sfa_ekc"
+  )
+}
+
+#' @export
+print.sfa_ekc <- function(x, ...) {
+  cat("Empirical Kaiser criterion (embedding-adapted)\n")
+  cat("  Suggested factors:", x$n_factors, "\n")
+  cat("  Sample size used:", x$n, "\n")
+  cat("  First reference:", format(x$references[1], digits = 4), "\n")
+  invisible(x)
+}
+
+#' Velicer's Minimum Average Partial for Similarity Matrices
+#'
+#' Applies Velicer's (1976) minimum average partial (MAP) test to an embedding
+#' similarity matrix. MAP extracts principal components one at a time and
+#' tracks the average squared partial correlation among the residuals; the
+#' component count at the minimum is the suggested dimensionality.
+#'
+#' MAP needs no sample size and no null model, so it transfers to similarity
+#' matrices without adaptation. Interpret it with care in this setting: on
+#' embedding similarity matrices MAP tends to track all reliably estimated
+#' structure, including minor components well beyond the interpretable factor
+#' count, which is why it is available in [sfa_nfactors()] but not part of the
+#' default method set.
+#'
+#' @param sim_matrix Numeric similarity matrix (n_items x n_items), or a
+#'   fitted \code{"sfa"} object.
+#' @param max_factors Largest component count to evaluate (default: number of
+#'   items minus two). The scan also stops early if a residual variance
+#'   becomes non-positive.
+#'
+#' @returns A list of class \code{"sfa_map"} with components:
+#' \describe{
+#'   \item{n_factors}{Integer: component count at the minimum average squared
+#'     partial correlation (floored at one).}
+#'   \item{map}{Numeric vector: the MAP criterion at each evaluated count.}
+#'   \item{map0}{Baseline average squared off-diagonal correlation with no
+#'     components removed.}
+#' }
+#'
+#' @references
+#' Velicer, W. F. (1976). Determining the number of components from the matrix
+#' of partial correlations. \emph{Psychometrika}, 41(3), 321--327.
+#' \doi{10.1007/BF02293557}
+#'
+#' @examples
+#' data(big5)
+#' sim <- sfa_similarity(big5$embeddings, "mean_centered_pearson")
+#' sfa_map(sim)
+#'
+#' @export
+sfa_map <- function(sim_matrix, max_factors = NULL) {
+  if (inherits(sim_matrix, "sfa")) sim_matrix <- sim_matrix$sim_matrix
+  J <- nrow(sim_matrix)
+  if (is.null(max_factors)) max_factors <- J - 2L
+  max_factors <- min(.assert_count(max_factors, "max_factors"), J - 2L)
+
+  e <- eigen(sim_matrix, symmetric = TRUE)
+  off <- function(M) (sum(M^2) - sum(diag(M)^2)) / (J * (J - 1))
+  map0 <- off(sim_matrix / tcrossprod(sqrt(diag(sim_matrix))))
+
+  map_vals <- rep(NA_real_, max_factors)
+  for (m in seq_len(max_factors)) {
+    lam <- e$vectors[, seq_len(m), drop = FALSE] %*%
+      diag(sqrt(e$values[seq_len(m)]), m, m)
+    resid <- sim_matrix - tcrossprod(lam)
+    d <- diag(resid)
+    if (any(d < 1e-10)) break
+    map_vals[m] <- off(resid / tcrossprod(sqrt(d)))
+  }
+
+  valid <- which(!is.na(map_vals))
+  n_factors <- if (length(valid) == 0L) 1L else valid[which.min(map_vals[valid])]
+
+  structure(
+    list(
+      n_factors = max(1L, as.integer(n_factors)),
+      map = map_vals,
+      map0 = map0
+    ),
+    class = "sfa_map"
+  )
+}
+
+#' @export
+print.sfa_map <- function(x, ...) {
+  cat("Velicer's minimum average partial\n")
+  cat("  Suggested factors:", x$n_factors, "\n")
+  cat("  MAP at minimum:", format(min(x$map, na.rm = TRUE), digits = 4), "\n")
+  cat("  Baseline (0 components):", format(x$map0, digits = 4), "\n")
+  invisible(x)
+}
+
 #' @keywords internal
 .retention_tefi <- function(sim_matrix, max_factors, rotate, fm) {
   n_items <- nrow(sim_matrix)
@@ -165,9 +345,17 @@ sfa_parallel <- function(sim_matrix, embeddings, n_iter = 100L,
 #'
 #' @param sim_matrix Numeric similarity matrix (n_items x n_items).
 #' @param embeddings Numeric embedding matrix (n_items x embedding_dim).
-#'   Required when \code{"parallel"} is in \code{methods}.
+#'   Required when \code{"parallel"} or \code{"EKC"} is in \code{methods}.
 #' @param methods Character vector of retention methods to run. Supported:
-#'   \code{"parallel"}, \code{"kaiser"}, \code{"TEFI"}, \code{"EGA"}.
+#'   \code{"parallel"} ([sfa_parallel()]), \code{"kaiser"} (latent-root
+#'   criterion), \code{"TEFI"}, \code{"EGA"} (requires EGAnet),
+#'   \code{"EKC"} ([sfa_ekc()]), and \code{"MAP"} ([sfa_map()]). The default
+#'   adds EKC to the original three; EGA is excluded from the default only
+#'   because EGAnet is a suggested dependency, and is worth requesting
+#'   explicitly. MAP is available but deliberately not a default vote: on
+#'   embedding similarity matrices it tends to track reliable minor structure
+#'   well past the interpretable factor count, which would pull the modal
+#'   consensus deep.
 #' @param seed Random seed for parallel analysis.
 #' @param parallel_iter Iterations for parallel analysis.
 #' @param max_factors Maximum factors to test for TEFI (default: auto).
@@ -188,7 +376,7 @@ sfa_parallel <- function(sim_matrix, embeddings, n_iter = 100L,
 #'
 #' @export
 sfa_nfactors <- function(sim_matrix, embeddings = NULL,
-                         methods = c("parallel", "kaiser", "TEFI"),
+                         methods = c("parallel", "kaiser", "TEFI", "EKC"),
                          seed = 42L, parallel_iter = 100L,
                          max_factors = NULL,
                          rotate = "oblimin", fm = "minres", ...) {
@@ -198,7 +386,8 @@ sfa_nfactors <- function(sim_matrix, embeddings = NULL,
     if (is.null(embeddings)) embeddings <- fit$transformed_embeddings
     sim_matrix <- fit$sim_matrix
   }
-  methods <- match.arg(methods, c("parallel", "kaiser", "TEFI", "EGA"),
+  methods <- match.arg(methods,
+                       c("parallel", "kaiser", "TEFI", "EGA", "EKC", "MAP"),
                        several.ok = TRUE)
   parallel_iter <- .assert_count(parallel_iter, "parallel_iter")
 
@@ -221,7 +410,15 @@ sfa_nfactors <- function(sim_matrix, embeddings = NULL,
       },
       kaiser = .retention_kaiser(eigs),
       TEFI = .retention_tefi(sim_matrix, max_factors, rotate, fm),
-      EGA = .retention_ega(sim_matrix)
+      EGA = .retention_ega(sim_matrix),
+      EKC = {
+        if (is.null(embeddings)) {
+          stop("'embeddings' is required for the empirical Kaiser criterion.",
+               call. = FALSE)
+        }
+        sfa_ekc(sim_matrix, embeddings)$n_factors
+      },
+      MAP = sfa_map(sim_matrix)$n_factors
     ), error = function(e) {
       warning("Retention method '", m, "' failed: ", conditionMessage(e),
               call. = FALSE)

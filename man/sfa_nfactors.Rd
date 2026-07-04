@@ -7,7 +7,7 @@
 sfa_nfactors(
   sim_matrix,
   embeddings = NULL,
-  methods = c("parallel", "kaiser", "TEFI"),
+  methods = c("parallel", "kaiser", "TEFI", "EKC"),
   seed = 42L,
   parallel_iter = 100L,
   max_factors = NULL,
@@ -20,10 +20,18 @@ sfa_nfactors(
 \item{sim_matrix}{Numeric similarity matrix (n_items x n_items).}
 
 \item{embeddings}{Numeric embedding matrix (n_items x embedding_dim).
-Required when \code{"parallel"} is in \code{methods}.}
+Required when \code{"parallel"} or \code{"EKC"} is in \code{methods}.}
 
 \item{methods}{Character vector of retention methods to run. Supported:
-\code{"parallel"}, \code{"kaiser"}, \code{"TEFI"}, \code{"EGA"}.}
+\code{"parallel"} (\code{\link[=sfa_parallel]{sfa_parallel()}}), \code{"kaiser"} (latent-root
+criterion), \code{"TEFI"}, \code{"EGA"} (requires EGAnet),
+\code{"EKC"} (\code{\link[=sfa_ekc]{sfa_ekc()}}), and \code{"MAP"} (\code{\link[=sfa_map]{sfa_map()}}). The default
+adds EKC to the original three; EGA is excluded from the default only
+because EGAnet is a suggested dependency, and is worth requesting
+explicitly. MAP is available but deliberately not a default vote: on
+embedding similarity matrices it tends to track reliable minor structure
+well past the interpretable factor count, which would pull the modal
+consensus deep.}
 
 \item{seed}{Random seed for parallel analysis.}
 

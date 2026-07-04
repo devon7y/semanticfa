@@ -1,3 +1,25 @@
+# semanticfa 0.1.2
+
+* New retention method `sfa_ekc()`: the empirical Kaiser criterion (Braeken &
+  van Assen, 2017) with the embedding dimension in the sample-size role. Its
+  serial reference-eigenvalue correction addresses the classical
+  parallel-analysis weakness that reference values ignore variance already
+  captured by real factors. Added to the `sfa_nfactors()` **default** method
+  set (now `parallel`, `kaiser`, `TEFI`, `EKC`).
+* New retention method `sfa_map()`: Velicer's (1976) minimum average partial.
+  Available in `sfa_nfactors()` via `methods = "MAP"` but deliberately not a
+  default vote: on embedding similarity matrices MAP tracks reliable minor
+  structure well past the interpretable factor count.
+* New diagnostic `sfa_cd()`: a comparison-data misfit profile adapting Ruscio
+  & Roche (2012), with print and plot methods. It reports how well k-factor
+  comparison populations reproduce the observed eigenvalue spectrum as k
+  grows, rather than a single retention verdict: response data with a crisp
+  factor boundary show a sharp elbow, while embedding similarity matrices
+  decline smoothly. Ruscio & Roche's sequential significance rule is opt-in
+  (`alpha =`) because it saturates at `n_factors_max` on embedding matrices
+  (the k-factor comparison model cannot reproduce the anisotropic spectral
+  tail, so every added factor keeps helping).
+
 # semanticfa 0.1.1
 
 * Bundled data upgrade: `data(big5)` now ships 50 x 4096 `Qwen3-Embedding-8B`
