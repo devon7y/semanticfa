@@ -22,6 +22,7 @@ sfa(
   seed = 42L,
   calibrate = FALSE,
   calibrate_iter = 100L,
+  label_factors = FALSE,
   ...
 )
 }
@@ -98,6 +99,11 @@ share, whereas the Gaussian unit-vector null has zero expected inter-item
 similarity and is therefore a stricter, structure-free reference.)}
 
 \item{calibrate_iter}{Iterations for calibration.}
+
+\item{label_factors}{If \code{TRUE}, run \code{\link[=sfa_name]{sfa_name()}} on the fitted
+object with default settings and store the result as \code{$labels}.
+Requires the candidate pool for the embedding model (fetched on first
+use; see \code{\link[=sfa_pool]{sfa_pool()}}). Default \code{FALSE}.}
 
 \item{...}{Additional arguments passed to \code{\link[psych]{fa}}.}
 }

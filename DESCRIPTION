@@ -1,6 +1,6 @@
 Package: semanticfa
 Title: Semantic Factor Analysis of Language Model Embeddings
-Version: 0.1.2
+Version: 0.2.0
 Authors@R: c(
     person("Devon", "Yanitski", , "dyanitsk@ualberta.ca", role = c("aut", "cre"),
            comment = c(ORCID = "0009-0006-1568-3387")),
@@ -35,6 +35,7 @@ Imports:
     withr
 Suggests:
     EFAtools,
+    jsonlite,
     EGAnet,
     httr2,
     knitr,

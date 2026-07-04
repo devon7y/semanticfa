@@ -61,6 +61,10 @@
 #'   share, whereas the Gaussian unit-vector null has zero expected inter-item
 #'   similarity and is therefore a stricter, structure-free reference.)
 #' @param calibrate_iter Iterations for calibration.
+#' @param label_factors If \code{TRUE}, run [sfa_name()] on the fitted
+#'   object with default settings and store the result as \code{$labels}.
+#'   Requires the candidate pool for the embedding model (fetched on first
+#'   use; see [sfa_pool()]). Default \code{FALSE}.
 #' @param ... Additional arguments passed to \code{\link[psych]{fa}}.
 #'
 #' @returns An object of class \code{"sfa"} containing factor loadings,
@@ -126,6 +130,7 @@ sfa <- function(items,
                 seed             = 42L,
                 calibrate        = FALSE,
                 calibrate_iter   = 100L,
+                label_factors    = FALSE,
                 ...) {
   cl <- match.call()
 
@@ -373,5 +378,8 @@ sfa <- function(items,
   )
 
   class(out) <- "sfa"
+  if (isTRUE(label_factors)) {
+    out$labels <- sfa_name(out)
+  }
   out
 }

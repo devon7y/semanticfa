@@ -1,0 +1,99 @@
+---
+title: "Naming the factors"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Naming the factors}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", eval = FALSE)
+```
+
+Semantic factor analysis extracts factors from the *meaning* of scale items.
+`sfa_name()` completes the workflow by giving each factor a verbal label —
+the name of the psychological construct its items express — retrieved
+deterministically from a pre-filtered pool of ~370,000 candidate terms
+(every WordNet entry and filtered Wikipedia title that qualifies as a
+psychological-attribute noun phrase, completed against five open construct
+inventories). Nothing is generated: the label is the nearest eligible term
+to the factor in the embedding space, under an instruction that asks the
+model to represent each item as *the construct it measures*.
+
+## Basic use
+
+```{r}
+library(semanticfa)
+
+fit <- sfa(big5$item, nfactors = 5)
+labels <- sfa_name(fit)
+labels
+#> Factor labels (Qwen/Qwen3-Embedding-0.6B)
+#>
+#>   F1   emotional instability  [emotional instability, neuroticism]
+#>   F2   conscientiousness
+#>   ...
+```
+
+The first call downloads the candidate pool for your embedding model into
+the user cache (a one-time download; see `sfa_pool()`); afterwards
+everything is local and deterministic.
+
+Or inline with the fit:
+
+```{r}
+fit <- sfa(big5$item, nfactors = 5, label_factors = TRUE)
+fit$labels
+```
+
+## What you get
+
+One row per factor:
+
+* `label` — the automatic label. All quantitative claims should use it.
+* `candidates` — the leave-one-out candidate set: every term that ranks
+  first when the factor's items are jackknifed one at a time. This is the
+  method's error bar: a sharp factor yields a single candidate, a fuzzy
+  factor several. You may report a different member of the set as the
+  factor name, but state that a human chose it.
+* `rule` — provenance: `tier1` (the label is a dictionary construct-noun)
+  or `top1` (no dictionary noun in the top candidates; the raw best term
+  was used).
+* `collision_moved` — `TRUE` if this factor originally picked the same
+  label as another factor and was re-labeled with its best non-conflicting
+  candidate (the factor geometrically closer to the shared term keeps it).
+
+Labels name the pole toward which the factor's positive loadings point: a
+factor defined by reverse-worded sociability items may be labeled
+"social withdrawal" — that is the faithful reading of its loadings, not an
+error.
+
+## Using a larger model for naming
+
+Extraction and naming reward different model properties: factor structure
+is recovered well by compact encoders, but label *abstraction* (choosing
+"anxiety" over a symptom word like "palpitation") improves with larger
+naming models. `sfa_name()` therefore accepts its own model:
+
+```{r}
+labels <- sfa_name(fit, model = "microsoft/harrier-oss-v1-27b")
+```
+
+The factor structure stays exactly as fitted; only the naming space
+changes. Note the model itself is downloaded on first use and is large
+(~54 GB for the example above) — a GPU machine is strongly recommended for
+this option.
+
+## Reproducibility notes
+
+* Deterministic: same items, same fit, same model, same pool version ⇒
+  same labels, bit for bit.
+* The naming instruction is fixed and inspectable
+  (`sfa_naming_instruction()`); label robustness to instruction rewording
+  was validated during method development. Overriding it is possible but
+  warned.
+* The candidate pool is a census (WordNet + Wikipedia + open construct
+  ontologies) with mechanical filters only — no hand-curated word list
+  anywhere in the pipeline.
+```

@@ -1,3 +1,28 @@
+# semanticfa 0.2.0
+
+## New features
+
+* `sfa_name()` labels the factors of an `sfa` fit with psychological
+  construct names retrieved from a 368k-term pre-filtered candidate pool
+  using instruction-conditioned embeddings. Deterministic; returns the
+  label, its provenance rule, and a leave-one-out candidate set per factor
+  (the method's error bar). Labels name the pole toward which the factor's
+  positive loadings point.
+* Two-encoder support: `sfa_name(fit, model = ...)` names with a different
+  (typically larger) embedding model than the one used for extraction.
+* `sfa_pool()` fetches pre-generated pool embeddings for the supported
+  models (downloaded once into the user cache) or builds a pool locally for
+  any sentence-transformers model. Default precision is int8 (half-size
+  downloads); relative to fp16 it changes 3 of 75 benchmark labels, all on
+  weak factors, all to near-synonyms ("stress resilience" -> "resilience";
+  two analogous changes under the large naming model). Pass
+  `precision = "fp16"` for exact parity with the research pipeline.
+* `sfa(..., label_factors = TRUE)` runs naming inline and stores the result
+  as `fit$labels`.
+* `sfa_naming_instruction()` exposes the naming instruction; overriding it
+  is supported but warned (label robustness was validated under the
+  default).
+
 # semanticfa 0.1.2
 
 * New retention method `sfa_ekc()`: the empirical Kaiser criterion (Braeken &
