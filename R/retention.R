@@ -122,9 +122,9 @@ sfa_parallel <- function(sim_matrix, embeddings, n_iter = 100L,
 #' with \eqn{\gamma} the variables-to-sample-size ratio (Marchenko-Pastur
 #' upper edge). Each subsequent reference applies Braeken and van Assen's
 #' proportional correction for the variance already absorbed by preceding
-#' observed eigenvalues, floored at one. Retention follows the same sequential
-#' first-crossing rule as [sfa_parallel()]: leading eigenvalues are counted
-#' until the first falls at or below its reference. The serial correction
+#' observed eigenvalues, floored at one. Retention counts the run of leading
+#' eigenvalues above their references (the paper's factors-1-to-K rule,
+#' operationally the same first-crossing stop as [sfa_parallel()]). The serial correction
 #' addresses the classical parallel-analysis weakness that reference values
 #' ignore variance captured by real factors.
 #'
@@ -222,6 +222,17 @@ print.sfa_ekc <- function(x, ...) {
 #' count, which is why it is available in [sfa_nfactors()] but not part of the
 #' default method set.
 #'
+#' Three guardrails can make the result diverge from Velicer's rule in edge
+#' cases, always toward retaining at least one factor: the count is floored
+#' at one (Velicer's comparison against the zero-component baseline can
+#' recommend retaining none; the baseline is reported as \code{map0} so that
+#' comparison remains available), the default scan stops at two below the
+#' item count (Velicer evaluates to one below), and the scan ends early when
+#' a residual variance turns non-positive (candidate counts whose partial
+#' correlations are undefined on a non-positive-semi-definite input are
+#' skipped as missing), which can truncate or thin the search before the
+#' global minimum.
+#'
 #' @param sim_matrix Numeric similarity matrix (n_items x n_items), or a
 #'   fitted \code{"sfa"} object.
 #' @param max_factors Largest component count to evaluate (default: number of
@@ -285,7 +296,9 @@ sfa_map <- function(sim_matrix, max_factors = NULL) {
 print.sfa_map <- function(x, ...) {
   cat("Velicer's minimum average partial\n")
   cat("  Suggested factors:", x$n_factors, "\n")
-  cat("  MAP at minimum:", format(min(x$map, na.rm = TRUE), digits = 4), "\n")
+  cat("  MAP at minimum:",
+      if (all(is.na(x$map))) "n/a"
+      else format(min(x$map, na.rm = TRUE), digits = 4), "\n")
   cat("  Baseline (0 components):", format(x$map0, digits = 4), "\n")
   invisible(x)
 }

@@ -2,13 +2,12 @@
 
 ## Submission
 
-This is an update (semanticfa 0.1.1; previous release 0.1.0, 2026-06-15).
+This is an update (semanticfa 0.1.2; previous release 0.1.0, 2026-06-15).
 
-We are aware this update comes shortly after the initial release. It corrects
-the bundled example dataset (the 0.1.0 data did not match the dataset analyzed
-in the accompanying methods manuscript) and fixes several user-facing bugs
-found in an intensive post-release review; we considered the correction too
-important to hold.
+Note on version numbering: a 0.1.1 was uploaded to the submission queue on
+2026-07-03 but its confirmation was deliberately allowed to lapse in favor of
+this strict superset, so that reviewers see a single update. 0.1.2 contains
+everything 0.1.1 did.
 
 Main changes (see NEWS.md for the full list):
 
@@ -17,6 +16,12 @@ Main changes (see NEWS.md for the full list):
   `all-MiniLM-L6-v2` embeddings of 0.1.0, so the bundled data matches the
   dataset analyzed in the accompanying methods manuscript. The installed
   package grows by roughly 220 KB.
+* New retention methods: `sfa_ekc()` (empirical Kaiser criterion) and
+  `sfa_map()` (Velicer's minimum average partial), plus `sfa_cd()`, a
+  comparison-data misfit-profile diagnostic with print and plot methods. All
+  are pure R with no new dependencies.
+* `sfa_nfactors()` now defaults to parallel analysis alone (the conventional
+  retention default); the multi-criterion battery is opt-in.
 * Bug fixes: `sfa_congruence()`'s disattenuated metric returns `NA` with a
   warning instead of erroring when a split-half reliability is not positive;
   `sfa_item_fit()` compares candidates against unflipped (topical) construct

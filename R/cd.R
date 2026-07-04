@@ -20,7 +20,8 @@
 #' reason Ruscio and Roche's sequential significance rule (each k tested
 #' against k - 1 with a one-tailed Mann-Whitney test) saturates at
 #' \code{n_factors_max} on embedding matrices at any conventional alpha, and
-#' inflates with the case count on response data too. The rule is therefore
+#' in this package's benchmark runs it inflated with the case count on
+#' response data too. The rule is therefore
 #' only run when \code{alpha} is supplied explicitly, and its verdict should
 #' be read alongside the profile shape rather than in place of it.
 #'
@@ -38,7 +39,7 @@
 #' @param input Whether \code{x} holds item embeddings (default) or raw
 #'   case-by-variable data.
 #' @param n_factors_max Largest factor count to profile (default 10, capped
-#'   at one third of the variable count).
+#'   at \code{floor(variables / 3)}).
 #' @param n_samples Bootstrap samples per factor count (default 500).
 #' @param n_pop Size of each comparison population (default 10000).
 #' @param alpha Optional alpha for Ruscio and Roche's sequential
@@ -182,7 +183,11 @@ sfa_cd <- function(x, input = c("embeddings", "data"),
 #' 2008): start from the k-factor model-implied correlation matrix, generate
 #' a Gaussian population, remap each variable's values onto a bootstrap of
 #' its empirical distribution, then nudge the generating matrix by the
-#' resulting reproduction error and keep the best population seen.
+#' resulting reproduction error and keep the best population seen. Not
+#' algorithmically identical to GenData: this refinement is a fixed-step
+#' Cholesky-based loop, without GenData's shared/unique factor-space
+#' decomposition, adaptive step-size halving, or diminishing-returns
+#' stopping rule.
 #'
 #' @keywords internal
 #' @noRd
@@ -234,6 +239,10 @@ sfa_cd <- function(x, input = c("embeddings", "data"),
 #' @export
 print.sfa_cd <- function(x, digits = 3, ...) {
   cat("Comparison-data misfit profile (Ruscio & Roche, adapted)\n")
+  if (length(x$median_rmsr) == 0L) {
+    cat("  No factor counts to profile (too few variables).\n")
+    return(invisible(x))
+  }
   cat(sprintf("  Cases: %d, samples per k: %d, population: %d\n\n",
               x$n, x$n_samples, x$n_pop))
   k <- seq_along(x$median_rmsr)

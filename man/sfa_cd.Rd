@@ -26,7 +26,7 @@ sfa_cd(
 case-by-variable data.}
 
 \item{n_factors_max}{Largest factor count to profile (default 10, capped
-at one third of the variable count).}
+at \code{floor(variables / 3)}).}
 
 \item{n_samples}{Bootstrap samples per factor count (default 500).}
 
@@ -84,7 +84,8 @@ spectrum, and each added factor keeps improving reproduction. For the same
 reason Ruscio and Roche's sequential significance rule (each k tested
 against k - 1 with a one-tailed Mann-Whitney test) saturates at
 \code{n_factors_max} on embedding matrices at any conventional alpha, and
-inflates with the case count on response data too. The rule is therefore
+in this package's benchmark runs it inflated with the case count on
+response data too. The rule is therefore
 only run when \code{alpha} is supplied explicitly, and its verdict should
 be read alongside the profile shape rather than in place of it.
 

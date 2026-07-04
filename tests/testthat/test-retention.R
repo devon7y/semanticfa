@@ -99,7 +99,7 @@ test_that("sfa_map returns a valid minimum and tracks psych's MAP", {
   expect_gt(cor(mp$map[shared], ref$map[shared], use = "complete.obs"), 0.999)
 })
 
-test_that("sfa_nfactors runs EKC and MAP methods and default includes EKC", {
+test_that("sfa_nfactors runs EKC and MAP methods and default is parallel", {
   data(big5)
   sim <- sfa_similarity(big5$embeddings, encoding = "mean_centered_pearson")
   nf <- sfa_nfactors(sim, big5$embeddings,

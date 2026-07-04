@@ -38,9 +38,9 @@ eigenvalue of a null-model correlation matrix, \eqn{(1 + \sqrt{\gamma})^2}
 with \eqn{\gamma} the variables-to-sample-size ratio (Marchenko-Pastur
 upper edge). Each subsequent reference applies Braeken and van Assen's
 proportional correction for the variance already absorbed by preceding
-observed eigenvalues, floored at one. Retention follows the same sequential
-first-crossing rule as \code{\link[=sfa_parallel]{sfa_parallel()}}: leading eigenvalues are counted
-until the first falls at or below its reference. The serial correction
+observed eigenvalues, floored at one. Retention counts the run of leading
+eigenvalues above their references (the paper's factors-1-to-K rule,
+operationally the same first-crossing stop as \code{\link[=sfa_parallel]{sfa_parallel()}}). The serial correction
 addresses the classical parallel-analysis weakness that reference values
 ignore variance captured by real factors.
 
