@@ -349,13 +349,16 @@ print.sfa_map <- function(x, ...) {
 #' @param methods Character vector of retention methods to run. Supported:
 #'   \code{"parallel"} ([sfa_parallel()]), \code{"kaiser"} (latent-root
 #'   criterion), \code{"TEFI"}, \code{"EGA"} (requires EGAnet),
-#'   \code{"EKC"} ([sfa_ekc()]), and \code{"MAP"} ([sfa_map()]). The default
-#'   adds EKC to the original three; EGA is excluded from the default only
-#'   because EGAnet is a suggested dependency, and is worth requesting
-#'   explicitly. MAP is available but deliberately not a default vote: on
-#'   embedding similarity matrices it tends to track reliable minor structure
-#'   well past the interpretable factor count, which would pull the modal
-#'   consensus deep.
+#'   \code{"EKC"} ([sfa_ekc()]), and \code{"MAP"} ([sfa_map()]). The
+#'   default runs parallel analysis alone, matching the field's conventional
+#'   retention default; request the multi-criterion battery explicitly (the
+#'   package's own demonstration uses
+#'   \code{c("parallel", "kaiser", "TEFI", "EGA", "EKC")}). Notes for
+#'   choosing: EGA needs the suggested EGAnet package; the latent-root rule
+#'   is retained for reference despite its known liberal bias; TEFI tends to
+#'   run low on embedding similarity matrices; and MAP tends to track
+#'   reliable minor structure well past the interpretable factor count,
+#'   which would pull the modal consensus deep.
 #' @param seed Random seed for parallel analysis.
 #' @param parallel_iter Iterations for parallel analysis.
 #' @param max_factors Maximum factors to test for TEFI (default: auto).
@@ -369,14 +372,16 @@ print.sfa_map <- function(x, ...) {
 #'     \code{n_factors}.}
 #'   \item{consensus}{Integer: modal recommendation across methods. When two
 #'     or more recommendations tie for the mode, the smallest tied value is
-#'     returned (the more parsimonious solution).}
+#'     returned (the more parsimonious solution). With a single method this
+#'     equals that method's suggestion, and \code{print()} omits the
+#'     consensus line.}
 #'   \item{eigenvalues}{Numeric vector: observed eigenvalues.}
 #'   \item{parallel}{Parallel analysis result (if run), or \code{NULL}.}
 #' }
 #'
 #' @export
 sfa_nfactors <- function(sim_matrix, embeddings = NULL,
-                         methods = c("parallel", "kaiser", "TEFI", "EKC"),
+                         methods = "parallel",
                          seed = 42L, parallel_iter = 100L,
                          max_factors = NULL,
                          rotate = "oblimin", fm = "minres", ...) {
@@ -458,9 +463,11 @@ print.sfa_nfactors <- function(x, ...) {
     nf_str <- if (is.na(nf)) "failed" else as.character(nf)
     cat(sprintf("  %-12s %s\n", x$methods$method[i], nf_str))
   }
-  cat("  ", strrep("-", 24), "\n", sep = "")
-  cat(sprintf("  %-12s %s\n", "Consensus",
-              if (is.na(x$consensus)) "N/A" else as.character(x$consensus)))
+  if (nrow(x$methods) > 1L) {
+    cat("  ", strrep("-", 24), "\n", sep = "")
+    cat(sprintf("  %-12s %s\n", "Consensus",
+                if (is.na(x$consensus)) "N/A" else as.character(x$consensus)))
+  }
 
   eig_str <- paste(format(head(x$eigenvalues, 10), digits = 2), collapse = "  ")
   if (length(x$eigenvalues) > 10) eig_str <- paste0(eig_str, "  ...")

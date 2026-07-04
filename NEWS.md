@@ -4,8 +4,17 @@
   van Assen, 2017) with the embedding dimension in the sample-size role. Its
   serial reference-eigenvalue correction addresses the classical
   parallel-analysis weakness that reference values ignore variance already
-  captured by real factors. Added to the `sfa_nfactors()` **default** method
-  set (now `parallel`, `kaiser`, `TEFI`, `EKC`).
+  captured by real factors. Available in `sfa_nfactors()` via
+  `methods = "EKC"`.
+* `sfa_nfactors()` default `methods` changed from
+  `c("parallel", "kaiser", "TEFI")` to `"parallel"` alone. Retention defaults
+  should match the field's conventional expectation (parallel analysis), and
+  the old default's silent votes carried known biases (the latent-root rule
+  is liberal by construction; TEFI runs low on embedding similarity
+  matrices, so the old bare-call consensus could tie-break down to its
+  value). The full battery is opt-in, as in the package demonstration
+  (`c("parallel", "kaiser", "TEFI", "EGA", "EKC")`), and `print()` now shows
+  the consensus line only when two or more methods ran.
 * New retention method `sfa_map()`: Velicer's (1976) minimum average partial.
   Available in `sfa_nfactors()` via `methods = "MAP"` but deliberately not a
   default vote: on embedding similarity matrices MAP tracks reliable minor

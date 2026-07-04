@@ -57,9 +57,10 @@ fit_auto <- sfa(
 cat("Auto-detected factors:", fit_auto$factors, "\n")
 ```
 
-For a multi-method comparison, use `sfa_nfactors()` (the default method set
-also includes TEFI and the empirical Kaiser criterion; `"EGA"` and `"MAP"`
-are available on request):
+For a multi-method comparison, use `sfa_nfactors()`. Its default runs
+parallel analysis alone (the conventional retention default); request the
+battery explicitly, choosing among `"kaiser"`, `"TEFI"`, `"EKC"`, `"EGA"`,
+and `"MAP"`:
 ```{r nfactors}
 sim <- sfa_similarity(big5$embeddings, encoding = "atomic_reversed",
                       scoring = big5$scoring)

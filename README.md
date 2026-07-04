@@ -77,7 +77,7 @@ No respondents are involved at any step.
 | Function | Purpose |
 |---|---|
 | `sfa()` | The end-to-end pipeline: embed → similarity → retain → extract → diagnose. Accepts raw text, precomputed embeddings, an `sfa_embeddings` object, or a precomputed similarity matrix. |
-| `sfa_nfactors()` | How many factors to keep — **parallel analysis, Kaiser, TEFI, EKC, EGA, and MAP** in one call. |
+| `sfa_nfactors()` | How many factors to keep — parallel analysis by default, with **Kaiser, TEFI, EKC, EGA, and MAP** as an opt-in consensus battery. |
 | `sfa_parallel()` | Embedding-adapted parallel analysis (random-unit-vector null; no sample size needed). |
 | `sfa_ekc()` | Empirical Kaiser criterion (Braeken & van Assen) with the embedding dimension as the sample size. |
 | `sfa_map()` | Velicer's minimum average partial (tracks *all* reliable structure — see docs before trusting it here). |

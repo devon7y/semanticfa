@@ -7,7 +7,7 @@
 sfa_nfactors(
   sim_matrix,
   embeddings = NULL,
-  methods = c("parallel", "kaiser", "TEFI", "EKC"),
+  methods = "parallel",
   seed = 42L,
   parallel_iter = 100L,
   max_factors = NULL,
@@ -25,13 +25,16 @@ Required when \code{"parallel"} or \code{"EKC"} is in \code{methods}.}
 \item{methods}{Character vector of retention methods to run. Supported:
 \code{"parallel"} (\code{\link[=sfa_parallel]{sfa_parallel()}}), \code{"kaiser"} (latent-root
 criterion), \code{"TEFI"}, \code{"EGA"} (requires EGAnet),
-\code{"EKC"} (\code{\link[=sfa_ekc]{sfa_ekc()}}), and \code{"MAP"} (\code{\link[=sfa_map]{sfa_map()}}). The default
-adds EKC to the original three; EGA is excluded from the default only
-because EGAnet is a suggested dependency, and is worth requesting
-explicitly. MAP is available but deliberately not a default vote: on
-embedding similarity matrices it tends to track reliable minor structure
-well past the interpretable factor count, which would pull the modal
-consensus deep.}
+\code{"EKC"} (\code{\link[=sfa_ekc]{sfa_ekc()}}), and \code{"MAP"} (\code{\link[=sfa_map]{sfa_map()}}). The
+default runs parallel analysis alone, matching the field's conventional
+retention default; request the multi-criterion battery explicitly (the
+package's own demonstration uses
+\code{c("parallel", "kaiser", "TEFI", "EGA", "EKC")}). Notes for
+choosing: EGA needs the suggested EGAnet package; the latent-root rule
+is retained for reference despite its known liberal bias; TEFI tends to
+run low on embedding similarity matrices; and MAP tends to track
+reliable minor structure well past the interpretable factor count,
+which would pull the modal consensus deep.}
 
 \item{seed}{Random seed for parallel analysis.}
 
@@ -52,7 +55,9 @@ An object of class \code{"sfa_nfactors"} with:
 \code{n_factors}.}
 \item{consensus}{Integer: modal recommendation across methods. When two
 or more recommendations tie for the mode, the smallest tied value is
-returned (the more parsimonious solution).}
+returned (the more parsimonious solution). With a single method this
+equals that method's suggestion, and \code{print()} omits the
+consensus line.}
 \item{eigenvalues}{Numeric vector: observed eigenvalues.}
 \item{parallel}{Parallel analysis result (if run), or \code{NULL}.}
 }

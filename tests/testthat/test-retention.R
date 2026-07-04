@@ -107,6 +107,5 @@ test_that("sfa_nfactors runs EKC and MAP methods and default includes EKC", {
                      parallel_iter = 10, seed = 42)
   expect_equal(nf$methods$method, c("kaiser", "EKC", "MAP"))
   expect_true(all(nf$methods$n_factors >= 1L))
-  expect_true("EKC" %in% eval(formals(sfa_nfactors)$methods))
-  expect_false("MAP" %in% eval(formals(sfa_nfactors)$methods))
+  expect_identical(eval(formals(sfa_nfactors)$methods), "parallel")
 })
