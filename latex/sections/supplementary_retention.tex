@@ -11,7 +11,9 @@ each sample's eigenvalue profile and the observed profile records how
 well $k$ factors account for the full spectrum. Because each step
 conditions on the structure already established, the method sidesteps
 the choice of a structureless null that the main text identifies as the
-weak point of the adapted parallel analysis. \texttt{sfa\_cd()}
+weak point of the adapted parallel analysis. Comparison populations are
+built by an iterative rank-remapping refinement after the GenData
+algorithm of \citet{ruscio-kaczetow-2008}. \texttt{sfa\_cd()}
 implements this profile for embedding similarity matrices, with
 embedding dimensions in the case role: the Pearson correlations of the
 transposed embedding matrix equal the \texttt{mean\_centered\_pearson}
