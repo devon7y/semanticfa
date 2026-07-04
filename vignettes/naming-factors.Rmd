@@ -26,7 +26,7 @@ model to represent each item as *the construct it measures*.
 ```{r}
 library(semanticfa)
 
-fit <- sfa(big5$item, nfactors = 5)
+fit <- sfa(big5$items, nfactors = 5)
 labels <- sfa_name(fit)
 labels
 #> Factor labels (Qwen/Qwen3-Embedding-0.6B)
@@ -43,7 +43,7 @@ everything is local and deterministic.
 Or inline with the fit:
 
 ```{r}
-fit <- sfa(big5$item, nfactors = 5, label_factors = TRUE)
+fit <- sfa(big5$items, nfactors = 5, label_factors = TRUE)
 fit$labels
 ```
 
