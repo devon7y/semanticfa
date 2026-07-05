@@ -276,18 +276,22 @@ sfa_install_python <- function(packages = "sentence-transformers", ...) {
 .sfa_load_manual <- function(model, device, dtype) {
   tr <- reticulate::import("transformers")
   tok <- tr$AutoTokenizer$from_pretrained(model)
+  # eager attention matches how the candidate pools were embedded (attention
+  # backends differ slightly in bf16 numerics).
   mod <- if (identical(device, "cuda")) {
     # device_map streams shards straight to the GPU but needs accelerate;
     # without it, load on CPU and move (higher host-RAM peak, same result).
     tryCatch(
       tr$AutoModel$from_pretrained(model, dtype = dtype %||% "auto",
+                                   attn_implementation = "eager",
                                    device_map = device),
       error = function(e)
-        tr$AutoModel$from_pretrained(model,
-                                     dtype = dtype %||% "auto")$to(device)
+        tr$AutoModel$from_pretrained(model, dtype = dtype %||% "auto",
+                                     attn_implementation = "eager")$to(device)
     )
   } else {
-    tr$AutoModel$from_pretrained(model, dtype = dtype %||% "auto")$to(device)
+    tr$AutoModel$from_pretrained(model, dtype = dtype %||% "auto",
+                                 attn_implementation = "eager")$to(device)
   }
   mod <- mod$eval()
   structure(list(tokenizer = tok, model = mod, device = device),
@@ -314,10 +318,21 @@ def _sfa_manual_encode(model, tokenizer, texts, device, batch_size=8):
                               truncation=True, max_length=512,
                               return_tensors='pt').to(device)
             h = model(**batch).last_hidden_state
-            idx = batch['attention_mask'].sum(dim=1) - 1
-            pooled = h[torch.arange(h.size(0)), idx]
-            pooled = torch.nn.functional.normalize(pooled, p=2, dim=1)
-            outs.append(pooled.float().cpu().numpy())
+            mask = batch['attention_mask']
+            # Last REAL token per sequence, handling either padding side:
+            # left-padded batches end on a real token at position -1; right-
+            # padded batches need the mask-count index. (The mask-count
+            # formula alone is WRONG under left padding, which decoder-family
+            # tokenizers default to.)
+            left_padded = bool((mask[:, -1].sum() == mask.shape[0]).item())
+            if left_padded:
+                pooled = h[:, -1]
+            else:
+                idx = mask.sum(dim=1) - 1
+                pooled = h[torch.arange(h.size(0)), idx]
+            # normalize in float32 (matches how the candidate pools were built)
+            pooled = torch.nn.functional.normalize(pooled.float(), p=2, dim=1)
+            outs.append(pooled.cpu().numpy())
     return np.vstack(outs)
 ", local = TRUE)
   }
