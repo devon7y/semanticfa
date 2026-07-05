@@ -157,6 +157,27 @@ sfa_install_python <- function(packages = "sentence-transformers", ...) {
   invisible(NULL)
 }
 
+# One resident sentence-transformer at a time. Loading a 27B naming model
+# next to an 8B extraction model would exceed a single 80 GB GPU, so loading
+# a different model evicts the previous one and releases its GPU memory.
+.sfa_encoder_env <- new.env(parent = emptyenv())
+
+#' @keywords internal
+.sfa_release_encoder <- function() {
+  if (!is.null(.sfa_encoder_env$encoder)) {
+    .sfa_encoder_env$encoder <- NULL
+    .sfa_encoder_env$key <- NULL
+    gc(verbose = FALSE)
+    try({
+      py_gc <- reticulate::import("gc")
+      py_gc$collect()
+      torch <- reticulate::import("torch")
+      if (torch$cuda$is_available()) torch$cuda$empty_cache()
+    }, silent = TRUE)
+  }
+  invisible(NULL)
+}
+
 #' @keywords internal
 .embed_sbert <- function(items, model, ...) {
   .sfa_py_require("sentence-transformers")
@@ -180,7 +201,38 @@ sfa_install_python <- function(packages = "sentence-transformers", ...) {
   } else {
     "cpu"
   }
-  encoder <- st$SentenceTransformer(model, device = device)
+  # Optional weight dtype, e.g. options(semanticfa.torch_dtype = "bfloat16").
+  # Large models (the 27B naming encoder) do not fit common GPUs at float32.
+  dtype <- getOption("semanticfa.torch_dtype", NULL)
+  if (!is.null(dtype)) {
+    dtype <- match.arg(dtype, c("float16", "bfloat16", "float32"))
+  }
+  key <- paste(model, device, dtype %||% "default", sep = "|")
+  if (!identical(.sfa_encoder_env$key, key)) {
+    .sfa_release_encoder()
+    encoder <- if (is.null(dtype)) {
+      st$SentenceTransformer(model, device = device)
+    } else {
+      torch_dtype <- switch(dtype,
+        float16  = torch$float16,
+        bfloat16 = torch$bfloat16,
+        float32  = torch$float32
+      )
+      # transformers >= 5 renamed from_pretrained's torch_dtype to dtype;
+      # try the current name first, then the older one.
+      tryCatch(
+        st$SentenceTransformer(model, device = device,
+          model_kwargs = reticulate::dict(dtype = torch_dtype)),
+        error = function(e) {
+          st$SentenceTransformer(model, device = device,
+            model_kwargs = reticulate::dict(torch_dtype = torch_dtype))
+        }
+      )
+    }
+    .sfa_encoder_env$encoder <- encoder
+    .sfa_encoder_env$key <- key
+  }
+  encoder <- .sfa_encoder_env$encoder
   emb <- encoder$encode(items, show_progress_bar = FALSE)
   emb_r <- reticulate::py_to_r(emb)
   # a single item is returned as a 1-D array/vector; reshape to 1 x dim

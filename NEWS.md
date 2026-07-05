@@ -22,6 +22,13 @@
 * `sfa_naming_instruction()` exposes the naming instruction; overriding it
   is supported but warned (label robustness was validated under the
   default).
+* The sentence-transformers backend now keeps the most recently used
+  encoder resident instead of re-loading it on every `sfa_embed()` call,
+  and loading a different model releases the previous one (so an
+  extraction model and a large naming model never co-occupy GPU memory).
+* New option `semanticfa.torch_dtype` ("float16", "bfloat16", or
+  "float32") controls the weight dtype of sentence-transformers models.
+  Large naming encoders do not fit common GPUs at float32.
 
 # semanticfa 0.1.2
 
