@@ -299,23 +299,26 @@ sfa_install_python <- function(packages = "sentence-transformers", ...) {
 #' @keywords internal
 .sfa_manual_py <- function() {
   if (is.null(.sfa_encoder_env$manual_py)) {
+    # All imports live INSIDE the function: py_run_string(local = TRUE)
+    # executes with a separate locals dict, so module-level bindings are
+    # invisible to the function body's global lookups.
     .sfa_encoder_env$manual_py <- reticulate::py_run_string("
-import torch as _sfa_torch
 def _sfa_manual_encode(model, tokenizer, texts, device, batch_size=8):
-    import numpy as _np
+    import torch
+    import numpy as np
     outs = []
     texts = list(texts)
-    with _sfa_torch.no_grad():
+    with torch.no_grad():
         for i in range(0, len(texts), batch_size):
             batch = tokenizer(texts[i:i + batch_size], padding=True,
                               truncation=True, max_length=512,
                               return_tensors='pt').to(device)
             h = model(**batch).last_hidden_state
             idx = batch['attention_mask'].sum(dim=1) - 1
-            pooled = h[_sfa_torch.arange(h.size(0)), idx]
-            pooled = _sfa_torch.nn.functional.normalize(pooled, p=2, dim=1)
+            pooled = h[torch.arange(h.size(0)), idx]
+            pooled = torch.nn.functional.normalize(pooled, p=2, dim=1)
             outs.append(pooled.float().cpu().numpy())
-    return _np.vstack(outs)
+    return np.vstack(outs)
 ", local = TRUE)
   }
   .sfa_encoder_env$manual_py
