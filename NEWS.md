@@ -29,6 +29,11 @@
 * New option `semanticfa.torch_dtype` ("float16", "bfloat16", or
   "float32") controls the weight dtype of sentence-transformers models.
   Large naming encoders do not fit common GPUs at float32.
+* When sentence-transformers cannot load a model (some text-only
+  checkpoints of multimodal families are misrouted through a processor
+  that demands an image component), the backend now falls back to a plain
+  transformers pipeline reproducing the model's own modules.json:
+  attention-mask-based last-token pooling plus L2 normalization.
 
 # semanticfa 0.1.2
 
