@@ -277,8 +277,15 @@ sfa_install_python <- function(packages = "sentence-transformers", ...) {
   tr <- reticulate::import("transformers")
   tok <- tr$AutoTokenizer$from_pretrained(model)
   mod <- if (identical(device, "cuda")) {
-    tr$AutoModel$from_pretrained(model, dtype = dtype %||% "auto",
-                                 device_map = device)
+    # device_map streams shards straight to the GPU but needs accelerate;
+    # without it, load on CPU and move (higher host-RAM peak, same result).
+    tryCatch(
+      tr$AutoModel$from_pretrained(model, dtype = dtype %||% "auto",
+                                   device_map = device),
+      error = function(e)
+        tr$AutoModel$from_pretrained(model,
+                                     dtype = dtype %||% "auto")$to(device)
+    )
   } else {
     tr$AutoModel$from_pretrained(model, dtype = dtype %||% "auto")$to(device)
   }
