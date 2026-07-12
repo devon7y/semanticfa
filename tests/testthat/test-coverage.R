@@ -319,6 +319,54 @@ test_that("battery region matching and assignment-vector input", {
   expect_named(battery, c("A", "B"))
 })
 
+test_that("cross = TRUE audits every factor against every region", {
+  # two 'constructs': cluster-1 region and cluster-2 region
+  region1 <- .fake_region()
+  keep1 <- 1:150
+  region1$sentences <- region1$sentences[keep1, ]
+  region1$embeddings <- region1$embeddings[keep1, ]
+  region2 <- .fake_region()
+  keep2 <- 151:300
+  region2$sentences <- region2$sentences[keep2, ]
+  region2$embeddings <- region2$embeddings[keep2, ]
+
+  texts <- .new_items("cross", rbind(.make_cloud(8, .centers[1, ]),
+                                     .make_cloud(8, .centers[2, ])))
+  df <- data.frame(item = texts, factor = rep(c("One", "Two"), each = 8),
+                   stringsAsFactors = FALSE)
+  x <- sfa_coverage(df, list(c1 = region1, c2 = region2), cross = TRUE,
+                    embed = .fake_embed, model = "fake-encoder",
+                    cache = FALSE, sense_gate = FALSE, trim = 0, n_boot = 0)
+  expect_s3_class(x, "sfa_coverage_cross")
+  m <- sfa_cross_matrix(x)
+  expect_equal(dimnames(m), list(c("One", "Two"), c("c1", "c2")))
+  # convergent: own-construct cells high; discriminant: crossed cells low
+  expect_gt(m["One", "c1"], 0.85)
+  expect_gt(m["Two", "c2"], 0.85)
+  expect_lt(m["One", "c2"], 0.30)
+  expect_lt(m["Two", "c1"], 0.30)
+  # a cell is exactly the corresponding single audit
+  manual <- sfa_coverage(df[df$factor == "One", "item"], region2,
+                         embed = .fake_embed, model = "fake-encoder",
+                         cache = FALSE, sense_gate = FALSE, trim = 0,
+                         n_boot = 0)
+  expect_equal(x$audits$One$c2$item_relevance, manual$item_relevance)
+  expect_output(print(x), "Cross-audit matrix")
+  cov_m <- sfa_cross_matrix(x, "coverage")
+  expect_true(all(cov_m >= 0 & cov_m <= 1))
+  # guard rails
+  expect_error(sfa_coverage(df, region1, cross = TRUE,
+                            embed = .fake_embed, model = "fake-encoder",
+                            cache = FALSE, sense_gate = FALSE, trim = 0,
+                            n_boot = 0),
+               "named list of regions")
+  expect_error(sfa_coverage(texts, list(c1 = region1, c2 = region2),
+                            cross = TRUE, embed = .fake_embed,
+                            model = "fake-encoder", cache = FALSE,
+                            sense_gate = FALSE, trim = 0, n_boot = 0),
+               "factor assignments")
+})
+
 # ------------------------------------------------------------ region build
 
 test_that("sfa_build_region works on a local corpus and honors options", {

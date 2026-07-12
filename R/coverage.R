@@ -217,6 +217,15 @@
 #'   returns a plain `"sfa_coverage"` audit). With character-vector
 #'   `items` lacking assignments, `factor` may instead be a vector of one
 #'   assignment per item.
+#' @param cross Audit every factor against every region (requires factor
+#'   assignments and a named region list)? Default `FALSE`. The result is
+#'   an `"sfa_coverage_cross"` matrix of audits - the content analogue of
+#'   a multitrait matrix: items should be relevant to their own
+#'   construct's region (diagonal) and irrelevant to their siblings'
+#'   (off-diagonal), which is discriminant content validity measured from
+#'   item text alone. Off-diagonal relevance is floored by how separable
+#'   the constructs are in language, not by zero - the printed output
+#'   states this caveat. [sfa_cross_matrix()] extracts the numeric matrix.
 #' @param definition Optional definition overriding the region's stored
 #'   one - the construct-narrowing workflow. When supplied, the region is
 #'   first restricted to the sentences that the narrower definition explains
@@ -314,6 +323,7 @@ sfa_coverage <- function(items,
                          definition = NULL,
                          construct = NULL,
                          factor = NULL,
+                         cross = FALSE,
                          radius_q = 0.95,
                          alpha = 0.05,
                          p_adjust = c("none", "BH"),
@@ -372,22 +382,22 @@ sfa_coverage <- function(items,
       unique(factor)
     }
     region_is_list <- is.list(region) && !inherits(region, "sfa_region")
-    if (region_is_list) {
+    if (region_is_list && !isTRUE(cross)) {
       miss <- setdiff(sel, names(region))
       if (length(miss)) {
         stop("'region' list has no entry for factor(s): ",
              paste(miss, collapse = ", "), ". Name the list by factor.",
              call. = FALSE)
       }
-    } else if (length(sel) > 1L) {
+    } else if (!region_is_list && !isTRUE(cross) && length(sel) > 1L) {
       message("One region supplied for ", length(sel), " factors - every ",
               "factor is audited against the same construct region.")
     }
-    audit_one <- function(f) {
+    audit_pair <- function(f, reg) {
       idx <- assignments == f
       sub <- data.frame(item = item_text[idx], code = item_codes[idx],
                         stringsAsFactors = FALSE)
-      sfa_coverage(sub, if (region_is_list) region[[f]] else region,
+      sfa_coverage(sub, reg,
                    definition = definition, construct = construct,
                    radius_q = radius_q, alpha = alpha, p_adjust = p_adjust,
                    n_draws = n_draws, n_null = n_null,
@@ -399,11 +409,33 @@ sfa_coverage <- function(items,
                    max_gaps = max_gaps, gap_quotes = gap_quotes,
                    embed = embed, model = model, cache = cache, seed = seed)
     }
+    # ---- cross-audit matrix: every factor against every region -
+    # discriminant content validity (items should be relevant to their own
+    # construct's region and irrelevant to their siblings')
+    if (isTRUE(cross)) {
+      if (!region_is_list || is.null(names(region))) {
+        stop("'cross = TRUE' needs a named list of regions (one per ",
+             "construct) to cross the factors against.", call. = FALSE)
+      }
+      audits <- lapply(sel, function(f) {
+        stats::setNames(lapply(names(region), function(r)
+          audit_pair(f, region[[r]])), names(region))
+      })
+      return(structure(list(audits = stats::setNames(audits, sel),
+                            factors = sel, regions = names(region)),
+                       class = "sfa_coverage_cross"))
+    }
+    audit_one <- function(f)
+      audit_pair(f, if (region_is_list) region[[f]] else region)
     if (length(sel) > 1L) {
       return(structure(stats::setNames(lapply(sel, audit_one), sel),
                        class = "sfa_coverage_battery"))
     }
     return(audit_one(sel))
+  }
+  if (isTRUE(cross)) {
+    stop("'cross = TRUE' needs items with factor assignments and a named ",
+         "list of regions.", call. = FALSE)
   }
   if (!is.null(factor)) {
     stop("'factor' was supplied but the items carry no factor assignments. ",
@@ -740,6 +772,51 @@ print.sfa_coverage_battery <- function(x, digits = 2, ...) {
   cat("\n  (ideal same-length scale ~ ", fmt(x[[1L]]$radius_q),
       " on both numbers; print one element, e.g. x$", names(x)[1L],
       ", for its full report)\n", sep = "")
+  invisible(x)
+}
+
+#' Extract the Numeric Matrix from a Cross-Audit
+#'
+#' @param x An `"sfa_coverage_cross"` from `sfa_coverage(..., cross =
+#'   TRUE)`.
+#' @param what `"relevance"` (default; the discriminant-informative
+#'   number) or `"coverage"`.
+#' @returns A numeric matrix, factors in rows, regions in columns.
+#' @export
+sfa_cross_matrix <- function(x, what = c("relevance", "coverage")) {
+  if (!inherits(x, "sfa_coverage_cross")) {
+    stop("'x' must be an sfa_coverage_cross object.", call. = FALSE)
+  }
+  what <- match.arg(what)
+  field <- if (what == "relevance") "item_relevance" else "coverage"
+  m <- do.call(rbind, lapply(x$audits, function(row)
+    vapply(row, `[[`, numeric(1), field)))
+  dimnames(m) <- list(x$factors, x$regions)
+  m
+}
+
+#' @export
+print.sfa_coverage_cross <- function(x, digits = 2, ...) {
+  m <- sfa_cross_matrix(x, "relevance")
+  cat("Cross-audit matrix: item relevance of each factor's items vs ",
+      "each construct region\n", sep = "")
+  cat("  (", length(x$factors), " factors x ", length(x$regions),
+      " regions; encoder: ",
+      x$audits[[1L]][[1L]]$region_provenance$encoder, ")\n\n", sep = "")
+  fm <- formatC(m, digits = digits, format = "f")
+  # mark the matched (own-construct) cells
+  for (f in rownames(m)) {
+    if (f %in% colnames(m)) fm[f, f] <- paste0(fm[f, f], "*")
+  }
+  print(noquote(fm))
+  cat("\n  * own construct. Items should be relevant to their own region",
+      "and not their siblings'\n")
+  cat("  (discriminant content validity). Off-diagonal relevance is",
+      "floored by how separable\n")
+  cat("  the constructs are in language, not by zero.",
+      "x$audits[[factor]][[region]] holds any\n")
+  cat("  cell's full audit;",
+      "sfa_cross_matrix(x, \"coverage\") gives the coverage matrix.\n")
   invisible(x)
 }
 

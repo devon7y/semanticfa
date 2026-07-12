@@ -42,6 +42,14 @@
   per-factor print table). `region` accepts a list named by factor so each
   subscale is audited against its own construct region; the `factor`
   argument restricts the battery to a subset or a single factor.
+* `cross = TRUE` audits every factor against every region and returns an
+  `"sfa_coverage_cross"` matrix of audits - the content analogue of a
+  multitrait matrix, with no data collection: items should be relevant to
+  their own construct's region (convergent) and irrelevant to their
+  siblings' (discriminant). `sfa_cross_matrix()` extracts the numeric
+  relevance or coverage matrix; the print method marks own-construct
+  cells and states the caveat that off-diagonal relevance is floored by
+  how separable the constructs are in language, not by zero.
 * The printed report lists flagged items with their counts and p-values,
   and states the ideal benchmark next to both headline numbers.
 * Bootstrap CIs now recalibrate both the radius and the critical count

@@ -10,6 +10,7 @@ sfa_coverage(
   definition = NULL,
   construct = NULL,
   factor = NULL,
+  cross = FALSE,
   radius_q = 0.95,
   alpha = 0.05,
   p_adjust = c("none", "BH"),
@@ -65,6 +66,16 @@ factor names restricts the battery to that subset (a single name
 returns a plain \code{"sfa_coverage"} audit). With character-vector
 \code{items} lacking assignments, \code{factor} may instead be a vector of one
 assignment per item.}
+
+\item{cross}{Audit every factor against every region (requires factor
+assignments and a named region list)? Default \code{FALSE}. The result is
+an \code{"sfa_coverage_cross"} matrix of audits - the content analogue of
+a multitrait matrix: items should be relevant to their own
+construct's region (diagonal) and irrelevant to their siblings'
+(off-diagonal), which is discriminant content validity measured from
+item text alone. Off-diagonal relevance is floored by how separable
+the constructs are in language, not by zero - the printed output
+states this caveat. \code{\link[=sfa_cross_matrix]{sfa_cross_matrix()}} extracts the numeric matrix.}
 
 \item{radius_q}{Null quantile defining the coverage radius. Default 0.95
 (ideal scale covers ~95\% of the region; each gap call is a test at
