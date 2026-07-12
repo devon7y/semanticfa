@@ -474,6 +474,36 @@ test_that("embedding banks reproduce direct-embedding audits exactly", {
   expect_equal(unname(lookup2(items[1])), unname(.fake_embed(items[1])))
 })
 
+test_that("region banks and combined banks serve region-drawn items", {
+  region <- .fake_region()
+  rb <- sfa_region_bank(region)
+  s3 <- region$sentences$text[3]
+  expect_equal(unname(rb(s3)), unname(region$embeddings[3, , drop = FALSE]))
+  expect_error(rb("not a region sentence"), "not sentences")
+
+  # combined: region sentences from the region bank, definition from a
+  # second bank - the overlap-baseline configuration
+  main <- sfa_build_bank(.seed_text, instruction = FALSE,
+                         embed = .fake_embed, model = "fake-encoder",
+                         cache = FALSE)
+  combo <- sfa_combine_banks(rb, sfa_embedding_bank(main))
+  got <- combo(c(s3, .seed_text))
+  expect_equal(unname(got[1, ]), unname(region$embeddings[3, ]))
+  seed_norm <- .fake_embed(.seed_text)
+  seed_norm <- seed_norm / sqrt(sum(seed_norm^2))   # banks store unit norm
+  expect_equal(unname(got[2, , drop = FALSE]), unname(seed_norm))
+  expect_error(combo(c(s3, "missing text")), "none of the combined")
+
+  # end to end: pretend items drawn from the region audit against it
+  pretend <- region$sentences$text[c(1, 40, 80, 160, 200, 260, 320, 380)]
+  audit <- sfa_coverage(pretend, region, embed = combo,
+                        model = "fake-encoder", cache = FALSE,
+                        sense_gate = FALSE, trim = 0, screen_items = FALSE,
+                        n_boot = 0)
+  expect_s3_class(audit, "sfa_coverage")
+  expect_gte(audit$item_relevance, 0.85)   # region-drawn items are ideal
+})
+
 # ------------------------------------------------------------ region build
 
 test_that("sfa_build_region works on a local corpus and honors options", {
