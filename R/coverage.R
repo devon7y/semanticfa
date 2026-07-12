@@ -25,7 +25,15 @@
 .cvg_nn_dist <- function(A, B, k = 1L) {
   sims <- tcrossprod(A, B)
   k <- min(k, ncol(sims))
-  kth <- apply(sims, 1L, function(s) sort(s, decreasing = TRUE)[k])
+  # k = 1 is the hot path (every bootstrap resample calls it several
+  # times): the 1st-nearest similarity is a row maximum, computed at C
+  # speed by max.col. Identical values to the general k-th-largest path.
+  kth <- if (k == 1L) {
+    sims[cbind(seq_len(nrow(sims)),
+               max.col(sims, ties.method = "first"))]
+  } else {
+    apply(sims, 1L, function(s) sort(s, decreasing = TRUE)[k])
+  }
   sqrt(pmax(2 - 2 * kth, 0))
 }
 

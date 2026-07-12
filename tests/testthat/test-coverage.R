@@ -211,6 +211,16 @@ test_that("item relevance flags construct-irrelevant items", {
   expect_true(all(audit$p_values[21:30] <= audit$alpha))
 })
 
+test_that("the k = 1 fast path equals the general k-th-largest path", {
+  set.seed(9)
+  A <- .norm_rows(matrix(rnorm(40 * .dim), 40))
+  B <- .norm_rows(matrix(rnorm(7 * .dim), 7))
+  fast <- semanticfa:::.cvg_nn_dist(A, B, k = 1L)
+  sims <- tcrossprod(A, B)
+  slow <- sqrt(pmax(2 - 2 * apply(sims, 1, max), 0))
+  expect_equal(fast, slow)
+})
+
 test_that("the sense gate drops a bimodal low mode and spares unimodal", {
   bimodal <- c(stats::rnorm(100, 0.75, 0.03), stats::rnorm(60, 0.25, 0.03))
   g <- semanticfa:::.cvg_sense_gate(bimodal, min_silhouette = 0.65)
