@@ -34,6 +34,14 @@
   corroboration counts on a log axis, empirical p-values on every bar,
   the calibrated critical count as a reference line, flagged items in
   red. The pre-0.3.0 curve plot remains as `type = "curve"`.
+* Multi-factor scales audit **per factor by default**: when the items data
+  frame carries a `factor` column, `sfa_coverage()` runs one audit per
+  subscale - content validity is a property of an (item set, construct
+  claim) pair, and a battery makes one claim per subscale - returning an
+  `"sfa_coverage_battery"` (a named list of audits with a compact
+  per-factor print table). `region` accepts a list named by factor so each
+  subscale is audited against its own construct region; the `factor`
+  argument restricts the battery to a subset or a single factor.
 * The printed report lists flagged items with their counts and p-values,
   and states the ideal benchmark next to both headline numbers.
 * Bootstrap CIs now recalibrate both the radius and the critical count

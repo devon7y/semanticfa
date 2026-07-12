@@ -235,6 +235,90 @@ test_that("encoder mismatch warns and print/plot run clean", {
   expect_invisible(plot(audit, type = "curve"))
 })
 
+# --------------------------------------------------------------- batteries
+
+test_that("a multi-factor scale audits per factor by default", {
+  texts <- .new_items("battery", rbind(.make_cloud(8, .centers[1, ]),
+                                       .make_cloud(8, .centers[2, ])))
+  df <- data.frame(item = texts, code = paste0("Q", 1:16),
+                   factor = rep(c("Delay", "Guilt"), each = 8),
+                   stringsAsFactors = FALSE)
+  regions <- list(Delay = .fake_region(), Guilt = .fake_region())
+  battery <- sfa_coverage(df, regions, embed = .fake_embed,
+                          model = "fake-encoder", cache = FALSE,
+                          sense_gate = FALSE, trim = 0, n_boot = 0)
+  expect_s3_class(battery, "sfa_coverage_battery")
+  expect_named(battery, c("Delay", "Guilt"))
+  expect_s3_class(battery$Delay, "sfa_coverage")
+  expect_equal(battery$Delay$n_items, 8L)
+  expect_output(print(battery), "audit battery")
+  grDevices::pdf(NULL)
+  on.exit(grDevices::dev.off(), add = TRUE)
+  expect_invisible(plot(battery, factor = "Guilt", type = "relevance"))
+
+  # a battery element is exactly the manual per-subscale audit
+  manual <- sfa_coverage(df[df$factor == "Delay", c("item", "code")],
+                         .fake_region(), embed = .fake_embed,
+                         model = "fake-encoder", cache = FALSE,
+                         sense_gate = FALSE, trim = 0, n_boot = 0)
+  expect_equal(battery$Delay$coverage, manual$coverage)
+  expect_equal(battery$Delay$item_relevance, manual$item_relevance)
+  expect_equal(battery$Delay$corroboration, manual$corroboration)
+})
+
+test_that("the factor argument selects a subset or a single factor", {
+  texts <- .new_items("facsel", rbind(.make_cloud(6, .centers[1, ]),
+                                      .make_cloud(6, .centers[2, ]),
+                                      .make_cloud(6, .centers[3, ])))
+  df <- data.frame(item = texts,
+                   factor = rep(c("A", "B", "C"), each = 6),
+                   stringsAsFactors = FALSE)
+  one <- sfa_coverage(df, .fake_region(), factor = "B",
+                      embed = .fake_embed, model = "fake-encoder",
+                      cache = FALSE, sense_gate = FALSE, trim = 0,
+                      n_boot = 0)
+  expect_s3_class(one, "sfa_coverage")
+  expect_equal(one$n_items, 6L)
+  expect_message(
+    two <- sfa_coverage(df, .fake_region(), factor = c("A", "C"),
+                        embed = .fake_embed, model = "fake-encoder",
+                        cache = FALSE, sense_gate = FALSE, trim = 0,
+                        n_boot = 0),
+    "same construct region")
+  expect_s3_class(two, "sfa_coverage_battery")
+  expect_named(two, c("A", "C"))
+  expect_error(
+    sfa_coverage(df, .fake_region(), factor = "Nope",
+                 embed = .fake_embed, model = "fake-encoder",
+                 cache = FALSE, sense_gate = FALSE, trim = 0, n_boot = 0),
+    "Unknown factor")
+})
+
+test_that("battery region matching and assignment-vector input", {
+  texts <- .new_items("facvec", rbind(.make_cloud(6, .centers[1, ]),
+                                      .make_cloud(6, .centers[2, ])))
+  df <- data.frame(item = texts, factor = rep(c("A", "B"), each = 6),
+                   stringsAsFactors = FALSE)
+  expect_error(
+    sfa_coverage(df, list(A = .fake_region()), embed = .fake_embed,
+                 model = "fake-encoder", cache = FALSE,
+                 sense_gate = FALSE, trim = 0, n_boot = 0),
+    "no entry for factor")
+  expect_error(
+    sfa_coverage(texts[1:6], list(A = .fake_region()),
+                 embed = .fake_embed, model = "fake-encoder",
+                 cache = FALSE, sense_gate = FALSE, trim = 0, n_boot = 0),
+    "no factor assignments")
+  # character items + per-item assignment vector
+  battery <- suppressMessages(
+    sfa_coverage(texts, .fake_region(),
+                 factor = rep(c("A", "B"), each = 6),
+                 embed = .fake_embed, model = "fake-encoder",
+                 cache = FALSE, sense_gate = FALSE, trim = 0, n_boot = 0))
+  expect_s3_class(battery, "sfa_coverage_battery")
+  expect_named(battery, c("A", "B"))
+})
+
 # ------------------------------------------------------------ region build
 
 test_that("sfa_build_region works on a local corpus and honors options", {

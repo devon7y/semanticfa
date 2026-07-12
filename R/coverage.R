@@ -199,9 +199,24 @@
 #' which re-applies the sense gate at audit time - no new extraction.
 #'
 #' @param items Character vector of item text, or a data frame with an
-#'   `item`/`text` column (and optionally `code`), as in [sfa()].
-#' @param region An `"sfa_region"` object from [sfa_build_region()], or the
-#'   path to one saved with its `file` argument.
+#'   `item`/`text` column (and optionally `code`), as in [sfa()]. When the
+#'   data frame also has a `factor` column (subscale assignments), the
+#'   audit runs **per factor by default** - one audit per (item set,
+#'   construct claim) pair, which is the unit content validity is defined
+#'   on - and returns an `"sfa_coverage_battery"`. Use `factor` to restrict
+#'   to a subset.
+#' @param region An `"sfa_region"` object from [sfa_build_region()], the
+#'   path to one saved with its `file` argument, or - for multi-factor
+#'   audits - a list of regions named by factor (each factor is audited
+#'   against its own construct region). A single region with a
+#'   multi-factor scale audits every factor against that same region, with
+#'   a message.
+#' @param factor Which factors to audit when the items carry factor
+#'   assignments. Default `NULL` audits all of them. A character vector of
+#'   factor names restricts the battery to that subset (a single name
+#'   returns a plain `"sfa_coverage"` audit). With character-vector
+#'   `items` lacking assignments, `factor` may instead be a vector of one
+#'   assignment per item.
 #' @param definition Optional definition overriding the region's stored
 #'   one - the construct-narrowing workflow. When supplied, the region is
 #'   first restricted to the sentences that the narrower definition explains
@@ -260,7 +275,11 @@
 #'
 #' @returns An object of class `"sfa_coverage"` with the audit numbers,
 #'   per-item corroboration counts and p-values, filter accounting, gap
-#'   report, and provenance. `print()` gives the report; `plot()` draws the
+#'   report, and provenance - or, when the items carry factor assignments
+#'   and more than one factor is audited, an `"sfa_coverage_battery"`: a
+#'   named list of `"sfa_coverage"` audits, one per factor (`x$Depression`
+#'   is that factor's full audit). `print()` gives the report (a compact
+#'   per-factor table for batteries); `plot()` draws the
 #'   proportional-overlap diagram (`type = "coverage"`), the per-item
 #'   relevance chart (`type = "relevance"`), or the coverage curve against
 #'   the matched-size null (`type = "curve"`); [sfa_gaps()] returns the gap
@@ -274,6 +293,16 @@
 #' plot(audit)                # proportional-overlap (Euler) diagram
 #' plot(audit, type = "relevance")   # per-item counts, p-values, flags
 #'
+#' # a multidimensional battery: items with a 'factor' column audit
+#' # per subscale by default, each against its own construct region
+#' battery <- sfa_coverage(dass_items,
+#'                         region = list(Depression = reg_dep,
+#'                                       Anxiety    = reg_anx,
+#'                                       Stress     = reg_str))
+#' battery                    # one row per factor
+#' battery$Depression         # full report for one subscale
+#' sfa_coverage(dass_items, reg_dep, factor = "Depression")  # just one
+#'
 #' # test a narrower claim against the same region - no new extraction
 #' sfa_coverage(my_items, region,
 #'              definition = "Academic procrastination is the delay of
@@ -284,6 +313,7 @@ sfa_coverage <- function(items,
                          region,
                          definition = NULL,
                          construct = NULL,
+                         factor = NULL,
                          radius_q = 0.95,
                          alpha = 0.05,
                          p_adjust = c("none", "BH"),
@@ -315,6 +345,76 @@ sfa_coverage <- function(items,
             "was region-size dependent. Items are now flagged by empirical ",
             "p-value against the ideal-item null at 'alpha'.", call. = FALSE)
   }
+  resolved <- .resolve_items(items)
+  item_text <- resolved$items
+  item_codes <- resolved$codes
+  assignments <- resolved$factors
+
+  # 'factor' as one assignment per item (character-vector items path)
+  if (!is.null(factor) && is.null(assignments) &&
+      length(factor) == length(item_text)) {
+    assignments <- as.character(factor)
+    factor <- NULL
+  }
+
+  # ---- battery dispatch: a multi-factor scale audits per factor by
+  # default - content validity is a property of an (item set, construct
+  # claim) pair, and a battery makes one claim per subscale.
+  if (!is.null(assignments)) {
+    lv <- unique(assignments)
+    sel <- if (is.null(factor)) lv else {
+      bad <- setdiff(factor, lv)
+      if (length(bad)) {
+        stop("Unknown factor(s): ", paste(bad, collapse = ", "),
+             ". The items carry: ", paste(lv, collapse = ", "), ".",
+             call. = FALSE)
+      }
+      unique(factor)
+    }
+    region_is_list <- is.list(region) && !inherits(region, "sfa_region")
+    if (region_is_list) {
+      miss <- setdiff(sel, names(region))
+      if (length(miss)) {
+        stop("'region' list has no entry for factor(s): ",
+             paste(miss, collapse = ", "), ". Name the list by factor.",
+             call. = FALSE)
+      }
+    } else if (length(sel) > 1L) {
+      message("One region supplied for ", length(sel), " factors - every ",
+              "factor is audited against the same construct region.")
+    }
+    audit_one <- function(f) {
+      idx <- assignments == f
+      sub <- data.frame(item = item_text[idx], code = item_codes[idx],
+                        stringsAsFactors = FALSE)
+      sfa_coverage(sub, if (region_is_list) region[[f]] else region,
+                   definition = definition, construct = construct,
+                   radius_q = radius_q, alpha = alpha, p_adjust = p_adjust,
+                   n_draws = n_draws, n_null = n_null,
+                   sense_gate = sense_gate,
+                   min_silhouette = min_silhouette, trim = trim,
+                   screen_items = screen_items,
+                   overlap_threshold = overlap_threshold,
+                   cosine_threshold = cosine_threshold, n_boot = n_boot,
+                   max_gaps = max_gaps, gap_quotes = gap_quotes,
+                   embed = embed, model = model, cache = cache, seed = seed)
+    }
+    if (length(sel) > 1L) {
+      return(structure(stats::setNames(lapply(sel, audit_one), sel),
+                       class = "sfa_coverage_battery"))
+    }
+    return(audit_one(sel))
+  }
+  if (!is.null(factor)) {
+    stop("'factor' was supplied but the items carry no factor assignments. ",
+         "Add a 'factor' column to the items data frame, or pass 'factor' ",
+         "as one assignment per item.", call. = FALSE)
+  }
+  if (is.list(region) && !inherits(region, "sfa_region")) {
+    stop("A list of regions was supplied but the items carry no factor ",
+         "assignments to match them to.", call. = FALSE)
+  }
+
   if (is.character(region) && length(region) == 1L) {
     region <- sfa_load_region(region)
   }
@@ -334,9 +434,6 @@ sfa_coverage <- function(items,
   definition <- definition %||% region$definition
   construct <- construct %||% region$construct
 
-  resolved <- .resolve_items(items)
-  item_text <- resolved$items
-  item_codes <- resolved$codes
   if (length(item_text) < 2L) {
     stop("Need at least 2 items to audit.", call. = FALSE)
   }
@@ -618,6 +715,45 @@ print.sfa_coverage <- function(x, digits = 2, ...) {
         "\n", sep = "")
   }
   invisible(x)
+}
+
+#' @export
+print.sfa_coverage_battery <- function(x, digits = 2, ...) {
+  fmt <- function(v) formatC(v, digits = digits, format = "f")
+  n_items <- sum(vapply(x, `[[`, numeric(1), "n_items"))
+  cat("Content-validity audit battery: ", length(x), " factors, ",
+      n_items, " items\n", sep = "")
+  cat("  encoder: ", x[[1L]]$region_provenance$encoder, "\n\n", sep = "")
+  w <- max(nchar(names(x)), 6L)
+  cat(sprintf("  %-*s %6s  %-20s %-20s %-10s %s\n", w, "factor", "items",
+              "construct", "coverage", "relevance", "flagged"))
+  for (f in names(x)) {
+    a <- x[[f]]
+    ci <- if (!is.null(a$boot)) {
+      paste0(" [", fmt(a$boot$coverage_ci[1]), ",",
+             fmt(a$boot$coverage_ci[2]), "]")
+    } else ""
+    cat(sprintf("  %-*s %6d  %-20s %-20s %-10s %d\n", w, f, a$n_items,
+                substr(a$construct, 1, 20), paste0(fmt(a$coverage), ci),
+                fmt(a$item_relevance), sum(!a$relevant_items)))
+  }
+  cat("\n  (ideal same-length scale ~ ", fmt(x[[1L]]$radius_q),
+      " on both numbers; print one element, e.g. x$", names(x)[1L],
+      ", for its full report)\n", sep = "")
+  invisible(x)
+}
+
+#' Plot One Factor of a Content-Validity Audit Battery
+#'
+#' @param x An `"sfa_coverage_battery"` from [sfa_coverage()] on a
+#'   multi-factor scale.
+#' @param factor Which factor's audit to plot. Default: the first.
+#' @param ... Passed to [plot.sfa_coverage()] (e.g. `type = "relevance"`).
+#' @returns The plotted `"sfa_coverage"` audit, invisibly.
+#' @export
+plot.sfa_coverage_battery <- function(x, factor = names(x)[1L], ...) {
+  factor <- match.arg(factor, names(x))
+  plot(x[[factor]], ...)
 }
 
 # ---------------------------------------------------------------- plotting

@@ -9,6 +9,7 @@ sfa_coverage(
   region,
   definition = NULL,
   construct = NULL,
+  factor = NULL,
   radius_q = 0.95,
   alpha = 0.05,
   p_adjust = c("none", "BH"),
@@ -33,10 +34,19 @@ sfa_coverage(
 }
 \arguments{
 \item{items}{Character vector of item text, or a data frame with an
-\code{item}/\code{text} column (and optionally \code{code}), as in \code{\link[=sfa]{sfa()}}.}
+\code{item}/\code{text} column (and optionally \code{code}), as in \code{\link[=sfa]{sfa()}}. When the
+data frame also has a \code{factor} column (subscale assignments), the
+audit runs \strong{per factor by default} - one audit per (item set,
+construct claim) pair, which is the unit content validity is defined
+on - and returns an \code{"sfa_coverage_battery"}. Use \code{factor} to restrict
+to a subset.}
 
-\item{region}{An \code{"sfa_region"} object from \code{\link[=sfa_build_region]{sfa_build_region()}}, or the
-path to one saved with its \code{file} argument.}
+\item{region}{An \code{"sfa_region"} object from \code{\link[=sfa_build_region]{sfa_build_region()}}, the
+path to one saved with its \code{file} argument, or - for multi-factor
+audits - a list of regions named by factor (each factor is audited
+against its own construct region). A single region with a
+multi-factor scale audits every factor against that same region, with
+a message.}
 
 \item{definition}{Optional definition overriding the region's stored
 one - the construct-narrowing workflow. When supplied, the region is
@@ -48,6 +58,13 @@ seed. Default \code{NULL} uses \code{region$definition} with no restriction.}
 \item{construct}{Optional display label for the (possibly narrowed)
 construct. Default: the region's construct, or the first words of a
 supplied \code{definition}.}
+
+\item{factor}{Which factors to audit when the items carry factor
+assignments. Default \code{NULL} audits all of them. A character vector of
+factor names restricts the battery to that subset (a single name
+returns a plain \code{"sfa_coverage"} audit). With character-vector
+\code{items} lacking assignments, \code{factor} may instead be a vector of one
+assignment per item.}
 
 \item{radius_q}{Null quantile defining the coverage radius. Default 0.95
 (ideal scale covers ~95\% of the region; each gap call is a test at
@@ -114,7 +131,11 @@ the calibrated per-item test.}
 \value{
 An object of class \code{"sfa_coverage"} with the audit numbers,
 per-item corroboration counts and p-values, filter accounting, gap
-report, and provenance. \code{print()} gives the report; \code{plot()} draws the
+report, and provenance - or, when the items carry factor assignments
+and more than one factor is audited, an \code{"sfa_coverage_battery"}: a
+named list of \code{"sfa_coverage"} audits, one per factor (\code{x$Depression}
+is that factor's full audit). \code{print()} gives the report (a compact
+per-factor table for batteries); \code{plot()} draws the
 proportional-overlap diagram (\code{type = "coverage"}), the per-item
 relevance chart (\code{type = "relevance"}), or the coverage curve against
 the matched-size null (\code{type = "curve"}); \code{\link[=sfa_gaps]{sfa_gaps()}} returns the gap
@@ -161,6 +182,16 @@ audit  <- sfa_coverage(my_items, region)
 audit                      # coverage, relevance, gaps, the two remedies
 plot(audit)                # proportional-overlap (Euler) diagram
 plot(audit, type = "relevance")   # per-item counts, p-values, flags
+
+# a multidimensional battery: items with a 'factor' column audit
+# per subscale by default, each against its own construct region
+battery <- sfa_coverage(dass_items,
+                        region = list(Depression = reg_dep,
+                                      Anxiety    = reg_anx,
+                                      Stress     = reg_str))
+battery                    # one row per factor
+battery$Depression         # full report for one subscale
+sfa_coverage(dass_items, reg_dep, factor = "Depression")  # just one
 
 # test a narrower claim against the same region - no new extraction
 sfa_coverage(my_items, region,
