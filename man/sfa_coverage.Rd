@@ -21,7 +21,6 @@ sfa_coverage(
   trim = 0.25,
   screen_items = TRUE,
   overlap_threshold = 0.6,
-  cosine_threshold = 0.9,
   n_boot = 200L,
   max_gaps = 6L,
   gap_quotes = 3L,
@@ -113,10 +112,13 @@ Default 0.25; set 0 to disable.}
 \item{screen_items}{Drop region sentences that near-duplicate the audited
 items (circularity rule)? Default \code{TRUE}.}
 
-\item{overlap_threshold, cosine_threshold}{Item-screen thresholds: a
-region sentence is dropped when at least this fraction of its content
-words appear in one item, or its cosine to an item is at least this
-value. Defaults 0.6 and 0.9.}
+\item{overlap_threshold}{Item-screen lexical threshold: a region
+sentence is dropped when at least this fraction of its content words
+appears in a single item (default 0.6), or - the self-calibrating
+geometric criterion, no constant - when it is more similar to an item
+than to any other region sentence (a leaked item copy always is; an
+on-topic corpus sentence never is; fixed cosine thresholds do not
+transfer across encoders' similarity scales).}
 
 \item{n_boot}{Bootstrap resamples of the region for percentile confidence
 intervals (0 to skip). Default 200.}

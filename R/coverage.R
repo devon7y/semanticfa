@@ -130,13 +130,26 @@
 #' @keywords internal
 # Item screen (circularity rule): drop region sentences that ARE items in
 # disguise - near-verbatim leaks of the audited scale into the corpus.
+# Two criteria, either sufficient:
+#   (a) lexical: at least `overlap_threshold` of the sentence's content
+#       words appear in a single item;
+#   (b) geometric, self-calibrating: the sentence is MORE similar to an
+#       item than to any other region sentence. A leaked item copy always
+#       is (it sits essentially on the item); an ordinary on-topic
+#       sentence never is (its nearest corpus neighbor is closer than any
+#       item). No fixed cosine constant: absolute similarity scales differ
+#       wildly across encoders (some spaces are so anisotropic that the
+#       MEDIAN sentence-item similarity exceeds 0.9), so any fixed
+#       threshold over- or under-screens depending on the model.
 .cvg_screen_items <- function(region_text, region_emb, item_text, item_emb,
-                              overlap_threshold = 0.6,
-                              cosine_threshold = 0.9) {
+                              overlap_threshold = 0.6) {
   item_words <- lapply(item_text, .cvg_words)
-  max_sim <- apply(tcrossprod(region_emb, item_emb), 1L, max)
+  max_sim_item <- apply(tcrossprod(region_emb, item_emb), 1L, max)
+  rr <- tcrossprod(region_emb)
+  diag(rr) <- -Inf
+  max_sim_region <- apply(rr, 1L, max)
   keep <- vapply(seq_along(region_text), function(i) {
-    if (max_sim[i] >= cosine_threshold) return(FALSE)
+    if (max_sim_item[i] > max_sim_region[i]) return(FALSE)
     w <- .cvg_words(region_text[i])
     if (length(w) == 0L) return(TRUE)
     !any(vapply(item_words, function(iw) {
@@ -262,10 +275,13 @@
 #'   2-means split; genuine sense mixtures score higher).
 #' @param screen_items Drop region sentences that near-duplicate the audited
 #'   items (circularity rule)? Default `TRUE`.
-#' @param overlap_threshold,cosine_threshold Item-screen thresholds: a
-#'   region sentence is dropped when at least this fraction of its content
-#'   words appear in one item, or its cosine to an item is at least this
-#'   value. Defaults 0.6 and 0.9.
+#' @param overlap_threshold Item-screen lexical threshold: a region
+#'   sentence is dropped when at least this fraction of its content words
+#'   appears in a single item (default 0.6), or - the self-calibrating
+#'   geometric criterion, no constant - when it is more similar to an item
+#'   than to any other region sentence (a leaked item copy always is; an
+#'   on-topic corpus sentence never is; fixed cosine thresholds do not
+#'   transfer across encoders' similarity scales).
 #' @param n_boot Bootstrap resamples of the region for percentile confidence
 #'   intervals (0 to skip). Default 200.
 #' @param max_gaps Maximum gap clusters to report. Default 6.
@@ -334,7 +350,6 @@ sfa_coverage <- function(items,
                          trim = 0.25,
                          screen_items = TRUE,
                          overlap_threshold = 0.6,
-                         cosine_threshold = 0.9,
                          n_boot = 200L,
                          max_gaps = 6L,
                          gap_quotes = 3L,
@@ -405,7 +420,7 @@ sfa_coverage <- function(items,
                    min_silhouette = min_silhouette, trim = trim,
                    screen_items = screen_items,
                    overlap_threshold = overlap_threshold,
-                   cosine_threshold = cosine_threshold, n_boot = n_boot,
+                   n_boot = n_boot,
                    max_gaps = max_gaps, gap_quotes = gap_quotes,
                    embed = embed, model = model, cache = cache, seed = seed)
     }
@@ -526,7 +541,7 @@ sfa_coverage <- function(items,
   n_screened <- 0L
   if (isTRUE(screen_items)) {
     keep <- .cvg_screen_items(region_text, C, item_text, S,
-                              overlap_threshold, cosine_threshold)
+                              overlap_threshold)
     n_screened <- sum(!keep)
     C <- C[keep, , drop = FALSE]
     region_text <- region_text[keep]
