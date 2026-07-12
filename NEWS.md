@@ -1,3 +1,46 @@
+# semanticfa 0.3.0
+
+## Content-validity audit: one 95% convention, per-item p-values
+
+* `sfa_coverage()` now calibrates both headline numbers against an ideal
+  same-length scale under a single 95% convention. The coverage radius is
+  the 95% quantile of the matched-size null (`radius_q = 0.95`; an ideal
+  scale's construct coverage is ~0.95), and each item's corroboration
+  count (construct texts within its radius) gets an empirical p-value
+  against the ideal-item null, flagged at `alpha = 0.05` (an ideal
+  scale's item relevance is also ~0.95). The identity behind the
+  convention: `1 - radius_q` and `alpha` are per-decision Type I error
+  rates of Monte Carlo tests.
+* The fixed-count relevance rule (`k_precision`) is retired: corroboration
+  counts grow linearly with region size, so a fixed threshold rewarded
+  sampling more construct text. The calibrated critical count rescales
+  with the region, making item relevance region-size invariant.
+  `k_precision` is ignored with a warning; `delta_q` maps to `radius_q`
+  with a warning.
+* Adopted vocabulary throughout output, docs, and returned fields:
+  *construct coverage* (was "coverage@delta*"), *item relevance* (was
+  "precision"), *coverage radius* (was "delta*"), *corroboration count*.
+  Renamed fields: `radius`, `radius_q`, `item_relevance`,
+  `corroboration`, `p_values`, `relevant_items`, `critical_count`,
+  `ideal_relevance`.
+* `p_adjust = "BH"` flags items by Benjamini-Hochberg false discovery
+  rate across the scale instead of per-item alpha.
+* Two new plots. `plot(audit)` draws a proportional Euler diagram: two
+  equal disks whose overlap area equals the measured construct coverage,
+  filled with the real texts (dots) and items (triangles) placed by their
+  full-space verdicts - a constructed diagram, not a projection (no 2-d
+  projection of the embedding space preserves these fractions).
+  `plot(audit, type = "relevance")` draws the per-item chart:
+  corroboration counts on a log axis, empirical p-values on every bar,
+  the calibrated critical count as a reference line, flagged items in
+  red. The pre-0.3.0 curve plot remains as `type = "curve"`.
+* The printed report lists flagged items with their counts and p-values,
+  and states the ideal benchmark next to both headline numbers.
+* Bootstrap CIs now recalibrate both the radius and the critical count
+  inside every resample and report `relevance_ci` (was `precision_ci`).
+* Verified against the Python reference implementation on identical
+  embeddings (431PTQ vs. the procrastination region, Qwen3-Embedding-8B).
+
 # semanticfa 0.2.0
 
 ## New features
