@@ -390,6 +390,90 @@ test_that("cross = TRUE audits every factor against every region", {
                "factor assignments")
 })
 
+# ------------------------------------------- campaign builders and banks
+
+test_that("sfa_build_regions: one pass, word boundaries, deferred embed", {
+  docs <- c(
+    paste("People delay and postpone things every day.",
+          "To delay a decision is common, and to postpone one is too.",
+          "Many report they delay chores; some postpone bills as well."),
+    paste("Her career took off after she scared the competition.",
+          "A careful careerist never worries about caregiving duties."),
+    paste("Guilt and shame follow the delay of important work.",
+          "Feeling guilt about postponed work is widely reported."),
+    paste("We care about clients and care for their needs.",
+          "They care deeply; caring is the whole business model.")
+  )
+  constructs <- list(
+    delay = list(definition = "Delaying things despite expecting costs.",
+                 variants = c("delay", "postpone", "postponed")),
+    care = list(definition = "Concern for the wellbeing of others.",
+                variants = c("care", "caring"))
+  )
+  dir <- tempfile()
+  regions <- suppressWarnings(   # tiny corpus: adequacy warnings expected
+    sfa_build_regions(constructs, corpus = docs, target = 50,
+                      embeddings = FALSE, instruction = FALSE, dir = dir,
+                      progress = FALSE))
+  expect_named(regions, c("delay", "care"))
+  expect_s3_class(regions$delay, "sfa_region")
+  expect_null(regions$delay$embeddings)
+  expect_true(file.exists(file.path(dir, "delay.rds")))
+  expect_true(file.exists(file.path(dir, "care.rds")))
+  # word boundaries: 'care' must not match career/careful/careerist doc 2
+  expect_false(any(grepl("career", regions$care$sentences$text)))
+  expect_gte(nrow(regions$care$sentences), 1L)
+  # an embedding-less region refuses to audit, with clear guidance
+  items <- .new_items("nb", .make_cloud(4, .centers[1, ]))
+  expect_error(
+    sfa_coverage(items, regions$delay, embed = .fake_embed,
+                 model = "fake-encoder", cache = FALSE,
+                 sense_gate = FALSE, trim = 0, n_boot = 0),
+    "sfa_reembed_region")
+  # re-embedding fills the space in
+  .register(regions$delay$sentences$text,
+            .make_cloud(nrow(regions$delay$sentences), .centers[1, ]))
+  r2 <- sfa_reembed_region(regions$delay, embed = .fake_embed,
+                           model = "fake-encoder", cache = FALSE)
+  expect_equal(nrow(r2$embeddings), nrow(r2$sentences))
+  expect_false(is.null(r2$reembedded))
+})
+
+test_that("embedding banks reproduce direct-embedding audits exactly", {
+  items <- .new_items("bank", rbind(.make_cloud(6, .centers[1, ]),
+                                    .make_cloud(6, .centers[2, ]),
+                                    .make_cloud(6, .centers[3, ])))
+  # region instruction is NULL in the fake region, so the bank matches with
+  # instruction = FALSE
+  bank <- sfa_build_bank(c(items, .seed_text), instruction = FALSE,
+                         embed = .fake_embed, model = "fake-encoder",
+                         cache = FALSE)
+  expect_s3_class(bank, "sfa_bank")
+  expect_output(print(bank), "Embedding bank")
+  lookup <- sfa_embedding_bank(bank)
+  expect_equal(unname(lookup(items[3])), unname(.fake_embed(items[3])))
+  expect_error(lookup("a text nobody embedded"), "not in the embedding bank")
+
+  direct <- sfa_coverage(items, .fake_region(), embed = .fake_embed,
+                         model = "fake-encoder", cache = FALSE,
+                         sense_gate = FALSE, trim = 0, n_boot = 0)
+  banked <- sfa_coverage(items, .fake_region(), embed = lookup,
+                         model = "fake-encoder", cache = FALSE,
+                         sense_gate = FALSE, trim = 0, n_boot = 0)
+  expect_equal(banked$coverage, direct$coverage)
+  expect_equal(banked$item_relevance, direct$item_relevance)
+  expect_equal(banked$corroboration, direct$corroboration)
+
+  f <- tempfile(fileext = ".rds")
+  suppressMessages(sfa_build_bank(c(items, .seed_text),
+                                  instruction = FALSE, embed = .fake_embed,
+                                  model = "fake-encoder", cache = FALSE,
+                                  file = f))
+  expect_s3_class(readRDS(f), "sfa_bank")
+  lookup2 <- sfa_embedding_bank(f)
+  expect_equal(unname(lookup2(items[1])), unname(.fake_embed(items[1])))
+})
+
 # ------------------------------------------------------------ region build
 
 test_that("sfa_build_region works on a local corpus and honors options", {

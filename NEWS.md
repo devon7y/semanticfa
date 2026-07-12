@@ -50,6 +50,18 @@
   relevance or coverage matrix; the print method marks own-construct
   cells and states the caveat that off-diagonal relevance is floored by
   how separable the constructs are in language, not by zero.
+* The package now enables the entire study pipeline in R, end to end:
+  `sfa_build_regions()` builds many construct regions in one corpus pass
+  (word-boundary variant matching, so compositional components like "care"
+  never match "career"; `embeddings = FALSE` defers encoding);
+  `sfa_reembed_region()` re-embeds one extraction under any encoder (the
+  encoder-ladder workflow: regions differ only in embedding space, never
+  in text); `sfa_build_bank()` pre-embeds items, definitions, and planned
+  narrowings; and `sfa_embedding_bank()` turns a saved bank into an
+  `embed =` function so every audit runs from published embeddings with
+  no encoder loaded. Heavy steps run on any GPU machine with the same R
+  calls (encoders drive through reticulate, including large models via
+  the manual transformers fallback).
 * Insufficient-data signaling: when a construct name returns too little
   corpus text, the method says so in the right epistemic register - the
   construct is not "invalid"; there is not enough natural-language data

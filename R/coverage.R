@@ -454,6 +454,11 @@ sfa_coverage <- function(items,
     stop("'region' must be an sfa_region (see sfa_build_region()) or a ",
          "path to one.", call. = FALSE)
   }
+  if (is.null(region$embeddings)) {
+    stop("This region has sentences but no embeddings (built with ",
+         "embeddings = FALSE). Embed it under an encoder first: ",
+         "sfa_reembed_region(region, model = ...).", call. = FALSE)
+  }
   if (is.null(model)) {
     model <- region$encoder
   } else if (!identical(model, region$encoder)) {
