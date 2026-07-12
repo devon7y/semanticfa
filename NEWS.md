@@ -50,6 +50,14 @@
   relevance or coverage matrix; the print method marks own-construct
   cells and states the caveat that off-diagonal relevance is floored by
   how separable the constructs are in language, not by zero.
+* Insufficient-data signaling: when a construct name returns too little
+  corpus text, the method says so in the right epistemic register - the
+  construct is not "invalid"; there is not enough natural-language data
+  about it (under this name, in this corpus) to estimate content validity
+  with this method. `sfa_build_region()` warns below the ~200-sentence
+  saturation threshold (estimates noisy, coverage biased favorable) and
+  errors below the 25-sentence audit minimum; `print()` on regions and
+  audits carries a NOTE/CAUTION line; audits store `small_region`.
 * The printed report lists flagged items with their counts and p-values,
   and states the ideal benchmark next to both headline numbers.
 * Bootstrap CIs now recalibrate both the radius and the critical count

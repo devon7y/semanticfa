@@ -126,13 +126,35 @@ test_that("the critical count rescales with region size (no gaming)", {
   keep <- c(1:60, 151:210, 301:360)     # a third of each cluster
   region_small$sentences <- region_small$sentences[keep, ]
   region_small$embeddings <- region_small$embeddings[keep, ]
-  a_small <- sfa_coverage(items, region_small, embed = .fake_embed,
-                          model = "fake-encoder", cache = FALSE,
-                          sense_gate = FALSE, trim = 0, n_boot = 0)
+  expect_warning(
+    a_small <- sfa_coverage(items, region_small, embed = .fake_embed,
+                            model = "fake-encoder", cache = FALSE,
+                            sense_gate = FALSE, trim = 0, n_boot = 0),
+    "saturation threshold")
   a_full <- sfa_coverage(items, .fake_region(), embed = .fake_embed,
                          model = "fake-encoder", cache = FALSE,
                          sense_gate = FALSE, trim = 0, n_boot = 0)
   expect_gt(a_full$critical_count, a_small$critical_count)
+  # small-region caution: flagged on the object and in the report,
+  # worded as a data limitation, never a validity verdict
+  expect_true(a_small$small_region)
+  expect_false(a_full$small_region)
+  expect_output(print(a_small), "CAUTION")
+  expect_output(print(a_small), "not a validity verdict")
+})
+
+test_that("too little region data refuses to audit with the right wording", {
+  items <- .new_items("tiny", rbind(.make_cloud(4, .centers[1, ]),
+                                    .make_cloud(4, .centers[2, ])))
+  region_tiny <- .fake_region()
+  region_tiny$sentences <- region_tiny$sentences[1:20, ]
+  region_tiny$embeddings <- region_tiny$embeddings[1:20, ]
+  expect_error(
+    suppressWarnings(
+      sfa_coverage(items, region_tiny, embed = .fake_embed,
+                   model = "fake-encoder", cache = FALSE,
+                   sense_gate = FALSE, trim = 0, n_boot = 0)),
+    "not enough natural-language data")
 })
 
 test_that("deprecated delta_q and k_precision warn and map", {
@@ -334,9 +356,10 @@ test_that("cross = TRUE audits every factor against every region", {
                                      .make_cloud(8, .centers[2, ])))
   df <- data.frame(item = texts, factor = rep(c("One", "Two"), each = 8),
                    stringsAsFactors = FALSE)
-  x <- sfa_coverage(df, list(c1 = region1, c2 = region2), cross = TRUE,
-                    embed = .fake_embed, model = "fake-encoder",
-                    cache = FALSE, sense_gate = FALSE, trim = 0, n_boot = 0)
+  x <- suppressWarnings(   # 150-sentence toy regions sit below saturation
+    sfa_coverage(df, list(c1 = region1, c2 = region2), cross = TRUE,
+                 embed = .fake_embed, model = "fake-encoder",
+                 cache = FALSE, sense_gate = FALSE, trim = 0, n_boot = 0))
   expect_s3_class(x, "sfa_coverage_cross")
   m <- sfa_cross_matrix(x)
   expect_equal(dimnames(m), list(c("One", "Two"), c("c1", "c2")))
@@ -346,20 +369,20 @@ test_that("cross = TRUE audits every factor against every region", {
   expect_lt(m["One", "c2"], 0.30)
   expect_lt(m["Two", "c1"], 0.30)
   # a cell is exactly the corresponding single audit
-  manual <- sfa_coverage(df[df$factor == "One", "item"], region2,
-                         embed = .fake_embed, model = "fake-encoder",
-                         cache = FALSE, sense_gate = FALSE, trim = 0,
-                         n_boot = 0)
+  manual <- suppressWarnings(
+    sfa_coverage(df[df$factor == "One", "item"], region2,
+                 embed = .fake_embed, model = "fake-encoder",
+                 cache = FALSE, sense_gate = FALSE, trim = 0, n_boot = 0))
   expect_equal(x$audits$One$c2$item_relevance, manual$item_relevance)
   expect_output(print(x), "Cross-audit matrix")
   cov_m <- sfa_cross_matrix(x, "coverage")
   expect_true(all(cov_m >= 0 & cov_m <= 1))
   # guard rails
-  expect_error(sfa_coverage(df, region1, cross = TRUE,
-                            embed = .fake_embed, model = "fake-encoder",
-                            cache = FALSE, sense_gate = FALSE, trim = 0,
-                            n_boot = 0),
-               "named list of regions")
+  expect_error(suppressWarnings(
+    sfa_coverage(df, region1, cross = TRUE,
+                 embed = .fake_embed, model = "fake-encoder",
+                 cache = FALSE, sense_gate = FALSE, trim = 0, n_boot = 0)),
+    "named list of regions")
   expect_error(sfa_coverage(texts, list(c1 = region1, c2 = region2),
                             cross = TRUE, embed = .fake_embed,
                             model = "fake-encoder", cache = FALSE,
@@ -388,14 +411,19 @@ test_that("sfa_build_region works on a local corpus and honors options", {
   all_sents <- unlist(lapply(docs, semanticfa:::.cvg_split_sentences))
   .register(all_sents, .make_cloud(length(all_sents), .centers[1, ]))
 
-  region <- sfa_build_region(
-    construct = "procrastination",
-    definition = "Delaying things despite expecting costs.",
-    corpus = docs, target = 100, max_docs = 3, sentences_per_doc = 2,
-    min_chars = 10, embed = .fake_embed, instruction = FALSE,
-    cache = FALSE, progress = FALSE)
+  expect_warning(
+    region <- sfa_build_region(
+      construct = "procrastination",
+      definition = "Delaying things despite expecting costs.",
+      corpus = docs, target = 100, max_docs = 3, sentences_per_doc = 2,
+      min_chars = 10, embed = .fake_embed, instruction = FALSE,
+      cache = FALSE, progress = FALSE),
+    "saturation threshold")
 
   expect_s3_class(region, "sfa_region")
+  # the insufficient-data note is about data, not construct validity
+  expect_output(print(region), "NOTE")
+  expect_output(print(region), "limited natural-language")
   expect_equal(region$docs_streamed, 3L)          # max_docs honored
   # doc 2 has no mentions; docs 1 and 3 contribute at most 2 sentences each
   expect_lte(nrow(region$sentences), 4L)
@@ -421,11 +449,15 @@ test_that("an override definition narrows the region discriminatively", {
   narrow_seed <- "Cluster one flavored narrow definition."
   .register(narrow_seed, matrix(.centers[1, ], nrow = 1))
   items <- .new_items("narrowed", .make_cloud(10, .centers[1, ]))
-  audit <- sfa_coverage(items, .fake_region(), definition = narrow_seed,
-                        construct = "cluster one only",
-                        embed = .fake_embed, model = "fake-encoder",
-                        cache = FALSE, sense_gate = FALSE, trim = 0,
-                        n_boot = 0)
+  # narrowing legitimately shrinks the region below the saturation
+  # threshold here; the audit warns and proceeds
+  expect_warning(
+    audit <- sfa_coverage(items, .fake_region(), definition = narrow_seed,
+                          construct = "cluster one only",
+                          embed = .fake_embed, model = "fake-encoder",
+                          cache = FALSE, sense_gate = FALSE, trim = 0,
+                          n_boot = 0),
+    "saturation threshold")
   expect_true(audit$narrowed)
   # most of clusters 2-3 should be dropped (300 of 450)
   expect_gte(audit$narrowed_dropped, 200L)

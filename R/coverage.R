@@ -527,9 +527,22 @@ sfa_coverage <- function(items,
     region_text <- region_text[keep]
   }
   if (nrow(C) < 25L) {
-    stop("Only ", nrow(C), " region sentences survive the filters - too few ",
-         "to audit against. Rebuild the region with a higher 'target'/",
-         "'max_docs', or reconsider the definition.", call. = FALSE)
+    stop("Only ", nrow(C), " region sentences survive the filters - too ",
+         "few to audit against. This does not mean the construct is ",
+         "invalid: there is not enough natural-language data about it ",
+         "(under this name, in this corpus) to estimate content validity ",
+         "with this method. Rebuild the region with a higher 'target'/",
+         "'max_docs', add term 'variants', or use a domain corpus where ",
+         "the construct is discussed.", call. = FALSE)
+  }
+  small_region <- nrow(C) < 200L
+  if (small_region) {
+    warning("The audited region has only ", nrow(C), " sentences after ",
+            "filtering - below the ~200-sentence saturation threshold. ",
+            "Estimates are noisy and coverage is biased favorable at small ",
+            "region sizes; interpret with caution. This reflects limited ",
+            "corpus data for the construct name, not the construct's ",
+            "validity.", call. = FALSE)
   }
 
   # ---- the audit: construct coverage
@@ -630,7 +643,7 @@ sfa_coverage <- function(items,
     trim = trim, trim_dropped = n_trimmed,
     item_screen_dropped = n_screened,
     radius = cal$radius, radius_q = radius_q, alpha = alpha,
-    p_adjust = p_adjust,
+    p_adjust = p_adjust, small_region = small_region,
     grid = cal$grid, grid_quantiles = cal$quantiles, curve = curve,
     coverage = coverage, auc = auc,
     item_relevance = item_relevance,
@@ -691,7 +704,14 @@ print.sfa_coverage <- function(x, digits = 2, ...) {
       if (x$item_screen_dropped > 0) paste0("; item screen dropped ",
                                             x$item_screen_dropped) else "",
       "\n", sep = "")
-  cat("  encoder: ", x$region_provenance$encoder, "\n\n", sep = "")
+  cat("  encoder: ", x$region_provenance$encoder, "\n", sep = "")
+  if (isTRUE(x$small_region)) {
+    cat("  CAUTION: region below the ~200-sentence saturation threshold - ",
+        "limited corpus\n  data for this construct name (not a validity ",
+        "verdict); estimates are noisy and\n  coverage is biased ",
+        "favorable at this size.\n", sep = "")
+  }
+  cat("\n")
 
   n_flag <- sum(!x$relevant_items)
   cat("  construct coverage  ", fmt(x$coverage), ci(x$boot$coverage_ci),

@@ -171,8 +171,12 @@ sfa_build_region <- function(construct,
     corpus_id <- got$corpus_id
   }
   if (length(got$text) == 0L) {
-    stop("No sentences mentioning '", construct, "' were found. Check the ",
-         "term (or supply 'variants'), or raise 'max_docs'.", call. = FALSE)
+    stop("No sentences mentioning '", construct, "' were found. This does ",
+         "not mean the construct is invalid - there is not enough ",
+         "natural-language data about it (under this name, in this corpus) ",
+         "to estimate content validity with this method. Try 'variants' ",
+         "(component or related terms), a higher 'max_docs', or a domain ",
+         "corpus where the construct is discussed.", call. = FALSE)
   }
 
   # dedupe on a whitespace/case-normalized key
@@ -180,6 +184,23 @@ sfa_build_region <- function(construct,
   keep <- !duplicated(key)
   text <- got$text[keep]
   source <- got$source[keep]
+
+  # data-adequacy check (saturation simulations: audit estimates plateau by
+  # ~200 region sentences and are biased favorable below that; under 25 the
+  # audit itself refuses to run)
+  if (length(text) < 200L) {
+    warning("Only ", length(text), " unique sentences mention '", construct,
+            "' - below the ~200-sentence saturation threshold",
+            if (length(text) < 25L) " and below the 25-sentence audit minimum"
+            else "",
+            ". This does not mean the construct is invalid; there is ",
+            "limited natural-language data about it under this name in ",
+            "this corpus, so content-validity estimates will be ",
+            if (length(text) < 25L) "unavailable" else
+              "noisy (and biased favorable)",
+            ". Try 'variants', a higher 'max_docs', or a domain corpus.",
+            call. = FALSE)
+  }
 
   if (isTRUE(progress)) {
     message(length(text), " unique sentences; embedding with ",
@@ -341,6 +362,13 @@ print.sfa_region <- function(x, ...) {
   cat("  extracted: ", format(x$extracted, "%Y-%m-%d"),
       " | semanticfa ", x$semanticfa, "\n", sep = "")
   cat("  definition: ", x$definition, "\n", sep = "")
+  if (nrow(x$sentences) < 200L) {
+    cat("  NOTE: below the ~200-sentence saturation threshold - limited ",
+        "natural-language\n  data for this construct name; ",
+        "content-validity estimates will be ",
+        if (nrow(x$sentences) < 25L) "unavailable" else "noisy", ".\n",
+        sep = "")
+  }
   invisible(x)
 }
 
