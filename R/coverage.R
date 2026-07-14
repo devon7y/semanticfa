@@ -756,12 +756,85 @@ sfa_coverage <- function(items,
     critical_count = critical_count, ideal_relevance = ideal_relevance,
     evenness = evenness, boot = boot,
     d_region = d_region, covered = covered,
+    region_text = region_text,
     gaps = gaps, covered_terms = covered_terms,
     call_params = list(radius_q = radius_q, radius = radius,
                        keep_frac = keep_frac, alpha = alpha,
                        p_adjust = p_adjust, n_draws = n_draws,
                        n_null = n_null, seed = seed)
   ), class = "sfa_coverage")
+}
+
+#' Newly Uncovered Content After an Item-Set Change
+#'
+#' Compares two audits of the *same region* - a reference audit and an
+#' audit of a changed item set (items deleted, a short form, a revision) -
+#' and reports the content the change strands: the region sentences covered
+#' by the reference scale but not by the changed one. Labeling only this
+#' *delta* is what makes a deletion study readable. The changed scale's
+#' full gap report mixes newly created gaps with whatever the reference
+#' scale already failed to cover, and the pre-existing uncovered mass
+#' usually drowns the signal.
+#'
+#' Both audits must be run against the same region with the same filters,
+#' and the changed audit must be **anchored** to the reference audit's
+#' radius (`radius = reference$radius`) - otherwise recalibration moves
+#' the yardstick along with the item set and the delta confounds the two.
+#' The function checks both conditions.
+#'
+#' @param reference The reference audit (`"sfa_coverage"`), typically the
+#'   full scale.
+#' @param reduced The changed item set's audit, run against the same
+#'   region and anchored to `reference$radius`.
+#' @param quotes Number of example sentences to return. Default 3, ordered
+#'   by how far the change strands them (largest increase in
+#'   nearest-item distance first).
+#' @param top Number of label terms. Default 8.
+#'
+#' @returns A list: `n_new` (newly uncovered sentences), `share_new`
+#'   (their fraction of the region), `coverage_drop`
+#'   (`reference$coverage - reduced$coverage`), `terms` (distinctive terms
+#'   of the newly uncovered content against the still-covered content),
+#'   and `quotes`.
+#' @export
+sfa_deletion_gaps <- function(reference, reduced, quotes = 3L, top = 8L) {
+  if (!inherits(reference, "sfa_coverage") ||
+      !inherits(reduced, "sfa_coverage")) {
+    stop("'reference' and 'reduced' must be sfa_coverage objects.",
+         call. = FALSE)
+  }
+  if (is.null(reference$region_text) || is.null(reduced$region_text)) {
+    stop("These audits carry no region sentences (produced by an older ",
+         "semanticfa). Re-run them under >= 0.3.0.", call. = FALSE)
+  }
+  if (!identical(reference$region_text, reduced$region_text)) {
+    stop("The two audits were run on different region sentences, so their ",
+         "coverage decisions cannot be compared row by row. Audit the same ",
+         "region with the same filters (an item-dependent circularity ",
+         "screen can also cause this - if the reference audit screened ",
+         "sentences out, run both with 'screen_items = FALSE').",
+         call. = FALSE)
+  }
+  if (!isTRUE(reduced$radius_anchored) ||
+      !isTRUE(all.equal(reference$radius, reduced$radius))) {
+    stop("'reduced' must be anchored to the reference audit's radius ",
+         "(radius = reference$radius). Recalibrating on the changed item ",
+         "set moves the yardstick along with the item set - deleting ",
+         "items grows the calibrated radius and can even raise coverage.",
+         call. = FALSE)
+  }
+  new_unc <- reference$covered & !reduced$covered
+  still <- reduced$covered
+  strand <- reduced$d_region - reference$d_region
+  ord <- order(-strand[new_unc])
+  list(
+    n_new = sum(new_unc),
+    share_new = mean(new_unc),
+    coverage_drop = reference$coverage - reduced$coverage,
+    terms = .cvg_distinctive_terms(reference$region_text[new_unc],
+                                   reference$region_text[still], top = top),
+    quotes = utils::head(reference$region_text[new_unc][ord], quotes)
+  )
 }
 
 #' Gap Table from a Coverage Audit
