@@ -1,0 +1,24 @@
+Review Findings
+PSD repair is not actually repairing PSD matrices. In R/utils.R (line 35), .check_psd() adds a fixed 1e-6 ridge even when the minimum eigenvalue is much more negative. I tested a 3x3 matrix with min eigenvalue -0.8; after .check_psd() it was still -0.7999982. This can break or distort psych::fa() for NLI/precomputed similarity matrices. Use eigenvalue clipping, Matrix::nearPD(), or a dynamic ridge of at least -min_eig + eps, then re-check.
+
+embed = "openai" defaults to an invalid OpenAI model. sfa_embed() defaults to Qwen at R/embed.R (line 30), then posts that model string to OpenAI at R/embed.R (line 195). If a user calls sfa_embed(items, embed = "openai"), the request likely fails unless they manually override model. Make model = NULL and resolve backend-specific defaults, e.g. Qwen for sbert, text-embedding-3-small or text-embedding-3-large for OpenAI per the OpenAI embeddings docs.
+
+The .npz test can download Python during tests. tests/testthat/test-load.R imports NumPy at line 21 (line 21), and locally this triggered reticulate to download CPython and Python packages. That passed, but it is risky for CRAN/offline CI. Gate it behind skip_on_cran() plus an explicit env var, or only run it when a known Python/NumPy environment is already configured.
+
+NLI classifier output needs stricter validation. R/nli.R (line 96) only checks for entailment and contradiction columns. Add checks for row count, numeric finite values, probability range, and maybe model-specific label mapping from the Hugging Face config. Otherwise a bad custom classifier can silently produce a malformed signed matrix.
+
+Research-Driven Ideas
+
+Add sfa_cfa() / SEMbeddings. Wrap lavaan or semTools to fit CFA models directly to embedding-derived matrices, report fit indices, and surface modification indices before data collection. This follows Feraco & Toffalini’s Feraco_Toffalini_2025.pdf idea.
+
+Add empirical calibration of semantic correlations. Implement sfa_calibrate() that learns a mapping from embedding similarity to empirical item correlations, optionally with construct-level random intercepts/slopes. This is supported by work showing synthetic item/scale correlations can predict empirical correlations, but imperfectly and with domain variation: Hommel_Arslan_2025.pdf, plus this 2026 multilevel preprint on item correlations (Zhang_Qiu_2026.pdf).
+
+IRT priors from embeddings. Add tools to predict or regularize IRT difficulty, discrimination, thresholds, or item information from item text and item metadata. Han et al. 2025 directly study predicting IRT parameters from item text and attributes (Han_Etal_2025.pdf).
+
+Construct coverage and gap detection. Extend sfa_anchor() into a construct-map tool: compare item pools to construct labels, definitions, and neighboring constructs; report over-covered and under-covered semantic regions. This fits Wulff & Mata’s taxonomy work in Wulff_Mata_2025.pdf and their 2026 conceptual-clarity paper (Wulff_Mata_2026.pdf).
+
+Translation/adaptation diagnostics. Build sfa_translate_check() to compare original and translated items with multilingual embeddings and NLI equivalence, flagging semantic drift before measurement invariance testing. This connects naturally to recent LLM-assisted cross-cultural adaptation work (Grobelny_Etal_2025.pdf).
+
+Generative item-pool loop. Pair generation with embeddings: generate candidate items, embed them, remove redundancy, check construct coverage, run EGA/UVA/bootstrap, then return a ranked item bank. The closest adjacent project is Russell-Lasalandra_Etal_2026.pdf; your package could offer a cleaner embedding-first psychometrics API.
+
+Response-free short-form optimization with constraints. Your sfa_simplify() is a start. Add constrained optimization: maximize construct coverage and predicted reliability while bounding redundancy, reading level, polarity balance, and cross-loading risk. Jung & Seo’s 2025 short-form paper is relevant here (Jung_Seo_2025.pdf).

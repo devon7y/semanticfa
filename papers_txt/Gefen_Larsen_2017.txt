@@ -1,0 +1,1586 @@
+                                J    ournal of the
+
+                                       A    ssociation for
+                                                                    I  nformation
+                                                                                            S   ystems
+
+Research Perspective                                                                                   ISSN: 1536-9323
+
+Controlling for Lexical Closeness in Survey Research:
+A Demonstration on the Technology Acceptance Model
+                     David Gefen                                                   Kai Larsen
+                   Drexel University                                     University of Colorado at Boulder
+                  gefend@drexel.edu
+
+
+                                                     Abstract:
+
+Word co-occurrences in text carry lexical information that can be harvested by data-mining tools such as latent
+semantic analysis (LSA). In this research perspective paper, we demonstrate the potency of using such embedded
+information by demonstrating that the technology acceptance model (TAM) can be reconstructed significantly by
+analyzing unrelated newspaper articles. We suggest that part of the reason for the phenomenal statistical validity of
+TAM across contexts may be related to the lexical closeness among the keywords in its measurement items. We do
+so not to critique TAM but to praise the quality of its methodology. Next, putting that LSA reconstruction of TAM into
+perspective, we show that empirical data can provide a significantly better fitting model than LSA data can. Combined,
+the results raise the possibility that a significant portion of variance in survey based research results from word co-
+occurrences in the language itself regardless of the theory or context of the study. Addressing this possibility, we
+suggest a method to statistically control for lexical closeness.
+
+Keywords: TAM, Latent Semantic Analysis (LSA), Lexical Closeness, CBSEM, Measurement Theory.
+
+
+Allen Lee was the accepting senior editor. This paper was submitted on February 18, 2016, and went through 3
+revisions.
+
+
+
+
+   Volume 18              Issue 10                       pp. 727 – 757                       October          2017
+728      Controlling for Lexical Closeness in Survey Research: A Demonstration on the Technology Acceptance Model
+
+
+
+1     Introduction
+In this research perspective paper, we present a new lexical aspect of the technology acceptance model
+(TAM) (Davis, 1989) and argue that there is more to TAM than just its current theory base: empirical
+research supports the theory extensively across IT contexts also because it represents connections
+among words as they are used in English. While we recognize that questionnaires not only measure the
+theory they pertain to but also may be influenced by a host of prejudices and priming related to the
+subjects, the researchers, and unrelated covariances introduced by the data-collection methods (see
+extensive discussion in Shadish, Cook, and Campbell (2002)), we present another, unrelated type of
+significant wording influence on the results. This significant influence pertains to the lexical closeness
+information embedded in language itself and that can be derived by analyzing word co-occurrences.
+Lexical closeness is the degree to which two terms or combinations of terms (including questionnaire
+measurement items and sentences) relate to each other as revealed through term co-occurrence in
+                                1
+societal usage of the language . This lexical closeness can be extracted through tools such as latent
+semantic analysis (LSA). LSA treats lexical closeness across documents as revealing shared inferences
+among the authors of those documents about the meaning of words (Landauer, Foltz, & Laham, 1998;
+                            2
+Wild, Haley, & Bülow, 2011) .
+In this paper, we demonstrate the power of such lexical closeness by replicating TAM results based solely
+on the lexical closeness of the keywords in the TAM measurement items as derived through LSA. In
+Section 2, we present LSA in more detail. In Section 3, we discuss the lexical closeness information that
+we derived from two newspaper corpora discussed.
+In Section 4, we show that the phenomenal success of TAM may plausibly in part result from the lexical
+closeness of its measurement items. We do not do so to challenge TAM; rather, we do so to show that
+there is more to TAM than currently considered. TAM is by far the most cited theory in the management
+information systems (MIS) discipline. The analyses show that simply analyzing the co-occurrence of the
+keywords in its questionnaire as they appear in magazine and newspaper articles statistically supports
+both its measurement model (how questionnaire items load into constructs) and even partly the
+correlations among its constructs are supported statistically. Each corpus produced adequate factorial
+validity in a principal components analysis (PCA) and supported TAM through linear regressions on those
+PCA factors—as done in the original TAM study.
+In Section 5, qualifying the conclusion that only relying on how its questionnaire keywords relate to each
+other in newspaper articles can support TAM, we show that, nonetheless, empirical questionnaire data
+can provide a significantly better model. To do so, we again replicate the analysis method in the original
+TAM but also add covariance-based structural equation modeling (CBSEM) analysis. The above analyses
+support previous findings that LSA can in some cases be applied to sort questionnaire items into groups
+by analyzing the lexical relationships among questionnaire items (Larsen & Bong, 2016). Arnulf, Larsen,
+Martinsen, and Bong (2014) have shown as much for several influential theories on leadership, which
+Nimon, Shuck, and Zigarmi (2015) have independently replicated. We extend those previous findings by
+showing that the constructs derived from those items at least partly correlate with each other as theory
+predicts. In Section 6, we reassuringly show how an existing CBSEM method can be applied to
+statistically control for lexical closeness covariance when examining empirical data. That analysis shows
+that TAM is not based solely on lexical closeness.
+Taking a broader methodological perspective, that lexical closeness revealed by analyzing corpora that
+does not deal with TAM studies can produce specific expected theory-based patterns is a departure from
+                             3
+classical measurement theory . Thus, in Section 7, we discuss what implications this result has and the
+
+
+1
+  One can identify that societal use by creating a semantic space out of a large set (e.g., 500) of orthogonal topic dimensions derived
+through a decomposition of term co-occurrence patterns weighted by the uniqueness of those terms across a large corpus of
+documents. The lexical closeness of sentences (such as questionnaire items) is calculated through item vectors (combinations of
+terms). LSA provides many measures of the degree that terms or sentences appear or do not appear together. We chose correlation
+because that is the type of data that Gefen et al. (2003), whose study we replicate, used. Currently, CBSEM can also support
+ordered measures, such as cosine distances, and not only rational numbers. We duly replicated the analyses with cosine distances,
+too, which resulted in equivalent results. Appendix E details how we created these measures.
+2
+  In this paper, we use the term lexical closeness to avoid misunderstandings. Lexical means pertaining to the meaning of words
+without reference to grammar and sentence construction. Semantic, by some definitions, is about word meaning based also on
+grammar. LSA does not consider grammar and sentence construction.
+3
+  To clarify, this study is not about how the choice of words or language can bias how subjects respond to questionnaire items as
+researchers have previously documented (Cook & Campbell, 1979, Shadish et al., 2002). It is about showing that preexisting
+
+
+                Volume 18                                                                                  Issue 10
+Journal of the Association for Information Systems                                                                              729
+
+
+
+intriguing idea that, to some extent, we can predict the results of empirical survey research that uses
+questionnaires by analyzing lexical closeness even without collecting data from subjects. We suggest that
+a possible reason for this ability to partly predict the results of survey research may be that, for language
+to work as a medium of communication, people have to somewhat think alike. This thinking alike should
+apply both to people who write the documents that LSA analyzes and to subjects who complete
+questionnaires. This may be inevitable, but it comes at a cost: some of the covariance in survey research
+may relate to lexical instrumentation and have nothing to do with the subjects except that the
+measurement items the subjects respond to and the articles the lexical closeness measures are based on
+are all in English. In this paper, we demonstrate that lexical closeness should and can be accounted for.
+We also show that lexical closeness does not replace the need for empirical data.
+
+2     Deriving Lexical Closeness through LSA
+We can learn much from word co-occurrences. Importantly, when researchers analyze word co-
+occurrences with LSA, they can adopt a data-driven and relatively objective approach and, thus, produce
+“meaning” devoid of researcher presuppositions (Evangelopoulos, Zhang, & Prybutok, 2012). LSA is a
+statistical modeling tool that analyzes term co-occurrences in preexisting corpora. LSA creates a
+“semantic space” (though perhaps “lexical space” is more technically correct because the tool ignores
+grammar and tense) by analyzing the co-occurrence of chosen keywords and phrases across documents
+in large corpora (Landauer et al., 1998). In producing the sematic space, LSA considers not only word co-
+occurrences per se but also words that may be related to each other because they co-occur often with the
+                         4
+same set of other words . A researcher can then analyze other documents against this semantic space.
+Landauer (2007, p. 31) claims that LSA “demonstrates a computational method by which a major
+component of language learning and use can be achieved”. Less presumptuously, researchers continue
+to debate why LSA actually does what it does and what mental process it might be simulating
+(Evangelopoulos et al., 2012; Valle-Lisboa & Mizraji, 2007).
+Underlying LSA is the realization that to cognitively understand what a term (i.e., a word or a combination
+of words) means requires considering its use in other documents (Wild et al., 2011). LSA dynamically
+creates this “semantic” space. LSA starts by creating a term-document co-occurrence matrix (known as
+the TDM matrix) across many documents in diverse corpora. Often, words that contribute little lexical
+information, such as “if” and “the”, are removed prior to the creation of the TDM (such words are known as
+“stop words” in LSA parlance). There are standard listings of stop words in English. Typically, the retained
+words are also stemmed using Porter’s (1980) algorithm or an equivalent one prior to the creation of the
+TDM matrix. This stemming creates one entry in the matrix for the same word regardless of its tense or
+whether it is singular or plural and so on. The algorithm then calculates the entropy of the terms across
+the documents and applies singular value decomposition (SVD) on the entropy data to produce
+vectors/factors that relate the terms to the documents they came from. SVD performs a transformation
+that is akin to dimension reduction (Wall, Rechsteiner, & Rocha, 2003). SVD accordingly enables
+researchers to identify connections among terms, such as underlying common factors, through a linear
+decomposition of an existing matrix into its principal components (Landauer & Dumais, 1997). This linear
+decomposition accounts for how often terms appear together or appear together through their
+relationships to other terms (Landauer et al., 1998). LSA typically approximates this linear decomposition
+through a 300 or higher dimensional semantic space that represents each term as a vector. Then, by
+applying either a cluster analysis or a PCA on the SVD results of that matrix, a researcher can show
+documents that share terms of interest to cluster together in a cluster analysis or to load together in a PCA
+based on assessing their co-occurrence (Deerwester, Dumais, Furnas, Landauer, & Harshman, 1990;
+Valle-Lisboa & Mizraji, 2007). In this manner, LSA allows a researcher to discover the revealed closeness
+                                                                                                            5
+of terms to other terms and documents to other documents in corpora (Evangelopoulos et al., 2012) .
+
+
+
+
+patterns of words co-occurring in regular language usage are a source of variance that, as of itself, may in some cases be enough to
+significantly produce the expected model.
+4
+  As an example, the words “USA” and “United States of America” will be closely related in such an analysis because, even if
+individual writers might often choose exclusively one term over the other to suit their magazines, both terms will appear in high co-
+occurrence with other words such as “Republicans” “Democrats” “map” “flag” and “population” and in contexts of other countries
+such as Cuba, Russia, Canada, and Mexico.
+5
+  For more discussion on LSA, refer to Deerwester et al. (1990) and Valle-Lisboa and Mizraji (2007). On analyzing co-occurrence
+correlations and, hence, why keywords may be related even if they do not appear together in the same document, see Kontostathis
+
+
+                Volume 18                                                                                Issue 10
+730      Controlling for Lexical Closeness in Survey Research: A Demonstration on the Technology Acceptance Model
+
+
+
+Terms that have closely related meaning tend to appear with high degrees of closeness in LSA analyses
+across many randomly selected documents (Gomez, Boiy, & Moens, 2012).
+Landauer et al. (1998) argue that the LSA algorithm is analogous to some aspects of human information
+retrieval and semantic memory. They claim that LSA simulates human thought so well that it can answer
+multiple choice questions in introduction to psychology exams almost as well as students can (Landauer
+et al., 1998) and that it scores on TOFEL exams as high as nonnative speakers do (Landauer & Dumais,
+1997). Landauer and Dumais (1997) have even argued that LSA may be simulating some of the
+processes by which people infer knowledge beyond information that is available to them. Extensive
+research on LSA shows that semantic closeness measures how words aggregate into groups through
+shared meanings that make sense to an objective person (Landauer et al., 1998). Indeed, LSA does
+identify synonyms (Valle-Lisboa & Mizraji, 2007). Moreover, the lexical closeness that LSA produces is
+sufficient to determine how close the synonym is to the original word based on the frequency in which they
+tend to appear together (Islam, Milios, & Keselj, 2012). Accordingly, researchers have presented LSA as a
+model that, to some extent, is a contextualization of a “generative lexicon” model of knowledge (Kintsch et
+al., 2007, p. 472) where knowledge can be partially derived through the written experience of others.
+Researchers have also convincingly shown LSA to classify MIS papers into their core research topics by
+analyzing the semantic closeness of the keywords in their abstracts (Evangelopoulos et al., 2012;
+Sidorova, Evangelopoulos, Valacich, & Ramakrishnan, 2008). LSA can also successfully classify emails
+into spam versus non-spam (Gomez et al., 2012). Having said all that, it should nonetheless be clear that
+LSA does not provide a perfect representation of human knowledge, nor does it account for all the
+information in the text such as morphology, syntax, and word order. It does, however, provide an estimate
+of at least how people group words and, thus, provides a basis for determining their lexical closeness
+(Kintsch, McNamara, Dennis, & Landauer, 2007). Importantly, LSA is not based on researchers’
+preexisting knowledge, and so they can apply it as an automated tool to any written text (Kintsch et al.,
+2007) with reasonable expectations for objectivity.
+Once LSA has created a semantic space, a researcher can use the tool to analyze the semantic space in
+further ways, such as how other texts that are not part of the corpora are close to each other based on
+that semantic space. In the case of this paper, we conducted such an analysis; specifically, we assessed
+TAM questionnaire items based on unrelated semantic spaces created out of newspaper corpora. To do
+so, we used LSA to create two independent semantic spaces out of two unrelated large newspaper
+corpora. We then used LSA to stem the TAM questionnaire terms and project them onto each of those
+semantic spaces. We created the projection of each questionnaire measurement item as the sum of the
+vectors of its terms independently for each semantic space so that we ran two parallel analyses. Having
+two parallel unrelated analyses produce equivalent results arguably adds to the reliability of the claims
+being made. Per each sematic space, the projection of the TAM items yielded n vectors where n is the
+number of items. We used the standard cosine formula (Dumais, 1991; Nakov, Popova, & Mateev, 2001)
+to evaluate the closeness of each pair of questionnaire items. We also ran a Pearson correlation. Pearson
+correlations are an alternative similarity measure (Landauer et al., 1998; Rohde, Gonnerman, & Plaut,
+2006) and allow analyses in CBSEM.
+
+3     Corpora Used in This Demonstration
+The accuracy of lexical closeness analysis depends on having an appropriate and large context corpus.
+For this paper, we used two such large corpora, which both focused on descriptions of human decision
+making, that we repurposed from another project (Hayward, Fitza, & Larsen, 2008; Fitza, Larsen, &
+                6
+Hayward, 2007) . These authors selected articles for the corpora because they contained reference to one
+or more Fortune 500 CEOs in their year of publication. One corpus sampled business press reports and
+the other news reports:
+        1.    The business corpus contained excerpts from The Wall Street Journal, Business Week,
+              Forbes, and Fortune. It had 84,836 articles from 1998-2007 that contained 45,816,686 total
+              words and 169,235 unique words that we analyzed as 132,267 stems.
+
+
+
+
+and Pottenger (2006). On its use in the IS discipline, see Evangelopoulos et al. (2012), Sidorova et al. (2008), and Larsen, Monarchi,
+Hovorka, and Bailey (2008a).
+6
+  We removed these citations during review.
+
+
+                Volume 18                                                                                 Issue 10
+Journal of the Association for Information Systems                                                                         731
+
+
+
+       2.    The news corpus contained excerpts from The New York Times, Los Angeles Times, Chicago
+             Tribune, The Washington Post, The Boston Globe, USA Today, Houston Chronicle, San
+             Francisco Chronicle, and The Denver Post. It had 162,929 articles from 1998-2007 that
+             contained 107,239,064 total words and 286,312 unique words that we analyzed as 231,606
+             stems.
+TAM should conceivably be more related to business reports than to news reports because ICT adoption
+is often related to, and has been studied about, ICT adoption in business and organizational contexts.
+Nonetheless, stories about ICT do appear also in news reports. Each corpus had one column for each
+measurement item and one row for each SVD dimension (500 rows in total). Appendix E presents the
+process by which we applied LSA to these corpora.
+
+4    Replicating the Original TAM Study on Lexical Closeness Data
+In this section, we discuss how we replicated TAM on lexical closeness data for each of the two corpora.
+Figure 1 summarizes the logic for why such data might conceivably relate to TAM. Preexisting usage
+patterns in English, such as synonyms, presumably create a disposition among people who write
+newspaper articles to associate those words in their writing (arrow 1) and prejudice and priming based on
+that predisposition among subjects who complete questionnaires (arrow 2). As a result, the cognitions of
+both groups should somewhat overlap (arrow 3). LSA implies arrow 1, and Cook and Campbell (1979)
+imply arrow 2. Arrow 3 is a transitive logic derivation of those implications. Allowing that LSA can identify
+aspects of lexical closeness (arrow 4) and that choice of wording can prejudice and prime subjects
+                                                      7
+answering questionnaires (Cook & Campbell, 1979) , which leads to arrow 5, one might expect (arrow 6)
+some degree of shared variance between the lexical closeness that LSA identifies in news and business
+reports and empirical data collected from subjects. That source of shared variance is the lexical
+information embedded in the daily usage of the language.
+
+
+
+
+                                 Figure 1. Summary of Why LSA Should Apply to TAM
+
+In other words, we cannot rule out that language usage patterns in one context, such as revealed by analyzing
+text corpora, might at least in part produce the expected answers in another context, such as in answering a
+questionnaire about ICT acceptance. We do not assert that LSA predicts how people will complete
+questionnaires. Rather, we assert that common, preexisting lexical patterns affect how people write texts (and,
+
+
+7
+  To avoid misunderstandings, by prejudicing and priming, we mean that a choice of words that subconsciously reminds the subject
+of something can affect an answer the subject gives to a survey question (Cassino & Erisen, 2010). An example of such priming is
+that the choice of words in a previous question can change how a subject answers a subsequent question (McFarland, 1981),
+framing the context.
+
+
+               Volume 18                                                                              Issue 10
+732      Controlling for Lexical Closeness in Survey Research: A Demonstration on the Technology Acceptance Model
+
+
+
+hence, LSA results) and how people design and answer questionnaires (and, hence, the people who answer
+TAM questionnaires). As such, because both draw on shared preexisting lexical patterns, the results of text
+                                                                                         8
+analysis in LSA and related empirical questionnaire answers should overlap to some degree .
+
+4.1     Reasons for Expecting a Replication of TAM in Particular
+                                                                                                                  9
+These shared preexisting lexical patterns might be especially pertinent in the case of TAM . Davis (1989,
+pp. 323-326) pretested TAM’s questionnaire items extensively to show that people understand and group
+the keywords in the TAM items as the model expects. Davis performed this step before pilot testing the
+model with questionnaire data. Therefore, if LSA synthesizes lexical patterns as Landauer and Dumais
+(1997) claim, then the lexical patterns that LSA identifies as an integral part of the language should
+presumably also somewhat determine how people answer TAM questionnaires. Notice that the pretest
+David conducted also sought lexical grouping except that Davis did so by explicitly asking people to Q sort
+index cards while LSA does so implicitly through analyzing word co-occurrences. The notion that wording
+can prejudice, influence, and prime how people respond to questionnaires is not new (Cook & Campbell,
+1979, Shadish et al., 2002) and should apply even more so in the case of TAM because its questionnaire
+items are reflective. Reflective items are measurement items that reflect a latent construct and are
+reasonably interchangeable with each other because they overlap considerably in their meaning (Jarvis et
+al., 2003). As reflective items, all the PU items were explicitly designed to share meaning with each other,
+as were the PEOU and the intended use items. That shared meaning was reflected explicitly in the Q sort
+that verified the TAM items before their pretest. Presumably, equivalent groupings should apply also to
+daily language usage. And so, just as empirical data load on a TAM questionnaire with a nice PCA
+                                                                                     10
+pattern, so too should the LSA-derived lexical closeness data of the same items . Accordingly, allowing
+that LSA identifies indirectly how people naturally group words to reveal related meanings and that this
+grouping rather accurately corresponds to actual word groupings in language (Landauer & Dumais, 1997)
+and allowing that, in the very creation of TAM, Davis applied a deliberate process to identify how people sort
+the TAM items into groups, we have no reason to expect an overlap between how people apparently group
+the TAM keywords in newspaper articles and how the original group who pretested TAM grouped them.
+
+4.2     Statistically Replicating the Original TAM Study 2 in Davis (1989) with LSA Data
+In this section, we show that the lexical information embedded in the English language, as derived from
+either of the newspaper corpora, provides sufficient lexical closeness among the original TAM
+                                                    11
+questionnaire items to actually replicate the model . We tested this replication in two stages. In the first
+stage, we derived the lexical closeness of the original TAM scales based on the semantic spaces of each
+of the two corpora. We took the wording of the PU and PEOU items from Davis (1989). As Davis did not
+include the wording of the intended use items, we added those items based on the same studies as
+described in Davis (1985). We performed the lexical closeness analysis with LSA independently on each
+of the two corpora. After we extracted the LSA dimensions and correlations, the remainder of the analysis
+emulated the methodology that Davis (1989) applied: running a PCA and then regression models on the
+PCA supported factors. In Section 5, we discuss how we performed the analysis using CBSEM on the
+same data. We analyzed the lexical closeness data of each corpus separately. We purposely analyzed
+the data in the way TAM originally did to show that the replication with LSA lexical closeness measures is
+not an artifact of applying CBSEM.
+The original TAM paper (Davis, 1989) reports on two studies. The first dealt with actual reported email and
+file editor use with 10 items each for perceived usefulness (PU) and perceived ease of use (PEOU) and
+
+8
+  Note that we do not claim that an exact pattern of correlations between items can be reconstructed. Rather, we claim only that such
+items do correlate regardless of the exact correlation coefficients between the many items.
+9
+  There are thousands of papers that have replicated the original TAM study, and many have proposed extensions to it. Therefore,
+we chose their originating source as a common denominator so that the conclusions could apply to as broad as possible a number of
+TAM studies and be of interest to as many researchers as possible. That common denominator is that all the TAM studies, as far as
+we could verify, rely on the core constructs of PU, PEOU, and behavioral intentions introduced in the original TAM study and almost
+universally apply the same keywords.
+10
+   Notice the contrast to classical measurement theory. In classical measurement theory (see Bollen (1989) for a detailed review of
+how classical measurement theory is applied in CBSEM), the model is assumed to be out there in the real world. The empirical data
+are assumed to reflect and support this model. The error variance is attributed to either how the subjects respond to the data
+collection instrument or to missing elements in the model. The correctness of the model in classical measurement theory has nothing
+to do with lexical patterns.
+11
+   Note that LSA does not require that the TAM items appear in their entirety in the documents used to create the semantic space. It
+is sufficient that sections of keywords inside each item appear. Appendix F shows a sample of such results.
+
+
+                Volume 18                                                                                 Issue 10
+Journal of the Association for Information Systems                                                            733
+
+
+
+one item for self-reported use. Based on that study, Davis refined the items in the second study to six
+items each for PU and PEOU and three items for intended use. Because subsequent TAM studies built on
+the PU and PEOU scales of the refined second study, the replication analysis we performed dealt with the
+15 items in that second study (which we call “study 2”). Appendix A shows the items.
+To test the measurement model, we ran a PCA on the lexical closeness measures of the TAM scales, which
+conceptually replicates the PCA analysis that Davis (1989) ran on questionnaire data. Table 1 (left set of
+columns) shows the results of the PCA on the business corpus after a varimax rotation. The PCA produced
+three eigenvalues above 1 (10.7256, 1.2263, 1.1751); the fourth eigenvalue was 0.4003. The rotated PCA
+with all the 15 items shows a clear grouping of the intended use items (U1-U3), PEOU items, and PU items
+but with cross loadings of PU6 and PEOU 2, 4, and 6. We bold the high loadings to emphasize them. After
+removing those items with high cross loadings (see the right set of columns), the item loading pattern looked
+good. We show communality with the prefix “Com”). TAM studies commonly remove some of the PU and
+PEOU items. Had the data been data from survey research that applied questionnaires, the criteria for a
+good item loading pattern in a PCA would have been above .60 on the related factor and below .40 on the
+other factors and communality above .707 (Hair, Black, Babin, & Anderson, 2005). Applying that rule of
+thumb, the item loading pattern in Table 1’s right column is good. Figure 2 shows the diagram of item
+loadings on the first two factors. The left diagram shows that pattern for all the items and the right one for
+only the retained items. Even in the left diagram (which retained all the items), one can see a discernable
+pattern of items’ grouping by their prefixes even if this grouping was clearly not linear and as such not
+registered with a PCA. The diagrams add overlays to emphasize these item groupings. Cronbach alphas
+were .97 for intended use 1-3, .95 for PU 1-5, and .88 for PEOU 1, 3, and 5. These results support the
+measurement model with the business corpus. Note also that, despite the need to remove items in the
+original TAM scales, as shown in Table 1, we did not need to so in the CBSEM replication we conducted on
+Gefen, Karahanna, and Straub’s (2003) data, which we discuss in Section 5.
+                                           Table 1. Business Corpus Data
+             Factor1      Factor2     Factor3        Com             Factor1      Factor2     Factor3   Com
+    U2       0.86907      0.40504     0.19680        .958    PU5     0.82055      0.35466     0.36333    .931
+    U1       0.86830      0.41011     0.20033        .962    PU4     0.79816      0.38462     0.35881    .914
+    U3       0.86697      0.40847     0.20254        .960    PU2     0.79326      0.22699     0.31219    .778
+ PEOU2       0.70404      0.12809     0.57546        .843    PU1     0.75914      0.44000     0.40769    .936
+   PU6       0.69003      0.60282     0.32128        .923    PU3     0.74896      0.39306     0.26379    .785
+   PU5       0.34586      0.83048     0.33954        .925    U2      0.34383      0.90619     0.23541    .995
+   PU4       0.35674      0.82846     0.32121        .917    U3      0.34790      0.90374     0.24080    .996
+   PU1       0.42266      0.78787     0.37465        .940    U1      0.35103      0.90368     0.23717    .996
+   PU2       0.21945      0.78606     0.30406        .759   PEOU1    0.32833      0.20752     0.84608    .867
+   PU3       0.38659      0.75265     0.24893        .778   PEOU3    0.24950      0.30563     0.80963    .811
+ PEOU1       0.16977      0.39661     0.80290        .831   PEOU5    0.37911      0.14954     0.77593    .768
+ PEOU3       0.28167      0.29929     0.79139        .795
+ PEOU5       0.10620      0.45632     0.72331        .743
+ PEOU4       0.61784      0.17211     0.70324        .906
+ PEOU6       0.61988      0.33600     0.64184        .909
+            Varimax-rotated factor loadings                         Varimax-rotated factor loadings
+                 (all items included)                                (only retained items included)
+                    PU              PEOU         USE                         PU             PEOU        USE
+     PU              1                                        PU             1
+   PEOU          0.77039             1                       PEOU          0.72238           1
+    USE          0.77333        0.72355              1        USE          0.72653      0.56059          1
+              Factor Pearson correlations                             Factor Pearson correlations
+
+
+
+
+              Volume 18                                                                     Issue 10
+734    Controlling for Lexical Closeness in Survey Research: A Demonstration on the Technology Acceptance Model
+
+
+
+
+                   All Items Included                           Only Retained Items Included
+                                  Figure 2. Business Corpus Data Graphics
+
+Running the same analysis on the news corpus (see Table 2) produced remarkably equivalent results
+even though the two corpora had no documents in common and came from an entirely different set of
+sources (albeit with potentially overlapping topics). The PCA produced three eigenvalues above 1
+(9.2635, 1.5538, 1.0765); the fourth was 0.5006. As we can see in the left set of columns, the rotated PCA
+shows a clear grouping of the U, PEOU, and PU items but with cross loadings of the same PU6, PEOU2,
+PEOU6, and (slightly) PEOU4 items. After removing items with high cross loadings including PEOU4,
+shown in the right set of columns, the results show a nice item loading pattern. Again, even retaining all
+the items, we can see a discernable pattern of items’ grouping together by their prefix in Figure 3.
+Cronbach alphas were .94 for intended use 1-3, .93 for PU 1-5, and .68 for PEOU 1, 3, and 5. These
+results support the measurement model also with the news corpus.
+Next, we ran a structural model analysis on each corpus independently. As in the original TAM study 2
+(Davis, 1989), we ran two linear regressions predicting intended use based on PU and PEOU and
+predicting PU based on PEOU. Doing the analysis this way conceptually parallels Davis’ TAM study 2
+except that we ran the analysis on lexical closeness data rather than on questionnaire data. We created
+the regression constructs by taking the algebraic average of the items assigned to each factor—the same
+method as Davis applied. The intended use, PU, and PEOU constructs were the averages of each of the
+factors on the right-hand side columns of Tables 1 and 2. We expected that one may plausibly expect that
+the regressions will be somewhat significant also with lexical closeness data because, just as each U, PU,
+and PEOU item may constitute a synonym with other items in the same construct, there might also be a
+weaker synonym with items in the other two constructs. For example, people may write about how to
+“accomplish tasks more quickly” (PU1) and about how it is “easy for me to become skillful” (PEOU5) in the
+same document even if less frequently than with “make it easier to do my job” (PU5). If so, then PU1 and
+PU5 would load on one PCA factor together with the other PU items but still be correlated with PEOU5.
+That correlation would be revealed in the linear regression.
+
+
+
+
+            Volume 18                                                                   Issue 10
+Journal of the Association for Information Systems                                                            735
+
+
+
+                                            Table 2. News Corpus Data
+
+             Factor1      Factor2     Factor3        Com            Factor1       Factor2     Factor3   Com
+PU4          0.82660      0.41158     0.25115        .916    PU2    0.83614       0.16864     0.19769    .767
+PU5          0.80257      0.42582     0.29898        .915    PU4    0.80973       0.42983     0.26678    .912
+PU2          0.79703      0.18230     0.21660        .715    PU5    0.79278       0.43938     0.29720    .910
+PU1          0.76670      0.40888     0.34246        .872    PU1    0.74264       0.43647     0.35939    .871
+PU3          0.71487      0.34133     0.21075        .672    PU3    0.73018       0.34001     0.19577    .678
+PU6          0.66238      0.59882     0.37052        .934    U3     0.35177       0.90636     0.21232    .990
+U2           0.38835      0.86689     0.24117        .960    U2     0.35457       0.90555     0.21159    .991
+U3           0.38783      0.86600     0.23813        .957    U1     0.37203       0.89870     0.21384    .992
+U1           0.40530      0.86035     0.24133        .963   PEOU1   0.33869       0.07575     0.79244    .748
+PEOU4        0.08881      0.36358     0.83052        .830   PEOU5   0.09824       0.16274     0.75753    .610
+PEOU3        0.22330      0.23155     0.76614        .690   PEOU3   0.25989       0.28177     0.68012    .609
+PEOU6        0.25987      0.46297     0.74546        .838
+PEOU1        0.40885     -0.01046     0.72944        .699
+PEOU2        0.16353      0.52208     0.72819        .830
+PEOU5        0.36071     -0.01305     0.52022        .401
+            Varimax-rotated factor loadings                         Varimax-rotated factor loadings
+                  (all items included)                               (only retained items included)
+                    PU              PEOU         USE                         PU             PEOU        USE
+      PU             1                                        PU              1
+     PEOU        0.66650             1                       PEOU          0.58965           1
+      USE        0.75911        0.61760              1       USE           0.72432      0.49369          1
+              Factor Pearson correlations                               Factor Pearson correlations
+
+
+
+
+                     All Items Included                           Only Retained Items Included
+                                      Figure 3. News Corpus Data Graphics
+
+
+
+
+              Volume 18                                                                     Issue 10
+736      Controlling for Lexical Closeness in Survey Research: A Demonstration on the Technology Acceptance Model
+
+
+
+Table 3 shows the results of those regressions. The intercepts were zero because LSA produces
+standardized measures. The business corpus analysis produced a significant model with intended use as
+                                                    2
+the dependent variable (F = 280.81, p < .0001, R = .53) and a significant model with PU as the
+                                             2
+dependent variable (F = 543.47, p < .0001, R = .52). The news corpus analysis produced a significant
+                                                                               2
+model with intended use as the dependent variable (F = 281.84, p < .0001, R = .53) and a significant
+                                                                   2
+model with PU as the dependent variable (F = 265.44, p < .0001, R = .35). Thus, Table 3 supports the
+expected structural model patterns with both the business corpus and the news corpus. Note that the
+corpora do not overlap and that Hayward et al. (2008) and Fitza et al. (2007) drew the sample texts we
+                                              12
+took from each corpus from a very large sample .
+           Table 3. Replicating TAM with Data Derived through LSA from News and Business Corpora
+
+                            Business corpus                                               News corpus
+          To-from           PEOU           PU         Intercept        To-from          PEOU           PU          Intercept
+       Intended use          0.12         0.81**           0        Intended use        0.15**        0.73**            0
+              PU            0.97**                         0              PU            0.81**                          0
+       ** significant at the 0.01 level
+
+
+5     Comparing LSA Text Analysis Results with Questionnaire Data
+As Section 4 shows, we derived LSA sematic closeness values for the original TAM items and ran PCA
+and linear regressions as done in the original TAM study with those values. The results demonstrate that
+lexical information embedded in the English language as derived by analyzing word co-occurrences in
+newspapers articles is sufficient to support TAM. Further, we obtained such results with two independent
+corpora, which increases the validity of that claim. In this section, we verify that CBSEM with its more
+demanding statistical validity tests can also support such replication and compare the results of analyzing
+lexical-derived data with empirical published questionnaire data. In Section 6, we build on these CBSEM
+results to suggest how an established method of comparing datasets in CBSEM may be a possible
+method to statistically control for the lexical information embedded in the language.
+
+5.1     Replicating TAM with the Lexical Closeness of the Gefen et al. (2003) Items
+Because Davis (1989) does not provide empirical data, we compared the survey data available in Gefen
+et al. (2003) with the lexical closeness measures of those same items. These items apply to online books
+and CD purchases. Appendix B shows the items that Gefen et al. used. Gefen et al. labeled what Davis in
+Appendix A called U as USE. Gefen et al. is among the most cited papers that have applied TAM and,
+crucially, is the only highly cited paper that includes the correlation matrix of the original item-level
+empirical data. Having the original correlation matrix allows for the comparison of previous empirical data
+to the lexical closeness data. We perform that comparison in Section 5.2 where we show the results side
+by side and, in Section 6, where a p-value comparing the results is produced. Malhotra, Kim, and Patil
+(2006) also used the same correlation matrix and concluded that the inevitable common method bias in
+those data did not change the supported model.
+We started the analysis we report in this section by replicating the analysis as done in Davis’ (1989) TAM
+study 2 (the one with six PU items and six PEOU items) and then augmented that analysis with CBSEM in
+Section 5.2. We did these analyses on both the original data available in Gefen et al. (2003) and the two
+lexical closeness datasets. We performed the analyses separately for each corpus. Table 4 and Figure 4
+show the business corpus PCA results after a varimax rotation. The PCA again identified three factors
+with eigenvalues above 1 (the top four eigenvalues were 8.656, 2.333, 1.509, and .515). Cronbach’s
+alphas were.98 for PU, .98 for PEOU, and.68 for intended use. We bold the loading pattern to emphasize
+it. Table 5 and Figure 5 show the news corpus PCA results after a varimax rotation. The PCA identified
+three factors with eigenvalues above 1 (the top four eigenvalues were 8.504, 2.386, 1.611, and .474).
+
+
+
+
+12
+   The two corpora came from two distinctly different sources, and so we expected them to differ because word associations should
+differ across contexts. We tested that by comparing the covariance matrices in CBSEM. As expected, every covariance was
+significantly different between the two groups at a p-value level of less than .0001. Further, the comparison of the two overall matrix
+patterns showed a significant chi squared of 1390.74 with 120 df and a p-value of less than .0001.
+
+
+                Volume 18                                                                                   Issue 10
+Journal of the Association for Information Systems                                                                             737
+
+
+
+Cronbach’s alphas were .98 for PU, .97 for PEOU, and.69 for intended use. The results across corpora
+                                                                      13
+support the expected measurement model even without dropping any items .
+                              Table 4. PCA with Varimax Rotation on the Business Corpus
+
+                                       Factor 1              Factor 2             Factor 3                Com
+             EOU6                       0.93770              0.28535              -0.05409               0.964
+             EOU4                       0.93394              0.28225              -0.04925               0.954
+             EOU1                       0.91394              0.32340              -0.04063               0.942
+             EOU3                       0.90629              0.30586              -0.04587               0.917
+             EOU5                       0.88723              0.28552              0.11815                0.883
+             EOU2                       0.86645              0.28149              -0.03442               0.831
+             PU3                        0.30994              0.92906              -0.00618               0.959
+             PU4                        0.29457              0.92423              0.06479                0.945
+             PU1                        0.31657              0.92200              -0.05811               0.954
+             PU5                        0.29537              0.90164              0.02248                0.901
+             PU2                        0.28862              0.88176              0.05584                0.864
+             PU6                        0.26012              0.87106              0.13419                0.844
+             USE2                      -0.02114              0.00544              0.88064                0.776
+             USE1                      -0.03483              0.09151              0.86867                0.764
+
+
+
+
+                                  Figure 4. PCA Item Loading Pattern Business Corpus
+
+
+
+
+13
+  Because the PCA results could possibly reflect an inflated lexical closeness (this could be due to the fact that all the PU items
+included the words CDs and books), we redid the LSA analysis and the subsequent PCAs on the same items but excluding the
+words CDs and books. The results, shown in Appendix C, show equivalent patterns in Tables C1 and C2 and Figures C1 and C2.
+Cronbach’s alphas were .97 for PU, .98 for PEOU, and .70 for intended use in the business corpus and .98, .97, .71, respectively, in
+the news corpus. These results support the expected measurement model with both corpora.
+
+
+               Volume 18                                                                                 Issue 10
+738    Controlling for Lexical Closeness in Survey Research: A Demonstration on the Technology Acceptance Model
+
+
+
+                          Table 5. PCA with Varimax Rotation on the News Corpus
+
+                                Factor 1           Factor 2          Factor 3           Com
+           PU3                   0.93852           0.29082           -0.03095           0.966
+           PU4                   0.93680           0.29603           0.03382            0.966
+           PU1                   0.93067           0.30099           -0.11042           0.969
+           PU5                   0.92289           0.28080           -0.05562           0.934
+           PU2                   0.90588           0.27576           0.03922            0.898
+           PU6                   0.89460           0.24912           0.09196            0.871
+           PEOU6                 0.26997           0.94152           -0.02946           0.960
+           PEOU4                 0.25783           0.93948           -0.02381           0.950
+           PEOU1                 0.32578           0.91423           -0.07326           0.947
+           PEOU3                 0.30422           0.90328           -0.04644           0.911
+           PEOU5                 0.26813           0.88448           0.17078            0.883
+           PEOU2                 0.23945           0.79430           -0.09990           0.698
+           USE2                 -0.02227           0.00753           0.88791            0.789
+           USE1                  0.01724           -0.05872          0.86896            0.759
+
+
+
+
+                              Figure 5. PCA Item Loading Pattern News Corpus
+
+
+
+5.2. Adding CBSEM Analyses the LSA Data and its Comparison to the
+     Questionnaire Data
+We also ran CBSEM analyses on the same two lexical closeness datasets. Again, we did the analyses
+separately for each corpus. The CBSEM analysis combined a confirmatory maximum likelihood factor
+analysis of the measurement model with a structural model analysis. The measurement model provides t
+statistics to verify that the items load significantly on their assigned latent variables (factors in PCA are
+named latent variables in CBSEM terminology). Those CBSEM statistics test the expected measurement
+model. The structural model tests whether the latent variables support the expected model of paths among
+the latent variables. CBSEM also provides overall fit statistics. These overall fit statistics are important
+because CBSEM explicitly models all the variance in the data, including variance that is not an integral part
+of the model. CBSEM is confirmatory in its objective as compared to the exploratory CFA in Section 5.1.
+Running CBSEM means that all the variance is explicitly mapped into the model, including measurement
+
+
+             Volume 18                                                                  Issue 10
+Journal of the Association for Information Systems                                                                            739
+
+
+
+error variance (Jarvis et al., 2003), and that any leftover variance will result in poor fit indices (Jöreskog,
+1979) and with indications of unmapped measurement error (Hu & Bentler, 1998, 1999).
+We conducted the analyses in LISREL. We set the sample size to 500, which corresponds to the number
+of data points or dimensions that the LSA analysis created. The correlation matrices appear in Appendix
+D. Table 6 shows the item loadings. Table 7 shows path coefficients between latent constructs 7. Fit
+indices for the original empirical correlation matrix in Gefen et al. (2003) were χ232 = 62.82 (p = .001), GFI =
+.94, AGFI = .90, RMR = .02, NFI = .98, CFI = .99. According to current convention, these fit indices are
+                                                                                        2
+good (Gefen, Rigdon, & Straub, 2011). The SMC values (the equivalent of an R ) were .67 for intended
+use and .48 for PU. The original empirical correlations are available in Gefen et al. (2003). In this study,
+we assessed only those correlations that relate to TAM.
+                                                      Table 6. CBSEM Item Loadings
+
+                      Analysis of data as it appears in the
+                                                                       Business corpus               News corpus
+                       correlation matrix in Gefen et al.
+                                                                       lexical closeness           lexical closeness
+                                     (2003)
+         USE1                             1.00                                1.00                         1.00
+         USE2                             0.92**                             0.88**                        0.29
+          PU2                             1.00                                1.00                         1.00
+          PU3                             1.04**                             1.07**                       1.04**
+                                                 **                                 **                           **
+          PU4                             1.07                               1.07                         1.06
+                                                 **                                 **                           **
+          PU6                             0.99                               0.93                         0.95
+        PEOU2                             1.00                                1.00                         1.00
+                                                 **                                 **                           **
+        PEOU3                             1.03                               1.08                         1.21
+                                                 **                                 **                           **
+        PEOU4                             1.00                               1.13                         1.29
+                                                 **                                 **                           **
+        PEOU5                             1.00                               1.06                         1.21
+       ** significant at the 0.01 level
+
+We then ran exactly the same CBSEM model specifications on the correlation matrix derived from the
+business corpus first and on the correlation matrix derived from the news corpus second. To allow
+comparison with the empirical data in Gefen et al. (2003), we dropped the same two PU and two PEOU
+                         14
+items that they dropped . Fit indices for the business corpus were χ232 = 250.98 (p < .001), GFI = .91, AGFI
+= .84, RMR = .03, NFI = .96, CFI = .97. These fit indices are good (Gefen et al., 2011) and support overall
+model fit. The SMC values were .02 for intended use and .34 for PU, which means that the data in this
+corpus support the PEOU to PU path but only weakly the paths to intended use. The fit indices for the news
+corpus were χ23 2 = 322.73 (p < .001), GFI = .89, AGFI = .80, RMR = .04, NFI = .95, CFI = .96. Again, these fit
+indices are good and support overall model fit. The SMC values were .00 for intended use and .30 for PU,
+                                                                                                         15
+which means that the data in this corpus support the PEOU to PU path but not the paths to intended use .
+
+
+
+
+14
+   We ran the analysis as in Gefen et al. (2003) to enable comparison of exactly the same measurement model. Running CBSEM on
+the lexical closeness data without dropping those four items produced equivalent results.
+15
+   CBSEM requires setting one of the paths from the measurement items to their corresponding latent variable to 1, which is why the
+paths from USE1, PU2, and PEOU2 were set to 1 and had no t-values. All the other loadings in the business corpus had significant
+p-values. The news corpora, presumably because its topics are less related to the organizational and business contexts of TAM,
+support the measurement model in only six of the seven loadings.
+
+
+
+                Volume 18                                                                               Issue 10
+740     Controlling for Lexical Closeness in Survey Research: A Demonstration on the Technology Acceptance Model
+
+
+
+         Table 7. CBSEM Path Coefficients Showing the Relationships among the TAM Items in the
+      Correlation Matrix in Gefen et al. (2003) and in the Lexical Closeness Business and News Corpora
+                                           Lexical Closeness Matrices
+
+             To-from                Original correlation        Business corpus           News corpus
+                                    matrix in Gefen et al.      lexical closeness       lexical closeness
+                                         PEOU        PU         PEOU          PU        PEOU              PU
+                                               **          **                      **
+          Intended use                   .31         .48         -.14        .16         -.09             .03
+                                               **                      **                      **
+                 PU                      .67                     .62                     .68
+      ** significant at the 0.01 level
+
+
+6     Accounting for Lexical Closeness Applying CBSEM
+In Sections 4 and 5, we show that LSA lexical closeness can significantly produce the measurement
+model of TAM in both corpora and even parts of its structural model. This finding raises the question of
+whether the additional variance obtained from actual empirical data contributes significantly to improving
+                                                                     2
+the model. In this section, we evaluate as much by comparing the χ of a CBSEM model that analyzes the
+                                    2
+original empirical data with the χ of the same model where the empirical item loadings are constrained to
+be the same as the values in their corresponding lexical closeness model measures. This method is an
+established way to compare models across samples (Anderson & Gerbing, 1988; Gerbing & Anderson,
+1988). We analyzed the same data that we analyzed in Section 5.2. Constraining item loadings in the
+original Gefen et al. (2003) data to be the same as those in the lexical closeness data produced χ239 =
+                                                                                2
+71.11 for the business corpus and χ239 = 138.32 for the news corpus. The Δχ 7 = 67.21 (p-value < .001)
+         2
+and Δχ 7 = 75.50 (p-value < .001), respectively, show that the original empirical data model without
+constrained paths is significantly better. This result means that, while lexical closeness data produce
+significant results in replicating TAM (as we show in Section 5.2), the empirical data produce even better
+                                 2
+overall model fit, which the Δχ values indicate.
+
+7     Discussion
+7.1    Summary of the Comparative Analyses
+The data analyses show that the lexical closeness of questionnaire items as captured by LSA on
+unrelated text corpora can significantly produce the measurement model of TAM and, to some degree,
+create some of the expected paths in the structural model. That the measurement model was supported
+by lexical closeness data from two completely unrelated corpora lends additional credence to this
+conclusion. The results imply that how people use words, which presumably reflects some aspects of their
+cognition, partly parallels how other people answer questionnaires. This conclusion may also suggest that
+one can foretell how subjects will answer questionnaires to some extent, which we can expect if LSA
+models some aspects of shared human cognition as widely claimed. Nonetheless, and putting the
+implications into perspective, empirical data collected through questionnaires significantly improved the
+data models, and lexical closeness data alone do not completely replicate the structural model paths. In
+other words, analyzing lexical closeness may allow partial replication of the measurement model, at least
+with TAM, but the lexical data alone may not be enough to completely recreate the expected structural
+model as we would expect given the influence of the setting and of subject experience in which the
+empirical data are collected.
+Before discussing the results, we note that we need additional research before we can draw any decisive
+conclusions. One study may indicate an issue, but it cannot be definitive. Having said that, that the lexical
+closeness data analyses could replicate the measurement model, and part of the structural model of TAM,
+may have profound implications for both TAM and classical measurement theory. The results suggest that
+a possible reason why TAM has been replicated successfully across so many contexts empirically is also
+because of lexical closeness reasons. That is to the credit of TAM and to the methodology applied in
+building its measurement items. The implications for classical measurement theory, however, may be
+more disturbing. Constructs in classical measurement theory should relate to measurement items and to
+each other based on theory and the actual experience of the subjects (Anderson & Gerbing, 1988; Bollen,
+1989). It should not be the case that questionnaire based models can be estimated without actually
+collecting data from subjects. From a classical measurement item theory perspective as applied also in
+
+
+               Volume 18                                                                       Issue 10
+Journal of the Association for Information Systems                                                     741
+
+
+
+CBSEM, neither the measurement model nor the structural model should be related to how words co-
+occur in unrelated corpora. We discuss these implications in Section 7.2. The results may actually add a
+new perspective to measurement theory because measurement theory assumes that subjects answer
+questionnaires based on theory and the context being studied but without considering preexisting
+relationships among words that may embed existing knowledge through language. As one of our
+reviewers said, that questionnaire items measure more than only the theoretical relationships, in contrast
+to the view of classical measurement theory, might be disturbing to some readers, but it is to be expected
+if, as widely claimed, LSA models some aspects of shared human cognition. Researchers have widely
+established that one can prime subjects by choice of words (Cook & Campbell, 1979; Shadish et al.,
+2002). The application of LSA in this study suggests that one of those priming effects is because of
+knowledge embedded in the language. This study show: 1) the consequences of that embedded
+knowledge in the language, but, also, 2) the study adds a numeric verification of this phenomenon in the
+case of TAM and, crucially, 3) a method to statistically control for it.
+
+7.2    Implication for TAM and LSA
+It might not be that surprising that there is an overlap in how LSA identifies lexical closeness among a
+given set of keywords and how people in a pretest Q sort those same keywords as was the case with
+TAM. We might expect such an overlap based on what researchers have long since claimed that LSA can
+do (i.e., group words into synonyms). It might not be that surprising, except that those LSA lexical
+closeness measures produced equivalent results also to how people assessed a specific ICT based on
+their actual experience with it. Indeed, the data might suggest that the way people think, at least with
+regard to usefulness and ease of use, contributes to both 1) the lexical closeness of the words in the
+writing of some people about business and news that is unrelated directly to the TAM measurement items,
+and 2) to the answers of other people who assess a specific ICT through the TAM measurement items.
+And so, the results support the argument that LSA taps into underlying human lexical cognitions that
+people share. Those cognitions are consequently revealed, partially at least, in both writing and in
+assessments in questionnaires. If true that LSA taps into such underlying cognitions, then this tapping
+could indicate a need to account for lexical closeness correlation in current methodology and theory,
+including the one applied in TAM. Such a tapping also extends classical measurement theory because,
+according to that theory, a model should be supported because of a theory-based reason that applies to
+the subjects in the context being studied; it should not be supported solely because its constructs are
+related to language usage patterns as revealed even in unrelated corpora. According to TAM and its
+theory bases, TAM captures rational experience-based assessments that people have about an ICT.
+However, if PEOU is correlated to PU because the terms are lexically close to each other in daily
+language usage patterns, then testing the propositions that TAM raises about the adoption of ICT being
+based on rational assessments needs to include statistical controls for that lexical closeness. Presumably,
+LSA also captures the relationship between ease of use and usefulness because that relationship is well
+known enough to be reflected by newspaper stories written in the same period, for the same society, and
+for the same lifestyle.
+We do not claim that all the answers to a TAM questionnaire are guided by mental associations based on
+the meaning of the words in the questionnaire items rather than by direct experience. Indeed, the
+empirical data contribute significantly to model fit beyond the correlations revealed through lexical
+closeness, and the correlations revealed through lexical closeness allow only partial replication of the
+structural model. Rather, the data suggest that text corpora implicitly embed information such as that
+revealed through lexical closeness and that this information may in some cases overlap with information
+other people enter in a questionnaire. Thus, the results may indicate that people do occasionally think
+alike and that their thoughts are reflected in common language patterns. As such, we can expect that the
+cognition of one group in one context, such as the people who wrote the articles in the corpora analyzed,
+may to some extent overlap with the cognition of another group, such as people who complete a TAM
+questionnaire. However, this overlap also means that there might be preexisting correlations that are
+plausibly unrelated to either the current sample or the theory.
+On the bright side, such lexical closeness might have a positive aspect, too. If we can predict the
+relationship between PU and intended use based on lexical closeness in text corpora, then perhaps we
+can identify other words and concepts that are associated in people’s cognition about ICT adoption. The
+key concepts in TAM were based on existing theory and could have plausibly been derived through
+interviews too. Conceivably, those cognitions might have been identifiable also through lexical closeness.
+Applying lexical closeness might, therefore, provide another method for building ICT adoption theory and
+
+
+              Volume 18                                                              Issue 10
+742     Controlling for Lexical Closeness in Survey Research: A Demonstration on the Technology Acceptance Model
+
+
+
+possibly other theories by identifying the interrelationships among concepts even when no theory about
+those concepts exists. On a practical side, lexical closeness analysis may allow IT managers to identify an
+initial list of topics that could be important to their clients and then verify that list through interviews, which
+could improve service and save time by pointing managers in the right direction.
+Another possible application of LSA relates to studying the dimensionality of the TAM scales. Shortly after
+TAM appeared, Segars and Grover (1993) questioned the dimensionality of PU by suggesting that the
+perceived usefulness scale should perhaps be split into perceived usefulness and perceived effectiveness.
+Chin and Todd (1995) challenged that suggestion. LSA could present another, possibly unrelated, side to
+such arguments and conceivably not only as they relate to TAM. Based on lexical closeness, LSA could
+perhaps provide an objective and quantitative assessment if there might indeed be reason to believe that
+subjects might interpret the measurement items in a questionnaire as reflecting more than one construct
+when the researcher intended there to be only one. Analyzing item relationships in such a way, as Larsen
+and Bong (2016) show, has the potential to integrate constructs across theories and enables a priori analysis
+before a researcher invests expensive data collection. It may even provide some indication when
+respondents might be assessing questionnaire items shallowly (Larsen et al., 2008a).
+
+7.3    On a Broader Perspective
+Classical measurement theory models the variance of measurement items in a reflective scale as
+comprising 1) true variance that reflects the latent construct it indirectly measures and 2) measurement
+error that is assumed to be extraneous, non-systemic, and random (Gerbing & Anderson, 1988; Nunnally
+& Bernstein, 1994). If the measurement error relates to anything except random variance, it could add
+inaccuracies to the interpretation of the analysis in that there may be more at play than the model and the
+empirical data analysis reveal, such as additional correlations among the measurement items or the way
+the data were collected that are absent from the model (Campbell & Fiske, 1959; Cook & Campbell, 1979;
+Podsakoff, MacKenzie, Lee, & Podsakoff, 2003; Shadish et al., 2002). For a detailed review, see Bollen
+(1989) and Podsakoff et al. (2003). It is important to note that, in classical measurement theory,
+extraneous variance (both systemic and non-systemic) is introduced by or related to the subjects’
+completing a data collection instrument (Cook & Campbell, 1979; Shadish et al., 2002). Classical
+measurement theory does not expect that lexical closeness derived by analyzing co-occurrences of the
+actual words alone in unrelated corpora may constitute significant extraneous variance. And so, while
+researchers have established that choice of words can prejudice and prime how subjects respond to a
+questionnaire item (Cook & Campbell, 1979; Shadish et al., 2002), that the words alone can determine the
+measurement model is new. In other words, it should not be the case that natural language usage
+patterns related to the keywords in a questionnaire are enough to even partly predict the empirical results
+of questionnaire-based research before empirical data are collected. And yet, the analyses suggest that
+that may partly be the case even without empirical data being collected from subjects. The above should
+not be interpreted as if we mean to suggest that lexical closeness might somehow replace the need to
+empirically collect data from subjects. Lexical closeness cannot do that because LSA, at least in its
+current application, cannot account for polysemy and word order (Kintsch, 2007), but it may pose an
+intriguing challenge to classical measurement theory. Lexical closeness shows that there is possibly more
+at play than classical measurement theory assumes.
+Going out on a proverbial limb, it is a disturbing thought that maybe the reason that researchers often find
+what they are looking for is not only because they are brilliant and have come up with a compelling theory.
+Rather, it may be for the rather mundane reason that they share with their subjects at least some aspects
+of a joint cognition, a joint cognition related to language usage patterns. This reason may possibly explain
+why nonnative English speakers answer differently on questionnaires when responding in their native
+language as compared to their answers in English (Harzing, 2005). That such preexisting lexical
+closeness may confound measurements is clearly controversial. But, as it applies to TAM, which is
+perhaps the gold standard of MIS research, we introduce the results to the community in the hope of
+engendering and encouraging debate and more research into this topic.
+
+7.4    The Sapir-Whorf Hypothesis and Classical Measurement Theory
+Psycholinguistics, and specifically the weak Sapir-Whorf hypothesis, suggests that language does affect
+how people think (Hill & Mannheim, 1992). By logical extension, if it does, it would imply that language
+also affects how people respond to questionnaire items. This theory is controversial. We did not test the
+Sapir-Whorf hypothesis, but our findings suggest an interesting twist on it. The finding may suggest the
+
+
+             Volume 18                                                                     Issue 10
+Journal of the Association for Information Systems                                                       743
+
+
+
+possibility of a reverse directionality than that predicted by the Sapir-Whorf hypothesis. Rather than
+people being influenced by language at large, people may be incorporating into their specific use of
+language aspects of their cognition. And, crucially, this incorporated cognition seems to be shared across
+samples. That is to say, people invest into their usage of language—in this case, in their writing of text—
+patterns of lexical meanings that seem to predict how other unrelated people will assess an ICT. And,
+crucially, we can measure that overlap through LSA and tested it in CBSEM. Ergo, it may be that, rather
+than language determining thought, language contains in it at least some aspects of how people think and
+that these aspects, at least word co-occurrence patterns, apply across many individuals. As a
+consequence, analyzing language (as, for example, LSA does) may provide somewhat equivalent results
+as if asking people about their own beliefs and intentions, even about a specific ICT that are not related to
+the original corpora. It is as if people tend to think in the same way as other people, a supposition
+consistent with classical measurement theory, and that language captures these shared thoughts, a
+supposition that introduces new extraneous currently unaccounted for variance into classical
+measurement theory but that is consistent with psycholinguistics.
+
+7.5    Limitations and Possible Directions Research Could Take
+A possible avenue worth pursuing is to test the extent to which lexical closeness extends to actual ICT
+use as it relates to a specific ICT. In this paper, we show that LSA can produce measures that create the
+expected factorial loading patterns created by survey data on beliefs and intentions. If this conclusion
+applies to actual reported behavior, it would have even more potential impact.
+Adding LSA analysis to questionnaire data collected in other languages and dealing with archival texts
+could also be an avenue worth pursuing. Doing so could verify the proposition behind LSA that it identifies
+human thought aspects that underlie the lexical grouping of words and that it presumably does so across
+languages (Islam et al., 2012).
+Given the thousands of LSA studies, we might ask why researchers have not discovered the phenomenon
+we report here before. Previous studies that use LSA have applied lexical spaces created from small sets
+of documents (less than 50,000), often the ones made available at lsa.colorado.edu. This reliance on the
+Colorado semantic spaces may partially account for the lack of discovery given that none of those lexical
+spaces would have the language content to “understand” business-related questions, including the oft-
+used TASA (“general reading up to 1st year college”) semantic space. Research could also look into
+corpora of less formal English such as blog postings, social media, and so on. Presumably, those corpora
+may contain alternative patterns of lexical closeness.
+
+7.6    Conclusion
+It is an intriguing idea that it may be possible to partially replicate how subjects answer questionnaires
+based solely on how the items in the questionnaire lexically relate to each other in common usage
+patterns as expressed in unrelated texts by other people. This lexical closeness may provide some hints
+why TAM is consistently supported, at least in establishing the factorial validity of PEOU and PU and the
+correlation between them. Lexical closeness, however, also poses an issue for classical measurement
+theory. It may suggest that there is more at play than the model measures. Language may be recording
+shared cognitions across people, at least in how keywords are grouped through lexical closeness, and this
+shared cognition may be systemic extraneous variance. It might be an oversimplification to claim as
+Ecclesiastes did that: “There is nothing new under the Sun”, but, as the LSA data show, we can to some
+extent analyze the past as recorded in unrelated texts to predict unrelated behavioral models. We may be
+able to do so because LSA reveals lexical patterns that people have invested into the language, lexical
+patterns that are apparently shared across people and contexts.
+Having shown, as is our objective in this study, that TAM has a lexical closeness aspect to it, there is now
+reason to study how to better refine the method. Our results show that lexical closeness has the potential
+to teach us more about perhaps the most important theory in the MIS discipline (certainly as measured by
+citations). This question is a research perspective question rather than a research paper question. We
+hope this paper encourages others to examine the lexical closeness of measurement items in a
+quantitative and replicable manner because, as is the case with TAM, lexical closeness is to be expected.
+As such, measurement items might be correlated due to both theoretical reasons and, as we note, also
+lexical closeness ones. Importantly, and recognizing that lexical closeness may be unavoidable, we also
+demonstrate a CBSEM method to statistically measure and control for it.
+
+
+
+              Volume 18                                                               Issue 10
+744    Controlling for Lexical Closeness in Survey Research: A Demonstration on the Technology Acceptance Model
+
+
+
+References
+Anderson, J. C., & Gerbing, D. W. (1988). Structural equation modeling in practice: A review and
+   recommended two-step approach. Psychological Bulletin, 103(3), 411-423.
+Arnulf, J. K., Larsen, K. R., Martinsen, Ø. L., & Bong, C. H. (2014). Predicting survey responses: How and
+   why semantics shape survey statistics on organizational behaviour. PLoS ONE, 9(9), e106361.
+Bollen, K. A. (1989). Structural equations with latent variables. New York: John Wiley and Sons.
+Campbell, D. T., & Fiske, D. W. (1959). Convergent and discriminant validation by the multitrait-
+   multimethod matrix. Psychological Bulletin, 56(2), 81-105.
+Cassino, D., & Erisen, C. (2010). Priming Bush and Iraq in 2008: A survey experiment. American Politics
+   Research, 38(2), 372-394.
+Chin, W. W., & Todd, P. A. (1995). On the use, usefulness, and ease of structural equation modeling in
+    MIS research: A note of caution. MIS Quarterly, 19(2), 237-246.
+Cook, T. D., & Campbell, D. T. (1979). Quasi experimentation: Design and analytical issues for field
+   settings. Chicago: Rand McNally.
+Davis, F. D. (1985). A technology acceptance model for empirically testing new end-user information
+   systems: Theory and results (doctoral thesis). Sloan School of Management, Massachusetts Institute
+   of Technology.
+Davis, F. D. (1989). Perceived usefulness, perceived ease of use and user acceptance of information
+   technology. MIS Quarterly, 13(3), 319-340.
+Deerwester, S., Dumais, S. T., Furnas, G. W., Landauer, T. K., & Harshman, R. (1990). Indexing by latent
+   semantic analysis. Journal of the American Society for Information Science, 41(6), 391-407.
+Dennis, S., Landauer, T., Kintsch, W., & Quesada, J. (2003). Introduction to latent semantic analysis
+   [slides]. Tutorial presented at the 25th Annual Meeting of the Cognitive Science Society, Boston.
+Dumais, S. T. (1991). Improving the retrieval of information from external sources. Behavior Research
+   Methods, Instruments, & Computers, 23(2), 229-236.
+Evangelopoulos, N., Zhang, X., & Prybutok, V. R. (2012). Latent semantic analysis: Five methodological
+   recommendations. European Journal of Information Systems, 21(1), 70-86.
+Fitza, M., Larsen, K., & Hayward, M. L. (2007). Claims to fortune: Does the availability of CEO press
+    attention explain discretionary CEO compensation. In Proceedings of the Academy of Management
+    Conference.
+Gefen, D., Karahanna, E., & Straub, D. W. (2003). Trust and TAM in online shopping: An integrated
+   model. MIS Quarterly, 27(1), 51-90.
+Gefen, D., Rigdon, E., & Straub, D. W. (2011). An update and extension to SEM guidelines for
+   administrative and social science research. MIS Quarterly, 35(2), III-XIV.
+Gerbing, D. W., & Anderson, J. C. (1988). An updated paradigm for scale development incorporating
+   unidimensionality and its assessment. Journal of Marketing Research, 25(2), 186-192.
+Gomez, J. C., Boiy, E., & Moens, M.-F. (2012). Highly discriminative statistical features for email
+   classification. Knowlege Information Systems, 31(1), 23-53.
+Hair, J. F., Black, B., Babin, B., & Anderson, R. E. (2005). Multivariate data analysis (6th ed.). Upper
+    Saddle River, NJ: Prentice Hall.
+Harzing, A.-W. (2005). Does the use of English-language questionnaires in cross-national research
+   obscure national differences? International Journal of Cross Cultural Management, 5(2), 213-224.
+Hayward, M. L., Fitza, M., & Larsen, K. (2008). The news media as purveyor of public status: Evidence
+   from CEO compensation. In Proceedings of the Strategic Management Society Annual Conference.
+Hill, J. H., & Mannheim, B. (1992). Language and world view. Annual Review of Anthropology, 21, 381-
+     404.
+
+
+
+            Volume 18                                                                   Issue 10
+Journal of the Association for Information Systems                                                        745
+
+
+
+Hu, L.-t., & Bentler, P. M. (1998). Fit indices in covariance structure modeling: Sensitivity to
+   underparameterized model misspecification. Psychological Bulletin, 3, 424-453.
+Hu, L.-t., & Bentler, P. M. (1999). Cutoff criteria for fit indexes in covariance strustural analysis:
+   Conventional criteria versus new alternatives. Structrued Equation Modeling, 6(1), 1-55.
+Islam, A., Milios, E., & Keselj, V. (2012). Text similarity using google tri-grams. In Proceedings of the 25th
+    Canadian Conference on Artificial Intelligence (LNAI 7310, pp. 312-317).
+Jarvis, C. B., MacKenzie, S. B., & Podsakoff, P. M. (2003). A critical review of construct indicators and
+    measurement model misspecification in marketing and consumer research. Journal of Consumer
+    Research, 30(2), 199-218.
+Jöreskog, K. G. (1979). Basic ideas of factor and component analysis. In K. G. Jöreskog & D. Sörbom
+    (Eds.), Advances in factor analysis and structural equation models (pp. 5-20). Cambridge, MA: Abt
+    Books.
+Kintsch, W. (2007). Meaning in context. In T. K. Landauer, D. S. McNamara, S. Dennis, & W. Kintsch
+    (Eds.), Handbook of latent semantic analysis (pp. 89-105). New York, NY: Routledge.
+Kintsch, W., McNamara, D. S., Dennis, S., & Landauer, T. K. (2007). LSA and meaning: In theory and
+    application. In T. K. Landauer, D. S. McNamara, S. Dennis, & W. Kintsch (Eds.), Handbook of latent
+    semantic analysis (pp. 467-479). New York and London: Routledge.
+Kontostathis, A., & Pottenger, W. M. (2006). A framework for understanding LSI performance. Information
+   Processing and Management, 42(1), 56-73.
+Landauer, T. K. (2007). LSA as a theory of meaning. In T. K. Landauer, D. S. McNamara, S. Dennis, &
+   W. Kintsch (Eds.), Handbook of latent semantic analysis (pp. 3-34). Mahwah, NJ: Larence Erlbaum
+   Associates, Publishers.
+Landauer, T. K., & Dumais, S. T. (1997). A solution to Plato’s problem: The latent semantic analysis
+   theory of acquisition, induction, and representation of knowledge. Psychological Review, 104(2), 211-
+   240.
+Landauer, T. K., Foltz, P. W., & Laham, D. (1998). An introduction to latent semantic analysis. Discourse
+   Processes, 25(2&3), 259-284.
+Larsen, K. R., & Bong, C. H. (2016). A tool for addressing construct identity in literature reviews and meta-
+    analyses. MIS Quarterly, 40(3), 529-551.
+Larsen, K. R., & Monarchi, D. E. (2004). A mathematical approach to categorization and labeling of
+    qualitative data: The latent categorization method. Sociological Methodology, 34(1), 349-392.
+Larsen, K. R., Monarchi, D. E., Hovorka, D. S., & Bailey, C. (2008a). Analyzing unstructured text data:
+    Using latent categorization to identify intellectual communities in information systems. Decision
+    Support Systems, 18(1), 23-43.
+Larsen, K. R., Nevo, D., & Rich, E. (2008b). Exploring the semantic validity of questionnaire scales. In
+    Proceedings of the Hawaii International Conference on System Sciences (pp. 1-10).
+Lifchitz, A., Jhean-Larose, S., & Denhière, G. (2009). Effect of tuned parameters on an LSA multiple
+    choice questions answering model. Behavior Research Methods, 41(4), 1201-1209.
+Malhotra, N. K., Kim, S. S., & Patil, A. (2006). Common method variance in IS research: A comparison of
+   alternative approaches and a reanalysis of past research. Management Science, 52(12), 1865-1883.
+McFarland, S. G. (1981). Effects of question order on survey responses. The Public Opinion Quarterly,
+   45(2), 208-215.
+McNamara, D. S., Cai, Z., & Louwerse, M. M. (2007). Optimizing LSA measures of cohesion. In T.
+   Landauer, D. S. McNamara, S. Dennis, & W. Kintsch (Eds.), Handbook of latent semantic analysis
+   (pp. 379-400). Mahwah, NJ: Erlbaum.
+Nakov, P., Popova, A., & Mateev, P. (2001). Weight functions impact on LSA performance. In
+   Proceedings of Recent Advances in Natural Language Processing (pp. 187-193).
+
+
+
+
+              Volume 18                                                                Issue 10
+746    Controlling for Lexical Closeness in Survey Research: A Demonstration on the Technology Acceptance Model
+
+
+
+Nimon, K., Shuck, B., & Zigarmi, D. (2015). Construct overlap between employee engagement and job
+   satisfaction: A function of semantic equivalence? Journal of Happiness Studies, 17(3), 1149-1171.
+                                                                   rd
+Nunnally, J. C., & Bernstein, I. H. (1994). Psychometric theory (3 ed.). New York: McGraw-Hill.
+Podsakoff, P. M., MacKenzie, S. B., Lee, J.-Y., & Podsakoff, N. P. (2003). Common Method Bias in
+   Behavioral Research: A Critical Review of The Literature and Recommended Remedies," Journal Of
+   Applied Psychology (88) 5, pp. 879-903.
+Porter, M. F. (1980). An Algorithm for Suffix Stripping. Program, 14(3), 130-137.
+Rohde, D. L. T., Gonnerman, L. M., & Plaut, D. C. (2006). An improved model of semantic similarity based
+   on lexical co-occurrence. Communications of the ACM, 8, 627-633.
+Segars, A. H., & Grover, V. (1993). Re-examining perceived ease of use and usefulness: A confirmatory
+   factor analysis. MIS Quarterly, 17(4), 517-525.
+Shadish, W. R., Cook, T. D., & Campbell, D. T. (2002). Experimental and quasi-experimental designs for
+   generalized causal inference. Boston, MA: Houghton Mifflin.
+Sidorova, A., Evangelopoulos, N., Valacich, J. S., & Ramakrishnan, T. (2008). Uncovering the intellectual
+    core of the information systems discipline. MIS Quarterly, 32(3), 467-482.
+Valle-Lisboa, J. C., & Mizraji, E. (2007). The uncovering of hidden structures by latent semantic analysis.
+    Information Sciences, 177(19), 4122-4147.
+Wall, M. E., Rechtsteiner, A., & Rocha, L. M. (2003). Singular value decomposition and principal
+   component analysis. In D. P. Berrar, W. Dubitzky, & M. Granzow (Eds.), A practical approach to
+   microarray data analysis (pp. 91-109). Norwell, MA: Kluwer.
+Wild, F., Haley, D., & Bülow, K. (2011). Using latent-semantic analysis and network analysis for monitoring
+    conceptual development. Journal for Language Technology and Computational Linguistics, 26(1), 9-
+    21.
+Wild, F., Stahl, C., Stermsek, G., Penya, Y. K., & Neumann, G. (2005). Factors influencing effectiveness in
+    automated essay scoring with LSA. In Proceedings of AIED (pp. 947-949).
+
+
+
+
+             Volume 18                                                                  Issue 10
+Journal of the Association for Information Systems                                                            747
+
+
+
+Appendix A: Questionnaire Items Used in TAM Study 2 (Davis, 1989)
+    Item                                                    Wording
+  Intended use
+             Assuming CHART-MASTER would be available on my job, I predict that I will use it on a regular basis
+      U1
+             in the future
+             Assuming CHART-MASTER would be available on my job, I predict that I will use it on a regular basis
+      U2
+             in the future Likely unlikely
+             Assuming CHART-MASTER would be available on my job, I predict that I will use it on a regular basis
+      U3
+             in the future Improbably probable
+  Perceived ease of use
+   PEOU1     Learning to operate CHART-MASTER would be easy for me
+   PEOU2     I would find it easy to get CHART-MASTER to do what I want it to do
+   PEOU3     My interaction with CHART-MASTER would be clear and understandable
+   PEOU4     I would find CHART-MASTER to be flexible to interact with
+   PEOU5     It would be easy for me to become skillful at using CHART-MASTER
+   PEOU6     I would find CHART-MASTER easy to use
+  Perceived usefulness
+     PU1     Using CHART-MASTER in my job would enable me to accomplish tasks more quickly
+     PU2     Using CHART-MASTER would improve my job performance
+     PU3     Using CHART-MASTER in my job would increase my productivity
+     PU4     Using CHART-MASTER would enhance my effectiveness on the job
+     PU5     Using CHART-MASTER would make it easier to do my job
+     PU6     I would find CHART-MASTER useful in my job
+
+
+
+
+              Volume 18                                                                    Issue 10
+748    Controlling for Lexical Closeness in Survey Research: A Demonstration on the Technology Acceptance Model
+
+
+
+Appendix B: Questionnaire Items Used in Gefen et al. (2003)
+    Item                                       Wording                                          Comments
+ Intended use
+   USE1     I would use my credit card to purchase from the online vendor.
+            I am very likely to provide the online vendor with the information it needs
+   USE2
+            to better serve my needs.
+ Perceived ease of use
+  PEOU1     The website is easy to use.                                                   Dropped by Gefen et al.
+  PEOU2     It is easy to become skillful at using the website.
+  PEOU3     Learning to operate the website is easy.
+  PEOU4     The website is flexible to interact with.
+  PEOU5     My interaction with the website is clear and understandable.
+  PEOU6     It is easy to interact with the website.                                      Dropped by Gefen et al.
+ Perceived usefulness
+    PU1     The website is useful for searching and buying CDs/books.                     Dropped by Gefen et al.
+            The website improves my performance in CD/book searching and
+    PU2
+            buying.
+    PU3     The website enables me to search and buy CDs/books faster.
+            The website enhances my effectiveness in CD/book searching and
+    PU4
+            buying.
+    PU5     The website makes it easier to search for and purchase CDs/books.             Dropped by Gefen et al.
+            The website increases my productivity in searching and purchasing
+    PU6
+            CDs/books
+
+
+
+
+             Volume 18                                                                       Issue 10
+Journal of the Association for Information Systems                                                749
+
+
+
+Appendix C: Revised LSA and PCA Analyses Where PU Items Do Not
+            Include the Words CDs or Books
+                          Table C1. PCA with Varimax Rotation on the Business Corpus
+
+                                   Factor 1          Factor 2      Factor 3            Com
+                 PEOU6             0.91466           0.35235       -0.05685            0.964
+                 PEOU4             0.91017           0.35134       -0.05224            0.955
+                 PEOU1             0.88673           0.39024       -0.04512            0.941
+                 PEOU3             0.87986           0.37457       -0.04924            0.917
+                 PEOU5             0.86341           0.35319        0.11596            0.884
+                 PEOU2             0.84024           0.35032       -0.03907            0.830
+                  PU3              0.38917           0.89116       -0.00638            0.946
+                  PU4              0.36646           0.88722        0.07563            0.927
+                  PU1              0.39919           0.88061       -0.06731            0.939
+                  PU5              0.35990           0.86137        0.02527            0.872
+                  PU6              0.29314           0.84017        0.14849            0.814
+                  PU2              0.35575           0.83151        0.06596            0.822
+                  Use2             -0.01160          -0.00363       0.88319            0.780
+                  Use1             -0.04948          0.10764        0.86481            0.762
+
+
+
+
+               Figure C1. PCA Item Loading Pattern After Varimax Rotation on Business Corpus
+
+
+
+
+              Volume 18                                                                Issue 10
+750   Controlling for Lexical Closeness in Survey Research: A Demonstration on the Technology Acceptance Model
+
+
+
+                        Table C2. PCA with Varimax Rotation on the News Corpus
+
+                               Factor 1           Factor 2          Factor 3           Com
+                PU3             0.88583           0.40473           -0.0147            0.945
+                PU4             0.88305           0.40559           0.06579            0.949
+                PU1             0.87127           0.42686           -0.1137            0.954
+                PU5             0.86676           0.38588            -0.046            0.902
+                PU2             0.84781           0.36006           0.06848            0.853
+                PU6             0.84517           0.30818           0.12974            0.826
+              PEOU6             0.37493           0.90463            -0.035            0.960
+              PEOU4             0.36618           0.90243           -0.0289            0.949
+              PEOU1             0.43333           0.86752           -0.0819            0.947
+              PEOU3             0.39686           0.86559           -0.0533            0.910
+              PEOU5             0.37891           0.84435           0.16699            0.884
+              PEOU2             0.32021           0.76485           -0.1048            0.699
+               Use2             -0.0194           0.02002           0.89253            0.797
+               Use1             0.06649           -0.0841           0.86163            0.754
+
+
+
+
+              Figure C2. PCA Item Loading Pattern After Varimax Rotation on News Corpus
+
+
+
+
+           Volume 18                                                                   Issue 10
+Journal of the Association for Information Systems                                                          751
+
+
+
+Appendix D: Correlation Matrices of Corpora for TAM
+                           Table D1. Correlation Matrix of Business Corpora for TAM
+
+            USE1       USE2         PU2       PU3       PU4      PU6      PEOU2    PEOU3        PEOU4    PEOU5
+  USE1      1.0000
+  USE2      0.5410     1.0000
+  PU2       0.0850     0.0790      1.0000
+  PU3       0.0420     0.0250      0.9070    1.0000
+  PU4       0.0960     0.0910      0.9090    0.9680   1.0000
+  PU6       0.2060     0.0770      0.7860    0.8470   0.8480    1.0000
+ PEOU2     -0.0070    -0.0600      0.4840    0.5210   0.5030    0.4630    1.000
+ PEOU3     -0.0490    -0.0480      0.5370    0.5660   0.5430    0.4980    0.8550       1.000
+ PEOU4     -0.0520    -0.0600      0.5120    0.5560   0.5340    0.4840    0.8410       0.9160    1.000
+ PEOU5      0.0650     0.0940      0.5320    0.5490   0.5500    0.5010    0.7740       0.8560   0.9120   1.000
+
+
+
+                                Table D2. Correlation Matrix of News Corpora for TAM
+
+            USE1       USE2         PU2       PU3       PU4      PU6      PEOU2    PEOU3        PEOU4    PEOU5
+  USE1      1.0000
+  USE2      0.5540     1.0000
+  PU2       0.0020     0.0400      1.0000
+  PU3      -0.0400    -0.0320      0.9240    1.0000
+  PU4      -0.0010     0.0350      0.9350    0.9750   1.0000
+  PU6       0.0830     0.0450      0.8380    0.8760   0.8930    1.0000
+ PEOU2     -0.0970    -0.0770      0.4220    0.4510   0.4530    0.4090    1.000
+ PEOU3     -0.0770    -0.0400      0.5310    0.5460   0.5410    0.4880    0.7760       1.000
+ PEOU4     -0.0690    -0.0320      0.4900    0.5180   0.5180    0.4610    0.7350       0.9030    1.000
+ PEOU5      0.0600     0.1520      0.5060    0.5130   0.5400    0.4830    0.6710       0.8280   0.9120   1.000
+
+
+
+
+              Volume 18                                                                     Issue 10
+752    Controlling for Lexical Closeness in Survey Research: A Demonstration on the Technology Acceptance Model
+
+
+
+Appendix E: LSA Process in Details as Applied
+The preparation and analysis of texts has a relatively long history in MIS, including in our top journals.
+LSA (Deerwester et al., 1990; Dennis, Landauer, Kintsch, & Quesada, 2003) has been one of the most
+popular approaches; Larsen and Monarchi (2004), Sidorova et al. (2008), and Larsen et al. (2008a) have
+all analyzed MIS abstracts to understand the structure of MIS research and communities. Larsen and
+Bong (2016) applied LSA to detect construct synonymy, and Larsen, Nevo, and Rich (2008b) used LSA to
+examine the extent to which respondents engaged in shallow processing of a survey instrument. Going
+beyond use of LSA as a method to address MIS problems, Evangelopoulos et al. (2012) recommended
+methodological improvements to the use of LSA in the MIS discipline. Given the extensive use and
+description of LSA in MIS along with the large set of available software for LSA analysis, we focus here on
+sharing the information necessary to replicate our analysis.
+
+LSA Steps
+
+Step 1: Procuring Documents for Analysis
+While no commonly agreed-on minimum set of documents required for LSA exists, the most commonly
+used LSA datasets generally comprise tens of thousands of documents or paragraphs. As we describe in
+Section 3, we used two datasets: 1) a business corpus that comprised 84,836 articles from business news
+outlets and 2) a news corpus that comprised 169,929 newspaper articles.
+
+Step 2: Creating the Term-document Matrix
+In this step, we transformed the raw data into a term by document matrix that represented each document
+(article) as a column and each unique word that existed in any document as a row. The cells of the matrix
+contained the counts of how many times each word appeared in each of the documents. While it is
+possible to employ a stop word list of common words (low-information words such as “a” and “the”) to
+exclude them from the matrix, we used no such list in this project deliberately to reduce human
+intervention in this stage of the analysis. As is common, we ran Porter’s (1980) stemming algorithm to
+combine words such as “run”, “running”, and “ran” into one term. We removed numbers from the datasets
+along with hyphens and backslashes. The analysis was not case sensitive.
+
+Step 3: Weighting and Normalizing the Term-document Matrix
+There are two generally acceptable formulas for weighting: TF-IDF and log-entropy. We employed log-
+entropy as is common outside of the MIS discipline and as Larsen and Bong (2016) did in a recent MIS
+Quarterly paper. To appropriately weigh the raw term counts as is traditional (e.g., McNamara, Cai, &
+Louwerse, 2007), the analysis normalized the document vectors to one. Although more recent research
+has found little to no effect from such normalization (Lifchitz, Jhean-Larose, & Denhière, 2009; Wild, Stahl,
+Stermsek, Penya, & Neumann, 2005), it provides some backward compatibility. Next, we weighted the
+normalized matrix using the log-entropy formula to reduce the impact of common words and to increase
+the impact of uncommon words. This step is considered key in making LSA work.
+
+Step 4: Singular Value Decomposition (SVD)
+We ran SVD on each corpora dataset separately with 500 eigenvectors. The SVD algorithm, employing
+math known for hundreds of years but only practically possible with machine resources available in the
+20th century, can be likened to a two-way principal components analysis. The relevant results of these
+analyses in this study are the so-called U-matrix wherein each term was endowed with a 500-dimensional
+vector that represents its location in what is often referred to as a “semantic space”. The first dimensions
+explain more of the overall variance of the original matrix and a singular value matrix (S-matrix) maintains
+the weight of each dimension.
+
+Step 5: Projecting Questionnaire Items into Semantic Space
+We then subjected the survey items to the same preprocessing as the corpora, which resulted in a set of
+terms. The terms for each item are found in the U-matrix and retrieved with their 500-dimensional location.
+We then added these term vectors to create one 500-dimensional item vector that represented the
+location of each survey item in the semantic space. One can think of this process as “imbuing” the words
+
+
+             Volume 18                                                                  Issue 10
+Journal of the Association for Information Systems                                                        753
+
+
+
+in the LSA items with the lexical properties of the semantic space, much like different readers of a text will
+bring different interpretations to it based on their experience and language understanding. That different
+semantic spaces produce similar results in analyzing data shows how the commonality of language
+generalizes across corpora, much like it does across individuals interpreting a questionnaire.
+
+Step 6: Calculating Lexical Closeness
+There are generally two ways to calculate lexical closeness. The most common approach is to use the
+cosine formula to evaluate each pair of item vectors, but, in this research, we used the Pearson product-
+moment correlation to better fit the logic of structural equation modeling.
+
+
+
+
+              Volume 18                                                                Issue 10
+754      Controlling for Lexical Closeness in Survey Research: A Demonstration on the Technology Acceptance Model
+
+
+
+Appendix F: Sample of TAM Item Keywords as They Appear in the
+            Corpora
+LSA can project entire sentences onto a semantic space even if the original projected texts (the
+questionnaire items, in this case) do not appear in the corpus. To illustrate this point, we conducted two
+separate investigations. First, we searched for the PEOU and PU TAM items inside the articles used to
+create the semantic spaces. Because we found no items in their entirety, we searched for small sections
+of keywords inside each item. Table F1 shows a sample of the results of these searches. The brackets in
+the first column of Table F1 show the keywords we searched for. As Table F1 shows, even though no
+article contained any actual TAM item, some did contain item fragments.
+                                              Table F1. Keyword Search
+
+                                      Business corpus (random sample
+                          Sections
+       TAM item                         when more than one element                         News corpus
+                           found
+                                                  found)
+                                      “customers were using the web        “Warner Bros Records has argued that
+It is (easy to become                 site to choose casket models which   Napster.com must be shut down because its
+skillful) at (using the      Bus: 7   they would then order over the       million users are using the web site to
+Web site)                   News: 7   telephone" (sample from 700-word     illegally download music without paying for
+                                      article)                             it” (sample from 720-word article)
+
+                                                                           “below older pictures from more tranquil
+                                                                           days like the one of Big Moe and the
+                                                                           monkey learning to operate engine
+                                                                           company automatic nozzle” (sample from
+                                    "workers took turns debugging the
+                                                                           1,620-word article_
+(Learning to operate)      Bus: 1   new equipment and learning to
+the (Web site is easy)    News: 2+1 operate it" (sample from 1,281-
+                                    word article)                          “getting groceries using the web site is
+                                                                           easy. You select a category such as canned
+                                                                           tuna and the web site offers three name
+                                                                           brand choices” (sample from 2,126-word
+                                                                           article)
+The (Web site is
+flexible) to interact        Bus: 0
+with                        News: 0
+                                      “ninety nine percent of my
+(My interaction with)                                                      “it was the only time this had happened to
+                            Bus: 1    interaction with the Bancroft family
+the (Web site is clear)                                                    me during my interaction with all of these
+                            New: 1    is through their representatives"
+and understandable                                                         services” (sample from 1,821-word article)
+                                      (sample from 1,587-word article)
+
+It is (easy to interact      Bus: 0
+with) the Web site          News: 0
+                                                                           “the AOL music site is easy to use and
+The Web (site is easy        Bus: 0                                        gives surfers many reasons to visit including
+to use)                     News: 1                                        free sneak peeks” (sample from 1,028-word
+                                                                           article)
+The (Web site is
+useful) for (searching       Bus: 0
+and buying                  News: 0
+CDs)/books
+The Web site                                                               “instead of offering a free jukebox program
+(improves my                                                               like its rivals, BuyMusic requires that you do
+performance) in              Bus: 0                                        your searching and buying online at
+CD/book (searching          News: 1                                        buymusic.com” (sample from 1,282-word
+and buying)                                                                article)
+The (Web site
+                                                                           “the software available for free on the
+enables) me to search        Bus: 0                                        Napster web site enables users to share
+and buy CDs/books           News: 3                                        songs” (sample from 1,419-word article)
+faster
+
+
+
+                Volume 18                                                                       Issue 10
+Journal of the Association for Information Systems                                                                    755
+
+
+
+                                               Table F1. Keyword Search
+
+The (Web site
+enhances) my
+effectiveness in             Bus: 0
+CD/book searching           News: 0
+and buying
+                                                                           “shipping clothes back and forth from stores
+The Web (site makes
+                                                                           to a central facility erased any savings,
+it easier to) (search for    Bus: 0                                        Anton says, and cleaning on site makes it
+and purchase)               News: 1                                        easier to offer same day service” (sample
+CDs/books.
+                                                                           from 1,227-word article)
+The Web site
+(increases my
+productivity) in             Bus: 0
+searching and               News: 0
+purchasing
+CDs/books
+
+Next, we used LSA similarity search to identify the articles that were most similar to each of the 12 TAM
+items. Table F2 provides the URL links to those articles in the business semantic space. We could not
+copy the original articles into this paper because of copyright issues. Note that we projected the TAM
+items onto the semantic space only after the semantic space was created based on business news
+articles. The table shows that there are articles that contain fragments that are somewhat close to the
+TAM items. (Note that we did not conduct the analysis at the level of these fragments but rather at the
+article level across hundreds of thousands of articles by extracting the underlying word relationships
+across all of them.)
+                                              Table F2. Semantic Search
+
+         TAM item                                           Most similar business article
+                              Bransten, L. (1998). Microsoft throws in its hand in dispute over palm devices. Wall
+It is easy to become skillful Street Journal. Retrieved from
+    at using the Web site     https://colorado.idm.oclc.org/login?url=http://search.proquest.com.colorado.
+                              idm.oclc.org/docview/1700194112
+                               Bransten, L. (1998). Microsoft throws in its hand in dispute over palm devices. Wall
+  Learning to operate the      Street Journal. Retrieved from
+     Web site is easy          https://colorado.idm.oclc.org/login?url=http://search.proquest.com.colorado.
+                               idm.oclc.org/docview/1700194112
+                             Petersen, A. (1998). Nextel loss exceeds estimates; 360 sees profit surge. Wall Street
+ The Web site is flexible to Journal. Retrieved from
+      interact with          https://colorado.idm.oclc.org/login?url=http://search.proquest.com.colorado.
+                             idm.oclc.org/docview/398822542
+My interaction with the Web Young, J. (1998). Bigger ain't always better. Forbes. Retrieved from
+      site is clear and     https://colorado.idm.oclc.org/login?url=http://search.proquest.com.colorado.
+      understandable        idm.oclc.org/docview/194980843
+                                Petersen, A. (1998). Nextel loss exceeds estimates; 360 sees profit surge. Wall Street
+It is easy to interact with the Journal. Retrieved from
+           Web site             https://colorado.idm.oclc.org/login?url=http://search.proquest.com.colorado.
+                                idm.oclc.org/docview/398822542
+                            Bransten, L. (1998). Microsoft throws in its hand in dispute over palm devices. Wall
+                            Street Journal. Retrieved from
+The Web site is easy to use
+                            https://colorado.idm.oclc.org/login?url=http://search.proquest.com.colorado
+                            .idm.oclc.org/docview/1700194112
+                               Hardy, Q. (1998). 3Com's sales, net plummeted in 3rd quarter. Wall Street
+ The Web site is useful for
+                               Journal. Retrieved from
+  searching and buying
+                               https://colorado.idm.oclc.org/login?url=http://search.proquest.com.colorado.
+       CDs/books
+                               idm.oclc.org/docview/1699297058
+
+
+
+
+               Volume 18                                                                        Issue 10
+756    Controlling for Lexical Closeness in Survey Research: A Demonstration on the Technology Acceptance Model
+
+
+
+                                           Table F2. Semantic Search
+
+The Web site improves my Young, J. (1998). Bigger ain't always better. Forbes. Retrieved from
+ performance in CD/book https://colorado.idm.oclc.org/login?url=http://search.proquest.com.colorado.
+  searching and buying   idm.oclc.org/docview/194980843
+ The Web site enables me    Young, J. (1998). Bigger ain't always better. Forbes. Retrieved from
+    to search and buy       https://colorado.idm.oclc.org/login?url=http://search.proquest.com.colorado.
+     CDs/books faster       idm.oclc.org/docview/194980843
+The Web site enhances my Young, J. (1998). Bigger ain't always better. Forbes. Retrieved from
+ effectiveness in CD/book https://colorado.idm.oclc.org/login?url=http://search.proquest.com.colorado.
+   searching and buying   idm.oclc.org/docview/194980843
+                            Bransten, L. (1998). Microsoft throws in its hand in dispute over palm devices. Wall
+  The Web site makes it
+                            Street Journal. Retrieved from
+ easier to search for and
+                            https://colorado.idm.oclc.org/login?url=http://search.proquest.com.colorado.
+  purchase CDs/books.
+                            idm.oclc.org/docview/1700194112
+The Web site increases my Young, J. (1998, May 04). Bigger ain't always better. Forbes. Retrieved from
+ productivity in searching https://colorado.idm.oclc.org/login?url=http://search.proquest.com.colorado.
+and purchasing CDs/books idm.oclc.org/docview/194980843
+
+
+
+
+             Volume 18                                                                       Issue 10
+Journal of the Association for Information Systems                                                   757
+
+
+
+About the Authors
+David Gefen is a Professor of MIS and the Provost Distinguished Research Professor at Drexel
+University, Philadelphia USA. He teaches management and outsourcing of information systems and data
+analytics. He has authored some of the most cited papers in MIS on trust management in information
+systems, ecommerce and online markets management. His research findings have been published in
+some of the leading journals, including MISQ, ISR, IEEE TEM, JMIS, and Omega. He is an author
+textbooks on VB.NET programming and outsourcing and a book on the art of IS outsourcing. He was a
+senior editor at MISQ and is on the editorial board of JMIS.
+Kai R. Larsen is an Associate Professor of information systems within the Division of Organizational
+Leadership and Information Analytics at Leeds School of Business, University of Colorado, Boulder, with a
+courtesy appointment as an Associate Professor of Information Science in the College of Media,
+Communication and Information. As Director of the federally supported Human Behavior Project, he is
+conducting research to create a transdisciplinary “backbone” for theoretical research. His research uses
+natural language processing technologies to create an integrating framework for predictors of human
+behavior. The research has implications for our understanding of all human behaviors, including
+technology utilization, investor decisions, and cancer prevention behaviors.
+
+
+
+
+              Volume 18                                                            Issue 10
+Reproduced with permission of copyright owner. Further reproduction
+                  prohibited without permission.
+

@@ -1,0 +1,7 @@
+== EKC vs EFAtools (BvA2017) ==
+   0.6B: sfa_ekc=6 EFAtools=6 OK
+     4B: sfa_ekc=6 EFAtools=6 OK
+     8B: sfa_ekc=6 EFAtools=6 OK
+== MAP vs psych::VSS (full scan) ==
+   0.6B: sfa_map=11 psych=11 OK  (curve cor 1.0000 over shared)
+     4B: sfa_map=9 psych=9 OK  (curve cor 1.0000 over shared)

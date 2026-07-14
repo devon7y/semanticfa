@@ -1,0 +1,8 @@
+"quantity","value"
+"pair_r_mcp_raw",0.456088978252029
+"pair_r_mcp_raw_lo",0.334633874277496
+"pair_r_mcp_raw_hi",0.562639038068467
+"phi_mean_matched",0.744
+"phi_mean_matched_lo",0.609517122686343
+"phi_mean_matched_hi",0.878482877313657
+"n_items_jackknife",50

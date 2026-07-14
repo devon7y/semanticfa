@@ -1,0 +1,1290 @@
+Reconstructing Item Characteristic Curves using Fine-Tuned Large
+Language Models
+
+arXiv:2601.02580v1 [cs.CL] 5 Jan 2026
+
+Christopher Ormerod
+Cambium Assessment
+christopher.ormerod@gmail.com
+January 2026
+
+Abstract
+Traditional methods for determining assessment item parameters, such as difficulty and discrimination, rely heavily on expensive field testing to collect student performance data for Item Response
+Theory (IRT) calibration. This study introduces a novel approach that implicitly models these psychometric properties by fine-tuning Large Language Models (LLMs) to simulate student responses across
+a spectrum of latent abilities. Leveraging the Qwen-3 dense model series and Low-Rank Adaptation
+(LoRA), we train models to generate responses to multiple choice questions conditioned on discrete ability descriptors. We reconstruct the probability of a correct response as a function of student ability,
+effectively generating synthetic Item Characteristic Curves (ICCs) to estimate IRT parameters. Evaluation on a dataset of Grade 6 English Language Arts (ELA) items and the BEA 2024 Shared Task dataset
+demonstrates that this method competes with or outperforms baseline approaches. This simulation-based
+technique seems particularly effective at modeling item discrimination.
+
+Keywords: Large Language Models, Item Difficulty Modeling, Parameter-efficient fine-tuning, Student
+Response Simulation
+
+1
+
+Introduction
+
+Item Difficulty Modeling (IDM) employs statistical techniques to describe and predict item difficulty as
+defined by Item Response Theory (IRT) [8]. Determining difficulty has traditionally required curating
+student performance data to identify the best-fitting model for the probability of a correct response as
+a function of student ability [19]. Due to the high cost of this process, researchers have long sought to
+model difficulty as a function of textual features [17]. Most approaches involve direct modeling, where the
+item difficulty parameters are modeled as explicit functions of features of the text, such as syntactic and
+readability measures.
+Language models are probabilistic models that determine the likelihood of a sequence of words. Most
+LLMs are built on the transformer architecture [26] and are trained on large corpora to either predict the
+next token in a sequence [18] or predict masked tokens [6]. When fine-tuned, these networks demonstrate
+remarkable abilities to understand, summarize, and generate text [27]. In educational applications, they have
+1
+
+successfully performed automated scoring [20, 25], the annotation of argumentative elements [15], automatic
+item generation [21], and IDM [10, 32].
+Modern Generative LLMs have scaled the transformer architecture by an order of magnitude in terms
+of parameters [13]. These models are trained to complete a wide range of tasks, and this scaling has given
+rise to emergent abilities [29]. They excel in coding, mathematical problem-solving, and translation. While
+much educational research focuses on large foundational models [13], there are compelling reasons to consider
+open-source alternatives [1, 2, 34]. Beyond offering privacy and security [3], parameter-efficient fine-tuning
+(PEFT) techniques [31] allow researchers to control model outputs according to specific requirements in ways
+that standard prompt-tuning techniques have proven to be difficult [7, 24]. This article explores fine-tuning
+the Qwen-3 series models [33] using Low-Rank Adaptation (LoRA) [9] to implicitly perform IDM. We do
+this by training a model to simulate student response probabilities to multiple choice questions (MCQ)
+across varying ability levels. This approach aims to reconstruct the probability that a student correctly
+answers an unseen question as a function of their ability. We apply this method to a collection of English
+Language and Arts (ELA) items used in a state assessment program, which we call the ELA Dataset, and
+the Building Educational Applications (BEA) 2024 Shared Task dataset, which we call the BEA 2024 Shared
+Task. Given that these are very small datasets, the method employed demonstrates excellent performance
+compared with baselines. By approximating the specific errors students make as we vary ability, this method
+seems particularly well-suited to modeling discrimination.
+While a version of this approach successfully modeled difficulty for items with free-form constructed
+responses [22], the way in which the models were trained in [22] did not generalize naturally to MCQ items.
+For this article, the model is trained to reproduce token probabilities, where each token corresponds to a
+choice provided in an MCQ item. This work aligns with recent efforts to simulate LLM responses to Sentence
+Reading Efficiency tasks [35] and studies using the latent ability levels of various LLMs to estimate difficulty
+[11].
+The remainder of this paper is organized as follows: Section 2 provides a comprehensive overview of the
+theoretical foundations, including IRT, the mechanics of LLMs, and the technical architecture of the Qwen-3
+series. Section 3 details the methodology for item difficulty modeling, describing the discretization of ability
+level descriptors, the evaluation datasets, and the fine-tuning procedures used to simulate student responses.
+Section 4 presents experimental results from the ELA Dataset and BEA 2024 Shared Task datasets, followed
+by a discussion of the scaling laws observed across model sizes. Finally, the paper concludes with a summary
+of findings regarding the efficacy of using simulated ability levels to predict assessment difficulty.
+
+2
+
+Background
+
+2.1
+
+Item Response Theory
+
+For a dichotomous item, where a response y is scored as either correct (1) or incorrect (0), the fundamental
+goal is to model the probability of a correct response as a function of a student’s latent ability, denoted by θ.
+This function is known as the Item Characteristic Curve (ICC). We approximate the ICC using the logistic
+function, specifically the Two-Parameter Logistic (2PL) and One-Parameter Logistic (1PL) models:
+P(y = 1) = P2 (θ; a, b) = σ (a(θ − b)) .
+
+2
+
+(1)
+
+where σ(x) = 1/(1 + e−x ) is the sigmoid function, a is the discrimination parameter, and b is the difficulty
+parameter. The 1PL model is a constrained case of the 2PL model where P1 (θ; b) = P2 (θ; 1, b).
+A field test collects responses from a sample of N students, with assumed ability levels θ ∼ N (µ, ς 2 ) 1 ,
+across a set of items with parameters a1,...,M and b1,...,M . The observed data consists of binary outcomes
+yij ∈ {0, 1} for all student-item pairs (i, j) in the observed set S. Calibration involves estimating the item
+parameters and student abilities by minimizing the squared error between the theoretical probabilities and
+the observed responses:
+{θ̂i }, {âj }, {b̂j } = arg min
+θ,a,b
+
+X
+
+2
+
+(P2 (θi ; aj , bj ) − yij ) .
+
+(2)
+
+(i,j)∈S
+
+In this optimization, the student abilities θi may either be treated as free variables to be estimated or fixed
+to values derived from an external assessment context.
+In the case of multiple-choice items, where the observations can be any element of a finite set V =
+{v1 , . . . , vn }, the form of (1) naturally generalizes. We use the ansatz that the probability of each outcome
+is the result of the softmax operator applied to a collection of n linear functions of θ. We parameterize this
+as:
+(P(yij = v1 ), . . . , P(yij = vn )) = softmax (a1 (θ − b1 ), . . . , an (θ − bn )) .
+
+(3)
+
+For n = 2, this is equivalent to (1) for some a and b. However, for arbitrary n > 2, the probability of
+a response being correct is not generally equivalent to an equation of the form (1). This generalization is
+known as the Nominal Response Model (NRM).
+A special case of (3) that remains equivalent to (1) occurs when we assume that if a student does not
+know the answer, the other options are chosen with equal probability. Without loss of generality, we may
+assume the correct answer is v1 . Since all other answers are equally probable, we can assume that ai = bi = 0
+for i ̸= 1. In this case, a simple calculation shows that:
+P(yij = v1 ) = σ (a1 (θ − b1 ) − log(n − 1)) .
+This implies that the correspondence between the variables of (1) and (3), under the assumption that testtakers choose uniformly at random from the remaining options when incorrect, is given by:
+âj = a1 ,
+
+b̂j = b1 +
+
+log(n − 1)
+a1
+
+(4)
+
+where all other ai and bi values are 0.
+
+2.2
+
+Language Models
+
+At their fundamental level, generative LLMs function as autoregressive probabilistic models that estimate
+the conditional probability of a token given a specific context. The core task is to model the probability
+distribution of the next token, wt , provided the sequence of all preceding tokens, w1 , . . . , wt−1 :
+P (wt |w1 , w2 , ..., wt−1 ; Ω),
+
+(5)
+
+1 We will use ς 2 to denote variance instead of the standard σ 2 notation to distinguish the variance from the sigmoid function.
+
+3
+
+where each wi represents a token from a finite fixed vocabulary V = {vi } and Ω represents the learned
+parameters (weights) of the neural network. A language model does not output a single prediction directly.
+Instead, the final layer produces a vector of logits, z = z(Ω; w), where the i-th element, zi , is associated with
+the event wt = vi . The softmax function normalizes these logits into a valid probability distribution:
+ezi
+P (wt = vi ) = P|V |
+
+j=1 e
+
+(6)
+
+zj
+
+This assigns a probability score between 0 and 1 to every possible next token, such that the sum of all
+probabilities equals 1. LLMs are trained using Maximum Likelihood Estimation (MLE). The goal is to
+maximize the probability assigned to the actual next token found in the training data by minimizing the
+Cross-Entropy Loss (Negative Log-Likelihood):
+L=−
+
+X
+
+log P (wttarget |w1:t−1 ).
+
+(7)
+
+t
+
+In the Transformer architecture [26], attention—specifically masked self-attention—is the mechanism that
+allows the model to “understand” the context of a sentence by determining which previous tokens are relevant
+to the current prediction [6, 18]. Instead of treating all preceding words equally or focusing only on the most
+recent one, attention assigns a dynamic “relevance score” to every past token. This allows the model to
+construct a context vector that is a weighted mixture of the entire history. To process context, the model
+transforms every token in the sequence into three vectors:
+1. Query (Q): Represents the current token asking, “What information do I need to predict the next
+word?”.
+2. Key (K): Represents a preceding token answering, “Here is what I define/contain.”.
+3. Value (V ): The actual content or meaning of that preceding token.
+If X ∈ RT ×d is a layers input where d is some hidden dimension of the model with T being the number of
+tokens, then
+Q = XWq + bq ,
+
+K = XWk + bk ,
+
+V = XWv + bv .
+
+(8)
+
+where bq , bk , and bv are called the bias terms. Typically, Wq , Wk , Wv ∈ Rd×dk where dk = d/h where h is
+the number of attention heads. In some models, such as Llama, these bias terms are zero [2], however, in
+the Qwen model series, these terms are nonzero [33]. When the model tries to predict the next token (time
+step t), it compares the Query of the current position against the Keys of all previous positions.
+Once a model is pretrained to determine the next word, most modern LLMs undergo two additional
+phases of training. First the models are subjected to supervised fine-tuning followed by a refinement of the
+outputs, sometimes called safety-tuning [2]. The supervised fine-tuning is a training in which the model is
+tuned to complete a set of tasks. Each task is encoded into components of the following form:
+system: {system text specifying how the assistant should behave}
+user: {specification of the task}
+assistant: {completion of the task}
+user: {subsequent follow-up task}
+assistant: {subsequent follow-up completion}
+4
+
+...
+assistant: {last completion}
+This input can be parsed and presented as a back-and-forth chat in web-based user interfaces. While the
+web-interface has broken down the technical barriers to using LLMs and made it seem as if these models
+have personalities of their own, it is still fundamentally a model focused on calculating the probability of the
+next token.
+A feature of many modern LLMs is to also include chain-of-thought processes into the solution [30], which
+can be encoded in a similar manner as thinking, however, we can also consider this to be a subcomponent
+of the assistant component. The refinement process uses proximal policy optimization often associated
+with reinforcement learning [23]. The process involves pairs or collections of completions in the form above,
+where one of the completions is considered optimal with respect to some human preferences (safe and useful)
+or some model based on preferences [16].
+
+2.3
+
+Qwen Models
+
+As of late 2025, the Qwen 3 series (developed by Alibaba Cloud) represents a significant evolution in openweights large language models, notable for introducing a highly granular range of model sizes and hybrid
+architectures [33]. The Qwen 3 family includes both dense and Mixture-of-Experts (MoE) architectures,
+designed to bridge the gap between lightweight edge deployment and massive high-performance computing.
+The dense Qwen 3 suite is particularly well-suited for studying the scaling laws of neural networks (how
+model performance changes as parameter count increases) since Qwen 3 offers a smooth continuum of sizes
+0.6B → 1.7B → 4B → 8B → 14B → 32B
+The Llama models, which are perhaps the best open-source alternative at this time, have 1B, 3B, 8B, and
+70B variants [2]. In many instances, the hardware made available made experimentation with 70B and even
+32B models difficult purely in terms of the combination of the size of the input and the model sizes.
+The architecture of these models is presented in Figure 1. With this in mind, there are just a few
+parameters governing the architecture that determine the size of the model. The most important of these
+parameters are the number of layers, the hidden size of the model, the number of attention heads, and their
+groups. Table 1 presents the technical specifications of these models.
+
+Model
+Qwen3-1.7B
+Qwen3-4B
+Qwen3-8B
+Qwen3-14B
+Qwen3-32B
+
+Parameters
+
+Layers
+
+Hidden
+Size
+
+Attention
+Heads
+
+Vocab
+Size
+
+1.72 B
+4.02 B
+8.19 B
+14.77 B
+32.76 B
+
+28
+36
+36
+40
+64
+
+2,048
+2,560
+4,096
+5,120
+8,192
+
+16 / 8
+32 / 8
+32 / 8
+40 / 8
+64 / 8
+
+151,936
+151,936
+151,936
+151,936
+151,936
+
+Table 1: Structural Key Characteristics of Qwen3 Dense Models.
+All models utilize a head dimension of 128, consistent with previous Qwen architectures [34]. The entire
+lineup uses Grouped Query Attention (GQA). For example, the 32B model has 64 query heads but only 8
+key/value heads, significantly reducing KV cache memory. The 1.7B and 4B models support a native context
+
+5
+
+Sample output text
+Output processing steps
+Linear output layer
+Final RMSNorm
+
+⊕
+
+Feed forward
+RMSNorm 2
+⊕
+QKNorm
+RoPE
+
+Grouped-query
+Attention
+
+L×
+RMSNorm 1
+
+Token Embedding Layer
+Tokenized text
+Sample input text
+Figure 1: Architectural Schematic of the Qwen3 Dense Model Series. This diagram illustrates the transformer block structure used across the Qwen3 lineup, highlighting the implementation of Root Mean Square
+Layer Normalization (RMSNorm) and Masked Grouped-query Attention. The architecture features a “prenorm” configuration where RMSNorm 1 and RMSNorm 2 precede the attention and feed-forward layers,
+respectively. Key technical enhancements include Rotary Positional Embeddings (RoPE) and QKNorm to
+improve training stability.
+of 32K tokens, while the 8B and 14B support 128K tokens natively. The relevant structural information of
+each of the models used in this study have been presented in Table 1.
+
+3
+
+Method
+
+The method in this article consists of defining three different probability values which provide three different
+discrete ICCs:
+1. The observed probabilities: The proportion of students that an answer an item correctly given a
+collection ranges of θ values.
+2. The nominal response model probabilities: The values arising from fitting a model to the observed
+6
+
+probabilities.
+3. The large language model probabilities: The token probabilities associated with the correct answer
+when simulating responses from a particular ability level.
+This section will detail how we arrive at each of these, and how we will calculate the item parameters from
+this.
+
+3.1
+
+Ability Level Descriptors
+
+The goal of this subsection will be to elucidate a framework where we are provided with labels instead of
+values of θ. Instead of having N students, we will be providing N classes of students, each associated with
+a descriptor. This gives us N labels, L1 , . . . , LN , where each label, Lk , is associated with bounds (ck−1 , ck ).
+That is to say that a student is given label Lk if ck−1 < θ ≤ ck . By letting c0 = −∞ and cN = ∞, then
+each θ ∈ R is uniquely associated with a label, Lk .
+These descriptors categorize distinct ability levels. Given that they serve as inputs for LLM possessing
+latent semantic knowledge, it is desirable to maintain a direct correspondence with the competency levels
+they define. We prompted a language model to provide appropriate descriptors and bounding values for use
+in this study. These descriptors and their bounding values are provided in Table 2.
+Descriptor (Lk )
+
+(ck−1 , ck )
+
+Descriptor (Lk )
+
+(ck−1 , ck )
+
+Critical
+Severely Limited
+Deficient
+Inadequate
+Minimal
+Emerging
+Developing
+Approaching Basic
+Basic
+Functional
+
+(∞, −3)
+(−3, −2.7)
+(−2.7, −2.4)
+(−2.4, −2.1)
+(−2.1, −1.8)
+(−1.5, −1.2)
+(−1.2, −0.9)
+(−0.9, −0.6)
+(−0.6, −0.3)
+(−0.3, 0)
+
+Satisfactory
+Competent
+Proficient
+Accomplished
+Advanced
+Superior
+Exceptional
+Outstanding
+Distinguished
+Exemplary
+
+(0, 0.3)
+(0.3, 0.6)
+(0.6, 0.9)
+(0.9, 1.2)
+(1.2, 1.5)
+(1.5, 1.8)
+(1.8, 2.1)
+(2.1, 2.4)
+(2.4, 2.7)
+(2.7, ∞)
+
+Table 2: The descriptors used in this project and their respective bounds.
+While the semantic distinction between labels associated with proximate θ values, such as “Exceptional”
+versus “Outstanding”, may be negligible, the semantic distinctions become clearer as the intervals they
+represent grow further apart. In any case, we will fine-tune response probabilities to reinforce the adherence
+between specific descriptors and their targeted ability intervals. In our discrete setting, the discrete ICC for
+item j is given by the N probabilities, (Pj1 , . . . , Pjn ), where each Pjk is the probability that a student in the
+class of students with label Lk will provide a correct answer
+Pjk = P (ck−1 < θi ≤ ck | yij = 1) .
+
+(9)
+
+Given the discrete ICC, in order to map back to continuous values of the difficulty and discrimination
+parameters, we map the label Lk to the expected θ values on the class of θ values with the label Lk , denoted
+θk . To derive these, we use the standard assumption that θ ∼ N (µ, ς 2 ). Using the standard notation for the
+
+7
+
+Probability Distribution Function (PDF) and Cumulative Distribution Function (CDF)
+ϕ(x) = √12π exp
+
+ 2
+x
+2
+
+f (x; µ, ς) = 1ς ϕ
+
+Z x
+,
+
+Φ(x) =
+
+ϕ(z)dz,
+
+
+x−µ
+F (x; µ, ς) = Φ
+,
+ς
+0
+
+x−µ
+ς
+
+
+
+,
+
+we express the expected values, θk , by
+θk = E(θ | ck−1 < θ ≤ ck ) = µ + ς
+
+2
+
+
+
+f (ck−1 ; µ, ς) − f (ck ; µ, ς)
+F (ck ; µ, ς) − F (ck−1 ; µ, ς)
+
+
+.
+
+When minimizing (2), we also need to take into account how often terms of a given θ will appear in the sum.
+We take this into account by defining weights, ωk , based on probability of the label Lk being applied:
+ωk = F (ck ; µ, ς) − F (ck−1 ; µ, ς)
+
+(10)
+
+We may recover reasonable approximations of the difficulty parameters by considering the minimization
+problem
+X
+2
+.
+(11)
+ωk Pjk − σ aj (θk − bj )
+aj , bj = arg min
+aj ,bj
+
+k
+
+These values can be obtained by any number of minimization techniques. We typically used BroydenFletcher-Goldfarb-Shanno (BFGS) algorithm in this study. This provides a method of determining a reasonable approximation of difficulty from a discrete ICC.
+We are now required to give approximations of the Pjk values from empirical observations. Given a
+collection of students, each with a specific θ value, one method of approximating the probability Pjk would
+be to take the ratio of correct to incorrect answers to item j for all students in which label Lk has been
+applied.
+Cijk
+
+=
+
+Cjk
+
+=
+
+# of students with label Lk responding with vi to item j,
+X
+Cijk = # of students with label Lk responding to item j,
+i
+
+Cj
+
+=
+
+X
+
+Cjk = # of students responding to item j.
+
+k
+
+Without loss of generality, we assume the correct answer is given by v1 . This creates the first version of the
+ICC for item j, provided by
+
+(Pj1 , . . . , Pjn ) =
+
+C1j1
+C1j1
+,...,
+Cj1
+Cj1
+
+
+(12)
+
+This may seem appealing given its simplicity, but this quantity can be a bad estimate with very few observations associated with a particular label or even ill-defined when there no student responses for some
+labels.
+Rather than use the empirical observations directly to provide the values of Pjk , we use the empirical
+
+observations to fit a NRM. Given an item, j, a label k, and a response vi , we use θk , Cijk /Cjk as a
+datapoint for fitting our NRM. However, we must also appropriately weight each of these datapoints by the
+class probability on that item, provided by Cjk /Ck . This means that the parameters of our NRM for item
+8
+
+j are defined by
+{aij }, {bij } = arg min
+aij ,bij
+
+X Cjk
+i,k
+
+Cj
+
+Cijk
+exp(aij (θk − bij )
+−P
+Cjk
+g exp(agj (θ k − bgj )
+
+!2
+(13)
+
+Once these values are defined, this provides us with a model for the probability that a student of ability level
+k answers with vi to item j:
+exp(aij (θk − bij )
+Pjk = P
+g exp(agj (θ k − bgj )
+
+(14)
+
+If we again assume that v1 is the correct answer, then the associated discrete ICC is provided by
+(Pj1 , . . . , Pjn ) =
+
+exp(a1j (θn − b1j )
+exp(a1j (θn − b1j )
+,..., P
+P
+exp(a
+(θ
+−
+b
+)
+gj 1
+gj
+g
+g exp(agj (θ 1 − bgj )
+
+!
+
+By minimizing (13), we expect that Pjk ≈ Cijk /Cjk . Furthermore, each Pjk is informed by the entire
+curve rather than one observation, possibly making this approximation a more accurate representation of
+the probability associated with each label than Cijk /Cjk . The weighting factor of Cjk /Cj ensures that cases
+with few observations do not have a large effect on the calculation of {aij } and {bij }. Perhaps the most
+useful way to understand this formulation is that (14) represents a smooth version of the empirical observed
+probabilities.
+
+3.2
+
+Fine-tuning
+
+The fundamental task of any generative LLM is to provide a function that determines the probability
+distribution of the next word/token based on the previous tokens [18]. Modern applications of generative
+LLMs primarily focus on the iterative application of this function to generate content; hence, most supervised
+and fine-tuning techniques have concentrated on manipulating the LLM weights in order to produce particular
+content. This paper takes a fundamentally different approach in that we are more concerned with the
+distribution of tokens than the actual token being produced.
+Given the size of these models, and the limits of our resources, it is still not possible to fine-tune the
+larger models. Due to the precision of the task, we stored the variables in 16-bit floating-point arithmetic
+and used low-rank adapters [9]. That is to say that instead of fine-tuning the model weights directly, we
+select a collection of linear layers and augment them by the addition of an additive factor. This means that
+applying LoRA substitutes the linear operator L with L̃
+L(x) = M x + b −→ L̃(x) = (M + ∆)x + b,
+
+∆ = BA,
+
+(15)
+
+where M is frozen in the optimization. We can generally replace any of the linear layers within the transformer
+architecture, however, it is more prudent to select a collection of “target-layers” [5]. The tried-and-true
+method has been to target the transformations of the input that define the keys, queries, and values [14].
+In the context of Table 1, the matrix BA is a square matrix with rows and columns equal to the hidden
+size of the model. What makes this a parameter-efficient method is that B possesses only r columns and A
+possesses only r rows. Consequently, ∆ is a matrix of low-rank. In our experiments, this rank is chosen to
+be 64.
+Once the model was augmented using LoRA, fine-tuning of the models was performed in two stages;
+supervised fine-tuning and distribution correction. During supervised fine-tuning, we take prompts specified
+
+9
+
+in the form presented in Appendix A. We sampled a single answer for each item for each ability level
+randomly from the distribution of responses in a single epoch. This process fine-tunes the model to the
+production of output in an expected form. This fine-tuning used the cross-entropy loss, and the main
+objective of fine-tuning is to change the model outputs to produce an expected answer in the correct spot.
+We trained the model in this way for only one epoch using a version of the Adam optimizer [12] with a
+learning rate of 5 × 10−5 and a batch size of one to accommodate the large input size with the usual linear
+learning rate scheduler and gradient clipping.
+In the second phase of training, we truncate the prompt specified in Appendix A up to the point at
+which the answer is presented. Given the first phase of training, we are now looking to equate the output
+probabilities defined by the language model, given by (6) over the set of tokens corresponding to an option,
+with the probabilities of each option defined by the nominal model, provided by (3). That is to say, we seek
+to equate
+ez1
+Pn
+
+j=1 e
+
+!
+
+ezn
+
+zj
+
+, . . . Pn
+
+j=1 e
+
+zj
+
+≈ softmax(a1 (θ − b1 ), . . . , an (θ − bn )),
+
+(16)
+
+where the left hand side involves the logits, z1 , . . . , zn , from (6) associated choices v1 , . . . , vn from (3). While
+we could equate the logits directly, one of the problems with this method is that they are not well-defined
+as the addition of a constant to all logits results in equivalent probabilities. Our loss function, from the
+standpoint of optimizing the LoRA adapter weights is the square of the difference between the left and right
+hand side of (16). We use a similar optimizer [12] with a smaller learning rate of 5 × 10−6 with the usual
+linear learning rate scheduler and gradient clipping for stability.
+Over the course of a single epoch, the model is exposed to each question 20 times, where 20 is the number
+of ability level descriptors. We used the development set in an early stopping mechanism that optimizes
+the weighted difference (16) where the weights are defined by (10) for each ability level descriptor. One
+final detail is that we expect this process to regress the difficulty estimates to the mean. To compensate for
+this, we fit the ability level estimates on the development set to the true ability level values with a linear
+regression, optimizing the Mean Squared Error on the development set. This linear transformation was also
+applied to the test set.
+
+3.3
+
+Data
+
+3.3.1
+
+English Language Arts Dataset
+
+The data consists of a collection of 275 multiple-choice items and associated student responses administered
+in a state-assessment program for Grade 6 English Language and Arts Assessment. The student ability
+levels were calibrated in the context of a larger item pool. In this way, we consider the student ability-levels,
+θi , constant and the variables to optimize in (2) to be {âj , b̂j }. Once the θ are fixed, equation (2) can be
+optimized independently to determine the difficulty and discrimination of each item.
+The dataset consisted of 754,000 student responses to 275 items, with item response frequencies ranging
+from 600 to 8,000 depending on the item. Each item has four options to choose from. The distribution of
+student ability parameters was approximately normal, where θ ∼ N (0.13, 1.15). After applying the ability
+level descriptors, the frequency of each ability-level descriptor, shown in Figure 2 approximates a normal
+curve. The distribution of θ values at the item level for each item is close to this distribution, which means
+that some items are expected to have, and have few or even no responses associated with a particular
+ability-level descriptor.
+
+10
+
+80k
+70k
+60k
+50k
+40k
+30k
+20k
+
+Disting
+uished
+Exemp
+lary
+
+nding
+Outsta
+
+ional
+Except
+
+nt
+Accom
+plished
+Advanc
+ed
+Superio
+r
+
+Proficie
+
+al
+
+ctory
+Compe
+tent
+
+Satisfa
+
+Functio
+n
+
+Basic
+
+sic
+App. B
+a
+
+ping
+Develo
+
+l
+
+g
+Emergin
+
+Minima
+
+nt
+
+uate
+Inadeq
+
+Deficie
+
+Critica
+
+l
+Limited
+
+10k
+
+Figure 2: Distribution of Ability-Level Descriptors. The bar chart illustrates the frequency of student
+responses categorized by the 20 discrete descriptors, ranging from “Critical” to “Exemplary”. The resulting
+distribution approximates a normal curve, consistent with the calibrated student ability parameters θ ∼
+N (0.13, 1.15) observed in the Grade 6 English Language and Arts assessment data.
+3.3.2
+
+BEA 2024 Shared Task
+
+The BEA 2024 Shared Task, formally titled “Automated Prediction of Item Difficulty and Item Response
+Time”, was a competition organized by the National Board of Medical Examiners (NBME) to determine
+how effectively we can analyze the difficulty of exam questions without relying on live pre-testing. Held at
+the 19th Workshop on Innovative Use of NLP for Building Educational Applications (BEA 2024), the task
+focused on two main objectives:
+1. Item Difficulty Prediction: Participants built models to predict the difficulty of a question.
+2. Item Response Time Prediction: Participants predicted the average time (in seconds) test-takers
+would need to answer the question.
+The data presented included the difficulty, as defined by the 1PL model. Since we do not have responses
+or probabilities directly to estimate the other response probabilities, we rely on the approximation that
+incorrect choices are uniformly random. This allows us to use the correspondence provided by (4).
+In terms of characteristics, the number of items released for training was 466, which was randomly split
+into a train set and a development set, while the test set consisted of 201 items. The distribution of the
+difficulties in each set was approximately normal with means (µ) and standard deviation (ς) provided in
+Table 3. One aspect of this dataset that is worth mentioning is that the number of options in the test set
+seems to have been taken from a different distribution from those chosen for training. The test set has a
+much higher average number of options, which could make the task of predicting difficulty on this particular
+test set more difficult than one that more closely resembles the training set. The work of Bulut et. al showed
+exceptional performance when a subset of the training set was used as a test set [4]. While the task of
+predicting the time taken was also a part of the task, modeling timing is not the focus of this paper.
+
+11
+
+N
+
+Difficulty
+µ
+ς
+
+Number of Options
+5
+6
+7
+8 9
+
+4
+
+10
+
+Train
+Dev
+Test
+
+419
+47
+201
+
+0.484
+0.472
+0.500
+
+0.309
+0.288
+0.310
+
+25
+7
+0
+
+333
+33
+0
+
+45
+6
+15
+
+6
+0
+159
+
+7
+0
+20
+
+2
+1
+2
+
+1
+0
+10
+
+Total
+
+667
+
+0.488
+
+0.309
+
+32
+
+366
+
+66
+
+165
+
+27
+
+5
+
+11
+
+Table 3: The distributional characteristics of the difficulty parameters for the BEA 2024 Shared Task.
+
+4
+
+Results
+
+To verify that the LLM is effectively simulating responses from students of varying ability levels, we compared
+three different discrete Item Characteristic Curves (ICCs). These include the observed empirical probabilities,
+the smoothed calibration probabilities derived from the Nominal Response Model (NRM), and the final LLMgenerated probabilities.
+Probability of Correct Response (P )
+
+1
+0.8
+0.6
+
+Observed Probabilities
+
+0.4
+
+Nominal Response Model
+
+0.2
+
+LLM Probabilities
+
+0
+−4
+
+−3
+
+−2
+
+−1
+
+0
+
+1
+
+2
+
+3
+
+Ability Level (θ)
+
+Figure 3: Comparison of Item Characteristic Curves (ICCs). This plot illustrates the relationship between
+student ability levels (θ) and the probability of a correct response (P ) for a sample item. The blue curve
+represents the Observed Probabilities from empirical student data, while the green curve depicts the Calibration Probabilities derived from fitting the Nominal Response Model (NRM). The red curve shows the
+LLM Probabilities, demonstrating the language model’s ability to simulate responses that adhere to specific
+ability level descriptors after supervised fine-tuning and distribution correction.
+As shown in the comparison plot in Figure 3, the LLM-generated response probabilities closely track the
+calibration curve, demonstrating the model’s adherence to the discrete ability level descriptors.
+
+4.1
+
+English Language Arts Dataset
+
+The ELA dataset, consisting of 754,000 student responses across 275 items, was used to evaluate the model’s
+ability to approximate IRT parameters. Calibration of the student ability levels (θ) revealed a distribution
+12
+
+approximately following N (0.13, 1.15). When applying the discrete ability level descriptors, the frequency of
+student responses followed a normal curve, ranging from “Critical” to “Exemplary”. Our baseline consists
+of a fine-tuned version of ModernBERT [28], in combination with a feature-based model.
+b (1PL)
+
+a (2PL)
+
+b (2PL)
+
+Model
+
+Pearson
+
+RMSE
+
+Pearson
+
+RMSE
+
+Pearson
+
+RMSE
+
+Qwen-1.7B
+Qwen-4B
+Qwen-8B
+Qwen-14B
+ModernBERT
+Features
+
+0.409
+0.404
+0.408
+0.503
+0.239
+0.160
+
+0.766
+0.764
+0.750
+0.721
+0.868
+0.827
+
+0.238
+0.332
+0.336
+0.446
+0.061
+0.194
+
+0.191
+0.186
+0.191
+0.169
+0.231
+0.200
+
+0.410
+0.391
+0.429
+0.485
+0.132
+0.040
+
+1.041
+1.008
+1.014
+0.936
+1.251
+1.098
+
+Table 4: This table presents the Pearson correlation coefficients and Root Mean Squared Error (RMSE)
+across five folds for the Qwen3 model series. The metrics are categorized by the modeling regime: the OneParameter Logistic (1PL) model for difficulty (b), and the Two-Parameter Logistic (2PL) model for both
+discrimination (a) and difficulty (b). Average values are provided for each model to illustrate performance
+scaling from the 1.7B to the 14B parameter variants.
+While the overall correlations are modest, it is important to note the limited size of the item pool used.
+Notably, this approach yielded a relatively high correlation and low Root Mean Square Error (RMSE) for the
+discrimination parameter (a) compared to the difficulty parameter (b). This is a significant result, as many
+difficulty prediction methods fail to accurately model item discrimination, and such results are frequently
+omitted from similar studies. Across the ELA dataset, the Qwen-14B model demonstrated the strongest
+performance, achieving an average correlation of 0.503 for the 1PL difficulty parameter and 0.446 for 2PL
+discrimination.
+
+4.2
+
+BEA 2024 Shared Task
+
+For the BEA 2024 Shared Task, models were evaluated on their ability to predict item difficulty (b) as defined
+by the 1PL model across a test set of 201 items. Because student response data was not directly available,
+the uniform randomness of incorrect choices was assumed to utilize the correspondence in equation (4).
+The predictive accuracy of the Qwen3 series was compared against standard baselines (Table 5):
+• Qwen-8B achieved the highest Pearson Correlation of 0.381 and the lowest Root Mean Square Error
+model
+
+Pearson Correlation
+
+Dummy Regressor Baseline [32]
+ELECTRA [32]
+Ensemble [10]
+Qwen-1.7B
+Qwen-4B
+Qwen-8B
+Qwen-14B
+Qwen-32B
+
+RMSE
+0.31
+0.299
+0.292
+
+0.157
+0.212
+0.381
+0.336
+0.365
+
+0.317
+0.309
+0.288
+0.294
+0.297
+
+Table 5: This table presents the average Pearson correlation coefficients and Root Mean Squared Error
+(RMSE) values using the Qwen3 model series for the BEA 2024 Shared Task.
+13
+
+(RMSE) of 0.288. This seems to be an improvement over many previous results [32, 10].
+• Qwen-14B followed closely with a correlation with RMSE of 0.294.
+• Qwen-4B performed slightly better than the Dummy Regressor Baseline but lagged behind the larger
+models with an RMSE of 0.309.
+• All Qwen models larger than 4B outperformed the ELECTRA baseline (RMSE 0.299) and the Dummy
+Regressor (RMSE 0.31).
+
+5
+
+Discussion
+
+The findings of this study suggest that utilizing large language models to simulate varied student ability
+levels provides a promising avenue for item difficulty modeling, though several limitations and future research directions remain. This approach to modeling item difficulty remains in its infancy, and significant
+improvements can be anticipated as prompting techniques become more refined. Furthermore, the rapid
+evolution of generative models, such as the progression within the Qwen series, suggests that the predictive
+accuracy of these simulations will likely improve over time as base model capabilities increase.
+It is important to note that the datasets utilized in this study—specifically the ELA dataset and BEA
+2024 Shared Task sets—are relatively small compared to those used in other large-scale psychometric studies. While these sets provided sufficient data for an initial evaluation, larger and more diverse collections of
+student performance data may be necessary to fully validate the scaling laws and IRT parameter approximations observed here. A particularly compelling direction for future research involves the integration of
+model-generated rationales. While the current study focused on the final answer produced by the simulated
+student, the prompting architecture was designed to accommodate chain-of-thought processes. Engaging
+the “thinking” component of the LLM to generate rationales could play a critical role in determining why
+certain items are difficult, potentially offering deeper diagnostic insights than result-based simulation alone.
+Despite the encouraging Pearson correlations observed with larger models like Qwen-8B and Qwen-14B,
+the field is not yet at a point where LLMs can be reliably trusted for high-stakes difficulty prediction. The
+current models serve as useful tools for low-stakes automated pre-testing, but further rigorous testing and
+reliability assessments are required before they can replace live human pre-testing in formal assessment
+environments.
+
+Acknowledgments
+The author gratefully acknowledges the Hawaii State Department of Education for their support of this
+research direction. The author would like to acknowledge Kai North, Frank Rijmen, and Suhwa Han for
+their discussions of the overall approach used in this paper. The author would like to thank Andrew Lan
+and Alex Scarlatos for their feedback on the draft and presentation of this work.
+
+References
+[1] Marah Abdin, Sam Ade Jacobs, Ammar Ahmad Awan, Jyoti Aneja, Ahmed Awadallah, Hany Awadalla,
+Nguyen Bach, Amit Bahree, Arash Bakhtiari, Jianmin Bao, Harkirat Behl, Alon Benhaim, Misha
+
+14
+
+Bilenko, Johan Bjorck, Sébastien Bubeck, Qin Cai, Martin Cai, Caio César Teodoro Mendes, Weizhu
+Chen, Vishrav Chaudhary, Dong Chen, Dongdong Chen, Yen-Chun Chen, Yi-Ling Chen, Parul Chopra,
+Xiyang Dai, Allie Del Giorno, Gustavo de Rosa, Matthew Dixon, Ronen Eldan, Victor Fragoso, Dan Iter,
+Mei Gao, Min Gao, Jianfeng Gao, Amit Garg, Abhishek Goswami, Suriya Gunasekar, Emman Haider,
+Junheng Hao, Russell J. Hewett, Jamie Huynh, Mojan Javaheripi, Xin Jin, Piero Kauffmann, Nikos
+Karampatziakis, Dongwoo Kim, Mahoud Khademi, Lev Kurilenko, James R. Lee, Yin Tat Lee, Yuanzhi
+Li, Yunsheng Li, Chen Liang, Lars Liden, Ce Liu, Mengchen Liu, Weishung Liu, Eric Lin, Zeqi Lin,
+Chong Luo, Piyush Madan, Matt Mazzola, Arindam Mitra, Hardik Modi, Anh Nguyen, Brandon Norick,
+Barun Patra, Daniel Perez-Becker, Thomas Portet, Reid Pryzant, Heyang Qin, Marko Radmilac, Corby
+Rosset, Sambudha Roy, Olatunji Ruwase, Olli Saarikivi, Amin Saied, Adil Salim, Michael Santacroce,
+Shital Shah, Ning Shang, Hiteshi Sharma, Swadheen Shukla, Xia Song, Masahiro Tanaka, Andrea
+Tupini, Xin Wang, Lijuan Wang, Chunyu Wang, Yu Wang, Rachel Ward, Guanhua Wang, Philipp
+Witte, Haiping Wu, Michael Wyatt, Bin Xiao, Can Xu, Jiahang Xu, Weijian Xu, Sonali Yadav, Fan
+Yang, Jianwei Yang, Ziyi Yang, Yifan Yang, Donghan Yu, Lu Yuan, Chengruidong Zhang, Cyril Zhang,
+Jianwen Zhang, Li Lyna Zhang, Yi Zhang, Yue Zhang, Yunan Zhang, and Xiren Zhou. Phi-3 Technical
+Report: A Highly Capable Language Model Locally on Your Phone, May 2024. arXiv:2404.14219 [cs].
+[2] AI@Meta. Llama 3 Model Card. 2024.
+[3] Okan Bulut, Maggie Beiting-Parrish, Jodi M. Casabianca, Sharon C. Slater, Hong Jiao, Dan Song,
+Christopher M. Ormerod, Deborah Gbemisola Fabiyi, Rodica Ivan, Cole Walsh, Oscar Rios, Joshua
+Wilson, Seyma N. Yildirim-Erbasli, Tarid Wongvorachan, Joyce Xinle Liu, Bin Tan, and Polina Morilova. The Rise of Artificial Intelligence in Educational Measurement: Opportunities and Ethical
+Challenges, June 2024. arXiv:2406.18900.
+[4] Okan Bulut, Guher Gorgun, and Bin Tan. Item Difficulty and Response Time Prediction with Large
+Language Models: An Empirical Analysis of USMLE Items. In Ekaterina Kochmar, Marie Bexte, Jill
+Burstein, Andrea Horbach, Ronja Laarmann-Quante, Anaı̈s Tack, Victoria Yaneva, and Zheng Yuan,
+editors, Proceedings of the 19th Workshop on Innovative Use of NLP for Building Educational Applications (BEA 2024), pages 522–527, Mexico City, Mexico, June 2024. Association for Computational
+Linguistics.
+[5] Tim Dettmers, Artidoro Pagnoni, Ari Holtzman, and Luke Zettlemoyer. QLoRA: Efficient Finetuning
+of Quantized LLMs. Advances in Neural Information Processing Systems, 36:10088–10115, December
+2023.
+[6] Jacob Devlin, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova. BERT: Pre-training of Deep
+Bidirectional Transformers for Language Understanding. Technical Report arXiv:1810.04805, arXiv,
+2018. arXiv:1810.04805 [cs] type: article.
+[7] Louie Giray. Prompt Engineering with ChatGPT: A Guide for Academic Writers. Annals of Biomedical
+Engineering, 51(12):2629–2633, December 2023.
+[8] Ronald K. Hambleton, Hariharan Swaminathan, and H. Jane Rogers. Fundamentals of Item Response
+Theory. SAGE, 1991. Google-Books-ID: gW05DQAAQBAJ.
+
+15
+
+[9] Edward J. Hu, Yelong Shen, Phillip Wallis, Zeyuan Allen-Zhu, Yuanzhi Li, Shean Wang, Lu Wang, and
+Weizhu Chen. LoRA: Low-Rank Adaptation of Large Language Models, October 2021. arXiv:2106.09685
+[cs].
+[10] Ming Li, Hong Jiao, Tianyi Zhou, Nan Zhang, Sydney Peters, and Robert W Lissitz. Item Difficulty Modeling Using Fine-Tuned Small and Large Language Models. In Joshua Wilson, Christopher
+Ormerod, and Magdalen Beiting Parrish, editors, Proceedings of the Artificial Intelligence in Measurement and Education Conference (AIME-Con): Coordinated Session Papers, pages 48–55, Wyndham
+Grand Pittsburgh, Downtown, Pittsburgh, Pennsylvania, United States, October 2025. National Council on Measurement in Education (NCME).
+[11] Yunting Liu, Shreya Bhandari, and Zachary A. Pardos. Leveraging LLM respondents for item evaluation:
+A psychometric analysis. British Journal of Educational Technology, 56(3):1028–1052, 2025.
+
+eprint:
+
+https://bera-journals.onlinelibrary.wiley.com/doi/pdf/10.1111/bjet.13570.
+[12] Ilya Loshchilov and Frank Hutter.
+
+Decoupled Weight Decay Regularization, January 2019.
+
+arXiv:1711.05101 [cs, math].
+[13] OpenAI. GPT-4 Technical Report, March 2023. arXiv:2303.08774 [cs].
+[14] Chris Ormerod and Alexander Kwako. Automated Text Scoring in the Age of Generative AI for the
+GPU-poor. Chinese/English Journal of Educational Measurement and Evaluation, 5(3), December 2024.
+[15] Christopher Ormerod, Amy Burkhardt, Mackenzie Young, and Sue Lottridge. Argumentation Element
+Annotation Modeling using XLNet, November 2023. arXiv:2311.06239 [cs].
+[16] Long Ouyang, Jeff Wu, Xu Jiang, Diogo Almeida, Carroll L. Wainwright, Pamela Mishkin, Chong
+Zhang, Sandhini Agarwal, Katarina Slama, Alex Ray, John Schulman, Jacob Hilton, Fraser Kelton, Luke
+Miller, Maddie Simens, Amanda Askell, Peter Welinder, Paul Christiano, Jan Leike, and Ryan Lowe.
+Training language models to follow instructions with human feedback, March 2022. arXiv:2203.02155.
+[17] Sydney Peters, Nan Zhang, Hong Jiao, Ming Li, Tianyi Zhou, and Robert Lissitz. Text-Based Approaches to Item Difficulty Modeling in Large-Scale Assessments: A Systematic Review, September
+2025. arXiv:2509.23486 [cs].
+[18] Alec Radford, Karthik Narasimhan, Tim Salimans, and Ilya Sutskever. Improving Language Understanding by Generative Pre-training, 2018.
+[19] Georg Rasch. Probabilistic Models for Some Intelligence and Attainment Tests. MESA Press, 5835 S,
+1993. ERIC Number: ED419814.
+[20] Pedro Uria Rodriguez, Amir Jafari, and Christopher M. Ormerod. Language models and Automated
+Essay Scoring, September 2019. Number: arXiv:1909.09482 arXiv:1909.09482 [cs, stat].
+[21] Andrew Runge, Yigal Attali, Geoffrey T. LaFlair, Yena Park, and Jacqueline Church. A generative
+AI-driven interactive listening assessment task. Frontiers in Artificial Intelligence, 7, November 2024.
+Publisher: Frontiers.
+[22] Alexander Scarlatos, Nigel Fernandez, Christopher Ormerod, Susan Lottridge, and Andrew Lan.
+SMART: Simulated Students Aligned with Item Response Theory for Question Difficulty Prediction,
+September 2025. arXiv:2507.05129 [cs].
+16
+
+[23] John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, and Oleg Klimov. Proximal Policy
+Optimization Algorithms, August 2017. arXiv:1707.06347 [cs].
+[24] Arnav Singhvi, Manish Shetty, Shangyin Tan, Christopher Potts, Koushik Sen, Matei Zaharia, and Omar
+Khattab. DSPy Assertions: Computational Constraints for Self-Refining Language Model Pipelines,
+February 2024. arXiv:2312.13382 [cs].
+[25] Chul Sung, Tejas I. Dhamecha, Swarnadeep Saha, Tengfei Ma, V. Reddy, and R. Arora. Pre-Training
+BERT on Domain Resources for Short Answer Grading. In EMNLP, 2019.
+[26] Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Lukasz
+Kaiser, and Illia Polosukhin. Attention is All you Need. In Advances in Neural Information Processing
+Systems, volume 30. Curran Associates, Inc., 2017.
+[27] Alex Wang, Amanpreet Singh, Julian Michael, Felix Hill, Omer Levy, and Samuel R. Bowman. GLUE: A
+Multi-Task Benchmark and Analysis Platform for Natural Language Understanding. Technical Report
+arXiv:1804.07461, arXiv, February 2019. arXiv:1804.07461 [cs] type: article.
+[28] Benjamin Warner, Antoine Chaffin, Benjamin Clavié, Orion Weller, Oskar Hallström, Said Taghadouini,
+Alexis Gallagher, Raja Biswas, Faisal Ladhak, Tom Aarsen, Nathan Cooper, Griffin Adams, Jeremy
+Howard, and Iacopo Poli. Smarter, Better, Faster, Longer: A Modern Bidirectional Encoder for Fast,
+Memory Efficient, and Long Context Finetuning and Inference, December 2024. arXiv:2412.13663 [cs].
+[29] Jason Wei, Yi Tay, Rishi Bommasani, Colin Raffel, Barret Zoph, Sebastian Borgeaud, Dani Yogatama,
+Maarten Bosma, Denny Zhou, Donald Metzler, Ed H. Chi, Tatsunori Hashimoto, Oriol Vinyals, Percy
+Liang, Jeff Dean, and William Fedus. Emergent Abilities of Large Language Models, October 2022.
+arXiv:2206.07682 [cs].
+[30] Jason Wei, Xuezhi Wang, Dale Schuurmans, Maarten Bosma, Brian Ichter, Fei Xia, Ed Chi, Quoc Le,
+and Denny Zhou. Chain-of-Thought Prompting Elicits Reasoning in Large Language Models, January
+2023. arXiv:2201.11903 [cs].
+[31] Lingling Xu, Haoran Xie, Si-Zhao Joe Qin, Xiaohui Tao, and Fu Lee Wang. Parameter-Efficient FineTuning Methods for Pretrained Language Models: A Critical Review and Assessment, December 2023.
+arXiv:2312.12148 [cs].
+[32] Victoria Yaneva, Kai North, Peter Baldwin, Le An Ha, Saed Rezayi, Yiyun Zhou, Sagnik Ray Choudhury, Polina Harik, and Brian Clauser. Findings from the First Shared Task on Automated Prediction of
+Difficulty and Response Time for Multiple-Choice Questions. In Ekaterina Kochmar, Marie Bexte, Jill
+Burstein, Andrea Horbach, Ronja Laarmann-Quante, Anaı̈s Tack, Victoria Yaneva, and Zheng Yuan,
+editors, Proceedings of the 19th Workshop on Innovative Use of NLP for Building Educational Applications (BEA 2024), pages 470–482, Mexico City, Mexico, June 2024. Association for Computational
+Linguistics.
+[33] An Yang, Anfeng Li, Baosong Yang, Beichen Zhang, Binyuan Hui, Bo Zheng, Bowen Yu, Chang Gao,
+Chengen Huang, Chenxu Lv, Chujie Zheng, Dayiheng Liu, Fan Zhou, Fei Huang, Feng Hu, Hao Ge,
+Haoran Wei, Huan Lin, Jialong Tang, Jian Yang, Jianhong Tu, Jianwei Zhang, Jianxin Yang, Jiaxi
+Yang, Jing Zhou, Jingren Zhou, Junyang Lin, Kai Dang, Keqin Bao, Kexin Yang, Le Yu, Lianghao
+
+17
+
+Deng, Mei Li, Mingfeng Xue, Mingze Li, Pei Zhang, Peng Wang, Qin Zhu, Rui Men, Ruize Gao,
+Shixuan Liu, Shuang Luo, Tianhao Li, Tianyi Tang, Wenbiao Yin, Xingzhang Ren, Xinyu Wang, Xinyu
+Zhang, Xuancheng Ren, Yang Fan, Yang Su, Yichang Zhang, Yinger Zhang, Yu Wan, Yuqiong Liu,
+Zekun Wang, Zeyu Cui, Zhenru Zhang, Zhipeng Zhou, and Zihan Qiu. Qwen3 Technical Report, May
+2025. arXiv:2505.09388 [cs].
+[34] An Yang, Baosong Yang, Binyuan Hui, Bo Zheng, Bowen Yu, Chang Zhou, Chengpeng Li, Chengyuan
+Li, Dayiheng Liu, Fei Huang, Guanting Dong, Haoran Wei, Huan Lin, Jialong Tang, Jialin Wang,
+Jian Yang, Jianhong Tu, Jianwei Zhang, Jianxin Ma, Jianxin Yang, Jin Xu, Jingren Zhou, Jinze Bai,
+Jinzheng He, Junyang Lin, Kai Dang, Keming Lu, Keqin Chen, Kexin Yang, Mei Li, Mingfeng Xue,
+Na Ni, Pei Zhang, Peng Wang, Ru Peng, Rui Men, Ruize Gao, Runji Lin, Shijie Wang, Shuai Bai, Sinan
+Tan, Tianhang Zhu, Tianhao Li, Tianyu Liu, Wenbin Ge, Xiaodong Deng, Xiaohuan Zhou, Xingzhang
+Ren, Xinyu Zhang, Xipin Wei, Xuancheng Ren, Xuejing Liu, Yang Fan, Yang Yao, Yichang Zhang,
+Yu Wan, Yunfei Chu, Yuqiong Liu, Zeyu Cui, Zhenru Zhang, Zhifang Guo, and Zhihao Fan. Qwen2
+Technical Report, September 2024. arXiv:2407.10671 [cs].
+[35] Eric Zelikman, Wanjing Ma, Jasmine Tran, Diyi Yang, Jason Yeatman, and Nick Haber. Generating
+and Evaluating Tests for K-12 Students with Language Model Simulations: A Case Study on Sentence Reading Efficiency. In Houda Bouamor, Juan Pino, and Kalika Bali, editors, Proceedings of the
+2023 Conference on Empirical Methods in Natural Language Processing, pages 2190–2205, Singapore,
+December 2023. Association for Computational Linguistics.
+
+A
+
+Prompting
+
+The model prompting consisted of two distinct parts; a system prompt that specified the way in which
+the model should behave, and the user prompt, that determined the task to be completed. We embedded
+the information regarding student abilities and their ordering in the system prompt, while the user prompt
+contained the question, the required student ability level, and the correct answer.
+
+A.1
+
+System Prompt
+
+You are an AI model simulating a student’s response to an assessment question. Your task is to
+generate a plausible answer, strictly adhering to the specified student ability level.
+**Ability Scale Context (Lowest to Highest):**
+[{’, ’.join(descriptors)}]
+* **Low-Ability Students (e.g., "Critical", "Deficient"):** Might get the answer correct by chance.
+* **Mid-Ability Students (e.g., "Basic", "Functional"):** More likely to give a correct answer.
+* **High-Ability Students (e.g., "Proficient", "Exemplary"):** Should provide the correct answer.
+
+A.2
+
+User Prompt
+
+This information is for your reference only, to understand the problem’s solution.
+
+18
+
+* **Question:**
+{question}
+* **Correct Answer:**
+{correct_answer}
+**Simulation Task**
+You must now generate a response from the perspective of a student at the following ability level:
+* **Student Ability Level:** {student_ability}
+Provide *only* the simulated student’s response in the format below.
+**Student Answer:**
+[Your generated answer here]
+
+19
+
+

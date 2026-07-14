@@ -1,0 +1,24 @@
+sanity max|cor(t(E)) - sfa_similarity| = 6.00e-15
+
+==== emb_06B: N=1024 cases x 50 variables ====
+[emb_06B] verdicts: alpha.30=10  alpha.05=10  alpha.01=10  (36s)
+[emb_06B] median RMSR by k: 0.3503 0.2833 0.2278 0.2033 0.1690 0.1482 0.1330 0.1187 0.1060 0.0945
+
+==== emb_4B: N=2560 cases x 50 variables ====
+[emb_4B] verdicts: alpha.30=10  alpha.05=10  alpha.01=10  (50s)
+[emb_4B] median RMSR by k: 0.3217 0.2693 0.2247 0.1847 0.1571 0.1349 0.1159 0.1052 0.0958 0.0862
+
+==== emb_8B: N=4096 cases x 50 variables ====
+[emb_8B] verdicts: alpha.30=10  alpha.05=10  alpha.01=10  (65s)
+[emb_8B] median RMSR by k: 0.3581 0.3153 0.2485 0.2056 0.1738 0.1542 0.1389 0.1243 0.1005 0.0857
+human rows after cleaning: 874434
+
+==== human_n2500: N=2500 cases x 50 variables ====
+[human_n2500] verdicts: alpha.30=10  alpha.05=10  alpha.01=10  (52s)
+[human_n2500] median RMSR by k: 0.8382 0.6559 0.4885 0.3357 0.1423 0.1177 0.0870 0.0817 0.0798 0.0581
+
+DONE
+    emb_06B emb_4B emb_8B human_n2500
+a30      10     10     10          10
+a05      10     10     10          10
+a01      10     10     10          10

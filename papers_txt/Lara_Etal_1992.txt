@@ -1,0 +1,536 @@
+APPLIED STOCHASTIC MODELS AND DATA ANALYSIS, VOL. 8, 7-16 (1992)
+
+SEMANTICS AND FACTOR ANALYSIS: AN APPROACH TO THE
+INTERPRETATION OF FACTORS
+B. F. LARA, E. TARTAS AND P. OYARZABAL
+University of Laitsanne, HEC, BFSHI Cff-IOIS Lausanne, Switzerland
+
+SUMMARY
+The interpretation of factors constitutes a major problem in factor analysis. Until now the underlying
+semantic aspects of the question have been studied only occasionally. However, there are some
+indications that the mechanical interpretation of the results may constitute in the immediate future a real
+need in the realm of very large problems. On the other hand, the semantic study of multivariate statistical
+methods is the only way to warrant the validity of the mechanization procedures and the means to
+identify their limits.
+K E Y WORDS Semantics
+
+Factor analysis Induction Multivalued logic
+
+1. SETTING BOUNDARIES FOR FACTOR ANALYSIS
+
+Generally speaking, the various methods of multivariate statistical analysis (MSA) endeavour
+to explain the variance of the sample, seeking the underlying pattern of relationships or
+grouping either the phenotypic variables or the observations.
+Factor analysis (FA) methods are very much in tune with the standards and epistemological
+constraints of modern scientific reasoning, although they d o not fully encompass the whole set
+o f requirements to such an extent as to replace the logical methods of induction.
+What the family of multivariate statistical analysis methods surely does is to extend and
+complement the panoply of the logician’s tools in particular for inductive reasoning, inasmuch
+as it provides very illuminating inferences over data collections. In spite of that the results of
+MSA methods lie only midway between the raw empirical facts and the ideas or theoretical
+constructs.
+Looking in more detail at the flurry of techniques which are available today, one may
+wonder why there are so many for performing apparently the same tasks. The very existence
+o f this fairly large set of methods reveals a certain ‘malaise’ and clearly testifies to the existence
+of various obstacles that undermine the application of MSA to real-life experiments in many
+cases.
+The main problems the user has to face are schematically presented in the following.
+1.1. The entrenchment of the universe of discourse
+It is obvious that the minimum criterion we should afford for ensuring the validity of any
+statistical treatment is that the collection of data be neither artificially truncated nor blatantly
+
+8755-0024/ 92/010007- 1O$ I 0.00
+(91992 by John Wiley & Sons, Ltd.
+
+Received 4 March 1991
+
+B. F. LARA, E. TARTAS AND P . OYARZABAL
+
+incomplete. Moreover, the sample set should ideally represent all the various instances or
+situations and all the aspects-or relevant attributes-of the phenomenon under study.
+However, it often happens that the chosen set of phenotypic variables constitutes merely a
+subset of the overall set of significant variables required for the intended explanatory purposes.
+Somewhat in this connection, the Alpha factoring techniques purport to define a set of
+factors that have a maximum of generalizability, as measured by the Cronach alpha or by the
+Kuder-Richardson reliability index, the objective being to make reliable inferences about the
+universe of variables based on a sample of them.
+Other techniques, such as image factoring (Guttman) approximate the closely related
+problem of the estimation of communalities. But the validity of this approach relies again on
+how well and to what extent the a priori selected set of variables represents the semantically
+meaningful universe of discourse.
+
+1.2. The interpretation of factors
+Each line of the factor matrix F exhibits the canonical correlations existing between each
+phenotypical variable and the extracted factors. Consequently, the factor loadings in principle
+should provide the analyst with the essential clues for the interpretation of the factors
+underlying the data.
+But the job of interpretation which has to be carried out by the human analyst proves very
+often to be highly sensitive, tedious and sometimes unsatisfactory.
+The trouble is that the underlying dimensions of the same sample may be defined in many
+ways. All of them are statistically valid, since one factor solution can be transformed onto
+another without violating any basic assumption. The trouble arises because not all are equally
+meaningful and useful for practical purposes.
+Let us put aside the otherwise important question of whether we have to start with the
+covariance matrix or with the correlation matrix-and the question of whether or not to
+replace the 1’s of the diagonal by the estimated communalities. There still remains the choice
+of the rotational procedure: either orthogonal (varimax, quartimax, equimax) or oblique.
+Orthogonal factors are simpler t o handle, whereas the oblique ones are usually considered
+to be more realistic, although there does not seem to exist a strong logical justification for this
+assumption.
+Short of being able to propose an univocal and unambiguous way of uncovering the truly
+useful factors, some authors (e.g. Harman’ and previously Thurstone’) have suggested a
+couple of rules of thumb in order to decide whether the resulting structure-after a given
+rotation-is adequate or not. The rationale of these criteria is very simple and it is guided by
+geometrical but not epistemologically rigorous speculations:
+(a) many points must lie near the factor axes;
+(b) a small number of points should appear t o be removed from the axes; and
+(c) a large number of points must lie near the origin, if there are many factors.
+In spite of the abundance of techniques, at the end of the exercise the analyst is left alone
+under the burden of having to choose among several possibilities, and without the certainty
+of reaching the right results, namely those which convey a real semantic meaning. Even worse,
+this confusing situation leads many people to arbitrary interpretations, specially when lacking
+a real insight and a deep understanding of the subject of the enquiry.
+
+10990747, 1992, 1, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/asm.3150080103 by University Of Alberta, Wiley Online Library on [19/04/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+8
+
+9
+
+1.3. Instability of the results
+Sampling errors and incompleteness of the set of phenotypic variables tend to generate the
+instability of the eigenvalues and eigenvectors and, consequently, of the rotated or unrotated
+factor loadings.
+The effect of the coding of data may possibly somewhat spoil the resulting configurations.
+These perturbations are not surprising whenever the metric of the scales is either heterogeneous
+or not given in a homogeneous fashion. In some circumstances, the simple fact of taking
+logarithms of the value demonstrate how much a change of scale may distort the emerging
+structure.
+The quantification of the variability of principal components had preoccupied the
+statisticians for many years. Some of them calculate confidence intervals assuming a normal
+distribution for the first principal component. Little is known however about the second
+component and the higher ones.
+As far as the analysis of correspondences is concerned, M . G. Kendall and A. Stuart
+suggested that the lambda values follow a chi-square distribution as the overall variance of the
+sample, but H.O. Lancaster has again disputed this assumption.
+At any rate, the recent bootstrap techniques allow us to cope-at least partially-with this
+problem and to calculate the statistical moments of the distribution of any parameter we want,
+without assuming any distribution (Diaconis and Effron). By all means it remains a fact that
+the factor loadings are not fixed values as we would have preferred, but only the more or less
+biased estimation of a value which follows a probabilistic function of unforseeable nature.
+
+2. A LINGUISTIC APPROACH
+When the analyst attempts to interpret the factors, what he does is to try to assign meanings
+to these factors on the basis of correlations exhibited by the matrix and relating the original
+variables to factors. In the search for meanings, the analyst is guided in a more or less explicit
+manner by an underlying theory of the phenomenon previously existing in his mind. (In this
+context the word ‘theory’ is understood in its very etymological sense, namely ‘a look at
+something’. This may be a well constructed set of scientifically sound statements or a
+postulational model, or even a loose and intuitive body of knowledge.)
+Let L be a first order language in which the theory T is stated. In our case, having to deal
+with data of a statistical nature we must distinguish between necessary and contingent truth.
+The latter is attached to the probabilistic statements, and is linked with the very notion of
+‘possible worlds’.
+Intentional logics such as modal logics contains notions like that of ‘possible worlds’.
+For good reasons, the set of constants of language L is restricted to properties. Properties
+play an indispensable role in our understanding of world phenomena. These properties are
+merely the natural language adjectives that we use attributively. In particular, one can assign
+a predicate to each instance of phenotypic variable and to each intended factor.
+The semantic structure of predicates is a major topic of linguists and logicians. 3 g 4 9 5 , 6 Leaving
+aside important questions, specifically the question of fine-grainedness of predicates, we need
+to define a structure for the whole set of predicates choosing among the many possible ways.
+Meanings require polymorphic structuring, as they appear to exist in different categories that
+go far beyond the standard type theory.
+
+10990747, 1992, 1, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/asm.3150080103 by University Of Alberta, Wiley Online Library on [19/04/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+SEMANTICS A N D FACTOR ANALYSIS
+
+B. F. LARA, E. TARTAS AND P . OYARZABAL
+
+A possibility could be to define a topological space, issued from an adequate set of axioms.
+Another way-which we have chosen here for the sake of simplicity-is t o follow the
+aristotelian schema of a kind of Porphyrius tree defined by means of a cascade of genera and
+differentiae.
+Accordingly, we could figure out a graph structure of predicates, i.e. a collection of distinct
+nodes representing the predicates related t o the phenomenon, together with an unspecified
+number of lines representing an ordering relationship defined over predicates.
+If we assume with Russell that each constant y , representing an individual, may be
+considered as a bundle of properties (located somewhere in the preceding nodes of the graph),
+it turns out that the terminal nodes of the graph correspond to the individuals or observations
+of the initial statistical tableau. Hence they are at the lower layer of depth n. The ordering
+relationship establishes that predicates associated with a given node entail (extensively) all
+other predecessors corresponding to predecessor nodes in the graph structure. Consequently
+the predicates x related to the phenotypic variables will be located at level n - 1. The factors
+should be found somewhere at levels lower than n - 1 (or equal to n - 1). Let Il be a nonempty set of predicates
+
+n = (Ti)= ( ( X I ,( Z l , . * . )
+where X = ( x i ) and Z = (a,) and let I’ be the underlying graph structure for these predicates.
+Note that it is not needed t o give the full graph structure in an explicit manner.
+One theory relative to the phenomenon requires a set of objects-a local ontology
+(LeniCwski, Quine, Hintikka)-and an ideology defined as the set of conceptual tools needed
+to describe these objects.
+Sentences of the theory are stated with the help of a formal language L containing in
+addition t o the symbols related t o the predicates, the familiar logical connectives
+l, A, V, = , -. Formally, the set of sentences belonging to L constitutes S L , according to the
+following rules:
+(i) if rI; E n then +IE
+;SL;
+(ii) if a E SL and 6 E SL then ( a A 0)E SL
+The last rule applies also to other connectives.
+Still, we will extend the language L to L + , by adding the necessitation connectives of a
+muitivalued modal logic:
+
+o a is read as ‘ a is necessary’
+o a is read as ‘ a is possible’
+0 2 a is read as ‘ a is very possible’
+(Note the modifier).
+Example: For a , ,8 E SL, 0 ’ ( 0 1 A P ) stands for ‘ a and P are very possible’. Intuitively
+speaking, if a and ,6 are predicates the above sentence admits of the set-theoretical
+interpretation: ‘the intersection of 01 and ,6 is very possible’; or, translated into terms of
+extensionality: it is very possible that the individuals exist: ( jI ay and b y ) .
+The formal language defined above allows one to express in formal fashion all the
+hypothesized candidates of meanings attached to the factors.
+For example, the meaning of an arbitrary intended factor U ~ E
+C is described by means of
+an S L + sentence as follows:
+Uj: 0 ’(X, A Uj) A
+
+0 (X2 A ~
+
+j A ). _ .A ( X i A ~
+
+j A )...
+
+10990747, 1992, 1, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/asm.3150080103 by University Of Alberta, Wiley Online Library on [19/04/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+10
+
+11
+
+Of course, with the help of such statements we can afford to reflect the scientific or intuitive
+knowledge the analyst possesses about the phenomenon under study.
+
+2.1. Formal statements related to the F matrix
+We assume that a theory makes a distinction between:
+(a) sentences intended to stipulate the meanings of the factors in terms of phenotypic
+variables, via L + ;
+(b) sentences intended to carry an empirical claim, via a formal translation of the
+informational content of the factor matrix.
+The latter sentences of analytical nature constitute a model W for L + , and hence are
+considered as a canonical intensive interpretation of L + .
+Example: let us take 0.9 as an arbitrary value of the element A, of the matrix F and let 0.4
+be a threshold value extracted from the statistical tables for a given significance level of this
+correlation coefficient. This information may be written as follows:
+
+( M Y )xiYAajy
+should be read as ‘for many individuals the predicate xi holds as well as the predicate u,’.
+Where M is a quantifier that stands for ‘many’; y is an individual; x; and a, keep the same
+readings as above.
+In order to carry out the formal translation, we have introduced the new quantification
+symbol M for ‘many’. In addition, we need the additional quantifiers S for ‘some’, the
+classical A for ‘all’ and E for ‘there is a’. The introduction of M and S is obviously
+appropriated in the statistical context.
+Moreover, for a! an atomic sentence of the shape XjyAu,y, the quantifiers are used to
+translate the real values in the interval [ - 1, 11 according to the following rules:
+Rule I . ( M y ) whenever f i j 2 th-2 (square root of the threshold value).
+Rule 2. ( S y ) whenever th-2 > f, 2 th.
+Rule 3. Values of the matrix coefficients such that th > f i j > - th are ignored.
+Rule#. Negative coefficients are translated as (My)7 and (Sy)-,, in a similar fashion.
+
+2.2. Hintikka-style possible worlds approach
+A model W for S L is an ordered pair (D,
+P ) in which: D is a set (domain) of individuals
+belonging to the sample; P = ( p i ) is a collection of sentences conveying the statistical
+information contained in the matrix F.
+The model W is a possible world, as one of the many doxastic alternatives, in our case one
+of the potentially many samples that can be drawn from the statistical universe. Hintikka‘ calls
+alternativity rules those rules which allow us to select among the possible worlds. Here,
+reversing the Hintikka approach, we try to find the ontological definitions, as stated by S L
+sentences, which are compatible with the model, as exhibited by the sentences generated
+from F.
+The logical adequacy (or strong compatibility) criterion states that two expressions e E S L
+and e‘ E P are judged to be semantically related if their formal representations are provably
+related. In other words, if the world-here the extension as expressed by e‘-is the way e E S L
+says it is, then clearly e has all the information contained in e’ (and possibly more).
+
+10990747, 1992, 1, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/asm.3150080103 by University Of Alberta, Wiley Online Library on [19/04/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+SEMANTICS AND FACTOR ANALYSIS
+
+compare expressions of type e and e’ requires the following.
+A falsifiability criterion, whenever the logical axioms set are violated. In this case, the
+hypothesized meaning for a factor does not correspond to, or even contradict, the
+mathematical profile of the factor as given by F.
+A weak identity criterion. When the expressions have the same extension, the two logical
+entities may be collapsed into the same logical object (strong compatibility).
+A degree of compatibility between sentences. Midway between complete verification and
+falsifiability, expressions issued from the ontology and those derived from the empirical
+world may often be logically compatible to different degrees.
+2.3. Formal description of the procedure
+Semantics associates a satisfaction relation E W , L between sentences of L + and elements of
+a class W L +of L-structures for W .
+If W E W L +then r=W ~ w , L +is read as saying that a is true in W or W is a model of a .
+If C E SL then W is a model of C, if W is a model of every sentence a in C.
+Tarski-equivalences for all W E W:
+W E -p * w nf: a
+W E ~ A P + + W E (and
+~ WEP
+
+(i)
+(ii)
+
+In addition:
+(iii)
+
+W ~ ( o a ) * (3W)WE W a n d W = a
+
+The core of the procedure consists in comparing the SL sentences with the corresponding W
+models. In order to do that it is useful to replace the quantifiers in the latter by modal
+connectives with the help of the x quasi-equivalence operator. The replacement rules would
+be:
+( M y ) XjyA ujy “ 0 2 X i y A ~ j y
+(Sy)XiyAUjjy = O X i y A ~ j y
+
+(iv)
+(v)
+
+(The monadic
+connective is not affected by the replacement rules).
+The falsifiability, weak identity and compatibility criteria may be applied in two ways:
+(1) by stating a set of axioms like the following:
+O2a+
+
+(Vi)
+
+(vii)
+(viii)
+
+ocu
+
+V O
+1 0O2a a
+* 0 lT a
+2
+02al 0 -p
+
+(ix)
+
+(2) alternatively, by defining a suitable algebra, or the equivalent truth tables; after
+establishing a correspondence between multivalued truth values (3, 2, 1 , 0) and the modal
+connectives ( n , o 0 , o-,), we have the tables I, I1 and 111.
+
+’,
+
+0
+
+3
+
+Table I
+
+~y 7
+2 2 2 1 0
+
+2 3 1 0
+
+1 1 1 1 0
+0 0 0 0 0
+
+1 1 3 0
+0 0 0 3
+
+Table I1
+
+Table Ill
+
+10990747, 1992, 1, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/asm.3150080103 by University Of Alberta, Wiley Online Library on [19/04/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+B. F. LARA, E. TARTAS AND P. OYARZABAL
+
+13
+
+2.4. Algorithm
+
+The linguistic approach described above may easily be translated in algorithmic terms in
+several fashions; and it is a simple task to implement the corresponding computer programme.
+
+3. EPISTEMOLOGICAL VALIDATION
+Popper drew a line between the genuine analytic sense and nonsense. Empirical statements are
+the business of modern science. The modern view of science lies in a firm rejection of the
+demands of pure deductive reasoning. Empirically significant accounts fall in the domain of
+empirical science because their truth or falsehood is decidable by reference to observational
+data and not only to their forms or meanings alone.
+Practice has widely admitted the important role of FA methods in inductive reasoning. At
+first glance its empirical basis and compliance with the standards of falsifiability and
+significance appear to suit modern requirements of scientific knowledge very well.
+Ideally, scientific discourse about things or events is to be translated into a language.
+Observational data are to be its primitive terms, in spite of the fact that they necessarily imply
+hidden theoretical notions. The search for factors of FA appears coincident with the task of
+finding the so-called dispositional terms (what Carnap does through reduction sentences).
+However, one has to keep in mind that the role of observational data is to refute or falsify
+a hypothesis and nothing more. What we get from FA is a generalization, but hardly an
+explanatory theory.
+
+3.1. Validation of linguistic approach
+The operational scheme proposed above in Section 2.3 establishes a criterion of
+confirmability allowing at least some selection from among hypotheses and stringent enough
+to provide legitimate differentiation between contradictory inductions. Note the following:
+(a) As is any non-observable predicate, a disposition term (meaning of factor) is permissible
+i f eliminable by definition in terms of the observational primitives (phenotypic variables).
+(b) In some way, a factor meaning or interpretation corresponds to a projectible hypothesis
+rather than to a law-like induction, as Goodman pointed out when speaking about induction.
+(c) The set of SL statements is tentative and expandable, in the sense that there are further
+hypothesis selections that may be accounted for.
+(d) A set of hypotheses for which the compatibility conditions cannot all be satisfied
+simultaneously is called ‘frustrated’. When the original design of the experimentation fails, the
+observational variables do not allow us to construct the ‘true’ disposition term because of the
+incompleteness of the initial set of variables.
+(e) When modelling the large variety of phenomena that we can handle with MSA methods,
+and in order to describe world events and entities with the help of properties, we must
+remember that properties are classified in two categories according to the typology of
+Georgescu-Roegen and Katzner. First, the so-called ‘arithmomorphic’ properties, perfectly
+capable of sharply delineating the boundaries of a given concept. In this case, numbers and
+quantitative scales can be associated with these properties. That happens when the
+phenomenon under study is related to the natural and metrizable world. In contrast, the
+
+10990747, 1992, 1, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/asm.3150080103 by University Of Alberta, Wiley Online Library on [19/04/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+SEMANTICS AND FACTOR ANALYSIS
+
+B. F. LARA, E . TARTAS AND P. OYARZABAL
+
+sociobiomorphic properties arising in the sociological contexts do not permit perfect
+association with continuous scales, and therefore meanings are not unequivocally
+distinguishable from their opposites.
+
+4. NUMERICAL EXPERIMENTS
+
+The success of any experiment based on a computer programme corresponding to the linguistic
+approach described above depends heavily on the nature of the field we are dealing with. As
+one would expect, the results are more encouraging in the arithmomorphic domains.
+Contrarily, in the sociobiomorphic areas the main problem lies in conceptual modelling, i.e.
+in stating a suitable set of intended meanings which constitute the postulational theory.
+4.1. A Thrustone-inspired experiment
+
+( I ) Suppose we are asked to extract the normalized factor matrix F from a table of N
+observations defined over 10 variables: (The experiment is inspired by an idea of Thurstone.)
+(2) Only after we get the results are we told that the data of the experiment consist in series
+of measures corresponding to N geometric figures of the same shape.
+
+(3) We are also told that the phenotypic variables or observational data in this particular
+example represent several measurements, such as the length of three diagonals on the surface,
+the volume of the figures, linear combinations of the three dimensions taken pairwise, etc.
+The computer programme performs very well in assigning potential meanings t o the factors.
+(Except for the first factor, which turns out to be a well-known common factor. In this
+particular circumstance, the interpretation therefore requires 1 he ingenuity of a human
+analyst .)
+Of course, the case study of the Thurstone experiment is ideal for handling since we know
+that the objects under study are identical geometric figures, i.e. abstract objects, and as with
+any mathematical construct the field is perfectly closed from a semantic point of view.
+Moreover, knowing that the domain is a geometrical one, we are in a position to ascertain
+that the underlying formal structure is workable in terms of a topological vector space.
+
+4.2. The sociobiomorphic domains
+Let us go further by proposing a multivariate statistical study applied to the colours of a
+collection of famous paintings. (It could also be the adjectives describing colours used by a
+school of poets.)
+Colours and shapes of objects are indeed empirically observable data and constitute for us
+a shared world of reference. At first glance the human eye could be taken to resemble a T V
+camera which measures how much energy is in the wavelength from each point on an image.
+However the sole colour predicates, taken as physical realities, are clearly insufficient for the
+operational needs of the artist, whose brain most certainly works also with other nonobservational variables.
+Let us suppose first that the experiment is restricted to the pure arithmomorphic aspects of
+the phenomenon of colours.
+We know pretty well the underlying physical theory of colours (and even, to a certain extent,
+
+10990747, 1992, 1, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/asm.3150080103 by University Of Alberta, Wiley Online Library on [19/04/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+14
+
+15
+
+the physiology of colour vision). Recalling that each colour has a characteristic angle of
+refraction and hence that a pure colour corresponds to light of a distinct wavelength, the basic
+predicates related to the phenotypic variables could be the set X of pure colours.
+
+X = (red, orange, yellow, green, blue, violet)
+The physical theory allows us t o translate colours into arithmomorphic terms and hence the
+application over the real line R is obvious
+g:
+
+x- R 6
+
+where IR6 stands for the Cartesian product of the real values corresponding to the six pure
+colours of the spectrum. The colour of a given object is therefore given by a vector on this
+six-dimensional space in order t o admit different hues and combinations of colours.
+(Although, according to the theory of trichromacy, most colours can be matched by a mixture
+of only the three primaries.)
+It is not surprising that in this reductionistic context our programme easily finds the
+underlying pure or primary colours.
+But coming back to the universe of discourse of the painter, it is quite clear that he associates
+colours with feelings like sadness, joy, etc. and other intellectual connotations. The
+formalization of his universe of discourse is not exhaustively given by the arithmomorphic
+properties of the underlying physical phenomenon. Dropping the additional non-physical
+linguistic variables would make it impossible to cover the operational attributes required for
+the painter’s aim of communicating emotions and ideas to other people. If that were the case,
+we would accept the implicit and na’ive belief that colour, unlike beauty, is uniquely and
+directly determined by a mere external physical cause.
+Formalization of the enlarged universe of discourse needs an enquiry into what topological
+structures are suited to the description o f the underlying phenomenon.
+This enquiry is worth making because we encounter the same difficulties when modelling
+social and economical scenarios. Our contention is that there exists a strong analogy between
+these and the colour surrogate, since the underlying brain functions must be quite similar.
+
+5 . CONCLUSIONS
+( 1 ) Phenotypic variables are used in factor analysis as a means for uncovering cryptotypic
+variables which usually reveal the underlying causes or explanations of the observable
+behaviour.
+
+( 2 ) Conceptual models in the area of sociology imply in many cases a number of variables of
+a sociobiomorphic nature that d o not allow measurements over either a continuous o r a
+discrete scale. Depending on the field, the application of the linguistic approach will be more
+or less difficult.
+(3) The interpretation of factors in terms of weights of the phenotypic sample variables (or
+individuals) is sometimes hazardous, and requires a good (expert) knowledge of the
+phenomena. Still, the amount of work and human contribution necessary for the task of
+interpretation is considerable. Many researchers in the areas of biogenetics, astrophysics and
+sociology would welcome the help of some kind of automatic interpretation (or at least an
+expert system of assistance), as the most suitable tool for the advancement of scientific
+discovery when they are confronted by an ever increasing amount of data.
+
+10990747, 1992, 1, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/asm.3150080103 by University Of Alberta, Wiley Online Library on [19/04/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+SEMANTICS AND FACTOR ANALYSIS
+
+B. F. LARA, E. TARTAS AND P. 0YARZABA.L
+
+(4) Given the large amount of data available, or to be available, in such an important area
+as the interpretation of polygenic characteristics in genoma decoding, the lack of adequate
+multivariate techniques for dealing with large size matrices and for automatically interpreting
+the results, are about t o constitute a severe bottleneck. The same situation occurs in the fields
+of astrophysics and sociology. We are therefore convinced that a substantial extension of
+current methodology is a major issue for the next few decades.
+
+(5) Whereas arbitrary interpretations plague the pure experimentalist, neoanalytic linguists
+may be hampered by their unfamiliarity with statistics or by their lack of a deep understanding
+of the subject. Epistemology and data analysis should not progress in isolation. From the
+conjunction of efforts one should expect great benefits.
+Several other alternative approaches (topological, fuzzy sets theory) to the problem may be
+undertaken. The present paper is only a preliminary contribution to the work. Much will need
+to be done before these possibilities can be fully organized in a coherent way. Our purpose has
+been to stimulate further research in this area until we build adequate algorithms, or possibly
+an efficient expert system.
+
+REFERENCES
+1. H. H. Harrnan, Modern Factor Analysis, University of Chicago Press, Chicago, 1967.
+2. L. L. Thurstone, Mulfiple-Factor Analysis, University of Chicago Press, Chicago, 1947.
+3. G. Chierchia, er ai. (eds) Properties, Types and Meaning, Kluwer Academic Publishers, Dordrecht, 1989.
+4. J. Hintikka, Models for Modalities, Reidel Publishing Co., Dordrecht, 1969.
+5 . J . Hintikka, Knowledge and the Known, Reidel Publishing Co., Dordrecht, 1974.
+6. E. L. Keenan and L. M. Faltz, Boolean Semantics for Nafural Language, Reidel Publishing Co., Dordrecht, 1985.
+
+10990747, 1992, 1, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/asm.3150080103 by University Of Alberta, Wiley Online Library on [19/04/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+16
+
+

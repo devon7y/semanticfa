@@ -1,0 +1,779 @@
+Psychological Assessment                                                                                                          © 2011 American Psychological Association
+2012, Vol. 24, No. 2, 282–292                                                                                                  1040-3590/11/$12.00 DOI: 10.1037/a0025697
+
+
+
+
+      Determining the Number of Factors to Retain in an Exploratory Factor
+         Analysis Using Comparison Data of Known Factorial Structure
+
+                                                              John Ruscio and Brendan Roche
+                                                                     The College of New Jersey
+
+
+                                Exploratory factor analysis (EFA) is used routinely in the development and validation of assessment
+                                instruments. One of the most significant challenges when one is performing EFA is determining how
+                                many factors to retain. Parallel analysis (PA) is an effective stopping rule that compares the eigenvalues
+                                of randomly generated data with those for the actual data. PA takes into account sampling error, and at
+                                present it is widely considered the best available method. We introduce a variant of PA that goes even
+                                further by reproducing the observed correlation matrix rather than generating random data. Comparison
+                                data (CD) with known factorial structure are first generated using 1 factor, and then the number of factors
+                                is increased until the reproduction of the observed eigenvalues fails to improve significantly. We
+                                evaluated the performance of PA, CD with known factorial structure, and 7 other techniques in a
+                                simulation study spanning a wide range of challenging data conditions. In terms of accuracy and
+                                robustness across data conditions, the CD technique outperformed all other methods, including a
+                                nontrivial superiority to PA. We provide program code to implement the CD technique, which requires
+                                no more specialized knowledge or skills than performing PA.
+
+                                Keywords: exploratory factor analysis, number of factors, parallel analysis, comparison data, Kaiser
+                                criterion
+
+
+
+
+   Exploratory factor analysis (EFA) is performed routinely to                              In many ways, the content, meaning, and psychometric proper-
+study the latent factors that underlie scores on a larger number of                      ties of scales and subscales depend on the care with which one
+measured variables or items. This data-analytic tool is especially                       determines the number of factors underlying a set of item re-
+popular in the development and validation of assessment instru-                          sponses, with theoretical and practical costs falling on those who
+ments. Henson and Roberts (2006) found that EFA is used espe-                            make suboptimal choices. For example, a researcher attempting to
+cially frequently in the research areas of measurement and assess-                       create internally consistent scales might make poor decisions re-
+ment, education, and personality, and they focused their review of                       garding which items to retain, remove, or revise if the number of
+published EFAs on the journals Psychological Assessment, Edu-                            factors is not determined correctly. The internal consistency of one
+cational and Psychological Measurement, Journal of Educational                           or more subscales might appear weak if items that would hang
+Psychology, and Personality and Individual Differences. Whereas                          together nicely are spread across an artificially large number of
+confirmatory factor analysis is used to test the fit of specified                        subscales. Alternatively, potentially useful scales, or even theoret-
+structural models, EFA often is used when there is little or no a                        ically interesting new constructs, could be missed altogether if too
+priori justification for specifying a particular structural model. For                   few factors are included in the data analysis to allow a subset of
+example, rather than specifying the number of latent factors un-                         items to reveal an otherwise hidden pattern in the data. Researchers
+derlying a set of item responses, one might proceed in a more                            developing or validating assessment instruments would benefit in
+exploratory manner by determining the number of factors empir-
+                                                                                         a number of ways from the application of reliable methods for
+ically. Along with many other investigators, Henson and Roberts
+                                                                                         determining how many factors to retain in EFA.
+noted that this task remains one of the most significant challenges
+                                                                                            Many techniques are available to address this challenging prob-
+to implementing EFA successfully.
+                                                                                         lem. Some of the better known methods are the scree test (Cattell,
+                                                                                         1966), Kaiser’s (1960) eigenvalue-greater-than-1 rule, and parallel
+                                                                                         analysis (Horn, 1965). Each of these, along with some more
+   This article was published Online First October 3, 2011.                              recently developed tests, begins with the calculation of eigenvalues
+   John Ruscio and Brendan Roche, Department of Psychology, The Col-                     from an item correlation matrix.1 We explain the rationales under-
+lege of New Jersey.
+   This research builds upon work that the second author performed as his
+                                                                                           1
+senior honors thesis under the supervision of the first author. We would                     Exploratory factor analyses can be performed using item covariance
+like to express our thanks to the other thesis committee members, Jason                  matrices. Referring to the special case of item correlation matrices, the
+Dahling and Jean Kirnan, for helpful comments and suggestions as this                    covariation matrix based on standardized variables, simplifies some of the
+project developed.                                                                       details we present. For example, the familiar Kaiser criterion identifies
+   Correspondence concerning this article should be addressed to John                    the number of factors as the number of eigenvalues greater than 1 when
+Ruscio, Department of Psychology, The College of New Jersey, P.O. Box                    performed using item correlation matrices; with covariance matrices for
+7718, Ewing, NJ 08628. E-mail: ruscio@tcnj.edu                                           unstandardized items, different thresholds are required.
+
+                                                                                   282
+                                      EXPLORATORY FACTOR ANALYSIS WITH COMPARISON DATA                                                            283
+
+lying procedures for examining patterns of eigenvalues, each of           discontinuity. Figure 1 shows two illustrative scree plots for data
+which specifies a stopping rule to determine the number of factors        sets with N ⫽ 200 cases and k ⫽ 10 items, each created using a
+(see Velicer, Eaton, & Fava, 2000, for an excellent overview).            structural model with F ⫽ 2 orthogonal (uncorrelated) latent
+Other methods compare the fit of structural models with varying           factors. (For the moment, ignore the solid line and dotted curve on
+numbers of factors. If one conceptualizes model comparison suf-           each plot.) In the first data set, the first two factors captured more
+ficiently broadly, this includes Velicer’s (1976) multiple average        than 40% of the total item variance, and the fact that the first two
+partial procedure as well as maximum-likelihood approaches that           eigenvalues are considerably larger than the remaining eight eigen-
+yield fit indices such as the Akaike information criterion (AIC;          values is easy to see; this illustrates an unambiguous scree plot. In
+Akaike, 1974), Bayseian information criterion (BIC; Schwarz,              the second data set, the first two factors captured just under 30%
+1978), and chi-square tests. In addition to reviewing and evaluat-        of the total item variance, and the discontinuity between the first
+ing methods that have fared well in prior research (e.g., Fabrigar,       two and remaining eight eigenvalues is more difficult to discern;
+Wegener, MacCallum, & Strahan, 1999; Velicer et al., 2000;                this illustrates an ambiguous scree plot, one in which the signal of
+Zwick & Velicer, 1986), we present and test a new method that             genuine latent factors is hard to detect against the noise of normal
+bridges the eigenvalue-pattern and model-comparison families of           sampling error. Because scree plots are often ambiguous, objective
+techniques.                                                               criteria or “stopping rules” have been developed to determine the
+   Making the decision about how many factors to retain when one          number of factors to retain.
+subsequently performs an EFA does not necessarily mean that one              The Kaiser criterion is the most commonly used stopping rule
+has to use the same methods as when the EFA itself is performed.          (Henson & Roberts, 2006), and it is the default on programs such
+For some of the techniques that we describe and study, determin-          as SPSS. The rule sets the threshold between large and small
+ing the number of factors to retain constitutes a decision one can        values at an eigenvalue of 1, the arithmetic mean of the eigenval-
+make as a preliminary step without having performed EFA. Thus,            ues (recall that these sum to k for k items). Each eigenvalue greater
+we review and test techniques traditionally used prior to a principal     than 1 is interpreted as representing a factor, and each value below
+components analysis as well as those traditionally used prior to or       1 is not. The basis for the rule is that a factor should not account
+as part of an EFA, including some techniques that require
+maximum-likelihood estimation methods and a new procedure that
+relies on the generation and analysis of comparison data with
+                                                                                                          Unambiguous Scree Plot
+known factorial structure. In short, we did not set out to study EFA
+itself, but a decision that may or may not be made prior to                                         3.0
+performing an EFA.
+
+
+
+                                                                                       Eigenvalue
+                                                                                                    2.0
+   Examining the Pattern of Eigenvalues for an Item
+                 Correlation Matrix                                                                 1.0
+   A good place to start in understanding conventional methods
+used to determine the number of factors to retain is with an                                        0.0
+examination of the k eigenvalues for an item correlation matrix,
+where k is the number of items. Each eigenvalue represents the                                               2   4       6      8    10
+share of the total item variance that can be captured using one                                                      Position
+linear combination of the items, and the sum of the eigenvalues
+equals k. For example, if the first (largest) of the eigenvalues for 10                                    Ambiguous Scree Plot
+items is 5.00, this means that a single linear combination of items
+                                                                                                    3.0
+can capture 50% of the total item variance. To the extent that a
+small number of eigenvalues are relatively large and most are
+
+
+                                                                                       Eigenvalue
+relatively small, this pattern suggests that a small number of linear                               2.0
+combinations can be used to capture much of the total item
+variance. These linear combinations correspond to the latent fac-                                   1.0
+tors underlying the item responses. Thus, many methods for de-
+termining the number of factors to retain in EFA are based on an
+examination of the pattern of eigenvalues.                                                          0.0
+   Cattell’s (1966) scree test is a graphical method in which the k                                          2   4       6      8    10
+eigenvalues are plotted in descending order, and a graph con-
+structed in this way is called a scree plot. The scree test is                                                       Position
+performed by searching for an “elbow” in the plot, or an abrupt
+                                                                          Figure 1. Scree plots for two illustrative data sets with N ⫽ 200 cases and
+transition from large to small eigenvalues. However, there is not
+                                                                          k ⫽ 10 items, each created using a structural model with F ⫽ 2 orthogonal
+always a visual elbow on the scree plot, in which case the test           (uncorrelated) factors. In the first data set, the first two factors captured
+requires a difficult subjective judgment of where a line should be        more than 40% of the total item variance. In the second data set, the first
+drawn to determine the number of factors to retain. Gorsuch (1983)        two factors captured just slightly less than 30% of the total item variance.
+noted that scree plots can be ambiguous due to the presence of            In each plot, the solid line at y ⫽ 1 represents the Kaiser criterion and the
+more than one discontinuity in the graph or the lack of a visible         dotted curve shows the parallel analysis reference eigenvalues.
+284                                                          RUSCIO AND ROCHE
+
+
+for less total item variance than a single item (Kaiser, 1960).              Using the AF method, one locates the elbow by determining
+However, this criterion fails to take into account normal sampling        where the slope of the graph changes most sharply. At each
+error. As Turner (1998) noted, the difference between eigenvalues         position j, the acceleration factor a is calculated as the change in
+of 1.01 and 0.99 is negligible and may be due to nothing more than        slope:
+sampling error, yet the former value will be considered indicative
+of a factor while the latter value will not. Moreover, sampling error                     a ⫽ 共eigj⫹1 ⫺ eigj 兲 ⫺ 共eigj ⫺ eigj⫺1 兲
+will yield some eigenvalues greater than 1 even when there are no         This equation only includes eigenvalues because consecutive
+latent factors. Unsurprisingly, this criterion has been found to          eigenvalues on a scree plot are evenly spaced one unit apart. Once
+identify too many factors (Fabrigar et al., 1999). In Figure 1, the       the position j with the largest value of a is located, the number of
+solid lines at y ⫽ 1 graphically depict the Kaiser criterion. For the     factors is identified as j ⫺ 1. As with the OC technique, the value
+unambiguous plot, this stopping rule correctly identifies two fac-        of j is capped at the number of factors identified by PA. For both
+tors; for the ambiguous plot, this rule incorrectly identifies five       illustrative data sets, the AF technique correctly identified two
+factors. This is consistent with the EFA literature demonstrating         factors.
+that the Kaiser criterion tends to overextract, or identify too many
+factors.
+   The statistical technique of parallel analysis (PA; Horn, 1965)              Comparing the Fit of Structural Models With
+simulates normal sampling error to generate a series of reference                     Differing Numbers of Factors
+eigenvalues. To perform PA, one calculates eigenvalues for ran-
+                                                                             Rather than examining the pattern of eigenvalues, several addi-
+domly generated data sets of the same dimensions (N cases with k
+                                                                          tional methods for determining the number of factors to retain
+items). These data are drawn at random from a population with no
+                                                                          involve procedures that implicitly or explicitly involve tests of the
+factors, for which the item correlation matrix is an identity matrix.
+                                                                          fit of structural models with varying number of factors. Velicer
+After calculating eigenvalues for each data set, these are averaged
+                                                                          (1976) introduced a criterion based on the average partial corre-
+at each position. The number of factors is estimated as the largest
+                                                                          lations in the correlation matrix after varying numbers of factors
+value j such that the first j eigenvalues for the actual data exceed
+                                                                          have been partialled out. To begin this procedure, one factor is
+those for the random data. The rationale for PA is that the eigen-
+                                                                          partialled out of the correlation matrix, and the average partial
+values for the random data differ from 1 due to sampling error
+                                                                          correlation in the new matrix is calculated. A second factor is then
+alone, so eigenvalues that exceed these represent meaningful fac-
+                                                                          partialled out, and the averaged partial correlation is calculated.
+tors rather than trivial values. Whereas the Kaiser criterion con-
+                                                                          This proceeds as long as the average partial correlation continues
+stitutes a flat threshold at an eigenvalue of 1, PA yields a decreas-
+                                                                          to decrease. The predicted number of factors is equal to the number
+ing series of threshold eigenvalues. In Figure 1, the dotted curves
+                                                                          of factors that were partialled out when the minimum average
+graphically depict the criteria derived using PA. For both plots,
+                                                                          partial was reached. This technique is known as the MAP—for
+this stopping rule correctly identified two factors. PA is supported
+                                                                          “minimum average partial”—procedure. Though no statistical tests
+by stronger empirical evidence than other methods for determining
+                                                                          are performed to quantify model fit, implicitly the MAP procedure
+the number of factors to retain (Fabrigar et al., 1999; Velicer et al.,
+                                                                          involves a sequential search for a parsimonious structural model.
+2000), and interest in PA is due in large part to a simulation study
+                                                                          Velicer, Eaton, and Fava (2000) found that the MAP procedure
+by Zwick and Velicer (1986). Though PA is considered the method
+                                                                          performed well, substantially better than the Kaiser criterion. The
+of choice among methodologists, it is not included in common
+                                                                          MAP procedure correctly identified two factors for the first illus-
+statistical software packages such as SPSS, where the default
+                                                                          trative data set but incorrectly identified one factor for the second
+stopping rule is still Kaiser’s criterion.2
+                                                                          data set.
+   Raiche, Riopel, and Blais (2006) presented two more objective
+                                                                             An approach that more explicitly tests model fit is to use
+solutions to the problem of interpreting a scree plot. The optimal
+                                                                          maximum-likelihood procedures to estimate the parameters of a
+coordinates (OC) and acceleration factor (AF) techniques can be
+                                                                          series of structural models and then calculate information criteria
+used to identify an elbow in a scree plot. To perform the OC
+                                                                          to assess the goodness of fit of each model. Popular indices include
+technique, one calculates a series of linear equations to determine
+                                                                          the AIC (Akaike, 1974) and the BIC (Schwarz, 1978). In the
+whether observed eigenvalues exceed the predicted values. Spe-
+                                                                          context of EFA, one can fit models that include one latent factor,
+cifically, the equation for the jth position connects the points at
+                                                                          two latent factors, three latent factors, and so forth, estimating the
+positions j ⫹ 1 and k, where k is the total number of items. When
+                                                                          loading of each observed variable onto each latent factor with no
+the eigenvalue observed at position j exceeds the value predicted
+                                                                          additional constraints on the models. For each model, calculating
+by an extrapolation with this linear equation, it represents an
+                                                                          fit begins with the maximized value of likelihood function L for
+increase that may be an elbow in the scree plot. One searches for
+                                                                          the estimated model, and this is transformed by multiplying the
+the largest value of j such that the observed eigenvalue still
+                                                                          natural logarithm of L times ⫺2 to obtain ⫺2ln(L); smaller values
+exceeds the value predicted by the equation calculated for that
+                                                                          represent better fit. The AIC and BIC build upon this foundation in
+position; this is interpreted as the elbow and constitutes the number
+                                                                          ways that penalize models that are less parsimonious. Allowing
+of factors predicted by the OC technique. Raiche et al. (2006)
+                                                                          more factors increases the number of free parameters to be esti-
+allow the maximum number of factors to be capped at the value
+identified by the Kaiser criterion or by PA. Because we found the
+latter to be a more effective limit in preliminary testing, we use that      2
+                                                                               For principal components analyses, syntax is available to perform PA
+exclusively. For both illustrative data sets, the OC technique            in SPSS and other popular programs (O’Connor, 2000). This is available
+correctly identified two factors.                                         online at https://people.ok.ubc.ca/brioconn/nfactors/nfactors.html
+                                      EXPLORATORY FACTOR ANALYSIS WITH COMPARISON DATA                                                           285
+
+mated and, hence, the ability to reproduce the observed correlation       value at a high percentile of the distribution—rather than the
+matrix. The AIC adds a penalty of 2p, where p is the number of            mean—to obtain the reference value for each position. For
+free parameters in the model, and the BIC adds a penalty of               example, to reduce a tendency of PA to overextract, Glorfeld
+ln(N) ⫻ p, where N is the total sample size:                              suggested using the eigenvalue at the 95th percentile as the
+                                                                          reference value. Though this would reduce errors of overex-
+                    AIC ⫽ ⫺2ln共L兲 ⫹ 2p                                    traction, it would come at the cost of errors of underextraction.
+                   BIC ⫽ ⫺2ln共L兲 ⫹ ln共N兲 ⫻ p                              Under the conditions studied by Weng and Cheng (2005), they
+                                                                          found that using the eigenvalue at either the 95th or 99th
+Thus, the BIC includes a stronger penalty for allowing additional         percentile minimized total errors. How one calculates reference
+free parameters than the AIC, as ln(N) will be much larger than           values clearly has implications for the magnitude and direction
+two in most model-fitting contexts. When they do not converge on          of bias with regard to overextraction or underextraction, but it
+the same structural solution, the AIC tends to retain a less parsi-       does not solve the fundamental problem that constrains the
+monious model than the BIC (see Burnham & Anderson, 2004, for             accuracy of PA. Whether an observed eigenvalue happens to
+an excellent overview of these criteria). The AIC correctly iden-         fall slightly above or below the reference value matters a great
+tified two factors for both of the illustrative data sets. The BIC        deal, and this renders PA vulnerable to the vicissitudes of
+correctly identified two factors for the first data set but incorrectly   sampling error, especially when observed and reference values
+identified one factor for the second data set.                            are close to one another. It is precisely when the pattern of
+   Another criterion based on maximum-likelihood factor analysis          eigenvalues is most ambiguous that investigators rely most
+is to calculate chi-square values for models with increasing num-         heavily on objective techniques such as PA.
+bers of factors, stopping when the chi-square value is no longer             A second weakness of PA is that when one or more factors are
+statistically significant (p ⬎ .05). One begins with the simplest         present, the reference eigenvalues obtained via PA provide a
+model (one factor) and rejects it only if the chi-square test suggests    biased frame of comparison. Turner (1998), drawing from the
+poor fit. In that case, a model with two factors is estimated, and a      earlier work of Harshman and Reddon (1983), explained that the
+new chi-square test performed. This continues until a model is not        source of this bias is the fact that the k eigenvalues must sum to k.
+rejected, at which point the number of factors is identified. The         After a factor has been identified by an eigenvalue that exceeds its
+chi-square test correctly identified two factors for the first illus-     reference value, the reference values for subsequent positions are
+trative data set but incorrectly identified one factor for the second     not adjusted downward to take into account the large eigenvalue
+data set.                                                                 that has already been observed. For example, consider a sample
+                                                                          with k ⫽ 10 items drawn from a population in which two factors
+   Generating and Analyzing Comparison Data With                          exist, one of which explains 50% of the total item variance and the
+              Known Factorial Structure                                   other explains an additional 10%.3 The expected eigenvalues are
+                                                                          5.00, 1.00, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.50, and 0.50. The
+   We attempted to improve upon the performance of PA, which
+                                                                          expected reference values obtained using PA are 1.00 at each
+appears to be the best supported approach available, by intro-
+                                                                          position. All eigenvalues are subject to normal sampling error. It is
+ducing a technique by which one creates and analyzes compar-
+                                                                          unlikely that the first factor would escape detection, but the second
+ison data (CD) with known factorial structure to determine the
+                                                                          factor could easily be missed: The expected eigenvalue of 1.00
+number of factors to retain. Rather than generating random data
+                                                                          equals the expected reference value of 1.00, leaving matters en-
+sets, which only take into account sampling error, multiple data
+                                                                          tirely up to sampling error. Even once a first factor has been
+sets with known factorial structures are analyzed to determine
+                                                                          identified, the fact that it accounts for 50% of the total item
+which best reproduces the profile of eigenvalues for the actual
+                                                                          variance is ignored rather than used to adjust all subsequent
+data. Varying the number of factors in populations of compar-
+                                                                          reference eigenvalues downward. This introduces a bias toward
+ison data and drawing random samples from each population
+incorporates sampling error as well as factor structure in a              underextraction, which Turner (1998) speculated might tend to
+model-comparison approach. Like the model-testing methods                 offset the bias described earlier, causing PA to overextract. The
+described previously, this is an exploratory technique in which           only circumstance in which all reference values obtained through
+full structural models need not be specified. Rather, one only            PA would represent appropriate thresholds for comparison is when
+needs to decide how many factors to allow in each of a series             no factors exist, and the only source of variance among eigenval-
+of models to determine which achieves the best fit. Likewise, no          ues is normal sampling error. However, it would be unusual in the
+special expertise is required to use this method because it is            extreme for an investigator to perform EFA in the absence of even
+fully automated.                                                          a single factor.
+   The CD method was designed to overcome two weaknesses                     Turner (1998) proposed a sequential modification of PA in
+of PA. The first weakness stems from the fact that PA compares            which the reference eigenvalues are recalculated after each factor
+each observed eigenvalue to a reference eigenvalue by using the
+latter as a threshold. Each reference value is conventionally               3
+                                                                              More generally, suppose F factors exist and that they collectively
+calculated as the mean eigenvalue for that position over a series         account for a proportion S of the total item variance. The first F eigenval-
+of replication samples. Sampling error can cause an observed              ues are expected to sum to S ⫻ k, and each subsequent eigenvalue is
+value to exceed a reference value, and Glorfeld (1995) sug-               expected to be (1 ⫺ S) ⫻ k/(k ⫺ F). Comparing expected values beyond
+gested that this might explain the tendency for PA to overex-             the first F values reveals that for any S ⬎ 0, (1 ⫺ S) ⫻ k/(k ⫺ F) ⬎ 1.00,
+tract. To address this bias, Glorfeld proposed using the eigen-           the expected reference values for PA.
+286                                                          RUSCIO AND ROCHE
+
+
+identified is removed. Each time an observed eigenvalue exceeds             asking whether samples drawn from a three-factor population of
+its corresponding reference value, this identified factor is included       comparison data better reproduce the eigenvalues observed for
+in a model of the data and PA is performed again to obtain a new            the target data than do samples drawn from a two-factor pop-
+reference value for the next position. Rather than using PA as a            ulation of comparison data. If not, this provides a two-factor
+single-iteration frame of reference, Turner’s modification essen-           estimate. If so, the procedure continues once more. This itera-
+tially builds a model with a sufficient number of factors to account        tive technique proceeds through questions shown in boxes
+for the pattern of observed eigenvalues. Our own model-                     toward the right until either a new population fails to improve
+comparison technique builds on this foundation not only by con-             fit, in which case the previous population provides the esti-
+sidering models of successively increasing complexity, but also by          mated number of factors, or the maximum number of factors to
+calculating a measure of fit rather than applying a threshold to            consider is reached with improved fit, in which case this max-
+overcome the first weakness of PA described previously. The CD              imum provides the estimated number of factors. At each stage,
+method builds a model of the data by incrementing the number of             steps required to generate and analyze the necessary compari-
+factors until the full pattern of observed eigenvalues is reproduced        son data of known factorial structure are depicted in the boxes
+well. Whereas small differences between observed and reference              toward the left.
+eigenvalues can make a big difference in the results of PA, this               The CD method combines features of those methods that
+should not be the case for the CD technique because fit is calcu-           examine the pattern of eigenvalues for an item correlation
+lated for the full series of eigenvalues rather than compared at a          matrix and those methods that compare the fit of structural
+single position via a threshold. To perform the CD method, all that         models with varying numbers of factors. What we propose is a
+one would provide to the algorithm are the empirical data for               model-comparison technique that relies on tests of the fit be-
+which one wishes to determine how many factors to retain (re-               tween observed and reproduced eigenvalues. In addition to
+ferred to as the target data set) and the maximum number of                 blending these approaches, the CD method may reduce the
+factors to consider (e.g., one might choose to test the fit of models       chances of obtaining certain kinds of artifactual factors. For
+with from one to five factors).                                             example, when binary items vary in their endorsement rates,
+   Figure 2 provides a schematic diagram of the CD method for               spurious “difficulty factors” can emerge (McDonald & Ahla-
+an analysis that considers the possibility of up to four factors            wat, 1974). More generally, if items in one subset are positively
+underlying the item responses in the target data set. The pro-              skewed and items in another subset are negatively skewed (e.g.,
+cedure begins by asking whether samples drawn from a two-                   if all item distributions are skewed but a subset of the items are
+factor population of comparison data better reproduce the                   reverse scored), two factors can emerge even if the items
+eigenvalues observed for the target data than do samples drawn              actually represent a single construct. When generating each
+from a one-factor population of comparison data. If not, this               population of comparison data for analysis in the CD method,
+provides a one-factor estimate. If so, the procedure continues by           not only is the item correlation matrix reproduced via a known
+
+
+
+                                                                                                     BEGIN HERE
+
+             1-Factor population     Random sample    Eigenvalues of item    Fit with eigenvalues
+             of comparison data        of N cases      correlation matrix        for target data
+                                                                                                                    NO: Estimate = 1 factor
+
+                                                                                 Repeat many times
+                                                                                                       Does 2-factor population
+                                                                                                        fit better than 1-factor
+                                                                                                              population?
+            2-Factor population      Random sample    Eigenvalues of item    Fit with eigenvalues
+            of comparison data         of N cases      correlation matrix        for target data
+                                                                                                        YES
+                                                                                                                   NO: Estimate = 2 factors
+                                                                                 Repeat many times
+                                                                                                       Does 3-factor population
+                                                                                                        fit better than 2-factor
+                                                                                                              population?
+            3-Factor population      Random sample    Eigenvalues of item    Fit with eigenvalues
+            of comparison data         of N cases      correlation matrix        for target data
+                                                                                                        YES
+                                                                                                                   NO: Estimate = 3 factors
+                                                                                 Repeat many times
+
+                                                                                                       Does 4-factor population
+                                                                                                        fit better than 3-factor
+                                                                                                              population?
+            4-Factor population      Random sample    Eigenvalues of item    Fit with eigenvalues
+            of comparison data         of N cases      correlation matrix        for target data
+                                                                                                        YES: Estimate = 4 factors
+                                                                                 Repeat many times
+
+
+                     Figure 2. Schematic diagram for comparison data method to determine the number of factors to retain.
+                     Structural models with from one to four factors are considered.
+                                     EXPLORATORY FACTOR ANALYSIS WITH COMPARISON DATA                                                        287
+
+factorial structure, but also the multivariate distribution of item     and the number of variables (k) ranged from 15 to 60. For each
+responses is reproduced. This holds the distributional charac-          sample, factors were either correlated or uncorrelated (orthogonal)
+teristics of the data constant across populations, which should         and the number of ordered categories (C) for each variable ranged
+reduce the chances of identifying spurious factors.                     across values of 2, 3, 4, 5, 6, 7, 10, and 20. These response scales
+   Novel as this CD method is in the EFA literature, something          range from dichotomous items (C ⫽ 2) through common Likert
+analogous has proven highly effective in taxometric analysis,           scales (C ⫽ 3–7) to levels that approximate continuous scales
+where the goal is to distinguish categorical from continuous latent     fairly well (C ⫽ 10 or 20). These data conditions are summarized
+variables (e.g., Ruscio & Kaczetow, 2009; Ruscio & Marcus,              in Table 1.
+2007; Ruscio, Ruscio, & Meron, 2007; Ruscio, Walters, Marcus,              In total, 10,000 target data sets were generated and analyzed.
+& Kaczetow, 2010). This technique has also been applied to a            Each consisted of a data matrix of N cases by k items, not
+factor-analytic procedure that examines factor score density plots      simply an item correlation matrix. A random series of data
+(Ruscio & Walters, 2009). Building on the use of CD in taxometric       parameters was drawn, and the data-generation program of
+analyses, Ruscio and Kaczetow (2009) discussed the potential            Ruscio and Kaczetow (2008) was used to create the target data
+utility of a similar model-comparison approach using CD to de-          set; in this program, a factor model, not a component procedure,
+termine the number of factors in EFA. For both of our illustrative      is used to generate data. The factor loadings used to create a
+data sets, the CD method outlined here correctly identified two         correlation matrix for each target data set were sampled at
+factors.                                                                random from ranges of values shown in Table 1. These loadings
+                                                                        were developed through a trial-and-error process in which only
+                      The Present Study                                 PA was performed, and its accuracy never approached 0% or
+                                                                        100% too closely, thereby leaving room for other techniques to
+   We examine the performance of all nine methods described in          perform even better or worse. Once the loadings were sampled
+the previous sections. This includes four methods based on exam-        for an item, they were randomly assigned to factor numbers (see
+ining the pattern of eigenvalues for item correlation matrices—         Table 2). For example, if the three loadings for an item in
+Kaiser criterion, PA, and two methods for objectively interpreting      orthogonal data set were .30, .00, and .00, the loading of .30 had
+scree plots that have not been studied systematically (OC and           an equal chance of being applied to Factor 1, 2, or 3, with the
+AF)—as well as four methods based on testing model fit—the              .00 loadings applied to the other two factors. New loadings and
+MAP procedure, maximum-likelihood information criteria (AIC             a new random assignment of loadings to factors were generated
+and BIC), and chi-square tests—and the newly introduced CD              for each item in turn. Thus, the number of items loading most
+method. Each technique was evaluated across a wide range of data        highly onto each factor was approximately equal for each data
+conditions designed to be realistic for EFA research, yet suffi-        set, varying due to normal sampling variation.
+ciently challenging to avoid ceiling effects in any technique’s            Nine techniques for determining the number of factors to retain
+performance. The focal comparison was between the new CD                were analyzed: the Kaiser criterion, parallel analysis (PA), optimal
+method and PA, the current state of the art. The other methods          coordinates (OC), acceleration factor (AF), the minimum average
+were included to place the PA and CD results in the broadest            partial (MAP) procedure, Akaike information criterion (AIC),
+context possible, as well as to study some techniques that have not     Bayesian information criterion (BIC), chi-square tests, and com-
+received as much empirical attention.                                   parison data (CD). We performed sufficient data analysis to im-
+                                                                        plement each technique, but no more. For example, if a technique
+                             Method                                     required only the calculation of eigenvalues and the application of
+                                                                        a threshold (e.g., the Kaiser criterion) to determine the number of
+   Because we wanted this simulation study to span a wide range         factors to retain, that was all that was done. If a technique required
+of data conditions and because performing the full array of meth-       a series of maximum-likelihood factor analyses to determine the
+ods was computationally intensive, a fully crossed factorial design     number of factors (e.g., for the AIC, BIC, and chi-square meth-
+was not a feasible option. Instead, a random-sampling design was        ods), this was done. To save computing time, we did not perform
+used such that for each target data set, data conditions were
+determined by drawing a series of parameters at random from
+specified ranges of values. For example, the first target data set
+                                                                        Table 1
+contained N ⫽ 412 cases and k ⫽ 31 items that loaded onto a
+                                                                        Summary of Data Conditions
+single factor; the second target data set contained N ⫽ 348 cases
+and k ⫽ 47 items that loaded onto two correlated factors. Addi-                 Factor                            Range of values
+tional details regarding the data conditions are provided in the
+following sections. Sampling data conditions at random from             Sample size (N)             200–1,000
+specified ranges, rather than insisting on a fully crossed factorial    Number of factors (F)       1–5
+                                                                        Number of variables (k)     15–60
+design, provided coverage of the full parameter space in a com-         Item response scale (C)     2, 3, 4, 5, 6, 7, 10, or 20 ordered categories
+putationally feasible design.                                           Type of factor structure    Correlated or orthogonal
+   The study design included a wide range of conditions designed
+to span those that might be encountered in actual research data but     Note. Sample size, number of factors, number of variables, item response
+                                                                        scale, and type of factor structure were sampled at random from uniform
+that would provide a sufficient challenge to avoid ceiling effects in   distributions spanning the ranges listed above, as were each item’s load-
+accuracy in the present study. Sample size (N) ranged from 200 to       ings. Once the loadings were sampled for an item, they were randomly
+1,000, the actual number of factors (F) ranged from one to five,        assigned to factor numbers.
+288                                                              RUSCIO AND ROCHE
+
+
+Table 2
+Summary of Factor Loadings
+
+                                                                                      Number of factors
+
+   Factor type                            1                         2                         3                              4                              5
+
+Correlated factors
+  Loading 1                           .30–.70                    .30–.70                   .30–.70                       .30–.70                        .30–.70
+  Loading 2                              —                       .20–.50                   .20–.50                       .20–.50                        .20–.50
+  Loading 3                              —                          —                      .00–.30                      .00 to .30                      .00–.30
+  Loading 4                              —                          —                         —                         .00 to .20                      .00–.20
+  Loading 5                              —                          —                         —                             —                           .00–.10
+Orthogonal factors
+  Loading 1                           .10–.35                    .15–.40                   .20–.45                        .25–.50                       .30–.55
+  Loading 2                              —                       .00                       .00                            .00                           .00
+  Loading 3                              —                          —                      .00                            .00                           .00
+  Loading 4                              —                          —                         —                           .00                           .00
+  Loading 5                              —                          —                         —                             —                           .00
+
+Note. Once the loadings were sampled for an item, they were randomly assigned to factor numbers. New loadings and a new random assignment of
+loadings to factors were generated for each item in turn. Thus, the number of items loading most highly onto each factor was approximately equal for each
+data set, varying due to normal sampling variation.
+
+
+
+maximum-likelihood factor analyses for models with more than                        (e.g., with one factor), the previous model is retained, and the CD
+F ⫹ 3 factors. For example, if F ⫽ 5, models with more than eight                   technique halts (e.g., the number of factors to retain is determined to
+factors were not considered.4                                                       be one).
+   To implement the CD technique that we introduced earlier, we                     B. If the new model provides statistically significantly lower RMSR
+perform the following steps:                                                        fit values than the previous model, return to Step 6.
+   1. Generate a finite population of comparison data (N ⫽ 10,000)
+using the GenData program (Ruscio & Kaczetow, 2008). This                      In short, new populations of comparison data are generated using
+reproduces the item correlation matrix for the target data set using           an increasing number of factors. The process continues as long as
+an iterative procedure and reproduces the multivariate distribution            the addition of a new factor significantly improves the reproduc-
+of item responses by reproducing each item’s marginal distribution             tion of the eigenvalues observed for the target data set. Preliminary
+using standard bootstrap methods. The first time this step is per-             testing on independent samples suggested that 500 replication
+formed, a structural model with one factor is used; in subsequent              samples and a liberal alpha level of .30 worked well in Steps 5 and
+iterations, larger numbers of factors are used. Factor loadings are            7, respectively, although varying either of these values did not
+determined by the GenData program to reproduce the item corre-                 affect the accuracy of the CD technique much.5
+lation matrix for the target data set as well as possible; correlated             The entire study, including all data generation and factor anal-
+factors are allowed if that is helpful.                                        ysis, was performed with programs written in the R language for
+   2. Draw a random sample of N cases from the population                      statistical computing (R Development Core Team, 2011). R is
+generated in Step 1.                                                           available as a free download, and the GenData program developed
+   3. Calculate the eigenvalues of the item correlation matrix for             by Ruscio and Kaczetow (2008)—with notes on how to adapt it for
+the sample drawn in Step 2.                                                    other uses—is available online at http://www.tcnj.edu/⬃ruscio/
+   4. Calculate the root-mean-square residual (RMSR) eigenvalue                taxometrics.html. Programs specific to our study are available on
+by comparing the eigenvalues obtained in Step 3 with those for the
+target data set.
+                                                                                  4
+   5. Repeat Steps 2 through 4 a total of 500 times, saving the                     It is possible that the AIC or BIC criteria or chi-square tests might have
+distribution of 500 RMSR fit values.                                           identified even more than F ⫹ 3 factors, but studying the amount of
+                                                                               overextraction in such cases was not deemed worth the additional com-
+   6. Return to Step 1, increasing the number of factors in the
+                                                                               puting time. Any bias introduced in favor of these methods was not
+structural model by one. Repeat Steps 2 through 5 for this new
+                                                                               sufficient to change the conclusions drawn from the results of this study.
+model, then proceed to Step 7 to compare the new distribution of                  5
+                                                                                    In preliminary tests, the CD method’s performance varied modestly
+RMSR fit values with those for the previous model.                             across alpha levels ranging from .05 to .50, peaking at ␣ ⫽ .30. Whereas
+   7. Compare the 500 RMSR fit values for the new factor model                 .05 is standard in statistical testing, in this context, the low Type I error rate
+with the 500 RMSR fit values from the previous model. The first                (overextraction) was accompanied by a very high Type II error rate
+time this step is reached, the fit values for a two-factor model are           (underextraction). Using ␣ ⫽ .30 allowed more Type I errors but with
+compared with those for a one-factor model. This comparison is                 sufficiently fewer Type II errors that the total number of errors was
+made using a nonparametric test (Mann–Whitney U) with a liberal                minimized. Because we see no reason to privilege either type of error in
+alpha level of .30.                                                            this context, we followed the results of the preliminary testing and used an
+                                                                               unconventionally liberal alpha level. Users uncomfortable with this deci-
+      A. If the new model (e.g., with two factors) does not provide statis-    sion can provide their own alpha level when running our program to alter
+      tically significantly lower RMSR fit values than the previous model      the relative risks of identifying too many or too few factors.
+                                         EXPLORATORY FACTOR ANALYSIS WITH COMPARISON DATA                                                                289
+
+request for readers interested in replicating or extending the results             ⫺0.12), whereas MAP and AF were more substantially biased in
+reported. We performed all factor analyses using unadjusted cor-                   this direction (MB ⫽ ⫺0.77 and ⫺1.30, respectively). As expected
+relation matrices.                                                                 based on their differing penalties for less parsimonious models, the
+                                                                                   AIC tended to overextract (MB ⫽ 0.20) and the BIC tended to
+                                 Results                                           underextract (MB ⫽ ⫺0.63). Chi-square tests tended to overextract
+                                                                                   (MB ⫽ 0.37). The Kaiser criterion dramatically overextracted
+   Table 3 shows the percentage of samples for which the number
+                                                                                   (MB ⫽ 7.16).
+of factors was overestimated, identified correctly, or underesti-
+                                                                                      CD was the most precise method (mean precision [MP] ⫽ 0.14),
+mated for each of the techniques included in this study. CD had the
+                                                                                   followed by three techniques that were approximately as precise as
+highest accuracy rate (87.1%), surpassing the MAP procedure
+                                                                                   one another (PA, MP ⫽ 0.30; AIC, MP ⫽ 0.31; OC, MP ⫽ 0.39).
+(59.6%) and even PA (76.4%). In addition to scoring the most
+                                                                                   Using chi-square tests was less precise (MP ⫽ 0.60). Because each
+correct identifications, the CD technique rarely over- or underex-
+                                                                                   of the remaining four methods tended to err in a consistent fashion,
+tracted by more than one factor when it erred. As expected, the
+                                                                                   its precision was approximately equal to its bias (BIC, MP ⫽ 0.63;
+Kaiser criterion had a very low overall accuracy rate (8.8%).
+                                                                                   MAP, MP ⫽ 0.77; AF, MP ⫽ 1.30; Kaiser criterion, MP ⫽ 7.19).
+   The information criteria—AIC and BIC— had accuracies of
+                                                                                      In the final series of analyses, the accuracy of the PA and CD
+72.1% and 59.6%, respectively. The BIC had a strong tendency to
+underestimate the number of factors, with just one instance of                     methods was examined across levels of the design factors (see
+overestimation out of all 10,000 samples. The AIC rivaled the                      Figure 3). For both techniques, accuracy declined with more
+accuracy level of PA. Chi-square tests achieved an accuracy of                     factors, with fewer items, and with smaller sample sizes. The fact
+58.9%. The objective tests based on scree plots—OC and AF—                         that accuracy was higher for the data sets with correlated rather
+had accuracies of 73.8% (rivaling that of PA) and 43.8%, respec-                   than orthogonal factors is probably an artifact of the experimental
+tively. Like the BIC, AF tended to underestimate the number of                     design; the loadings were selected to avoid ceiling effects, not to
+factors; often it estimated only one factor. As a consequence, it                  afford a well-controlled test of whether it is easier to identify the
+was 100% accurate for data sets with only one factor, but much                     number of orthogonal or correlated factors. From binary items
+less so for data sets with more than one factor.                                   through quasi-continuous items with 20 ordered categories on their
+   In addition to scoring the percentage correct, we examined the                  response scales, there was little difference in accuracy levels
+bias and precision of each technique. Bias was calculated as the                   across item types for either technique. Most important for the
+average deviation score (predicted – actual number of factors) to                  purpose of this study is that CD outperformed PA in all but one
+quantify the extent to which a method over- or underestimated the                  data condition. The only exception was observed for data sets with
+number of factors. Precision was calculated as the average absolute                five factors. In this situation, PA performed slightly better (74.2%)
+deviation score to quantify the typical magnitude of error for a                   than CD (72.7%), though this was not a statistically significant
+method. A summary of these results is presented in Table 3. PA                     difference (z ⫽ 0.59, p ⫽ .555). Even though PA scored more
+was unbiased (mean bias [MB] ⫽ 0.00); its errors were evenly                       direct hits, its errors were sufficiently large that on balance its
+distributed between over- and underextraction. CD showed a small                   precision (MP ⫽ .33) was no better than the precision of the CD
+bias toward underextraction (MB ⫽ ⫺0.07), as did OC (MB ⫽                          technique (MP ⫽ .31) for the 2,000 samples with F ⫽ 5. With this
+
+
+Table 3
+Summary of Accuracy for Analyses of the 10,000 Target Data Sets
+
+                                 Methods testing the pattern of eigenvalues                     Methods testing the fit of competing structural models
+
+      Variable              Kaiser           PA             OC              AF             MAP            AIC            BIC             ␹2             CD
+                                                                                                           a                             a
+Maximum deviation           25              8               7               2               0             3              0             3               2
+Minimum deviation           ⫺2             ⫺3              ⫺5              ⫺4              ⫺4            ⫺3             ⫺4            ⫺3              ⫺3
+Factor
+  ⱖ ⫹3 (%)                   74.86           0.92           0.65            0.00            0.00          0.29           0.00           4.59           0.00
+  ⫹2 (%)                      7.34           2.07           1.81            0.01            0.00          2.76           0.00           8.05           0.02
+  ⫹1 (%)                      7.67           7.92           7.78            0.12            0.00         19.39           0.00          18.65           3.64
+  Correct (%)                 8.77          76.42          74.03           45.91           59.60         72.65          60.45          58.88          87.14
+  ⫺1 (%)                      1.31          10.56          10.07           15.01           18.54          4.27          22.95           8.35           8.02
+  ⫺2 (%)                      0.05           1.93           2.92           13.70           11.04          0.61          10.89           1.34           1.12
+  ⱕ ⫺3 (%)                    0.00           0.18           2.74           25.25           10.82          0.03           5.71           0.14           0.06
+Bias (M)                      7.16           0.00          ⫺0.12           ⫺1.30           ⫺0.77          0.20a         ⫺0.63           0.37a         ⫺0.07
+Precision (M)                 7.19           0.30           0.39            1.30            0.77          0.31a          0.63           0.60a          0.14
+
+Note. Accuracy was assessed with deviation scores calculated as the predicted minus actual number of factors. Maximum and minimum deviation scores
+represent the largest errors for each technique when it overextracted or underextracted the correct number of factors, respectively. Percentages for how often
+each technique erred by one, two, or three factors are listed. Bias was computed as the average deviation from the correct number of factors, and precision
+was calculated as the average absolute deviation. Kaiser ⫽ Kaiser criterion; PA ⫽ parallel analysis; OC ⫽ optimal coordinates; AF ⫽ acceleration factor;
+MAP ⫽ minimum average partial; AIC ⫽ Akaike information criterion; BIC ⫽ Bayesian information criterion; CD ⫽ comparison data.
+  a
+    The maximum overextraction might have been larger had this technique been allowed to consider models that exceeded the correct number of factors
+by more than three. Because overextraction was the norm for this technique, its bias and precision may have been underestimated.
+290                                                                           RUSCIO AND ROCHE
+
+
+                          100
+
+                                                                                                                                    Comparison Data
+                                                                                                                                    Parallel Analysis
+
+                          90
+
+
+
+
+                          80
+
+
+
+
+        Percent Correct   70
+
+
+
+
+                          60
+
+
+
+
+                          50
+
+                                Total    F1   F2   F3   F4   F5      N-Hi Med Lo       k-Hi Med Lo        Corr Orth      C2   C3   C4   C5 C6    C7 C10 C20
+
+
+
+                                  Figure 3. Results for analyses of the 10,000 target data sets using several techniques, broken down by factors
+                                  in the study design. Design factors appear in the following order: number of factors (F from 1 to 5), sample size
+                                  (N divided into three ranges of high, medium, and low), number of items (k divided into three ranges of high,
+                                  medium, and low), correlated (Corr) versus orthogonal (Orth) factors, and number of ordered categories (C ⫽
+                                  2, 3, 4, 5, 6, 7, 10, or 20). Vertical lines highlight the differences in accuracy between comparison data and
+                                  parallel analysis.
+
+
+
+
+partial exception noted, the present data support CD as at least as                          Only PA was less biased, though its accuracy and precision were
+effective a method as PA for determining the number of factors to                            lower than those for CD by a nontrivial amount. PA over- or
+retain across the wide range of challenging data conditions in-                              underextracted by more than one factor about 5% of the time.
+cluded in this study.                                                                        Results were poorer in terms of accuracy, precision, or bias for
+                                                                                             each of the other methods. For example, accuracy was rather poor
+                                          Discussion                                         for the MAP, AF, and BIC techniques, each of which exclusively
+                                                                                             or almost exclusively underestimated the number of factors when
+   Determining the number of factors to retain in EFA remains an                             they erred. Even though chi-square tests were less biased, accuracy
+important yet difficult problem. Examinations of published re-                               was not much better. OC and AIC rivaled the accuracy achieved by
+search (Fabrigar et al., 1999; Henson & Roberts, 2006) suggest                               PA, but there appears to be no reason to prefer either of these methods
+that many researchers continue to use methods that are known to
+                                                                                             to the established standard of PA or the newly developed CD. The
+perform poorly. For example, Henson and Roberts (2006) found
+                                                                                             Kaiser criterion performed poorly, as the literature suggests. In fact,
+that more than half of all studies that they reviewed (57%) used the
+                                                                                             the Kaiser criterion predicted as many as 26 factors—and that oc-
+Kaiser criterion, and only 7% used PA. PA was first introduced
+                                                                                             curred three times, each for a data set with one factor.
+more than 40 years ago (Horn, 1965), and it has outperformed the
+                                                                                                The conditions set forth in the study span a wide range of
+Kaiser criterion in many studies since that time (for overviews of
+the evidence, see Fabrigar et al., 1999; Velicer et al., 2000; Zwick                         situations that researchers might encounter, but we caution against
+& Velicer, 1986). Despite the increasing availability of user-                               the generalization of the accuracy levels observed here. We were
+friendly software and sufficient computing power to perform PA,                              reluctant to decrease levels of study design factors such as sample
+it is seldom used. Perhaps the most significant reason that the                              size or the number of variables below realistic values. To avoid
+Kaiser criterion remains the tool of choice in EFA is that statistical                       ceiling effects in accuracy, however, we allowed factor loadings to
+packages such as SPSS continue to maintain this as the default                               range down to levels that would be considered fairly low. Because
+setting (Thompson & Daniel, 1996).                                                           PA has performed very well in prior simulation studies (e.g.,
+   In the present study, substantial differences in performance were                         Velicer et al., 2000; Zwick & Velicer, 1986), we wanted to avoid
+observed across techniques. Among the techniques evaluated in                                ceiling effects when comparing the newly proposed CD method
+this study, the CD method performed the best in terms of accuracy                            with the PA standard. This required especially challenging data
+and precision, and it was nearly unbiased. This technique over- or                           conditions. Whereas the accuracy rates observed in the main study
+underextracted by more than one factor only about 1% of the time.                            might appear unusually low in comparison with other simulation
+                                      EXPLORATORY FACTOR ANALYSIS WITH COMPARISON DATA                                                            291
+
+studies, that was by design; we do not believe that the present           CD given its superior performance in the present study. We believe
+findings call into question the absolute or relative accuracy rates of    the present data provide tentative, but sufficient, support for using
+any methods under other data conditions.                                  CD in EFA and that further study of this new approach is war-
+   To provide some sense for how much accuracy might improve              ranted. To facilitate study or application of CD, the first author has
+under more favorable data conditions, particularly with larger            made the R code needed to perform it available on his website
+factor loadings, we generated an additional 1,000 target data sets        (http://www.tcnj.edu/⬃ruscio/taxometrics.html). This allows in-
+using the same randomly sampled data conditions as in the main            vestigators to implement the CD technique with no special knowl-
+study, with one exception: All ranges of factor loadings were             edge of how to generate or analyze comparison data, just as no
+increased by .10 (e.g., a range of .30 –.70 became .40 –.80, a range      special knowledge of how to generate random data sets or calcu-
+of .10 –.35 became .20 –.45). The CD method and PA were per-              late eigenvalues is required to perform PA using a program written
+formed for these data sets. The accuracy rates were 92.1% for the         for that purpose.
+CD method and 82.5% for PA, a substantial and statistically
+significant difference (z ⫽ 2.30, p ⫽ .021). For each subset of 200
+data sets with between one and five factors, the CD method was                                           References
+more accurate than PA.                                                    Akaike, H. (1974). A new look at the statistical model identification. IEEE
+   In the present study, we did not vary distributional characteris-        Transactions on Automatic Control, 19, 716 –723. doi:10.1109/TAC
+tics that might have led to the identification of spurious factors          .1974.1100705
+(e.g., subsets of binary items with distinct difficulty levels). Future   Burnham, K. P., & Anderson, D. R. (2004). Multimodel inference: Under-
+research might test whether using the CD method provides some               standing AIC and BIC in model selection. Sociological Methods &
+protection against such artifacts.                                          Research, 33, 261–304. doi:10.1177/0049124104268644
+   A discouraging finding of Henson and Roberts’ (2006) review            Cattell, R. B. (1966). The scree test for the number of factors. Multivariate
+of published EFAs is that 55% of the studies that they reviewed             Behavioral Research, 1, 245–276. doi:10.1207/s15327906mbr0102_10
+reported only one criterion for determining the number of factors.        Fabrigar, L. R., Wegener, D. T., MacCallum, R. C., & Strahan, E. J.
+                                                                            (1999). Evaluating the use of exploratory factor analysis in psycholog-
+When performing EFA, researchers can use more than one method
+                                                                            ical research. Psychological Methods, 4, 272–299. doi:10.1037/1082-
+to check whether the results are in agreement. This could be                989X.4.3.272
+especially helpful under certain data conditions, such as when an         Glorfeld, L. W. (1995). An improvement on Horn’s parallel analysis
+investigator suspects there may be a large number of factors. In the        methodology for selection the correct number of factors to retain. Edu-
+present study, this is where PA and CD performed least satisfac-            cational and Psychological Measurement, 55, 377–393. doi:10.1177/
+torily. However, PA and CD both predicted five factors for 1,297            0013164495055003002
+target data sets; this was correct in 1,277 instances (98.5%). In all     Gorsuch, R. L. (1983). Factor analysis (2nd ed.). Hillsdale, NJ: Erlbaum.
+10,000 target data sets, PA and CD agreed with one another by             Harshman, R. A., & Reddon, J. R. (1983, May). Determining the number
+identifying the same number of factors 78.1% of the time. When              of factors by comparing real with random data: A serious flaw and some
+the two methods agreed, the accuracy rate was 92.2%. Including              possible corrections. Paper presented at the annual meeting of the
+                                                                            Classification Society, Philadelphia, PA.
+additional methods (e.g., requiring that PA, CD, AIC, and OC
+                                                                          Henson, R. K., & Roberts, J. K. (2006). Use of exploratory factor analysis
+agree) can increase accuracy even further (e.g., to 95.9% in the            in published research: Common errors and some comment on improved
+present study), but this applies only to instances in which agree-          practice. Educational and Psychological Measurement, 66, 393– 416.
+ment was obtained (e.g., 57.5% of the time in the present study).           doi:10.1177/0013164405282485
+There is a trade-off such that when one uses multiple methods to          Horn, J. L. (1965). A rationale and test for the number of factors in factor
+compare structural models, agreement is not guaranteed, but when            analysis. Psychometrika, 30, 179 –185. doi:10.1007/BF02289447
+results are in agreement, they are highly likely to be accurate           Kaiser, H. F. (1960). The application of electronic computers to factor
+(Ruscio et al., 2010). Experts on EFA (e.g., Gorsuch, 1983) have            analysis. Educational and Psychological Measurement, 20, 141–151.
+long recommended the use of multiple methods to determine                   doi:10.1177/001316446002000116
+the number of factors to retain, and the present findings demon-          McDonald, R. P., & Ahlawat, K. S. (1974). Difficulty factors in binary
+                                                                            data. British Journal of Mathematical and Statistical Psychology, 27,
+strate how effective this practice can be.
+                                                                            82–99. doi:10.1111/j.2044-8317.1974.tb00530.x
+   Especially when relying on the scree test (Cattell, 1966) or when      O’Connor, B. P. (2000). SPSS and SAS programs for determining the
+drawing conclusions from one or more methods of dubious utility             number of components using parallel analysis and Velicer’s MAP test.
+(e.g., the Kaiser criterion), efforts to determine the number of            Behavior Research Methods, Instruments, and Computers, 32, 396 – 402.
+factors to retain can be plagued by difficult subjective judgments.         doi:10.3758/BF03200807
+Using one or more of the empirically supported methods devel-             Raiche, G., Riopel, M., & Blais, J.-G. (2006, June). Nongraphical solutions
+oped and tested in recent decades can help researchers model their          for the Cattell’s scree test. Paper presented at the annual meeting of the
+data more accurately and ultimately to develop more reliable and            Psychometric Society, Montreal, Quebec, Canada.
+valid assessment instruments. In particular, we recommend that            R Development Core Team. (2011). R: A language and environment for
+researchers take advantage of PA as a starting point, perhaps               statistical computing. Retrieved from http://www.R-project.org
+                                                                          Ruscio, J., & Kaczetow, W. (2008). Simulating multivariate nonnormal
+supplemented by CD as proposed here. Though these methods will
+                                                                            data using an iterative algorithm. Multivariate Behavioral Research, 43,
+disagree some of the time, the magnitude of disagreement between            355–381. doi:10.1080/00273170802285693
+these techniques is likely to be small. In the present study, they        Ruscio, J., & Kaczetow, W. (2009). Differentiating categories and dimen-
+agreed within ⫾ 1 factor nearly 96% of the time. In the event of            sions: Evaluating the robustness of taxometric analysis. Multivariate
+a disagreement, one could choose to rely on PA given its demon-             Behavioral Research, 44, 259 –280. doi:10.1080/00273170902794248
+strated track record of success in multiple simulation studies or on      Ruscio, J., & Marcus, D. K. (2007). Detecting small taxa using simulated
+292                                                              RUSCIO AND ROCHE
+
+
+  comparison data: A reanalysis of Beach, Amir, and Bau’s (2005) data.          on random data eigenvalues: Implications for the accuracy of parallel
+  Psychological Assessment, 19, 241–246. doi:10.1037/1040-3590                  analysis. Educational and Psychological Measurement, 58, 541–568.
+  .19.2.241                                                                     doi:10.1177/0013164498058004001
+Ruscio, J., Ruscio, A. M., & Meron, M. (2007). Applying the bootstrap to      Velicer, W. F. (1976). Determining the number of components from the
+  taxometric analysis: Generating empirical sampling distributions to help      matrix of partial correlations. Psychometrika, 41, 321–327. doi:10.1007/
+  interpret results. Multivariate Behavioral Research, 42, 349 –386. doi:       BF02293557
+  10.1080/00273170701360795                                                   Velicer, W. F., Eaton, C. A., & Fava, J. L. (2000). Construct explication
+Ruscio, J., & Walters, G. D. (2009). Using comparison data to differentiate     through factor or component analysis: A review and evaluation of
+  categorical and dimensional data by examining factor score distribu-          alternative procedures for determining the number of factors or compo-
+  tions: Resolving the mode problem. Psychological Assessment, 21, 578 –        nents. In R. D. Goffin & E. Helmes (Eds.), Problems and solutions in
+  594. doi:10.1037/a0016558                                                     human assessment: Honoring Douglas N. Jackson at seventy (pp. 41–
+Ruscio, J., Walters, G. D., Marcus, D. K., & Kaczetow, W. (2010).               71). Boston, MA: Kluwer Academic.
+  Comparing the relative fit of categorical and dimensional latent variable   Weng, L., & Cheng, C. (2005). Parallel analysis with unidimensional
+  models using consistency tests. Psychological Assessment, 22, 5–21.           binary data. Educational and Psychological Measurement, 65, 697–716.
+  doi:10.1037/a0018259                                                          doi:10.1177/0013164404273941
+Schwarz, G. E. (1978). Estimating the dimension of a model. Annals of         Zwick, W. R., & Velicer, W. F. (1986). Factors influencing five rules for
+  Statistics, 6, 461– 464. doi:10.1214/aos/1176344136                           determining the number of components to retain. Psychological Bulletin,
+Thompson, B., & Daniel, L. G. (1996). Factor analytic evidence for the          99, 432– 442. doi:10.1037/0033-2909.99.3.432
+  construct validity of scores: A historical overview and some guidelines.
+  Educational and Psychological Measurement, 56, 197–208. doi:                                                      Received January 12, 2010
+  10.1177/0013164496056002001                                                                                    Revision received July 5, 2011
+Turner, N. E. (1998). The effect of common variance and structure pattern                                               Accepted July 20, 2011 䡲
+
+
+
+
+                                         E-Mail Notification of Your Latest Issue Online!
+                       Would you like to know when the next issue of your favorite APA journal will be available
+                     online? This service is now available to you. Sign up at http://notify.apa.org/ and you will be
+                     notified by e-mail when issues of interest to you become available!
+

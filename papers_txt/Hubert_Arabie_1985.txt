@@ -1,0 +1,1799 @@
+Journal of Classification 2:193-218 (1985)
+
+lournal of
+
+Classification
+~1985 Springer-VerlagNew YorkInc.
+
+Comparing Partitions
+Lawrence Hubert
+
+Phipps Arabic
+
+The University of California, Santa Barbara
+
+University of Illinois at Champaign
+
+Abstract: The problem of comparing two different partitions of a finite set of
+objects reappears continually in the clustering literature. We begin by reviewing a well-known measure of partition correspondence often attributed to
+Rand (1971), discuss the issue of correcting this index for chance, and note
+that a recent normalization strategy developed by Morey and Agresti (1984)
+and adopted by others (e.g., Milligan and Cooper 1985) is based on an
+incorrect assumption. Then, the general problem of comparing partitions is
+approached indirectly by assessing the congruence of two proximity matrices
+using a simple cross-product measure. They are generated from cOrresponding partitions using various scoring rules. Special cases derivable include
+traditionally familiar statistics and/or ones tailored to weight certain object
+pairs differentially. Finally, we propose a measure based on the comparison
+of object triples having the advantage of a probabilistic interpretation in addition to being corrected for chance (i.e., assuming a constant value under a
+reasonable null hypothesis) and bounded between -4-I.
+
+Keywords: Measures of agreement; Measures of association; Consensus
+indices.
+
+1. Introduction
+The problem of measuring the correspondence between two partitions
+of an object set has attracted substantial interest in the literature of
+classification (e.g., see Arabie and Boorman 1973; Lerman 1973; Rohlf
+1974, 1982; Fowlkes and Mallows 1983 for reviews). We will not try to
+review this literature comprehensively since that task would require the
+length of a monograph. Instead, we will concentrate on what has been
+called the Rand index, along with some of its possible variations and extensions. This measure appears to be one of the most popular alternatives for
+William H.E. Day was Acting Editor for the reviewing of this paper. We are grateful to
+him, Ove Frank, Charles Lewis, Glenn W. Milligan, Ivo Molenaar, Stanley S. Wasserman, and
+anonymous referees for helpful suggestions. Lynn Bilger and Tom Sharpe provided competent
+technical assistance. Partial support of Phipps Arabic's participation in this research was provided by NSF Grant SES 8310866 and ONR Contract N00014-83-K-0733.
+Authors' Addresses: Lawrence Hubert, Graduate School of Education, The University of
+California, Santa Barbara, California 93106, USA. Phipps Arabic, Department of Psychology,
+University of Illinois, 603 E Daniel Street, Champaign, Illinois 61820, USA.
+
+L. Hubert and P. Arabic
+
+194
+
+comparing partitions and has a rather interesting history of being
+rediscovered and/or modified by different authors (e.g., Johnson 1968;
+Green and Rao 1969; Mirkin 1970; Rand 1971; Brennan and Light 1974;
+Hartigan 1975; Frank 1976; Hubert 1977; Fowlkes and Mallows 1983; Brook
+and Stirling 1984; Klastorin 1985; among others).
+We begin by briefly reviewing the definition of the Rand index and how
+it might be normalized to provide a more appropriate descriptive measure.
+The latter part of the paper develops a much broader class of possible comparison measures under one common framework. This structure will
+include the Rand proposal as a special case along with several traditional
+indices from the statistical literature concerned with the assessment of association in contingency tables. Finally, we propose a measure of partition
+correspondence based on the comparison of object triples, rather than object
+pairs used by the Rand index and related alternatives. Our new measure has
+a clear probabilistic interpretation in the sense of Goodman and Kruskal
+(1954), is corrected for chance with respect to the null hypothesis, and is
+bounded between ___1.
+
+2. The Rand Index
+Given an n object set S = {O1 . . . . . O,}, suppose U = {ul . . . . . uR}
+and V - - { v t . . . . . vc} represent two different partitions of S, i.e., the
+entries in U and V are subsets of S; U i~l u i - - S - - U F 1 vj;
+u i n ui,= o = v j n v; for l <~i~.i'<~R and I <~j~j'<~ C. Letting n~i denote
+the number of objects that are common to classes u~ and vj, the information
+on class overlap between the two partitions U and V can be written in the
+form of a contingency table (using standard " d o t " notation for row and
+column sums) with ni. and n..i referring respectively to the number of
+objects in classes u~ (row i) and vj (column j ) , as in Table 1.
+Rand (1971), as well as others cited in the introduction, bases measures
+of correspondence between U and V on how object pairs are classified in
+the R x C contingency table. Specifically, there are four different types
+among the (if) distinct pairs that could be found:
+type (i):
+type (ii):
+type (iii):
+type (iv):
+
+objects in the pair are placed in the same class in U and in
+the same class in V;
+objects in the pair are placed in different classes in U and in
+different classes in V;
+objects in the pair are placed in different classes in U and in
+the same class in V;
+objects in the pair are placed in the same class in U and in
+different classes in V.
+
+C o m p a r i n g Partitions
+
+195
+
+TABLE 1
+Notation for Comparing Two Partitions
+
+Partition V
+Class
+
+vl
+
+v2
+
+...
+
+Vc
+
+Sums
+
+/2 l
+
+nil
+
+//t2
+
+"--
+
+ntC
+
+B 1.
+
+U2
+
+/'/21
+
+1/22
+
+//2C
+
+/'/2"
+
+UR
+
+nR 1
+
+nR 2
+
+...
+
+rlRC
+
+hR.
+
+Sums
+
+n.~
+
+n. 2
+
+...
+
+n. C
+
+n.. =
+
+Partition U
+
+n
+
+Types (i) and (ii) are typically interpreted as agreements in the classification
+of the objects from a pair; types (iii) and (iv) represent disagreements.
+Obviously, if A represents the total number of agreements and D the total
+number of disagreements, then A + D = (~). Moreover, we can show (cf.
+Brennan and Light 1974) that
+
+iffil .j=l
+
+=
+
+2 Z 2
+ill
+
+j=l
+
+i=1
+
+./=1
+
+(i)
+
++ 2
+i=l
+
+j=l
+
+where a binomial coefficient (2m) is defined as 0 when m = 0 or 1. In fact,
+as given in Table 2, explicit formulae can be obtained to express the number
+of object pairs of each type as a function of n, ni., n.j, and nii- If we
+assume that the marginal sums are fixed in the R × C contingency table,
+then all of the formulae in Table 2, including those given for the sums A
+and D, are constant linear transformations of ~ n~, and thus, of each other.
+ij
+
+Intuitively, two partitions that are similar produce relatively large values
+of A and small values for D. Thus, depending on how A and D are normalized, different raw measures of agreement are possible, e.g., Rand
+(1971) uses A / ( ~ ) ; Johnson (1968), Mirkin (1970), and Arabie and Boorman (1973) adopt D / ( ~ ) ; and Hubert (1977) suggests (A - D ) / ( ~ ) .
+
+In all
+
+196
+
+L Hubert and P. Arabic
+
+TABLE 2
+Formulae for the Number of (Unordered) Object Pairs
+of the Four Types
+Type
+
+Formula
+R
+
+C
+
+1 ~_, ~ nij(nij -- 1)
+
+(i)
+
+T ,=1 ./=1
+
+(ii)
+
+1 (n 2 + 2~ En,: ~ _ ( Z n 2 + ~.,n~))
+
+R
+
+2
+
+C
+
+R
+
+C
+
+i=1 j=l
+
+i~l
+
+j=l
+
+C
+
+R
+
+C
+
+E ni~)
+T1 (,~-,
+j=l n.~ - ~i=~ j=l
+
+(iii)
+
+(iv)
+
+2
+
+(i) + (ii) = A - -
+
+R
+
+R
+
+i=1
+
+i=l j = l
+
+(~) + ~
+
+R
+
+C
+
+~ n ? .,j-
+
+i=I j ~ l
+
+C
+
+R
+
+C
+
+i=t
+
+j~l
+
+1 (,j~,n,.2 + ~ n . 2 )
+~"
+
+R
+
+C
+
+R
+
+C
+
+i=l
+
+j=l
+
+i=t .]~1
+
+1 ( Z n,2. + Z n~.)-- Z Z n,~
+
+(iii) + (iv) = D =
+
+2
+
+three of these cases, the raw measures have straightforward probabilistic
+interpretations with respect to picking a pair of objects at random, i.e.,
+A/(~) is the probability of agreement; D/(~) is the (complementary) probability of a disagreement, and (A - D)/(~) is the difference between the
+probability of an agreement and a disagreement.
+More recently, Wallace (1983) in commenting on Fowlkes and Mallows' (t983) paper has suggested two other raw measures of partition
+correspondence. Wallace bases his two measures
+X (~/) / 2~ (~')
+t,J
+
+i
+
+and
+
+X (~') / ]~ ( 2 j)
+t,J
+
+j
+
+on type (i) object pairs alone and argues that those of type (ii) might be
+considered "neutral," and thus, should not be included in a raw index of
+
+Comparing Partitions
+
+197
+
+correspondence. Considering the U partition as the fixed standard against
+which to compare V, the first index can be interpreted as the probability of
+a randomly selected object pair being within the same class in V given that it
+is within the same class in U; the second index is interpreted in a similar
+manner with V considered as the conditionalizing standard. The symmetric
+measure adopted by Fowlkes and Mallows (1983) is the simple geometric
+mean of the two nonsymmetric Wallace indices:
+~-, f no.~
+
+.~.,2-/
+I ,.l
+
+w/z(2)Z(.
+n#.
+
+.i)
+
+.1
+
+None of the indices mentioned thus far is "corrected for chance" in
+the sense that the index would take on some constant value (e.g., zero)
+under an appropriate null model of how the partitions have been chosen.
+Consequently, the relative sizes for each of these raw indices are difficult to
+evaluate and compare since they are neither measures of departure from a
+common baseline nor are they normalized to lie within certain fixed bounds
+(e.g., 0 and 1 or ___1). As might be expected, a variety of suggestions have
+been made to eliminate these latter scaling difficulties.
+2.1 Corrections for Chance
+Probably the most obvious (null) model for randomness assumes that
+the R x C contingency table is constructed from the generalized hypergeometric distribution, i.e., the U and V partitions are picked at random,
+subject to having the original number of classes and objects in each. Under
+the hypergeometric assumption, we can show (see Hubert 1977 and followup by Klastorin 1985; Fowlkes and Mallows 1983):
+
+t,d
+
+i
+
+i
+
+That is, (2) gives the expected number of object pairs of type (i), i.e., pairs
+in which the objects are placed in the same class in U and in the same class
+in V. This latter value is the number of distinct pairs that can be constructed within rows, ~ ( /'/i"
+2 )' times the number of distinct pairs that can be
+i
+n.j
+
+formed from columns, ~ ( 2 )' divided by the total number of pairs, (~).
+J
+
+Obviously, an analogue exists to the expected value for a cell entry in the
+traditional approach to contingency tables, defined by the number of objects
+
+t98
+
+L. H u b e r t a n d P. A r a b i c
+
+in its row times the number of objects in its column divided by n. Now,
+however, the expected number of object pairs of type (i) attributable to a
+particular cell is the number of pairs in its row times the number of pairs in
+its column divided by (~):
+
+All the formulae in Table 2 are constant linear transformations of
+.~(~J); consequently, the expectations for any of these expressions can be
+I,./
+
+obtained directly from the expectation in (2). For example, using that
+result and the latter part of (1), we find that the Rand measure has expectation:
+2
+
+E(A/(:)) = I + 2 ~.,(~') Z(~J) / (~)
+i
+
+-
+
+j
+
+(
+
++
+
+/
+
+i
+
+<3>
+
+j
+
+Thus, using the general form of an index corrected for chance:
+Index - Expected Index
+Maximum Index - Expected Index
+
+'
+
+(4)
+
+which is bounded above by 1 and takes on the value 0 when the index
+equals its expected value, the corrected Rand index would have the form
+(assuming a maximum Rand index of 1):
+r,,l
+
+2
+
+t.
+
+/
+i
+
+j
+
+j
+
+i
+
+(5)
+j
+
+It might be appropriate to have a well-defined lower bound as welt for the
+index in (4), but since negative values of the index have no substantive use,
+the required normalization would offer no practical benefits. Moreover, it
+might require an unusual bound on the maximum index.
+In general, the normalized expression of (3) is invariant under positive
+linear transformations of the original raw index. Thus, because of the fixed
+
+ComparingPartitions
+
+t99
+
+marginal assumption on the R x C contingency table, the selection of which
+of the four types of pairs listed in Table 2 is used as a base in the general
+form of equation (4) is more or less irrelevant since all of the options in
+Table 2 are linear transformations of the number of unordered object pairs,
+]~ (~/).
+
+(The normalization given in (4) assumes that larger positive values
+
+tJ
+
+of the raw index imply greater degrees of partition correspondence. If the
+reverse is true, i.e., one has raw indices based on types (iii) and (iv) object
+pairs, then the directionality of the normalized index must be reversed by
+replacing the maximum in the denominator by the minimum. In this case,
+however, the use of type (iii) or (iv) object pairs and a minimum index of 0
+would still lead directly to (5) and a normalized index based on ]~ (~J).)
+IJ
+
+A more important question concerns the choice of the " m a x i m u m
+index" in (4) for determining the upperbound on the raw index. The one
+currently given in (5) is, in effect, one possible bound on the number of
+type (i) object pairs, but others could be used instead. Thus, the two nonsymmetric Wallace indices mentioned earlier could be corrected for chance
+1
+by replacing the term ~- []~(~')
+.
++ ~"~(2/)] in the denominator of (5) by
+t
+
+j
+
+either ]~ (~') or ~ (n2J). Or, if an alternative symmetric index were desired
+i
+
+j
+
+as a competitor to (5), the expression ~ - [ ] ~
+
++
+
+i
+
+.i
+
+replaced by the sharper bound of minimum []~ ( ni.
+2 )' y,(n2.J)]. A corrected
+i
+
+.i
+
+version of the Fowlkes and Mallows measure is a little more uncertain. One
+version would take the geometric mean of the two corrected Wallace measures, and would thus be equivalent to using a very complicated bound on
+(~J) in (4). Alternatively, one could rely on the more direct approach of
+I ~J
+
+IIIIIIIII
+
+bounding ~ ' 2 "
+I ,./
+
+I I I
+
+by
+
+resulting in a much simpler
+,/
+
+expression. Obviously, there are many variations that could be pursued,
+depending on the bound we eventually choose. Moreover, the strategies
+discussed thus far do not begin to exhaust all possibilities. For instance, in
+a later section, two other measures will be introduced using a regression
+argument that indirectly generates two alternative bounds o n / . ~ , 2 ""
+t,.]
+
+It is rather unfortunate all these variations exist and that a "best"
+bound cannot be derived with analytic finality. Constructing an exact
+bound, conditional on the fixed row and column totals of the given contingency table, is a very difficult problem of combinatorial optimization.
+
+L. Hubert and P. Arabic
+
+200
+
+Consequently, we will be forced to rely on the less satisfactory options
+entailed by basing our measures exclusively on pairs of objects.
+
+2.2 Commentary
+Some additional observations should be made before we supply a more
+general framework for such measures as the Rand statistic. First, there are
+alternatives to the null model of randomness based on the generalized
+hypergeometric distribution. For example, Dubien and Warde (1981)
+develop two alternatives based on choosing partitions at random from either
+the set of all partitions or only those with a certain number of object classes.
+Given the availability of a Monte Carlo generation of partitions (e.g., Stare
+1983) and/or the (second) moments of the Rand index (even under the
+Dubien and Warde alternatives), significance testing can be carried out routinely. In fact, as will be seen later, the Rand measure can be considered a
+special case in a more comprehensive framework, and thus, all the
+significance testing alternatives developed in that context apply immediately
+(for a review, see Hubert 1983).
+A second and more important point to be made concerns the correction
+for chance suggested by Morey and Agresti (1984) and which has been used
+recently by Milligan and his coworkers (e.g., see Milligan, Soon, and Sokol
+1983; Milligan and Cooper 1985) in their extensive Monte Carlo comparisons of the performance of clustering strategies and associated evaluation
+techniques. As defined, the Morey-Agresti correction inappropriately
+assumes that the expectation of a squared random variable is the square of
+the expectation. Specifically, Morey and Agresti assert that
+
+E(~,n~) = ~".ni2n. 2 / n 2 ,
+i,.i
+
+(6)
+
+i,.i
+
+whereas our equation (2) could be rewritten to show
+
++ n2/(n-1)
+i ,.j
+
+i ,j
+
+-
+
+('~n, 2" + E n 2 ) / ( n - 1 )
+i
+
+(7)
+
+i
+
+In general, (7) is larger than (6) and the positive difference of
+1
+n2 ( n - l )
+
+hi2.) (n 2 - ~, n.~.)
+
+(n 2 - ~
+i
+
+.i
+
+is not necessarily small, depending on the sizes of the object sets and associated partitions being compared. As an example, we use the Morey-Agresti
+application taken from Rand (1971), shown in Table 3.
+
+ComparingPartitions
+
+201
+
+TABLE 3
+Data Used by Morey and Agresti (1984) from Rand (1971)
+
+Partition V
+
+Partition U
+
+A1
+A2
+
+BI
+
+B2
+
+B3
+
+2
+0
+2
+
+1
+2
+3
+
+0
+1
+1
+
+3
+3
+
+The Rand index, A/(~t), has a value of 9/15, and thus, the adjusted
+measure according to Morey and Agresti (1984, p. 36) should be
+9
+15
+
+6
+15
+6
+15
+
+using 6/15 as the expected value of
+Our correction would give
+
+1
+3
+
+'
+
+A/(~).
+1
+
+9
+
+8T
+
+15
+
+15
+
+2
+
+8?-1
+
+t7
+
+1
+
+~
+
+~
+
+15
+
+8 1/5
+
+based on the expected value of ~
+
+'
+
+calculated from (3). At present, it is
+
+unclear what effect the underadjustment for chance implied by the use of
+(6) might have had on the extensive Monte Carlo studies conducted by Mitligan and his coworkers.
+3. A More General Context
+
+Although the Rand index and some of its simple transformations might
+be the most popular measures for assessing the correspondence between two
+
+L. Hubert and P. Arabic
+
+202
+
+partitions, we can also embed these indices in more all-inclusive schemes.
+These generalizations, in turn, lead directly to a number of alternative measures that could supplant the Rand statistic, including some based on traditional assessment of association in contingency tables. This framework facilitates for many special cases a comprehensive strategy for significance tests
+as well as a method of normalizing the indices.
+3.0.1. An Alternative Development of the Rand Index
+The easiest way to introduce this type of all-inclusive scheme is to provide an alternative derivation of the Rand index. Although this approach
+ostensibly requires more complicated notation, generalizations are readily
+forthcoming once this special case is available.
+As we commented earlier, the Rand index is a constant linear transfor•~
+
+gnu. I
+
+mation of ~ , 2 "" In turn,
+t~J
+
+2
+t ,.i
+
+i ~.l
+
+where the latter expression is the number of ordered object pairs of type (i).
+For convenience, it is this term that we will construct from an alternative
+notational scheme.
+First, define two n × n (partitioned) binary matrices, P and Q, based on
+the categorization of the n objects in S = {O1 . . . . . O,} according to U and
+V respectively as in Table 4. Both P and Q are assumed to have zeroes
+along their main diagonals with the indicated ones and zeroes defining all
+the entries in the corresponding submatrices. The rows and columns of
+P (Q) are partitioned according to the row (column) sums of the original
+contingency table; thus, there are n;. (n..]) rows bracketed by the label
+A; (Bj) in P (Q) for l<~i<~R (I~<j~<C).
+For notational simplicity, we will assume that the n objects in S are
+indexed according to the partition defined by U. Thus, O1. . . . . O,v belong
+to A1; O,1.+i . . . . . 0,2 belong to A2 ;...; O,~R_t).+l. . . . .
+O,R" belong to AR.
+Obviously, the n row and column objects of Q are the same as the row and
+column objects of P but reordered to be consistent with the partition
+represented by V. In particular, we let ~o(') denote the permutation on the
+first n integers that matches identical objects between the rows (and
+columns) of P and Q, i.e., if t~0(r) = t, then the r-th row (and column) in
+P, which corresponds to object Or, is actually the t-th row (and column) in
+
+q.
+
+203
+
+Comparing Partitions
+
+TABLE 4
+Partitioned Matrices P and Q
+
+ul
+
+u2
+
+•
+
+•
+
+•
+
+un
+
+Ut
+
+U2
+
+0
+
+p_-
+
+0
+
+1
+
+1"%
+
+UR
+
+vl
+
+v2
+
+.
+
+.
+
+.
+
+Vc
+
+Vl
+
+1'2
+
+Q=
+
+VC
+
+o
+
+0
+
+204
+
+L. Hubert and P. Arabic
+
+Given this framework, consider a measure of correspondence between
+the two matrices P and Q of the cross-product form
+r ( ~ o ) = 5". ?,, qv, o(,>V,o(,) ,
+
+(8)
+
+r,s
+
+which numerically equals
+nij (n,:/- 1)
+
+(9)
+
+ij
+
+Intuitively, qJ0(') defines the observed contingency table (i.e.:the i-th row
+and j-th column entry of the contingency table); nii specifies how many row
+(column) objects from the i-th class, Ai, of U are mapped to the j-th class,
+, of V. Because all entries in P and Q are 0-1, the cross-product index in
+8) merely counts the number of ordered object pairs placed in the same
+class in U and in the same class in V.
+
+f:
+
+3.0.2. A Regression-Based Measure of Correspondence Between U and F
+Although the use of matrices P and Q has been directed toward obtaining the number of ordered object pairs of type (i) in (9), it is of some
+interest to note that this redefinition by itself suggests another strategy for
+evaluating the correspondence between the two partitions U and V, based
+on predicting one matrix from the other. For example, considering U as
+the standard, suppose we predict the entries in Q from those in P using
+least-squares (i.e., q~oir)%(s) is predicted from P~s). The regression
+coefficient obtained, say boi,, can be written as
+
+z
+bQp -~
+
+- z
+
+t,J
+
+z
+i
+
+/
+
+.l
+
+y, ('~)
+~(~')
+
+i
+
+(1
+
+i
+
+)
+
+(~)
+
+Alternatively, treating V as the standard and predicting P from Q, bl,o could
+be given in the same form with ~ (n2J) replacing ~ (~') in the denominator
+j
+i
+of bQp. In both cases, the resulting indices are automatically corrected for
+chance, bounded above by 1, and can be rewritten to conform to the general
+structure of our index corrected for chance given in (4):
+
+Comparing Partitions
+
+205
+
+~ . ( nu. ~
+*,.!
+
+n#.
+
+, 2 , - Z ( 2 ) Z ('~') I (~)
+i
+
+j
+
+bQp
+
+=
+
+z('/;)-z(~)
+Z(~')
+
+(1+
+
+j
+
+'
+
+) -- Z ( ~ ' ) Z ( 2 J ) / ( ~
+
+)
+
+Z<~') - z(~) z:('Z) / (~)
+t,j
+
+i
+
+j
+
+J
+
+) -
+
+bpQ =
+
+Z ( 2 j) ( 1 +
+
+'
+
+j
+
+(~)
+
+The two bounds on ~ ( ~ J )
+
+Z(~')Z(2J)/(~
+,
+
+j
+
+)
+
+used in the latter representations for bQp and
+
+i,j
+
+bpQ, respectively, are
+
+Z(~')
+
+(1+
+
+J
+
+(1 +
+
+j
+
+i
+
+(~)
+
+'
+
+)
+
+J
+
+)
+
+,
+
+and
+
+Z(2J)
+.;
+
+(~)
+
+To obtain a symmetric measure, one option is to take the geometric
+mean of the two regression coefficients, thus yielding the conventional
+correlation between the off-diagonal entries of P and Q. Notice that this
+latter measure would also be the geometric mean of the two nonsymmetric
+Wallace measures that have been corrected for chance even though the two
+constituent components are slightly different.
+
+L. Hubert and P. Arabie
+
+206
+
+TABLE 5
+Weighting Schemes for Object Pairs
+in Matrices P and Q
+
+Ul
+
+U2
+
+UR
+
+O~n
+
+Ul
+
+Pll ~"0
+
+P12
+
+U2
+
+P21
+
+P22 %
+
+UR
+
+PRl
+
+PR2
+
+Vl
+
+V2
+
+O ~ 11
+~It 0
+
+~2
+
+~2~
+
+~22 0
+
+~c,
+
+~c2
+
+~R
+
+p=
+
+o,,,
+
+]J1
+
+V2
+
+FRR "0
+
+.
+
+.
+
+.
+
+VC
+
+~c
+
+Q=
+
+o,, cc
+VC
+
+-qcc "0
+
+ComparingPartitions
+
+207
+
+3.1 Generalizing P and Q
+Although the use of the matrices P and Q and the index in (8) is a
+notationally cumbersome way of finding the number of ordered pairs of type
+(i), there is considerable generality inherent in this alternative development.
+In particular, the 0-1 nature of P and Q that we began with may be
+extended to allow for differential weighting functions in the classification of
+all object pairs by defining P and Q to have the generic forms given in Table
+5.
+Initially, the weights ~//, for 1 ~< i, i'x< R and ~j, for 1 <~j,j'<~ C are arbitrary but are assumed to be constant within the indicated submatrices (the
+on-diagonal submatrices of P and Q indicated in Table 5 are obtained when
+i = i' and j - - - j ' ; the off-diagonal submatrices correspond to i ~ i ' and
+j ~ j ' ) . The index in (8),
+r(~o) = Z
+
+Prs q%(,),o(s)
+
+,
+
+now assumes the reduced form:
+r(,o)
+
+= Z
+i,i' j,j'
+
+•
+
+i,j
+
+(lo)
+
+Alternatively, we can express (10) as four additive components corresponding to weighted contributions from the four types of object pairs listed earlier, i.e.,
+F(~b0) --- ~_,na(n(j-1)~ii~ j
+
+(type (i))
+
+i,j
+
++ ~_, ~., n~in~i,p'~i,qj,
+
+(type (ii))
+
+i7~i7~ j'
+
++ ~. ~.~nqni,jpii,qjj
+
+(type (iii))
+
+i~i' j
+
++ ~_, ~., no n~i'P"iiq'~j'.
+
+(type (iv))
+
+j~j' i
+
+Obviously, the raw statistic in (9) defining the number of ordered object
+pairs of type (i) is obtained from (10) merely by letting Pu' = 1 for i - - i'
+and 0 otherwise; and ~/--- 1 for j -- j ' and 0 otherwise.
+Although we might wish to generalize this structure even further by
+relaxing the cross-product restriction on the measure of correspondence
+between the matrices P and Q (e.g., see Hubert 1979 for a discussion of
+
+208
+
+L. Hubert and P. Arabic
+
+four-argument functions between the entries in P and Q), the form of (10)
+by itself still allows extensive flexibility for defining a number of alternative
+indices to assess the correspondence between the partitions U and V. For
+example, suppose ~i' and ~j, are zero unless i -- i' and j = j ' in which case
+they can be variously defined as below. Then, F(tk0) reduces to an additive
+composite of type (i) ordered object pairs from each cell of the R x C contingency table, with a weighting scheme that may differ from cell to cell,
+i.e.,
+F (~b0) = ~ n,:i(n U- 1)ff/i ~j
+i,j
+
+(11)
+
+As pointed out recently by Brook and Stirling (1984), but reinterpreted in
+the present context, the use of unit weights allows each cell in the contingency table to contribute in direct relation to the number of object pairs it
+contains; thus, those classes in U and V with the larger marginal frequencies tend to dominate the raw index. If we wish to attenuate this effect, a
+different weighting function could be developed using some reciprocal function of the marginal totals. For instance, since the expected number of
+ordered object pairs in the cell formed by the i-th row and j-th column is
+n~.(ni.-1) n.j(n.j-1)/(n ( n - l ) ) , one possible raw index might be
+
+~ nij (n~i-1) /
+i,i
+
+ni.(ni.-1)n.j(n.j-1)
+n(n-1)
+
+(12)
+
+Here, the contribution from each cell is taken relative to the number of
+pairs expected rather than to the absolute number of ordered object pairs
+generated from the cell irrespective of the corresponding marginal frequencies. This latter index may be obtained from the general scheme in (11)
+merely by letting
+
+ffli = ~
+
+/(ni.(ni.--1))
+
+~j --- ~
+
+/(n.j(n.i-1))
+
+and
+
+As can be derived from a formula given in section 3.3 of this paper, the
+expectation of (12) is RC. Thus, given an upper bound on the raw index,
+such as
+
+Comparing Partitions
+
+209
+
+2-
+
+1, v• n.j(n.s-1) 1 '
+
+n,..(n~.-1) +
+
+an adjusted measure could be constructed as an analogue of (5):
+
+ni.(n~.-1)n.s(n.F1)
+
+~nij(nq-1) /
+1
+
+-
+
+n (n--l)
+
+i,j
+
+n(n-1)
+
+n(n-1)
+
+] _
+
+2 [~ n,.(n,.-1) + ~'~ n . j ( n . F 1 )
+
+RC
+
+RC
+
+As a somewhat different line of generalization leading to indices based
+on conventional tests for association in contingency tables, suppose only
+weighted object pairs of type (iv) are considered. Specifically, let Pi;' be zero
+unless i -- i', and conversely, let ~j, be zero unless j ~ j ' . Then
+F(00) = ~
+J~.]'
+
+~_,nijn#'Pii~f
+
+(13)
+
+i
+
+As one example, if we define
+
+Pii = 1~hi.
+
+~jj, = 1/n.i
+
+and
+
+when
+
+j~j'
+
+,
+
+(14)
+
+then F (qJ0) reduces to
+
+c - z i,j ?1i""Jn.j
+which is a constant linear transformation of the traditional chi-square statistic for evaluating association in an R x C contingency table, i.e.,
+
+x2=n(~
+
+i,j
+
+"~
+
+ni.rl./
+
+1) ,
+
+and thus,
+X2-- - n r(~o) + n ( C - l ) .
+
+(15)
+
+(Starting with type (iii) pairs, a similar equivalence results with C replaced
+by R.) Or, if we let P be defined as above and let
+
+L. Hubert and P. Arabic
+
+210
+
+~J'--
+
+when j ; ~ j '
+otherwise
+
+1
+0
+
+;
+
+(16)
+
+,
+
+then the pairs of type (iv) are weighted differently to produce
+
+rOo)--
+
+i,j
+
+rli"
+
+which is a constant linear transformation of an alternative index for measuring association in a contingency table, called the Goodman-Kruskal (1954)
+zb statistic. Specifically,
+
+i,j nj.
+
+~'b=
+
+n2
+
+-
+
+i
+
+~n.~
+
+'
+
+J
+
+so that
+~/,/
+
+• b---
+
+n2_Zn.
+
+F (00) + 1
+
+(17)
+
+J
+
+Using different notation, this last equivalence between r b and the comparison of two matrices, P and Q, has been pointed out recently by Berry
+and Mietke (1985).
+As these few illustrations suggest, a very wide variety of special cases of
+the index in (10) are possible. However, before proceeding further with
+these interpretations of the matrix comparison framework, we should discuss the general problems of significance testing and normalization of
+indices, irrespective of the weighting scheme chosen.
+3.2
+
+Significance Testing
+
+The contingency table defined by the two partitions U and V was
+characterized by a permutation (or matching), 00, of the row/column
+objects of P and Q. If we consider an arbitrary permutation ~ to effect such
+a matching and select 0 at random from all n! possibilities, we generate a
+sampling distribution for the index F(.) based on the generalized
+
+Comparing Partitions
+
+211
+
+hypergeometric (e.g., see Fowlkes and Mallows 1983). Each permutation
+induces a contingency table on our original n objects where each table has
+the same row and column totals as the original. Stated differently, we produce a distribution for the index F (') by picking two partitions of S at random that have the same number of classes and class sizes as U and V.
+The first three moments of F (~) have already been derived (e.g., see
+Mielke 1979), and thus, significance testing of the observed measure F(~0)
+can be approached by approximating the distribution of F(~) by another,
+e.g., the Pearson Type III as suggested by Mielke, Berry, and Brier (1981).
+For contingency tables that are associated with large values of n, the direct
+use of Mielke's formulae, which operate on the n x n matrices P and Q,
+may prove to be a computationally burdensome task. One option is to simplify expressions for the first three moments for the particular weighting
+options chosen, e.g., for weighted measures of type (i) or (iii). For the
+Rand and chi-square options, these formulae are available in Brook and Stirling (1984) and Mielke and Berry (1985), respectively. Alternatively,
+Monte Carlo significance testing can be used based on a random sample of
+all n! permutations, or again, as a computationally more efficient strategy,
+the given Monte Carlo distribution could be generated directly from randomly selected R x C contingency tables (by, say, the method of Patefield
+1981). For a comparison of the moment approximation and Monte Carlo
+methods, the reader is referred to Costanzo, Hubert, and Golledge (1983).
+Also, Brook and Stirling (1984), who rederived Mielke's (1979) third
+moment formula for the special case of Rand's measure, demonstrated
+through simulation the inadequacy of the normal approximation based on
+just the first two moments when the row or column categories have nearly
+an equal number of objects. Earlier, Mielke (1979) derived this result
+analytically and concluded that significance testing through a distributional
+approximation should be based on at least the third moment.
+3.3 Normalization of Indices
+
+For normalization of an index corrected for chance, it is necessary to
+have an explicit formula for the expectation of F(~). Given the general
+partitioned structure of P and Q presented earlier, we can show that
+
+e(r(¢))
+
+=
+
+n(n--t)
+
+[E
+i,i"
+
+[ g ,,.J n.y zy - g
+i
+
+./,j'
+
+•
+
+./
+
+Thus, assuming that large values of F(~b) should be keyed positively (e.g.,
+indices based on weighted type (i) and (ii) object pairs), this expectation can
+be used in the general form of a normalized index:
+
+212
+
+L. Hubert and P. Arabic
+
+r (~o) -E(r (~))
+max r
+
+-E(r(,))
+
+Typically, max F (if) is replaced by some upper bound since calculation of an
+exact solution is a very difficult computational task (e.g., see Garey and
+Johnson 1979). If small values of F(~0) are of interest (e.g., indices based
+on weighted type (iii) and (iv) object pairs) and are to be keyed positively,
+the maxF(tk) term is replaced by minF(~) (or, more usually, a lower
+
+bound~:
+
+q'
+
+E(F (~))-r (~o)
+E(r (q,)) --min
+F($)
+¢
+For example, in our two special cases of weighted type (iv) object pairs
+using the general index in (13), the specification in (14) leads to an expectation of ( n - R ) ( C - l ) /
+( n - l ) and the alternative in (16) leads to
+( n - R ) (n2-~_.,n~) / ( n ( n - 1 ) ) . If the bound on min r ( $ ) is assumed zero,
+j
+¢
+then normalized indices of the form given above are immediate. These
+latter measures are linear combinations of the usual X2 and 7b statistics,
+respectively, which in turn have expectations of n ( R - 1 ) ( C - 1 ) / ( n - 1 ) and
+
+(R-1)/(n-1).
+4. Comparison Measures Based on Object Triples
+The measures discussed thus far for comparing two partitions have
+been based on the classification of all object pairs into one of four types. As
+a parallel development, it is possible to subdivide all n ( n - l ) ( n - 2 ) ordered
+triples into separate categories depending on how the three distinct objects
+are classified by U and V. Although a wide variety of correspondence
+indices based on these counts could again be developed, our sole concern
+will be with concordant and discordant object triples. The latter can be
+defined using the 0-1 matrices P and Q representing U and V and the
+matching ~k0(') between identical row/column objects in P and Q:
+Letting
+
+sign (x) --
+
+1
+0
+-1
+
+for x > 0
+for x=0
+for x < 0
+
+;
+;
+,
+
+a concordant triple of ordered objects (0r, 0s, 0t) is one for which
+P r t ) sign (q,0(r),0(s)-q,o(r)#,0(t)) -- +1; a discordant triple is one
+
+sign (Prs -
+
+C o m p a r i n g Partitions
+
+213
+
+for which sign (Prs - Prt) sign (q¢o(r)%(s)--q~o(r)q~O(t)) ---- - 1 . Consequently, a
+concordant triple has the property that either Prs = q~o(r),o(S~ = 1 and
+o r Prs = qt~o(r)%(s) "= 0 and Prt = q~o(r)~o(t) - - 1 (i.e.,
+characterized as pairs, ( 0 , 0s) is of type (i) a n d (0r, 0t) is of type (ii), or
+conversely).
+A
+discordant
+triple
+is
+characterized by
+either
+Prs = q~o(r)¢o(t) ---- 1 a n d Prt = qq~o(r)~o(s.) "~ 0 , o r Prs "~ qtOo(r)¢o(t) --" 0 and
+P~t = q%(r)%(t) = 1 (i.e., (0r, 0s) is of type (iv) a n d ( 0 , 0t) is o f type (iii),
+or conversely). If we consider the 0-1 matrices P and Q as providing order
+information in comparing object pairs, where +1 indicates a similar pair and
+0 indicates a dissimilar pair, a concordant (or discordant) triple ( 0 , 0s, 0t)
+is one in which the order information for the pairs (Or, 0s) and (Or, 0t) is
+consistent (or inconsistent). For triples that are neither concordant or
+discordant, the values for Prs and Prt and/or q~0tr~0(s~ and q~o(r)t~o(t ) a r e tied
+at 0 or 1 and it is impossible to make an unambiguous determination of
+either consistency or inconsistency.
+This development is directly analogous to assessing association between
+two 0-1 numerical sequences using, say, Kendall's r or Goodman-Kruskal's
+y. The numerators of both measures are based on the number of consistent
+pairs minus the number of inconsistent pairs where a consistency (or inconsistency) depends on whether there is the same (or different) order for a
+pair of objects in the two sequences. When the constituent objects in a pair
+are tied within either sequence, that occurrence is ignored since any clear
+determination of order consistency or inconsistency is impossible. In our
+definition for proximity matrices, triples are ignored when the two constituent pairs (Or, 0s) and (Or, 0t) are tied in P or in Q or both. Extending
+the analogy further, the Rand index is based on the number of exact
+matches between P and Q, which would correspond in the 0-1 numerical
+sequence framework to the use of the number of objects that are coded by a
+one in both sequences. This latter value, in effect, is the usual Fisher's
+exact test statistic in a 2x2 contingency table.
+By analogy to rank correlation between two matched numerical
+sequences using concordant and discordant object pairs, one possible raw
+measure of correspondence between U and V could be given as Con - Dis,
+where Con and Dis represent the number of concordant and discordant triples, respectively:
+
+Prt "~ qt~o(r)~o(t) ---- 0 ,
+
+Con - Dis =
+
+~
+
+sign (P~s - Prt) sign (q,0(r),0(s) - q,o(r) q,0(t))
+
+"(18)
+
+r,$~l
+distinct
+
+Alternatively, Con - Dis can be obtained directly from the cell frequencies
+within the R x C contingency table:
+
+L. Hubert and P. Arabic
+
+214
+
+Con - Dis = 2 [ ( n - l ) ~ n u ( n u - 1 ) - ~.,(nv-1)(n.i-1)n u]
+#,j
+
+(19)
+
+#,j
+
+We should emphasize that this formula is recommended for computational
+purposes, in contrast to the more transparent and general expressions given
+earlier. Recasting this last expression may clarify the relation to Rand's
+adjusted index. In particular, (19) can be given as
+4(n-l) [~
+"d
+
+(~i)
+
+(~') (2s) {
+
+nu
+
+(~)
+
+ni.nq
+n
+
+l]
+
+(20)
+
+,
+
+and the numerator of the adjusted Rand index in (5) as
+(21)
+
+Ignoring the multiplicative constant of 4(n-1) in (20), the difference
+between (20) and (21) resides in the multiplicative term [
+
+nu
+
+]
+
+n i. n .)
+n
+
+applied to the expected number of object pairs in (20). This expression is
+greater or less than 1 depending on whether the observed cell frequency is
+greater or less than ni.n.j/n, the expected number of observations in the cell
+defined by At and Bj under the hypergeometric model. Thus, compared to
+the Rand measure in (21), the contribution of the number of object pairs
+
+(~s) in relation to the expectation ( ~ ' ) ( n ~ j ) / ( ~ ) in (20) is r e d u c e d when
+
+nu>ni.n.Jn and increased when n~j<ni.nq/n. Given the form of
+C o n - Dis in (19), each cell of the contingency table will contribute positively or negatively depending on whether no - 1 is greater or less than
+(nv-1)(n.F1)/(n-1). Thus, for reasonable cell sizes that allow us to
+ignore the - l s in the above expression, each cell will contribute, as might
+be expected, positively or negatively depending on whether the number of
+observations in cell (i,j), n~i, is greater than or equal to its expectation,
+nvn.Jn.
+4.1 Significance Testing
+As can be seen from the form of (18), the agreement index,
+C o n - Dis, can be specified as a cross-product measure based on threeargument functions:
+
+215
+
+ComparingPartitions
+
+A(*0) =
+
+q*0(,)*0(s)*0(,)
+
+,
+
+r,s,t
+
+where
+Prst = sign (P~s -- Pn) ,
+
+and
+~,o(r),o(s),oft) = sign
+
+(q,o(r)¢o(s)--q,o(r)¢o(t))
+
+Thus, as with the cross-product measure in (8) using two-argument functions, the distribution of Con - Dis may be generated under the generalized
+hypergeometric model for the R x C contingency table by considering the
+distribution of A (~0) when ~k is picked at random from all n! possible permutations. Again, using an efficient algorithm for randomly constructing R x C
+contingency tables with given row and column totals (see Patefield 1981),
+Monte Carlo significance testing of the observed index A (~0) may be routinely carried out through repeated evaluation of the raw index C o n - Dis
+given in reduced form in (19). We also note that the expectation of A(~) is
+0 (see Hubert, GoUedge, Costanzo, and Gale 1985), and consequently,
+Con - Dis as a raw measure of agreement is already corrected for chance.
+
+4.2 Normalization of Index
+Given the structure of an index corrected for chance in (3) and the
+expectation of 0 for C o n - Dis, normalized indices would have the form
+(Con - Dis)/(Upper Bound). Generalizing from strategies of assessing rank
+correlation (see Reynolds 1977, Chapter 3, for a discussion), there are at
+least four different bounds that lead to clear probabilistic (or operational)
+meanings in the sense advocated by Goodman and Kruskal (1954) for the
+corresponding normalized measure:
+(i)
+(ii)
+
+n(n-1)(n-2);
+
+~
+
+= Con +
+
+Dis =
+
+r,s,t
+distinct
+
+2 [~.nu(n~i-1) (n-ni.-n.j+nq) + ~.,nu(ni.-ni) ( n . / - n i ) ] ;
+l,j
+
+(iii)
+
+~
+r,s,r
+distinct
+
+i,j
+
+l r ,t = 2 [~.,ni.(ni.-I)(n-ni.)];
+i
+
+2t6
+
+L. Hubert and P. Arabic
+
+(iv)
+
+~
+r,s,t
+distinct
+
+l stt = 2 [~,n.j(n.71)(n-n.j)].
+j
+
+Using (i), for instance, and considering an object triple picked at random,
+( C o n - Dis)/(n(n-1)(n-2)) can be interpreted as the difference between
+the probability of a concordant triple, Con/(n(n-1)(n-2)), and a discordant triple, Dis/(n ( n - l ) ( n - 2 ) ) , as an analogue of Kendatl's (1970) r~.
+Although the use of n ( n - l ) ( n - 2 ) ) in (i) leads to a convenient probabilistic interpretation for the resulting measure, this bound does impose a
+penalty because of the existence of object triples other than those labeled
+concordant and discordant, e.g., the normalized index could never attain the
+value of 1.00 if U and V has more than two classes and/or if any class in U
+or V had more than two objects. To compensate for these "tied" object triples not included in either Con or Dis, we could consider the bound in (ii)
+(an analogue of Goodman-Kruskal's 3/):
+(Con - Dis) / (Con + Dis) .
+Here, the normalized measure would again be the difference between two
+probabilities, where the probabilities are now conditional on the randomly
+selected triple being either concordant or discordant, i.e., [Con/(Con +
+Dis)] - [Dis/(Con + Dis)]. Finally, if one particular partition is considered
+the standard and we wished to discount the difference, C o n - Dis, when
+there are ties in the other partition, one could rely on the bounds in (iii)
+and (iv). For example, conditional on an untied triple in U, which is considered as the standard,
+(Con - Dis) /
+
+t ,s,l
+
+~
+t,$,t
+distinct
+
+can be interpreted as the difference between the probability of a concordant
+and discordant triple. These two measures based on (iii) and (iv) are analogues of Somers' nonsymmetric rank correlation coefficients and may be generated alternatively as regression coefficients in predicting q%(r)%(s)%(t)
+from P~st, or conversely. As in the earlier discussion of Wallace's measures,
+the geometric mean of the two indices based on (iii) and (iv) would lead to
+another possible bound,
+i
+
+I rstl
+r,sj
+distinct
+
+I r tl,
+r~s,t
+distinct
+
+(and an analogue of Kendatl's %, which is based on Daniels' generalized
+correlation coefficient; see Kendall 1970).
+
+Comparing Partitions
+
+217
+
+In short, each of the bounds in (i) through (iv) leads to an index that
+is corrected for chance, bounded between ___1, and interpretable as the
+difference between (possibly conditional) probabilities of concordance and
+discordance. For each case, there is a direct analogue to well-known indices
+of rank correlation, and in fact, the discussion in this latter context extends
+directly to the task of comparing two partitions. When considering rank
+correlation, the --. 1 scoring function is constructed over object pairs through
+two given numerical sequences; for partition agreement, the -+-1 scoring
+function is on triples and is generated from dichotomous order information
+within two proximity matrices defined over the n given objects. Although
+we will not pursue the extensions to k-tuples when k>/4, similar probabilistic interpretations could be developed for selecting k-tuples at random.
+
+References
+ARABIE, P., and BOORMAN, S.A, (1973), "Multidimensional Scaling of Measures of Distance Between Partitions," Journal of Mathematical Psychology, 10, 148-203.
+BERRY, K.J., and MIELKE, P.W., (1985), "Goodman and Kruskal's TAU-B Statistic," Sociological Methods & Research, t3, 543-550.
+BRENNAN, R.L., and LIGHT, R.J., (I974), "Measuring Agreement When Two Observers
+Classify People into Categories not Defined in Advance," British Journal of Mathematical
+and Statistical Psychology, 27, 154-163.
+BROOK, R.J., and STIRLING, W.D., (1984), "Agreement Between Observers When the
+Categories are not Specified in Advance," British Journal o.f Mathematical and Statistical
+Psychology, 37, 271-282.
+COSTANZO, C.M., HUBERT, L.J., and GOLLEDGE, R.G., (1983), "A Higher Moment for
+Spatial Statistics," Geographical Analysis, t5, 347-351.
+DUBIEN, J.L., and WARDE, W.D., (1981), Some Distributional Results Concerning a Comparative Statistic Used in Cluster Analysis, Unpublished manuscript, Department of Mathematics, Western Michigan University, Kalamazoo, Michigan.
+FOWLKES, E.B., and MALLOWS, C.L., (1983), "A Method for Comparing Two Hierarchical
+Clusterings," Journal of the American Statistical Association, 78, 553-569.
+FRANK, O., (1976), "Comparing Classifications by the Use of the Symmetric Class
+Difference," in Proceedings in Computational Statistics, eds. J. Gordesch and P. Maeze,
+Wi~rzburg: Physica Verlag, 84-96.
+GAREY, M.R., and JOHNSON, D.S., (1979), Computers and Intractability: A Guide to the Theory
+of NP-Completeness, San Francisco: W.H. Freeman.
+GOODMAN, L.A., and KRUSKAL, W.H., (1954), "Measures of Association for CrossClassifications," Journal of the American Statistical Association, 49, 732-764.
+GREEN, P.E., and RAO, V.R., (1969), "'A Note on Proximity Measures and Cluster
+Analysis," Journal of Marketing Research, 6, 359-364.
+HARTIGAN, J.A., (1975), Clustering Algorithms, New York: Wiley.
+HUBERT, L.J., (1977), "Nominal Scale Response Agreement as a Generalized Correlation,"
+British Journal of Mathematical and Statistical Psychology, 30, 98-103.
+HUBERT, L.J., (1979), "Matching Models in the Analysis of Cross-Classifications," Psychometrika, 44, 21-41.
+
+218
+
+L. Hubert and P. Arabie
+
+HUBERT, L,J., (1983), "Inference Procedures for the Evaluation and Comparison of Proximity Matrices," in Numerical Taxonomy, ed. J. Felsenstein, New York: Springer-Verlag,
+209-228.
+HUBERT, LJ., GOLLEDGE, R.G., COSTANZO, C.M., and GALE, N., (1985), "OrderDependent Measures of Correspondence for Comparing Proximity Matrices and Related
+Structures," in Measuring the Unmeasurable, eds. P. Nijkamp and H. Leitner, The Hague:
+Martinus Nijhoff.
+JOHNSON, S.C., (1968), "Metric Clustering," Unpublished manuscript, AT&T Bell Laboratories, Murray Hill, New Jersey.
+KENDALL, M.G., (1970), Rank Correlation Methods, 4th Edition, London: Griffin.
+KLASTORIN, T.D., (1985), "The p-Median Problem for Cluster Analysis: A Comparative
+Test Using the Mixture Model Approach," Management Science, 31, 84-95.
+LERMAN, I.C., (1973), "Etude DistributioneUe de Statistiques de Proximit6 entre Structures
+Finies de M~me Type; Application ~ la Classification Automatique," Cahier no. 19 du
+Bureau Universitaire de Recherche Opbrationnelle, Institut de Statistique des Universit6s de
+Paris.
+MIELKE, P.W., (1979), "On Asymptotic Nonnormality of Null Distributions of MRPP Statistics," Communications in Statistics - Theory and Methods, A8, 1541-1550 (errata: AIO,
+1981, p. 1795 and All, 1982, p. 847).
+MIELKE, P.W., and BERRY, K.J., (1985), "Non-Asymptotic Inference Based on the Chisquare Statistic for r by c Contingency Tables," Journal of Statistical Planning and Inference, 12, 41-45.
+MIELKE, P.W., BERRY, K.J., and BRIER, G.W., (1981), "Application of Muttiresponse Permutation Procedures for Examining Seasonal Changes in Monthly Sea-Level Pressure
+Patterns," Monthly Weather Review, 109, 120-126.
+MILLIGAN, G.W., and COOPER, M.C., (1985), "A Study of the Comparability of External
+Criteria across Hierarchy Levels," unpublished manuscript, Ohio State University,
+Columbus, Ohio.
+MILLIGAN, G.W., SOON, S.C., and SOKOL, L.M., (1983), "The Effect of Cluster Size,
+Dimensionality, and the Number of Clusters on Recovery of True Cluster Structure,"
+IEEE Transactions on Pattern Analysis and Machine Intelligence, PAMI-5, 40-47.
+MIRKIN, B.G., and CHERNYI, L.B., (1970), "Measurement of the Distance Between Distinct
+Partitions of a Finite Set of Objects," Automation and Remote Control, 31, 786-792.
+MOREY, L.C., and AGRESTI, A., (1984), "The Measurement of Classification Agreement:
+An Adjustment of the Rand Statistic for Chance Agreement," Educational and Psychological Measurement, 44, 33-37.
+PATEFIELD, W.M., (1981), "Algorithm AS159. An Efficient Method of Generating Random
+R × C Tables with Given Row and Column Totals," Applied Statistics, 30, 91-97.
+RAND, W.M., (1971), "Objective Criteria for the Evaluation of Clustering Methods," Journa,
+of the American Statistical Association, 66, 846-850.
+REYNOLDS, H.T., (1977), The Analysis of Cross-Class~cations, New York: Free Press.
+ROHLF, F.J., (i974), "Methods of Comparing Classifications," Annual Review of Ecology ant
+Systematics, 5, 101-113.
+ROHLF, F.J., (1982), "Consensus Indices for Comparing Classifications," Mathematical Biosciences, 59, 131-144.
+STAM, A.J., (1983), "Generation of a Random Partition of a Finite Set by an Urn Model,"
+Journal of Combinatorial Theory A, 35, 231-240.
+WALLACE, D.L., (1983), "Comment" Journal of the American Statistical Association, 78, 569579.
+
+

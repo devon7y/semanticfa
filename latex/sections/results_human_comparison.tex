@@ -16,10 +16,10 @@ Respondents after cleaning: 874434 of 1015341
 \end{verbatim}
 }
 
-Five factors were fixed a priori \citep{goldberg-1990}; parallel
-analysis suggested \valHumanPaKWord---at $N = \valNHuman$ even trivial factors
-clear noise---but five reproduced the Big Five with simple structure
-(Table~\ref{tab:s-human-loadings}).
+Five factors were fixed a priori \citep{goldberg-1990}. Parallel
+analysis suggested \valHumanPaKWord{} (at $N = \valNHuman$ even trivial
+factors clear noise), but five reproduced the Big Five with simple
+structure (Table~\ref{tab:s-human-loadings}).
 
 \subsubsection{Factor-Level Congruence}
 
@@ -49,9 +49,11 @@ MR4 0.18  0.02 0.17 0.14 0.92
 
 Each semantic factor found a distinct human counterpart
 (Table~\ref{tab:tucker}): Openness, Conscientiousness, and Neuroticism
-strongly ($\phi = \valPhiO$, \valPhiC, \valPhiN); Extraversion (\valPhiE) and Agreeableness
+strongly ($\phi = \valPhiO$, \valPhiC, \valPhiN), and Extraversion (\valPhiE) and Agreeableness
 (\valPhiA) weakly, the former matching human Agreeableness nearly as well
-(\valPhiEA). Overall, $\bar{\phi} = \valPhiMean$, NMI = \valNmiTheory, ARI = \valAriTheory, and
+(\valPhiEA). Overall, $\bar{\phi} = \valPhiMean$, 95\% CI
+$[\valPhiMeanLo, \valPhiMeanHi]$ (item-level jackknife, see Method),
+NMI = \valNmiTheory, ARI = \valAriTheory, and
 normalized Frobenius similarity \valFrob between the correlation
 structures.
 
@@ -62,19 +64,19 @@ structures.
 (rows) and the human-response factors (columns)}
 \label{tab:tucker}
 \input{generated/table_tucker_body}
-\caption*{\textit{Note}. E = Extraversion; N = Neuroticism; A =
-Agreeableness; C = Conscientiousness; O = Openness. MR labels are the
+\caption*{\textit{Note}. E = Extraversion, N = Neuroticism, A =
+Agreeableness, C = Conscientiousness, and O = Openness. MR labels are the
 rotation-order factor names from each solution. Bold values mark each
 semantic factor's best-matching human factor (mean matched
 $\bar{\phi} = \valPhiMean$). Semantic solution: minres/oblimin on the
-mean-centered Pearson similarity matrix; human solution: minres/oblimin on
+mean-centered Pearson similarity matrix. Human solution: minres/oblimin on
 keyed response correlations, $N = \valNHuman$.}
 \end{table}
 
 \subsubsection{Comparing the Encodings}
 
 Table~\ref{tab:encodings} extends this to every encoding's five-factor
-solution; the NLI matrix, supplied via \texttt{similarity =}, was
+solution. The NLI matrix, supplied via \texttt{similarity =}, was
 indefinite (minimum eigenvalue $\valNliMinEig$), requiring positive-definite
 projection (see Method).
 
@@ -90,11 +92,11 @@ solution, and with human item-pair correlations, plus fit diagnostics}
 }
 \caption*{\textit{Note}. NMI = normalized mutual information and ARI =
 adjusted Rand index of the five-factor item clustering against the
-theoretical Big Five partition; $\bar{\phi}$ = mean Tucker congruence after
-matching each semantic factor to its best human factor;
+theoretical Big Five partition. $\bar{\phi}$ = mean Tucker congruence after
+matching each semantic factor to its best human factor.
 $r_{\text{keyed}}$ / $r_{\text{raw}}$ = correlation between the encoding's
 \valNPairs{} item-pair similarities and the human inter-item correlations computed
-from keyed and raw responses, respectively; $r_{\text{dis}}$ =
+from keyed and raw responses, respectively. $r_{\text{dis}}$ =
 disattenuated congruence against the keyed human correlations. Dashes mark
 cases where the disattenuated metric is undefined and reported as NA
 because the similarity matrix's split-half reliability is not positive: the
@@ -103,9 +105,9 @@ pattern (the signed NLI matrix behaves analogously). KMO, TEFI, RMSR, and
 CAF are the fit diagnostics of each encoding's five-factor solution.}
 \end{table}
 
-Three patterns stand out. First, \texttt{atomic\_reversed}---an
+Three patterns stand out. First, \texttt{atomic\_reversed}, an
 anti-topic vector, not reverse-scoring's analogue (see
-Discussion)---aligned worst among cosines with keyed correlations
+Discussion), aligned worst among cosines with keyed correlations
 ($r_{\text{keyed}} = \valArRKeyed$ vs.\ \valAtRKeyed{} unflipped) and ordinarily only
 with raw ($r_{\text{raw}} = \valArRRaw$).
 
@@ -113,16 +115,16 @@ Second, NLI mirrors the cosines: best on the theoretical partition
 (NMI = \valNliNmi, ARI = \valNliAri) and on raw pairwise correlations
 ($r_{\text{raw}} = \valNliRRaw$), worst on loading shape
 ($\bar{\phi} = \valNliPhi$), cosine the reverse ($\bar{\phi} = \valPhiMean$,
-$r_{\text{raw}} = \valMcpRRaw$)---directional entailment versus graded
+$r_{\text{raw}} = \valMcpRRaw$), directional entailment versus graded
 geometry (see Discussion).
 
-Third, SQuID won keyed pair-level agreement ($r_{\text{keyed}} = \valSqRKeyed$;
+Third, SQuID won keyed pair-level agreement ($r_{\text{keyed}} = \valSqRKeyed$,
 $r_{\text{dis}}$ saturated at \valSqDis) yet was essentially unfactorable
 (KMO = \valSqKmo), its differencing keeping pairwise relations but
 stripping extractable common variance. Only keying-free
 mean-centered Pearson combined near-best theory congruence (within
 \valNmiGapNli{} NMI), the best loading-shape match ($\bar{\phi} = \valPhiMean$), and a
-genuine, well-conditioned correlation matrix (KMO = \valKmo)---hence the
+genuine, well-conditioned correlation matrix (KMO = \valKmo), hence the
 main fit. On these high-dimensional vectors it is numerically
 indistinguishable from \texttt{atomic} (Table~\ref{tab:encodings}), so
 the demonstration's conclusions for the main encoding attach to the
@@ -131,8 +133,8 @@ cosine family as a whole.
 \subsubsection{Item-Pair Agreement}
 
 Across all 1,225 item pairs, structure from language alone matched the
-raw correlations of \valNHuman{} respondents at $r = \valPairR$
-(Figure~\ref{fig:semantic-human}).
+raw correlations of \valNHuman{} respondents at $r = \valPairR$, 95\% CI
+$[\valPairRLo, \valPairRHi]$ (Figure~\ref{fig:semantic-human}).
 
 \begin{figure}[H]
 \centering
@@ -140,7 +142,7 @@ raw correlations of \valNHuman{} respondents at $r = \valPairR$
 \includegraphics[width=0.6\textwidth]{figures/semantic_vs_human.pdf}
 \caption{Semantic similarity (mean-centered Pearson encoding of the
 Qwen3-Embedding-8B item vectors) against human inter-item correlations
-from raw responses ($N = \valNHuman$), for all \valNPairs{} item pairs;
+from raw responses ($N = \valNHuman$), for all \valNPairs{} item pairs,
 $r = \valPairR$. The fitted regression line is shown in red.}
 \label{fig:semantic-human}
 \end{figure}

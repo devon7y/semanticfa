@@ -1,0 +1,2156 @@
+EPJ Data Science
+
+https://doi.org/10.1140/epjds/s13688-026-00654-1
+
+Article in Press
+
+From keyword-based text measures to latent
+variables: conﬁrmatory factor analysis with word
+embeddings
+Received: 14 October 2025
+
+Artur Pokropek
+
+Accepted: 31 March 2026
+
+Cite this article as: Pokropek, A. From
+keyword-based text measures to latent
+variables: conﬁrmatory factor analysis
+with word embeddings. EPJ Data Science
+(2026). https://doi.org/10.1140/epjds/
+s13688-026-00654-1
+
+We are providing an unedited version of this manuscript to give early access to its
+ﬁndings. Before ﬁnal publication, the manuscript will undergo further editing. Please
+note there may be errors present which affect the content, and all legal disclaimers
+apply.
+If this paper is publishing under a Transparent Peer Review model then Peer
+Review reports will publish with the ﬁnal article.
+
+© The Author(s) 2026. Open Access This article is licensed under a Creative Commons Attribution 4.0 International License, which permits use, sharing,
+adaptation, distribution and reproduction in any medium or format, as long as you give appropriate credit to the original author(s) and the source,
+provide a link to the Creative Commons licence, and indicate if changes were made. The images or other third party material in this article are included in
+the article’s Creative Commons licence, unless indicated otherwise in a credit line to the material. If material is not included in the article’s Creative
+Commons licence and your intended use is not permitted by statutory regulation or exceeds the permitted use, you will need to obtain permission
+directly from the copyright holder. To view a copy of this licence, visit http://creativecommons.org/licenses/by/4.0/.
+
+From Keyword-Based Text Measures to
+Latent Variables: Confirmatory Factor
+Analysis with Word Embeddings
+Artur Pokropek
+ORCID: 0000-0002-5899-2917
+Institute of Philosophy and Sociology of the Polish Academy of Sciences
+Computational Social Science Department
+Nowy Świat 72, 00-330 Warsaw, Poland
+Telephone number: (48-22) 657-28-82
+Email: artur.pokropek@ifispan.edu.pl
+
+Abstract
+Dictionary-based text analysis, where researchers select keywords to measure constructs such
+as public sentiment, anxiety, or political attitudes in large text corpora, is widely used in
+computational social science. However, keyword selection is rarely subjected to the same
+psychometric scrutiny applied to survey instruments: studies seldom report reliability, evaluate
+internal structure, or test whether the measurement holds across subpopulations or time points.
+Moreover, few existing methods enable the construction of measures that reflect theoretical or
+expected relationships among keywords. This paper proposes a method that brings these
+capabilities to text analysis by applying Confirmatory Factor Analysis (CFA) to word
+embeddings. Keywords are treated as observed indicators of a latent construct, and their
+semantic relationships, operationalized as centered cosine similarities between embedding
+vectors, serve as the input correlation matrix for CFA estimation. The framework enables
+researchers to estimate factor loadings and model fit indices (CFI, TLI, RMSEA, SRMR),
+compute reliability coefficients (Cronbach's alpha, Omega), and test measurement invariance
+across groups or time periods using multigroup models with structured means. Moreover, the
+method allows researchers to compare latent construct intensity across groups or time periods,
+transforming keyword-based text measures from descriptive indicators into formally
+comparable latent variables. The method is demonstrated through an empirical application of
+the discourse of war anxiety during Russia's 2022 invasion of Ukraine. A Monte Carlo
+simulation further examines the behavior of fit indices under random keyword selection. The
+approach complements existing text analysis methods and can be implemented using standard
+software, such as the lavaan R package.
+Keywords: computational social science, text-as-data, measurement validity, confirmatory
+factor analysis, word embeddings, measurement invariance, latent variable modeling, keyword
+selection
+
+Introduction
+Digitalization has greatly increased the volume of electronically stored text, including social
+media posts, forums, blogs, reviews, news, and digitized publications. These unstructured data
+provide social scientists with a rich source of information about beliefs, attitudes, behavior, and
+social interaction, making text analysis an increasingly important field of study (Salganik,
+2019; Zachlod et al., 2022). More generally, electronic traces from social media platforms
+could allow researchers to track outcomes frequently, investigate regional diversity, and
+conduct large-scale network analysis quickly and cost-effectively (Golder & Macy, 2014).
+Moreover, proponents of user-generated text data indicate that the informal and spontaneous
+nature of such data presents a unique opportunity to capture authentic human sentiment,
+opinions, and social dynamics that are not easily accessible through structured surveys
+(Stephens-Davidowitz, 2017).
+However, the field is relatively new and has yet to develop standard procedures to handle all
+methodological and statistical issues. This is particularly important given the nonrepresentative nature of user-generated data (Kapoor et al., 2018), ethical concerns (Zimmer &
+Kinder-Kurlanda, 2017), biases introduced by algorithms, and user behavior (Olteanu et al.,
+2019). Moreover, proper keyword indicator selection that defines a measurement remains a
+constant and often overlooked challenge. As Grimmer and Stewart (2013) emphasize, all
+quantitative models of text require validation. Yet in practice, studies based on user-generated
+text rarely report the reliability of their measures, the structure of the measurement model, or
+its fit to the data (Lowe & Benoit, 2013). A growing literature in computational social science
+addresses the validation of text-based measures (e.g., van Atteveldt et al., 2021; Boukes et al.,
+2020; Kantner & Overbeck, 2020), but confirmatory psychometric tools, specifically CFA with
+model fit indices, reliability coefficients, and measurement invariance testing, have not been
+
+applied to researcher-selected keyword sets using word embeddings. This gap is the central
+focus of this article.
+This paper introduces a statistical approach for constructing and evaluating keyword-based
+measures from unstructured text. Grounded in Confirmatory Factor Analysis (CFA), it allows
+researchers to assess reliability, internal structure, and measurement invariance, and to model
+theoretically expected relationships among keywords.
+
+Figure 1. From keywords to construct: a simplified illustration of CFA with word embeddings.
+
+Figure 1 illustrates the core idea of the proposed approach using a simplified example with
+three keywords from a war-related corpus. Each keyword is represented as a high-dimensional
+vector learned from the corpus (a). After mean-centering, pairwise centered cosine similarities
+between the keyword vectors yield a correlation matrix (b) that captures how strongly the words
+share contextual usage patterns. This matrix serves as input to a CFA model, in this example,
+a one-factor CFA model (c), where factor loadings indicate how strongly each keyword relates
+to a common latent dimension, and error terms capture word-specific variance unrelated to the
+shared construct. The resulting fit indices and reliability estimates (d) allow the researcher to
+evaluate empirically whether the selected keywords form a coherent measurement instrument,
+a step that is standard practice in statistical analysis but has been largely absent from keywordbased text analysis.
+
+Measurement and composite indicators in textual data
+Analyzing textual data according to a specific theoretical aim requires the selection of proper
+indicators. This often involves selecting keywords or phrases, which can be used to gather,
+filter, or highlight data that could be used in subsequent steps of analysis (Bordoloi & Biswas,
+2023). For example, Antenucci et al. (2014) developed a "job loss" index by monitoring the
+frequency of tweets containing terms like "fired," "axed," and "canned" to predict U.S.
+unemployment trends. Similarly, Boon-Itt and Skunkan (2020) analyzed the frequency of
+keywords such as "outbreak" and "pandemic" to evaluate public engagement with the COVID19 situation. Abdul Reda, Sinanoglu, and Abdalla (2024) focused on measuring the resource
+mobilization efforts of social movements on Twitter. They identified a specific lexicon,
+including terms like "sit-in," "protest," "rally," "picket," "strike," etc. Rosenberg et al. (2023)
+analyzed Twitter data to gauge public sentiment towards climate action by focusing on 113
+keywords such as “energy”, “carbon”, “climate change”, “resilience”, and “global warming”.
+Another example is immigration sentiment measured by investigating Twitter posts that
+contain, among other keywords: "immigration", "border", "migration", and "refugees" (Rowe
+et al. 2021).
+In a typical social-science application of textual data analysis, keyword selection yields a
+lexicon of relevant terms. This lexicon is then used to estimate relative word frequencies over
+time, providing a simple descriptive signal of how salient a phenomenon is in the corpus
+(Bordoloi & Biswas, 2023; Zachlod et al., 2022). More complex workflows include sentiment
+analysis, which estimates the evaluative tone of texts and can be extended to discrete emotion
+categories. For example, Tavoschi et al. (2020) used machine-learning to classify tweets as
+supporting or opposing vaccination; Rosenberg et al. (2023) applied VADER, TextBlob, and
+BERT to assess sentiment in climate-action tweets; and Loureiro and Alló (2020) examined
+expressions of anger, joy, fear, and surprise in energy and climate change tweets.
+
+The process of selecting keywords for textual analysis can be viewed as a process of
+constructing a complex indicator intended to reflect a specific phenomenon or population
+characteristic. Keywords could serve as observable features of a latent construct in reflective
+measurement models or as observable indicators of a composite in formative models (Henseler,
+2020, Diamantopoulos & Winklhofer, 2001). In both instances, keyword selection should be
+grounded in theoretical considerations and validated through an appropriate measurement
+model. This validation may range from assessing the reliability of the keyword-based measure
+to performing more advanced analyses, such as factor analysis, which evaluates whether the
+measure's structure aligns with the underlying theoretical framework (Bollen & Lennox, 1991).
+Additionally, empirical testing of indicator adequacy is essential to ensure that the selected
+keywords are valid and reliable. This step also helps identify whether any specific keywords
+pose issues that could affect the use of the indicator. This process of constructing indicators,
+however, isn’t a novel task unique to text analysis. On the contrary, social scientists have been
+facing similar problems for ages, leading to the development of robust and methodological
+frameworks that could guide the development and evaluation of state-of-the-art indicators
+(DeVellis, 2017). Transferring these practices to the field of textual data analysis would elevate
+the scientific rigor of the field. An early example of such transfer exists already in topic
+modeling, which employs exploratory methods to identify and cluster words or phrases. This,
+however, is an example of exploratory rather than confirmatory analysis (Blei, Ng, & Jordan,
+2003).
+The field of text analysis currently lacks the tools to assess the validity and reliability of
+keyword-based measurements empirically as well tools to compute measures aligned to
+theoretical or desired structure. To fill this gap, this paper presents how a set of tools previously
+established in the social sciences can be applied in computational linguistics, textual data
+analysis, and computational social science in general. By bridging these disciplines, a more
+
+robust framework for verifying and refining keyword selection, ensuring alignment with
+theoretical constructs, and enhancing the rigor of sentiment and textual analysis is provided.
+
+Word embeddings
+Word embeddings are a technique for representing words as vectors in a continuous, highdimensional space, so that words used in similar contexts have similar representations
+(Mikolov et al., 2013). Embeddings underpin many modern language models and have enabled
+a range of social-science applications (Arseniev-Koehler, 2022). In Word2Vec, embeddings
+are learned either by predicting a target word from its surrounding context (Continuous Bagof-Words, CBOW) or by predicting surrounding context words from a target word (Skipgram).
+Embeddings are learned by iteratively adjusting randomly initialized word vectors through
+prediction and backpropagation until words appearing in similar contexts receive similar
+representations (Mikolov et al., 2013).
+In addition to these traditional methods for creating word embeddings, more sophisticated
+models have emerged, such as BERT (Bidirectional Encoder Representations from
+Transformers). Unlike Word2Vec, BERT uses a transformer architecture and takes a
+bidirectional approach to understand the context of a word. Importantly, BERT operates on
+sub-word tokens rather than whole words, which allows it to handle rare and out-of-vocabulary
+terms by decomposing them into known sub-word units. Instead of using a fixed window,
+BERT captures the entire sentence context on both sides of a word to generate embeddings that
+are deeply contextualized (Devlin et al., 2018).
+Word vectors, generated using algorithms like Word2Vec or BERT, enable models to capture
+semantic relationships between words by analyzing their contexts in large text corpora. Words
+
+with similar meanings or that appear in similar contexts are represented by vectors close to
+each other in a high-dimensional space. One of the most well-known examples of such a
+relationship is between the words “king” and “queen”. Through word vectors, it becomes
+evident that the difference between the vectors for "king" and "man" is similar to the difference
+between "queen" and "woman." This relationship can be mathematically expressed as king man + woman ≈ queen (Mikolov, Sutskever, et al. 2013b).
+Cosine similarity (CS) is commonly used to measure the similarity between words, calculating
+the cosine of the angle between two vectors in a multidimensional space. The formula is:
+( , )=
+
+⋅
+
+∥ ∥∥ ∥
+
+=
+
+∑
+
+∑
+
+∑
+
+,
+
+where A and B are vectors, A⋅B is the dot product of the vectors, and ∥A∥ and ∥B∥ are the
+Euclidean norms (magnitudes) of the vectors. CS evaluates to 1 when the vectors point in the
+same direction, -1 if they point in opposite directions, and 0 if the vectors are orthogonal (90
+degrees apart). CS is widely used in many NLP applications such as document clustering,
+information retrieval, and text classification (Park, Hong & Kim, 2020).
+
+From cosine similarity to correlation
+Some researchers argue, however, that CS may not always be the best measure for evaluating
+the relationships between word embeddings. For instance, Ethayarajh (2019) highlights that
+representations produced by deep models like BERT tend to show high CS between random
+word pairs, particularly at the higher layers of the model. This is attributed to a distributional
+bias in the embedding space, where vectors tend to be concentrated in narrow regions rather
+than spread uniformly. This distributional bias can obscure the true similarity relationships
+between word and sentence representations, potentially leading to suboptimal performance in
+
+NLP tasks. Similar concerns were raised by Mu and Viswanath (2018), who also observed that
+the over-similarity between embeddings might distort downstream NLP performance.
+It has been suggested that the high CS in embeddings could be mitigated by applying centering
+techniques (Libovický et al., 2019; Zhao et al., 2020; Ethayarajh 2019). The equation for CS
+between two mean-centered vectors A and B, where the vectors have been centered by
+subtracting their respective means, can be expressed as follows:
+( , )=
+
+∑
+
+∑
+
+(
+
+(
+
+)
+
+where n is the number of components in each vector,
+of vectors,
+
+and
+
+)(
+
+∑
+
+(
+
+)
+
+and
+
+)
+
+,
+
+are individual components
+
+are means of vectors.
+
+As mentioned by Chen and colleagues (2020), after applying mean centering, the CS measure
+between two vectors becomes mathematically equivalent to Pearson's correlation
+coefficient(r):
+( , )=
+
+where
+
+and
+
+∑ =1
+
+∑ =1
+
+(
+
+(
+
+− )(
+
+− )2 ∑ =1
+
+− )
+(
+
+are individual components of vectors X and Y,
+
+− )2
+and
+
+are the means of
+
+the components of vectors X and Y, n is the number of components in each vector.
+Both metrics fundamentally focus on comparing the relative orientation and variation of the
+vectors, independent of their magnitudes. In other words, once the vectors are mean-centered,
+their magnitudes (the actual lengths of the vectors) no longer play a role in the similarity
+calculation; instead, the focus shifts entirely to their directional relationship. When the vectors
+are centered by subtracting their means, the resulting vectors exhibit zero mean, and the CS
+effectively becomes a measure of how two vectors co-vary in their direction. Pearson's
+
+correlation coefficient quantifies this: the degree to which two variables (or vectors, in this
+case) co-vary linearly, normalized by their respective standard deviations. Having a correlation
+between variables allows us to utilize statistical models such as Confirmatory Factor Analysis
+(CFA), which allows for testing hypothesized relationships and the structure of latent
+constructs within the textual data.
+
+Confirmatory Factor Analysis with Word Embeddings
+Structural models for covariance matrices (Jöreskog 1978), such as CFA and Structural
+Equation Modeling (SEM), are standard tools in empirical investigations in many fields of
+research. They provide a general framework for testing hypotheses about the relationships
+between observed variables and underlying latent constructs, allowing researchers to specify
+and evaluate complex relationships in data. This paper shows how word embeddings can be
+incorporated into a CFA model (and by extensions to SEM) to analyze the underlying semantic
+relationships between words by modeling these embeddings as observed indicators.
+In this context, the observed distances between word embeddings (mean-centered vectors) are
+modeled using the CFA structure, where the latent factors represent broader semantic
+dimensions, such as topics or abstract concepts derived from the text. For one factor, the word
+embedding CFA model can be specified as:
+= !+#
+Where: Y represents the centered word embeddings, serving as the observed indicators. Λ is
+the factor loading matrix, showing how strongly each word embedding (indicator) is related to
+the underlying latent factors (ξ). ϵ is the measurement error, accounting for the variability in
+word embeddings not explained by the latent factors. In this model, the factor loadings ( =[λ1,
+λ2, …, λi]) reflect the strength of the relationship between each word embedding and the
+
+corresponding latent factor.
+The estimation of the CFA model relies on model-implied covariance or, in our case, centered
+cosine distance:
+$ = % & + '(
+where Λ is the matrix of factor loadings, Ψ represents the covariances of the latent factors (how
+the different semantic dimensions relate to each other) or variance of one factor in the onefactor model, Θ accounts for the measurement errors in the word embeddings.
+We can assess how well the hypothesized latent semantic structure fits the data by fitting this
+CFA model to the centered word embeddings. By examining how close the model-implied
+covariance is to real covariance (or, in our case, correlations), fit indices could be computed.
+The model-fit indices help determine whether the relationships between the word embeddings
+and the latent factors are consistent with our imposed structure, and simple indices like
+reliability could be estimated. The most commonly used fit indices in CFA include: the Chisquare (χ²) test, which assesses exact model fit (non-significant values suggest good fit); the
+Comparative Fit Index (CFI) and Tucker-Lewis Index (TLI), both ranging from 0 to 1, where
+values above 0.95 indicate good fit and above 0.90 acceptable fit; the Root Mean Square Error
+of Approximation (RMSEA), where values below 0.05 indicate close fit, below 0.08 acceptable
+fit, and above 0.10 poor fit; and the Standardized Root Mean Square Residual (SRMR), where
+values below 0.08 indicate good fit (Hu & Bentler, 1999). These indices are reported
+throughout the empirical examples that follow. This approach allows us to quantitatively
+evaluate how well the semantic patterns captured by the word embeddings align with the latent
+dimensions in the data, thus offering a method for examining the underlying semantic structure
+of textual data.
+
+An important practical question is how researchers should arrive at the hypothesized factor
+structure before applying CFA to word embeddings. Several strategies are available, paralleling
+standard practice in psychometric research. First, the factor structure may be derived from
+substantive theory: if prior research or domain knowledge suggests that a set of keywords
+captures distinct but related facets of a construct (e.g., military, economic, and social
+dimensions of war anxiety), this theoretical model can be directly specified and tested via CFA.
+Second, researchers may use Exploratory Factor Analysis (EFA) on the cosine similarity matrix
+as a preliminary step. EFA can reveal the number and composition of latent dimensions in the
+keyword set, and its results can then inform a confirmatory specification in a subsequent CFA.
+This two-step approach, exploration followed by confirmation, is standard in scale
+development (DeVellis, 2017) and translates naturally to the word embedding context. Third,
+existing dictionary-based tools (e.g., LIWC categories or domain-specific lexicons) may
+provide a starting point for specifying which keywords should load on which factors. Fourth,
+topic modeling approaches such as LDA (Blei, Ng, & Jordan, 2003) can serve as an exploratory
+complement, identifying clusters of co-occurring words that may correspond to latent
+dimensions worth testing confirmatorily. In all cases, the CFA framework proposed here
+provides the confirmatory step: it allows researchers to formally test whether the hypothesized
+structure fits the data, evaluate model fit, and compare alternative specifications.
+There's a caveat, however. Traditionally, structural models rely on covariance matrices, which
+preserve the scale of variables, not on correlations that are equivalent to centered cosine
+distances. To clarify this equivalence: raw cosine similarity between two word embedding
+vectors captures their angular proximity in the full embedding space, including any global
+biases in vector orientation. Mean-centering each vector (subtracting the vector’s mean across
+dimensions) removes this global component, so that the resulting centered cosine similarity is
+mathematically identical to the Pearson correlation coefficient computed across vector
+
+dimensions. In substantive terms, centering strips away the portion of similarity attributable to
+the general distributional properties of the embedding space (which can inflate similarity
+between unrelated words) and isolates the pattern-specific co-variation between dimensions.
+The resulting correlation matrix thus captures how two words share distinctive patterns of
+contextual usage, net of global distributional artifacts, making it a more appropriate input for
+CFA than raw cosine similarities. Correlation matrices can be used for scale-invariant models
+to avoid errors in estimation and interpretation (Cudeck, 1989). Although it may seem
+straightforward, determining whether a model is scale-invariant is not always a simple task.
+Cudeck proposed a method for testing scale invariance by estimating the model twice: first
+using a correlation matrix and then a transformed version of the correlation matrix, such as a
+covariance matrix. It is considered scale-invariant if the model exhibits the same goodness-offit and test statistics (e.g., chi-square) before and after scaling the correlation matrix, despite
+potential differences in parameter estimates. If the variances or standard deviations of the
+observed variables are not known, the correlation matrix used for testing invariance can be
+rescaled by assigning arbitrary values to the standard deviations. A simple CFA model, as used
+in subsequent examples, is an example of a scale-invariant model. However, even if a model is
+scale-invariant, it may still yield incorrect standard errors for parameter estimates that depend
+on the scale of the data. This issue particularly affects factor loadings, which, while remaining
+invariant in a scale-invariant model, still have scale-dependent parameter values.
+In applying CFA to understand the structure of latent variables, inaccuracies in the standard
+errors of factor loadings are less critical, as the analysis primarily focuses on factor loadings
+and model fit, which are appropriately estimated in this context. It is also worth mentioning
+that methods do exist for the correct estimation of standard errors derived from correlation
+matrices, though they are not commonly implemented in standard statistical software such as
+lavaan R-package or Mplus (Browne & Mels, 1998; Browne, 1982). This area of research has
+
+not seen much further development in recent years, as modern computational power allows
+users to conduct analyses on large datasets easily.
+
+Means and covariance structures
+Simple CFA models are not the only models we would like to use when analyzing word
+embeddings. While a basic CFA can evaluate whether keywords form a coherent construct and
+estimate reliability, many research questions require more: comparing the intensity of a
+construct across groups (e.g., countries, platforms) or tracking changes over time requires
+models with structured means; testing whether a measurement holds equivalently across
+subpopulations requires multigroup models with measurement invariance constraints. We will
+not present the formulation of those models as there are multiple sources with excellent
+descriptions, and providing detailed formulations of more complex models is not necessary to
+understand the proposed approach (Bollen 1989; Schumacker & Lomax 2016).
+To estimate a model with structured means or a multigroup model, it is necessary to have the
+means of the observed indicators and the covariance matrix, which in practice requires
+incorporating standard deviations. Two methods are proposed to incorporate a mean structure
+into CFA when using word embeddings as inputs, each with distinct advantages and limitations
+regarding interpretability.
+The first method involves using the average frequency of each word in the corpus under
+investigation and calculating the estimated standard deviation. Means and standard deviations
+are computed directly from word occurrence frequencies in the corpus. Once the standard
+deviations of the indicators are known, transforming the correlation matrix derived from cosine
+similarities becomes a simple task (as covariance is correlation multiplied by variances of
+variables). This method has the advantage of simplicity and direct interpretability. The latent
+
+means in this approach can be understood as weighted averages of word frequencies; this
+allows us to interpret changes in the latent factors as reflecting changes in the frequency of
+word usage within the population. However, this method also has its drawbacks. Using word
+frequencies for the mean structure may introduce inconsistencies with the covariance structure
+derived from word embeddings, as the two are based on different aspects of the data.
+Specifically, the inconsistency arises because the covariance structure is derived from semantic
+relationships between words (how they co-occur in context windows), whereas the mean
+structure is derived from raw word frequencies (how often each word appears). These two data
+sources need not align: a word may be semantically central to a construct (high factor loading
+from embeddings) yet infrequent, or vice versa. This mismatch means that the covariance and
+mean structures reflect different underlying generative processes, which can produce distorted
+latent mean estimates if the discrepancy is severe. Additionally, it should be noted that word
+frequencies in natural language corpora follow a well-known power-law distribution (Zipf’s
+law), where a small number of very common words dominate frequency counts (Piantadosi,
+2014). In our application, this concern is partially mitigated because the CFA keywords are
+content-specific terms (e.g., “alliance,” “nuclear,” “aggression”) rather than the high-frequency
+function words that typically dominate Zipfian distributions. Nevertheless, researchers using
+this method should be aware that differences in frequency magnitude across keywords can
+influence latent mean estimates and should consider whether log-transformation or other
+normalizations are warranted for their particular application.
+The second method involves treating the word embeddings themselves as observed indicators
+to derive the mean structure. By calculating the means and standard deviations directly from
+the word embeddings, we maintain consistency between the mean and covariance structures,
+as both are based on the same data source. This method allows researchers to model latent
+semantic factors that represent broader concepts or topics within text data, capturing semantic
+
+shifts and changes in discourse over time. Despite its advantages, the interpretability of latent
+means derived from word embeddings can be challenging. Word embeddings are highdimensional vectors, and their components are not easily interpretable in the same way as word
+frequencies. The latent means in this method represent positions in a semantic space, which
+may not have a straightforward interpretation in terms of population-level changes. Comparing
+latent means across groups or conditions can reveal differences in semantic usage or conceptual
+focus, but not the intensity of phenomena under investigation.
+In studies focused on social media, where the key issue is often examining the dynamics of
+changes within the population rather than changes in the discourse itself, the first method seems
+more appropriate. Using word frequencies to construct the mean structure, we can directly
+observe and interpret trends in word usage over time. This aligns with research objectives
+focused on understanding shifts in public attention or sentiment, which are critical for
+analyzing social media data, and this is the method chosen for the empirical example in this
+paper.
+
+Summary of the Proposed Framework
+Figure 2 summarizes the proposed framework. The left column presents the data preparation
+pipeline. In Step 1, a text corpus is assembled from the data source of interest (e.g., social media
+posts, news articles). In Step 2, word embeddings are trained on this corpus using algorithms
+such as CBOW or Skip-gram, producing a d-dimensional vector for each word in the
+vocabulary. In Step 3, the researcher selects k keyword indicators based on theoretical
+reasoning about the construct of interest. In Step 4, the selected keyword vectors are meancentered, and centered cosine similarities are computed, yielding a correlation matrix R that
+serves as the primary input for CFA. Optionally, in Step 5, per-keyword frequency statistics
+
+(means and standard deviations) are computed from the corpus, enabling the construction of a
+covariance matrix and the incorporation of a mean structure into the model.
+
+Figure 2. Analytical pipeline for Confirmatory Factor Analysis with word embeddings: from
+
+text corpus to psychometric evaluation and multigroup extensions.
+The right column presents the modeling and evaluation stages. In Step 6, a CFA model is fitted
+to the correlation (or covariance) matrix, where the latent factor ξ represents the hypothesized
+construct and factor loadings λ quantify how strongly each keyword relates to it. Step 7 yields
+standard psychometric outputs: factor loadings, model fit indices (χ², CFI, TLI, RMSEA,
+SRMR), and reliability estimates (Cronbach's α, McDonald's ω). The framework extends
+naturally to multigroup CFA, where separate models are estimated for different groups or time
+periods and measurement invariance is tested through progressively constrained models
+(configural → metric → scalar). Once scalar invariance is established, latent mean comparisons
+allow researchers to track construct intensity across groups or over time.
+
+Empirical Examples
+The goal of this empirical application is threefold: (1) to demonstrate that keyword-based CFA
+with word embeddings produces interpretable factor structures, factor loadings, and fit indices
+comparable to those obtained from traditional survey-based CFA; (2) to illustrate how the
+framework can be extended to multigroup analysis and measurement invariance testing across
+time periods; and (3) to examine whether latent means derived from keyword-based text
+measures track temporal trends observed in survey-based measures of a related construct. To
+this end, self-reported war anxiety (measured via a survey instrument) and discourse of war
+anxiety (captured via Twitter keyword indicators) are modeled in parallel, not as equivalent
+measures of the same construct, but as related measures that allow us to showcase the full range
+of CFA capabilities in both data contexts.
+
+Data
+For the purpose of illustrative analysis, we used data collected in Poland during the early stages
+of Russia’s invasion of Ukraine in 2022. Two datasets were utilized. The first is a survey, with
+participants aged 18 and older recruited through an internet panel, using quota sampling based
+on sex, age, and place of residence. The second dataset consists of posts collected from Twitter
+during the same period. In the survey, respondents were asked to assess four statements on a
+5-point Likert scale (1 = strongly disagree; 5 = strongly agree): "The war between Russia and
+Ukraine may: (1) turn into a world war, (2) turn into a nuclear conflict, (3) spread to Poland
+soon, (4) have a disastrous impact on the economy and social life in Poland."
+The survey items were designed to capture distinct facets of war-related anxiety: military
+escalation (world war, nuclear conflict), geographic proximity of threat (spread to Poland), and
+socioeconomic consequences (economy and social life). Following a similar logic, keywords
+
+for the Twitter analysis were selected based on theoretical reasoning about which terms should
+appear in public discourse when people discuss similar concerns. This parallel between survey
+items and discourse keywords is intentional: just as survey items need not be synonymous to
+load on a common factor (each taps a different aspect of the construct), keywords need not
+share dictionary definitions to co-vary in discourse about a specific topic. The assumption is
+that co-occurrence patterns of theoretically relevant keywords in a war-related corpus may
+reflect shared underlying concerns.
+This empirical application is intended as a methodological illustration rather than a fully
+developed substantive study. Its purpose is to show how CFA can be applied to word
+embeddings, not to offer a definitive measurement model of war anxiety.
+The Twitter data was collected using the Twitter API for academic research, employing a set
+of keywords related to the war. We gathered all posts containing the following words: Ukraine,
+War, Refuge, Immigrant, Migrant, Border, Russia, Putin, Warfare, Aid, 500+, Pension, Social,
+Crime, Volhynia, Conflict, Atomic, Nuclear, Bomb, Inflation, Crisis, Price, Gasoline, Work,
+Prices, Zloty, Franc, Euro, NATO, Tank, Genocide, Imperialism, Fascism, Bander. All posts
+were written in Polish; thus, all presented keywords were also applied in its Polish translations.
+It is important to distinguish between two sets of keywords that serve different functions in this
+analysis. The retrieval keywords listed above were used to query the Twitter API and define
+the corpus, that is, to collect all posts related to the war in Ukraine. This is a broad set designed
+to capture the full range of war-related discourse. The indicator keywords, introduced below,
+are a smaller, theoretically motivated subset selected to serve as indicators of a specific latent
+construct (war-related discourse). These two sets are related but not identical: the retrieval
+keywords define the textual universe from which word embeddings are trained, while the
+indicator keywords are the specific terms whose semantic relationships are modeled as
+reflections of an underlying construct. In principle, CFA could also be applied to the retrieval
+
+terms themselves; however, these were chosen for breadth of coverage rather than construct
+coherence, and a CFA would likely reveal a multidimensional structure rather than a single
+factor.
+The details of the data collection are presented in Table 1. It is important to note that during
+the first 5 weeks, survey data were collected weekly, while in later periods, data collection
+occurred once a month, and only the first three indicators of war anxiety were included. In this
+analysis, we utilize datasets from the first eleven weeks.
+Standard preprocessing was applied: URL removal, retweet prefix filtering, lowercasing, stopword removal, tokenization, and filtering of tokens shorter than two characters. No
+lemmatization or stemming was applied before computing word embeddings. This decision
+was deliberate: in Polish, an inflectionally rich language, different morphological forms of the
+same lemma (e.g., wojnę, wojny, wojną for “war”) often carry distinct contextual nuances and
+appear in different syntactic environments. Word embedding algorithms like CBOW learn
+representations from local context windows, meaning that each inflected form receives a vector
+shaped by its specific usage contexts. Collapsing these forms through lemmatization would
+lose this contextual variation. Moreover, for the CFA analysis, what matters is that the selected
+keywords, in their surface forms as they appear in tweets, share systematic semantic variance;
+the embedding model captures this directly from the corpus without requiring morphological
+normalization. Future research could investigate whether lemmatization affects CFA results,
+particularly in morphologically simpler languages.
+After cleaning the text data, we trained word embeddings in MATLAB using the default
+CBOW settings: 300 dimensions, a context window of 5, five iterations, and a learning rate of
+0.05. We retained these settings because they are standard in the literature and help keep the
+methodological demonstration transparent and easy to replicate, rather than tailored to a
+
+particular dataset (Mikolov et al., 2013). Nevertheless, hyperparameter choices may affect CFA
+results, and future research should examine their impact across corpora and languages.
+
+Table 1 Survey and Twitter Data Collection Overview.
+Survey (Internet panel)
+
+Twitter posts
+
+Week
+
+Dates of collection
+
+N
+respondents
+
+Data collection
+
+N
+posts
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+
+March, 4-7, 2022
+March, 11-14, 2022
+March, 18-21, 2022
+March, 25-28, 2022
+April, 1-4, 2022
+—
+—
+—
+—
+—
+May, 13-16, 2022
+
+1090
+1073
+1074
+1063
+1067
+—
+—
+—
+——1070
+
+March, 3-9, 2022
+March, 10-16, 2022
+March 17-23, 2022
+March 24-30, 2022
+March 31-April 6, 2022
+April 7-13, 2022
+April 14-20, 2022
+April 21-27, 2022
+April 28-May 4, 2022
+May 5-11, 2022
+May 12-18, 2022
+
+495110
+537189
+765959
+611109
+671749
+591989
+423445
+493858
+413240
+443065
+404618
+
+Next, keywords were selected to serve as potential indicators of war-related discourse. The
+selection followed a logic parallel to the survey instrument. If survey items capture fears of
+military escalation, nuclear conflict, geographic spread, and socioeconomic consequences, then
+public discourse expressing similar concerns should contain words related to these themes.
+Specifically:
+
+● alliance and NATO relate to collective security discussions, which in the Polish context
+during Russia's invasion of Ukraine are tied to concerns about Poland's safety
+guarantees;
+
+● nuclear directly corresponds to fears of nuclear escalation captured by the survey;
+● aggression, conflict, and military capture discourse about hostile actions and armed
+forces;
+● development (Polish: wzrost; also commonly translated as growth), while polysemous
+in general language, appears in this war-related corpus predominantly in discussions of
+economic consequences, rising prices (wzrost cen), inflation, economic development
+prospects, and increases in military spending.
+
+The inclusion of development warrants a brief comment. Economic concerns, including
+inflation, recession, trade disruptions, and energy prices, are well-documented components of
+public anxiety during armed conflicts. The multidimensional models in Appendix (Table A1)
+show that economic terms cluster on a factor correlated with but distinct from the
+political/military anxiety factor, consistent with a multidimensional structure of war-related
+discourse.
+
+Importantly, good CFA fit indicates that the selected keywords form a semantically coherent
+dimension within the corpus, that is, they share systematic variance in their embedding
+representations. Substantive interpretation, however, depends on the data context, not on the
+keywords alone. Terms such as “alliance,” “nuclear,” “aggression,” and “development” could
+co-vary for many reasons in a general-purpose corpus. Here, we interpret the factor as warrelated anxiety discourse because (a) the corpus consists of Polish-language tweets collected
+during Russia’s 2022 invasion of Ukraine using war-related retrieval terms, (b) keywords were
+selected based on theory paralleling the survey instrument, and (c) latent means track selfreported war anxiety closely (r = 0.873). CFA therefore supports internal coherence and helps
+disambiguate a construct within a specific discursive context, while substantive interpretation
+must be justified by research design and theory.
+
+The trained word embeddings were used to extract vectors for these specific words. To
+standardize the embeddings, the mean for each word vector was calculated and then subtracted
+from each vector element, resulting in mean-centered vectors. Cosine similarity was then
+calculated for each pair of mean-centered word vectors, resulting in a measure equivalent to
+the correlation coefficient. Additionally, the frequency statistics of the words were estimated.
+For each term, the mean frequency and standard deviation were calculated. Specifically, for
+each CFA keyword, the frequency was computed as the number of occurrences of that word
+per tweet, averaged across all tweets in a given weekly corpus; the standard deviation was
+calculated across tweets within the same corpus. The unit of measurement for the means and
+variances is thus per-tweet word frequency. It is important to clarify that war anxiety discourse
+is not measured through sentiment analysis. No sentiment scoring, emotion classification, or
+valence detection is applied. Instead, the measurement approach is purely frequency- and cooccurrence-based: the CFA models how frequently selected keywords appear and how their
+semantic relationships (captured via word embedding cosine similarities) reflect a common
+latent dimension. The assumption is that the intensity of discourse about war-related topics, as
+reflected in keyword frequencies and their semantic coherence, serves as a proxy for the
+prominence of war anxiety in public discourse.
+
+Fit and reliability of indicators in a one-factor model
+In this section, we demonstrate the application of CFA by comparing the traditional surveybased approach with the proposed approach based on word embeddings. The aim is to show
+how both approaches can be used side by side to recover interpretable latent structures, while
+highlighting differences that follow from the distinct data-generating processes.
+
+The traditional CFA model (Table 2) fitted to self-reported survey data showed strong fit, with
+standardized loadings ranging from 0.508 to 0.885 and fit indices close to conventional
+benchmarks (CFI and TLI close to 1; RMSEA close to 0). Note, however, that these nearperfect indices should be interpreted cautiously because the model is nearly saturated (df = 2),
+leaving limited scope to detect misspecification. Reliability coefficients were computed from
+the CFA results (Bentler, 2009; McDonald, 1999): Cronbach’s alpha = 0.858 and omega =
+0.874.
+In parallel, we applied CFA to word embeddings derived from Twitter posts from the same
+period. Keywords such as alliance, nuclear, aggression, and development were treated as
+indicators of a latent semantic dimension reflecting conflict-related discourse. Estimation relied
+on mean-centered cosine similarities (equivalent to correlations) and was implemented in the
+lavaan package (Rosseel, 2012).
+Despite the lower factor loadings (ranging from 0.536 to 0.680) compared to the survey model,
+the fit indices were still satisfactory, with a CFI of 0.991, TLI of 0.974, and RMSEA of 0.054
+(Table 2). Reliability measures, while slightly lower than the survey data, indicated reasonable
+consistency, with Cronbach’s Alpha of 0.703 and Omega of 0.705.
+The somewhat lower reliability coefficients for the embedding-based model, compared to the
+survey model, are expected and reflect an important distinction. When applying CFA to word
+embeddings, three sources of disalignment contribute to imperfect scale consistency: (1)
+measurement error, (2) idiosyncratic variation in the measured construct, and (3) word uses
+and meanings that are simply unrelated to the intended construct. In traditional survey-based
+CFA, only the first two sources are typically present, as it is arguably rare that survey
+respondents simply answer a different question from the one asked. In contrast, word
+
+embeddings capture the full range of contexts in which a word appears, including those
+unrelated to the construct of interest.
+Both models demonstrated a similar underlying structure, supporting the use of CFA as a tool
+to explore latent constructs across different data types but having similar theoretical
+assumptions about the unidimensional latent construct of war anxiety.
+
+Table 2. CFA models for self-reported data (survey data) and CFA are based on word
+embeddings (data from Twitter). Standardized solution.
+CFA Self-Reports
+(Self Reported War Anxiety)
+Indicator
+Est.
+SE
+Factor Loadings
+world war
+0.885
+0.004
+nuclear conflict
+0.864
+0.005
+spread to Poland
+0.852
+0.005
+economy and
+0.508
+0.011
+social life
+Residual Variances
+world war
+0.217
+0.008
+nuclear conflict
+0.253
+0.008
+spread to Poland
+0.275
+0.008
+economy and social 0.742
+0.011
+life
+
+CFA WE Twitter
+(Discourse of War Anxiety)
+Indicator
+Est.
+SE
+Factor Loadings
+alliance
+0.680
+—
+nuclear
+0.561
+—
+aggression
+0.665
+—
+development
+0.536
+—
+
+Fit Indices
+chisq
+df
+p-value
+N
+CFI
+TLI
+RMSEA
+srmr
+Reliability Indices
+Alpha
+Omega
+
+Fit Indices
+chisq
+df
+p-value
+N
+CFI
+TLI
+RMSEA
+srmr
+Reliability Indices
+Alpha
+Omega
+
+0.591
+2
+0.744
+5 367
+1.000
+1.000
+0.000
+0.001
+0.858
+0.874
+
+Residual Variances
+alliance
+nuclear
+aggression
+development
+
+0.537
+0.686
+0.558
+0.712
+
+—
+—
+—
+—
+
+18 112.95
+2
+0.000
+3 117 117*
+0.991
+0.974
+0.054
+0.015
+0.703
+0.705
+
+* Note: Determining the number of observations is not straightforward in this context. One option is the number
+of posts reported in the table. Another is the dimensionality of the embedding space.
+
+Monte Carlo simulations of the fit indices
+A key question for applying CFA to word embeddings is whether conventional fit index
+thresholds remain informative, or whether the high-dimensional nature of embeddings renders
+them problematic. In 300-dimensional word embedding space, any pair of words shares some
+degree of vector overlap, and even randomly selected words from a thematically constrained
+corpus may exhibit non-trivial cosine similarities. This raises a legitimate concern: could a
+CFA model fitted to arbitrary word combinations produce acceptable fit indices simply because
+all words in a topic-specific corpus share some baseline semantic similarity? To address this
+question empirically, we conducted a Monte Carlo simulation. Words were randomly sampled
+from the full vocabulary of our Twitter corpus (which, being collected via war-related retrieval
+keywords, is thematically constrained). For each random sample, we computed the centered
+cosine similarity matrix and fitted a one-factor CFA model. The logic is as follows: if
+theoretically selected keywords produce substantially better fit than random selections from
+the same corpus, this constitutes evidence that the theoretical selection captures genuine shared
+variance beyond what any arbitrary word combination would yield. Conversely, if random
+words routinely achieve good fit, the conventional thresholds would be uninformative for this
+type of data. Note that this simulation does not claim that random words lack any shared
+variance in a war-related corpus, most words are loosely connected to the overarching topic.
+Rather, the simulation asks whether CFA fit indices can discriminate between purposeful
+keyword selection (reflecting a theoretically coherent construct) and arbitrary selection
+(reflecting only the baseline thematic homogeneity of the corpus).
+We examined settings with 4, 6, and 8 indicators, focusing on fit indices (CFI, TLI, RMSEA,
+SRMR) and reliability measures (Cronbach’s alpha, omega). For each indicator count, we
+sampled 1,000 sets of words from the corpus, estimated the CFA model, and inspected the
+
+resulting distributions. We focus on whether fit indices exceed conventional thresholds at the
+5th and 95th percentiles, to quantify how often apparently good fit can arise by chance.
+The ideal situation would be one in which the values of the recognized thresholds for CFI and
+TLI (measures where a high value is associated with good fit), that is, 0.95, coincide with the
+empirical distribution (specifically the 95th percentile). In the case of SRMR and RMSEA, the
+5th percentile should coincide with the thresholds known from the literature (0.08 and 0.05,
+respectively).
+Table 3. Summary Statistics of Fit Indices and Reliability Measures for Different Numbers of
+Randomly Sampled Indicators in CFA
+
+N items
+
+measure
+
+mean
+
+sd
+
+5th
+percentile
+
+95th
+percentile
+
+% of
+models in
+thresholds
+
+4
+
+CFI
+TLI
+RMSEA
+SRMR
+Alpha
+Omega
+
+0.925
+0.775
+0.110
+0.038
+0.572
+0.585
+
+0.071
+0.213
+0.061
+0.022
+0.064
+0.067
+
+0.776
+0.328
+0.026
+0.009
+0.465
+0.482
+
+0.996
+0.989
+0.221
+0.079
+0.678
+0.695
+
+47.9%
+20.1%
+16.1%
+95.0%
+0.0%
+0.0%
+
+6
+
+CFI
+TLI
+RMSEA
+SRMR
+Alpha
+Omega
+
+0.826
+0.710
+0.131
+0.065
+0.671
+0.674
+
+0.077
+0.128
+0.037
+0.021
+0.040
+0.066
+
+0.692
+0.487
+0.076
+0.037
+0.604
+0.604
+
+0.935
+0.892
+0.193
+0.104
+0.739
+0.740
+
+2.2%
+0.2%
+0.3%
+78.7%
+0.1%
+0.3%
+
+8
+
+CFI
+TLI
+RMSEA
+SRMR
+Alpha
+Omega
+
+0.757
+0.659
+0.137
+0.078
+0.730
+0.726
+
+0.074
+0.104
+0.032
+0.023
+0.029
+0.035
+
+0.625
+0.476
+0.094
+0.052
+0.683
+0.664
+
+0.864
+0.809
+0.195
+0.127
+0.776
+0.777
+
+0.0%
+0.0%
+0.0%
+65.7%
+0.8%
+1.8%
+
+Thresholds: CFI>0.95; TLI>0.95; SRMR<0.08 RMSEA<0.05; Alpha >0.8; Omega >0.8;
+The 4-indicator model (Table 3) results showed a mean CFI of 0.925, with 47.9% of models
+
+exceeding the 0.95 threshold. TLI had a mean of 0.775, with 20.1% of models surpassing 0.95.
+These high percentages suggest that CFI and TLI may not be reliable when using a limited
+number of indicators. RMSEA was less affected by false positives, with only 16.1% of models
+below the 0.05 threshold, while SRMR showed that 95% of models had values below the
+acceptable 0.08 threshold, indicating it might not effectively assess fit in this scenario.
+Reliability, as indicated by Cronbach's Alpha (0.572) and Omega (0.585), was low, reflecting
+poor internal consistency - the results we would expect from random words.
+For the 6-indicator model, the mean CFI dropped to 0.826, with only 2.2% of models exceeding
+0.95, and TLI had a mean of 0.710, with 0.2% surpassing the threshold. RMSEA improved
+slightly, with 0.3% of models below 0.05, while 78.7% of models had SRMR values under
+0.08, suggesting SRMR remains overly lenient. Reliability improved moderately, with Alpha
+and Omega averaging 0.671 and 0.674, respectively.
+In the 8-indicator model, no models exceeded the CFI and TLI thresholds of 0.95, and none
+had RMSEA below 0.05, indicating these fit indices become more stringent with more
+indicators. However, 65.7% of models still had SRMR below 0.08. Reliability further
+improved, with Alpha and Omega averaging 0.730 and 0.726, with below 2% of indices
+exceeding the threshold of 0.8 for both measures.
+It is worth noting that with eight randomly sampled indicators, the mean reliability already
+approaches or exceeds the commonly used threshold of .70 (mean alpha = .730, mean omega
+= .726). This means that a more lenient reliability threshold could be met by chance alone in a
+thematically constrained corpus. This observation suggests using the stricter .80 threshold, as
+it more effectively discriminates between theoretically motivated and arbitrary keyword
+selections.
+Overall, as the number of indicators increased from 4 to 8, the likelihood of achieving high fit
+
+indices by chance decreased. With six or more indicators, CFI, TLI, and RMSEA thresholds
+appear appropriate, making them reliable measures for assessing model fit. For models with
+fewer indicators, we recommend focusing on RMSEA and TLI, as SRMR and CFI tend to
+indicate a good fit even in randomly generated models. Reliability measures seem to provide
+accurate indicators. Overall results show that fit indices are not heavily impacted by false
+positives, at least for factors measured by at least six indicators. A smaller number of indicators
+could also be evaluated properly by TLI, and RMSEA measures slightly higher thresholds than
+those used in classical CFA applications. Full distributions of the simulation results are
+presented in Appendix Figures A1 (4 indicators), A2 (6 indicators), and A3 (8 indicators).
+
+Selecting Indicators and Building More Complex Models
+The initial CFA, based on word embeddings, focused on four indicators: alliance, nuclear,
+aggression, and development. These terms were chosen due to their theoretical relevance to the
+construct of war anxiety and their semantic relationships within the corpus of Twitter data
+collected during the early stages of Russia's invasion of Ukraine. The initial model (Model 1,
+Table 4) demonstrated satisfactory fit indices and reliability measures according to
+conventional CFA thresholds, as shown in Table 3. However, as noted in the previous section,
+this model could be prone to false positives.
+
+Table 4. Factor Loadings and Fit Indices for Models with Increasing Indicators
+Indicator
+Factor Loadings
+alliance
+nuclear
+aggression
+development
+conflict
+military
+Residual Variances
+alliance
+nuclear
+aggression
+development
+conflict
+military
+Fit Indices
+chisq
+df
+pvalue
+N
+CFI
+TLI
+RMSEA
+srmr
+Reliability Indices
+Alpha
+Omega
+
+Model 1
+
+Model 2
+
+Model 3
+
+0.680
+0.561
+0.665
+0.536
+—
+—
+
+0.725
+0.556
+0.647
+0.495
+0.795
+—
+
+0.703
+0.584
+0.670
+0.528
+0.761
+0.780
+
+0.537
+0.686
+0.558
+0.712
+—
+—
+
+0.474
+0.691
+0.581
+0.755
+0.368
+
+0.506
+0.660
+0.551
+0.721
+0.421
+0.391
+
+18 112.95
+2
+0.000
+3 117 117
+0.991
+0.974
+0.054
+0.015
+
+49 775.57
+5
+0.000
+3 117 117
+0.988
+0.975
+0.057
+0.021
+
+147 568.33
+9
+0.000
+3 117 117
+0.976
+0.960
+0.073
+0.025
+
+0.703
+0.705
+
+0.779
+0.780
+
+0.829
+0.834
+
+Working with word embeddings and a full corpus provides opportunities that a typical survey
+researcher lacks. With embeddings, we can index a measure using any theoretically motivated
+combination of words (or phrases) in the vocabulary. Adding further indicators is therefore
+limited mainly by theory and practical judgment. Below (Table 4), we add two terms, conflict
+and military, to the initial four-word set and assess whether they improve measurement quality.
+Results show that adding "conflict" and "military" as indicators brought both benefits and trade-
+
+offs to the measurement model. On the positive side, factor loadings for the new indicators
+were high (e.g., "conflict" at 0.795 in Model 2 and "military" at 0.780 in Model 3), with other
+indicators showing moderate adjustments. Residual variances generally decreased, especially
+for "alliance," indicating improved indicator reliability. Reliability indices (Cronbach's Alpha
+and Omega) increased with each model, reaching 0.829 and 0.834 in Model 3, confirming
+stronger internal consistency.
+
+However, it is important to acknowledge a fundamental trade-off when expanding
+measurement models. While adding theoretically relevant indicators increases reliability and
+provides more comprehensive construct coverage, it does not guarantee improvement in model
+fit. Although chi-square values rose with model complexity, fit indices (CFI, TLI, RMSEA,
+SRMR) remained within acceptable ranges across all three models. Nevertheless, absolute fit
+index values show slight decreases in CFI and TLI from Model 1 to Model 3, while RMSEA
+and SRMR show slight increases. This pattern reflects the well-known tension in CFA between
+model parsimony and construct breadth: simpler models with fewer indicators are closer to
+saturation and thus have less opportunity to exhibit misfit, whereas more complex models face
+stricter tests of the hypothesized structure. The choice of final model ultimately depends on
+research objectives: if the priority is construct coverage and reliability, Model 3 with six
+indicators may be preferred; if parsimony is paramount, Model 1 provides adequate fit with
+fewer assumptions.
+
+Multidimensional Models
+While the initial models treated war anxiety as a unidimensional construct, a multidimensional
+approach may better capture the complexity of this phenomenon. War anxiety potentially
+encompasses
+
+various
+
+dimensions,
+
+including
+
+political/military
+
+concerns,
+
+economic
+
+implications, and social impacts. To explore this, we developed a series of multidimensional
+models, gradually introducing additional latent factors to represent these distinct dimensions.
+For this exercise, we utilized the following terms: alliance, nuclear, aggression, conflict,
+military, economy, inflation, social, society, and development. The factor structure for these
+models is presented in Figure 3. Detailed values for all model parameters are available in the
+appendix.
+
+Figure 3. Factor Structure of War Anxiety Across Unidimensional and Multidimensional
+Models
+
+Model 1 started with a single-factor structure, grouping all indicators under one dimension.
+This model assumed war anxiety as a unified construct; however, the fit statistics indicated a
+poor fit to the data (TLI = 0.593, CFI=0.684, RMSEA = 0.199), suggesting the need for a more
+
+nuanced approach. In Model 2, we introduced a second factor to distinguish economic concerns
+(e.g., Economy, Inflation, Development) from political concerns. This two-factor model
+significantly improved fit (TLI = 0.778, CFI=0.833, RMSEA = 0.147), indicating that
+separating economic anxiety from political anxiety better represents the data.
+Model 3 added a third factor specifically for social concerns, placing Social and Society into
+this new dimension. This three-factor model provided an even better fit (TLI = 0.892, CFI =
+0.923, RMSEA = 0.103), highlighting that social, economic, and political dimensions are
+distinct yet interrelated aspects of war anxiety.
+In Model 4, we further refined the structure by adding residual covariance between Social and
+Society, allowing for their shared variance beyond the main factors. The covariance between
+Social and Society was introduced to account for additional shared variance between these
+indicators, which standard latent factors may not fully capture. These terms share the same
+root, with Social being an adjective and Society a noun. So, there is some additional linguistic
+relation that is likely to go beyond the structure factor. This final model yielded the best fit
+(TLI = 0.920, CFI=0.945, RMSEA = 0.088). It is worth noting that Model 4’s fit, while
+acceptable by conventional CFA standards, raises the question of whether the same thresholds
+should apply when CFA is used with word embeddings rather than survey data. In surveybased CFA, items are purposefully designed to tap a common construct, and high fit is
+expected. In text-based CFA, keywords are natural language terms that serve multiple functions
+and carry meaning beyond any single construct, so some residual misfit is inherent rather than
+indicative of model misspecification. The Monte Carlo simulation presented earlier in this
+paper provides empirical grounding for this question, demonstrating that conventional
+thresholds remain informative for distinguishing theoretically coherent keyword sets from
+random selections. Nonetheless, developing text-specific benchmarks for CFA fit indices
+remains an important direction for future research.
+
+Multigroup Analysis
+One of the great advantages of human-generated textual data is its continuous and longitudinal
+nature. Unlike survey data, which typically captures discrete points in time or requires a special
+design for longitudinal studies, textual data can naturally reflect dynamics and changes over
+time without additional design efforts.
+
+In the longitudinal dimension of this study, CFA serves three purposes: it tests whether the
+measurement model remains stable over time, enables latent mean estimation at each time
+point, and allows comparison with independently collected survey trends. The last comparison
+is presented as a methodological illustration rather than a formal test of convergent validity.
+
+For the survey-based analysis (Self-Reported War Anxiety), data from the questionnaire
+described earlier (see Tables 1 and 2) are used, with measurements taken at six time points
+using three indicators: world war, nuclear conflict, and spread to Poland. The follow-up survey
+was administered in week 11, where only questions related to these three indicators were asked.
+
+For the Twitter-based analysis (Discourse of War Anxiety), multigroup (11 groups)
+confirmatory factor analysis using the unidimensional Model 3 (see Table 4) was conducted,
+where the indicators are alliance, nuclear, aggression, development, conflict, and military. This
+analysis captures the evolving discourse around war anxiety as reflected in social media
+conversations.
+
+Measurement Invariance Testing
+The methodology used in CFA offers significant advantages for trend analyses, particularly
+through the testing of measurement invariance, an element often overlooked in textual data
+analyses, such as those based on Twitter trends or other social media data. This is particularly
+
+important in social media contexts, where the meaning of specific phrases and the relationships
+between them may shift over time, and certain expressions may lose relevance (for instance,
+the usage of the term "atomic" in times of peace might reflect something great and positive,
+while in time of war, it drastically changes its connotations). Additionally, technical aspects of
+data collection can impact the comparability of results, further underscoring the importance of
+testing invariance.
+
+In latent trait analysis, measurement invariance testing is critical for validating cross-group
+comparisons of latent means. Measurement invariance ensures that a construct is measured
+equivalently across groups, enabling valid comparisons of latent means. The typical approach
+to assessing measurement invariance is to test increasingly restrictive multigroup models with
+additional equality constraints across groups (see Pokropek et al., 2019, Meuleman et. al 2023,
+for an overview).
+
+In the basic testing of measurement invariance, the process begins with configural invariance,
+the baseline model with no equality constraints, which verifies that the overall factor structure
+is consistent across groups (i.e., measurement occasions). Metric invariance is tested next by
+constraining factor loadings to be equal across groups. Metric invariance allows researchers to
+compare relationships between indicators and latent constructs, ensuring that observed
+differences reflect meaningful distinctions rather than measurement inconsistencies. The final
+and most restrictive test, scalar invariance, adds constraints on both factor loadings and
+intercepts, indicating that the construct's baseline is equivalent across groups. Achieving scalar
+invariance is essential for comparing latent means because it ensures that each group shares a
+common starting point, allowing direct comparison of average levels of the latent construct. It
+is worth elaborating on why each level of invariance matters, particularly for readers less
+familiar with multigroup CFA. Metric invariance (equal factor loadings) ensures that each
+
+keyword indicator contributes to the latent construct with the same relative weight across time
+periods. If metric invariance fails, it means that certain keywords become more or less
+important for the construct over time, for instance, “nuclear” might dominate the war anxiety
+factor in early weeks but become less central later. While such shifts are substantively
+interesting, they prevent meaningful comparison of factor scores or structural relationships
+across groups. Scalar invariance (equal intercepts) goes further: it ensures that observed
+differences in keyword frequencies reflect genuine differences in the latent construct, rather
+than shifts in baseline usage rates unrelated to the construct. Without scalar invariance, a
+change in latent means could simply reflect that people use certain words more frequently over
+time for reasons unrelated to war anxiety (e.g., media coverage patterns). Thus, both levels are
+necessary for valid latent mean comparisons: metric invariance ensures the construct is
+measured with the same structure, and scalar invariance ensures that differences in observed
+scores translate into differences in the latent variable itself (Meredith, 1993; Vandenberg &
+Lance, 2000).
+
+Chen (2007) proposed widely used guidelines for judging measurement invariance in
+multigroup CFA: invariance is typically supported when ΔCFI ≤ .01, ΔRMSEA ≤ .015, and
+ΔSRMR ≤ .030 (configural→metric) or ≤ .015 (metric→scalar). However, because Chen’s
+simulations focused mainly on few groups (2–4), these cutoffs can be overly conservative in
+settings with many groups. Rutkowski and Svetina (2014), using 10–20 groups (close to our
+11 time points), recommended relaxed thresholds for metric invariance (ΔCFI ≥ −.02,
+ΔRMSEA ≤ .03), while retaining the traditional criteria for scalar invariance (ΔCFI ≥ −.01,
+ΔRMSEA ≤ .01). They did not propose alternative SRMR cutoffs, so we keep Chen’s SRMR
+thresholds (.030 for metric; .015 for scalar) and apply Rutkowski and Svetina’s criteria only to
+CFI/RMSEA in our multigroup analysis.
+
+For the survey-based model measuring Self-Reported War Anxiety, we do not conduct formal
+measurement invariance testing due to the limited number of indicators. With only three
+indicators, the configural model is just-identified (df = 0), resulting in perfect fit by definition
+and making fit indices uninterpretable for comparison purposes (Bollen, 1989). However, this
+limitation is not a major concern for several reasons. First, measurement properties of
+standardized self-report scales are generally stable over short time periods (Widaman et al.,
+2010; Pokropek et al., 2019), particularly it seems reasonable when the same instrument is
+administered to similar populations within weeks rather than years. Second, survey items are
+deliberately designed to maintain consistent meaning across administrations, unlike naturally
+occurring text where semantic shifts are more likely. Third, and most importantly, we directly
+fit the scalar invariance model, which demonstrates excellent fit to the data (χ² = 36.8, df = 30,
+CFI = 0.999, RMSEA = 0.012), suggesting that the assumption of equivalent measurement
+across time points is reasonable for this construct.
+
+In contrast, measurement invariance testing is particularly valuable for the Twitter-based model
+of Discourse of War Anxiety, where the meaning and usage of terms may evolve rapidly in
+response to current events. This analysis uses word embeddings derived from text, where word
+frequencies can vary significantly over time. When we compute cosine distances and derive
+correlation matrices from these embeddings, we effectively standardize the variables. We
+calculated the means and standard deviations of the word frequencies for each word each week,
+transformed the correlation matrices into covariance matrices using the estimated standard
+deviations, and then used these covariance matrices in our multi-group CFA.
+
+Table 5 provides the fit indices for our measurement invariance testing for the Twitter-based
+word embedding model. The results illustrate how fit measures respond to the addition of
+constraints at each level of invariance testing.
+
+Table 5. Fit Indices for Measurement Invariance Testing (Twitter Data: Discourse of War
+Anxiety)
+Model
+
+χ²
+
+df
+
+RMSEA
+
+CFI
+
+TLI
+
+SRMR
+
+ΔCFI
+
+99
+
+0.077
+
+0.967 0.946
+
+0.025
+
+—
+
+—
+
+—
+
+Metric
+
+454,021 149
+
+0.076
+
+0.953 0.947
+
+0.047
+
+-0.015
+
+-0.001
+
+0.022
+
+Scalar
+
+464,827 199 0.066
+
+Configural 311,723
+
+0.951 0.960 0.048
+
+ΔRMSEA ΔSRMR
+
+-0.001 -0.009
+
+0.0003
+
+For the Twitter model, chi-squared values increase across the configural (311,723), metric
+(454,021), and scalar (464,827) models, as expected when additional constraints reduce model
+flexibility; however, other fit indices respond differently, with RMSEA improving from 0.077
+to 0.066 and TLI increasing from 0.946 to 0.960. This counterintuitive pattern reflects how
+these indices adjust for model parsimony: CFI, TLI, and RMSEA penalize models with more
+free parameters, so as constraints reduce parameter count, these indices may actually improve
+if the added constraints do not substantially harm the model's ability to capture the data
+structure. Given this sensitivity to parameterization, the SRMR provides a more stable indicator
+of model deterioration, as it is less affected by the number of parameters and more directly
+reflects residual correlations. Applying Rutkowski and Svetina's (2014) criteria for large
+numbers of groups, both metric and scalar invariance are supported: configural to metric shows
+ΔCFI = -0.015 (threshold: ≤ 0.02), ΔRMSEA = -0.001 (threshold: ≤ 0.03), and ΔSRMR = 0.022
+(threshold: ≤ 0.030); metric to scalar shows ΔCFI = -0.001 (threshold: ≤ 0.01), ΔRMSEA = 0.009 (threshold: ≤ 0.01), and ΔSRMR = 0.0003 (threshold: ≤ 0.015). The SRMR changes are
+particularly reassuring, as they indicate that constraining factor loadings and intercepts across
+groups does not significantly compromise the model's ability to reproduce observed
+correlations. These results indicate that the Discourse of War Anxiety construct, as measured
+through word embeddings, demonstrates measurement equivalence across the 11-week period,
+allowing for valid comparisons of latent means over time.
+
+Substantively, this finding carries an informative interpretation: it suggests that imposing
+equality constraints on factor loadings and intercepts across the 11 weekly corpora does not
+degrade the model’s fit to the data, meaning that the semantic relationships between keywords
+and the latent construct are genuinely stable over time. The configural model, with its many
+freely estimated parameters, may be capitalizing on week-to-week sampling variability in the
+embedding space (analogous to overfitting); constraining these parameters to equality across
+groups imposes a more parsimonious structure that the data actually support. In other words,
+the “improvement” in fit under stricter invariance reflects the fact that week-to-week
+differences in loadings and intercepts are predominantly noise rather than meaningful
+measurement change. This is substantively reassuring: it means that the keyword-based
+construct maintains stable measurement properties despite the rapidly evolving discourse
+context of an armed conflict.
+
+While the global fit index approach described above is the most commonly used method for
+evaluating measurement invariance researchers have developed several complementary
+techniques to examine measurement equivalence more deeply. These alternative approaches
+can provide additional insights, particularly when working with complex data structures such
+as word embeddings. One such approach involves examining standardized factor loadings over
+time (Millsap, 2011; van de Schoot et al., 2012). This method allows researchers to visually
+inspect how the relationship between indicators and the latent construct changes across
+measurement occasions. While the global fit indices (ΔCFI, ΔRMSEA) assess overall model
+deterioration, examining individual loadings can reveal which specific indicators drive any
+observed non-invariance. In our case, since global fit indices already support metric and scalar
+invariance, indicating that loading fluctuations across weeks are not statistically significant,
+individual loading inspection serves a supplementary, descriptive role rather than providing
+
+essential additional evidence. Nevertheless, visualizing loading patterns can help researchers
+identify which specific indicators contribute most to any residual variability.
+
+Figure 4 presents the standardized factor loadings for each indicator across the 11 weeks,
+derived from the configural invariance model. The indicator "military" shows the highest
+loadings overall, ranging from 0.68 to 0.83 across weeks, with a variance of 0.0017, indicating
+strong and relatively stable relationship with the latent construct. The "alliance" indicator
+demonstrates moderate loadings (0.58 to 0.73) with variance of 0.0022, showing some
+temporal fluctuation but maintaining consistent relevance to the discourse construct. The
+"conflict" indicator exhibits high loadings initially (0.74 in weeks 1-2) but shows a declining
+trend toward later weeks (0.58 in week 10), with variance of 0.0024, suggesting evolving
+prominence in war anxiety discourse.
+
+0.9
+
+Standardized Factor Loading (λ)
+
+0.8
+
+Indicator
+
+0.7
+
+Nuclear (var=0.0033)
+Conflict (var=0.0024)
+Alliance (var=0.0022)
+
+0.6
+
+Military (var=0.0017)
+Aggression (var=0.0012)
+Development (var=0.0010)
+
+0.5
+
+0.4
+
+W1
+
+W2
+
+W3
+
+W4
+
+W5
+
+W6
+
+W7
+
+W8
+
+W9
+
+W10
+
+W11
+
+Week
+
+Figure 4. Standardized factor loadings for each indicator across the 11 weeks
+
+The most variable indicator is "nuclear" (variance = 0.0033), with loadings ranging from 0.50
+to 0.69, showing considerable fluctuation across weeks. This variability likely reflects
+
+changing salience of nuclear-related discourse in response to specific events during the study
+period. The “aggression” indicator maintains moderate stability (variance = 0.0012) with
+loadings between 0.56 and 0.67.
+
+Importantly, while we observe this heterogeneity in loading patterns, none of the indicators
+show systematic drift or dramatic shifts that would suggest fundamental changes in construct
+meaning. The moderate variability observed, particularly for "nuclear" and "conflict," is
+consistent with our global fit assessment and falls within acceptable bounds for scalar
+invariance. This pattern suggests that while the discourse around war anxiety evolved over the
+11-week period in response to changing events, the core structure of how these terms relate to
+the underlying construct remained fundamentally stable. These loading fluctuations, which the
+global metric invariance test confirmed to be statistically non-significant, are consistent with
+expected sampling variability in weekly embedding spaces rather than substantive
+measurement change.
+
+Trend Analysis
+After confirming scalar invariance for the Twitter data and establishing the validity of the scalar
+invariance for survey data, we proceed with comparing latent means over time. Figure 5
+presents the trends for both Self-Reported War Anxiety (bottom panel) and Discourse of War
+Anxiety (top panel), derived from scalar invariance models for each data source.
+
+Discourse of War Anxiety (Twitter)
+0.00
+
+-0.02
+
+Latent Factor Mean
+
+-0.04
+
+-0.06
+
+Self-Reported War Anxiety (Survey)
+
+0.0
+
+-0.1
+
+-0.2
+
+-0.3
+
+-0.4
+
+W1
+
+W2
+
+W3
+
+W4
+
+W5
+
+W11
+
+Week
+
+Figure 5 Comparison of Discourse of War Anxiety (Twitter) and Self-Reported War
+Anxiety
+Both measures show a similar pattern (Figure 5): anxiety levels start near zero in week 1 (the
+reference point) and decline steadily through the study period, with minor fluctuations,
+reaching their lowest point by week 11.
+
+To formally assess the convergence between these two measurement approaches and
+constructs, we calculated the correlation between Self-Reported War Anxiety and Discourse of
+War Anxiety for the six overlapping time points. The correlation was strong and statistically
+significant (r = 0.873, p = .023), indicating substantial temporal agreement between selfreported war anxiety and discourse-based latent means. This does not demonstrate that both
+measures tap the same construct (as discussed in the Limitations section), but it suggests that
+the CFA-based method captures meaningful temporal variation rather than noise.
+
+Discussion
+This study demonstrates that integrating Confirmatory Factor Analysis (CFA) with word
+embeddings offers a robust methodology for evaluating the coherence and reliability of
+keyword-based text measures. Applied to war-related discourse on Polish Twitter, the method
+produced interpretable factor structures, adequate model fit, and multidimensional structures
+encompassing political/military, economic, and social dimensions. Moreover, our multigroup
+analysis indicated that the measurement model remained consistent over time, allowing for
+meaningful comparisons of latent means across different periods.
+It should be noted that the approach presented here is complementary to, rather than a
+replacement for, existing text analysis methodologies. Dictionary-based approaches like LIWC
+(Boyd et al., 2022) remain valuable for general-purpose applications; inductive methods
+(Kantner & Overbeck, 2020) are essential for discovering relevant vocabulary; and the broader
+word embeddings literature (Rodriguez & Spirling, 2022; Kozlowski et al., 2019) provides
+important foundations for semantic analysis. Importantly, the CFA framework proposed here
+is agnostic about the source of keywords: it can evaluate keyword sets derived from any of
+these traditions, as well as from ad hoc theoretical reasoning, corpus-specific exploration, or
+interdisciplinary collaboration. The method’s value lies not in prescribing how keywords
+should be selected, but in providing a formal evaluative framework that has been absent from
+keyword-based text analysis regardless of how the keywords were obtained. The contribution
+of the present paper lies in bringing confirmatory psychometric tools, specifically CFA, to
+evaluate the coherence of researcher-selected keywords within specific corpora. This
+represents a novel integration rather than a competing paradigm.
+Limitations and Future Directions
+While our study provides promising insights, several limitations must be acknowledged. First,
+
+our analysis relies on data collected from a specific cultural and temporal context, Poland
+during the early stages of Russia's invasion of Ukraine. This context-specific focus may limit
+the generalizability of our findings to other settings or topics. Therefore, future research should
+replicate this methodology across diverse cultural contexts and subject matters to assess its
+broader applicability.
+Second, the quality and representativeness of social media data pose potential concerns. Social
+media platforms may not capture the full spectrum of public opinion due to varying levels of
+access and engagement among different demographic groups. Furthermore, the preprocessing
+steps and choice of word embedding model (e.g., CBOW) may influence the results. Future
+studies could explore the impact of using different word embedding algorithms, such as Skipgram or BERT, and assess how these choices affect the measurement models.
+Third, the keyword selection in the presented empirical example, while informed by analogy
+with the survey instrument, was not subjected to the rigorous theoretical development expected
+in fully substantive applications. This is intentional, the paper's contribution is methodological,
+demonstrating that empirical evaluation of keyword coherence is possible, not providing a
+definitive operationalization of war anxiety. Future substantive applications should invest
+greater effort in theoretically grounding keyword selection, potentially drawing on domain
+expertise, existing conceptual frameworks, or qualitative analysis of relevant discourse. The
+CFA framework proposed here can evaluate whether a given keyword set forms a coherent
+construct, but thoughtful, theory-driven keyword selection remains essential.
+Fourth, while training word embeddings is nowadays computationally feasible, the costs are
+not negligible and depend on several factors: the embedding model type (e.g., CBOW is faster
+than Skip-gram; transformer-based models like BERT require substantially more resources),
+the size of the corpus and vocabulary, and the available computational resources (CPU vs.
+
+GPU). In our application, training CBOW embeddings on weekly Twitter corpora of 400,000–
+760,000 posts was completed in minutes on standard hardware. However, researchers working
+with larger corpora, higher-dimensional embeddings, or more complex architectures should
+budget computational resources accordingly. Pre-trained embeddings (e.g., from fastText or
+language-specific models; Bojanowski, Grave, Joulin, & Mikolov, 2017) offer an alternative
+that avoids training costs entirely, though at the expense of corpus-specific contextual
+information.
+Fifth, the comparison between survey-based and Twitter-based measures presented in this
+paper should not be interpreted as a convergent validity test. Survey data and social media data
+differ fundamentally as measurement instruments: surveys capture responses from sampled
+populations under controlled conditions, whereas social media data reflect the public
+expressions of self-selected, non-representative users whose motivations for posting may be
+unrelated to the constructs of interest (Murphy et al., 2014). As Baden et al. (2024) discuss in
+detail, these data sources differ not only in who is represented but also in what is being
+measured, self-reported attitudes versus publicly performed discourse, making direct
+equivalence an unreasonable expectation. The parallel analysis presented here is therefore
+intended as a methodological demonstration, it shows that CFA applied to word embeddings
+can produce temporally coherent latent means that track independently collected data,
+suggesting that the method captures meaningful signal rather than noise.
+Finally, our method primarily focused on reflective measurement models. Expanding this
+approach to formative models or incorporating more complex structural equation modelling
+could provide a more comprehensive understanding of the relationships between textual
+indicators and latent constructs. Future research should consider these extensions to enhance
+the robustness and applicability of the methodology.
+
+Practical Implications
+Our findings suggest that integrating CFA with word embeddings can enhance the rigor of
+textual data analysis, providing a robust framework for constructing and validating composite
+indicators from large text corpora. This methodology enables researchers to systematically
+assess the reliability and validity of keyword-based measures, which ensures the integrity of
+findings derived from big data sources.
+In monitoring public sentiment, such as war anxiety, our approach allows for real-time analysis
+of social media data, offering timely insights that traditional survey methods may not capture
+due to longer data collection periods. Policymakers and mental health professionals could
+leverage this method to track shifts in public concern, tailor interventions, and communicate
+effectively with the public during rapidly evolving situations.
+More broadly, our results support the conclusion that applying rigorous statistical models to
+word embeddings can mitigate some methodological challenges associated with textual data
+analysis. By promoting deliberate and systematic measurement practices, researchers can more
+accurately interpret the information available in digital text sources, ultimately contributing to
+more informed decision-making across various domains.
+
+Declarations
+●
+
+Funding
+
+This research is funded by a grant from the National Science Centre (NCN) 'Research
+Laboratory for Digital Social Sciences' (SONATA BIS-10, No. UMO-020/38/E/HS6/00302).
+●
+
+Conflicts of interest/Competing interests
+
+The author has no relevant financial or non-financial interests to disclose.
+●
+
+Ethics approval
+
+The original data collection project received a positive ethics review from the Ethics
+Committee at the Institute of Philosophy and Sociology of the Polish Academy of Sciences.
+The present study uses these data for secondary analysis.
+●
+
+Consent to participate
+
+Informed consent was obtained from all survey participants through the internet panel
+provider. Twitter data was collected via the public API and does not require individual
+consent.
+●
+
+Consent for publication
+
+Not applicable. No individual-level data is published. Twitter data is presented only in
+aggregated form (correlation matrices and frequency statistics).
+●
+
+Availability of data and materials
+
+Full tweet texts cannot be shared due to the terms of service of the X (formerly Twitter)
+platform. However, all data necessary to reproduce the CFA analyses, correlation matrices
+(based on cosine similarities), means, and standard deviations for each weekly corpus, are
+provided as supplementary materials. These summary statistics are sufficient to replicate all
+models reported in this paper. The supplementary materials also include R code for model
+estimation.
+●
+
+Code availability
+
+All analysis code (R scripts for CFA estimation, measurement invariance testing, and Monte
+Carlo simulations) is available in the supplementary online appendix and in a dedicated
+GitHub repository: https://github.com/arturpokropek/CFA-WE
+●
+
+Authors' contributions
+
+The article was written by one author.
+
+Literature
+Abdul Reda, A., Sinanoglu, S., & Abdalla, M. (2024). Mobilizing the Masses: Measuring
+Resource Mobilization on Twitter. Sociological Methods & Research, 53(1), 153192. https://doi.org/10.1177/0049124120986197
+Antenucci, D., Cafarella, M., Levenstein, M., Ré, C., & Shapiro, M. D. (2014). Using social
+media to measure labor market flows (NBER Working Paper No. 20010). National
+Bureau of Economic Research.
+Arseniev-Koehler, A. (2022). Theoretical foundations and limits of word
+embeddings. Sociological Methods & Research, 51(4), 1486–1533.
+Baden, C., Pipal, C., Schoonvelde, M., & van der Velden, M. A. C. G. (2022). Three Gaps in
+Computational Text Analysis Methods for Social Sciences: A Research
+Agenda. Communication Methods and Measures, 16(1), 1–18.
+https://doi.org/10.1080/19312458.2021.2015574
+Bentler, P. M. (2009). Alpha, dimension-free, and model-based internal consistency
+reliability. Psychometrika, 74(1), 137–143. https://doi.org/10.1007/s11336-008-9100-1
+Blei, D. M., Ng, A. Y., & Jordan, M. I. (2003). Latent Dirichlet allocation. Journal of
+Machine Learning Research, 3, 993–1022.
+Bojanowski, P., Grave, E., Joulin, A., & Mikolov, T. (2017). Enriching word vectors with
+subword information. Transactions of the Association for Computational Linguistics, 5,
+135–146. https://doi.org/10.1162/tacl_a_00051
+Bollen, K. A. (1989). Structural equations with latent variables. Wiley.
+Bollen, K. A., & Lennox, R. (1991). Conventional wisdom on measurement: A structural
+equation perspective. Psychological Bulletin, 110(2), 305–
+314. https://doi.org/10.1037/0033-2909.110.2.305
+Boukes, M., van de Velde, B., Araujo, T., & Vliegenthart, R. (2020). What’s the tone? Easy
+doesn’t do it: Analyzing performance and agreement between off-the-shelf sentiment
+analysis tools. Communication Methods & Measures, 14(2), 83–104.
+Boon-Itt, S., & Skunkan, Y. (2020). Public perception of the COVID-19 pandemic on
+Twitter: Sentiment analysis and topic modeling study. JMIR Public Health and
+Surveillance, 6(4), e21978.
+Bordoloi, M., & Biswas, S. K. (2023). Sentiment analysis: A survey on design framework,
+applications and future scopes. Artificial Intelligence Review, 56(11), 12505–12560.
+Boyd, R. L., Ashokkumar, A., Seraj, S., & Pennebaker, J. W. (2022). The development and
+psychometric properties of LIWC-22. University of Texas at Austin.
+
+Browne, M. W. (1982). Covariance structures. In D. R. Hawkins (Ed.), Topics in applied
+multivariate analysis (pp. 72–141). Cambridge University Press.
+Browne, M. W., & Mels, G. (1998). RAMONA analysis in EQS for Windows: Advanced
+applications, version 8. In EQS structural equations program manual (pp. 607–665).
+SYSTAT.
+Chen, F. F. (2007). Sensitivity of goodness of fit indexes to lack of measurement
+invariance. Structural Equation Modeling, 14(3), 464–
+504. https://doi.org/10.1080/10705510701301834
+Chen, X., Ding, N., Levinboim, T., & Soricut, R. (2020). Improving text generation
+evaluation with batch centering and tempered word mover distance. In Proceedings of
+the First Workshop on Evaluation and Comparison of NLP Systems (pp. 51–59).
+Cudeck, R. (1989). Analysis of correlation matrices using covariance structure
+models. Psychological Bulletin, 105(2), 317–327. https://doi.org/10.1037/00332909.105.2.317
+DeVellis, R. F. (2017). Scale development: Theory and applications (4th ed.). SAGE
+Publications.
+Devlin, J., Chang, M.-W., Lee, K., & Toutanova, K. (2018). BERT: Pre-training of deep
+bidirectional transformers for language understanding. arXiv preprint
+arXiv:1810.04805.
+Diamantopoulos, A., & Winklhofer, H. M. (2001). Index construction with formative
+indicators: An alternative to scale development. Journal of Marketing Research, 38(2),
+269–277.
+Ethayarajh, K. (2019). How contextual are contextualized word representations? Comparing
+the geometry of BERT, ELMo, and GPT-2 embeddings. In Proceedings of the 2019
+Conference on Empirical Methods in Natural Language Processing and the 9th
+International Joint Conference on Natural Language Processing (EMNLPIJCNLP) (pp. 3687–3698).
+Golder, S. A., & Macy, M. W. (2014). Digital footprints: Opportunities and challenges for
+online social research. Annual Review of Sociology, 40, 129–152.
+Grimmer, J., & Stewart, B. M. (2013). Text as data: The promise and pitfalls of automatic
+content analysis methods for political texts. Political Analysis, 21(3), 267–297.
+https://doi.org/10.1093/pan/mps028
+Henseler, J. (2020). Composite-based structural equation modeling: Analyzing latent and
+emergent variables. Guilford Publications.
+Hu, L., & Bentler, P. M. (1999). Cutoff criteria for fit indexes in covariance structure
+analysis: Conventional criteria versus new alternatives. Structural Equation Modeling:
+A Multidisciplinary Journal, 6(1), 1–55. https://doi.org/10.1080/10705519909540118
+
+Jöreskog, K. G. (1978). Structural analysis of covariance and correlation
+matrices. Psychometrika, 43(4), 443–477. https://doi.org/10.1007/BF02293808
+Kantner, C., & Overbeck, M. (2020). Exploring soft concepts with hard corpus-analytic
+methods. In N. Reiter, A. Pichler, & J. Kuhn (Eds.), Reflektierte algorithmische
+Textanalyse: Interdisziplinäre(s) Arbeiten in der CRETA-Werkstatt (pp. 169–190). De
+Gruyter. https://doi.org/10.1515/9783110693973-008
+Kapoor, K., Tamilmani, K., Rana, N., Patil, P., Dwivedi, Y., & Nerur, S. (2018). Advances in
+social media research: Past, present and future. Information Systems Frontiers, 20, 531–
+558. https://doi.org/10.1007/s10796-017-9810-y
+Kozlowski, A. C., Taddy, M., & Evans, J. A. (2019). The geometry of culture: Analyzing
+meaning through word embeddings. American Sociological Review, 84(5), 905–
+949. https://doi.org/10.1177/0003122419877135
+Libovický, J., Rosa, R., & Fraser, A. (2019). How language-neutral is multilingual
+BERT? arXiv preprint arXiv:1911.03310.
+Loureiro, M. L., & Alló, M. (2020). Sensing climate change and energy issues: Sentiment
+and emotion analysis with social media in the U.K. and Spain. Energy Policy, 143,
+111490.
+Lowe, W., & Benoit, K. (2013). Validating estimates of latent traits from textual data using
+human judgment as a benchmark. Political Analysis, 21(3), 298–313.
+https://doi.org/10.1093/pan/mpt002
+McDonald, R. P. (1999). Test theory: A unified treatment. Erlbaum.
+Meredith, W. (1993). Measurement invariance, factor analysis and factorial
+invariance. Psychometrika, 58(4), 525–543. https://doi.org/10.1007/BF02294825
+Meuleman, B., Żółtak, T., Pokropek, A., Davidov, E., Muthén, B., Oberski, D. L., Billiet, J.,
+& Schmidt, P. (2023). Why measurement invariance is important in comparative
+research: A response to Welzel et al. (2021). Sociological Methods & Research, 52(3),
+1401–1419. https://doi.org/10.1177/00491241221091755
+Mikolov, T., Chen, K., Corrado, G., & Dean, J. (2013a). Efficient estimation of word
+representations in vector space. arXiv preprint arXiv:1301.3781.
+Mikolov, T., Sutskever, I., Chen, K., Corrado, G. S., & Dean, J. (2013b). Distributed
+representations of words and phrases and their compositionality. In Advances in Neural
+Information Processing Systems 26 (NIPS).
+Millsap, R. E. (2011). Statistical approaches to measurement invariance. Routledge.
+Mu, J., & Viswanath, P. (2018). All-but-the-top: Simple and effective postprocessing for
+word representations. In Proceedings of the International Conference on Learning
+Representations (ICLR).
+
+Murphy, J., Link, M. W., Childs, J. H., Tesfaye, C. L., Dean, E., Stern, M., ... & Harwood, P.
+(2014). Social media in public opinion research: Report of the AAPOR task force on
+emerging technologies in public opinion research. American Association for Public
+Opinion Research.
+Olteanu, A., Castillo, C., Diaz, F., & Kıcıman, E. (2019). Social data: Biases, methodological
+pitfalls, and ethical boundaries. Frontiers in Big Data, 2, 13.
+Piantadosi, S.T. (2014) Zipf’s word frequency law in natural language: A critical review and
+future directions. Psychon Bull Rev 21, 1112–1130 . https://doi.org/10.3758/s13423014-0585-6
+Park, K., Hong, J. S., & Kim, W. (2020). A methodology combining cosine similarity with
+classifier for text classification. Applied Artificial Intelligence, 34(5), 396–411.
+Pokropek, A., Davidov, E., & Schmidt, P. (2019). A Monte Carlo simulation study to assess
+the appropriateness of traditional and newer approaches to test for measurement
+invariance. Structural Equation Modeling: A Multidisciplinary Journal, 26(5), 724–
+744.
+Rodriguez, P. L., & Spirling, A. (2022). Word embeddings: What works, what doesn't, and
+how to tell the difference for applied research. Journal of Politics, 84(1), 101–115.
+Rosenberg, E., Tarazona, C., Mallor, F., Eivazi, H., Pastor-Escuredo, D., Fuso-Nerini, F., &
+Vinuesa, R. (2023). Sentiment analysis on Twitter data towards climate action. Results
+in Engineering, 19, 101287.
+Rosseel, Y. (2012). lavaan: An R package for structural equation modeling. Journal of
+Statistical Software, 48(2), 1–36.
+Rowe, F., Mahony, M., Graells-Garrido, E., Rango, M., & Sievers, N. (2021). Using Twitter
+to track immigration sentiment during early stages of the COVID-19 pandemic. Data &
+Policy, 3, e36.
+Rutkowski, L., & Svetina, D. (2014). Assessing the hypothesis of measurement invariance in
+the context of large-scale international surveys. Educational and Psychological
+Measurement, 74(1), 31–57. https://doi.org/10.1177/0013164413498257
+Salganik, M. (2019). Bit by bit: Social research in the digital age. Princeton University Press.
+Schumacker, R. E., & Lomax, R. G. (2016). A beginner's guide to structural equation
+modeling (4th ed.). Routledge.
+Stephens-Davidowitz, S., A. (2017). Everybody lies: Big data, new data, and what the
+Internet can tell us about who we really are. HarperCollins.
+Tavoschi, L., Quattrone, F., D'Andrea, E., Ducange, P., Vabanesi, M., Marcelloni, F., &
+Lopalco, P. L. (2020). Twitter as a sentinel tool to monitor public opinion on
+vaccination: An opinion mining analysis from September 2016 to August 2017 in
+Italy. Human Vaccines & Immunotherapeutics, 16(5), 1062–1069.
+
+van Atteveldt, W., van der Velden, M. A. C. G., & Boukes, M. (2021). The validity of
+sentiment analysis: Comparing manual annotation, crowd-coding, dictionary
+approaches, and machine learning algorithms. Communication Methods and Measures,
+15(2), 121–140. https://doi.org/10.1080/19312458.2020.1869198
+van de Schoot, R., Lugtig, P., & Hox, J. (2012). A checklist for testing measurement
+invariance. European Journal of Developmental Psychology, 9(4), 486–
+492. https://doi.org/10.1080/17405629.2012.686740
+Vandenberg, R. J., & Lance, C. E. (2000). A review and synthesis of the measurement
+invariance literature: Suggestions, practices, and recommendations for organizational
+research. Organizational Research Methods, 3(1), 4–
+70. https://doi.org/10.1177/109442810031002
+Widaman, K. F., Ferrer, E., & Conger, R. D. (2010). Factorial invariance within longitudinal
+structural equation models. Child Development Perspectives, 4(1), 10–18.
+Zachlod, C., Samuel, O., Ochsner, A., & Werthmüller, S. (2022). Analytics of social media
+data—State of characteristics and application. Journal of Business Research, 144,
+1064–1076.
+Zhao, J., Zhou, Y., Li, Z., Wang, W., & Chang, K.-W. (2020). Learning gender-neutral word
+embeddings. In Proceedings of the 2020 Conference on Empirical Methods in Natural
+Language Processing (EMNLP) (pp. 4847–4853).
+Zimmer, M., & Kinder-Kurlanda, K. (2017). Internet research ethics for the social age: New
+challenges, cases, and contexts. Peter Lang.
+
+Appendix
+
+Figure A1. Simulation results: four items, 1000 replications
+
+Figure A2. Simulation results: six items ,1000 replications
+
+Figure A3. Simulation results: eight items, 1000 replications
+
+Table A1. Summary of Multidimensional Models
+Indicator
+
+F
+
+Model 1
+
+Factor Loadings
+Alliance
+F1 0.594
+Nuclear
+F1 0.507
+Aggression
+F1 0.649
+Conflict
+F1 0.658
+Military
+F1 0.713
+Economy
+F1 0.655
+Inflation
+F1 0.549
+Social
+F1 0.598
+Society
+F1 0.640
+Development
+F1 0.668
+Covariances (correlations)
+F1-F2
+F1-F3
+F2-F3
+Social- Society
+Fit indices
+Chi-square
+4326774.28
+DF
+35
+P-value
+0.000
+RMSEA
+0.199
+CFI
+0.684
+TLI
+0.593
+SRMR
+0.103
+AIC
+79108405.81
+BIC
+79108664.86
+FI Alpha
+F1 Omega
+F2 Alpha
+F2 Omega
+F3 Alpha
+F3 Omega
+
+0.863
+0.864
+
+F
+
+Model 2
+
+F
+
+Model 3
+
+F
+
+Model 4
+
+F1
+F1
+F1
+F1
+F1
+F2
+F2
+F2
+F2
+F2
+
+0.697
+0.575
+0.683
+0.762
+0.779
+0.703
+0.597
+0.761
+0.781
+0.670
+
+F1
+F1
+F1
+F1
+F1
+F2
+F2
+F3
+F3
+F2
+
+0.700
+0.575
+0.680
+0.761
+0.780
+0.863
+0.695
+0.824
+0.915
+0.670
+
+F1
+F1
+F1
+F1
+F1
+F2
+F2
+F3
+F3
+F2
+
+0.701
+0.575
+0.680
+0.761
+0.779
+0.879
+0.693
+0.783
+0.947
+0.651
+
+0.608
+
+0.582
+0.479
+0.638
+
+0.575
+0.463
+0.610
+0.163
+
+2289438.16
+34
+0.000
+0.147
+0.833
+0.778
+0.066
+77071071.69
+77071343.69
+
+1053709.36
+32
+0.000
+0.103
+0.923
+0.892
+0.052
+75835346.90
+75835644.80
+
+749434.99
+31
+0.000
+0.088
+0.945
+0.920
+0.049
+75531074.52
+75531385.38
+
+0.826
+0.828
+0.840
+0.831
+
+0.826
+0.828
+0.770
+0.789
+0.860
+0.862
+
+0.825
+0.828
+0.770
+0.789
+0.860
+0.864
+
+

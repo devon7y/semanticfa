@@ -1,0 +1,793 @@
+                                                                        Psicothema (2026) 38(1) 1-12
+
+
+                                                                       Psicothema
+                                                  https://www.psicothema.com/es • ISSN 0214–9915 • eISSN 1886-144X
+
+                                                                 Colegio Oficial de Psicología del Principado de Asturias
+
+
+Article
+
+
+      Using Artificial Intelligence in Test Construction: A Practical Guide
+                       Javier Suárez-Álvarez1 , Qiwei He2 , Nigel Guenole3                                                  and Damiano D’Urso4
+                                                           1
+                                                               University of Massachusetts Amherst (USA)
+                                                                     2
+                                                                       Georgetown University (USA)
+                                                               3
+                                                                 University of London (United Kingdom)
+                                                                 4
+                                                                   Independent Researcher (Netherlands)
+
+
+
+
+  ARTICLE INFO                               ABSTRACT
+
+Received: 01/08/2025                      Background: Artificial Intelligence (AI) is increasingly used to enhance traditional assessment practices by improving
+Accepted: 09/10/2025                      efficiency, reducing costs, and enabling greater scalability. However, its use has largely been confined to large
+                                          corporations, with limited uptake by researchers and practitioners. This study aims to critically review current AI-based
+                                          applications in test construction and propose practical guidelines to help maximize their benefits while addressing
+Keywords:                                 potential risks. Method: A comprehensive literature review was conducted to examine recent advances in AI-based
+Artificial intelligence                   test construction, focusing on item development and calibration, with real-world examples to demonstrate practical
+Test construction                         implementation. Results: Best practices for AI in test development are evolving, but responsible use requires ongoing
+Automated item generation                 human oversight. Effective AI-based item generation depends on quality training data, alignment with intended use,
+Validity                                  model comparison, and output validation. For calibration, essential steps include defining construct validity, applying
+Fairness
+                                          prompt engineering, checking semantic alignment, conducting pseudo factor analysis, and evaluating model fit with
+                                          exploratory methods. Conclusions: We propose a practical guide for using generative AI in test development and
+                                          calibration, targeting challenges related to validity, reliability, and fairness by linking each issue to specific guidelines
+                                          that promote responsible, effective implementation.
+
+
+
+                                          Uso de la Inteligencia Artificial en la Construcción de Pruebas: Una Guía Práctica
+Palabras clave:
+Inteligencia artificial
+Construcción de pruebas                      RESUMEN
+Generación automatizada de ítems
+Validez
+Equidad                                   Antecedentes: La inteligencia artificial (IA) se utiliza crecientemente para mejorar las prácticas tradicionales de
+                                          evaluación, aumentando la eficiencia, reduciendo costos y facilitando la escalabilidad. Sin embargo, su uso se ha
+                                          limitado a grandes corporaciones, con escasa adopción por parte de investigadores y profesionales. Este estudio revisa
+                                          críticamente las aplicaciones de la IA en la construcción de pruebas y propone guias prácticas para maximizar sus
+                                          beneficios y abordar posibles riesgos. Método: Se realizó una revisión exhaustiva de la literatura para examinar los
+                                          avances en aplicaciones basadas en IA en la construcción de pruebas, con énfasis en el desarrollo y calibración de ítems,
+                                          y se incluyeron ejemplos del mundo real para mostrar su implementación práctica. Resultados: Las mejores prácticas
+                                          para el uso de IA en el desarrollo de pruebas están en evolución, pero requieren supervisión humana. Para generar
+                                          ítems se necesitan datos de calidad, alineación con el uso previsto, comparación de modelos y validación. Para calibrar,
+                                          hay que definir el constructo, optimizar las instrucciones (prompts), verificar la alineación semántica, realizar análisis
+                                          factoriales pseudoexploratorios y evaluar el ajuste del modelo. Conclusiones: Se propone una guía práctica que vincula
+                                          los desafíos de validez, fiabilidad y equidad con recomendaciones para una implementación responsable y eficaz.
+
+
+
+Cite as: Suárez-Álvarez, J., He, Q., Guenole, N., & D´Urso, D. (2026). Using artificial intelligence in test construction: A practical guide. Psicothema, 38(1), 1-12. https://doi.
+org/10.70478/psicothema.2026.38.01
+Corresponding author: Javier Suárez-Álvarez, suarezj@umass.edu
+This article is published under Creative Commons License 4.0 CC-BY-NC-ND
+                                                          Suárez-Álvarez et al. / Psicothema (2026) 38(1) 1-12
+
+
+
+    Artificial Intelligence (AI) is being adopted globally at an                       sufficiently large pool of items from which to create parallel versions
+unprecedented pace. ChatGPT alone reached 800 million weekly                           of tests to counteract item content becoming public online (Bißantz
+users by April 2025, achieving 90% of its current global user base                     et al., 2024). Designing assessments that reflect test takers’ funds of
+in just three years. In comparison, the Internet took over 23 years to                 knowledge and cultural backgrounds to enhance engagement, and
+reach the same level of global adoption (Meeker et al., 2025). Most                    performance is particularly challenging in traditionally developed
+importantly, its capabilities are still evolving. The Organisation                     assessments, due to rigid blueprints, administration conditions,
+for Economic Co-operation and Development (OECD, 2025)                                 and high development costs (Walker et al., 2023). Traditional test
+established an independent committee of experts, which estimated                       development is also at an increasing risk of assessing skills that
+that it has reached only about half of its full potential (OECD,                       humans routinely use machines to perform (Swiecki et al., 2022).
+2025). As AI continues to grow, finding ways to use it effectively                         To address these limitations, researchers have long proposed the use
+while reducing potential risks is a major focus for governments,                       of Automated Item Generation (AIG) and predicting item parameters
+researchers, and practitioners. Educational and psychological                          based on item attributes. AIG enables the creation of diverse item
+assessments are no exception as AI is transforming how tests are                       versions based on item templates, reducing item reuse and improving
+designed, delivered, and interpreted.                                                  cost efficiency (Bejar et al., 2002; Luecht, 2025). Similarly, statistical
+    Educational and psychological assessments are crucial for both                     modeling approaches have been recommended for decades to estimate
+individual and societal progress, as they support the identification                   item complexity by assigning a difficulty score based on item attributes,
+of needs and the monitoring of progress over time. However, as                         allowing developers to systematically predict item performance without
+emphasized in the Standards for Educational and Psychological                          relying on extensive field testing (Embretson, 1983, 1999; Sheehan &
+Testing jointly developed by the American Educational Research                         Mislevy, 1994; Sheehan et al., 2006). These analytical methods offer
+Association (AERA), the American Psychological Association                             the potential to streamline development by replacing large-scale pilot
+(APA), and the National Council on Measurement in Education                            studies with model-based predictions. However, it is only with recent
+(NCME), assessments must be relevant, valid, and fair to be effective                  technological advancements in generative and representational AI using
+(AERA, APA, & NCME, 2014). Historically, the improvement                               embeddings that these approaches are beginning to realize their full
+of these assessments has progressed alongside advances in                              operational potential (see Table 1 for key operational definitions).
+methodology and technology. For example, in the 20th century,                              In recent years, the automation of test content generation
+standardized testing provided a systematic method for evaluating                       has significantly streamlined the traditionally manual and costly
+the skills and knowledge of large populations (Sireci et al., 2025).                   development processes (Attali et al., 2022; Gierl & Haladyna, 2012; von
+Optical scanners later automated the scoring process, enhancing                        Davier et al., 2024). Automated scoring systems are now routinely used
+efficiency and reducing errors. Computer-adaptive testing (CAT)                        for evaluating constructed responses - a task that previously required
+advanced the measurement field by adjusting test difficulty based on                   human judgment (von Davier et al., 2022; Yamamoto et al., 2019).
+individual performance, optimizing the accuracy and relevance of                       When well-design prompts are used, large language models (LLM)
+assessments for each test-taker (Zenisky & Sireci, 2002).                              can enhance efficiency and quality over traditional automated item
+    Traditional test development followed a rigorous process that                      generation methods (Bezirhan & von Davier, 2023). LLMs can also be
+typically began with defining the assessment purpose and construct to                  used to obtain item parameters estimates prior to collecting empirical
+be measured, manually crafting assessment items, and refining them                     data (Feng et al., 2025; Guenole et al., 2024, 2025). AI technologies
+based on pilot studies and psychometric analysis (AERA et al., 2014;                   are helping to define and refine new constructs, like AI literacy,
+Downing & Haladyna, 2006; Lane et al., 2016; Muñiz & Fonseca-                          computational thinking, and prompt engineering, that are becoming
+Pedrero, 2019). While this systematic approach is still considered                     increasingly important in digital learning environments (European
+the gold standard for creating relevant, valid, fair measurement                       Commission, OECD, & Code.org., 2025). The use of AI enables the
+tools, it does have its drawbacks. Crafting assessment items                           development of innovative item formats such as interactive simulations,
+manually is time-consuming and often expensive, particularly when                      scenario-based assessments, and chat-based dialogues (Foster &
+done by experienced subject-matter experts (SMEs). Additionally,                       Piacentini, 2023). AI algorithms can be used to map assessment items
+if the assessments’ purpose and construct are innovative and                           to learning standards or curriculum frameworks, thereby assisting with
+groundbreaking such as AI literacy or prompt engineering, finding                      instructional alignment and reducing the burden on subject-matter
+the appropriate SMEs can be challenging, which limits accessibility                    experts (Butterfuss & Doran, 2025). AI supports adaptive testing
+for the broader research community (European Commission, OECD,                         and personalized learning paths that respond to individual learner
+& Code.org., 2025). Another common challenge is generating a                           characteristics (Arslan et al., 2024; Sireci et al., 2024; Suárez-Álvarez
+
+
+Table 1
+Key Definitions of AI-Driven Methods in Educational and Psychological Assessment
+           Name                                                 Description                                                           Example
+Generative AI (GenAI)         A class of AI models that can generate new content, such as text, images, or code, ChatGPT (OpenAI, 2023)
+                              based on learned patterns from data.
+Machine Learning (ML)         A subset of AI that enables systems to learn from data and improve performance on Neural Networks (von Davier, 2018).
+                              tasks without being explicitly programmed.
+Natural Language Processing A field of AI focused on enabling machines to understand, interpret, and respond Analyzing students’ written responses to assess problem-
+(NLP)                       to human language.                                                               solving strategies (Yaneva von & Davier, 2023).
+Large Language Model          A type of NLP model trained on massive text to generate and understand human- GPT-4 or Claude 3 Opus (OpenAI, 2023; Anthropic, 2024)
+(LLM)                         like language.
+
+
+
+
+   2
+                                                             GenAI in Modern Test Construction
+
+
+
+et al., 2024; Yan et al., 2024). Digital assessments also capture log           or AI that could help lower these development costs are of great
+(process) data, providing invaluable insights into test takers’ cognitive       interest to test creators. Traditionally, AIG has focused either on
+processes and engagement with tasks (He et al., 2021, 2023; Ulitzsch            non-verbal formats like visual matrix puzzles (Embretson, 1999),
+et al., 2023; Suárez-Álvarez et., 2022). Although log (process) data has        or on techniques resembling fill-in-the-blank exercises similar to
+primarily been used to refine estimates of test takers’ proficiencies (Pohl     MadLibs. Since then, GenAI has significantly transformed both
+et al., 2021; Wise et al., 2021), it can also be employed to identify item      reading and language assessment.
+attributes and predict item performance.                                            In Maas’s (2024) recent research, the team applied a fine-tuned
+    The goal of this paper is to summarize current best practices               Conditional Transformer Language (CTRL) model to generate
+in the applications of Generative AI in modern educational and                  English reading comprehension questions for educational purposes,
+psychological test construction, specifically focusing on item                  with a focus on controllability and alignment to classroom needs.
+generation and item calibration. These applications are emphasized              The model was trained on the Reading Comprehension dataset from
+because they offer significant benefits in terms of cost efficiency and         Examinations (RACE) and clustered latent traits to allow educators to
+scalability within educational and psychological assessments, and               specify desired question types, for example, cloze-style, title-related,
+they also present potential threats to reliability, validity, and fairness.     or general questions. The training helped improve the generation of
+Although these applications have been predominantly utilized by                 questions tailored to specific reasoning skills. The research found
+large corporations like Duolingo (von Davier et al., 2024), their               that while the fine-tuned model demonstrated promising results in
+adoption among the wider research and practitioner community                    generating relevant and contextual reading questions, challenges
+remains limited. The mission of this paper is to disseminate the                such as overfitting and maintaining consistency in generated outputs
+latest technological advancements to a broader audience, ensuring               remain. This required further refinement for practical classroom
+that these innovations benefit a diverse group and contribute to                adoption (Maas, 2024). Another study compared human-designed
+the development of a wide range of groundbreaking assessments.                  and AI-generated English reading comprehension materials, using
+Finally, a cautionary commentary is included, outlining strategies              tools like Twee and Kimi to generate multiple-choice questions
+to maximize the benefits of AI-driven methods in test construction              based on middle school materials. This research used mixed methods
+while minimizing potential risks.                                               by using both quantitative data and qualitative data to explore the
+                                                                                human-AI collaboration in comprehension questions generation.
+            Generative AI in Educational Assessment                             The results of the study showed that the AI tool was significantly
+                                                                                more time-efficient, requiring only a fraction of the time needed by
+    Generative AI (GenAI hereafter) has emerged as an innovative                the human teacher to complete the task, while generating material
+tool rapidly adopted across various professional fields, efficiently            of comparable quality, although the human was superior in terms
+managing repetitive and time-consuming tasks. Education assessment              of clarity, relevance, and consistency of the questions with the
+has been significantly transformed by these advancements, with                  educational objectives. The study also proved that AI tools can
+GenAI becoming a contemporary trend in education. AI facilitates                effectively complement teachers in content creation, enhancing
+interactive and authentic assessment formats, including simulations,            efficiency while requiring human guidance to ensure pedagogical
+virtual reality (VR) integration, and gamified learning experiences.            depth and appropriateness for classroom contexts (Jen et al., 2024).
+Automated grading and instant feedback reduce teachers’ workloads                   In addition to the Generative Pre-trained Transformer (GPT)
+while enabling personalized learning experiences (Mao et al., 2024).            model, widely used for text generation through applications like
+Educational chatbots, also known as educational conversational                  ChatGPT, the BERT model, which underlies Google’s search engine
+agents (ECAs), are designed to assist teachers, enhance students’               capabilities, has also been widely discussed. For example, Kumar’s
+learning processes, and evaluate their performance (Chang et al.,               study combined GPT and BERT in a two-stage architecture to
+2023). Some chatbots are student-oriented, serving as personalized              improve the coherence and contextual accuracy of automated text
+learning assistants that guide students to answers, evaluate their              generation. Before training, the team preselected models from
+responses, and foster engagement (Kuhail et al., 2023). Others are              GPT, Large Scale Decision-Making (LSDM), and Gated Recurrent
+tailored to support teachers by preparing class materials, managing             Units (GRU) and finally selected GPT as the text generation model.
+course schedules, and tracking deadlines (Ramandanis et al., 2023).             After fine-tuning the model with metrics like Bilingual Evaluation
+The applications of GenAI are widely utilized across various                    Understudy (BLEU) Score and perplexity to gauge the model’s
+subjects, adapting to different educational formats and needs. In this          performance, the combined model outperformed the single model
+section we describe emerging methods in educational assessments                 across various tasks like question-answering and summarization.
+that leverage GenAI for Automated Item Generation (AIG) and                     The research indicated the potential of combining several models
+summarize current best practices for implementing them.                         for better AI-driven content creation for future diverse applications
+                                                                                (Kumar et al., 2024). GenAI chatbots were also powerful tools
+Automated Item Generation (AIG)                                                 for language learning and adaptive questions generation during
+                                                                                the learning process. Yang et al. (2022) implemented Ellie, a
+   Automated item generation (AIG) has long been a subject of                   task-based AI voice chatbot, to support Korean EFL students in
+study in employment and educational assessments (Bejar et al.,                  practicing English speaking. The chatbot fostered meaningful
+2002). Creating test questions—especially for medical licensing                 conversations and achieved high task success rates, with students
+and certification—requires significant time and financial resources             positively perceiving it as a fun and effective learning tool despite
+because it depends on expert input for writing scenarios and crafting           some technical and comprehension challenges. The results highlight
+credible answer choices. Technologies like machine learning                     the potential of AI chatbots to enhance language education while
+
+
+
+
+                                                                                                                                                   3
+                                                        Suárez-Álvarez et al. / Psicothema (2026) 38(1) 1-12
+
+
+
+recommending further development to address usability issues and                     readability indices: Average Reading Level Consensus, Automated
+expand application scope (Yang et al., 2022). Von Davier (2018)                      Readability Index (Smith & Senter, 1967), Flesch-Kincaid Grade
+used a recurrent neural network (RNN) trained on 3,000 test                          Level (Kincaid et al., 1975), and SMOG Index (McLaughlin, 1969).
+items from the International Personality Item Pool (IPIP) database                   Contrary to expectations, the results revealed minimal distinction
+(Goldberg, 1999), which shows the initial framework of modern test                   between grades—approximately 75% of the passages exhibited
+design with a collaboration between human and AI.                                    similar readability scores, making them indistinguishable in terms
+    Earlier studies noticed that due to limitations in models and data,              of grade-level appropriateness.
+practical AI-driven AIG was still far off, though the models have                        Inconsistencies such as these can introduce substantial variability
+been well developed with machine learning techniques. However,                       in model performance. Moreover, training on biased or misaligned
+as previously noted, the field advanced rapidly when researchers                     data risks reinforcing and amplifying those biases in model outputs.
+replaced recurrent networks with self-attention-based architectures                  This is especially concerning when employing general-purpose pre-
+(Vaswani et al., 2017), enabling simpler designs that support parallel               trained models, where human oversight becomes essential to ensure
+training and allow models to be pre-trained on broad text data before                cultural relevance, fairness, and appropriateness.
+being adapted to specific tasks.                                                         To address these challenges and construct a clearly defined,
+                                                                                     representative training set, we collaborated closely with item
+Real-World Example: NAEP Reading Passage Generation                                  developers. Together, we identified and selected six prototypical
+                                                                                     passages for each grade to serve as the foundation for model
+   To illustrate how GenAI can support item development, we                          training. Figure S1 (Supplementary Material) shows the results
+present an example from the U.S. National Assessment of Educational                  from four readability metrics before and after the selection process.
+Progress (NAEP) focused on the generation of reading passages.                       It apparently shows a smaller variance after the careful selection
+This process includes ensuring high-quality and consistent training                  for training data. This more accurate training set significantly
+data, evaluating multiple AI models for performance and reliability,                 contributes to the accuracy of AI generation results. It is noted that
+applying standardized validation metrics, and collecting response                    AI generated results kept at the comparable level as the training set
+samples to test and refine newly generated items (Figure 1).                         index results. The Fleisch Kincaid Grade Level index consistently
+                                                                                     showed the lowest value of readability compared with their peers.
+Figure 1
+                                                                                         NAEP reading passage generation findings indicate that AI-
+Cyclical Framework for Generative AI-Based Test Development
+                                                                                     generated nonfiction passages demonstrate a significantly higher
+                                                                                     difficulty level than fiction passages. This discrepancy likely
+                                                                                     stems from the inherent variability and creative divergence of
+                                                                                     fiction writing, which contrasts with the more structured nature
+                                                                                     of nonfiction texts. Figure S2 (Supplementary Material) presents
+                                                                                     AI-generated fiction and nonfiction passages for Grade 4. While
+                                                                                     the nonfiction passages exhibit relatively higher readability scores
+                                                                                     across all indices—suggesting a level above Grade 4—the fiction
+                                                                                     passages more closely match the required difficulty range.
+                                                                                         To improve the performance of AI in generating fiction content,
+                                                                                     augmenting the input prompts has shown promise. For example,
+                                                                                     including explicit labels such as “fiction” or “nonfiction” during training,
+                                                                                     and emphasizing genre-specific textual features in the prompts, can help
+                                                                                     guide the AI towards producing passages more consistent with training
+                                                                                     expectations. These refinements contribute to marginal improvements
+                                                                                     in readability scores and better alignment with task design.
+                                                                                         In this example, we trained AI models using LLMs implemented
+                                                                                     in ChatGPT, Meta AI, and Claude to generate 40 new passages
+                                                                                     for Grade 4 and Grade 8 respectively. The readability of these
+                                                                                     AI-generated passages was reassessed to determine whether they
+                                                                                     matched the target grade levels. To enhance generation quality, we
+                                                                                     employed an iterative approach to prompt engineering. Initially, we
+                                                                                     provided a general description of key differences between Grade
+   A recent analysis of NAEP reading tasks revealed inconsistencies                  4 and Grade 8 reading levels, including vocabulary complexity,
+in readability scores across the training data. We curated reading                   sentence structure, and word count. Our preliminary prompts led
+passages from NAEP-released items spanning Grades 4 and 8,                           to AI-generated passages that mimicked these linguistic features
+covering the years 1992 to 2020. To maintain consistency in item                     but did not consistently align with expected readability index score
+design, we focused exclusively on text-based passages paired with                    ranges. To refine the process, we revised our prompts by explicitly
+multiple-choice questions, deliberately excluding content that                       quantifying readability standards, detailing the significance of
+incorporated tables or figures. This process yielded 24 passages for                 readability indices, and explaining how they are calculated. This
+Grade 4 and 23 passages for Grade 8. To assess the difficulty level                  structured approach improved alignment with actual readability
+and establish a robust base sample, we applied four widely accepted                  levels. Among the three AI tools, ChatGPT demonstrated the most
+
+
+
+
+  4
+                                                          GenAI in Modern Test Construction
+
+
+
+effective performance in passage generation, particularly when               within the same readability grade level. This guideline aligns with
+utilizing customized GPT functions. The language in the reading              and extends general guidance on evidence for test validation (Sireci
+passage generated from ChatGPT shows richer descriptions and is              & Benítez, 2023) specifically to AI-based assessments.
+highly consistent with the grade level indexes.
+    As pointed out earlier, we used the consistent evaluation method         5. Verify and Validate AI-Generated Items
+by using the four readability indicators. This evaluation standard is
+unchanged between human and AI generated items. As Figure S2                     While collecting new human response data to evaluate freshly
+(c) shows (Supplementary Material), the language in the reading              generated items is the most rigorous validation approach, it may not
+passage generated from ChatGPT shows richer descriptions and is              always be feasible due to cost and time restriction. In AI contexts,
+highly consistent with the grade level indexes.                              “verification” often denotes confirming that AI systems are working
+    Finally, we invited human item developers to help validate the           correctly internally before submitting them for validation scrutiny.
+generated items by giving multiple dimensions and calculated the             This involves checking that AI algorithms generate items as
+consistency. Though there was no real data collected to validate the         intended, free from technical errors, bias, or unintended patterns,
+items, the experienced human developers give a relatively objective          which creates an additional layer addressing the “black box” nature
+evaluation. In the future study, it is highly recommended to consider        of AI compared to traditional assessment development. For example,
+using simulated data and/or new sample data collection to make a             consider using AI-simulated data to calibrate item parameters and
+further validation on the passages.                                          compare them with the training set (e.g., through Differential Item
+                                                                             Functioning analysis), or apply NLP techniques to measure semantic
+Practical Guide for Generative AI-Based Test Development                     distance between AI-generated items and the original dataset to
+                                                                             ensure content alignment and diversity.
+    This section provides a practical guide (Table 2) for developing
+tests using GenAI, aimed at maximizing relevance, validity, and                          Generative AI in Psychological Assessment
+fairness throughout the test construction process.
+                                                                                 GenAI is increasingly applied in psychological assessment and
+1. Ensure Consistency and Quality in Training Data                           practice, with examples ranging from enhancing diagnostic accuracy
+                                                                             and therapeutic interventions in clinical psychology (De la Fuente
+    Ensuring the quality of the training dataset is essential for            & Armayones, 2025) to using ChatGPT as a simulated patient to
+conveying accurate information during the learning process. All              support interactive training and skill development (Sanz et al., 2025).
+materials must undergo rigorous review to confirm the inclusion of           Recent advances in Representational AI using embeddings and
+high-quality items before they are used for AI training (AERA et al.,        GenAI have led to novel approaches in psychological assessment,
+2014; Downing & Haladyna, 2006; Lane, Raymond, & Haladyna,                   offering alternatives to traditional self-report methods and enhancing
+2016; Muñiz & Fonseca-Pedrero, 2019). This step is vital to support          item development, and validation. Generative models (decoders)
+critical learning and clear representation of labels in the model.           help create text, such as test items, while representational models
+                                                                             (encoders) convert text into numerical formats (embeddings) for
+2. Align AI Use with Intended Uses and Task Type                             analysis. This approach offers a promising way to modernize and
+                                                                             improve measurement in psychology (Wulff & Mata, 2025). These
+    When using AI for item generation, it is essential to consider           embeddings can be used in methods like Pseudo Factor Analysis
+both the intended use and the nature of the task. AI models tend to          (PFA) to explore psychological constructs and address issues such
+excel at rule-based or logic-driven tasks, yet they often struggle with      as overlap between scales (Guenole et al., 2025). On the other
+fiction and emotionally nuanced content. Tasks that require complex          hand, Large Language Models (LLMs) such as GPT-4o and Claude
+human emotion or creativity typically demand additional validation           3 can be used to predict correlations between personality items
+to ensure quality and appropriateness.                                       more accurately than human experts (Schoenegger et al., 2025).
+                                                                             Another application comes from Fan et al. (2023), who examined
+3. Compare Multiple AI Models for Reliability                                the psychometric properties of personality scores inferred by AI
+                                                                             chatbots. These scores, derived from users’ free-text input during
+   To ensure consistent and reliable outcomes, it is highly                  conversational interactions, showed acceptable reliability and
+recommended to employ at least two AI models and carefully evaluate          convergent validity but limited discriminant and criterion-related
+their performance. Comparing outputs, such as those from ChatGPT             validity. Yuan et al. (2024) examined how users perceive personality
+and the Claude model, can help identify discrepancies, assess                scores generated by AI chatbots compared to traditional self-report
+robustness, and improve the overall quality of generated items.              questionnaires. While users found both methods similarly satisfying
+                                                                             and accurate, they tended to view the survey-based results as more
+4. Apply a Standardized Validation Approach                                  trustworthy, likely due to their greater familiarity and simplicity. Sun
+                                                                             et al. (2024) presented a framework for developing and validating an
+    Use a consistent evaluation index to assess both training and AI-        AI chatbot based on the Big Five personality model. They emphasize
+generated outputs. This ensures alignment with baseline standards            the chatbot’s ability to elicit rich, narrative responses aligned with
+and allows for meaningful performance comparisons. Treat AI-                 psychological constructs and report improved validity outcomes
+generated responses as those from a “human” rater to calculate inter-        compared to existing tools. In this section we describe emerging
+rater agreement. For example, by verifying whether passages fall             methods in psychological assessment that leverage LLMs for scale
+
+
+
+
+                                                                                                                                                5
+                                                  Suárez-Álvarez et al. / Psicothema (2026) 38(1) 1-12
+
+
+
+construction. We discuss item generation, how to check semantic                At the heart of PFA is the “substitutability assumption”, or the idea
+item alignment, and PFA.                                                       that the embedding vector for an item statement can stand in for an
+                                                                               empirical response vector. This involves forming a cosine similarity
+Item Generation, Semantic Item Alignment, and Pseudo                           matrix between the item embeddings from the previous step, and
+Factor Analysis (PFA)                                                          factor analyzing the matrix in essentially the same way that a
+                                                                               correlation matrix of real item responses is analyzed.
+    When designing a new assessment, conceptual clarification of
+how the construct is similar to and different from related constructs          Real-World Example: Moral Foundations Scale Calibration
+is an important step. This can occur qualitatively using subject matter
+experts before data are collected, but LLMs present the possibility                As in the previous section, we use a real-world example to
+to approach this task analytically with sentence encoders. A sentence          illustrate how GenAI can support AI-based item calibration. This
+encoder is a transformer-based model trained on text to produce                section focuses on the design of a measure targeting executive
+highly dense numerical representations of sentences in vector                  moral foundations (Graham et al., 2009). Moral foundations are
+form. These representations are commonly known as embeddings.                  important for senior executives because they make decisions that
+Association measures such as cosine similarity can be used to                  affect many workers, and these decisions are frequently evaluated
+compare the similarities of embeddings created from construct                  in moral terms. Moral foundations are conceptually distinct from
+definitions. This allows practitioners to determine the constructs’            familiar industrial psychology constructs, yet they are infrequently
+semantic positions in a nomological network, in turn allowing us to            included in executive assessment processes. We propose a new
+move to item generation.                                                       moral foundations scale using AI. We show that when our proposed
+    One of the most important requirements is designing effective              pipeline is followed (Figure 2), PFA can be an effective data-less
+instructions for the AI, known as prompt engineering, to ensure                method for obtaining item pre-knowledge in scale development.
+the output aligns with your goals while minimizing hallucinations              We also discuss the challenges relevant to PFA including assessing
+and misinterpretations. Prompt engineering with few constraints                model fit without sample sizes using raw residuals. We begin our
+on instructions leads to direct item generation, where we instruct             analysis pipeline after we have generated items. More details on the
+the LLM to generate items measuring the focal construct without                item generation process itself are available in Guenole (2025).
+restrictions. We can also use guided item generation methods, where
+we provide detailed instructions about item requirements, such as              Figure 2
+                                                                               Analytical Pipeline for Generative AI-Based Item Calibration
+construct definitions, item templates, and other constraints necessary
+such as item polarity (Ferrando et al., 2025). Whether direct or guided
+item generation is used, we can provide or omit example items in the
+LLM prompt. If no item examples are given, the approach is zero-
+shot prompting, giving less control over the items that are created. If
+we do give examples, we refer to the method as few-shot prompting,
+which grounds the model in the task context.
+    Despite giving instructions regarding item features, generated
+items might not always match our criteria. Quality checks can be
+implemented as constraints during the item generation process itself.
+Alternatively, items might be checked with a prompting approach
+post generation. If the number of items is small (e.g. several hundred
+or fewer) it is feasible to check these manually and ultimately all
+items should be human reviewed. As suggested in the educational
+assessment section, LLMs can also be used to check semantic
+item alignment with construct definitions. To check semantic item                 To prepare items for analysis, we first prepared a file of our moral
+alignment, encodings are generated between the items and the                   foundations’ items (Supplementary Material: factor.csv). We used the
+construct definitions, and the cosine similarities are calculated.             MiniLM sentence encoder to generate embeddings of these items in
+Items should have high similarities with their parent constructs and           a Jupyter notebook (matrix_generation.ipynb). The notebook uses
+low similarities with non-parent constructs. High and low here do              MiniLM to convert each item into a numerical representation called
+not have fixed values, item parent similarities and item non-parent            an embedding, which captures the semantic meaning of the item. Each
+similarities need to be interpreted relative to one another.                   embedding has hundreds of numbers (dimensions), and the notebook
+    With items generated and pre-screened via semantic item                    organizes these into columns (one column per dimension). The
+analysis, the factor structure of the items can be examined before             notebook calculates how similar each item embedding row is to every
+responses data are collected with PFA. Similar to traditional factor           other item, creating a similarity matrix, much like how you’d calculate
+analysis, PFA allows for different degrees of prior expectations               correlations between item responses. The output matrix (matrix.csv)
+through the use of target rotation. This flexibility enables both              can then be prepared for factor analysis by setting any diagonals that
+fully exploratory analyses, with no prior assumptions, and semi-               are less than one due to rounding errors to 1, as they are in a correlation
+confirmatory approaches to examine how items group and cluster.                matrix (matrix.csv). Early theorizing about why this approach works
+
+
+
+
+  6
+                                                           GenAI in Modern Test Construction
+
+
+
+rests on a substitutability assumption (Guenole et al. 2025). This is             Critically, we do not yet present empirical relations with actual
+the notion that a numerical item embedding can substitute for an              factor loadings from participant responses, and this is always an
+empirical item response vector under certain conditions.                      important step. Earlier work by Guenole et al. (2025) shows that
+    Next, a factor analysis can be performed on the similarity matrix         pseudo factor loadings are related to empirical loadings, but this is an
+in R (pfa.R) using any extraction and rotation method. Maximum                important next step for the executive moral foundations assessment.
+likelihood estimation with oblique rotation, which allows the                 We also note while the pseudo and empirical loadings themselves
+resulting factors to be related to each other, have been shown to             have been shown to be highly correlated. The pseudo factor loadings
+work well in earlier work. The output includes familiar results               do not yet differentiate reverse keyed items in the way conventional
+from traditional factor analysis, such as eigenvalues, a scree plot,          items do, because cosine similarities between embeddings tend to
+and a pattern loading matrix showing which items load onto which              be positive. Nonetheless, it is still critical to compare pseudo factor
+factors. While we present the factor analysis for the final item set,         structures derived from embeddings with empirical factor structures
+we intentionally included about twice as many items as we intended            based on human responses. Ultimately, the empirical factor structure
+to keep. This gave us the flexibility to run several rounds of analysis,      remains the gold standard. Once empirical data are available,
+removing items that didn’t load well on any factor or that cross-             alignment between models can be assessed using quantitative
+loaded on multiple factors. After each round of removal, we updated           metrics such as Tucker’s congruence coefficient (values > .85
+the matrix and repeated the analysis to refine the item set. The items,       indicate fair similarity; > .95 indicate strong alignment) and
+embedding code, and R code to produce the final factor model are              correlation coefficients between corresponding factors (Guenole et
+included in Supplemental Materials.                                           al., 2025). Readers may also wish to explore alternative approaches
+    Most methods conventionally used to decide on item retention              to assessing item dimensionality and discrimination through
+in the context of EFA can be used with PFA. In the current example            embedding-based network models (Russell-Lasalandra et al., 2024).
+we soon discuss, we proposed ensuring that items have their highest
+loading on their parent factor; that this loading is higher than its          Practical Guide for Generative AI-Based Item Calibration
+loading on any other factor; that this loading is higher than its
+average loading across all other factors; and that its loading is higher         This section provides a practical guide (Table 2) for item
+than the average of all other item loadings on that factor. From the          calibration using GenAI, aimed at maximizing relevance, validity,
+pattern matrix in Table S1 (Supplementary Materials) we see that this         and fairness throughout the test construction process.
+is the case for most items of the newly developed executive moral
+foundation scale. From the scree plot in Figure S3 (Supplementary             6. Use Sentence Encoders to Establish Semantic Construct
+Materials), we see that six factors are plausible, which in fact was          Validity
+the expectation at the outset.
+    One important point about this approach is that the factor analysis           Before item generation, clarify how the target construct is similar to
+is based on the embedding similarities rather than human responses            or distinct from related constructs. By comparing the semantic similarity
+and therefore there is no sample size. Sample sizes are required              of construct definitions within a nomological network, developers can
+for many model-based fit tests and indexes. It is not recommended             validate construct boundaries early in the design process, improving
+to simply assume an arbitrarily large sample size, because model              alignment and focus on subsequent item development.
+fit statistics are influenced by sample size and the correct sample
+size is required. In this case, we recommend using model free and             7. Apply Prompt Engineering Strategies for LLM-Based Item
+exploratory approaches to checking model fit based on interpreting            Generation
+the raw residuals. There are several exploratory approaches that might
+be useful depending on the goal and we describe these here now.                   When generating non-cognitive assessment items with LLMs,
+    We first plot a heat map of the residual correlations. What we            use prompt engineering strategies that match the desired level of
+hope to see is that most residual correlations are white indicating           control. Guided prompts with examples (few-shot) offer greater
+they are near zero. We do not want to see any obvious patterns with           precision, while minimal prompts without examples (zero-shot)
+blocks of blue or red indicating systematically low or high residual          allow more creativity but less control. The choice should reflect the
+correlations between the items after conditioning on the latent               specificity and psychometric standards required for the assessment.
+factors. In Figure S4 (Supplementary Materials) we see this is mostly
+the case. We might also plot the distribution of off-diagonal elements        8. Conduct Semantic Item Alignment to Ensure Construct
+of the residual correlation matrix, expecting to see relatively small         Relevance
+residuals with few outliers. Again, this appears mostly the case in
+Figure S5 (Supplementary Materials). Finally, we may choose to                   To ensure AI-generated items align with the intended construct,
+plot the original versus the residual correlations. Ideally, we would         apply semantic alignment checks either during or after item generation.
+see a horizontal band of residuals clustered around zero, which is            This can involve manual review or LLM-based methods, such as
+broadly what we see in Figure S5 (Supplementary Materials). We                calculating cosine similarity between item and construct embeddings.
+also calculated the Root Mean Square Residual (.037) and the                  Items should show relatively higher similarity to their target construct
+Common Part Accounted for (CAF, Lorenzo-Seva et al., 2011) (.87)              than to unrelated ones, guiding item selection and refinement.
+which are both indicative of good fit.
+
+
+
+
+                                                                                                                                                   7
+                                                          Suárez-Álvarez et al. / Psicothema (2026) 38(1) 1-12
+
+
+
+9. Use Embedding-Based Factor Analysis with Iterative                                  is essential to understand their limitations (Bulut et al., 2024; Dixon-
+Refinement for Item Selection                                                          Roman, 2024; Dumas, Greiff, & Wetzel, 2025; Hao et al., 2024; Ho,
+                                                                                       2024; Yan, Greiff et al., 2024; Swiecki et al., 2022).
+    To evaluate AI-generated items, convert item text into                                 The following section summarizes current limitations of AI-based
+embeddings using an LLM and analyze the resulting similarity                           methods for test construction, organized into four key areas: validity
+matrix with factor analysis. Begin with a large item pool to allow for                 (explainability), reliability (consistency, and generalizability),
+iterative refinement, removing items with weak or cross-loadings.                      fairness (training data quality), and data security and privacy. Each
+Assign items to factors using systematic criteria based on loading                     issue is linked to specific guidelines to support implementation.
+strength and distinctiveness. Ensure the process is transparent and                    However, given the conceptual and practical overlap among these
+reproducible using shared data and code.                                               issues and the guidelines to address them, some level of interaction
+                                                                                       between them is to be expected.
+10. Use Model-Free Exploratory Techniques to Evaluate Fit in
+Embedding-Based Factor Analysis                                                        Validity and the “Black Box” Problem
+
+   When factor analyzing item embeddings without response data,                            One of the most pressing validity concerns is the lack of
+traditional fit indices can’t be used due to the lack of a sample size.                transparency in how large AI models make predictions, a challenge
+Instead, apply model-free exploratory methods such as heatmaps                         often referred to as the black box problem. Unlike theory-driven
+of residual correlations, distributions of off-diagonal residuals, and                 methods grounded in Karl Popper’s falsifiability principle, where
+plots comparing original to residual correlations to assess whether                    a scientific theory must be testable and subject to empirical
+the latent structure fits the data well.                                               disconfirmation, data-driven AI models do not typically allow
+                                                                                       for such scrutiny. While these models can serve valuable roles in
+Table 2                                                                                educational and psychological measurement, the absence of a clear
+Practical Guide to Generative AI–Based Test Development and Calibration
+                                                                                       theoretical foundation increases the risk of speculative or spurious
+       Generative AI-Based                                                             conclusions. Rather than discarding theory when confronted with
+                                                    Guidelines
+          Application
+                                                                                       data inconsistencies, we argue for refining theoretical frameworks
+                                   1. Ensure Consistency and Quality in
+                                   Training Data                                       using advanced methodologies. Empirical inquiry should be guided,
+                                   2. Align AI Use with Intended Uses and Task         and at minimum verified, by theory, not divorced from it.
+                                   Type                                                    Furthermore, Explainable Artificial Intelligence (XAI) aims to
+Test Development                   3. Compare Multiple AI Models for
+                                                                                       make AI models more transparent and interpretable, addressing
+                                   Reliability
+                                   4. Apply a Standardized Validation Approach
+                                                                                       concerns related to model opacity and validity (Samek et al.,
+                                   5. Verify and Validate AI-Generated Items
+                                                                                       2017). By providing clear and understandable explanations of
+                                   6. Use Sentence Encoders to Establish               how decisions are made, XAI helps build trust and facilitates
+                                   Semantic Construct Validity                         validation, particularly in high-stakes domains. This approach has
+                                   7. Apply Prompt Engineering Strategies for          shown promising results in healthcare, improving both clinician
+                                   LLM-Based Item Generation                           understanding and patient outcomes (Doshi-Velez & Kim, 2017;
+                                   8. Conduct Semantic Item Alignment to               Holzinger et al., 2019). Given these successes, there is growing
+Item Calibration                   Ensure Construct Relevance
+                                                                                       interest in applying XAI techniques to the educational (Khosravi et
+                                   9. Use Embedding-Based Factor Analysis
+                                   with Iterative Refinement for Item Selection        al., 2022) and psychological fields (Joyce et al., 2023) to enhance
+                                   10. Use Model-Free Exploratory Techniques           the interpretability and acceptance of AI-driven assessment tools.
+                                   to Evaluate Fit in Embedding-Based Factor           Our current efforts focus on adapting XAI methods to support
+                                   Analysis                                            transparent and valid test development processes.
+                                                                                           Guideline 4 directly addresses the validity concern by establishing
+            Maximizing Benefits While Reducing Risks                                   systematic methods for evaluating whether AI-generated outputs
+                                                                                       align with intended constructs. It helps make the AI’s decision-
+    As public trust and engagement in standardized testing declines                    making process more interpretable and transparent, reducing the
+(Borgonovi & Suárez-Álvarez, 2025; Suárez-Álvarez et al., 2024),                       “black box” nature of the model. Guideline 5 supports construct
+AI-driven methods, such ML, NLP, and LLM (see Table 1 for                              validity by ensuring that the generated items are actually measuring
+definitions), are being increasingly applied to optimize traditional                   what they are intended to measure. Through expert review, semantic
+measurement approaches (Hao et al, 2024; Yaneva & von Davier,                          alignment, or empirical validation, this step helps mitigate the opacity
+2023). While these innovations offer important gains in efficiency,                    of the model’s outputs. Guideline 6 helps clarify how constructs
+cost, and scalability, there is a risk that, without also addressing                   are defined and differentiated prior to item generation, enhancing
+broader concerns of trust, equity, and relevance, educational and                      conceptual transparency. Guideline 8 ensures that generated items
+psychological measurement may become increasingly disconnected                         align with the intended construct, providing a data-driven check on
+from evolving scientific standards, societal needs, and ethical                        construct representation. Finally, Guideline 9 offers a framework
+principles (Burstein et al., 2025; Johnson et al., 2025; Walker et                     for analyzing the dimensionality of AI-generated items, thereby
+al., 2023). Therefore, to fully harness the benefits of technological                  supporting construct validity through empirical evidence.
+innovations like AI in promoting individual and societal progress, it
+
+
+
+
+   8
+                                                           GenAI in Modern Test Construction
+
+
+
+Reliability and the “Hallucination” Problem                                   with privacy regulations, avoiding the use of open-access consumer
+                                                                              AI tools that may reuse input data (such as ChatGPT’s free version),
+   Another major threat is (un)reliability. AI models can produce             and using secure environments for storing and processing both
+errors, respond inconsistently to identical prompts, and struggle             training data and AI-generated content. Effective governance also
+with abstract reasoning, logical inference, or unfamiliar content,            involves transparency in how data are handled and ensuring that
+issues commonly referred to as hallucinations. Although Guidelines            personal or confidential educational data are not inadvertently
+2 and 3 are intended to mitigate these risks by encouraging task-             exposed or misused.
+model alignment and multi-model comparisons, consistent human
+verification remains essential (see also Guidelines 4 and 5).                 Concluding Remarks
+   Guideline 7 recommends using prompt engineering strategies
+that align with the intended purpose to structure, and guide                      GenAI holds great promise for transforming assessments by
+prompts effectively. This approach reduces variability, increases             enabling faster, more adaptive, and scalable test development.
+the consistency of AI-generated items, and is also expected to                Techniques like embedding-based item evaluation can streamline
+enhance validity. Guideline 9 advises applying embedding-based                early test design and reduce costs, helping bridge the gap between
+factor analysis iteratively to identify and remove items with weak or         semantic AI models and traditional psychometric practices
+inconsistent loadings, thereby enhancing item stability and internal          (Guenole et al., 2025; Russell-Lasalandra et al., 2024). However,
+consistency. Finally, Guideline 10 encourages the use of model-free           these innovations must be implemented with caution. Risks such
+exploratory techniques to empirically assess internal consistency             as academic misconduct, technical vulnerabilities, and disciplinary
+and dimensional coherence. These methods help identify unreliable             skepticism highlight the need for thoughtful integration (Alasadi
+or poorly fitting items and support improvements to both internal             et al., 2023; Dolenc et al., 2024; Farrelly et al., 2023; Wang et al.,
+consistency and the underlying structure of the scale.                        2023). Crucially, the effectiveness of AI-based tools depends on their
+                                                                              alignment with core psychometric principles. Without clear evidence
+Fairness and the “Alignment Gap”                                              of reliability, validity, and fairness, even the most advanced systems
+                                                                              remain superficial. Moving forward, assessment professionals must
+    Fairness is compromised when pre-trained models, such as                  balance innovation with rigorous empirical standards and ethical
+those behind ChatGPT, are used without scrutiny of the cultural               safeguards to ensure responsible use of GenAI.
+responsiveness of their training data. This alignment gap reflects
+a disconnect between model training and intended test use. When                                       Authors Contributions
+sufficient task-specific data are available, Guideline 1 recommends
+training models directly on curated, high-quality content. However,              Javier Suárez-Álvarez: Conceptualization, Writing - Original
+when relying on general-purpose pre-trained models, extreme                   draft. Qiwei He: Conceptualization, Writing - Original draft. Nigel
+caution is warranted. Human oversight and review are essential to             Guenole: Conceptualization, Software, Writing - Original draft.
+ensure cultural relevance and appropriateness (see Guidelines 4               Damiano D’Urso: Software, Writing - Review & editing
+and 5). Our approach maintains a clear boundary between AI-based
+assessments and the ultimate decision-making responsibilities of                                               Funding
+psychologists and educators, reinforcing that AI serves as an aid
+rather than a substitute.                                                        This research did not receive any specific grant from funding
+    Guideline 6 also aims to ensure that constructs are clearly               agencies in the public, commercial, or not-for-profit sectors
+defined and culturally grounded, helping to reduce the risk of biased
+construct representation. Guideline 8 recommends systematically                                       Declaration of Interests
+evaluating whether items accurately reflect the target construct
+across diverse populations. Additionally, Guideline 7 supports                    The author(s) declare(s) that there is no conflict of interest
+greater control over content generation by incorporating constraints
+that promote inclusivity and cultural responsiveness.                                              Data Availability Statement
+
+Data Security and Privacy                                                        Supplementary material for this article is available
+                                                                              online in the following link: https://osf.io/fvzyx/?view_
+   Although not directly related to validity, reliability, and fairness,      only=27238879597b42f984ec7e7b2c721041
+data privacy and security are crucial ethical considerations.
+Consumer-facing tools like ChatGPT may use submitted prompts                                                  References
+and generated responses to further train their models. This poses risks
+when test content or sensitive data are entered into such platforms.          Alasadi, E. A., & Baiz, C. R. (2023). Generative AI in education and research:
+Also, the legal and ethical aspects of content ownership generated               Opportunities, concerns, and solutions. Journal of Chemical Education,
+by AI warrant future discussion to inform policy and practice.                   100(8), 2965–2971. https://doi.org/10.1021/acs.jchemed.3c00323
+   This issue is addressed through strong data governance practices           American Educational Research Association, American Psychological
+that ensure sensitive information used in AI-assisted test construction          Association, & National Council on Measurement in Education.
+is protected throughout the development process. This includes                   (2014). Standards for educational and psychological testing. American
+establishing clear protocols for data access, ensuring compliance                Educational Research Association.
+
+
+
+
+                                                                                                                                                       9
+                                                       Suárez-Álvarez et al. / Psicothema (2026) 38(1) 1-12
+
+
+
+Anthropic. (2024). Claude 3 Opus [Large language model]. https://www.               Dumas, D., Greiff, S., & Wetzel, E. (2025). Ten guidelines for scoring
+   anthropic.com                                                                       psychological assessments using artificial intelligence [Editorial].
+Arslan, B., Lehman, B., Tenison, C., Sparks, J. R., López, A. A., Gu,                  European Journal of Psychological Assessment, 41(3), 169–173.
+   L., & Zapata-Rivera, D. (2024). Opportunities and challenges of                     https://doi.org/10.1027/1015-5759/a000904
+   using generative AI to personalize educational assessment. Frontiers             Embretson, S. (1983). Construct validity: Construct representation versus
+   in Artificial Intelligence, 7, 1460651. https://doi.org/10.3389/                    nomothetic span. Psychological Bulletin, 93(1), 179–197. https://doi.
+   frai.2024.1460651                                                                   org/10.1037/0033-2909.93.1.179
+Attali, Y., Runge, A., LaFlair, G. T., Yancey, K., Goodwin, S., Park, Y., &         Embretson, S. E. (1999). Generating items during testing: Psychometric
+   von Davier, A. A. (2022). The interactive reading task: Transformer-                issues and models. Psychometrika, 64(4), 407-433.
+   based automatic item generation. Frontiers in Artificial Intelligence, 5,        European Commission, OECD, & Code.org. (2025, May). Empowering
+   903077. https://doi.org/10.3389/frai.2022.903077                                    learners for the age of AI: An AI literacy framework for primary and
+Bejar, I. I., Lawless, R. R., Morley, M. E., Wagner, M. E., Bennett, R. E., &          secondary education (Review draft). https://www.oecd.org/digital/
+   Revuelta, J. (2002). A feasibility study of on‐the‐fly item generation in           empowering-learners-ai-literacy-framework
+   adaptive testing. ETS Research Report Series, i-44.                              Fan, J., Sun, T., Liu, J., Zhao, T., Zhang, B., Chen, Z., … Hack, E. (2023,
+Bezırhan, U., & von Davier, M. (2023). Automated reading passage                       January 5). How well can an AI chatbot infer personality? Examining
+   generation with OpenAI’s large language model. Computers and                        psychometric properties of machine-inferred personality scores.
+   Education: Artificial Intelligence, 5, 100161. https://doi.org/10.1016/j.           PsyArXiv. https://doi.org/10.31234/osf.io/pk2b7
+   caeai.2023.100161                                                                Farrelly, T., & Baker, N. (2023). Generative artificial intelligence:
+Bißantz, S., Frick, S., Melinscak, F., Iliescu, D., & Wetzel, E. (2024). The           Implications and considerations for higher education practice. Education
+   potential of machine learning methods in psychological assessment                   Sciences, 13(11), 1109.
+   and test construction. European Journal of Psychological Assessment,             Feng, W., Tran, P., Sireci, S., & Lan, A. S. (2025). Reasoning and sampling-
+   40(1), 1–4. https://doi.org/10.1027/1015-5759/a000817                               augmented MCQ difficulty prediction via LLMs. In A. I. Cristea, E.
+Borgonovi, F. & Suárez-Álvarez, J (2025). How can adult skills assessments             Walker, Y. Lu, O. C. Santos, & S. Isotani (Eds.), Artificial intelligence
+   best meet the demands of the 21st century?. OECD Social, Employment                 in education. AIED 2025 (Lecture Notes in Computer Science, Vol.
+   and Migration Working Papers, No. 319. OECD Publishing. https://doi.                15880). Springer, Cham. https://doi.org/10.1007/978-3-031-98459-4_3
+   org/10.1787/853db37b-en                                                          Ferrando, P. J., Morales-Vives, F., Casas, J. M., & Muñiz, J. (2025). Likert
+Bulut, O., Beiting-Parrish, M., Casabianca, J. M., Slater, S. C., Jiao, H.,            scales: A practical guide to their design, construction and use. Psicothema,
+   Song, D., Ormerod, C., Fabiyi, D. G., Ivan, R., Walsh, C., Rios, O.,                37(4), 1–15. https://doi.org/10.70478/psicothema.2025.37.24
+   Wilson, J., Yildirim-Erbasli, S. N., Wongvorachan, T., Liu, J. X., Tan, B.,      Foster, N. & Piacentini, M (2023). Innovating assessments to measure
+   & Morilova, P. (2024). The rise of artificial intelligence in educational           and support complex skills. OECD Publishing. https://doi.org/10.1787/
+   measurement: Opportunities and ethical challenges. Chinese/English                  e5f3e341-en
+   Journal of Educational Measurement and Evaluation, 5(3), 3. https://             Gierl, M. J., & Haladyna, T. M. (2012). Automatic item generation.
+   doi.org/10.59863/MIQL7785                                                           Routledge. https://doi.org/10.4324/9780203803912
+Burstein, J. (2025, April 17). The Duolingo English Test responsible AI             Goldberg, L. R. (1999). A broad-bandwidth, public domain personality
+   standards (Duolingo Research Report No. DRR-25-05). Duolingo.                       inventory measuring the lower-level facets of several five-factor models.
+   https://englishtest.duolingo.com/research                                           In I. Mervielde, I. Deary, F. De Fruyt, & F. Ostendorf (Eds.), Personality
+Butterfuss, R., & Doran, H. (2025). An application of text embeddings                  Psychology in Europe (Vol. 7, pp. 7-28). Tilburg University Press
+   to support alignment of educational content standards. Educational               Graham, J., Haidt, J., & Nosek, B. A. (2009). Liberals and conservatives
+   Measurement: Issues and Practice, 44(1), 73–83. https://doi.                        rely on different sets of moral foundations. Journal of Personality and
+   org/10.1111/emip.12581                                                              Social Psychology, 96(5), 1029.
+Chang, D. H., Lin, M. P.-C., Hajian, S., & Wang, Q. Q. (2023). Educational          Guenole, N., D’Urso, E. D., Samo, A., Sun, T., & Haslbeck, J. (2025).Enhancing
+   design principles of using AI chatbot that supports self-regulated                  scale development: Pseudo factor analysis of language embedding similarity
+   learning in education: Goal setting, feedback, and personalization.                 matrices. PsyArXiv. https://osf.io/preprints/psyarxiv/vf3se_v2
+   Sustainability, 15(17), 12921.                                                   Guenole, N., Samo, A., Sun, T. (2024). Pseudo-Discrimination Parameters
+De la Fuente, D., & Armayones, M. (2025). AI in psychological practice:                from Language Embeddings. OSF. https://osf.io/9a4qx_v1
+   What tools are available and how can they help in clinical psychology?           Guenole, N. (2025). Psychometrics.ai: Transforming Behavioral Science
+   Psychologist Papers, 46(1), 18-24. https://doi.org/10.70478/pap.                    with Machine Learning. https://psychometrics.ai
+   psicol.2025.46.03                                                                Hao, J., von Davier, A. A., Yaneva, V., Lottridge, S., von Davier, M., & Harris,
+Dixon-Román, E. (2024). AI and psychometrics: Epistemology, process,                   D. J. (2024). Transforming assessment: The impacts and implications of
+   and politics. Journal of Educational and Behavioral Statistics, 49(5),              large language models and generative AI. Educational Measurement:
+   709–714. https://doi.org/10.3102/10769986241280623                                  Issues and Practice, 43(2), 16-29. https://doi.org/10.1111/emip.12602
+Dolenc, K., & Brumen, M. (2024). Exploring social and computer science              He, Q., Borgonovi, F., Paccagnella, M. (2021). Leveraging process data to
+   students’ perceptions of AI integration in (foreign) language instruction.          assess adults’ problem-solving skills: Identifying generalized behavioral
+   Computers and Education: Artificial Intelligence, 7, 100285.                        patterns with sequence mining. Computers and Education, 166, 104170.
+Doshi-Velez, F., & Kim, B. (2017). Towards a rigorous science of                       https://doi.org/10.1016/j.compedu.2021.104170
+   interpretable machine learning. arXiv. https://doi.org/10.48550/                 He, Q., Borgonovi, F., & Suárez-Álvarez, J. (2023). Clustering sequential
+   arXiv.1702.08608                                                                    navigation patterns in multiple-source reading tasks with dynamic time
+Downing, S. M., & Haladyna, T. M. (Eds.). (2006). Handbook of test                     warping method. Journal of Computer Assisted Learning, 39, 719–736.
+   development. Lawrence Erlbaum Associates Publishers.                                https://doi.org/10.1111/jcal.12748
+
+
+
+
+  10
+                                                               GenAI in Modern Test Construction
+
+
+
+Ho, A. D. (2024). Artificial intelligence and educational measurement:            OECD (2025). Introducing the OECD AI capability indicators. OECD
+   Opportunities and threats. Journal of Educational and Behavioral                   Publishing. https://doi.org/10.1787/be745f04-en
+   Statistics, 49(5), 715-722. https://doi.org/10.3102/10769986241248771          OpenAI. (2023). GPT-4 technical report. https://arxiv.org/abs/2303.08774
+Holzinger, A., Langs, G., Denk, H., Zatloukal, K., & Müller, H. (2019).           Pohl, S., Ulitzsch, E., & von Davier, M. (2021). Reframing rankings in
+   Causability and explainability of artificial intelligence in medicine.             educational assessments. Science, 372(6540), 338–340. https://doi.
+   Wiley Interdisciplinary Reviews: Data Mining and Knowledge                         org/10.1126/science.abd3300
+   Discovery, 9(4), e1312. https://doi.org/10.1002/widm.1312                      Ramandanis, D., & Xinogalos, S. (2023). Designing a chatbot for
+Jen, F.-L., Huang, X., Liu, X., & Jiao, J. (2024). Can generative AI really           contemporary education: A systematic literature review. Information,
+   empower teachers’ professional practices? Comparative study on                     14(9), 503.
+   human-tailored and GenAI-designed reading comprehension learning               Russell-Lasalandra, L. L., Christensen, A. P., & Golino, H. (2024,
+   materials. In L. K. Lee, P. Poulova, K. T. Chui, M. Černá, F. L. Wang, &           September 12). Generative psychometrics via AI-GENIE: Automatic
+   S. K. S. Cheung (Eds.), Technology in Education. Digital and Intelligent           item generation and validation via network-integrated evaluation.
+   Education. ICTE 2024. Communications in Computer and Information                   PsyArXiv. https://doi.org/10.31234/osf.io/fgbj4
+   Science, vol. 2330 (pp. 112–123). Springer.                                    Samek, W., Wiegand, T., & Müller, K.-R. (2017). Explainable artificial
+Johnson, M. S. (2025, April). Responsible AI for measurement and learning:            intelligence: Understanding, visualizing and interpreting deep learning
+   Principles and practices (ETS Research Report No. RR-25-03). ETS                   models. arXiv. https://doi.org/10.48550/arXiv.1708.08296
+   Research Institute.                                                            Sanz, A., Tapia, J. L., García-Carpintero, E., Rocabado, J. F., & Pedrajas,
+Joyce, D. W., Kormilitzin, A., Smith, K. A., & Cipriani, A. (2023).                   L. M. (2025). ChatGPT simulated patient: Use in clinical training
+   Explainable artificial intelligence for mental health through transparency         in Psychology. Psicothema, 37(3), 23-32. https://doi.org/10.70478/
+   and interpretability for understandability. NPJ Digital Medicine, 6(6).            psicothema.2025.37.21
+   https://doi.org/10.1038/s41746-023-00751-9                                     Schoenegger, P., Greenberg, S., Grishin, A., Lewis, J., & Caviola, L.
+Khosravi, H., Shum, S. B., Chen, G., Conati, C., Tsai, Y.-S., Kay, J.,                (2025). AI can outperform humans in predicting correlations between
+   Knight, S., Martinez-Maldonado, R., Sadiq, S., & Gašević, D. (2022).               personality items. Communications Psychology, 3, 23. https://doi.
+   Explainable artificial intelligence in education. Computers and                    org/10.1038/s44203-025-00123-1
+   Education: Artificial Intelligence, 3, 100074. https://doi.org/10.1016/j.      Sheehan, K. M., Kostin, I., & Persky, H. (2006, April). Predicting item
+   caeai.2022.100074                                                                  difficulty as a function of inferential processing requirements: An
+Kincaid, J. P., Fishburne Jr, R. P., Rogers, R. L., & Chissom, B. S. (1975).          examination of the reading skills underlying performance on the NAEP
+   Derivation of new readability formulas (automated readability index,               Grade 8 Reading Assessment. Paper presented at the annual meeting
+   fog count and flesch reading ease formula) for navy enlisted personnel.            of the National Council on Measurement in Education (NCME), San
+   (Research Report No. 56). Institute for Simulation and Training. https://          Francisco, CA. Educational Testing Service.
+   stars.library.ucf.edu/istlibrary/56                                            Sheehan, K., & Mislevy, R. J. (1994). A tree-based analysis of items from
+Kuhail, M. A., Alturki, N., Alramlawi, S., & Alhejori, K. (2023).                     an assessment of basic mathematics skills (ETS RR-94-14). Educational
+   Interacting with educational chatbots: A systematic review. Education              Testing Service.
+   and Information Technologies, 28, 973–1018. https://doi.org/10.1007/           Sireci, S., & Benítez, I. (2023). Evidence for test validation: A guide for practitioners.
+   s10639-022-11177-3                                                                 Psicothema, 35(3), 217-26. https://doi.org/10.7334/psicothema2022.477
+Kumar, P., Manikandan, S., & Kishore, R. (2024). AI-driven text generation:       Sireci, S. G., Crespo Cruz, E, Suárez-Álvarez, J, & Rodríguez Matos, G.
+   A novel GPT-based approach for automated content creation. 2024                    (2025). Understanding UNDERSTANDardization research. In R. Bennett,
+   2nd International Conference on Networking and Communications                      R., L. Darling-Hammond & A. Barinarayan (Eds.), Socioculturally
+   (ICNWC). IEEE.                                                                     responsive assessment: Implications for theory, measurement, and
+Lane, S., Raymond, M. R., & Haladyna, T. M. (Eds.). (2016). Handbook of               systems-level policy, Routledge. https://doi.org/10.4324/9781003435105
+   test development (2nd ed.). Routledge.                                         Sireci, S. G., Suárez-Álvarez, J., Zenisky, A. L., & Oliveri, M. E. (2024).
+Lorenzo-Seva, U., Timmerman, M. E., & Kiers, H. A. (2011). The Hull                   Evolving educational testing to meet students’ needs: Design-in-real-
+   method for selecting the number of common factors. Multivariate                    time assessment. Educational Measurement: Issues and Practice, 43(4),
+   Behavioral Research, 46(2), 340–364. https://doi.org/10.1080/002731                112–118. https://doi.org/10.1111/emip.12653
+   71.2011.564527                                                                 Smith, E. A., & Senter, R. J. (1967). Automated readability index (Vol.
+Luecht, R. M. (2025). Assessment engineering in test design: Methods and              66, No. 220). Aerospace Medical Research Laboratories, Aerospace
+   applications (1st ed.). Routledge. https://doi.org/10.4324/9781003449464           Medical Division, Air Force Systems Command.
+Maas, A. C. (2024). An empirical study on training generative AI to create        Suárez-Álvarez, J., Fernández-Alonso, R., García-Crespo, F. J., & Muñiz,
+   appropriate questions for English reading comprehension [Doctoral                  J. (2022). The use of new technologies in educational assessments:
+   dissertation, Tohoku University]. Tohoku University Repository.                    Reading in a digital world. Psychologist Papers, 43(1), 36–47. https://
+Mao, J., Chen, B., & Liu, J. C. (2024). Generative artificial intelligence in         doi.org/10.23923/pap.psicol.2986
+   education and its implications for assessment. TechTrends, 68(1), 58-66.       Suárez‑Ávarez, J., Oliveri, M. E., Zenisky, A., & Sireci, S. G (2024). Five
+Meeker, M., Simons, J., Chae, D., & Krey, A. (2025). Trends – artificial              key actions for redesigning adult skills assessments from learners,
+   intelligence (AI). BOND. https://www.bondcap.com/report/tai/                       employees, and educators. Journal for Research on Adult Education,
+McLaughlin, G. H. (1969). SMOG grading-a new readability formula.                     47, 321–343. https://doi.org/10.1007/s40955‑024‑00288‑8
+   Journal of Reading, 12(8), 639-646.                                            Sun, T, B., Drasgow, F., & Zhou, M. X. (2024, May 1). Developmente and
+Muñiz, J., & Fonseca-Pedrero, E. (2019). Ten steps for test development.              validation of an artificial chatbot to assess personality. PsyArXiv. https//
+   Psicothema, 31(1), 7–16. https://doi.org/10.7334/psicothema2018.291                doi.org/10.131234/osf.io/ahtr9
+
+
+
+
+                                                                                                                                                                     11
+                                                          Suárez-Álvarez et al. / Psicothema (2026) 38(1) 1-12
+
+
+
+Swiecki, Z., Khosravi, H., Chen, G., Martinez-Maldonado, R., Lodge, J.                 Wise, S. L., Im, S., & Lee, J. (2021). The impact of disengaged test taking
+    M., Milligan, S., Selwyn, N., & Gašević, D. (2022). Assessment in                     on a state’s accountability test results. Educational Assessment, 26(3),
+    the age of artificial intelligence. Computers and Education: Artificial               163–174. https://doi.org/10.1080/10627197.2021.1956897
+    Intelligence, 3, 100075. https://doi.org/10.1016/j.caeai.2022.100075               Wulff, D. U., & Mata, R. (2025). Semantic embeddings reveal and address
+Ulitzsch, E., Shin, H. J., & Lüdtke, O. (2023). Accounting for careless and               taxonomic incommensurability in psychological measurement. Nature
+    insufficient effort responding in large-scale survey data—Development,                Human Behaviour, 1-11. https://doi.org/10.1038/s41562-024-02089-y
+    evaluation, and application of a screen-time-based weighting procedure.            Yamamoto, K., Shin, H. J., & Khorramdel, L. (2019). Introduction of
+    Behavior Research Methods, 56(2), 804–825. https://doi.org/10.3758/                   multistage adaptive testing design in PISA 2018. OECD Education
+    s13428-022-02053-6                                                                    Working Papers, No. 209, OECD Publishing, https://doi.org/10.1787/
+Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A.N.,              b9435d4b-en
+    Kaiser, Ł. & Polosukhin, I. (2017). Attention is all you need. Advances            Yan, L., Greiff, S., Teuber, Z., & Gašević, D. (2024). Promises and challenges
+    in Neural Information Processing Systems, 30, 5998–6008. https://                     of generative artificial intelligence for human learning. Nature Human
+    arxiv.org/abs/1706.03762                                                              Behaviour, 8, 1839–1850. https://doi.org/10.1038/s41562-024-02004-5
+von Davier, A. A., Runge, A., Park, Y., Attali, Y., Church, J., & LaFlair,             Yaneva, V., & von Davier, M. (Eds.). (2023). Advancing natural language
+    G. (2024). The item factory: Intelligent automation in support of test                processing in educational assessment (1st ed.). Routledge. https://doi.
+    development at scale. In H. Jiao & R. W. Lissitz (Eds.), Machine                      org/10.4324/9781003278658
+    learning, natural language processing, and psychometrics (Marces                   Yang, H., Kim, H., Lee, J. H., & Shin, D. (2022). Implementation of an
+    Book Series) (pp. 1– 25). Information Age Publishing Inc.                             AI chatbot as an English conversation partner in EFL speaking classes.
+von Davier, M. (2018). Automated item generation with recurrent neural                    ReCALL, 34(3), 327–343. https://doi.org/10.1017/S0958344022000039
+    networks. Psychometrika, 83(4), 847–857. https://doi.org/10.1007/s11336-           Yuan, L. (I.), Sun, T., Dennis, A. R., & Zhou, M. (2024). Perception is
+    018-9608-y                                                                            reality? Understanding user perceptions of chatbot-inferred versus self-
+von Davier, M., Tyack, L., & Khorramdel, L. (2022). Scoring graphical responses in        reported personality traits. Computers in Human Behavior: Artificial
+    TIMSS 2019 using artificial neural networks. Educational and Psychological            Humans, 2, 100057. https://doi.org/10.1016/j.chbah.2024.100057
+    Measurement, 83(3), 556–585. https://doi.org/10.1177/00131644221098021             Zenisky, A. L., & Sireci, S. G. (2002). Technological innovations in large-
+Walker, M. E., Olivera-Aguilar, M., Lehman, B., Laitusis, C., Guzman-                     scale assessment. Applied Measurement in Education, 15(4), 337–362.
+    Orth, D., & Gholson, M. (2023). Culturally responsive assessment:                     https://doi.org/10.1207/S15324818AME1504_02
+    Provisional principles (ETS RR-23-11). Educational Testing Service.
+    https://doi.org/10.1002/ets2.12374
+Wang, Y., Pan, Y., Yan, M., Su, Z., & Luan, T. H. (2023). A survey on
+    ChatGPT: AI-generated contents, challenges, and solutions. Open
+    Journal of Computer Science, 4, 280–286. https://doi.org/10.48550/
+    arXiv.2305.18339
+
+
+
+
+  12
+

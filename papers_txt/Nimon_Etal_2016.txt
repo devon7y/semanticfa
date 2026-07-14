@@ -1,0 +1,1214 @@
+J Happiness Stud (2016) 17:1149–1171
+DOI 10.1007/s10902-015-9636-6
+
+RESEARCH PAPER
+
+
+
+Construct Overlap Between Employee Engagement
+and Job Satisfaction: A Function of Semantic
+Equivalence?
+
+Kim Nimon1 • Brad Shuck2 • Drea Zigarmi3
+
+
+
+
+Published online: 18 April 2015
+ Springer Science+Business Media Dordrecht 2015
+
+
+Abstract The evidence for employee engagement as a distinct construct, separate from
+related work attitudes such as job satisfaction, has been contradictory. Despite a growing
+inventory of research, current statistical techniques fall short in providing additional an-
+swers beyond those previously documented through discriminant and incremental validity,
+among others. Understanding the semantic similarity between scales however could un-
+cover the potential bounds of current evidence and highlight areas of further exploration.
+This study examined the semantic similarity between three measures of employee en-
+gagement frequently found in the research literature and a commonly used measure of job
+satisfaction. Examining a relatively new indicator of validity, manifest validity, semantic
+relatedness between items from employee engagement and job satisfaction instruments was
+assessed using latent semantic analysis. Semantic similarity between employee engage-
+ment and job satisfaction items predicted moderate to high amounts of variance
+(R2 = 25–69 %) in corresponding correlations of survey responses. Findings suggest that
+high correlations between certain employee engagement measures and job satisfaction
+scores may be a function of semantic equivalence rather than individual perceptions of
+separate theoretical constructs.
+
+Keywords      Latent sematic analysis  Employee engagement  Job satisfaction
+
+
+
+
+A previous version of this manuscript was presented at the Academy of Human Resource Development 2014
+International Research Conference in the Americas, Houston, TX.
+
+& Kim Nimon
+  kim.nimon@gmail.com
+1
+    University of Texas at Tyler, 3900 University Blvd, Tyler, TX 75799, USA
+2
+    College of Education and Human Development, University of Louisville, Louisville, KY 40292,
+    USA
+3
+    The Ken Blanchard Companies, 125 State Place, Escondido, CA 92029, USA
+
+
+                                                                                         123
+1150                                                                           K. Nimon et al.
+
+
+1 Introduction
+
+Numerous researchers have employed survey research as a primary method for the study of
+employee engagement. As a result, survey research has led to a growing understanding of
+the experience of the phenomenon (Albrecht 2010; Macey and Schneider 2008; Nimon
+et al. 2011; Shuck and Reio 2013), antecedents associated with engagement (Christian
+et al. 2011; Shuck et al. 2011), as well as the expected outcomes of highly engaged
+employees (Rich et al. 2010; Xanthopoulou et al. 2009). Current research on data from
+employee engagement measures such as the Utrecht Work Engagement Scale (UWES;
+Schaufeli and Bakker 2003), the Job Engagement Scale (JES; Rich et al. 2010), and the
+Harmonious Passion Scale (HPS; Vallerand et al. 2003) has provided evidence for the
+validity of employee engagement perceptions by primarily reporting indices associated
+with factor structure stability, convergent validity, and reliability (Shuck et al. 2014).
+While the psychometric properties for many of the employee engagement measures re-
+ported in academic literature appear to be strong, other research (e.g., de Bruin and Henn
+2013; Shirom 2003; Wefald and Downey 2009) questions the validity of employee en-
+gagement as a unique construct.
+   Some scholars have suggested engagement as old wine in a new bottle (Newman et al.
+2010, 2011). For some, the construct of employee engagement is believed to be redundant
+and offer little explanatory utility beyond previously established job-related constructs.
+This debate has grown in recent years and called for analyses establishing some level of
+definitive nomological distinction (Newman et al. 2010; Shuck et al. 2013). At the leading
+edge of this debate are questions about employee engagement and overlap with more
+traditional measures of workplace-related attitude (Harrison et al. 2006). This is of prin-
+cipal focus when comparing the emerging construct of employee engagement and the well-
+established construct of job satisfaction, especially where both constructs have provided
+important leverage points for workforce scholars and practitioners.
+   Conceptually, employee engagement has been defined as an active, work-related
+positive psychological state (Parker and Griffin 2011; Shuck et al. 2013). In their posi-
+tioning of engagement, Christian et al. (2011) noted the active, dynamic pull of engage-
+ment that draws a person towards their work (Kahn 1990). Notwithstanding, job
+satisfaction has been commonly defined as a valuation of satiation ‘‘resulting from the
+appraisal of one’s job or job experiences’’ (Locke 1976, p. 1300). Conceptually, job
+satisfaction has been operationalized as a stationary state and a measure of satiation (i.e.,
+contentment with status quo) (Christian et al. 2011; Cooper-Thomas et al. 2010). The
+active and stationary states of engagement and job satisfaction embedded within their
+definitions suggest that employees should respond differently to survey items that inde-
+pendently measure each construct. As a result, researchers might reasonably expect to find
+meaningful differences in employees’ responses to items that independently assess en-
+gagement and job satisfaction. Nonetheless, conceptual positioning and empirical evidence
+remain indistinct.
+   For example, Macey and Schneider (2008) noted the seemingly ambiguous conceptual
+and empirical overlap between employee engagement and job satisfaction suggesting,
+‘‘Many traditional measures of satisfaction … seemingly tap facets that fit [the] conceptual
+space for engagement’’ (p. 7). Further, Macey and Schneider as well as Newman et al.
+(2010) indicated that Brayfield and Rothe’s (1951) seminal measure of job satisfaction
+included overlap with several statements that, at least on the surface, seemed to be in-
+tertwined with the nomological net of the engagement concept. Specifically, Newman et al.
+
+
+123
+Construct Overlap Between Employee Engagement and Job…                                   1151
+
+
+(2010) pointed out that the statement ‘‘Most days I feel enthusiastic about my work’’
+(Brayfield and Rothe 1951, p. 311) directly overlapped with statements on the UWES
+(Schaufeli and Bakker 2003), the latter of which is one of the more popular and widely
+cited measures of employee engagement to date (Rich et al. 2010). Conceptually, while the
+constructs of engagement and satisfaction can be defined as unique and independent, in
+some cases, operationally and empirically, the constructs have been conflated in practice.
+Take, for example, the well-cited work by Harter et al. (2002) who specifically defined
+engagement as ‘‘satisfaction-engagement’’ (p. 269) and whose measure (i.e., the Q12)
+directly taps facets of an employees’ satisfaction level with those conditions under which
+they work. These include satisfaction with their manager, satisfaction with access to re-
+sources, and satisfaction with the frequency of feedback, among others. Some practitioners
+simply measure engagement as direct assessments of satisfaction, trading one word for the
+other interchangeably (Macey and Schneider 2008). Connecting the potential conceptual
+overlap to empirical measurement, Newman et al. (2011) provided an overall litmus test
+for which to examine the conceptual distinction between engagement and other job atti-
+tudes such as job satisfaction. They suggested that correlations exceeding .70 could call the
+conceptual and empirical nomological utility of the engagement into serious question.
+    Within the .70 benchmark, results vary. For example, in meta-analytic work by
+Christian et al. (2011), evidence suggested that employee engagement and job satisfaction
+were not statistically redundant nor did the two constructs approach the a priori benchmark
+(Mq = .53, k = 20, N = 9725). In single studies examining the relationship between
+employee engagement and job satisfaction there also seems to be evidence for the dis-
+tinction of the two concepts. Rich et al. (2010) correlated total scores from their measure of
+engagement to job satisfaction scores from Cammann et al. (1983) and found only a
+moderate correlation (r = .56, n = 245). Saks (2006) similarly found moderate correla-
+tions between job satisfaction scores from Cammann et al. (1983) and scores (n = 102)
+from his two measures of engagement (job [r = .42] and organization [r = .57]). In other
+cases when job satisfaction was correlated to employee engagement subscales, correlations
+tended to be lower. For example, Ho et al. (2011) used scores (n = 577) from Quinn and
+Shepard’s (1974) three-item measure of job satisfaction to correlate with scale scores from
+Rothbard’s (2001) engagement instrument and reported lower correlations for absorption
+(r = .30) and attention (r = .38).
+    Yet evidence for the similarity of job satisfaction and engagement exemplifies the
+controversy. For example, Yalabik et al. (2013) correlated scores from UWES-9 (Schaufeli
+et al. 2006) with job satisfaction scores from Cammann et al. (1983) and found a strong
+correlation (r = .81, n = 377). Similarly, Wefald et al. (2011) correlated scores from
+UWES-9 (Schaufeli et al. 2006) with job satisfaction scores from Brayfield and Rothe
+(1951) and also found a strong correlation (r = .70, n = 382). Zigarmi et al. (2014) further
+explored the relationship of data derived from a set of employee engagement and job
+attitudes measures. Employing two measures of employee engagement (JES; Rich et al.
+2010; UWES-9; Schaufeli et al. 2006) as well as a measure of work passion (Harmonious
+Passion Scale [HPS]; Vallerand et al. 2003), scores (n = 1586) resulting from the en-
+gagement-related and job satisfaction measures called into question conceptual distinc-
+tiveness (i.e., rUWES = .75, rJES = .69, rHPS = .76).
+    Considering both conceptual and empirical research, the evidence for employee en-
+gagement as a construct distinct and separate from related job attitudes such as job sat-
+isfaction is conflicting at best; yet claims of new wine in old bottles appear to be gaining
+support (Rigg 2013). Despite the litany of research on these two constructs, current sta-
+tistical techniques and methods fall short in providing any additional answers. This may be
+
+                                                                                   123
+1152                                                                           K. Nimon et al.
+
+
+due to current processes and techniques coupled with current limitations of survey re-
+search. For example, survey research requires the development of survey questionnaires
+that attempt to measure latent constructs of interest (e.g., employee engagement). How-
+ever, issues of survey fatigue and the language used in the scales typically go unexamined
+in current validation methods, leaving issues of semantic similarity and word meaning
+abandoned (Arnulf et al. 2014; Larsen et al. 2008). This seems extraordinary given that the
+constructs assessed by survey research methods are derived from items containing words
+and that the meanings prescribed to those words are used to derive statistical results from
+which theory is constructed and then used in practice. Despite rigorous methods that have
+explored numerous types of validity and reliability, language selection within the ques-
+tionnaire itself has gone underdeveloped (Arnulf et al. 2014; Larsen et al. 2008). For a
+specific example within the employee engagement context, Newman et al. (2010) ques-
+tioned the semantic similarity between the words enthusiasm (used in the UWES) and
+satisfied (used in several traditional measures of satisfaction; see Brayfield and Rothe 1951
+and Cammann et al. 1983). It is possible that high semantic similarity could lead to high
+correlations yet go undetected in current research methods. As further pointed out by
+Newman et al., the meanings of attitudinal words such as those often used in both en-
+gagement and satisfaction survey items can change the context of a specific question based
+on worldviews and interpretation. In consequence, ‘‘as respondents with similar experi-
+ences or attitudes respond to a questionnaire, high correlations between questionnaire
+statements occur’’ (Larsen et al. 2008, p. 1). This is precisely the problem with ques-
+tionnaires that purport to measure employee engagement and job satisfaction.
+   A new indicator of validity, manifest validity was introduced by Larsen et al. (2008) to
+check for language-driven survey results such as, in this case, the reported differences
+between the terms enthusiasm and satisfaction. In proposing this new measure of validity,
+Larsen et al. offered that:
+   Manifest validity is expected to support researchers during the data analysis stage in
+   that researchers can compare measures of manifest validity (evaluating the extent of
+   semantic difference between different scales) to item correlations computed from
+   actual responses. In cases where there is little difference between distances proposed
+   by correlation coefficients, the respondents are more likely to have employed shallow
+   processing during questionnaire analysis. To the extent that such semantically driven
+   results are the result of the language of the questionnaire itself rather the question-
+   naire fatigue of a specific response population, standard questionnaires may need
+   redevelopment. (p. 3)
+   Larsen et al. (2008) found that semantic equivalence between pairs of survey items as
+computed by an automated semantic based application predicted observed survey re-
+sponses across 22 questionnaires published in information system studies, where the
+predictive power in terms of R2 ranged from 0 to 63 %. Although a pioneering first step
+towards examining how semantics predict survey responses, it is not clear if Larsen et al.
+considered established instruments with published evidence of construct validity from
+resulting data. However, more recently, Arnulf et al. (2014) used the results of semantic
+analyses to predict survey responses from a number of established instruments that are
+purported to measure constructs such as leadership, motivation, and self-reported work
+outcomes. They found that semantic similarity of survey items as measured by two types of
+text algorithms across four semantic spaces explained 47–79 % of the variance in survey
+responses. Only in the case of data from a personality test, did semantic similarity of
+survey items not predict inter-item correlations from survey responses.
+
+123
+Construct Overlap Between Employee Engagement and Job…                                              1153
+
+
+    At present, commonly used statistical methods fail to reflect potential latent semantic
+similarities between question wordings and as a result miss an important indicator of
+empirical support that could explain highly correlated results (Arnulf et al. 2014). Within
+our interest, it seems possible that the underlying semantic structure of employee en-
+gagement and job satisfaction scale items could explain the variability in the correlation
+between measures of employee engagement and job satisfaction. Because there is wide
+discussion about the semantics of the employee engagement construct and its empirical
+relation to other constructs of interest, testing manifest validity using the emerging sta-
+tistical technique of latent semantic analysis (LSA) seemed a likely next step forward in
+adding to the literature. Moreover, while employee engagement and job satisfaction are
+instantiated as survey questions, by looking at the semantic similarity between survey
+items we may uncover inferences about the similarity of the underlying constructs. While it
+is important to keep in mind that LSA is only comparing the similarity of the survey
+questions, understanding the manifest validity between employee engagement and job
+satisfaction could provide additional information about the underlying structure of the
+employee engagement construct. This information could provide scholars and practitioners
+added evidence regarding the practical utility and conceptual clarity of the still emerging
+employee engagement construct, alongside a more traditional, widely applied and mature
+construct such as job satisfaction. Thus, the purpose of our research was to determine to
+what degree, if any, correlations between employee engagement and job satisfaction items
+were a function of semantic equivalence. We explored the relatedness using latent se-
+mantic analyses (LSA)—a technique that has been infrequently applied to survey items—
+and thus tested for the first time, the manifest validity between employee engagement and
+job satisfaction. The remainder of this article unfolds as follows: (a) introduction to LSA,
+(b) methodology, (c) results, and (d) discussion of results including limitations and im-
+plications for research and practice.
+
+
+2 Latent Semantic Analysis
+
+Latent semantic analysis is a ‘‘computational model that does many humanlike things with
+language’’ (Landauer 2011, p. 5). According to Landauer, LSA’s initiating event stemmed
+from problems customers had in finding the services they wanted in the Bell System
+Yellow Pages. Observation data indicated that there were many more words with related
+
+Table 1 LSA example text
+Document                                   Text
+
+JI1                                        The major satisfaction in my life comes from my job
+JI2                                        The most important things that happen to me involve my job
+JI3                                        I live eat and breathe my job
+JI4                                        I am very much involved personally in my work
+
+Document texts are the four job involvement (JI) items from Lawler and Hall (1970). Bolded terms were
+analyzed with LSA. For the purpose of a parsimonious illustration, only important content words were
+analyzed where involved was stemmed to involve. More commonly, LSA would be used to treat involve
+separate from involved. As noted by an anonymous reviewer, with enough text involve and involved would
+likely have similar representations; however, they are independent word tokens. As well, excluding non-
+content words may affect LSA results as they may help inform the latent semantic structure of a corpus of
+text (cf., Bellegarda 1998; Rehder et al. 1998)
+
+
+                                                                                            123
+1154                                                                            K. Nimon et al.
+
+
+meanings than searchers tried or indexers indexed (Furnas et al. 1987). The solution was a
+computational model that learned word meanings from vast amounts of text and that
+identified the degree to which two words or passages had the same meaning (Landauer
+2011).
+   To apply LSA to a particular domain, a corpus of documents (see Table 1, for example)
+is represented in a sparse matrix of terms and documents (see Table 2). Typically, the
+corpus contains between 10,000 and 100,000 documents (Larsen et al. 2008). As an ex-
+ample, for illustrative purposes only, consider a subset of words (bolded in Table 1) from
+the four items of a well-documented job involvement scale (JI, Lawler and Hall 1970). Job
+involvement is an often-used construct in both management and human resource literature
+that indicates the degree to which persons psychologically identify with their work
+(Cooper-Hakim and Viswesvaran 2005). As it relates to the present study, job involvement
+has been posited to share a nomological net with employee engagement and found to be
+related to but psychometrically distinguishable from job satisfaction (Macey and Schneider
+2008; Mathieu and Farr 1991). Within this illustrative example, note that each cell in the
+example term-document matrix represents the number of times that each document in-
+cludes the term in the corresponding row. In the case of the job involvement scale, one
+can see that the word job occurs in items 1, 2, and 3 and that the word work occurs only in
+item 4.
+   The term-document matrix is typically weighted before being submitted to a Singular
+Value Decomposition (SVD) where the output is generally referred to as a semantic space
+with k dimensions (Larsen et al. 2008). Term-document matrix elements are usually
+weighted according to (a) how frequently a term occurred within a document (local) and
+(b) inversely, to how frequently a term occurred in documents across the corpus (global)
+(Martin and Berry 2011). See Table 3 for a weighted version of term-document matrix
+represented in Table 2. Although the weighted term-document matrix represented in
+Table 3 could be perfectly replicated in four dimensions (the smallest of terms and
+documents), dimensionality reduction is key to developing semantic spaces that match the
+resolution in human word and passage meanings (Landauer 2011). Table 4 shows the SVD
+for the weighted term-document matrix in Table 3, with the first two dimensions bolded
+(k = 2).
+   For ease of illustration, the weighted term-document matrix shown in Table 3 is rep-
+resented in Fig. 1 as two-dimensional vector space where the semantic space represents the
+distance between text units. The (x, y) pair is ‘‘defined x = first dimension or column of
+matrix U or V multiplied by the first singular value and y = second dimension or column
+of matrix U or V multiplied by the second singular value’’ for term and document points,
+
+
+Table 2 Term-document matrix
+                                  Term             JI1         JI2          JI3             JI4
+for the bolded terms in Table 1
+                                  Breathe          0           0            1               0
+                                  Eat              0           0            1               0
+                                  Involve          0           1            0               1
+                                  Job              1           1            1               0
+                                  Life             1           0            0               0
+                                  Live             0           0            1               0
+                                  Satisfaction     1           0            0               0
+                                  Work             0           0            0               1
+
+
+
+123
+Construct Overlap Between Employee Engagement and Job…                                  1155
+
+
+Table 3 Weighted term-docu-
+                                 Term              JI1         JI2          JI3          JI4
+ment matrix for the term-docu-
+ment matrix in Table 2
+                                 Breathe           0.00        0.00         1.39         0.00
+                                 Eat               0.00        0.00         1.39         0.00
+                                 Involve           0.00        2.08         0.00         2.08
+                                 Job               1.67        2.08         1.39         0.00
+                                 Life              1.67        0.00         0.00         0.00
+                                 Live              0.00        0.00         1.39         0.00
+                                 Satisfaction      1.67        0.00         0.00         0.00
+                                 Work              0.00        0.00         0.00         2.08
+
+
+
+
+respectively (Martin and Berry 2011, p. 42). Resultantly, two sets of data points are plotted
+in Fig. 1: (a) the individual terms (e.g., breathe, work) and (b) the original documents (JI1
+through JI4).
+   Note that items JI2 and JI4 as well as items JI1, JI2, and JI3 show semantic similarity.
+Further observe that there is a co-occurrence of words within items (involve in JI2 and JI4;
+job in JI1, JI2, JI3). Whereas LSA starts with a kind of co-occurrence (e.g., words within
+items as depicted in Table 1), LSA ‘‘produces a result in which the fact that two words
+appear in the same passage is not what makes them similar’’ (Landauer 2011, p. 16). As
+evidence, consider the fact that LSA found items JI1 and JI3 to be the most semantically
+similar as determined by the size of the angle between the vectors associated with JI1 and
+JI3 even though the words life, satisfaction, breathe, live, and eat do not occur in each
+item. The result from LSA is, in a way, ‘‘the opposite of word meaning coming from co-
+occurrence. LSA learns about the meaning of a word from every meeting with it and from
+the composition of all the passages in which it does not occur’’ (Landauer 2011, p. 16).
+This example demonstrates the power of LSA when examining manifest validity. Semantic
+similarity can also be represented via cosines, where vectors are ordered in the same
+manner as correlations and range between -1 and 1 (Landauer 2011). For instance, in our
+example, the cosine between items JI1 and JI3 was .99, whereas the cosine between items
+JI1 and JI2 was .64.
+   Text from other survey items could be ‘‘projected’’ onto our example semantic space,
+and distances between them could be calculated. However, the generalizability of our
+example semantic space is limited due to the small corpus of documents and dimensions.
+Generalizability of semantic spaces to texts not yet encountered (e.g., new survey items)
+tends not to be a problem when a large and representative set of documents is used to
+create the initial semantic space (Larsen et al. 2008; Quesada 2011).
+
+
+3 Method
+
+In applying LSA to predict inter-item correlations from employee engagement and job
+satisfaction measures, we followed the method from Larsen et al. (2008). Our method
+involved (a) defining a semantic space, (b) computing semantic similarity indexes (i.e.,
+cosines) among items, (c) obtaining inter-item correlations, and (d) correlating resulting
+cosines to inter-item correlations resulting from survey data.
+
+
+
+                                                                                   123
+1156                                                                          K. Nimon et al.
+
+
+Table 4 SVD of the weighted
+                                  Matrix U-term vectors
+term-document matrix in Table 3
+                                   Breathe            -0.14       0.20    -0.44         0.22
+                                   Eat                -0.14       0.20    -0.44         0.22
+                                   Involve            -0.58      -0.59      0.00       -0.24
+                                   Job                -0.69       0.38      0.02       -0.34
+                                   Life               -0.20       0.28      0.45        0.34
+                                   Live               -0.14       0.20    -0.44         0.22
+                                   Satisfaction       -0.20       0.28      0.45        0.34
+                                   Work               -0.23      -0.49    -0.01         0.67
+                                  Matrix R-singular vectors
+                                                          3.93    3.08      2.39        1.67
+                                  Matrix V-document vectors
+                                   JI1                -0.46       0.51      0.64        0.34
+                                   JI2                -0.67      -0.14      0.01       -0.73
+                                   JI3                -0.39       0.44    -0.77         0.27
+First two dimensions bolded        JI4                -0.43      -0.73    -0.01         0.54
+(k = 2)
+
+
+3.1 Semantic Space
+
+In lieu of creating a new semantic space, we followed Larsen et al. (2008) and utilized a
+publically available general purpose semantic space. From the spaces available on the LSA
+Web site (http://lsa.colorado.edu/), we chose the general reading space for college level.
+This space ‘‘uses a variety of texts, novels, newspaper articles, and other information from
+the Touchstone Applied Science Associated, Inc. (TASA) corpus used to develop The
+Educator’s Word Frequency Guide’’ (Dennis 2011, p. 69). According to Dennis (2011), the
+college-level general reading space includes 37,651 documents and 92,409 terms that
+cover a variety of academic areas including business.
+
+3.2 Semantic Similarity
+
+To determine the semantic similarity between job satisfaction and employee engagement
+items, we conducted LSA using the one-to-many comparisons application, as we were
+comparing each job satisfaction item to many employee engagement items. We then used
+the document-to-document comparison, thereby employing log entropy weighting (cf.
+Dennis 2011).
+   Items from two measures of employee engagement (JES; Rich et al. 2010; UWES-9;
+Schaufeli et al. 2006) as well as a measure of work passion (Harmonious Passion Scale
+[HPS]; Vallerand et al. 2003) and job satisfaction (JS; Luthans et al. 2006) were analyzed.
+As shown in Table 5, these engagement measures stemmed from different theoretical
+foundations and contain scales that focus on specific characteristics of employee en-
+gagement. While there appear to be similarities between the theoretical constructs asso-
+ciated with the UWES-9 and the JES (e.g., dedication shares similar characteristics with
+emotional engagement), the characteristics associated with HPS are unique in that they
+consider how work is internalized in an employee’s identity (cf. Vallerand et al. 2003). We
+selected these measures because Shuck, Nimon, and Zigarmi (2014) indicated that the JES,
+UWES-9 and HPS scales are theorized to measure some domain of employee engagement
+and Zigarmi et al. (2014) found that the employee engagement measures yielded high scale
+
+123
+Construct Overlap Between Employee Engagement and Job…                                                  1157
+
+
+
+
+Fig. 1 Two-dimensional semantic space example based on job involvement (JI; Lawler and Hall 1970)
+items. The words live and eat as well as the words life and satisfaction are in the same semantic space; their
+positions have been jittered to prevent over-plotting
+
+
+score correlations with job satisfaction scores rUWES = .75, rJES = .69, and rHPS = .76,
+calling into question whether the employee engagement measures were measuring any-
+thing substantively different from job satisfaction.
+
+3.2.1 UWES-9 (Schaufeli et al. 2006)
+
+The UWES-9 (Schaufeli et al. 2006) was developed as a shortened measure of the original
+Utrecht Work Engagement Scale (UWES-17; Schaufeli et al. 2002). The UWES-9 includes
+three items for each of its scales: vigor, dedication, and absorption. Engagement, as
+measured by the UWES (Schaufeli and Bakker 2003), was theorized as the positive an-
+tithesis to burnout, and in early research operationalized as reverse scores on the Maslach
+Burnout Inventory-General Survey (MBI-GS; Schaufeli et al. 1996), also a 3-factor scale
+(e.g., exhaustion, cynicism, and ineffectiveness). Conceptually, what was once ‘‘important,
+meaningful, and challenging work became unpleasant, unfulfilling, and meaningless’’
+(Maslach et al. 2001, p. 416), demonstrating the theoretical linkage between engagement
+and burnout. In psychometric support, Schaufeli et al. (2006) provided evidence of con-
+struct validity for the UWES-9, including the confirmation of the 3-factor structure across
+10 international samples.
+
+3.2.2 Job Engagement Scale (Rich et al. 2010)
+
+The JES was developed by Rich et al. (2010) to conceptualize Kahn’s (1990) original
+conceptualization of the employee engagement construct. The JES is an 18-item instrument
+that includes three scales: cognitive engagement, emotional engagement, and physical
+engagement. Rich et al. indicated that the cognitive engagement scale was centered on
+Rothbard’s (2001) measure of engagement and paralleled the constructs of attention and
+absorption, which map theoretically to the UWES (Schaufeli and Bakker 2003) absorption
+scale. Emotional engagement was supported from work by Russell and Barrett’s (1999)
+
+
+                                                                                                 123
+1158                                                                                                                   K. Nimon et al.
+
+
+Table 5 Scales, theoretical frameworks, characteristics, # items, and sample items of employee engage-
+ment measures analyzed
+    Measure                     Theoretical framework
+     Scale (# items)             Characteristics                                        Sample item
+    UWES-9a                     Burnout-antithesis framework (Maslach et al., 2001)
+     Absorption (3)             •   Full concentration                                  At my job, I feel strong and vigorous.
+                                •   Happily engrossed in work
+                                •   Time passes quickly
+                                •   Difficulty detaching from work
+     Dedication (3)             •   Strong involvement in work                          I am enthusiastic about my job.
+                                •   Feelings of significance, enthusiasm, and pride
+     Vigor (3)                  •   High levels of energy and mental flexibility        When I get up in the morning, I feel like going
+                                •   Investment of effort and persistence                to work.
+
+    Job Engagement Scaleb       Multidimensional framework (Kahn, 1990)
+     Cognitive engagement (6)   •   Attention (focus and concentration)                 At work, my mind is focused on my job.
+                                •   Absorption (intensity of focus and concentration)
+     Emotional engagement (6)   •   High pleasantness (feeling positive)                I am enthusiastic in my job.
+                                •   High activation (feeling energetic)
+     Physical engagement (6)    •   Work intensity                                      I work with intensity on my job.
+    Passion Scalec              Dualistic approach (Vallerand et al., 2003)
+     Harmonious passion (7)     •   Autonomous internalization                          My activity is in harmony with the other
+                                •   Willingly engaged in work                           activities in my life.
+a
+     Schaufeli et al. (2006), b Rich et al. (2010), c Vallerand et al. (2003)
+
+
+
+scholarship around core affect, which concentrated on the affect of pleasantness and high
+activation as they related to experiences of work-related perceptions (Shuck et al. 2014).
+Physical engagement was designed to measure the levels of physical intensity in effort
+exerted toward work and paralleled Brown and Leigh’s (1996) original scholarship on
+work intensity. Initial evidence suggested that the JES fit a higher-order factor structure
+with the three first-order factors loading on a second-order factor with moderate levels of
+reliability (Rich et al. 2010).
+
+3.2.3 Harmonious Passion Scale (Vallerand et al. 2003)
+
+The HPS was constructed by Vallerand et al. (2003) to quantify the ‘‘strong inclination
+toward an activity that people like, that they find important, and in which they invest time,
+and energy’’ (p. 757). The HPS includes separate scales for the constructs of harmonious
+passion and obsessive passion, which were theorized to result from an autonomous and
+controlled internalization of activity into one’s identity. Harmonious passion is believed to
+connote the more positive, autonomous internalization whereas obsessive passion was
+believed to connote a more negative, controlled internalization. Vallerand et al. (2003)
+provided initial evidence of construct validity, including confirmation of the two-factor
+structure and acceptable levels of reliability.
+
+3.2.4 Job Satisfaction Scale (Luthans et al. 2006)
+
+Job satisfaction items were originally adapted from Hackman and Oldham (1980). Three
+items were used in Luthans et al. Items include ‘‘Generally speaking I am very satisfied
+with my job,’’ ‘‘I am generally satisfied with the feeling of worthwhile accomplishment I
+
+
+
+123
+Construct Overlap Between Employee Engagement and Job…                                  1159
+
+
+get from doing this job,’’ and ‘‘I am generally satisfied with the kind of work I do in this
+job’’ (Luthans et al. 2006, p. 125).
+
+3.3 Inter-item Correlations
+
+For correlations among survey item outcomes, we used item-level correlations obtained
+from the authors of Zigarmi et al. (2014). In their study, 1586 clients and client prospects
+of a national training and consulting company completed a survey including items from
+several employee engagement measures and outcomes. Of interest to our study were
+survey responses from UWES-9 (Schaufeli et al. 2006), the Job Engagement Scale (JES,
+Rich et al. 2010), the Harmonious Passion Scale (HPS, Vallerand et al. 2003), and the Job
+Satisfaction Scale (JSS, Luthans et al. 2006). In the Zigarmi et al. study, participants
+responded to the (a) UWES-9 items via a 6-point Likert scale, with 1 indicating almost
+never and 6 indicating always; (b) JES and JSS items via a 5-point Likert scale, with 1
+indicating strongly disagree and 5 indicating strongly agree; (c) and HPS items via a
+7-point Likert scale, with 1 = strongly disagree and 7 = strongly agree. Coefficient al-
+phas reported for the UWES-9, JES, HPS, and JSS scores were .95, .97, 93, and .92,
+respectively.
+
+3.4 Analyses
+
+We used ordinary least squares (OLS) regression to assess to what degree correlations
+between employee engagement and job satisfaction items based on participant responses
+were explained by semantic similarity indices between the employee engagement and job
+satisfaction items as reported via cosines. Although the cosines and correlations were
+nested by job satisfaction items, hierarchical linear models that nested correlations and
+cosines within job satisfaction item did not converge. Influence plots which provided
+bubble plots of studentized residuals by hat values were used to identify and delete out-
+lying conditions such that we maximized R2 with the maximum number of cosine/corre-
+lation pairings (cf. Fox and Weisberg 2011). Remaining cosines and correlations were then
+correlated to determine the relationship between participant responses and semantic
+similarity among relevant item sets. As it was observed that correlations and cosines did
+not vary by job satisfaction item (see Tables 6, 7), averaged correlations and cosines were
+also plotted to provide a visual representation of the relationship between participant
+responses and semantic similarity.
+
+
+4 Results
+
+In examining inter-item correlations and scatterplots, a number of the item-level correla-
+tions (see Table 6) between the employee engagement and job satisfaction items were
+greater than .70, which may suggest that some employee engagement items were tapping
+into the same construct as job satisfaction (cf. Kline 1979). Semantic similarity indices
+between the employee engagement and job satisfaction items are reported via cosines
+where greater magnitudes indicate more similarity (see Table 7). Although there is no
+cutoff point for cosines between items from different scales, Larsen et al. (2008) identified
+values of .57 and greater as ‘‘rather high’’ (p. 5). As evidenced in Table 7, the majority of
+similarity indices could be considered ‘‘rather high.’’
+
+
+                                                                                  123
+1160                                                                                             K. Nimon et al.
+
+
+Table 6 Item-level correlations between measures of employee engagement and job satisfactiona from
+Zigarmi et al. (2014)
+UWES-9b                                Job engagementc                       Harmonious passiond
+
+Item     js1   js2   js3   M     SD    Item    js1   js2   js3   M     SD    Item   js1    js2    js3   M     SD
+
+vi1      .59   .59   .54   .57   .03   pe1     .40   .44   .45   .43   .03   hp1    .52    .54    .51   .52   .02
+vi2      .60   .61   .57   .59   .02   pe2     .45   .47   .48   .47   .02   hp2    .63    .62    .59   .61   .02
+de2      .69   .68   .66   .68   .02   pe3     .42   .45   .44   .44   .02   hp3    .59    .60    .56   .58   .02
+de3      .68   .69   .66   .68   .02   pe4     .38   .39   .40   .39   .01   hp4    .67    .68    .64   .66   .02
+vi3      .67   .64   .60   .64   .04   pe5     .39   .40   .40   .40   .01   hp5    .61    .58    .54   .58   .04
+ab3      .45   .46   .46   .46   .01   pe6     .35   .39   .38   .37   .02   hp6    .61    .61    .57   .60   .02
+de4      .61   .63   .63   .62   .01   ee1     .65   .64   .60   .63   .03   hp7    .59    .59    .56   .58   .02
+ab4      .55   .57   .55   .56   .01   ee2     .67   .64   .60   .64   .04
+ab5      .41   .43   .42   .42   .01   ee3     .62   .64   .67   .64   .03
+                                       ee4     .63   .64   .63   .63   .01
+                                       ee5     .72   .69   .66   .69   .03
+                                       ee6     .72   .70   .67   .70   .03
+                                       ce1     .46   .49   .47   .47   .02
+                                       ce2     .47   .51   .49   .49   .02
+                                       ce3     .45   .50   .48   .48   .03
+                                       ce4     .43   .48   .44   .45   .03
+                                       ce5     .45   .49   .46   .47   .02
+                                       ce6     .46   .49   .47   .47   .02
+
+js Job satisfaction, vi vigor, de dedication, ab absorption, pe physical engagement, ee emotional engage-
+ment, ce cognitive engagement, hp harmonious passion
+a
+    Luthans et al. (2006), b Schaufeli et al. (2006), c Rich et al. (2010), d Vallerand et al. (2003)
+
+
+   Regression influence plots (Fox and Weisberg 2011) identified data points associated
+with vigor items 1 and 3 (UWES-9, Schaufeli et al. 2006), emotional engagement item 5
+(JES, Rich et al. 2010), and harmonious passion item 7 (HPS, Vallerand et al. 2003) as
+outliers such that when removed model fit substantially improved (DR2 [ 10 %). Before
+deleting outlying data, semantic similarities accounted for 9 % (UWES-9; 27 item pairs),
+13 % (JES; 54 item pairs), and 32 % (HPS; 21 item pairs) of differences in corresponding
+survey outcome correlations. After deleting outlying data, we found that semantic simi-
+larities, as determined by the LSA application, accounted for moderate to high amounts of
+variance in survey outcomes across the three employee engagement measures: (a) 63 %
+(UWES-9; 21 item pairs), (b) 25 % (JES; 51 item pairs), and (c) 69 % (HPS; 18 item
+pairs). Figures 2 through 4 provide visual representation of the relationships between
+averaged survey outcome correlations and semantic analysis cosines, with and without
+outlying conditions.
+
+4.1 UWES-9 (Schaufeli et al. 2006)
+
+After omitting outlying data points associated with vigor items 1 and 3, average semantic
+similarity indexes demonstrated a strong relationship to corresponding average survey
+outcome correlations (see Fig. 2). Dedication items 2 (‘‘I am enthusiastic about my job’’)
+and 3 (‘‘My job inspires me’’) yielded survey outcomes that had the highest average
+
+
+123
+Construct Overlap Between Employee Engagement and Job…                                                        1161
+
+
+Table 7 Semantic similarity between employee engagement and job satisfactiona items
+UWES-9b                                Job engagementc                       Harmonious passiond
+
+Item     js1   js2   js3   M     SD    Item    js1   js2   js3   M     SD    Item   js1    js2   js3    M      SD
+
+vi1      .41   .51   .51   .48   .06   pe1     .82   .84   .92   .86   .05   hp1    .57    .57   .57    .57    .00
+vi2      .78   .86   .78   .81   .05   pe2     .87   .87   .86   .87   .01   hp2    .69    .72   .70    .70    .02
+de2      .94   .93   .92   .93   .01   pe3     .59   .62   .61   .61   .02   hp3    .58    .58   .58    .58    .00
+de3      .85   .84   .83   .84   .01   pe4     .88   .89   .88   .88   .01   hp4    .80    .82   .81    .81    .01
+vi3      .44   .63   .58   .55   .10   pe5     .87   .89   .88   .88   .01   hp5    .63    .62   .63    .63    .01
+ab3      .61   .71   .63   .65   .05   pe6     .59   .61   .61   .60   .01   hp6    .64    .64   .64    .64    .00
+de4      .71   .76   .84   .77   .07   ee1     .94   .93   .92   .93   .01   hp7    .85    .84   .83    .84    .01
+ab4      .78   .81   .87   .82   .05   ee2     .82   .89   .82   .84   .04
+ab5      .68   .75   .72   .72   .04   ee3     .94   .92   .92   .93   .01
+                                       ee4     .95   .93   .92   .93   .02
+                                       ee5     .71   .79   .71   .74   .05
+                                       ee6     .94   .93   .91   .93   .02
+                                       ce1     .77   .78   .87   .81   .06
+                                       ce2     .73   .76   .82   .77   .05
+                                       ce3     .76   .75   .83   .78   .04
+                                       ce4     .88   .89   .96   .91   .04
+                                       ce5     .82   .85   .93   .87   .06
+                                       ce6     .80   .82   .90   .84   .05
+js Job satisfaction, vi vigor, de dedication, ab absorption, pe physical engagement, ee emotional engage-
+ment, ce cognitive engagement, hp harmonious passion
+a
+    Luthans et al. (2006), b Schaufeli et al. (2006), c Rich et al. (2010), d Vallerand et al. (2003)
+
+
+
+
+Fig. 2 Scatterplot of correlations and cosines between UWES-9 (Schaufeli et al. 2006) and job satisfaction
+(Luthans et al. 2006) items, averaged across job satisfaction items. DE dedication, VI vigor, AB absorption.
+Items numbered according to Schaufeli et al. (2006). Left panel contains all 9 items. Right panel omits VI1
+and VI3
+
+
+
+
+                                                                                                   123
+1162                                                                                     K. Nimon et al.
+
+
+              rDE2 ¼ :68, rDE3 ¼ :68) with job satisfaction items. Dedication items 2 and 3
+correlations (
+also appeared to be the most semantically similar to job satisfaction items
+(cosineDE2 ¼ :93, cosineDE3 ¼ :84). In contrast, absorption items 3 (‘‘I feel happy when I
+am working intensely’’) and 5 (‘‘I get carried away when I am working’’) yielded the
+smallest average correlations ( rAB3 ¼ :46, rAB5 ¼ :42) and semantic similarity indexes
+(cosineAB3 ¼ :65, cosineAB5 ¼ :72).
+
+
+4.2 Job Engagement Scale (Rich et al. 2010)
+
+After omitting outlying data points associated with emotional engagement item 5, average
+semantic similarity indexes demonstrated a moderate relationship to corresponding aver-
+age survey outcome correlations (see Fig. 3). Emotional engagement item 6 (‘‘I am excited
+about my job’’) yielded survey outcomes that had the highest average correlation
+ rEE6 ¼ :70) with job satisfaction items. Along with emotional engagement items 1, 3, and
+(
+4, emotional engagement item 6 had the highest average semantic similarity index
+(cosineEE6 ¼:93). In contrast, physical engagement item 6 (‘‘I exert a lot of energy on my
+                                                 rPE6 ¼ :37) and semantic similarity index
+job’’) yielded the smallest average correlation (
+(cosinePE6 ¼ :60).
+
+
+4.3 Harmonious Passion Scale (Vallerand et al. 2003)
+
+After omitting outlying data points associated with harmonious passion item 7, average
+semantic similarity indexes demonstrated a strong relationship to corresponding average
+survey outcome correlations (see Fig. 4). Harmonious passion item 4 (‘‘This job reflects
+the qualities I like about myself’’) yielded survey outcomes that had the highest average
+             rHP4 ¼ :66) with job satisfaction items. Harmonious passion item 4 also ap-
+correlation (
+peared to be the most semantically similar to job satisfaction items (cosine ¼ :81). In
+
+
+
+
+Fig. 3 Scatterplot of correlations and cosines between job engagement (Rich et al. 2010) and job
+satisfaction (Luthans et al. 2006) items, averaged across job satisfaction items. E emotional engagement,
+C cognitive engagement, P physical engagement. Left panel contains all 18 items. Right panel omits E5.
+Correlations for E4, E4, P2, and P5 have been adjusted to prevent over-plotting
+
+
+123
+Construct Overlap Between Employee Engagement and Job…                                               1163
+
+
+
+
+Fig. 4 Scatterplot of correlations and cosines between harmonious passion (Vallerand et al. 2003) and job
+satisfaction (Luthans et al. 2006) items averaged across job satisfaction items. Left panel contains all 7
+items. Right panel omits item 7. Correlation for H5 have been adjusted to prevent over-plotting
+
+contrast, harmonious passion item 1 (‘‘This job allows me to live a variety of experiences’’)
+yielded the smallest average correlation (   rHP1 ¼ :52) and semantic similarity index
+(cosineHP1 ¼ :57).
+
+
+5 Discussion
+
+Based on the item-level correlations between three select measures of employee engage-
+ment and one measure of job satisfaction, this study found that semantic similarity between
+items predicted moderate to high amounts of variance in survey responses
+(R2 = 25–69 %). For the majority of UWES-9 (Schaufeli et al. 2003) and harmonious
+passion (HPS, Vallerand et al. 2003) items, over half of the variance in inter-item corre-
+lations with job satisfaction was predicted by the results from an automated LSA appli-
+cation. In the case of job engagement (JES, Rich et al. 2010), only a quarter of variance in a
+select set of survey outcomes was predicted by semantic similarities among items. Note
+that these effects are all higher than the average R2 of 22 % reported in Larsen et al.
+(2008), where inter-item correlations from 22 information system questionnaires were
+correlated to corresponding inter-item cosines, and are generally in the range of the R2s
+(47–79 %) reported by Arnulf et al. (2014) who analyzed inter-item correlations resulting
+from a set of leadership, motivation, and self-reported work outcome scales. The results of
+this study lead to two noteworthy considerations for discussion. The first consideration is
+the relationship between semantic similarity and survey response. The second consid-
+eration is that while semantic similarity is assumed to be unintentional, it may arise
+because there is a common construct to both employee satisfaction and engagement that
+goes unnamed and un-explored within the original intent of a given project.
+
+5.1 Semantic Similarity
+
+According to Larsen et al. (2008), ‘‘in cases where there is little difference between
+distances proposed by the semantic analysis of items and distances proposed by correlation
+
+                                                                                             123
+1164                                                                            K. Nimon et al.
+
+
+coefficients, the respondents are more likely to have employed shallow processing during
+questionnaire analysis’’ (p. 3). While it may be assumed that survey responses are formed
+from deep processing which ‘‘involves reflecting on the nuances and meaning of text and
+attaching personal relevance to the information provided’’, survey responses may be
+formed from shallow processing through the ‘‘use of surface features of the language
+during processing of text’’ (Larsen et al. 2008, p. 3). Because language and environment
+have co-evolved (Hauser et al. 2002), it is also possible that some language cannot be
+distinguished from experiential knowledge or attitudes; in such cases, survey items may
+solicit instinctual responses rather than personally experienced attitudes (Larsen).
+   Arnulf et al. (2014) argued, using general psychometric theory as a guide, that while
+semantic overlap is required to create internal consistency (e.g., high coefficient alpha),
+semantic overlap should not extend across scales. If semantic overlap extends across
+scales, ‘‘it is regarded as a contamination of the data since one scale will automatically
+correlate with another’’ (Arnulf et al. 2014, p. 2).
+   In the present study, semantic similarity predicted up to 69 % of variance in survey
+responses. We agree with Larsen et al. (2008) that the existence of high R2 between
+semantic similarity indices and inter-item correlations is indicative of a potential under-
+lying semantic problem that warrants further consideration. It appears that in some of the
+employee engagement measures analyzed in the present study, more work may be needed
+to order to create survey items that discriminate between job satisfaction and the still
+emerging construct of employee engagement.
+   However, it may not be readily understood whether the correlations between employee
+engagement and job satisfaction scores were an artifact of shallow processing, instinctual
+responses, or contamination of data. Considering the propositions set forth by Larsen et al.
+(2008), one might conclude that the UWES and HP correlations to job satisfaction are an
+artifact of participants employing shallow processing or responding instinctually to the
+employee engagement survey items, given the high correlation between semantic similarity
+indices and inter-item correlations. Also note than an alternative explanation to the pre-
+dictive power of the semantic similarity indices is survey fatigue. However, given that
+semantic similarities between items did not uniformly contribute to variance in survey
+outcomes, it appears that survey fatigue may not be a plausible rationale for the observed
+relationship between semantic similarities and survey outcomes. According to the survey
+semantic response theory offered by Arnulf et al. (2014), it might also be possible that the
+UWES and HP correlations to job satisfaction reflect a contamination of data due to
+semantic overlap between scales. Although semantic overlap existed between JE and job
+satisfaction items, semantic similarity was not as highly predictive of survey responses as
+in the case of UWES and HP. While clearly more research is needed to understand how
+participants respond to items in the presence of semantic similarity, it appears that in some
+cases, participants from Zigarmi et al. (2014) were not able to distinguish their responses to
+items that asked about their state of engagement at work from items that asked about their
+feelings of job satisfaction due to semantic equivalence.
+   The semantic equivalence found between measures of employee engagement and job
+satisfaction should not necessarily come as a surprise because they both focus on work and
+consider employee emotions. While employee engagement considers an employee’s active
+psychological state, job satisfaction is operationalized as a work attitude, focused at the job
+level as a temporal, general indicator of employee sentiment (Shuck et al. 2013). It would
+appear that the common domain of work, coupled with the emotional aspects of the state of
+engagement and the feeling of satisfaction from one’s work, could yield survey items that
+prevent employees from thinking deeply about their responses and instead illicit instinctual
+
+123
+Construct Overlap Between Employee Engagement and Job…                                  1165
+
+
+responses based on the language of items that has co-evolved over time with the envi-
+ronment (cf. Hauser et al. 2002; Larsen et al. 2008).
+
+5.2 Common Construct
+
+Although the JES exhibited the least semantic similarity with employee engagement
+constructs, the JES items which did show semantic similarity were concentrated in the
+emotional engagement subscale. This finding may suggest that there is a construct common
+to employee engagement and job satisfaction, namely affect. It is possible that the concept
+of affect has not been adequately conceptualized and separately measured as different
+theoretical ideas about satisfaction, engagement or work passion have evolved.
+    Brief and Weiss (2002) contended that the concept of satisfaction arose from the ‘‘study
+of nonadjustive emotional tendencies experienced by workers on the job’’ and that the
+concept of satisfaction was thought of and measured as an affect state (p. 281). They also
+asserted that over the history of satisfaction studies conducted between 1930 and 1990,
+affect at work was replaced by an approach ‘‘that was conceptually and methodologically
+narrow’’, couched exclusively in terms of job satisfaction, and ignoring more clinical or
+qualitative aspects and research methods (p. 281).
+    As previously discussed, we recognize that some scholars (e.g. Harrison et al. 2006;
+Newman et al. 2010, 2011) advocated that the concept of employee engagement is re-
+dundant to other previously established work-related constructs. This line of thinking
+considers job satisfaction, organizational commitment, and job involvement as types of job
+attitudes, where an attitude is defined as a ‘‘psychological tendency that is expressed by
+evaluating a particular entity with some degree of favor or disfavor’’ (Eagly and Chaiken
+1993, p. 1). Much of the literature summarizing developments in employee engagement
+(e.g., Albrecht 2010; Macey and Schneider 2008; Shuck et al. 2013; Zigarmi et al. 2011)
+are in agreement with job-attitude advocates when they assert that expressed evaluations or
+appraisals of work can be divided into three aspects: (a) cognitive, (b) affective, and
+(c) behavioral. For example, Zigarmi et al. (2011) presented a cognitive appraisal
+framework for understanding the formation of employee engagement or passion and ad-
+vocated that there are two decision-making aspects to the appraisal process: (a) an affective
+aspect and (b) a cognitive aspect which then leads to the formation of intentions and
+resultant behaviors. In their framework, affect is an ingredient of the work passion or
+engagement construct because the formation of engagement or work passion involves both
+the heart (feelings) and the head (cognitions), and is a product of both the cognitive and
+affective dimensions of the individual’s decision-making process.
+    It is also possible that affect is the common ‘‘ingredient’’ in each of the concepts
+associated with the nomological net of engagement. Job satisfaction would have an im-
+plicit affective component, as would employee engagement, job involvement, and orga-
+nizational commitment if defined as a job attitude. Each of these well-known job attitudes
+could have an affective component as an expressed evaluative response of favor or disfavor
+toward a particular person, place, or thing. Extending this line of logic, it may be asserted
+that researchers should continually acknowledge the well-founded separation of attitudes
+into cognition, affect, and behavior. That would mean that the concept of job satisfaction,
+for example, incorporates the measurement of both a cognitive appraisal of one’s job and
+the affective/emotional state that may accompany it (Judge and Illies 2004).
+
+
+
+
+                                                                                  123
+1166                                                                                      K. Nimon et al.
+
+
+5.3 Limitations
+
+The findings from this study must be taken within the context of the study limitations. First,
+the study was limited by one sample of respondents who tended to be managers (76 %),
+female (58 %), born between 1961 and 1981 (Gen Xers, 54.6 %) and between 1943 and
+1960 (Boomers, 41 %), and with their current company 2 years or longer (83.7 %). It is
+possible that other populations may respond to survey items differently. Second, the survey
+in the Zigarmi et al. (2014) was administered online. Although there is research that
+indicates little difference between online and paper-and-pencil administration of tests, such
+research has focused on mean differences rather than inter-item correlations. It is therefore
+possible that other techniques of survey administration may yield different results. Third,
+the study employed a general purpose semantic space as the basis for the LSA. It is
+possible that employing a semantic space designed for self-report questionnaire items may
+result in different semantic similarities indices. However, it is important to observe that
+creating such a semantic space might result in an over-fitted solution (cf. Larsen et al.
+2008). The study also only used one set of semantic similarity indices in predicting inter-
+item correlations. In contrast, Arnulf et al. (2014) analyzed four measures of semantic
+similarity indices resulting from employing two semantic algorithms across four semantic
+spaces. Fourth, the study considered only one measure of job satisfaction and three
+measures of employee engagement, which were administered at the same time. It is pos-
+sible that other measures of job satisfaction (e.g., Brayfield-Rothe Job Satisfaction Index
+Brayfield and Rothe 1951) and employee engagement (e.g., job engagement scale Saks
+2006) administered at the same or different times may yield different inter-item correla-
+tions and relationships with corresponding inter-item cosines. Future research might use
+LSA to objectively quantify the semantic similarity between measures of employee en-
+gagement and well-known work concepts such as job involvement, organizational com-
+mitment, and employee affect. The distinctions between these well-known ‘‘work
+attitudes’’ could become clearer through the technique of latent semantic analysis. For
+example, the Meyer and Allen (1991) three-component model of commitment (TCM) has
+three subscales labeled affective, continuance, and normative commitment. It is possible
+that the affective commitment scale of the TCM might show greater semantic similarity
+with a measure of job satisfaction than the other measures of commitment. Fifth, the study
+only considered the inter-item correlations between employee engagement and job satis-
+faction items. As indicated in the correlation formula (Eq. 1) for composite variables (Cx,
+Cy):
+                                                         rxi yi
+                             rCx Cy ¼ qﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ q  ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ              ð1Þ
+                                       1       n1              1       m1
+                                       n þ n rxi xj             m þ m ryi yj
+
+the correlation between two composite variables is a function of the mean inter-item
+correlation between constructs (rxi yi ), the mean intra-item correlations within constructs
+(rxi xj ; ryi yj ), and the number of items (n, m) in each composite variable (Ley 2007, p. 117).
+Given that the concern of the present study was the semantic overlap between items
+across purportedly different constructs, the present study did not take into consideration
+the intra-item level correlations which also affect the magnitude of composite correla-
+tions, which may also have been affected by semantic similarities between items of the
+same construct.
+
+
+
+
+123
+Construct Overlap Between Employee Engagement and Job…                                       1167
+
+
+5.4 Implications for Research
+
+Notwithstanding addressing the limitations of the present study, there are several consid-
+erations for future research. First, manifest validity should be integrated into the unified
+theory of construct validity so that it may be considered an integral component of survey
+development. As indicated in our work, traditional indicators of construct validity fail to
+consider the semantic structure of survey items, which could uncover important challenges
+early in the development of new measures. This seems especially salient when examining
+latent constructs such as employee engagement whose measurement is often operationalized
+by way of survey responses. Second, more research is needed that replicates and extends the
+work of the present study, Larsen et al. (2008) and Arnulf et al. (2014). It might be particularly
+beneficial to conduct a mixed-methods study to understand how participants interpret items
+when the magnitude of inter-scale correlations are about the same but the predictive power of
+semantic similarities differs from small to large. Third, it would appreciably advance research
+on manifest validity and semantic survey response theory if researchers could contribute their
+inter-item correlations to a repository for secondary data analyses (cf. Zientek and Thompson
+2009). We encourage researchers to explore this opportunity and to contribute where pos-
+sible. Fourth, future research might use LSA to objectively quantify the semantic similarity
+between measures of employee engagement and affect.
+
+5.5 Implications for Practice
+
+When interpreting survey results, our recommendation is that practitioners and scholar-
+practitioners replicate both the method and analyses reported in this paper and assess the
+degree to which semantic similarities accounts for survey responses. In some cases surveys
+may need to be designed with fewer items and scales as a means to avoid survey fatigue. In
+other cases, it may be necessary to find and develop instruments that have stronger levels
+of manifest validity.
+    As a method, practitioners and scholar-practitioners may also find LSA useful in other
+applications beyond survey data analysis. It could be used alongside other techniques to
+determine the appropriateness of aggregating data from multiple instruments. An example
+is the meta-analysis on employee engagement conducted by Christian et al. (2011). In their
+study, they aggregated data derived from multiple measures of employee engagement.
+Although they selected employee engagement instruments that met certain criteria, in-
+cluding whether the measure referred to (a) ‘‘the actual work performed’’ and (b) ‘‘a
+psychological investment in the work or in the performance of the work’’ (pp. 102–103),
+no objective data were provided that indicated how semantically similar the aggregated
+employee engagement measures were. Although a practitioner or scholar-practitioner
+could subjectively evaluate the semantic equivalence of a set of instruments, LSA offers an
+objective measure of semantic equivalence that does not rely on subjective language
+perceptions (cf. Larsen et al. 2008).
+
+
+6 Conclusion
+
+Our work sought to uncover the extent to which correlations between employee engage-
+ment and job satisfaction scores were a function of semantic equivalence. Evidence sug-
+gested that similarity indices resulting from LSA predicted moderate to large amounts of
+
+
+                                                                                      123
+1168                                                                                       K. Nimon et al.
+
+
+variance in survey responses. We offered two considerations from our findings including
+competing theoretical explanations related to semantic equivalence as well as the potential
+that affect serves as a common construct. While our work identified the need for more
+research to understand how participants respond to items in the face of semantic similarity,
+it illuminates the opportunity that data from semantic text processing algorithms have on
+informing survey design and analysis.
+    We hope our work can guide researchers who have encountered data where the con-
+ceptual distinctiveness of constructs has been called into question, due to high inter-scale
+correlations. The method employed in this study is accessible to a wide body of scholars
+and scholar-practitioners and offers a way to test for a form of validity (i.e., manifest
+validity) that has largely gone ignored or has been considered with less objective means.
+Certainly, our work is but one exploration into how semantic overlap among items explain
+variation in survey responses. There remains much work for future scholars and practi-
+tioners to examine whether correlations among constructs reflect the theoretical influence
+of one variable on another or is simply an artifact of semantic overlap.
+
+Acknowledgments The authors would like to thank the anonymous reviewers for their valuable insights,
+comments, and questions.
+
+
+
+References
+Albrecht, S. (2010). Handbook of employee engagement. Cheltenham: Edward Elgar.
+Arnulf, J. K., Larsen, K. R., Martinsen, Ø. L., & Bong, C. H. (2014). Predicting survey responses: How and
+     why semantics shape survey statistics on organizational behaviour. PLoS ONE, 9(9), e106361. doi:10.
+     1371/journal.pone.0106361
+Bellegarda, J. R. (1998). A multispan language modeling framework for large vocabulary speech recog-
+     nition. IEEE Transactions on Speech and Audio Processing, 6, 456–467.
+Brayfield, A. H., & Rothe, H. F. (1951). An index of job satisfaction. Journal of Applied Psychology, 35,
+     307–311. doi:10.1037/h0055617
+Brief, A. P., & Weiss, H. M. (2002). Organizational behavior: Affect in the workplace. Annual Review of
+     Psychology, 3, 297–307.
+Brown, S. P., & Leigh, T. W. (1996). A new look at psychological climate and its relationship to job
+     involvement, effort, and performance. Journal of Applied Psychology, 81, 358–368. doi:10.1037/0021-
+     9010.81.4.358
+Cammann, C., Fichman, M., Jenkins, G. D, Jr, & Klesh, J. R. (1983). Assessing the attitudes and perceptions
+     of organizational members. In S. E. Seashore, E. E. Lawler III, P. H. Mirvis, & C. Cammann (Eds.),
+     Assessing organizational change: A guide to methods, measures, and practices (pp. 71–138). New
+     York: Wiley.
+Christian, M. S., Garza, A. S., & Slaughter, J. E. (2011). Work engagement: A quantitative review and test
+     of its relations with task and contextual performance. Personnel Psychology, 64, 89–136. doi:10.1111/
+     j.1744-6570.2010.01203.x
+Cooper-Hakim, A., & Viswesvaran, C. (2005). The construct of work commitment: Testing an integrative
+     framework. Psychological Bulletin, 131, 241–259. doi:10.1037/0033-2909.131.2.241
+Cooper-Thomas, H. D., Leighton, N., Xu, J., Knight-Turvey, N., & Albrecht, S. (2010). Measuring change:
+     Does engagement flourish, fade, or stay true. Handbook of employee engagement. doi:10.4337/
+     9781849806374.00013
+de Bruin, G. P., & Henn, C. M. (2013). Dimensionality of the nine-item Utrecht Work Engagement scale
+     (UWES-9). Psychological Reports: Human Resources & Marketing, 112, 1–12. doi:10.2466/01.03.
+     PRO.112.3
+Dennis, S. (2011). How to use the LSA Web site. In T. K. Landauer, D. S. McNamara, S. Dennis, & W.
+     Kintsch (Eds.), Handbook of latent semantic analysis (pp. 57–70). New York: Routledge.
+Eagly, A. H., & Chaiken, S. (1993). The psychology of attitudes. Belmont, CA: Wadsworth.
+Fox, J., & Weisberg, S. (2011). An R companion to applied regression. Thousand Oaks, CA: Sage.
+
+
+
+
+123
+Construct Overlap Between Employee Engagement and Job…                                                   1169
+
+
+Furnas, G. W., Landauer, T. K., Gomez, L. M., & Dumais, S. T. (1987). The vocabularly problem in human-
+     system communication. Communications of the Association for Computing Machinery, 30, 964–971.
+     doi:10.1145/32206.32212
+Hackman, J. R., & Oldham, G. R. (1980). Work redesign. Reading, MA: Addison-Wesley.
+Harrison, D. A., Newman, D. A., & Roth, P. L. (2006). How important are job attitudes? Meta-analytic
+     comparisons of integrative behavioral outcomes and time sequences. The Academy of Management
+     Journal, 49, 305–325. doi:10.5465/AMJ.2006.20786077
+Harter, J. K., Schmidt, F. L., & Hayes, T. L. (2002). Business-unit-level relationship between employee
+     satisfaction, employee engagement, and business outcomes: A meta-analysis. Journal of Applied
+     Psychology, 87, 268–279. doi:10.1037//0021-9010.87.2.268
+Hauser, M. D., Chomsky, N., & Fitch, W. T. (2002). The faculty of language: What is it, who has it, and how
+     did it evolve? Science, 298, 1569–1579. doi:10.1126/science.298.5598.1569
+Ho, V. T., Wong, S., & Lee, C. H. (2011). A tale of passion: Linking job passion and cognitive engagement
+     to employee work performance. Journal of Management Studies, 48, 26–47. doi:10.1111/j.1467-6486.
+     2009.00870X
+Judge, T. A., & Illies, R. (2004). Affect and job satisfaction: A study of their relationship at work and home.
+     Journal of Applied Psychology, 89, 661–673. doi:10.1037/0021-9010.89.4.661
+Kahn, W. (1990). Psychological conditions of personal engagement and disengagement at work. Academy of
+     Management Journal, 33, 692–724. doi:10.2307/256287
+Kline, P. (1979). Psychometrics and psychology. London: Academic Press.
+Landauer, T. K. (2011). LSA as a theory of meaning. In T. K. Landauer, D. S. McNamara, S. Dennis, & W.
+     Kintsch (Eds.), Handbook of latent semantic analysis (pp. 71–88). New York: Routledge.
+Larsen, K., Nevo, D., & Rich, E. (2008). Exploring the semantic validity of questionnaire scales. In
+     Proceedings of the 41st annual Hawaii International Conference on System Sciences (pp. 1–10).
+     Waikoloa, HI.
+Lawler, E. E., & Hall, D. T. (1970). Relationship of job characteristics to job involvement, satisfaction, and
+     intrinsic motivation. Journal of Applied Psychology, 54, 305–312. doi:10.1037/h0029692
+Ley, P. (2007). Quantitative aspects of psychological assessments. Retrieved from http://www.
+     psychassessment.com.au/
+Locke, E. A. (1976). The nature and causes of job satisfaction. In M. D. Dunnette (Ed.), Handbook of
+     industrial and organizational psychology (pp. 1297–1343). Chicago: Rand McNally.
+Luthans, F., Zhu, W., & Avolio, B. J. (2006). The impact of efficacy on work attitudes across cultures.
+     Journal of World Business, 41, 121–132. doi:10.1016/j.jwb.2005.09.003
+Macey, W. H., & Schneider, B. (2008). The meaning of employee engagement. Industrial and Organiza-
+     tional Psychology, 1, 3–30. doi:10.1111/j.1754-9434.2007.0002.x
+Martin, D. I., & Berry, M. W. (2011). Mathematical foundations behind latent semantic analysis. In T.
+     K. Landauer, D. S. McNamara, S. Dennis, & W. Kintsch (Eds.), Handbook of latent semantic analysis
+     (pp. 35–56). New York: Routledge.
+Maslach, C., Schaufeli, W. B., & Leiter, M. P. (2001). Job burnout. Annual Review of Psychology, 52,
+     397–422. doi:10.1111/1467-8721.01258
+Mathieu, J. E., & Farr, J. L. (1991). Further evidence for the discriminant validity of measures of organi-
+     zational commitment, job involvement, and job satisfaction. Journal of Applied Psychology, 76,
+     127–133. doi:10.1037/0021-9010.76.1.127
+Meyer, J. K., & Allen, N. J. (1991). A three complement conceptualization of organizational commitment.
+     Human Resource Management Review, 1, 64–89.
+Newman, D. A., Joseph, D. L., & Hulin, C. L. (2010). Job attitudes and employee engagement: considering
+     the attitude ‘‘A-factor’’. In S. L. Albrecht (Ed.), The handbook of employee engagement: Perspectives,
+     issues, research, and practice (pp. 43–61). Northampton, MA: Edward Elgar.
+Newman, D. A., Joseph, D. L., Sparkman, T. E., & Carpenter, N. C. (2011). Invited reaction: The work
+     cognition inventory: Initial evidence of construct validity. Human Resource Development Quarterly,
+     22, 37–47. doi:10.1002/hrdq.20065
+Nimon, K., Zigarmi, D., Houson, D., Witt, D., & Diehl, J. (2011). The work cognition inventory: Initial
+     evidence of construct validity. Human Resource Development Quarterly, 22, 7–35. doi:10.1002/hrdq.
+     20064
+Parker, S. K., & Griffin, M. A. (2011). Understanding active psychological states: Embedding engagement
+     in a wider nomological net and closer attention to performance. European Journal of Work and
+     Organizational Psychology, 20(1), 60–67. doi:10.1080/1359432X.2010.532869
+Quesada, J. (2011). Creating your own LSA spaces. In T. K. Landauer, D. S. McNamara, S. Dennis, & W.
+     Kintsch (Eds.), Handbook of latent semantic analysis (pp. 71–88). New York: Routledge.
+
+
+
+
+                                                                                                  123
+1170                                                                                         K. Nimon et al.
+
+
+Quinn, R. P., & Shepard, L. J. (1974). Quality of employee survey. Ann Arbor: University of Michigan,
+     Institute for Social Research.
+Rehder, B., Schreiner, M. E., Wolfe, M. B., Laham, D., Landauer, T. K., & Kintsch, W. (1998). Using latent
+     semantic analysis to assess knowledge: Some technical considerations. Discourse Processes, 25,
+     337–354.
+Rich, B., LePine, J., & Crawford, E. (2010). Job engagement: Antecedents and effects on job performance.
+     The Academy of Management Journal, 53, 617–635. doi:10.5465/AMJ.2010.51468988
+Rigg, J. (2013). Worthwhile concept or old wine? A review of employee engagement and related constructs.
+     American Journal of Business and Management, 2, 31–36. doi:10.11634/216796061302229
+Rothbard, N. P. (2001). Enriching or depleting? The dynamics of engagement in work and family roles.
+     Administrative Science Quarterly, 46, 655–684. doi:10.2307/3094827i
+Russell, J. A., & Barrett, L. F. (1999). Core affect, prototypical emotional episodes, and other things called
+     emotion: Dissecting the elephant. Journal of Personality and Social Psychology, 76, 805–819. doi:10.
+     1037/0022-3514.76.5.805
+Saks, A. M. (2006). Antecedents and consequences of employee engagement. Journal of Managerial
+     Psychology, 21, 600–619. doi:10.5465/AMJ.2010.51468988
+Schaufeli, W. B., & Bakker, A. B. (2003). Test manual for the Utrecht Work Engagement Scale. Unpub-
+     lished manuscript, Utrecht University, The Netherlands. Retrieved from http://www.schaufeli.com
+Schaufeli, W. B., Bakker, A. B., & Salanova, M. (2006). The measurement of work engagement with a short
+     questionnaire: A cross-national study. Educational and Psychological Measurement, 66, 701–716.
+     doi:10.1177/0013164405282471
+Schaufeli, W. B., Leiter, M. P., Maslach, C., & Jackson, S. E. (1996). Maslach burnout inventory-general
+     survey. In C. Maslach, S. E. Jackson, & M. P. Leiter (Eds.), The Maslach burnout inventory-test
+     manual (3rd ed.). Palo Alto, CA: Consulting Psychologists Press.
+Schaufeli, W. B., Salanova, M., Gonzalez-Romá, V., & Bakker, A. B. (2002). The measurement of en-
+     gagement and burnout: A confirmative analytic approach. Journal of Happiness Studies, 3, 71–92.
+     doi:10.1023/A:1015630930326
+Shirom, A. (2003). Feeling vigorous at work? The construct of vigor in the study of positive affect in
+     organizations. In D. Ganster & P. L. Perrewe (Eds.), Research in organizational stress and well-being
+     (Vol. 3, pp. 135–165). Greenwich, CT: JAI Press.
+Shuck, B., Ghosh, R., Zigarmi, D., & Nimon, K. (2013). The jingle jangle of employee engagement: Further
+     exploration of the emerging construct & implications for workplace learning and performance. Human
+     Resource Development Review, 12, 11–35. doi:10.1177/1534484312463921
+Shuck, B., Nimon, K., & Zigarmi, D. (2014). Employee engagement and HRD: Exploring the philosophical
+     underpinnings, measurement, and interventions. In N. E. Chalofsky, T. S. Rocco, & M. L. Morris
+     (Eds.), The handbook of human resource development: The discipline and the profession (pp.
+     605–622). Hoboken, NJ: Wiley.
+Shuck, B., & Reio, T. (2013). Employee engagement and wellbeing: A moderation model and implications
+     for practice. Journal of Leadership and Organizational Studies. Advanced online publication. doi:10.
+     1177/1548051813494240
+Shuck, B., Reio, T., & Rocco, T. (2011). Employee engagement: An antecedent and outcome approach to
+     model development. Human Resource Development International, 14, 427–445. doi:10.1080/
+     13678868.2011.601587
+Vallerand, R. J., Blancard, C., Mageau, G. A., Loestner, R., Leonard, C. R., Leonard, M., et al. (2003). Les
+     Passions de l’Ame: On obsessive and harmonious passion. Journal of Personality and Social Psy-
+     chology, 86, 757.
+Wefald, A. J., & Downey, R. G. (2009). Construct dimensionality of engagement and its relationship with
+     satisfaction. Journal of Psychology, 143, 91–111. doi:10.3200/JRLP.143.1.91-112
+Wefald, A. J., Mills, M. J., & Smith, M. R. (2011). A comparison of three job engagement measures:
+     Examining their factorial and criterion-related validity. Applied Psychology: Health and Well-Being, 4,
+     67–90. doi:10.1111/j.1758-0854.2011.01059.X
+Xanthopoulou, D., Bakker, A. B., Demerouti, E., & Schaufeli, W. B. (2009). Work engagement and
+     financial returns: A diary study on the role of job and personal resources. Journal of Occupational and
+     Organizational Psychology, 82, 183–200. doi:10.1348/096317908X285633
+Yalabik, Y. Z., Popaitoon, P., Chowne, J. A., & Rayton, B. A. (2013). Work engagement as a mediator
+     between employee attitudes and outcomes. The International Journal of Human Resource Manage-
+     ment, 24, 2799–2823. doi:10.1080/09585192.2013.763844
+Zientek, L. R., & Thompson, B. (2009). Matrix summaries improve research reports: Secondary analyses
+     using published literature. Educational Researcher, 38, 343–352. doi:10.3102/0013189X09339056
+
+
+
+
+123
+Construct Overlap Between Employee Engagement and Job…                                              1171
+
+
+Zigarmi, D., Nimon, K., Houson, D., Witt, D., & Diehl, D. (2011). A preliminary field test of an employee
+     work passion model. Human Resource Development Quarterly, 22, 195–221. doi:10.1002/hrdq.20076
+Zigarmi, D., Nimon, K., & Shuck, B. (2014). Employee engagement: Job attitude or mediator between job
+     attitudes and affect? In D. Chapman & K. Guerdat (Eds.), Proceedings of the Academy of Human
+     Resource Development 2014 international research conference in the America’s. AHRD: Houston, TX.
+
+
+
+
+                                                                                            123
+

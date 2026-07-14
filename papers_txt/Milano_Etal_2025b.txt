@@ -1,0 +1,968 @@
+Original Research Article
+
+Human Expertise and Large
+Language Model
+Embeddings in the Content
+Validity Assessment of
+Personality Tests
+
+Educational and Psychological
+Measurement
+1–24
+Ó The Author(s) 2025
+Article reuse guidelines:
+sagepub.com/journals-permissions
+DOI: 10.1177/00131644251355485
+journals.sagepub.com/home/epm
+
+Nicola Milano1 , Michela Ponticorvo1 and Davide Marocco1
+Abstract
+In this article, we explore the application of Large Language Models (LLMs) in assessing the content validity of psychometric instruments, focusing on the Big Five
+Questionnaire (BFQ) and Big Five Inventory (BFI). Content validity, a cornerstone of
+test construction, ensures that psychological measures adequately cover their
+intended constructs. Using both human expert evaluations and advanced LLMs, we
+compared the accuracy of semantic item-construct alignment. Graduate psychology
+students employed the Content Validity Ratio to rate test items, forming the human
+baseline. In parallel, state-of-the-art LLMs, including multilingual and fine-tuned models, analyzed item embeddings to predict construct mappings. The results reveal distinct strengths and limitations of human and AI approaches. Human validators
+excelled in aligning the behaviorally rich BFQ items, while LLMs performed better
+with the linguistically concise BFI items. Training strategies significantly influenced
+LLM performance, with models tailored for lexical relationships outperforming
+general-purpose LLMs. Here we highlight the complementary potential of hybrid validation systems that integrate human expertise and AI precision. The findings underscore the transformative role of LLMs in psychological assessment, paving the way
+for scalable, objective, and robust test development methodologies.
+Keywords
+content validity, Big Five Questionnaire, Big Five Inventory, embeddings, natural language processing, large language models
+1
+
+Department of Humanistic Studies, Natural and Artificial Cognition Laboratory ‘‘Orazio Miglino,’’
+University of Naples Federico II, Naples, Italy
+
+Corresponding Author:
+Nicola Milano, Department of Humanistic Studies, Natural and Artificial Cognition Laboratory ‘‘Orazio
+Miglino,’’ University of Naples Federico II, via Porta di Massa 1, Naples 80125, Italy.
+Email: nicola.milano@unina.it
+
+2
+
+Educational and Psychological Measurement 00(0)
+
+Introduction
+Recent advancements in artificial intelligence, particularly the development of
+transformer-based Large Language Models (LLMs) such as Generative Pre-trained
+Transformer (GPT) and Bidirectional Encoder Representations from Transformer
+(BERT) (Brown et al., 2020; Radford et al., 2018, 2019; Vaswani et al., 2017), have
+revolutionized the field of Natural Language Processing (NLP) and introduced novel
+methodologies in psychological research. These models, trained on vast corpora of
+text, create high-dimensional semantic embeddings that capture the contextual and
+linguistic nuances of sentences rather than individual words. Such capabilities have
+paved the way for innovative applications in psychometrics, including the semantic
+analysis of test items to predict and validate latent factorial structures in personality
+assessments. The field of self-report language-based psychological assessment has
+rapidly embraced the use of LLMs. Particularly, due to the great number of tests and
+items freely available, and to the possible impact for a general audience, the domain
+of personality assessment provides a suitable benchmark to introduce new
+approaches. Within a relatively short span, numerous studies have emerged
+(Abdurahman et al., 2024; Hitsuwari et al., 2024; Kjell et al., 2022; Nilsson et al.,
+2024), highlighting the potential of LLMs in this domain. Research has shown that
+LLM-derived embeddings surpass traditional approaches, such as bag-of-words, in
+predicting responses to personality items (Abdurahman et al., 2024). Moreover,
+recent studies have demonstrated how LLMs can effectively cluster semantically
+similar items under their hypothesized constructs, achieving alignment with humanderived factorial structures without relying on response data (Guenole et al., 2024;
+Milano et al., 2025; Wulff & Mata, 2025, Hussain et al., 2024). Despite their power,
+these models are trained on a general corpus of data to be as broadly applicable as
+possible, aiming to capture diverse aspects of human knowledge. However, to adapt
+such models to a specific domain, they are re-trained on specialized datasets through
+a process known as fine-tuning. Fine-tuning a language model for semantic similarity
+involves adapting a pre-trained model using a dataset of sentence or text pairs
+labeled with similarity scores or binary indicators of semantic equivalence.
+With the growing interest in these approaches within psychology, fine-tuned models specifically tailored for personality assessment have been proposed. A targeted
+approach—focusing on the language and terminology commonly used in personality
+research—may enhance the performance of language models in analyzing
+personality-related items. Recent studies have shown promising results in this direction (Hommel & Arslan, 2024; Wulff & Mata, 2025).
+Despite the increasing interest within the psychological community, a comprehensive comparison of the recently proposed models is still lacking. Moreover, drawing
+parallels with human expertise in the field could improve the reliability and applicability of these models in psychological assessment.
+In this study, we propose to evaluate several recent language models for semantic
+text analysis, along with two fine-tuned approaches specifically designed for
+
+Milano et al.
+
+3
+
+personality assessment. Additionally, we introduce a novel model fine-tuned from
+scratch to examine the impact of fine-tuning on performance in personality assessment tasks.
+In this paper, we will focus on content validity that assesses whether the test adequately covers the domain of interest and on how LLMs can help to answer content
+validity-related questions. Content validity reflects the extent to which a measurement tool adequately covers the entire domain of the construct it intends to assess,
+and it is therefore linked on how items cover the construct.
+Unlike other types of validity, which often rely on statistical analyses, content
+validity is evaluated through expert judgment, focusing on the representativeness and
+comprehensiveness of test items within the defined construct (Haynes et al., 1995).
+In practice, establishing content validity involves defining the construct thoroughly
+and ensuring that all relevant facets are reflected in the test items. Lack of adequate
+content validity may lead to gaps in assessment coverage, meaning the test could fail
+to capture essential aspects of the construct, undermining the interpretability of the
+results and any decisions based on them (Downing & Haladyna, 2004).
+The interest in this aspect of validity, which is indeed essential for ensuring that
+psychometric tests are both representative and comprehensive in relation to their
+intended constructs, has grown in recent years (El-Den et al., 2020; Spoto et al.,
+2023).
+We think that LLM application in this domain could mark a significant leap in
+the assessment of content validity, enabling the identification of redundancies or
+gaps in test coverage through purely algorithmic means. By integrating LLM-based
+methodologies into psychometric test design, researchers can augment traditional
+validation approaches with scalable, replicable, and objective tools that enhance the
+rigor of psychological evaluations. We propose to integrate such methods with more
+traditional ones, as the expert judgment hinted at before, to provide more robust indications. However, it is essential to explore both the strengths and limitations of these
+models in comparison to human experts, as this represents the critical focus of our
+work. Whereas language models offer the potential for scalability, objectivity, and
+replicability, human experts bring contextual understanding, nuanced judgment, and
+domain-specific knowledge that algorithms may lack. By evaluating the capabilities
+of language models against expert judgments, this study aims to identify where artificial intelligence excels, where it falls short, and how the two approaches can complement one another to enhance the assessment of content validity. Along with the
+human experts, who often are involved in assessing content validity, we wish to
+investigate if modern artificial intelligence techniques, particularly methods developed for the analysis of texts and language, can enhance and help in the assessment
+of the process of content validation.
+More in detail, in our study we investigate how language models can enhance the
+processing and content validation of personality tests using two well-established
+instruments: the Big Five Questionnaire (BFQ) (Caprara et al., 1993) and the Big
+Five Inventory (BFI) (John et al., 1991). These tests were chosen because they are
+
+4
+
+Educational and Psychological Measurement 00(0)
+
+among the most widely used tools for measuring personality and capture distinct
+aspects of test construction through linguistic approaches. The BFQ focuses on
+describing behaviors and tendencies through language, while the BFI is designed to
+reveal nuances in personality using concise lexical descriptors.
+Starting from these two tests, we analyze the differences in content understanding
+between language models and humans. First, a group of graduate psychology students served as expert validators, rating each test item according to its alignment
+with the factors being measured, using the Content Validity Ratio (CVR) as a metric.
+Using these expert ratings as a baseline, we evaluated the performance of state-ofthe-art language models in assessing content validity compared to human experts.
+Because our experts are Italian, we utilized the Italian versions of the two tests for
+the expert validation process. Subsequently, we tested the language models using
+both the Italian and English versions of the tests to evaluate their performance across
+different languages.
+Additionally, we propose a novel language model specifically designed for personality assessment, which utilizes the International Personality Item Pool (IPIP) during
+the model training. We compare the performance of our model against existing models developed for personality research purposes.
+We analyze in depth how these models work, confronting with humans and showing weak and stronger points in the contest of content validity. We observe that, if
+correctly applied, these models have the potential to reduce the dependency on subjective evaluations, enhance reproducibility, and offer a new procedure to be adopted
+to streamline the content validation process in psychometric test development.
+
+Methods
+In this section, we outline the methods used to evaluate content validity through both
+human experts and semantic analysis models. We begin by providing a detailed
+description of the tests and the procedures employed to assess content validity using
+expert evaluations. Following this, we introduce the language models used in the
+study and describe the process of developing a language model specifically tailored
+for personality assessment. Finally, we present the methods used to automatically
+assess content validity of questionnaire items using these language models.
+
+Content Validity of the BFQ and BFI
+To evaluate content validity using both human validators and AI-based methods, we
+selected two well-established and validated personality assessments: the BFQ and the
+BFI.
+The BFQ is a psychometric tool developed by Caprara et al. (1993) to measure
+personality traits according to the Five-Factor Model. It assesses Extraversion,
+Agreeableness, Conscientiousness, Emotional Stability (Neuroticism), and Openness
+to Experience, each divided into two facets for a detailed profile. Unlike other
+
+Milano et al.
+
+5
+
+personality measures like the BFI or NEO-IPIP, the BFQ emphasizes behavioral
+descriptions rather than abstract lexical traits, focusing on observable actions and
+tendencies.
+The questionnaire consists of 132 items rated on a 5-point Likert scale. However,
+due to its length and to the lack of any validated short-form, we randomly selected
+50 of the 132 items, with 10 items for each construct, to maintain participant
+engagement.
+The BFQ is particularly valued for its focus on behaviors, which distinguishes it
+from other trait-focused tools; we chose BFQ for this peculiar property that differentiates it from other personality tests and permits us to analyze the level of validity
+of these kinds of items in human and artificial validators.
+The BFI is a 44-item questionnaire designed to measure the Big Five personality
+traits—Extraversion, Agreeableness, Conscientiousness, Neuroticism, and Openness
+(John et al., 1991). It uses short, lexical descriptors (e.g., ‘‘I see myself as someone
+who is talkative’’), making it concise and easy to administer. The BFI is widely used
+in research for its brevity and general applicability, though it lacks the detailed subdimensions provided by instruments like the NEO-IPIP.
+The main difference between the BFI and BFQ lies in their focus: the BFI uses
+lexical terms to define personality traits, while the BFQ emphasizes behavioral
+descriptions of actions and tendencies. This makes the BFQ more aligned with practical and observable behaviors, whereas the BFI provides a more abstract, languagebased assessment of traits. Additionally, the BFQ includes subdimensions for each
+trait, offering greater specificity compared to the BFI’s general approach. The complete list of the items used is reported in the Supplemental Material.
+
+Participants
+For this study, we assembled a panel of 10 expert raters recruited among graduate
+students in psychology at the University of Naples Federico II (60% female, 40%
+male). All participants possessed specific knowledge in the domain of personality
+psychology, having completed multiple relevant courses during their academic training. In addition, they were provided with detailed definitions of the five personality
+constructs, which were thoroughly explained prior to the task.
+For both questionnaires, human experts rated each item based on its alignment
+with the five constructs. The level of agreement among the experts was then evaluated using the CVR framework. It is important to note that neither the BFI nor the
+BFQ underwent CVR analysis during its original validation processes, and we are
+not aware of works that have made these kinds of analyses so we use our results the
+as unique baseline. For this reason, we assess the CVR of these tests using expert
+validators for the first time, without having a baseline for comparison.
+
+6
+
+Educational and Psychological Measurement 00(0)
+
+Content Validity Ratio
+The CVR is a statistic used in psychometrics to quantify how much agreement there
+is among experts regarding the relevance of test items to hypothesized underlying
+constructs (Lawshe, 1975). The CVR is commonly used to assess the content validity
+of tests, questionnaires, or surveys to ensure that the items measure what they are
+intended to measure. It is especially useful in early stages of test development to
+refine or select items that are valid representations of the construct being measured.
+A panel of subject matter experts, also called validators, reviews each item on the
+test or questionnaire. For each item, they determine whether it is essential, useful but
+not essential, or not necessary for assessing the target construct. For each item, the
+CVR is calculated based on the proportion of experts who consider the item to be
+essential, formally:
+CVR =
+
+(ne  N =2)
+N =2
+
+where ne is the number of experts who rated the item as essential, and N is the total
+number of experts. The CVR ranges from 21 to 1.
+For an item to be deemed valid, its CVR must meet or exceed a minimum threshold, which varies based on the number of experts involved. Lawshe (1975) provided
+a table of critical values for different panel sizes, and, according to Lynn (1986),
+using more than 10 experts is likely unnecessary. In our study, we used the CVR calculated from a panel of 10 experts as the baseline for an automated content validity
+procedure. This procedure was developed using deep learning models to analyze sentences, specifically the test items in our case.
+
+Data Analysis
+We calculated the CVR for each item across all dimensions. This approach allowed
+us to assess the level of agreement between the validators and the theoretical constructs. For each dimension, we also reported the accuracy with which items were
+correctly classified by the validators. Although this is not the standard use of CVR—
+which is typically employed to examine the relationship between an item and the
+overarching construct (in this case, personality)—our method enables us to identify
+quantitatively the dimension with which each item aligns most closely. Formally, we
+calculated the overall accuracy as follows:
+Total accuracy =
+
+n
+1X
+Correcti
+n i = 1 Totali
+
+i
+where n is the number of test dimensions, and Correct
+Totali represents the proportion of
+items correctly assigned to each dimension. In addition to accuracy, we report the
+specific construct each item was assigned to. All the analyses based on validator
+
+Milano et al.
+
+7
+
+responses were then replicated using various LLMs, each trained with different
+approaches. In the following section, we introduce the general concepts underlying
+computational embeddings and present our model, specifically trained for personality
+item assessment.
+
+Computational Embeddings
+In NLP, embeddings represent words, phrases, or even entire sentences as dense vectors of numbers in a high-dimensional space. These vectors are designed to capture
+the meaning, context, and relationships between words or sentences in a way that
+machine learning models can understand and process (Bengio et al., 2003; Brown
+et al., 2020). The values in these vectors are not arbitrary but are carefully structured
+to encode semantic and contextual information from text. By training embeddings on
+large text datasets, they can encapsulate rich information about language, enabling
+algorithms to convert symbolic forms (like words) into sub-symbolic representations
+(vectors) for effective processing.
+Traditional word embeddings, such as Word2Vec (Mikolov et al., 2013), have a
+key limitation: they assign a single static vector to each word, regardless of its context. This means that the same embedding is used for a word, even if its meaning
+varies depending on the sentence. However, with the advent of transformer-based
+models (Vaswani et al., 2017), contextual embeddings have become the standard.
+Models like BERT (Devlin et al., 2019) and GPT (Conneau et al., 2017) produce
+embeddings that dynamically adjust based on the context in which a word appears,
+allowing them to generate semantically meaningful representations of both words
+and sentences (Akhtar et al., 2019; Liu et al., 2019).
+In this work, we used embeddings derived from Sentence-BERT (SBERT)
+(Reimers & Gurevych, 2020), a class of BERT-based models specifically trained to
+calculate the semantic similarity between sentences. BERT is pre-trained on large
+corpora, including the English Wikipedia and the Google Books dataset, using two
+main tasks: predicting randomly masked words in a sentence and predicting whether
+two sentences follow each other. After pre-training, BERT can be fine-tuned with
+additional output layers to handle specific tasks.
+SBERT extends BERT by optimizing it for generating semantically meaningful
+sentence embeddings. It employs Siamese Neural Networks, a structure that trains on
+pairs or triplets of sentences, adjusting the embeddings to position semantically similar sentences closer together in the embedding space while pushing dissimilar sentences further apart. Over time, several improved versions of the base SBERT model
+have been developed, with benchmarks comparing their performance in tasks like
+sentence similarity (Reimers & Gurevych, 2020).
+In our study, we utilized a transformer-based BERT model: Microsoft’s MPNet
+(Masked and Permuted Pre-trained Network) and its variant, Multilingual MPNet
+(Song et al., 2020). MPNet, a member of the BERT family, is designed to generate
+high-quality embeddings for various NLP tasks, including sentence similarity,
+
+8
+
+Educational and Psychological Measurement 00(0)
+
+classification, and information retrieval. It is trained on large-scale datasets consisting of diverse sources, providing a general-purpose understanding of language. The
+multilingual version of MPNet, however, is trained on smaller datasets tailored to
+multiple languages.
+Since our validators are Italian native speakers and the tests we used were in
+Italian, we initially employed the multilingual version of MPNet. To investigate
+potential differences, we translated the items into English and tested them with the
+English version of MPNet. We anticipated that the English model would perform
+better, as it benefits from significantly larger training datasets compared to the multilingual version. This discrepancy is a known issue (Li et al., 2024; Wu & Dredze,
+2020), as English-language models are often trained on far more extensive corpora
+than those available for other languages. To address this, we conducted experiments
+with both the multilingual and English MPNet models.
+Furthermore, our ultimate goal is to develop a specialized personality model capable of capturing the semantic similarity between personality-related items. This
+domain-specific task differs from the general-purpose focus of standard language
+models trained on diverse sources. To achieve this, we fine-tuned the English MPNet
+model specifically for understanding personality assessment items, leveraging the
+availability of large-scale English datasets for training.
+In the next section, we review previous attempts to construct fine-tuned models
+for personality assessment and introduce our approach.
+
+Creating the Personality Fine-Tuned Model
+The first attempts to fine-tune language models for predicting relationships among
+personality items has been carried by Hommel and Arslan (2024) and Wulff and
+Mata (2025).
+Hommel and Arslan (2024) developed the SurveyBot3000 model by fine-tuning a
+pre-trained MPNet model, employing a multi-stage process to address nuanced
+semantic relationships, including polarity calibration and domain-specific adaptation.
+In the first stage, they modified the Stanford Natural Language Inference corpus,
+adding directionality to cosine similarities for contradictory pairs to better reflect
+opposing psychological constructs, such as introversion versus extraversion. The second stage involved training on a curated dataset of 90,424 item pairs drawn from
+publicly available personality inventories, ensuring high-quality representation and
+rigorous cross-validation by partitioning the data into training, validation, and test
+sets with no overlap. They further tested the model on a robust holdout dataset of
+87,153 item pairs from Bainbridge et al. (2022) to evaluate generalizability. Hommel
+and Arslan also cleaned item texts to eliminate unrelated linguistic features, such as
+adverbs of frequency, to ensure the model captured only trait-relevant semantics.
+Wulff and Mata (2025) fine-tuned MPNet to adapt it to predicting unsigned correlations between personality items, irrespective of whether they were positively or
+negatively correlated. Their approach relied on diverse datasets, including four
+
+Milano et al.
+
+9
+
+inventories from the Open-Source Psychometrics Project (16PF, BIG5, FFM, and
+HEXACO), data from the NEO inventory by Kajonius and Johnson, and the EugeneSpringfield Community Sample, covering over 1 million responses in total. They
+designed a training set of 200,000 examples by pairing items and using absolute
+Pearson correlations as the target variable. Special care was taken to standardize text
+formatting across datasets, such as removing the pronoun ‘‘I’’ from item phrasing to
+ensure uniformity. They balanced the data by oversampling high-correlation pairs to
+counteract their rarity in the raw datasets, and used the sentence-transformers library
+to fine-tune MPNet with a CosineSimilarityLoss function.
+Our approach is more straightforward; we do not preprocess the data and do not
+implement polarity-specific adjustments to enhance model sensitivity to reverseditems as Hommel and Arslan (2024). We do not use human correlation as target, as in
+Wulff and Mata (2025); but we rely uniquely on semantic similarity between items.
+To create a model as capable as possible of classifying semantically similar items
+together, we developed a method to fine-tune the Microsoft all-MPNet model on personality items. We used the IPIP as the dataset to fine-tune the model.
+IPIP is an open-access collection of personality items, scales, and measures used
+for psychological research and assessment. It was designed to provide researchers
+and practitioners with a resource to measure various personality traits using standardized tools. The IPIP is especially valuable because it offers a wide range of items
+based on well-established personality models. Additionally, IPIP is completely opensource, which is why we used this database as the training set to fine-tune the
+general-purpose model on personality items.
+The IPIP database contains over 3,320 items derived from more than 250 scales.
+Since our goal was to create a model specifically trained to detect similarities
+between personality items, we generated all possible item pairs from the IPIP dataset,
+excluding repetitions and identical items (i.e., no self-pairing). Formally:
+ 
+n!
+n
+=
+k
+k!ðn  k Þ!
+where n is the total number of items (in our case 3,250), and k is the number of items
+for each combination, in this case 2 for a couple. This led to over 15 million possible
+item pairs.
+In order to fine-tune the model, we needed to label the item pairs with target similarity scores to train our language model. To achieve this, we used a cross-encoder
+neural network. Cross encoders are a type of architecture primarily used in NLP tasks
+such as text pair classification, sentence similarity, and ranking tasks. Cross encoders
+jointly encode two input texts to capture interactions between them and output a similarity score for the input sentences. For our cross encoder, we used the Microsoft MSMARCO-MiniLM-L12-v2 model, a general-purpose model trained to predict similarities between natural language sentences in a range from 21 (very dissimilar sentences) to + 1 (very similar sentences).
+
+10
+
+Educational and Psychological Measurement 00(0)
+
+Once the dataset based on IPIP was created, we fine-tuned the base all-MPNet
+model. Details of the training procedure are provided in the Supplemental Material.
+It is important to note that none of the items from the BFI or BFQ are present in the
+IPIP database, so we did not need to divide the dataset into training and testing sets.
+In Figure 1 a schematic representation of the fine-tuning method is reported.
+Our goal is to create a more informative embedding space specifically designed
+for personality items. We hypothesize that this embedding space will be better at
+detecting similarities between items and distinguishing between items related to different psychological constructs. To test our hypothesis, we compared the performance of differently fine-tuned MPNet models against general-purpose language
+models, using experts’ performance as the baseline accuracy.
+In the next subsection, we describe the proposed algorithm for using the language
+models as validators. This algorithm automatically, and in an unsupervised manner,
+groups semantically similar items under the same latent constructs.
+
+Automated Content Validity Method
+Unlike the human validators, the construct definitions were not provided to the language models. As in previous studies (Abdurahman et al., 2024; Guenole et al., 2024;
+Milano et al., 2025; Wulff & Mata, 2025), the factorial structure identified by the
+models is based solely on lexical analysis and on the semantic knowledge of the models. Without access to explicit construct definitions, the language models rely purely
+on the semantic similarity of item content to group items under the same constructs.
+Our procedure provides the entire list of N items as input to the language model
+(LLM). The items are then embedded into 768-dimensional vectors, forming a matrix
+(N 3 768), where each row represents the embedded vector of a specific item.
+At this stage, we calculate the cosine similarity (CS) between each item and all
+other items, resulting in a N 3 N square matrix. Unlike human validators, the language model does not directly assign each item to an underlying construct. To
+address this, we propose a method for automatically classifying each item into a single construct.
+We calculate the average CS for each item with all items theoretically belonging
+to each of the five constructs, excluding the item’s similarity with itself from the
+average. To determine the final classification of an item as related to a specific construct, we apply the SoftMax function to the average CS across all constructs. The
+SoftMax function transforms the cosine similarities into probabilities, representing
+the likelihood that an item belongs to a particular construct. In this way, we select
+the construct with the highest probability as the representative for each item of the
+test. We can measure the accuracy of our method by simply dividing the number of
+items assigned to the right underlying construct for the number of items expected
+from the theory; doing this way, we can measure how accurate the prediction for
+each construct is, and averaging the accuracy of the constructs retrieves the total
+accuracy of the model.
+
+11
+
+Figure 1. Schematic representation of the fine-tuning method.
+
+12
+
+Educational and Psychological Measurement 00(0)
+
+Results
+In this section, we analyze how the validators rate each questionnaire item in terms of
+its alignment with the constructs the test is designed to measure. We then examine
+how LLMs capture semantic similarities between items. Based on these similarities,
+we propose a method for assigning each item to a construct and test this method using
+two LLMs: one multilingual model, which matches the language of the validators,
+and one English-based model, which processes items translated into English.
+The accuracies of both the validators’ and LLMs’ responses are evaluated against
+the true associations between items and constructs, as documented in the literature.
+Additionally, we test fine-tuned models on their ability to classify BFQ and BFI
+items, comparing their performance to general-purpose LLMs and validators’ ratings.
+For clarity, we refer to the model fine-tuned by Hommel and Arslan (2024) as
+SurveyBot MPNet, the model fine-tuned by Wulff and Mata (2025) as Personality
+MPNet, and our fine-tuned model as Cross Encoder MPNet (Cross Encoder). To
+streamline the ‘‘Results’’ section, we have included figures only for the human
+experts and the best-performing models in the main text. Detailed graphs showing
+the construct assignments of each item across the different methods are available in
+the Supplemental Material for reference.
+
+Study 1 BFQ Personality Test
+Experts’ Rating. Each validator was tasked with rating the items according to the CVR
+methodology, using a 3-point scale: 0 for items deemed not useful, 1 for items considered useful but not essential, and 2 for items judged absolutely necessary to assess the
+construct. Items were assigned to the construct that received the highest number of
+positive ratings from the validators.
+To evaluate the accuracy of these assignments, we compared the validators’ itemconstruct mappings with the ground truth provided by the BFQ. The total accuracy
+was calculated as the ratio of correctly identified relationships to the total number of
+predictions. Overall, the validators correctly matched 82% of the items to their corresponding constructs, demonstrating a strong alignment between most items and their
+intended constructs.
+However, a closer examination of the results reveals variability across constructs
+(Figure 2). While the relationships for constructs such as agreeableness, conscientiousness, and openness showed high accuracy, extraversion emerged as an exception, with only 50% of the items being correctly matched. This suggests a weaker
+connection between the items and the intended construct as identified by the validators. Despite this anomaly, the results remain largely consistent with the expected
+item-construct relationships hypothesized in the test design, reinforcing the validity
+of the overall approach.
+MPNet Multilingual. A Multilingual LLM was then employed to classify the items
+according to their underlying constructs. Since the validators are Italian native
+
+Milano et al.
+
+13
+
+speakers and the BFQ test is in Italian, we utilized the BERT Multilingual model as
+our initial approach to derive an automated measure of content validity.
+Using this approach, the multilingual model achieved an overall accuracy of 64%
+in assigning items to the correct constructs. The breakdown of accuracy for each construct is as follows: agreeableness (50%), conscientiousness (70%), extraversion
+(60%), neuroticism (90%), and openness (50%) (Figure S1).
+Compared to the human validators, this approach demonstrated a notable drop in
+accuracy, particularly for the constructs of agreeableness and openness, where half
+of the items were misclassified. These findings highlight the challenges faced by the
+multilingual model in capturing the nuanced semantic relationships within the constructs when applied to a personality assessment in Italian.
+Masked and Permuted Pre-Trained Network. To evaluate whether the multilingual
+model was suboptimal, we translated the items into English and repeated the analysis
+using the MPNet model, which is trained exclusively on English text. Multilingual
+models often exhibit biases toward specific languages due to the diverse nature of
+their training datasets and are exposed to smaller amounts of text per language compared to models trained solely in English.
+The English-based MPNet model achieved a total accuracy of 70% in classifying
+the items to their respective constructs. The construct-specific accuracies were agreeableness (80%), conscientiousness (50%), extraversion (60%), neuroticism (100%),
+and openness (60%) (see Figure S2).
+Compared to the multilingual model, the English-based MPNet showed a slight
+improvement in overall accuracy, suggesting that training exclusively on English text
+provides a marginal advantage for this task. This indicates that the multilingual
+approach may be hindered by the limitations of its training data, particularly when
+applied to a specialized domain like personality assessment.
+SurveyBot MPNet. The model developed by Hommel and Arslan (2024) is a finetuned version of the base MPNet. To evaluate its performance, we tested this model,
+referred to as SurveyBot, on the BFQ items to determine whether it outperforms the
+base MPNet.
+SurveyBot achieved a total accuracy of 64% in classifying items to their respective
+constructs. The construct-specific accuracies were as follows: agreeableness (60%),
+conscientiousness (30%), extraversion (80%), neuroticism (100%), and openness
+(50%) (Figure S3).
+Compared to the base MPNet model, the fine-tuning resulted in a decrease in overall accuracy for the BFQ test. While the classification accuracy for neuroticism items
+remained unchanged, the model exhibited a decline in performance for the constructs
+of conscientiousness, openness, and agreeableness. However, it showed an improvement in classifying extraversion items. These results suggest that the fine-tuning process may have introduced biases or limitations that reduced its effectiveness for some
+constructs in this specific test.
+
+14
+
+Figure 3. Schematic representation of the items, x-axis, and of the constructs, y-axis. The black square indicates the construct where an item
+has been assigned from the validators, the item range spans from 1 to 10, and the capital letter shows the construct to what they belong
+according to the theory.
+
+Figure 2. Schematic representation of the items, x-axis, and of the constructs, y-axis. The black square indicates the construct where an item
+has been assigned from the validators, the items’ range spans from 1 to 10, and the capital letter shows the construct to what they belong
+according to the theory.
+
+Milano et al.
+
+15
+
+Personality MPNet. We tested the model developed by Wulff and Mata (2025), a finetuned version of MPNet (referred to as Personality MPNet), to evaluate its content
+validity accuracy on the BFQ items.
+Personality MPNet achieved an overall accuracy of 72% in classifying items to
+their respective constructs. The construct-specific accuracies were as follows: agreeableness (60%), conscientiousness (80%), extraversion (60%), neuroticism (100%),
+and openness (60%) (see Figure S4).
+Compared to the base MPNet model, Personality MPNet slightly improves overall
+performance. Notably, it shows a substantial improvement in classifying neuroticism
+items, with accuracy increasing from 50% to 100%. However, this comes at the cost
+of a decrease in accuracy for agreeableness items, dropping from 80% to 60%.
+Performance for the other constructs remains consistent with the base model.
+Cross Encoder MPNet. Finally, we tested our fine-tuned version of the MPNet model
+(referred to as Cross Encoder MPNet) on the BFQ items. Cross Encoder MPNet
+achieved an overall accuracy of 80% in classifying items to their respective constructs. The construct-specific accuracies were agreeableness (80%), conscientiousness (70%), extraversion (70%), neuroticism (100%), and openness (80%) (Figure 3).
+This represents a significant 10% improvement over the base MPNet model, with
+enhanced performance across all constructs. The classification accuracy achieved by
+Cross Encoder MPNet is notably close to the performance of the human validators,
+demonstrating the potential effectiveness of this fine-tuning approach in improving
+content validity assessments.
+
+Study 2 BFI Personality Test
+Experts’ Ratings. We replicated the methods outlined in Study 1 and used the itemconstruct assignments from the BFI as ground truth to measure how accurately the
+validators identified the correct relationships. The total accuracy was calculated as
+the ratio of correct predictions to total predictions.
+The validators correctly matched 72% of the items with their respective constructs.
+The construct-specific accuracies were as follows: agreeableness (62.5%), conscientiousness (100%), extraversion (62.5%), neuroticism (50%), and openness (87.5%)
+(Figure 4).
+While the results align reasonably well with the expected item-construct relationships for openness and conscientiousness, the accuracy is notably lower for the other
+constructs. This suggests that the validators were more successful in matching items
+to these two constructs, but there were challenges in accurately associating items with
+the remaining constructs.
+MPNet Multilingual. For the BFI items, the MPNet Multilingual identified the itemconstruct relationships with a total accuracy of 77.5%. The construct-specific accuracies were as follows: agreeableness (75%), conscientiousness (75%), extraversion
+(62.5%), neuroticism (50%), and openness (100%) (see Figure S5).
+
+16
+
+Educational and Psychological Measurement 00(0)
+
+Interestingly, unlike the results with the BFQ, the multilingual model outperformed the validators in this study, providing a more precise mapping of the items to
+their corresponding constructs. This suggests that the multilingual model may be
+more effective in handling the BFI items, potentially due to differences in the structure and wording of the two tests.
+Masked and Permuted Pre-Trained Network. As with the BFQ test, the BFI items were
+translated into English, and the MPNet model was applied to retrieve the
+embeddings.
+Using this model, we achieved a total accuracy of 80%, with the following
+construct-specific accuracies: agreeableness (87.5%), conscientiousness (75%),
+extraversion (87.5%), neuroticism (50%), and openness (100%) (Figure S6).
+Once again, the English-language model outperformed the multilingual model,
+demonstrating that English-based language models tend to have a greater capacity
+for analyzing language. This suggests that the larger and more specialized training
+datasets available for English-language models contribute to their superior performance in this context.
+SurveyBot MPNet. SurveyBot, when applied to the BFI, achieved an accuracy of 75%,
+with construct-specific accuracies as follows: agreeableness (87.5%), conscientiousness (62.5%), extraversion (87.5%), neuroticism (62.5%), and openness (100%) (see
+Figure S7).
+Once again, this model performed worse than the base MPNet on the BFI items,
+failing to improve item classification within the given constructs. It is likely that the
+fine-tuning procedure has been detrimental to this type of analysis, possibly introducing biases or limitations that hindered the model’s effectiveness for the BFI test.
+Personality MPNet. The Personality model, when applied to the BFI, achieved an
+impressive accuracy of 97.5%, with construct-specific accuracies as follows: agreeableness (100%), conscientiousness (87.5%), extraversion (100%), neuroticism
+(100%), and openness (100%) (Figure 5).
+This represents a significant improvement over the base MPNet model used for
+fine-tuning. Nearly all items were correctly classified, highlighting the effectiveness
+of the approach employed by Wulff and Mata (2025). Their fine-tuning strategy
+appears to be particularly well-suited for lexical-based items, such as those found in
+the BFI setup.
+Cross Encoder MPNet. Our Cross Encoder model, based on MPNet, achieved a total
+accuracy of 82.5% in classifying the items to their related constructs. The constructspecific accuracies were as follows: agreeableness (75%), conscientiousness (75%),
+extraversion (62.5%), neuroticism (100%), and openness (100%) (see Figure S8).
+
+17
+
+Figure 5. Schematic representation of the items, x-axis, and of the constructs, y-axis. The black square indicates the construct where an item
+has been assigned from the Personality MPNet model, the item range spans from 1 to 10, and the capital letter shows the construct to what
+they belong according to the theory.
+
+Figure 4. Schematic representation of the items, x-axis, and of the constructs, y-axis. The black square indicates the construct where an item
+has been assigned from the validators, the item range spans from 1 to 10, and the capital letter shows the construct to what they belong
+according to the theory.
+
+18
+
+Educational and Psychological Measurement 00(0)
+
+In the BFI setup, our model outperformed the base MPNet, though it did not reach
+the performance level of the Personality MPNet model, which proved to be the most
+effective at handling the BFI items.
+Tables 1 and 2 summarize the results reported in the previous section, providing
+the accuracy for each construct and the total accuracy; each model is reported along
+with the results of human experts.
+
+Discussion
+The results of this study elucidate the complex interplay between human expertise
+and artificial intelligence in evaluating content validity. By comparing human validators to various models of LLMs, we reveal how the characteristics of the test items
+affect the accuracy and utility of these approaches. A notable distinction in this study
+lies in the nature of the personality test items. The BFI items predominantly represent
+lexical terms, serving as samples of the linguistic domains associated with personality constructs. In contrast, the BFQ items are behavioral in nature, describing specific
+actions or tendencies that exemplify the constructs they measure. This difference had
+significant implications for the performance of both human validators and LLMs.
+Human validators perform better in the BFQ test, achieving an 82% accuracy rate.
+This performance reflects their strength in interpreting the nuanced behavioral cues
+embedded in the BFQ items. Behavioral descriptions often require contextual and
+experiential understanding, which humans naturally possess, enabling them to discern
+subtle alignments between items and constructs. However, the human performance
+dropped to 72% for the BFI, likely because humans may struggle to consistently identify the implicit lexical patterns that define construct-related terms without additional
+theoretical support.
+In contrast, LLMs demonstrated greater proficiency with the BFI’s lexical items.
+The models’ embeddings, particularly when fine-tuned or trained on extensive text
+corpora, capture the semantic relationships among words. For instance, the baseline
+English MPNet achieved 80% accuracy with the BFI, outperforming its performance
+on the BFQ (70%). Similarly, the Personality MPNet, fine-tuned using lexical personality data, achieved an impressive 97.5% accuracy on the BFI, underscoring its
+effectiveness in identifying lexical relationships. However, LLMs underperform with
+the behavioral complexity of the BFQ items, where in comparison each model scores
+less than in the BFQ, reflecting the challenges in bridging the gap between linguistic
+embeddings and behavioral semantics.
+The variation in model performance underscores the importance of tailoring finetuning methods to the specific demands of the task. The Personality model’s success
+can be attributed to its domain-specific training on lexical constructs, which allows it
+to discern semantic relationships with high precision. In contrast, SurveyBot’s less
+consistent results suggest that fine-tuning procedures must be carefully aligned with
+the end task, as misalignment can reduce the generalizability of the model. These
+
+19
+
+100
+50
+80
+60
+60
+80
+
+Agreeableness (%)
+90
+70
+50
+30
+80
+70
+
+Conscientiousness (%)
+50
+60
+60
+80
+60
+70
+
+Extraversion (%)
+80
+90
+100
+100
+100
+100
+
+Neuroticism (%)
+100
+50
+60
+50
+60
+80
+
+Openness (%)
+
+84
+64
+70
+64
+72
+80
+
+Total (%)
+
+62.5
+75
+87.5
+87.5
+100
+75
+
+Agreeableness (%)
+100
+75
+75
+62.5
+87.5
+75
+
+Conscientiousness (%)
+62.5
+62.5
+87.5
+87.5
+100
+62.5
+
+Extraversion (%)
+
+Note. BFI = Big Five Inventory; MPNet = Masked and Permuted Pre-trained Network.
+
+Experts
+MPNet-ML
+MPNet
+SurveyBot
+Personality
+Cross Encoder
+
+BFI
+
+50
+50
+50
+62.5
+100
+100
+
+Neuroticism (%)
+
+87.5
+100
+100
+100
+100
+100
+
+Openness (%)
+
+72
+77.5
+80
+75
+97.5
+82.5
+
+Total (%)
+
+Table 2. Percentage of Accuracy in Assigning the Items to Right Construct Obtained by the Language Models and the Human Experts in the BFI
+Test.
+
+Note. BFQ = Big Five Questionnaire; MPNet = Masked and Permuted Pre-trained Network.
+
+Experts
+MPNet-ML
+MPNet
+SurveyBot
+Personality
+Cross Encoder
+
+BFQ
+
+Table 1. Percentage of Accuracy in Assigning the Items to Right Construct Obtained by the Language Models and the Human Experts in the
+BFQ Test.
+
+20
+
+Educational and Psychological Measurement 00(0)
+
+findings point to the need for further research into fine-tuning methods, particularly
+for tasks involving complex, context-dependent items such as those in the BFQ.
+The distinction between lexical and behavioral domains also influenced constructspecific performance. Constructs like neuroticism and openness were consistently
+well-classified across both tests, likely because their definitions—whether lexical or
+behavioral—are conceptually clear and semantically distinct. Even models that were
+not fine-tuned achieved optimal or near-optimal accuracy in classifying these constructs. Conversely, constructs like extraversion and agreeableness posed challenges,
+particularly in the BFQ, where the behavioral nature of the items may introduce
+overlapping or ambiguous cues that are difficult for both humans and models to disentangle. For the BFI, the lexical clarity of these constructs likely contributed to the
+models’ improved accuracy, particularly with fine-tuned approaches.
+The differential performance across tests and methods has important implications
+for psychometric test development. The results reinforce the importance of human
+expertise in evaluating items that reflect complex, contextualized behaviors. While
+LLMs can process text with high semantic precision, the interpretation of behaviors
+requires a broader cognitive framework that encompasses personal experience and
+cultural knowledge. Even if some approaches like the Cross Encoder barely reach
+human performance, LLMs appear to struggle in evaluating behavioral-based items.
+While large language models (LLMs) show potential for retrieving the factorial
+structure of test items, analyzing item-construct relationships, and serving as tools
+for item selection and analysis (Abdurahman et al., 2024; Guenole et al., 2024;
+Milano et al., 2025; Wulff & Mata, 2025), our focus here is on content validity.
+Specifically, we compare LLM-based assessments with expert judgments in the personality domain, examining two different approaches to psychometric test construction. The capability of these models to address content validity is closely linked to
+their potential application in item selection and test construction—these are inherently interconnected properties. In this study, we chose to focus specifically on content validity in order to obtain a quantitative measure of how well these models
+perform in this foundational aspect of test development.
+The superior performance of LLMs on lexical items highlights their potential as a
+complementary tool in content validation, particularly for tests like the BFI that draw
+on linguistic domains. Fine-tuned models like Personality MPNet, which specialize
+in lexical constructs, can serve as reliable, scalable alternatives or supplements to
+human judgments in these contexts.
+The challenges faced by LLMs with the BFQ highlight a gap in current NLP techniques. Future research should explore embedding strategies that better capture the
+semantic and contextual nuances of behavioral descriptions. For instance, fine-tuning
+on datasets explicitly focused on behavioral language may enhance the models’
+capacity to interpret such items. Furthermore, the effects of the length of the items
+on the LLM performance is a variable that needs to be analyzed, the BFQ items are
+sensibly longer than the BFI items, and this can have an impact when the embeddings are retrieved by the language models.
+
+Milano et al.
+
+21
+
+While the study highlights key insights, certain limitations must be acknowledged.
+First, the reliance on ground truths from the literature assumes the correctness of
+these item-construct mappings, which may not fully account for construct evolution
+or cultural variability. Second, translating BFQ items into English for some LLMs
+may have introduced linguistic distortions that affect their interpretability of the original behavioral content.
+
+Conclusion
+Due to the advancement of deep learning in NLP, LLMs are becoming pervasive and
+widely used in psychological assessment. Here we tried to provide insights into how
+these models can be useful for content validity in psychometrics, analyzing how
+state-of-the-art models, and their specialization explicitly tailored for personality
+research, perform against a human baseline. We compare fine-tuned models on the
+top of the same base model but with different training approach; furthermore, we
+analyze how the nature of test items—lexical or behavioral—interacts with the capabilities of human validators and AI-based methods in assessing content validity. By
+systematically comparing human performance to that of LLMs across two distinct
+personality tests, the BFQ and BFI, we highlighted strengths and limitations inherent
+to each approach.
+Our work shows how different LLMs assess content validity from psychological
+items compared to humans. We use two different versions of the Big Five personality, BFI and BFQ, each specifically designed with items more lexical or behavioral
+related to the underlying construct, to compare fine-tuning strategies applied to a
+common base model, MPNet, with the performance validation of human validators
+to assess content validity. This allowed us to directly evaluate how specific training
+to the base architecture impacts the model’s ability to predict content validity. The
+results reveal a clear hierarchy in the effectiveness of fine-tuning approaches. For
+instance, the Personality MPNet, fine-tuned using a pipeline tailored for lexical relationships, achieved outstanding accuracy on the BFI items (97.5%), far surpassing
+both the base MPNet and other fine-tuned versions, such as SurveyBot and our Cross
+Encoder MPNet. Conversely, while our model demonstrated significant improvements in accuracy for the BFQ, it highlights the challenges faced by LLMs in interpreting behavioral items.
+These findings have important implications for psychometric test development.
+First, the success of specific fine-tuning approaches demonstrates that AI models can
+be highly effective in tasks requiring semantic precision, provided that the training
+strategy is appropriately designed. This is particularly relevant for tests that rely on
+lexical constructs, where AI-based validation can serve as a scalable, reliable complement to human judgments. Second, the persistent challenges faced by models in
+evaluating behavioral items suggest a need for further innovation in this area, including the development of embeddings specifically tailored for behavioral language.
+
+22
+
+Educational and Psychological Measurement 00(0)
+
+Future research and applications should build on these insights to refine and
+expand the use of AI in psychometric validation. Developing task-specific fine-tuning pipelines and hybrid validation systems can optimize accuracy and efficiency
+while maintaining the interpretative depth offered by human expertise. By addressing
+these challenges, we can harness the strengths of both humans and AI to advance the
+scientific rigor and utility of psychometric assessments.
+Declaration of Conflicting Interests
+The author(s) declared no potential conflicts of interest with respect to the research, authorship,
+and/or publication of this article.
+
+Funding
+The author(s) disclosed receipt of the following financial support for the research, authorship,
+and/or publication of this article: This research was supported by the PNRR MUR project
+(grant PE0000013-FAIR).
+
+ORCID iD
+Nicola Milano
+
+https://orcid.org/0000-0002-1604-5161
+
+Supplemental Material
+Supplemental material for this article is available online.
+
+References
+Abdurahman, S., Vu, H., Zou, W., Ungar, L., & Bhatia, S. (2024). A deep learning approach to
+personality assessment: Generalizing across items and expanding the reach of survey-based
+research. Journal of Personality and Social Psychology, 126(2), 312.
+Akhtar, M. S., Chauhan, D. S., Ghosal, D., Poria, S., Ekbal, A., & Bhattacharyya, P. (2019).
+Multi-task learning for multi-modal emotion recognition and sentiment analysis. arXiv
+preprint arXiv:1905.05812.
+Bainbridge, T. F., Ludeke, S. G., & Smillie, L. D. (2022). Evaluating the Big Five as an
+organizing framework for commonly used psychological trait scales. Journal of Personality
+and Social Psychology, 122(4), 749.
+Bengio, Y., Ducharme, R., Vincent, P., & Janvin, C. (2003). A neural probabilistic language
+model. Journal of Machine Learning Research, 3, 1137–1155.
+Brown, T., Mann, B., Ryder, N., Subbiah, M., Kaplan, J. D., Dhariwal, P., Neelakantan, A.,
+Shyam, P., Sastry, G., Askell, A., Agarwal, S., Herbert-Voss, A., Krueger, G., Henighan, T.,
+Child, R., Ramesh, A., Ziegler, D., Wu, J., Winter, C., & ...Amodei, D. (2020). Language
+models are few-shot learners. Advances in neural information processing systems, 33,
+1877–1901.
+Caprara, G. V., Barbaranelli, C., Borgogni, L., & Perugini, M. (1993). The ‘‘Big Five
+Questionnaire’’: A new questionnaire to assess the five factor model. Personality and
+individual Differences, 15(3), 281–288.
+
+Milano et al.
+
+23
+
+Conneau, A., Kiela, D., Schwenk, H., Barrault, L., & Bordes, A. (2017). Supervised learning
+of universal sentence representations from natural language inference data. arXiv preprint
+arXiv:1705.02364.
+Devlin, J., Chang, M. W., Lee, K., & Toutanova, K. (2019, June). Bert: Pre-training of deep
+bidirectional transformers for language understanding. In Proceedings of the 2019
+conference of the North American chapter of the association for computational linguistics:
+human language technologies, volume 1 (long and short papers) (pp. 4171–4186).
+Downing, S. M., & Haladyna, T. M. (Eds.). (2004). Handbook of test development. Lawrence
+Erlbaum Associates.
+El-Den, S., Schneider, C., Mirzaei, A., & Carter, S. (2020). How to measure a latent construct:
+Psychometric principles for the development and validation of measurement instruments.
+International Journal of Pharmacy Practice, 28(4), 326–336.
+Guenole, N., , D’Urso, E. D.Samo, A., & Sun, T. (2024). Pseudo factor analysis of language
+embedding similarity matrices: New ways to model latent constructs. https://osf.io/
+preprints/psyarxiv/vf3se_v1
+Haynes, S. N., Richard, D. C. S., & Kubany, E. S. (1995). Content validity in psychological
+assessment: A functional approach to concepts and methods. Psychological Assessment,
+7(3), 238–247.
+Hitsuwari, J., Okano, H., & Nomura, M. (2024). Predicting attitudes toward ambiguity using
+natural language processing on free descriptions for open-ended question measurements.
+Scientific Reports, 14(1), 8276.
+Hommel, B. E., & Arslan, R. C. (2024). Language models accurately infer correlations
+between psychological items and scales from text alone. PsyArXiv. [Preprint]. https://doi.
+org/10.31234/osf. io/kjuce.
+Hussain, Z., Binz, M., Mata, R., & Wulff, D. U. (2024). A tutorial on open-source large
+language models for behavioral science. Behavior Research Methods, 56(8), 8214–8237.
+John, O. P., Donahue, E. M., & Kentle, R. L. (1991). Big Five Inventory. Journal of
+Personality and Social Psychology.
+Kjell, O. N., Sikström, S., Kjell, K., & Schwartz, H. A. (2022). Natural language analyzed with
+AI-based transformers predict traditional subjective well-being measures approaching the
+theoretical upper limits in accuracy. Scientific reports, 12(1), 3918.
+Lawshe, C. H. (1975). A quantitative approach to content validity. Personnel Psychology,
+28(4), 563–575.
+Li, Z., Shi, Y., Liu, Z., Yang, F., Payani, A., Liu, N., & Du, M. (2024). Quantifying
+multilingual performance of large language models across languages. arXiv preprint
+arXiv:2404.11553.
+Liu, Y., Ott, M., Goyal, N., Du, J., Joshi, M., Chen, D., Levy, O., Lewis, M., & Stoyanov, V.
+(2019). RoBERTa: A robustly optimized BERT pretraining approach. arXiv preprint
+arXiv:1907.11692.
+Lynn, M. (1986). Determination and quantification of content validity. Nursing Research,
+35(6), 382–385.
+Milano, N., Luongo, M., Ponticorvo, M., & Marocco, D. (2025). Semantic analysis of test
+items through large language model embeddings predicts a-priori factorial structure of
+personality tests. Current Research in Behavioral Sciences, 8, 100168.
+Mikolov, T., Sutskever, I., Chen, K., Corrado, G. S., & Dean, J. (2013). Distributed
+representations of words and phrases and their compositionality. Advances in neural
+information processing systems, 26.
+
+24
+
+Educational and Psychological Measurement 00(0)
+
+Nilsson, A. H., Schwartz, H. A., Rosenthal, R. N., McKay, J. R., Vu, H., Cho, Y. M.,
+Mahwish, S., Ganesan, A. V., & Ungar, L. (2024). Language-based EMA assessments help
+understand problematic alcohol consumption. Plos one, 19(3), e0298300.
+Radford, A., Narasimhan, K., Salimans, T., & Sutskever, I. (2018). Improving language
+understanding by generative pre-training. OpenAI blog, 1(7), 8.
+Radford, A., Wu, J., Child, R., Luan, D., Amodei, D., & Sutskever, I. (2019). Language models
+are unsupervised multitask learners. OpenAI blog, 1(8), 9.
+Reimers, N., & Gurevych, I. (2020). Making monolingual sentence embeddings multilingual
+using knowledge distillation. arXiv preprint arXiv:2004.09813.
+Song, K., Tan, X., Qin, T., Lu, J., & Liu, T. Y. (2020). MPNet: Masked and permuted pretraining for language understanding. Advances in Neural Information Processing Systems,
+33, 16857–16867.
+Spoto, A., Nucci, M., Prunetti, E., & Vicovaro, M. (2023). Improving content validity
+evaluation of assessment instruments through formal content validity analysis.
+Psychological methods. 30(2), 203–222.
+Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, L., &
+Polosukhin, I. (2017). Attention is all you need. Advances in neural information processing
+systems, 30.
+Wu, S., & Dredze, M. (2020). Are all languages created equal in multilingual BERT? arXiv
+preprint arXiv:2005.09093.
+Wulff, D. U., & Mata, R. (2025). Semantic embeddings reveal and address taxonomic
+incommensurability in psychological measurement. Nature Human Behaviour. 9(5), 944–
+954.
+
+

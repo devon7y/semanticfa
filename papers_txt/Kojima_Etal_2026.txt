@@ -1,0 +1,1170 @@
+PCN
+
+Psychiatry and
+Clinical Neurosciences
+
+REGULAR ARTICLE
+
+Language or syndrome? Investigating the origins of the general
+psychopathology factor through large language
+model embeddings
+Hiroki Kojima, PhD,1† Takafumi Soda, PhD
+
+1†
+
+and Yuichi Yamashita, MD, PhD
+
+Aims: Psychiatric diagnostic categories are challenged by
+comorbidity, symptom heterogeneity, and blurred nosological boundaries, sparking interest in trans-diagnostic dimensions such as the general psychopathology factor (p-factor).
+Yet it remains unclear whether p-factor represents a valid
+psychopathological construct or merely echoes semantic
+overlap among questionnaire items. Leveraging recent
+advances in large language models (LLMs), we conduct an
+empirical investigation that aims to disentangle linguistic
+similarity from syndromic co-occurrence in the p-factor.
+Methods: We analyzed 145 symptom items spanning eight
+diagnostic categories with two similarity metrics: (1) Semantic—
+cosine similarity of LLM embeddings; and (2) Syndromic—
+polychoric correlations of responses from 985 community
+participants. Exploratory factor analyses extracted latent structures, their alignment was quantiﬁed, and factor scores were
+tested against lifetime psychiatric diagnoses.
+Results: Both similarity matrices converged on a dominant
+p-factor with high cross-diagnostic loadings. Loading patterns
+The diagnosis of mental disorders has traditionally relied on a
+categorical framework, as exempliﬁed by the DSM (Diagnostic and
+Statistical Manual of Mental Disorders).1 This approach emphasizes
+the assignment of diagnostic labels to distinct mental disorders based
+on reported symptomatology. However, this method has notable
+limitations, as extensive research indicates that mental disorder diagnoses and symptoms frequently exhibit high correlations.2,3 In many
+cases, multiple disorders co-occur simultaneously (i.e., comorbidity),
+suggesting that a purely categorical system may inadequately capture
+the complexity of symptom overlap.
+In response to these limitations, factor analysis has emerged
+as a widely utilized methodology for conceptualizing mental
+disorders from a transdiagnostic perspective.4,5 This approach
+facilitates a dimensional understanding of psychopathology
+by grouping symptoms according to shared latent factors. For example, one commonly proposed classiﬁcation scheme identiﬁes internalizing symptoms, externalizing symptoms, and thought disorder
+dimensions.6,7 More recently, an even broader conceptualization has
+been introduced, the general psychopathology factor (p-factor),
+which seeks to account for common elements across diverse mental
+disorders.8,9 This framework advances the ﬁeld by shifting the focus
+
+1
+
+*
+
+were strongly congruent, indicating that LLM-derived semantics alone recapitulate much of the latent structure in human
+data. Crucially, syndromic p-factor scores predicted individual diagnostic histories more accurately than semantic
+p-factor scores, revealing clinically informative variance
+beyond language.
+Conclusions: LLM embeddings reveal that the linguistic
+fabric of symptom items contains a shadow of the
+p-factor, yet real-world co-occurrence embeds additional,
+diagnosis-relevant information. Our ﬁndings position
+LLM-driven text analytics as a new lens for probing
+psychiatric constructs while underscoring the complex
+interplay between linguistic semantics and symptom
+co-occurrence in shaping our understanding of psychiatric constructs.
+Keywords: hierarchical taxonomy of psychopathology (HiTOP), nosology, psychopathology, text embeddings, transdiagnostic.
+http://onlinelibrary.wiley.com/doi/10.1111/pcn.70010/full
+
+from discrete diagnostic categories to shared psychopathological
+dimensions.
+Despite the utility of the p-factor model, several unresolved
+questions persist.10,11 One critical issue concerns the underlying origins of the p-factor.12,13 Some researchers attribute the p-factor to
+genetic inﬂuences, whereas others contend that it may represent an
+artifact of social desirability bias—that is, individuals responding to
+assessments in ways that align with socially acceptable norms rather
+than accurately reﬂecting their psychological state.11,12,14 Additionally, alternative perspectives suggest that the p-factor reﬂects broader
+dispositional traits, such as negative emotionality,15 deﬁcits in selfregulation,16 or variations in cognitive ability.17 From this standpoint,
+the p-factor may not constitute a distinct psychopathological entity
+but rather emerge from stable personality traits or cognitive capacities. These divergent theoretical perspectives highlight the ongoing
+debate regarding the nature of the p-factor and underscore the need
+for continued empirical investigation and conceptual reﬁnement.
+One potential origin of the p-factor that has not been sufﬁciently
+explored is the inﬂuence of linguistic properties inherent in the symptom assessment process. It has long been recognized that descriptions
+of human traits are inextricably tied to language. In personality
+
+1
+
+Department of Information Medicine, National Institute of Neuroscience, National Center of Neurology and Psychiatry, Tokyo, Japan
+* Correspondence: Email: yamay@ncnp.go.jp
+These authors contributed equally to this work.
+
+†
+
+196
+
+© 2025 The Author(s).
+Psychiatry and Clinical Neurosciences published by John Wiley & Sons Australia, Ltd on behalf of Japanese Society of Psychiatry and Neurology.
+This is an open access article under the terms of the Creative Commons Attribution-NonCommercial License, which permits use, distribution and reproduction in
+any medium, provided the original work is properly cited and is not used for commercial purposes.
+Psychiatry and Clinical Neurosciences 80: 196–204, 2026
+
+Psychiatry and
+Clinical Neurosciences
+
+psychology, for example, it has long been argued that key human traits
+and properties are reﬂected in our vocabulary.18 Although these
+debates provide a conceptual foundation for reconsidering how language and semantics might contribute to the emergence of p-factor,
+they have not yet been applied directly to it. Extending these ideas,
+we propose a novel hypothesis that the p-factor emerges, in part, from
+the linguistic properties of symptom assessments. Speciﬁcally, the
+p-factor is typically derived from diagnostic labels assigned to
+mental disorders8,9 or responses to questionnaire items designed to
+assess psychiatric symptoms.19,20 The linguistic structure and
+phrasing of these diagnostic criteria and questionnaire items may
+introduce systematic biases that contribute to the emergence of a
+general factor. For instance, text similarity, including overlapping
+wording, shared semantic content, and common descriptive frameworks, across diagnostic criteria and questionnaire items may artiﬁcially inﬂate correlations among responses independent of any
+underlying psychopathological construct.
+The present study aims to investigate whether the factor structures of psychopathology, including the p-factor, are shaped by the
+textual properties of questionnaire items (e.g., lexical similarity and
+semantic overlap) rather than by the syndromic co-occurrence of mental disorders. Historically, quantitatively testing this hypothesis has
+been challenging due to methodological limitations. However, recent
+advancements in natural language processing (NLP), particularly the
+development of language embedding models and large language
+models (LLMs), now allow for a more rigorous examination of these
+effects. Notably, recent research has demonstrated that personality
+factor structures extracted from questionnaire text using language
+embedding models closely resemble those derived from actual human
+response data.21,22 Building upon these ﬁndings, we examined the
+questionnaire items commonly used in mental disorder symptom
+assessments and conducted a quantitative analysis of the extent to
+which the factor structures of psychopathology can be inferred from
+textual similarity using language embedding models. To achieve this,
+we utilized language embedding models to quantify the textual similarities among questionnaire items assessing mental disorders. We
+then compared these text-based similarities to response similarity patterns derived from actual response scores collected from approximately 1,000 individuals in the general population. This approach
+enabled us to assess whether the factor structures, including the
+p-factor, identiﬁed through language embeddings align with those
+obtained from empirical response data. Additionally, we analyzed the
+differences between these two approaches to delineate their respective
+contributions to the factor structures of psychopathology.
+Through these analyses, we aim to clarify the extent to which
+factor structures emerge purely from the linguistic properties of questionnaire items versus those derived from actual symptom cooccurrence in response data. Furthermore, this study highlights the
+potential of integrating language embedding models with traditional
+factor analysis to enhance the precision of psychiatric assessment.
+
+Results
+Comparison Between Similarity Matrices
+First, we directly compared the two similarity matrices, S rsp and S emb .
+Figure 1 shows the similarity matrices for questionnaire items based
+on participants’ responses (left) and text embeddings (right). Upon
+inspection, several common block structures were observed in these
+similarity matrices, indicating that the matrices were correlated
+with each other. The similarities of items within the same category
+were relatively high (indicated by strong red), while the similarities between different categories (especially between the AUDIT
+and other categories) were relatively low (indicated by weak red).
+However, the matrices did not fully align, indicating that while
+language embeddings capture some overlap in the underlying
+structure, they do not entirely replicate the patterns observed in
+the question-response data.
+Psychiatry and Clinical Neurosciences 80: 196–204, 2026
+
+Language or syndrome?
+
+We also visualized the results using a scatter plot (Fig. 2) to
+further investigate the similarities and differences between the two
+similarity matrices. We found that these two matrices were positively
+correlated (r = 0.55), though some discrepancies were observed.
+A typical example of a pair of items with high response similarity and low text similarity was between ‘I am mad (item 6 in the
+State-trait Anger Expression Inventory: STAXI)’ and ‘I feel like
+banging on the table (item 7 in the STAXI)’ (r = 0.89 in participants’
+responses, r = 0.23 in text embeddings). On the other hand, a typical
+example of a pair of items with low response similarity and high text
+similarity was between ‘I ﬁnd it difﬁcult to touch an object when I
+know it has been touched by strangers or certain people (item 22 in
+the Obsessive-Compulsive Inventory: OCI)’ and ‘I feel very uneasy
+talking to people I do not know well (item 21 in the Schizotypal
+Personality Questionnaire-Brief: SPQB)’ (r = 0.06 in participants’
+responses, r = 0.47 in text embeddings). The similarities between
+and within the questionnaires are presented in Figure S1. These
+analyses highlight both the commonalities and differences between
+the similarity matrices derived from participants’ responses and
+text embeddings.
+Similarity Between Factor Structures
+Then, we applied factor analysis to these two similarity matrices.
+First, we analyzed the decay of eigenvalues (Fig. 3). In the similarity matrix of participants’ responses, the ﬁrst principal component
+explained 33.2% of the total variance, followed by 5.84% and 5.27%.
+Similarly, in the text embeddings, 29.5% of the variance was
+explained by the ﬁrst component, followed by 5.02% and 4.16%. This
+observation suggests that the variance in both similarity matrices was
+primarily accounted for by the ﬁrst component.
+Since the number of factors was not clearly deﬁned in participants’ responses, further analysis was conducted using various numbers of factors (details are shown in Table S2). Although we
+prioritized the number of factors based on participants’ responses to
+ensure the analysis used the same number of factors, the number of
+factors cannot be determined for text embeddings. However, following previous research23, we report the factor model with 12 factors in
+the main text. The results using different numbers of factors are presented in Figure S1, and the ﬁndings are generalizable.
+Next, we derived the factor loadings from the similarity matrix
+of text embeddings (bottom panel in Fig. 4) and participants’
+responses (top panel in Fig. 4). The loadings for general factors were
+higher across all items in both matrices (Fig. 4).
+Based on the content of the questionnaire items, we assigned
+labels for the speciﬁc factors. The factors identiﬁed in the text
+embeddings were interpreted as ‘Alcohol’, ‘Checking’, ‘Ablutomania’,
+‘Insomnia’, ‘Amnesia’, ‘Suicide’, ‘Intrusive Thoughts’, ‘Shyness’,
+‘Derealization’, ‘Destructive Impulse’, and ‘Depression’. In contrast,
+previous research23 indicated that the factors in participants’ responses
+could be interpreted as ‘Alcohol’, ‘Dissociation’, ‘Anger’, ‘InsomniaSomatic’, ‘Ablutomania’, ‘Withdrawal’, ‘Checking’, ‘Hopelessness’,
+‘Spirituality’, ‘NumberPersistence’, and ‘Bizarreness’. While the labels
+between the two types of data share common elements, some differences were also observed. An interesting point is that, while
+insomnia symptoms and somatic symptoms formed a single factor
+in the participants’ responses (‘Insomnia-Somatic’ factor), only
+insomnia symptoms constituted a single factor in the text embeddings (‘Insomnia’ factor). This suggests that, although insomnia
+and physical symptoms are not semantically similar as questionnaire items, they might correlate through syndromic co-occurrence
+due to bodily or physiological bases.
+To quantitatively investigate the similarity between the factors of
+participants’ responses and text embeddings, congruence coefﬁcients
+were analyzed (Fig. 5). The congruence coefﬁcient for the general
+factor showed a sufﬁcient value (0.97). In contrast, the other congruence coefﬁcients (e.g., between speciﬁc factors) did not demonstrate
+sufﬁciently high values. Although the highest value was 0.89, which
+197
+
+14401819, 2026, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.1111/pcn.70010, Wiley Online Library on [19/04/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+PCN
+
+PCN
+
+Psychiatry and
+Clinical Neurosciences
+
+PHQ_1
+PHQ_4
+PHQ_7
+STAXl_1
+STAXl_4
+STAXI_7
+STAXl_10
+ISI_3
+ISl_6
+DES_2
+DES_5
+DES_8
+DES_11
+DES_14
+DES_17
+DES_20
+DES_23
+DES_26
+MCMl_1
+MCMI_4
+MCMl_7
+MCMl_10
+MCMl_13
+MCMl_16
+SPQB_2
+SPQB_5
+SPQB_8
+SPQB_11
+SPQB_14
+SPQB_17
+SPQB_20
+AUDIT_1
+AUDIT_4
+AUDIT_7
+AUDIT_10
+OCI_3
+OCI_6
+OCI_9
+OCI_12
+OCI_15
+OCI_18
+OCI_21
+OCI_24
+OCI_27
+OCI_30
+OCI_33
+OCI_36
+OCI_39
+OCI_42
+
+Fig. 1 Similarity Matrix constructed from the participants’ responses, Srsp (Left) and the text embeddings, Semb (Right). AUDIT, alcohol use disorders identiﬁcation test;
+DES, dissociative experiences scale-II; ISI, Insomnia severity index; MCMI, Millon clinical multiaxial inventory-ii borderline scale; OCI, obsessive-compulsive inventory;
+PHQ, patient health questionnaire; SPQB, schizotypal personality questionnaire-brief; STAXI, state–trait anger expression inventory.
+
+Fig. 3 Eigenvalues of response similarity (Srsp ) and text similarity (Semb ).
+
+Dissecting the Information on Diagnostic Prediction
+Fig. 2 Scatter plot between the response-based similarity (Srsp ) and the text
+embeddings-based similarity (Semb ).
+
+is close to the cutoff value of 0.90, it did not surpass the threshold.
+The congruence coefﬁcients for other factor models are presented in
+Figure S2. As these results indicate, while general and speciﬁc factors
+can be extracted from both text embeddings and participants’
+responses, the content of the speciﬁc factors may differ from that
+found in the response data.
+
+The Distinct Inﬂuence on Diagnostic Prediction
+Furthermore, the relationships between the general factors of the two
+similarities and the history of diagnoses were examined (top-left panel
+in Fig. 6). The results suggest that participants’ responses provide a
+more accurate prediction of diagnoses than the text semantics. In contrast, clear differences were not observed in the relationship between
+the history of diagnosis and factor scores when using the speciﬁc factors (top-middle panel in Fig. 6).
+198
+
+Finally, we aimed to identify the difference in the resulting factor
+structure between the two matrices, which contributed to the different
+predictive power on diagnosis.
+For this purpose, we ﬁrst checked if the information included
+in these matrices was redundant or complementary by using a
+weighted average similarity matrix with a weighting factor w:
+w S rsp þ ð1  wÞ S emb . If this information were complementary, we
+would expect that the predictive power would be maximized by the
+combination of these two matrices (0 < w < 1). However, our analysis
+revealed that the highest relevance was observed when w was set to
+1.0, while the lowest relevance was observed when w was set to 0.0
+(top-right side in Fig. 6). This suggests that no complementary
+information was included in these two matrices and we can simply
+assume that the information used for diagnosis prediction from
+text similarity was a subset of the information from response
+similarity.
+To identify the difference, we compared the distances between
+the factor loadings of responses and text similarity. Figure 6 (bottom
+panel) shows the distance between the factor loadings of responses
+and text similarity. This ﬁgure shows that, in the case of responses,
+the inﬂuence of measures related to emotional and internalizing
+Psychiatry and Clinical Neurosciences 80: 196–204, 2026
+
+14401819, 2026, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.1111/pcn.70010, Wiley Online Library on [19/04/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+Language or syndrome?
+
+Psychiatry and
+Clinical Neurosciences
+
+Language or syndrome?
+
+Participants’ Responses
+GeneralFactor
+
+Alcohol
+
+Dissociation
+
+Anger
+
+InsomniaSomatic
+
+Ablutomania
+
+Withdrawal
+
+Checking
+
+Hopelessness
+
+Spirituality
+
+NumberPersistence
+
+Bizarreness
+
+PHQ
+STAXI
+ISI
+DES
+MCMI
+SPQB
+AUDIT
+OCI
+
+0.9
+0.6
+0.3
+0.0
+–0.3
+
+0.9
+0.6
+0.3
+0.0
+
+load
+
+–0.3
+
+0.9
+0.6
+0.3
+0.0
+–0.3
+
+0.9
+0.6
+0.3
+0.0
+–0.3
+0
+
+50
+
+100
+
+150
+
+0
+
+50
+
+100
+
+150
+
+0
+
+50
+
+100
+
+150
+
+100
+
+150
+
+Text Embeddings
+GeneralFactor
+
+Alcohol
+
+Checking
+
+Ablutomania
+
+Insomnia
+
+Amnesia
+
+Suicide
+
+IntrusiveThoughts
+
+Shyness
+
+Derealization
+
+DestructiveImpulse
+
+Depression
+
+0.5
+
+0.0
+
+0.5
+
+load
+
+0.0
+
+0.5
+
+0.0
+
+0.5
+
+0.0
+
+0
+
+50
+
+100
+
+150
+
+0
+
+50
+
+100
+
+150
+
+0
+
+50
+
+Fig. 4 Factor loadings estimated from response similarity (Srsp ) and text similarity (Semb ). These factor loadings were estimated from text embeddings (top) and participants’ responses (bottom). The explained variance decreases row by row, from left to right within each row. AUDIT, alcohol use disorders identiﬁcation test; DES, dissociative experiences scale-II; ISI, Insomnia severity index; MCMI, Millon clinical multiaxial inventory-II Borderline Scale; OCI, obsessive-compulsive inventory; PHQ,
+patient health questionnaire; SPQB, schizotypal personality questionnaire-brief; STAXI, state–trait anger expression inventory.
+
+symptoms, such as Patient Health Questionnaire (PHQ; depression) and STAXI (irritability), is strengthened, while the inﬂuence
+of Alcohol Use Disorders Identiﬁcation Test (AUDIT; alcohol
+use) is weakened.
+Replication Study
+
+We conducted analyses to examine whether our ﬁndings depend on
+the choice of embedding model. In addition to the original embeddings derived from the OpenAI model, we generated text similarity
+matrices using (a) sBERT, (b) MiniLM, (c) multilingual BERT, and
+Psychiatry and Clinical Neurosciences 80: 196–204, 2026
+
+(d) English-language versions of the questionnaire items instead of
+Japanese. All other analytical procedures remained unchanged.
+Across all models, the emergence of a dominant general factor was
+consistently observed, replicating our main ﬁndings (Figs S3–S7). Specifically, the congruence coefﬁcients between the general factors derived
+from text-based and response-based similarity matrices were high (0.96–
+0.97; Fig. S4), and the ﬁrst principal components accounted for a substantial proportion of the variance (25.9%–81.1%; Fig. S5). Congruence
+coefﬁcients for speciﬁc factors showed considerable variability, consistent
+with our initial observations (Fig. S4). Moreover, in all cases, predictive
+199
+
+14401819, 2026, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.1111/pcn.70010, Wiley Online Library on [19/04/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+PCN
+
+0.03 –0.06 0.38 0.03 0.06 –0.03 –0.09 –0.04 –0.10 0.04 0.02 –0.22
+
+12_Depression
+
+0.16 –0.05 –0.14 0.28 0.31 –0.01 0.06 0.01 0.15 –0.06 0.04 –0.33
+
+12_IntrusiveThoughts
+
+0.22 –0.03 –0.36 0.01 0.01 –0.06 –0.02 0.01 0.05 –0.21 0.06 –0.27
+
+12_Suicide
+
+0.12 –0.01 –0.40 0.03 –0.02 –0.10 –0.10 –0.02 0.35 0.08 –0.06 0.13
+
+12_Checking
+
+0.23 0.04 –0.17 0.01 –0.07 –0.11 –0.11 0.70 –0.11 0.02 0.40 –0.08
+
+12_Shyness
+
+0.10
+
+12_Ablutomania
+
+0.21 –0.01 –0.20 0.15 0.02 0.66 –0.01 0.05 0.01 –0.07 0.21 0.00
+
+12_Insomnia
+
+0.14 0.04 0.05 0.02 0.81 –0.03 –0.03 0.01 0.00 –0.08 –0.01 –0.10
+
+12_DestructiveImpulse
+
+0.12 0.03 –0.05 0.56 –0.05 –0.06 –0.07 0.05 0.28 –0.21 0.06 –0.10
+
+12_Amnesia
+
+0.11 –0.02 0.61 –0.23 –0.07 –0.05 –0.21 0.06 –0.20 –0.03 –0.16 –0.25
+
+12_Alcohol
+
+0.05 0.89 0.03 –0.03 0.06 0.04 –0.09 –0.03 –0.01 –0.06 –0.02 –0.09
+
+12_GEN
+
+0.97 0.16 0.25 0.14 0.15 0.17 0.20 0.19 0.09 0.18 0.08 0.16
+
+Text Embedding
+
+12_Derealization
+
+0.01 –0.15 –0.05 –0.05 0.04 0.55 –0.03 –0.16 –0.09 0.03 0.10
+
+Psychiatry and
+Clinical Neurosciences
+
+Value
+
+so
+is
+D
+
+12
+_
+
+ng
+er
+12
+_S
+So le
+m ep
+a 12 tic
+_A
+bl
+12 m uto_W an
+ith i
+dr
+aw
+al
+12
+_C
+he
+12
+ck
+_H
+in
+g
+op
+el
+es
+sn
+es
+12
+s
+_S
+pi
+rit
+ua
+lit
+y
+12
+Pe _N
+rs um
+is
+te be
+n r
+12 ce
+_B
+iz
+a
+ne rress
+
+n
+io
+at
+ci
+
+co
+Al
+
+G
+12
+_
+
+12
+_
+
+12
+_A
+
+ho
+
+l
+
+EN
+
+0.5
+
+Response
+
+0.0
+
+Fig. 5 Congruence coefﬁcients between
+factors extracted from response similarity
+(Srsp ) and text similarity (Semb ). The factors
+extracted from text embeddings were
+sorted so that similar ones are arranged
+along the diagonal.
+
+Fig. 6 Diagnostic predictions using factor scores in the top panel and differences between factor loadings estimated from response similarity (Srsp ) and text similarity
+(Semb ) in the bottom panel. Prediction of diagnosis using general factors (top-left) and speciﬁc factors (top-middle) when the number of factors is varied. Predictions for
+diagnoses using the weighted similarity matrix (top-right). The relationship of the general factors with diagnoses depending on the weighting factor between two types
+of similarity matrices. Error bars in the top-left and top-right panels represent the standard error of regression coefﬁcients in multiple regression analysis. Error bars in
+the top-middle panel represent the standard deviations among multiple speciﬁc factors. AUDIT, alcohol use disorders identiﬁcation test; DES, dissociative experiences
+scale-II; ISI, Insomnia Severity Index; MCMI, Millon Clinical Multiaxial Inventory-II Borderline Scale; OCI, obsessive-compulsive inventory; PHQ, patient health questionnaire; SPQB, schizotypal personality questionnaire-brief; STAXI, state–trait anger expression inventory.
+
+200
+
+Psychiatry and Clinical Neurosciences 80: 196–204, 2026
+
+14401819, 2026, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.1111/pcn.70010, Wiley Online Library on [19/04/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+PCN
+
+Language or syndrome?
+
+Psychiatry and
+Clinical Neurosciences
+
+performance for participants’ diagnostic histories were better when using
+response similarity rather than text similarity (Fig. S7).
+However, differences across models were also evident. For
+example, embeddings from sBERT and mBERT yielded inﬂated
+inter-item correlations (Fig. S3), leading to stronger ﬁrst principal
+components (explaining 81.1%, 31.2%, 69.1%, and 25.9% of the variance for sBERT, MiniLM, mBERT, and English embeddings,
+respectively). The similarity between text-based and response-based
+similarity matrices was highest for the OpenAI embeddings using
+Japanese (Mean Squared Error = 0.018, 0.274, 0.024, 0.168, and
+0.020 for OpenAI, sBERT, MiniLM, mBERT, and English embeddings, respectively). These model-speciﬁc variations underscore that
+while the overall pattern of general factor is robust, quantitative
+details can shift depending on embedding choice.
+
+Discussion
+The aim of this study was to determine whether transdiagnostic factors, including p-factors, are driven by text similarity or by underlying
+syndromic co-occurrence related to mental disorders. To address this,
+we combined language embedding models and factor analysis to analyze mental disorder assessment scales. We then compared the factor
+structures derived from text embeddings with those based on actual
+participant response scores, using data from approximately 1000 individuals in the general population.
+The results revealed similarities between latent factors derived
+from text embeddings and participant responses. The similarity matrices generated from both data types demonstrated comparable clustering patterns, with variances primarily explained by the ﬁrst
+component. Additionally, both approaches produced general factors
+with consistently high loadings across a wide range of questionnaires.
+These ﬁndings indicate that most of the factor structure observed in
+response data can be reconstructed from the questionnaire texts alone.
+In other words, when responses are similar, it is mainly because the
+questions asked are similar, rather than reﬂecting underlying syndromic co-occurrence.
+However, notable differences were observed. The LLM may have
+primarily focused on the behavioral aspects of the questions, potentially overlooking their emotional context, as demonstrated by the
+similarity between item 6 and item 7 in the STAXI. Furthermore, as
+shown by the similarity between item 22 in the OCI and item 21 in
+the SPQB, common wording could result in stronger similarities in
+text embeddings, even when the items represent distinct psychopathological characteristics.
+Moreover, when examining criterion-related validity through a
+history of diagnoses, important differences emerged. Speciﬁcally, the
+association between factor scores and mental disorder history was
+stronger when using participant response data than when using text
+embeddings. This suggests that participant responses capture critical
+features related to mental disorders that text embeddings fail to fully
+reﬂect. This difference implies that the weighting of response data
+may differ between the two quantiﬁcation methods. In fact, when
+comparing the factor loadings of the general factor for both
+approaches, we found that, for response data, questionnaires related
+to emotions had relatively higher loadings. This result suggests that
+the latent space of transdiagnostic factors constructed from response
+data is somewhat misaligned with that constructed from text embeddings. We suspect that this discrepancy reﬂects syndromic cooccurrences, which may enhance diagnostic predictions.
+Previous studies have shown that the p-factor is associated with
+a wide range of indicators, including personality traits and cognitive
+functioning.15–17 Additionally, genetic studies have reported associations between the p-factor and heritability.24–26 These genetic
+associations suggest that the p-factor reﬂects underlying biological
+predispositions that cannot be accounted for by text similarities alone.
+These non-linguistic components of the p-factor may help explain the
+strong associations we observed between the p-factor and diagnostic
+history in our ﬁndings.
+Psychiatry and Clinical Neurosciences 80: 196–204, 2026
+
+Language or syndrome?
+
+The utility of LLMs and text embedding models has gained
+increasing recognition in psychology and psychiatry.27 Several studies
+have analyzed the text embeddings of questionnaires, reporting similarities between text embeddings and response data.21,22,28 For
+instance, Cutler and Condon21 and Guenole et al.22 examined the
+similarity between text embeddings and participant responses, focusing on personality questionnaires. However, psychopathology questionnaires have not been fully investigated through this type of
+analysis, except for the studies by Kambeitz et al.28 and Milano
+et al.,29 which measured the correlation between response similarity
+and text similarity for several specialized psychopathology questionnaires. Therefore, their study covered only a single, limited domain.
+Our study extends these ﬁndings by analyzing the transdiagnostic and
+hierarchical factor structure, including the general factor (p-factor),
+using multiple questionnaires. Additionally, we evaluated the criterionrelated validity of transdiagnostic factors, revealing that response data
+captured unique features related to mental disorders that were not
+reﬂected in text embeddings.
+The ﬁndings from our study suggest several directions for future
+research in psychopathology and psychiatry using natural language
+processing, including LLMs. Several studies have highlighted the
+utility of LLMs and NLP in these ﬁelds, including analysis of
+questionnaire items and narrative data, generation and reﬁnement of
+psychological constructs, and the creation of mental disorder
+agents.21,22,28–31 However, certain psychopathological features remain
+uncaptured by LLMs, emphasizing the need for real human data, such
+as behavioral data, alongside LLM analysis results. An interesting
+direction for future work is the selection of questionnaire items. Questionnaire items are often designed with deliberate redundancy—
+adding semantically similar questions to boost reliability and robustness.32,33 However, this practice can create a correlational structure
+driven more by item wording than by true symptom patterns and
+result in questionnaires composed of excessively redundant items.
+Text similarity measures based on large language models may allow
+us to reduce excessive item redundancy without sacriﬁcing measurement precision. Furthermore, methods based on LLMs have also been
+proposed to analyze the overlap and distinctions between psychological constructs,34 which may contribute to reﬁning both dimensional
+concepts and categorical diagnoses of mental disorders.
+Furthermore, the ﬁnding of differences between response data
+and text embeddings suggests new assessment strategies for psychopathology. Speciﬁcally, the presence of such discrepancies suggests
+that text similarity in language does not fully account for symptom
+co-occurrence, and that the two are not equivalent. By identifying and
+removing this inﬂuence, it may be possible to extract transdiagnostic
+factors based on syndromic co-occurrence, which could quantify the
+severity of participants’ ‘pure’ psychopathology. However, such
+adjustments only make sense if there is a substantive divergence
+between text similarity and symptom co-occurrence. Therefore, it is
+important to carefully analyze and distinguish between these two
+aspects. In relation to this, methods for estimating individual differences using text embeddings also need further reﬁnement. While we
+calculated scores for transdiagnostic factors based on text embeddings
+by combining response data with factor structures derived from text
+similarity matrices, we did not fully decompose the inﬂuence of
+semantic similarity and syndromic co-occurrence. One challenge in
+separating latent factors based on semantic similarity from those
+based on syndromic co-occurrence may arise from the fact that
+participant-speciﬁc data for text embeddings do not exist. Future
+research could address this difﬁculty by constructing a Bayesian
+model to estimate participant-speciﬁc text embedding scores as latent
+variables.
+This study has some limitations. First, there are issues related to
+the sample. The data were collected through an online survey, which
+was limited to the general population in Japan. Future studies should
+recruit participants using alternative methods and include data from
+other countries to enhance generalizability. Additionally, as this was a
+secondary analysis, the possibility of some inherent biases cannot be
+201
+
+14401819, 2026, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.1111/pcn.70010, Wiley Online Library on [19/04/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+PCN
+
+ruled out. Second, there is the issue of translation. The similarity
+between questionnaire items may vary depending on the language
+used. Although we estimate this inﬂuence to be minimal, further
+investigation is needed. Third, the scope of the questionnaires poses a
+limitation. The included measures may underrepresent externalizing
+symptoms relative to other domains. Next, we note that although the
+general factors derived from text and response data were highly congruent, this does not imply the p-factor is solely a product of language. Semantic overlap and true symptom co-occurrence likely both
+contribute, and our ﬁndings cannot fully disentangle these effects.
+Future work should aim to separate linguistic inﬂuences from genuine
+syndromic associations to identify the non-linguistic core of the
+p-factor.
+
+Psychiatry and
+Clinical Neurosciences
+
+Similarity Matrix
+Participants’ Responses
+
+For factor analysis, we constructed two types of similarity matrices:
+response similarity (S rsp ) and text similarity (S emb ).
+To construct response similarity (S rsp ), we utilized response data
+obtained from the psychiatric symptom questionnaires described earlier. We computed polychoric correlations between participants’
+response patterns for each questionnaire item. Polychoric correlation
+was selected as the most appropriate method because the questionnaire items were ordinal and exhibited skewed distributions, making
+it more suitable than Pearson correlation for estimating the latent relationships between ordinal variables.
+Text Embeddings
+
+Conclusions
+This study examined whether transdiagnostic factors, including
+p-factors, stem from questionnaire text properties or underlying syndromic co-occurrence. Comparing text embeddings with participant
+responses in approximately 1000 individuals, both methods showed
+similar clustering patterns and general factors. However, participant
+responses showed stronger associations with mental disorder history
+than text embeddings, highlighting their ability to capture some
+important features. This study suggests a new direction for the assessment of psychopathology using LLMs.
+
+Methods
+Participants, Measures, and Procedure
+This study analyzed 145 items from standardized psychiatric symptom
+questionnaires, encompassing a broad range of mental health conditions.
+The measures included: Schizotypal Personality Questionnaire-Brief
+(SPQB), a 22-item measure assessing schizotypal personality disorder
+symptoms, using binary response options35,36; Obsessive-Compulsive
+Inventory (OCI), a 42-item questionnaire evaluating obsessivecompulsive symptoms, rated on a ﬁve-point Likert scale37,38; Patient
+Health Questionnaire (PHQ), a nine-item measure of depressive
+symptoms, rated on a four-point scale39,40; Insomnia Severity Index
+(ISI), a seven-item scale measuring insomnia severity, with ﬁve-level
+response options,41,42 Alcohol Use Disorders Identiﬁcation Test
+(AUDIT), a 10-item assessment of alcohol use disorder, with eight items
+rated on a ﬁve-point scale and two items rated on a three-point scale43,44;
+state anger from State–trait Anger Expression Inventory (STAXI), a
+10-item measure assessing irritability symptoms, with four-level response
+options,45,46 Dissociative Experiences Scale-II (DES), a 28-item measure
+of dissociative symptoms, rated on an 11-point scale47,48; and Millon
+Clinical Multiaxial Inventory-II Borderline Scale (MCMI), a
+17-item measure assessing borderline personality traits, using
+binary response options.49,50 All measures were administered in
+their validated Japanese-translated versions, which have demonstrated sufﬁcient reliability.35,38,40,42,43,46,48,49 For all scales, scores were
+transformed so that higher scores indicated greater symptom severity.
+Response data were collected from 985 participants (female =
+607; male = 378) through an online survey conducted in Japan. The
+mean participant age was 38.87 years (standard deviation = 9.91).
+Participants were limited to those who could read Japanese. Additionally, participants’ diagnostic history was obtained (collected diagnoses
+included schizophrenia, mood disorders, anxiety disorders, obsessivecompulsive disorders, developmental disorders, and unspeciﬁed
+disorders).
+The dataset was originally collected to examine the reliability
+and validity of the DSM-5 Level 1 Cross-Cutting Symptom Measure.23 The protocol used to collect the data was approved by the
+ethics committees of the Senshu University (20-S002-4). These studies were carried out in accordance with the provisions of the World
+Medical Association Declaration of Helsinki. Participants provided
+informed consent by clicking ‘I agree’ after reviewing the study
+information.
+202
+
+For text similarity (S emb ), we used text embedding vectors
+corresponding to the same questionnaire items administered to participants. Some questionnaire items did not explicitly include symptomrelated wording in their main question but rather embedded it within
+the Likert scale response options. To ensure accurate semantic representation, we revised the text for these items. This procedure was
+applied only to a small number of items (three related to sleep), and
+the original wording was preserved (the revised sentences are provided in Table S1).
+We employed OpenAI Embeddings (text-embedding-3-small) to
+convert each questionnaire item into an embedding vector. The text
+was processed in Japanese, and similarity between the resulting
+embedding vectors was computed using cosine similarity, a widely
+used metric for quantifying semantic similarity in high-dimensional
+vector spaces.
+Additionally, we assessed the robustness of our ﬁndings across
+different embedding methods to ensure reproducibility. First, we generated embeddings using models other than OpenAI’s text-embedding-3-small: speciﬁcally, sBERT (ruri-v3-130m), MiniLM (L12-v2),
+and multilingual BERT with pooling. To evaluate any inﬂuence of
+the Japanese language, we also used the corresponding Englishlanguage questionnaire items through the OpenAI embedding model
+to generate embeddings, then repeated our analyses to see if the
+results would replicate. However, for the MCMI, we were unable to
+obtain the corresponding English-language items, so we instead used
+machine-translated versions of the Japanese items.
+Weighted Average Similarity Matrices
+
+To integrate both response-based and text-based similarity information, we constructed weighted average similarity matrices, computed
+as follows:
+
+w S rsp þ ð1  wÞ S emb
+where w represents the weighting factor. This approach allowed us
+to systematically examine the relative contributions of response patterns and linguistic similarities in shaping the factor structure of
+psychopathology.
+Factor Analysis
+We applied factor analysis to the obtained similarity matrices as follows. This same procedure was used for different similarity matrices
+in our analysis.
+First, we explored the number of factors using a similarity matrix
+of participants’ responses. Because we could not determine a clear
+number of factors using conventional methods (Table S2), we conducted broad models with factors ranging from 3 to 19. A solution
+with 19 factors was suggested by parallel analysis. We selected the
+factor solution with as many factors as possible for representative
+results, ensuring that all factors were interpretable. We focus on
+reporting these representative results (i.e., the model with 12 factors),
+but the ﬁndings are generalizable. Next, exploratory factor analysis
+Psychiatry and Clinical Neurosciences 80: 196–204, 2026
+
+14401819, 2026, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.1111/pcn.70010, Wiley Online Library on [19/04/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+PCN
+
+Language or syndrome?
+
+Psychiatry and
+Clinical Neurosciences
+
+(EFA) was performed using maximum likelihood estimation. We
+used biquartimin rotation, where the oblique bifactor model was constructed. The oblique bifactor model refers to a type of bifactor model
+that allows for correlations between speciﬁc factors. This model was
+chosen for its higher ﬂexibility and reliability compared to other rotation methods that could extract the general factor, though the differences were small.51 The labels for the speciﬁc factors were assigned
+based on the items with high factor loadings.
+The procedure for factor analysis, including the selection of the
+number of factors and rotation methods, follows the analysis conducted on the same dataset as reported in Soda et al.51 For additional
+details, please refer to their study.
+Effectiveness of Diagnosis Prediction
+We analyzed the diagnostic predictive power using factor scores
+derived from the results of factor analysis. Factor scores were estimated using the tenBerge method, as preliminary analysis showed
+that it effectively reconstructed factor correlations in participants’
+responses. It is important to note that when calculating factor scores,
+the factor loadings and factor correlations were derived from each
+similarity matrix, but the same response data were used in both cases.
+Roughly, for text embedding, factor scores for each participant were
+calculated from their response data by weighting based on the factor
+loadings derived from text similarity. Next, a multiple regression analysis was conducted to predict the presence or absence of a diagnosis
+history using the factor scores for all general and speciﬁc factors.
+
+Language or syndrome?
+9.
+10.
+11.
+12.
+13.
+14.
+15.
+
+16.
+17.
+
+18.
+19.
+
+Software
+
+Analyses were performed using R software. The R packages ‘polycor’
+and ‘psych’ were used for polychoric correlations and EFA.
+
+20.
+21.
+
+Acknowledgments
+This research was supported by JSPS KAKENHI (JP20H00625,
+JP24H00076,
+JP24K00499,
+JP25H01173),
+JST
+CREST
+(JPMJCR21P4), and Intramural Research Grant (4-6, 6-9, 7-9) for
+Neurological and Psychiatric Disorders of NCNP.
+Disclosure statement
+All authors declare no ﬁnancial or non-ﬁnancial competing interests.
+Data availability statement
+The data that support the ﬁndings of this study are available from the
+corresponding author upon reasonable request.
+
+22.
+23.
+
+24.
+25.
+26.
+
+References
+1.
+2.
+
+3.
+4.
+5.
+6.
+7.
+8.
+
+American Psychiatric Association. DSM–5: Diagnostic and Statistical
+Manual of Mental Disorders, 5th edn. Washington, DC, American Psychiatric Association, 2013.
+Kessler RC, Chiu WT, Demler O, Merikangas KR, Walters EE. Prevalence, severity, and comorbidity of 12-month DSM-IV disorders in the
+national comorbidity survey replication. Arch. Gen. Psychiatry 2005; 62:
+617–627.
+Kessler RC, Ormel J, Petukhova M et al. Development of lifetime
+comorbidity in the world health organization world mental health surveys. Arch. Gen. Psychiatry 2011; 68: 90–100.
+Achenbach TM. The classiﬁcation of children’s psychiatric symptoms: A
+factor-analytic study. Psychol. Monogr. 1966; 80: 1–37.
+Krueger RF. The structure of common mental disorders. Arch. Gen. Psychiatry 1999; 56: 921–926.
+Kotov R, Krueger RF, Watson D et al. The hierarchical taxonomy of
+psychopathology (HiTOP): A dimensional alternative to traditional
+nosologies. J. Abnorm. Psychol. 2017; 126: 454–477.
+Ringwald WR, Forbes MK, Wright AG. Meta-analysis of structural evidence for the hierarchical taxonomy of psychopathology (HiTOP) model.
+Psychol. Med. 2023; 53: 1–14.
+Caspi A, Houts RM, Belsky DW et al. The p factor: One general psychopathology factor in the structure of psychiatric disorders? Clin. Psychol.
+Sci. 2014; 2: 119–137.
+
+Psychiatry and Clinical Neurosciences 80: 196–204, 2026
+
+27.
+28.
+29.
+
+30.
+31.
+32.
+33.
+
+Lahey BB, Applegate B, Hakes JK, Zald DH, Hariri AR, Rathouz PJ. Is
+there a general factor of prevalent psychopathology during adulthood?
+J. Abnorm. Psychol. 2012; 121: 971–977.
+van Bork R, Epskamp S, Rhemtulla M, Borsboom D, van der Maas HLJ.
+What is the p-factor of psychopathology? Some risks of general factor
+modeling. Theory Psychol. 2017; 27: 759–773.
+Watts AL, Poore HE, Waldman ID. Riskier tests of the validity of the
+bifactor model of psychopathology. Clin. Psychol. Sci. 2019; 7:
+1285–1303.
+Lahey BB, Moore TM, Kaczkurkin AN, Zald DH. Hierarchical models
+of psychopathology: Empirical support, implications, and remaining
+issues. World Psychiatry 2021; 20: 57–63.
+Smith GT, Atkinson EA, Davis HA, Riley EN, Oltmanns JR. The general factor of psychopathology. Annu. Rev. Clin. Psychol. 2020; 16:
+75–98.
+Widiger TA, Oltmanns JR. The general factor of psychopathology and
+personality. Clin. Psychol. Sci. 2017; 5: 182–183.
+Tackett JL, Lahey BB, van Hulle C, Waldman I, Krueger RF,
+Rathouz PJ. Common genetic inﬂuences on negative emotionality and a
+general psychopathology factor in childhood and adolescence.
+J. Abnorm. Psychol. 2013; 122: 1142–1153.
+Carver CS, Johnson SL, Timpano KR. Toward a functional view of the
+P factor in psychopathology. Clin. Psychol. Sci. 2017; 5: 880–889.
+Martel MM, Pan PM, Hoffmann MS et al. A general psychopathology
+factor (P factor) in children: Structural model analysis and external validation through familial risk and child global executive function.
+J. Abnorm. Psychol. 2017; 126: 137–148.
+Allport GW, Odbert HS. Trait-names: A psycho-lexical study. Psychol.
+Monogr. 1936; 47: i–171.
+Polek E, Jones PB, Fearon P et al. Personality dimensions emerging during adolescence and young adulthood are underpinned by a single latent
+trait indexing impairment in social functioning. BMC Psychiatry 2018;
+18: 23.
+Rosenström T, Gjerde LC, Krueger RF et al. Joint factorial structure of
+psychopathology and personality. Psychol. Med. 2019; 49: 2158–2167.
+Cutler A, Condon DM. Deep lexical hypothesis: Identifying personality
+structure in natural language. J. Pers. Soc. Psychol. 2023; 125: 173–197.
+Guenole N, D’Urso E, Samo A, Sun T. Pseudo factor analysis of language embedding similarity matrices: New ways to model latent constructs. 2024.
+Soda T, Toyama A, Takeda M, Kunisato Y, Yamashita Y. Reliability
+and validity of the DSM-5 level 1 cross-cutting symptom measure in
+Japan: Insights into general and speciﬁc psychiatric symptom assessment.
+J. Pers. Assess. 2025: 1–13. doi.org/10.1080/00223891.2025.2527702
+Harden KP, Engelhardt LE, Mann FD et al. Genetic associations
+between executive functions and a general factor of psychopathology.
+J. Am. Acad. Child Adolesc. Psychiatry 2020; 59: 749–758.
+Pettersson E, Larsson H, Lichtenstein P. Common psychiatric disorders
+share the same genetic origin: A multivariate sibling study of the Swedish population. Mol. Psychiatry 2016; 21: 717–721.
+Lahey BB, Van Hulle CA, Singh AL, Waldman ID, Rathouz PJ. Higherorder genetic and environmental structure of prevalent forms of child and
+adolescent psychopathology. Arch. Gen. Psychiatry 2011; 68: 181–189.
+Stade EC, Stirman SW, Ungar LH et al. Large language models could
+change the future of behavioral healthcare: A proposal for responsible
+development and evaluation. npj Ment. Health Res. 2024; 3: 12.
+Kambeitz J, Schiffman J, Kambeitz-Ilankovic L, Ettinger U, Vogeley K.
+The empirical structure of psychopathology is represented in large language models. 2023.
+Milano N, Luongo M, Ponticorvo M, Marocco D. Semantic analysis of
+test items through large language model embeddings predicts a-priori
+factorial structure of personality tests. Curr. Res. Behav. Sci. 2025; 8:
+100168.
+Sikström S, Nicolai M, Ahrendt J, Nevanlinna S, Stille L. Language or
+rating scales based classiﬁcations of emotions: Computational analysis of
+language and alexithymia. npj Ment. Health Res. 2024; 3: 37.
+Herderich A, Freudenthaler HH, Garcia D. A computational method to
+reveal psychological constructs from text data. Psychol. Methods 2024.
+doi.org/10.1037/met0000700
+Boyle GJ. Does item homogeneity indicate internal consistency or item
+redundancy in psychometric scales? Pers. Individ. Differ. 1991; 12:
+291–294.
+Panayides P. Coefﬁcient alpha: Interpret with caution. Eur. J. Psychol.
+2013; 9: 687–696.
+
+203
+
+14401819, 2026, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.1111/pcn.70010, Wiley Online Library on [19/04/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+PCN
+
+34. Wulff DU, Mata R. Semantic embeddings reveal and address taxonomic
+incommensurability in psychological measurement. Nat. Hum. Behav.
+2025; 9: 944–954.
+35. Ito S, Obu S, Ota M, Takao T, Sakamoto S. Reliability and validity of
+the Japanese version of SPQ-B (schizotypal personality questionnaire
+brief). Jpn. Bull. Soc. Psychiatry 2008; 17: 168–176.
+36. Raine A, Benishay D. The SPQ-B: A brief screening instrument for
+schizotypal personality disorder. J. Pers. Disord. 1995; 9: 346–355.
+37. Foa EB, Kozak MJ, Salkovskis PM, Coles ME, Amir N. The validation
+of a new obsessive–compulsive disorder scale: The obsessive–
+compulsive inventory. Psychol. Assess. 1998; 10: 206–214.
+38. Ishikawa R, Kobori O, Shimizu E. Development and validation of the
+Japanese version of the obsessive-compulsive inventory. BMC Res. Notes
+2014; 7: 306.
+39. Kroenke K, Spitzer RL, Williams JB. The PHQ-9: Validity of a brief
+depression severity measure. J. Gen. Intern. Med. 2001; 16: 606–613.
+40. Muramatsu K, Kamijima K, Yoshida M et al. The patient health questionnaire, Japanese version: Validity according to the mini-international
+neuropsychiatric interview-plus. Psychol. Rep. 2007; 101: 952–960.
+41. Bastien CH, Vallières A, Morin CM. Validation of the insomnia severity
+index as an outcome measure for insomnia research. Sleep Med. 2001; 2:
+297–307.
+42. Munazawa T, Morin C, Inoue Y, Nedate K. Nihon go ban Fumin jusho
+do shitumon hyo no kaihatsu. Jpn. J. Psychiatr. Treat. 2009; 24: 219–225.
+43. Hiro H, Shima S. Availability of the alcohol use disorders identiﬁcation
+test (AUDIT) for a complete health examination in Japan. Nihon Arukoru
+Yakubutsu Igakkai Zasshi 1996; 31: 437–450.
+
+204
+
+PCN
+
+Psychiatry and
+Clinical Neurosciences
+
+44. Saunders JB, Aasland OG, Babor TF, De La Fuente JR, Grant M. Development of the alcohol use disorders identiﬁcation test (AUDIT): WHO
+collaborative project on early detection of persons with harmful alcohol
+consumption-II. Addiction 1993; 88: 791–804.
+45. Spielberg C. Manual for the Stale-Trait Anger Expression Inventory
+(STAXI). Psychological Assessment Resources, Odessa, FL, 1988.
+46. Suzuki T, Haruki Y. The relationship between anger and circulatory disease. Jpn. J. Health Psychol. 1994; 7: 1–13.
+47. Bernstein EM, Putnam FW. Development, reliability, and validity of a
+dissociation scale. J. Nerv. Ment. Dis. 1986; 174: 727–735.
+48. Tanabe H, Ogawa T. On the measurement of dissociative experiences:
+Development of the dissociative experiences scale with a population
+of Japanese university students. Tsukuba Psychol. Res. 1992; 14:
+171–178.
+49. Izawa K. Validation of millon clinical multiaxial inventory-II borderline
+scale. Arch. Psychiatr. Diagn. Clin. Eval. 1995; 6: 473–483.
+50. Millon T, Davis R. Millon Clinical Multiaxial Inventory-II: MCMI-II.
+National Computer Systems, Minneapolis, MN, 1987.
+51. Soda T, Murata S, Toyama A et al. Psychometric Properties of Hierarchical Psychiatric Symptoms on the General Population. PsyArXiv, 2024.
+doi.org/10.31234/osf.io/84nua
+
+Supporting Information
+Additional supporting information can be found online in the
+Supporting Information section at the end of this article.
+
+Psychiatry and Clinical Neurosciences 80: 196–204, 2026
+
+14401819, 2026, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.1111/pcn.70010, Wiley Online Library on [19/04/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+Language or syndrome?
+
+

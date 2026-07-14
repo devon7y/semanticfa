@@ -1,0 +1,5 @@
+library(semanticfa)
+dass <- read.csv("/Users/devon7y/VS_Code/LLM_Factor_Analysis/scale_items/DASS_items.csv", stringsAsFactors = FALSE)
+emb <- sfa_embed(dass$item)
+emb_8b <- sfa_load_npz('/Users/devon7y/VS_Code/LLM_Factor_Analysis/embeddings/DASS_items_8B.npz')
+fit <- sfa(emb) 

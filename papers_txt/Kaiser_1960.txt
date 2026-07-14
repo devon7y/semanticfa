@@ -1,0 +1,453 @@
+EDUCATIONAL AND PSYCHOLOGICAL MEASUREMENT
+VOL. XX, No. 1, 1960
+
+
+
+
+    THE APPLICATION OF ELECTRONIC COMPUTERS
+                      TO FACTOR 1
+                                ANALYSIS
+                           HENRY F. KAISER
+                           University of Illinois
+
+  IN one sense, it is appropriate that I should go first on this sym-
+posium. For my topic is electronic computers in factor analysis-
+and factor analysis may properly be said to be that technique in
+psychology for which computers were first used and are unquestion-
+ably the most used today. Thus, relatively, I shall be talking about
+a more traditional, better established, and consequently perhaps
+
+more stodgy and less exciting application of computers to psy-
+
+chological problems.
+   Let me warn you about how I am going to talk today. I have not
+conducted a survey of available computer programs for factor ana-
+lytic computations, nor have I done an analysis of the problems of
+the application of computers to factor analysis in any way that
+could be considered scientific. I am saying that I shall ask you to
+listen to my opinions about the applications of computers to factor
+analysis and only hope that these opinions and anecdotes make some
+sense. My qualification for presuming to ask you to listen to these
+ruminations is purely quantitative: I imagine that I am guilty of
+having carried out more factor analytic calculations of the theo-
+retical sort on electronic computers than anyone walking the earth.
+
+                          Practical Application
+  While almost my entire paper is going to be about the implications
+of computers for the theory of factor analysis, allow me to devote a
+
+  1 A
+      paper read at the symposium, "Applications of Computers to Psychologi-
+cal Problems," under the chairmanship of Cletus J. Burke, annual meeting of
+the American Psychological Association, Cincinnati, September 7, 1959.
+  I am most indebted to Professor N. L. Gage for criticizing a draft of this
+paper.
+                                     141
+142   EDUCATIONAL AND PSYCHOLOGICAL MEASUREMENT
+
+paragraph to the implications of computers for a factor-analytic
+practitioner. Although very important, I think the main thing to be
+said here is so obvious that we need not linger over it. With a com-
+puter one does not need to spend endless hours hanging away on a
+desk calculator or on punched card mechanical pomputers. Or, he
+does not need to hire, at great expense, a vast corps of clerks to
+carry out these efforts. Some implications of this relief from drudgery
+seem equally obvious. An investigator can think great thoughts about
+
+psychological and scientific problems free from inhibitions generated
+by purely practical computing difficulties. Also, so-called research
+can really no longer be based on long hours of hard work; it is much
+more difficult these days to set graduate students off in a corner
+
+clubbing out centroids as an excuse for their not producing a
+thoughtful thesis.
+   The other side of the coin with respect to the ease of calculations
+brought about by electronic computers is that investigators unques-
+tionably are scientifically much less careful with data. Back in the
+Dark Ages before computers, a researcher would do some very seri-
+ous psychologizing before he increased the scope of his study-when
+he realized that it would add perhaps weeks to the drudgery of com-
+puting ; nowadays, unfortunately, he can add unrationalized varia-
+bles to his matrices without blinking an eye. This seems undesirable,
+of course. I have also heard it said that it is undesirable that students
+no  longer have the opportunity for that &dquo;good for the soul&dquo; plugging
+away-really doing the deed on a desk calculator. Things aren’t like
+they were in the good old days when we really had to work and
+appreciate our factor analyses. I consider this argument specious. As
+I go on shortly to more theoretical matters, I shall argue most
+strongly that those factor analytic computations which are desira-
+ble are impossible to do on desk calculators; only undesirable pro-
+cedures may be attacked with a desk machine. It is not &dquo;good for
+one’s soul&dquo; by hand to invert matrices, find principal axes, and rotate
+analytically-things which form the very basis of factor analysis
+in this enlightened era; these are impossible to compute by hand.
+
+                               Theory
+  Let me turn now to my main topic, the implications for the theory
+of factor analysis arising from electronic computers. It is sufficient
+to think of the theoretical questions of factor analysis as belonging
+                            HENRY F. KAISER                                143
+
+to two essentially independent problems. The first of these is deter-
+mining an &dquo;interesting&dquo; factor space-different from the original test
+space. Under this are subsumed both the communality problem and
+the question of the number of factors. The second major problem is
+determining a vector basis for this &dquo;interesting&dquo; factor space. Under
+this are subsumed both the question of arbitrary factoring and the
+problem of rotation.
+                              Communalities
+   In this order then, first consider the communality problem. Over
+the years Professor Guttman, in a series of brilliant papers, has
+developed the entire mathematical model of factor analysis from
+the scientifically and psychologically satisfying inferential view-
+point of sampling variables from a universe of psychological content.
+This algebraically more complicated formulation, but scientifically
+more insightful one, has led to a rather straightforward proof that
+
+the communality of a variable is the squared multiple correlation of
+this variable on the remaining variables in the universe of content.
+That is, the communality is the limiting squared multiple correla-
+tion on the infinite number of other variables to which we are at-
+tempting to draw psychometric inferences. Now squared multiple
+correlations, of course, involve inverting the correlation matrix.
+Additionally, Guttman essentially proved ’way back in 1940, that
+for the factor analytic approach to be appropriate, it is sufficient
+that the inverse of the correlation matrix in the limit becomes diag-
+onal. Inverting many empirical matrices, I have found that this con-
+dition apparently is also necessary: if the inverse of the correlation
+matrix under consideration deviates wildly from diagonal form,
+subsequent operations will often lead to trouble and confusion. Thus,
+both these important contributions to the theory of factor analysis
+computationally are centered about the inverse. This is my first
+example of the application of computers to factor analysis. Gutt-
+man’s well-appreciated, but formerly little-used ideas are now
+coming to light applicationally through their necessary adjunct, the
+ability to find results to go with the algebraic theorems with which
+he has provided us.
+   Very closely related to the mathematical model of factor analysis
+is a mathematical model which Guttman calls image theory or
+analysis. A couple of years ago it occurred to me that one of the
+144   EDUCATIONAL AND PSYCHOLOGICAL MEASUREMENT
+
+matrices involved in image theory represented an ideal approxi-
+mation to a common-factor space. Again, we must invert the ob-
+served correlation matrix, and, since I had a computer available, I
+was able to try out my ideas in great quantity-something which
+would have been but an idle dream without a computer. Indeed, as
+a result of these extensive empirical efforts, I am well convinced that
+this image theoretical approach to the communality problem is
+essentially unimprovable.
+   Also with regard to communalities, allow me to give a small exam-
+ple of how computers can sometimes be an effective substitute for
+mathematics. Three years ago Professor Tryon and I developed what
+looked like an exact solution for the communality problem. This was
+truly exciting; we had finally found the Pot of Gold. After much
+arm-waving, the technique boiled down mathematically and compu-
+tationally to inverting a matrix iteratively until the communalities
+were solved for. (Conceptually we were concerned with taking the
+
+squared multiple in the limit.) However, neither Tryon nor I was
+able to prove that this procedure converged to the &dquo;true&dquo; communal-
+ities. I then turned to a machine and after having computed actually
+four or five million squared multiple correlations, I gave up. Our
+approach, ultimately, was a glamorous failure. Not completely
+though: in rehashing why in the long pull it had failed to converge,
+I had impressed upon me the simple proof of why the communality
+problem as classically stated is insolvable.
+                           Number of Factors                                    ,
+
+
+
+
+   Now consider the closely interlocked problem of the number of
+factors. It would appear that there have been four distinguishable
+bases for determining the number of factors. In order of increasing
+importance these are (1) statistical criteria of significance, (2) alge-
+braic criteria of necessity, (3) psychometric criteria of reliability,
+ (4) psychological criteria of meaningfulness. Let me discuss each of
+these in this same order.
+   For those of you who have been browbeaten by the imprecations
+of second-rate statisticians into thinking that a significance test for
+the number of common factors is essential to the proper application
+of factor analysis, I can only say that electronic computers are an
+absolute necessity to carrying out such logically inappropriate sta-
+tistical tests. The statistically correct but scientifically issue-con-
+                        HENRY F. KAISER                           145
+
+fusing significance tests of Lawley and Company require, I have
+been told, matrix inversion, and eigenvector-eigenvalue problems of
+the worst sort-things not ever done on anything but electronic
+computers.
+   Professor Guttman, in establishing some algebraically necessary
+conditions for common factor analysis, has provided us with the
+most important paper yet published on the number-of-factors ques-
+tion. More specifically, Guttman has found criteria for determining
+a lower bound for the number of factors. His universally strongest
+lower bound requires that we find the number of positive latent roots
+of the observed correlation matrix with squared multiples in the
+diagonal. An alternative lower bound-weaker than the onejust
+mentioned-requires that we find the number of latent roots greater
+than one of the observed correlation matrix. I have systematically
+studied the first of these lower bounds through the use of a computer
+and have gotten results which surprised even Professor Guttman:
+it almost invariably is necessary-in the strict algebraic sense-to
+have more than half as many factors as there are variables in the
+study. This is not a very delightful result-considering the well-
+known results regarding unique communalities. I have also studied
+somewhat systematically Guttman’s other lower bound for the num-
+ber of factors, the number of eigenvalues greater than one of the
+observed correlation matrix. This typically runs from a sixth, say,
+to a third, of the number of variables.
+   The reason for studying this second lower bound with some care
+has to do with the next criterion for the number of factors, psycho-
+metric reliability. Very recently, I have worked out all of the formu-
+las for the Kuder-Richardson reliability of factors. One remarkably
+simple result is that for a principal component to have positive
+Kuder-Richardson reliability, it is necessary and sufficient that the
+associated eigenvalue be greater than one-a finding corresponding
+exactly to Guttman’s algebraic lower bound.
+   And, finally, from the fourth, and by far most important view-
+point for choosing the number of factors-psychological meaning-
+fulness-I have found that the number of eigenvalues greater than
+one of the observed correlation matrix led to a number of factors
+
+corresponding almost invariably, in a great number of studies, to
+the number of factors which practicing psychologists were able to
+interpret.
+146   EDUCATIONAL AND PSYCHOLOGICAL MEASUREMENT
+
+  Summarizing then, allow me to suggest a &dquo;best&dquo; answer to the
+question of the number of factors: it is the number of latent roots
+greater than one of the observed correlation matrix. This conclu-
+sion is based on the relatively independent criteria of algebraic
+necessity, psychometric reliability, and psychological meaningful-
+ness. This best answer to this perennial question is not an attempt
+to say how many factors there are in the universe of psychological
+content-for the answer to this theoretical question is obviously that
+the number of factors in any psychological domain is infinite. I am
+just presenting an answer which will provide one with a basis for
+finding that number of factors which may be yielded necessarily,
+reliably, and meaningfully-from the data at hand. And this result,
+which you can perhaps see that I am somewhat enchanted by, has
+come about only through an extensive application of electronic com-
+
+puters ; even Professor Guttman’s mathematical genius is incapable
+of grinding out inverses and eigenvalues in the bushelsful that were
+necessary to reach this conclusion.
+
+                                      Factoring
+   Let us turn then to the second major problem of factor analysis:
+that of determining a &dquo;best&dquo; basis for the common factor space al-
+ready found. This problem, of course, proceeds in two stages: first,
+an arbitrary factoring, and then a rotation to a purportedly &dquo;psy-
+
+chologically interesting&dquo; position. As for this first stage, electronic
+computers have provided us with a theoretically most desirable way
+of doing business. This is simple and not at all subtle: rather than
+use the vastly inferior centroid method, we may turn to the ideal
+
+procedure, Hotelling’s method of principal axes. For reasons which
+have completely escaped me, the particularly simple distinction just
+made seems to have caught on slowly. Eventually, of course, be-
+cause of the impact of electronic computers, the centroid method will
+die. From a theoretical point of view, the quicker this demise, the
+better.
+
+                                 Rotation
+  Once we have an arbitrary basis, then we may turn to the prob-
+lem of rotation-that particular question in factor analysis for which
+computers relatively have probably had the greatest effect. For,
+before the advent of computers, rotations were always carried out
+                         HENRY F. KAISER                            147
+
+on a   subjective, graphical basis. Scientifically, of course, this was
+nonsense, and perhaps led, more than anything else, to a bad name
+for factor analysis among professional mathematicians and statis-
+ticians. Amazingly, in 1953 and 1954 a number of investigators-
+Carroll, Neuhaus and Wrigley, Saunders, and Ferguson-independ-
+ently and essentially simultaneously suddenly brought forth the first
+analytic criteria for rotation-mathematical statements through the
+use of to-be-optimized criterion functions of the loadings. Addi-
+
+tionally, Professor Wrigley had the foresight to realize immediately
+that these ideas absolutely required the services of a computer, and,
+using the recently completed Illiac at the University of Illinois
+together with thejim-dandy name &dquo;quartimax&dquo; for his criterion,
+started pouring forth purely objective analytic rotational solutions
+by the ton. This would have been impossible without a computer.
+Subsequently, the development of analytic criteria for rotation has
+been very rapid. In 1955 I first proposed the so-called varimax cri-
+terion for analytic rotation in the orthogonal case, a criterion that-
+so I’ve been told-appears to be the essentially satisfactory answer
+for analytic orthogonal solution. Quartimax and varimax are
+child’s play on a computer-easily accomplished even on medium-
+speed machines. However, the completely general analytic solution
+for the case of the oblique factors has been a more difficult nut to
+crack. The original, and subsequently major contributor to this field,
+Professor Carroll, has produced a series of papers interspersed with
+some efforts of mine which together seem to be zeroing in on a final
+
+general solution to the rotation problem. Computationally, the
+oblique case is extremely difficult and time-consuming. Later in
+these meetings I shall give my latest attack at this problem-a
+possible improvement of Professor Carroll’s most recent aff air-
+which computationally requires for a reasonably sized problem solv-
+ing hundreds of latent root and vector problems of not inconse-
+quential difficulty.
+   These approaches to the rotation problem-and the whole per-
+spective which brought them about-would probably never have
+occurred without the atmosphere created by the potentialities of
+electronic computers. While computers can’t think-as the saying
+goes-they certainly are able to disinhibit us so that we may dream
+those voluptuous dreams which in an earlier era would have been
+only computational nightmares.
+148   EDUCATIONAL AND PSYCHOLOGICAL MEASUREMENT
+
+                             Main Point
+   I come then to what I would consider the single major point of
+this presentation. Factor analysis will eventually come out of the
+realm of a strange, mystical, ad hoc, half-art, half-science sort of
+numerology into the camp of reputable methodologies because of the
+possibility of attacking factor-analytic problems in a mathemati-
+cally respectable fashion through the use of high-speed computers.
+Factor analysis, in the past, has been much criticized technically
+because of the cloacal short-cuts that have been imposed upon it
+by computational considerations. However, scientifically unspeak-
+able methods of determining the number of common factors, of
+approximating communalities, of factoring, and of rotation can now
+fortunately be thought of as a dying witness to the ingenuity of
+earlier factor analysts in avoiding impossible computational prob-
+lems.
+  In this vein, I might add that one of the major present deterrents
+to the full utilization of electronic computers in factor analysis is
+the error of attempting to adapt some of these antique methods to
+an electronic computer. For example, it strikes me as inane to use
+
+Tucker’s or Coombs’ technique for guessing at the number of factors
+now that the powerful methods of Louis Guttman are feasible. Other
+
+techniques such as using the highest in the column for a communality
+approximation, the centroid method, and graphical rotation, belong
+to an earlier era, and it is a travesty on computers and on science
+to continue to use them.
+
+
+                              Programs
+   My next topic will be of a somewhat paternalistic sort: I shall
+suggest to those of you who arejust building, or thinking of build-
+ing, a library of programs for factor analytic purposes, some sort of
+priority of effort.
+   First, of course, the most basic program of all is that for deter-
+mining intercorrelational matrices. This need not detain us, since
+it is an extremely easy program to write (good for beginners to get
+started on) and is indeed merely a data-processing problem which
+does not take full advantage of a high-speed electronic computer.
+   A second program to write, and probably the most important and
+most difficult, is matrix inversion for real, symmetric, positive defi-
+                         HENRY F. KAISER                            149
+
+nite matrices. An inverse program is of pre-eminent importance for
+a number of reasons. I have already alluded to Guttman’s proof that
+
+it was sufficient for factor analytic purposes in the inferential sense
+that the inverse of a correlation matrix tend to be diagonal. Again
+referring to Guttman’s work, obtaining inverses is necessary for
+finding the squared multiple correlations as a best approximation to
+the communalities, and, with respect to Guttman’s work on neces-
+sary conditions, the inverse is essential for finding the universally
+strongest lower bound for the number of common factors. After
+rotating analytically, our solution, for mathematical reasons, is
+invariably in terms of the reference vector system of axes. It may
+be said that the primary factor axes are the preferable system of
+coordinates, and to provide the necessary transformation a matrix
+must be inverted. Finally an inverse program is essential for the
+important-and most neglected-problem in factor analysis, that
+of obtaining factor scores.
+   The third thing to program for factor analytic purposes on a com-
+puter is the principal axes method of factoring. There are, speaking
+very generally, two methods for doing the deed here, one due basi-
+cally to Jacobi and the other to Hotelling. For factor analytic pur-
+poses Hotelling’s method-involving iterated multiplication of a
+matrix by a vector-probably should have priority since in the arbi-
+trary factoring of a correlation matrix we usually wish to get only
+a few of the largest principal axes, something Hotelling’s method
+
+allows us to do. A program for finding principal axes by Jacobi’s
+method through sine-cosine transformations should also be in the
+library. Jacobi’s method in every respect but one seems superior to
+Hotelling’s; it is faster per root and vector, it is less temperamental
+-grinding out solutions in an easily predictable time-and it is
+probably easier to program. Its one disadvantage is that it requires
+finding all roots simultaneously, something which often is not desir-
+able in factor analysis, where we are usually interested in minimizing
+or maximizing a function, or getting just the dominant factors.
+
+   The fourth factor analytic procedure that I would recommend
+programming is the varimax criterion for analytic rotation. As indi-
+cated above, this seems to accomplish the purpose of rotating
+orthogonally in an essentially satisfactory manner-no one has
+seriously complained to me yet. It now appears that such a program
+for the rotation problem will be of more or less permanent usefulness.
+150   EDUCATIONAL AND PSYCHOLOGICAL MEASUREMENT
+  I am somewhat at a loss to make suggestions for writing programs
+for analytic criteria for the general oblique case. The oblique case
+is presently in a state of ferment; no one has yet written a com-
+pletely satisfactory analytic criterion for oblique rotation. I have
+hopes that the thing I shall later present at these meetings is an
+improvement over methods now on the market, but it is not yet what
+could be considered a &dquo;perfect&dquo; answer. Additionally, programs for
+the presently available oblique analytic criteria for rotation are very
+difficult to write; tentatively, I might suggest that it would be wise
+to delay writing such programs until the present fermentation settles
+down to a more permanently potable solution.
+   These programs I have just suggested could provide a complete
+system of factor analysis. For example, find all principal components
+with associated latent roots greater than one, rotate these according
+to the varimax criterion, and exactly calculate factor scores for indi-
+viduals through the matrix inversion program.
+
+                      Medium-Speed Computers
+   I should now like to turn to a topic about which I intend to speak
+intemperately. I should like briefly to comment on medium-speed
+electronic computers-of which the IBM 650 is the pre-eminent
+example. With the insufferable arrogance of one who has almost
+always dealt with high-speed computers, I should like to go on
+record as saying that medium-speed computers such as the IBM 650
+are a positive detriment to the theoretical development of factor
+
+analysis. I consider them an anathema-machines which detract
+from theoretical progress while grinding out necessarily primitive
+solutions in immense quantities. These strong words stem from the
+point of view I have been taking for the last 10 or 15 minutes. You
+simply cannot, with these medium-speed electronic computers, do
+any of the things which are theoretically desirable in factor analysis
+-with the possible exception of rotating analytically under the
+restriction of orthogonality. You cannot invert large matrices on a
+medium-speed computer; you most certainly cannot compute princi-
+pal axes of reasonably sized matrices; and you could never rotate
+analytically in the general oblique case except for the very smallest
+problems. Thus with machines of which the IBM 650 is prototypical,
+the methods currently used-like repulsive centroid factoring, after
+garbage approximation of communalities and noisome determination
+                         HENRY F. KAISER                           151
+
+of the number of factors-can, out of this slime, briefly rise to
+respectability through analytic criteria for rotation-as long as one
+maintains the sometimes undesirable restriction of orthogonality.
+The only conditions under which I could ever abide a medium-speed
+computer would be, after robbing a bank, buying my own and run-
+ning it night and dayjust for my own problems. These incontinent
+words are for those of you who are contemplating procuring a
+medium-speed computer-or are self-satisfied with your presently
+completed library of programs for a medium-speed computer.
+                             Conclusion
+   To conclude, allow me to repeat and rephrase my major point.
+In spite of the fact that computers have long been used successfully
+in factor analysis, the implications of electronic computers to factor
+analysis are still on the horizon: through their use, we will in the
+future more fully be able to capitalize on the before-his-time mathe-
+matical and scientific genius of Louis Guttman, the before-his-time
+statistical genius of Harold Hotelling, and perhaps most important,
+allow us to continue to translate and interpret the inspired intuitive
+scientific genius of L. L. Thurstone.
+

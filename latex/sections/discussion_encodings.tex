@@ -2,33 +2,35 @@
 \subsection{Methodological Implications}
 
 The clearest lesson concerns reverse keying, the Introduction's fault
-line: a reverse-scored response keeps its content on an inverted scale; an
+line: a reverse-scored response keeps its content on an inverted scale, but an
 embedding multiplied by $-1$ is an anti-topic vector. Hence
 \texttt{atomic\_reversed} matched keyed human correlations worst of the
 cosine family ($r = \valArRKeyed$ vs.\ \valAtRKeyed{} unflipped), its checkerboard signs
 driving split-half reliability negative and rendering disattenuated
-congruence undefined---a pathology-diagnosing NA, reported, not
-suppressed. This substantiates the caution that embeddings do not
+congruence undefined (a pathology-diagnosing NA, reported, not
+suppressed). This substantiates the caution that embeddings do not
 differentiate reverse-keyed items \citep{suarez-alvarez-etal-2026},
 explains why keyed sign-flipping fared worst in HEXACO pseudo-factor
 analyses \citep{guenole-etal-2025}, fits the positive-sign bias surviving
-polarity fine-tuning \citep{hommel-arslan-2025}, and settles negatively
-whether an embedding can be meaningfully ``reversed''
+polarity fine-tuning \citep{hommel-arslan-2025}, and provides evidence
+against meaningfully ``reversing'' an embedding by sign-flipping
 \citep{pellert-etal-2026}. The boundary predates transformers: LSA-era
 semantic indices likewise carried no polarity, and signs had to be imposed
 from theory before analysis \citep{arnulf-etal-2014}. Content-not-key logic recurs package-wide:
 anchoring and projection both flagged N12 (``I am relaxed most of the
 time.''), reverse-keyed yet semantically the inventory's most calm-pole
-statement (\valProjNTwCalm). Three upshots follow: prefer keying-free encodings
-(mean-centered Pearson, SQuID) or signed NLI over sign-flipping; build
+statement (\valProjNTwCalm). Three upshots follow. Prefer the keying-free
+mean-centered Pearson encoding or signed NLI over sign-flipping (SQuID is
+also keying-free and wins keyed pair-level agreement, but is essentially
+unfactorable, KMO = \valSqKmo). Build
 candidate-vetting reference fits without the scoring column, keeping
-centroids purely topical; and drop earlier short-form pipelines'
+centroids purely topical. Drop earlier short-form pipelines'
 drift-prone manual paraphrasing of reverse-keyed items
 \citep{jung-seo-2025,wang-etal-2026}, checking substitutions scale by
 scale.
 
-Second, no single encoding or congruence metric dominates; each
-operationalizes a distinct inter-item relation---cosine symmetric and
+Second, no single encoding or congruence metric dominates. Each
+operationalizes a distinct inter-item relation: cosine symmetric and
 graded \citep{reimers-gurevych-2019}, entailment directional over ordered
 premise--hypothesis pairs \citep{bowman-etal-2015}. Profiles mirror
 accordingly: signed NLI best matched the theoretical partition
@@ -40,10 +42,10 @@ encoding-dependent, echoing item-parameter modeling: difficulty is
 text-predictable \citep{peters-etal-2025}, discrimination largely not
 \citep{han-etal-2025}, though simulation-based item-characteristic-curve
 reconstruction recovers it more readily \citep{ormerod-2026}. Two
-reporting practices follow: compare like with like---keying-free encodings
-to raw correlations, keyed to rescored; conflation under- or overstates
+reporting practices follow. Compare like with like: keying-free encodings
+to raw correlations, keyed to rescored. Conflation under- or overstates
 coherence (NLI: $r_{\text{raw}} = \valNliRRaw$ vs.\
-$r_{\text{keyed}} = \valNliRKeyed$)---and report congruence on several metrics
+$r_{\text{keyed}} = \valNliRKeyed$). Report congruence on several metrics
 (loading shape, partition agreement, pair-level correlation), which can
 rank encodings oppositely.
 
@@ -51,17 +53,17 @@ Third, semantic-space fit needs matched chance baselines: by survey
 conventions the RMSR of \valRmsr{} reads as good yet exceeded the entire
 structureless-embedding null range (\valCalRmsrMin--\valCalRmsrMax), the CAF (\valCaf) fell
 below its nulls (\valCalCafMin--\valCalCafMax), and the TEFI ($\valTefiMain$) beat all 100 null
-replicates ($\valCalTefiMin$ to $\valCalTefiMax$)---two of three conventional readings
+replicates ($\valCalTefiMin$ to $\valCalTefiMax$). Two of three conventional readings
 invert. This generalizes beyond confirmatory modeling the finding that
 chance meets conventional thresholds alarmingly often in embedding space
 \citep{pokropek-2026} and answers the ``no sample size'' problem of
 \citet{suarez-alvarez-etal-2026}: absent an $N$, Monte Carlo nulls supply
-empirical reference distributions; we propose such calibrated reporting as
+empirical reference distributions. We propose such calibrated reporting as
 a default for semantic factor analyses, with the null-generating model
 itself an open design choice (see Limitations). Retention repeats the pattern:
-semantic criteria disagree (parallel \valPaK, Kaiser \valKaiserK, TEFI \valTefiK, EGA \valEgaK) as
+semantic criteria disagree (parallel \valPaK, Kaiser \valKaiserK, empirical Kaiser \valEkcK, TEFI \valTefiK, EGA \valEgaK) as
 simulations predict \citep{garrido-etal-2025, golino-2026}, while
 human-side parallel analysis at $N = \valNHuman$ endorsed \valHumanPaKWord{} factors as
-trivially small minor factors cleared the noise threshold; such two-sided
+trivially small minor factors cleared the noise threshold. Such two-sided
 minor-factor proliferation is precisely the case for consensus-based
 retention with theory-fixed solutions \citep{goldberg-1990}.

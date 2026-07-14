@@ -1,0 +1,1658 @@
+      Multivariate Behavioral Research
+
+
+
+
+      ISSN: 0027-3171 (Print) 1532-7906 (Online) Journal homepage: www.tandfonline.com/journals/hmbr20
+
+
+
+
+Entropy Fit Indices: New Fit Measures for
+Assessing the Structure and Dimensionality of
+Multiple Latent Variables
+
+Hudson Golino, Robert Moulder, Dingjing Shi, Alexander P. Christensen,
+Luis Eduardo Garrido, Maria Dolores Nieto, John Nesselroade, Ritu Sadana,
+Jotheeswaran Amuthavalli Thiyagarajan & Steven M. Boker
+
+To cite this article: Hudson Golino, Robert Moulder, Dingjing Shi, Alexander P. Christensen,
+Luis Eduardo Garrido, Maria Dolores Nieto, John Nesselroade, Ritu Sadana, Jotheeswaran
+Amuthavalli Thiyagarajan & Steven M. Boker (2021) Entropy Fit Indices: New Fit Measures
+for Assessing the Structure and Dimensionality of Multiple Latent Variables, Multivariate
+Behavioral Research, 56:6, 874-902, DOI: 10.1080/00273171.2020.1779642
+
+To link to this article: https://doi.org/10.1080/00273171.2020.1779642
+
+
+
+
+       View supplementary material                          Published online: 07 Jul 2020.
+
+
+
+       Submit your article to this journal                  Article views: 1691
+
+
+
+       View related articles                                View Crossmark data
+
+
+
+       Citing articles: 44 View citing articles
+
+
+
+
+                      Full Terms & Conditions of access and use can be found at
+            https://www.tandfonline.com/action/journalInformation?journalCode=hmbr20
+MULTIVARIATE BEHAVIORAL RESEARCH
+2021, VOL. 56, NO. 6, 874–902
+https://doi.org/10.1080/00273171.2020.1779642
+
+
+
+
+Entropy Fit Indices: New Fit Measures for Assessing the Structure and
+Dimensionality of Multiple Latent Variables
+Hudson Golinoa, Robert Mouldera , Dingjing Shia, Alexander P. Christensenb , Luis Eduardo Garridoc,
+Maria Dolores Nietod, John Nesselroadea, Ritu Sadanae, Jotheeswaran Amuthavalli Thiyagarajane, and
+Steven M. Bokera
+a
+ Department of Psychology, University of Virginia; bDepartment of Psychology, University of North Carolina at Greensboro;
+c
+ Department of Psychology, Pontificia Universidad Catolica Madre y Maestra; dDepartment of Psychology, Universidad Antonio de
+Nebrija; eAgeing and Health Unit, Department of Maternal, Newborn, Child, Adolescent Health and Ageing, World Health
+Organization
+
+
+    ABSTRACT                                                                                                           KEYWORDS
+    The accurate identification of the content and number of latent factors underlying multivari-                      Fit measures; dimensionality
+    ate data is an important endeavor in many areas of Psychology and related fields. Recently,                        analysis; information theory;
+    a new dimensionality assessment technique based on network psychometrics was proposed                              network psychometrics;
+                                                                                                                       exploratory graph analysis
+    (Exploratory Graph Analysis, EGA), but a measure to check the fit of the dimensionality
+    structure to the data estimated via EGA is still lacking. Although traditional factor-analytic fit
+    measures are widespread, recent research has identified limitations for their effectiveness in
+    categorical variables. Here, we propose three new fit measures (termed entropy fit indices)
+    that combines information theory, quantum information theory and structural analysis:
+    Entropy Fit Index (EFI), EFI with Von Neumman Entropy (EFI.vn) and Total EFI.vn (TEFI.vn).
+    The first can be estimated in complete datasets using Shannon entropy, while EFI.vn and
+    TEFI.vn can be estimated in correlation matrices using quantum information metrics. We
+    show, through several simulations, that TEFI.vn, EFI.vn and EFI are as accurate or more
+    accurate than traditional fit measures when identifying the number of simulated latent fac-
+    tors. However, in conditions where more factors are extracted than the number of factors
+    simulated, only TEFI.vn presents a very high accuracy. In addition, we provide an applied
+    example that demonstrates how the new fit measures can be used with a real-world data-
+    set, using exploratory graph analysis.
+
+
+
+
+Introduction                                                                   Hayton et al., 2004; Keith et al., 2016; Ruscio &
+                                                                               Roche, 2012).
+Estimating the dimensionality or the number of
+                                                                                  Recently, a new dimensionality assessment tech-
+underlying dimensions (or factors) in multivariate
+datasets is an important step in psychology and                                nique termed Exploratory Graph Analysis (EGA:
+related areas. In the health and social sciences areas,                        Golino & Epskamp, 2017) was proposed. EGA has
+assessing the dimensionality of scales, tests, and ques-                       shown a number of advantages when compared to
+tionnaires is one of the first steps on the path to                            traditional factor-analytic techniques (Golino &
+understanding multivariate data. Parallel, exploratory                         Demetriou, 2017; Golino & Epskamp, 2017). The
+factor, and principal component analysis (e.g., eigen-                         technique estimates the number of underlying dimen-
+values and scree plots) are the most common techni-                            sions by first modeling multivariate data as a network
+ques implemented in commercial software and among                              of partial correlations (using the Gaussian graphical
+the most common strategies used to identify the                                model, GGM; Lauritzen, 1996) or zero-order correla-
+dimensionality of the data across research areas.                              tions (using the triangulated maximally filtered graph
+Despite their long history and widespread application,                         approach, TMFG; Massara et al., 2016). Then, the
+simulation studies have consistently shown that trad-                          technique applies a community detection algorithm
+itional factor-analytic techniques present important                           for weighted networks (i.e., Walktrap; Pons & Latapy,
+limitations (Crawford et al., 2010; Garrido et al., 2013;                      2005), which identifies the number of dimensions in
+
+CONTACT Hudson Golino        hfg9s@virginia.edu     Department of Psychology, University of Virginia, Charlottesville, VA 22903-1738, USA.
+   Supplemental data for this article can be accessed at https://doi.org/10.1080/00273171.2020.1779642.
+ß 2020 Taylor & Francis Group, LLC
+                                                                               MULTIVARIATE BEHAVIORAL RESEARCH     875
+
+
+the network using a random walk process. Not only            EFIs indicate lower disorder (or uncertainty) of a sys-
+does EGA present higher accuracy than many trad-             tem of variables, indicating a higher probability that a
+itional methods (i.e., percentage of correct estimates       given structure represents the best organization of
+across different simulated conditions), but it also pro-     these variables. Second, we use a Monte Carlo simula-
+duces a visual guide (network plot) that indicates the       tion method to compare the EFIs to some of the most
+number of dimensions to retain, showing which items          commonly used fit indices in factor analysis: CFI,
+cluster together and their level of association, all with-   RMSEA, Tucker-Lewis Index (TLI), and Standardized
+out the need of any specification from researchers           Root Mean Square Residual (SRMR).
+(e.g., type of rotation, number of factors; Golino et al.,      This article is organized as follows: The first section
+2020). Although useful, EGA lacks a fit index to com-        briefly introduces several traditional factor-analytic fit
+pare different dimensionality structures between EGA         indices and examines their usefulness in estimating
+methods (GGM and TMFG), EGA and factor-analytic              the number of underlying dimensions in multivariate
+methods, and EGA and theoretical structures.                 data. The second section briefly reviews EGA, and
+Moreover, community detection algorithms often have          summarizes the main findings of previous simulation
+parameters (e.g., steps in the Walktrap algorithm) that      studies. The third section briefly introduces the con-
+adjust the number of dimensions that the algorithm           cept of entropy, its properties and estimation meth-
+will find. Therefore, a fit measure that can be used to      ods, and the new EFIs. The fourth section presents a
+automatically adjust these parameters for optimal per-       Monte Carlo simulation, where the number of factors,
+formance could greatly improve EGA’s precision.              variables per factor, interfactor correlations, factor
+    Applied researchers and methodologists use fit           loadings, and skewness of the variables are systematic-
+indices to assess the factor solutions of their data (or     ally controlled. The fit indices will be computed when
+instruments), mainly because they provide useful diag-       a given structure reflects: (1) exactly the simulated fac-
+nostic information, but also because they enable the         tor structure, (2) the correct number of factors, but
+comparison of different dimensionality structures (i.e.,     with a random placement of items per factor, and (3)
+number of factors and distribution of items per fac-         an incorrect number of factors (underfactoring or
+tors). Despite the usefulness of fit indices used in fac-    overfactoring). The fifth section uses an empirical
+tor analysis to estimate the number of underlying            example, from a large scale study on aging, to demon-
+dimensions, two main limitations can be found in the         strate the use of EFI. Finally, the last section presents
+literature. First, there are only a few simulation studies   a discussion of the results, limitations of the current
+investigating the accuracy of the traditional fit indices    study, and future directions.
+(such as Comparative Fit Index and Root Mean
+Square Error of Approximation or CFI and RMSEA,
+                                                             Fit indices used in dimensionality assessment
+respectively) to estimate the correct number of factors
+(Barendse et al., 2015; Clark & Bowles, 2018; Frazier        Fit indices derived from factor analysis models have
+& Youngstrom, 2007; Garrido et al., 2016; Yang &             been proposed as tools to estimate latent dimensions
+Xia, 2015). Second, they produce poor dimensionality         in multivariate data (Santos et al., 2018; Schermelleh-
+estimates for skewed categorical variables (Clark &          Engel et al., 2003; Ventimiglia & MacDonald, 2012).
+Bowles, 2018; Garrido et al., 2016). Clearly, there is a     These fit indices include (among others): CFI
+need for fit indices that mitigate these limitations.        (Bentler, 1990), TLI (Tucker & Lewis, 1973), RMSEA
+    The goals of the paper are twofold. First, we intro-     (Steiger, 1980), and SRMR (Joreskog & Sorbom,
+duce a new family of fit indices termed Entropy Fit          1981). The first three indices are based on the non-
+Indices (EFIs) will be presented: an index that is com-      centrality parameter (kM) of the specified model,
+puted using the raw data (Entropy Fit Index; EFI), and       which is computed as v2M  dfM , where v2M is the chi-
+two indices that are computed using the correlation          square statistic that tests the equivalence of the popu-
+matrix (Entropy Fit Index with Von Neumann Entropy           lation covariance matrix of observed variables and the
+and Total Entropy Fit Index; vnEFI and TEFI, respect-        model-implied covariance matrix, and dfM is the
+ively). These new fit indices can be used to assess the      degrees of freedom of the specified model. The last fit
+degree of disorder (or uncertainty, using information        index, SRMR, is based on the average difference
+theory terms) of a set of random variables for struc-        between observed and model-implied covariance
+tures with different skew of variables, number of fac-       matrices. The CFI and TLI indices are considered
+tors, different distribution of items in factors, and        incremental fit indices because they evaluate the
+placement of items in each factor. Lower values of the       degree to which the specified model is superior to a
+876         H. GOLINO ET AL.
+
+
+baseline model—usually a null model where the                                         based on the results of DiStefano et al. (2018) the cre-
+observed variables are proposed to be uncorrelated—                                   ators of the index decided to remove it from the out-
+in reproducing the observed covariances. In contrast,                                 put of the MPlus program in favor of the SRMR
+the RMSEA and SRMR are considered absolute fit                                        index (Asparouhov & Muthen, 2018). The authors
+indices because they offer a measure of overall fit that                              state “In Mplus 8.1 for the WLS family of estimators
+only takes into account the fit of the specified model.                               this SRMR fit index replaces the WRMR fit index
+A key advantage of the RMSEA index is that, because                                   which has been shown to perform poorly for situa-
+it follows a known v2 distribution asymptotically, con-                               tions with extremely large sample sizes, see DiStefano
+fidence intervals can be estimated around the point                                   et al. (2018)” (Asparouhov & Muthen, 2018, p. 11).
+estimate, allowing for formal hypothesis tests to be                                  Finally, all the simulated items were on the
+conducted by jointly considering the point estimate                                   same scale.
+and its associated confidence interval (Chen et al.,                                      When using fit indices to estimate latent dimen-
+2008). The formulas for the aforementioned fit indices                                sionality under the framework of unrestricted
+are shown below in Equations 1 to 4:                                                  (exploratory) factor models, the common rationale is
+                            maxðkM , 0Þ                                               that factors should be sequentially added to a model
+                        CFI ¼ 1                ,                               (1)   until an acceptable level of fit has been achieved. First,
+                           maxðkN , kM Þ
+                                                                                  a one-factor model would be fitted to the data and its
+                            kM        dfN                                             level of fit would be compared against pre-specified
+                 TLI ¼ 1                       ,                               (2)
+                            kN        dfM                                             cutoff values for the fit indices. If the fit was deemed
+                          0sﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ 1                                 acceptable, the one-factor model would be retained; if
+                                    kM
+              RMSEA ¼ max@                         , 0A,                        (3)   not, an unrestricted two-factor model would be esti-
+                             dfM ðN  1Þ                                              mated and the process would be repeated, until an
+             vﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ           acceptable level of fit was achieved. Applied research-
+             uP P                                                     2
+             u p                                              ^
+                                                             r ij                     ers that have employed this approach (e.g., Campbell-
+             u i¼1 ij¼1 pﬃﬃﬃ                 pﬃﬃﬃ  pﬃﬃﬃﬃpﬃﬃﬃﬃ
+                                           sij
+             u                            sii sjj          ^ ii ^
+                                                           r      r jj                Sills et al., 2004; Sanne et al., 2009) have generally
+      SRMR ¼ t                                pðpþ1Þ
+                                                                            ,   (4)   relied on the typical cutoff values that have been pro-
+                                                 2                                    posed for these indices in the literature, such as .90 or
+where kN and dfN are the noncentrality parameter and                                  .95 for CFI and TLI, and .05 or .08 for RMSEA and
+degrees of freedom of the baseline model, N is the                                    SRMR (good and acceptable fit, respectively; Browne
+sample size, sij is the observed covariance, r  ^ ij is the                           & Cudeck, 1992; Chen et al., 2008; Hu &
+model-implied covariance, sii and sjj are the observed                                Bentler, 1999).
+standard deviations, r^ ii and r
+                               ^ jj are the model-implied                                 Despite the appeal of using fit indices to estimate
+standard deviations, and p is the number of                                           latent dimensionality, recent simulation studies have
+observed variables.                                                                   shown that they are not the best tools for this
+   SRMR (Equation 4) and the fit index for categorical                                endeavor. Garrido et al. (2016) examined the perform-
+data termed weighted root mean square residual                                        ance of these four fit indices across a large number of
+(WRMR) are residual based fit indices (DiStefano                                      conditions of continuous and categorical variables and
+et al., 2018). The WRMR fit index was originally pro-                                 using a wide range of cutoff values for each index.
+posed by Muthen and Muthen (1998) and first exam-                                   They found that the CFI and TLI indices were the
+ined by Yu (2002). Among several fit indices                                          most accurate, followed at a step below by RMSEA,
+evaluated (e.g., CFI, TLI, RMSEA), WRMR produced                                      and finally by SRMR, which produced very poor esti-
+results that were most similar to the SRMR index (Yu,                                 mates across all the cutoff values in its relevant range
+2002). Initially the WRMR was recommended for                                         of functioning. Even the best performing fit indices
+models composed of variables that have widely dispar-                                 (CFI and TLI) were more variable and less accurate
+ate variances and/or are on different scales (Yu, 2002).                              than parallel analysis—one of the most widely recom-
+   There are several reasons why we opted to use the                                  mended methods in the dimensionality literature
+SRMR over WRMR for the present study. First, the                                      (Garrido et al., 2016; Horn, 1965). Subsequent studies
+index has been regarded as “experimental” by its crea-                                by Clark and Bowles (2018) and Beierl et al. (2018)
+tors (Muthen & Muthen, 1998–2012). Second, in con-                                  have corroborated these findings, showing that none
+trast of other well-established fit indices it has only                               of the conventional cutoff values previously cited
+been evaluated in a couple of simulation studies                                      appeared to perform well enough to be recommended.
+(DiStefano et al., 2018). Third, and most importantly,                                Similar to Garrido et al. (2016), they found that the
+                                                                                MULTIVARIATE BEHAVIORAL RESEARCH    877
+
+
+RMSEA index combined with the typical cutoff value           2017). This section briefly introduces EGA, which can
+of 0.05 was insensitive to latent misspecification, fre-     be used as one of the steps for assessing dimensional-
+quently accepting models with fewer major factors            ity, complementing the suggestion of Clark and
+than those in the population. Similarly, while the CFI       Bowles (2018).
+and TLI indices performed more reliably using a 0.95             EGA is a dimensionality technique from the net-
+cutoff value, their accuracy was contingent on the size      work psychometrics perspective. A network is
+of the factor loadings, factor correlations, and number      depicted by nodes (circles) representing variables and
+of items (Beierl et al., 2018; Clark & Bowles, 2018).        edges (lines) representing the associations between
+Again, the SRMR index performed very poorly, gener-          variables. The general notion behind the EGA algo-
+ally accepting underfactored models when using a cut-        rithm is to estimate a network and apply the
+off value of 0.08.                                           Walktrap community detection algorithm (Pons &
+    In general, research studies evaluating the use of fit   Latapy, 2005), which is a common approach for iden-
+indices for dimensionality assessment have encoun-           tifying communities (densely connected sets of nodes)
+tered similar problems to those found in the general         in weighted networks. These communities are shown
+literature that has assessed the usefulness of fit indices   to be statistically equivalent to latent factors of factor
+for latent variable modeling. More specifically, it has      models (Golino et al., 2020; Golino & Epskamp,
+been shown that the values of the fit indices are            2017). Below we provide a more thorough explanation
+affected by incidental parameters not related to the         of this algorithm. Readers interested in a more in-
+size of the misfit, such as the size of the factor load-     depth description of EGA can find additional details
+ings, the number of response categories, and the sam-        in the simulation study and tutorial published by
+ple size (Chen et al., 2008; Heene et al., 2011; Hu &        Golino et al. (2020).
+Bentler, 1999; McNeish et al., 2018; Savalei, 2012; Xia          The first network estimation method for EGA algo-
+& Yang, 2018). Because of this, there are no “golden         rithm is the Gaussian graphical model (GGM;
+rules” for fit indices as no single cutoff value can be
+                                                             Lauritzen, 1996), which estimates multivariate joint
+expected to perform well across the diverse type of
+                                                             probability distribution of random variables—that is,
+data structures encountered in practice (Marsh et al.,
+                                                             the probability for the values of each pair of variables
+2004). In a recent study, Clark and Bowles (2018)
+                                                             to be within the range of values for those variables.
+concluded that, “the common fit statistics cut-offs
+                                                             This probability distribution is represented by the
+employed in the literature are at best imperfect tools
+                                                             inverse of the covariance matrix (often referred to as
+for guiding decisions regarding dimensionality when
+                                                             the precision matrix), whose off-diagonal elements
+interpreting an item factor analysis” (Clark & Bowles,
+                                                             represent the conditional dependence between two
+2018, p. 555). Clark and Bowles (2018) suggest that fit
+                                                             variables given all other variables. The current
+indices should be used in conjunction with other
+                                                             approach used in network psychometrics to estimate a
+methods for assessing dimensionality.
+                                                             GGM works as follows: Let’s assume a set of random
+                                                             variables y that are normally distributed with mean
+Exploratory graph analysis: an overview                      zero and variance-covariance matrix R, and let K
+A recently developed dimensionality assessment tech-         (kappa) be the inverse of R,
+nique, Exploratory Graph Analysis (Golino &                                           K ¼ R1                      (5)
+Epskamp, 2017), is part of a relatively new field of
+quantitative methods termed network psychometrics            then, each element kij (row i, column j of K) can be
+(Epskamp, 2018; Epskamp et al., 2017). EGA estimates         standardized to yield the partial correlation between
+the dimensionality structure of multivariate data by         two variables yi and yj, given all other variables in y
+combining network analysis with a community detec-           (Epskamp & Fried, 2018):
+tion algorithm (i.e., a method to detect dimensions in                                                   kij
+networks), and has shown to be a promising dimen-                        CorðYi , Yj jyði, jÞ Þ ¼  pﬃﬃﬃﬃ pﬃﬃﬃﬃ   (6)
+                                                                                                      kii kjj
+sionality assessment technique in simulation studies
+(Golino et al., 2020; Golino & Epskamp, 2017).                  Epskamp and Fried (2018) pointed out that model-
+Currently, however, there is no fit index that can dir-      ing K in a way that every nonzero element is treated
+ectly determine the adequacy of the dimensional              as a freely estimated parameter generates a sparse
+structures estimated via EGA (without having to use          model for R: The sparse model of the variance-covari-
+additional models such as CFA; Golino & Demetriou,           ance matrix is the GGM (Epskamp & Fried, 2018).
+878     H. GOLINO ET AL.
+
+
+   This partial correlation matrix represents a fully       The steps move from one node to another randomly
+connected network where all nodes are connected to          and uniformly using a transition probability, Pij ¼
+                                                             Aij
+all other nodes. Typically, a network estimation            NSðiÞ , which forms the transition matrix, P. The tran-
+method is applied to remove non-relevant relations          sition matrix is used to compute a distance metric, r,
+resulting in a sparser network (i.e., each node is no       measuring the structural similarity between nodes
+longer connected to all other nodes). The level of          (Equation 7), and is computed to determine the com-
+sparsity of the GGM can be set using different meth-        munities that the nodes belong to. This structural
+ods, but the most common method is to apply a vari-         similarity is defined as (Pons & Latapy, 2005):
+ant of the least absolute shrinkage and selection                                  vﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+                                                                                   u n
+operator (LASSO; Tibshirani, 1996) termed graphical                                uX ðPik  Pjk Þ2
+                                                                             rij ¼ t                               : (7)
+LASSO (GLASSO; Friedman et al., 2008). The                                           k¼1
+                                                                                                 NSðkÞ
+GLASSO is a regularization technique that estimates
+both the model structure and the parameters of a               This distance can be generalized to the distance
+sparse GGM (Epskamp & Fried, 2018). It has a tuning         between nodes and communities by beginning the
+parameter (k) that is chosen by minimizing the              random walk at a random node in a community, C.
+extended Bayesian information criterion (EBIC; Chen         This can be defined as:
+& Chen, 2008), which has been shown to accurately                                     1 X
+retrieve the simulated network structure in Monte                             PC j ¼         Pij :          (8)
+                                                                                     jCj i2C
+Carlo studies (Epskamp & Fried, 2018; Foygel &
+Drton, 2010).                                                  Finally, this can be further generalized to the
+   A newer version of EGA (Golino et al., 2020) uses a      distance between two communities:
+                                                                                  vﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+different network estimation method called triangulated                           u n
+                                                                                  uX ðPC1 k  PC2 k Þ2
+maximally filtered graph method (TMFG; Massara                           rC1 C2 ¼ t                                     , (9)
+et al., 2016; Christensen et al., 2019). The TMFG                                   k¼1
+                                                                                                   NSðkÞ
+method computes a zero-order correlation matrix from
+the data and applies a constraint on the number of          where this definition is consistent with the distance
+edges to retain in the network (3n  6, where n is the      between nodes in the network (Equation 7).
+number of nodes; Massara et al., 2016). The algorithm          As pointed by Golino et al. (2020), the algorithm
+begins by identifying the four variables with largest       begins by having each node as a cluster (i.e., n clus-
+sum of correlations to all other variables and connects     ters) and then begins to iteratively choose two clusters
+them to each other. Then, variables are iteratively         after computing the distances, r, between all adjacent
+added to the network based on the largest sum of three      nodes. These two clusters chosen are then merged
+correlations to nodes already in the network. This pro-     into a new cluster, updating the distances between the
+cess is repeated until all nodes are connected in the       node(s) and cluster(s) with each merge (in each k ¼
+network. The resulting network is composed of 3- and        n  1 steps).
+4-node cliques (i.e., sets of connected nodes; a triangle      If clusters are adjacent to one another (i.e., an edge
+and tetrahedron, respectively). Hereafter, EGA will         between them), then they are merged using an
+refer to EGA with GLASSO network estimation and             approach based on Ward’s agglomerative clustering
+EGAtmfg will refer to EGA with TMFG network.                (Ward, 1963) that depends on the estimation of the
+   Once the network is estimated using one of these         squared distances between each node and its commu-
+two methods, the Walktrap community detection               nity (rk), for each k steps of the algorithm. Since com-
+algorithm is applied. A detailed introduction of the        puting rk is computationally expensive, Pons and
+walktrap algorithm can be found in Golino et al.            Latapy (2005) adopted an efficient approximation that
+(2020). In the next paragraphs we summarize how             only depends on the nodes and the communities rather
+this algorithm works. The Walktrap algorithm uses a         than the k steps. The approximation seeks to minimize
+process known as random walks or stochastic transi-         the variation of r that would be induced if two clusters
+tions from one node to another over an edge. To             (C1 and C2) are merged into a new cluster (C3):
+define the random walk, let A be a square matrix of                          1 X 2        X          X         
+edge weights (e.g., partial correlations) in the network,     DrðC1 , C2 Þ ¼        riC3       2
+                                                                                               riC       r 2
+                                                                                                           iC    : (10)
+                                                                             n i2C         i2C
+                                                                                                  1
+                                                                                                      i2C
+                                                                                                              2
+                                                                                     3           1           2
+where Aij is the strength of the (partial) correlation
+between node i and j and a node’s strength is the sum         The resulting values of Ward’s approximation
+                                                   P
+of node i’s connections to its neighbors NS ¼ j Aij :       adopted by Pons and Latapy (2005) can be stored in a
+                                                                                    MULTIVARIATE BEHAVIORAL RESEARCH    879
+
+
+balanced tree, and a sequence of Pk partitions into               accuracy in estimating the number of simulated fac-
+clusters (1  k  n, being n the total number of                  tors was higher for continuous data.
+nodes) is obtained. The best number of clusters is                   On the one hand, Golino et al. (2020) found that
+defined as the partition that maximizes modularity.               when EGA and EGAtmfg provided the same estimate
+    As Golino et al. (2020) note, modularity is a meas-           for 78% of the datasets, they had a nearly perfect
+ure that was proposed by Newman (2004) to identify                accuracy (91.85%). On the other hand, when the two
+meaningful clusters in networks and can be calculated             methods disagreed, the accuracy of both EGA (73.3%)
+as follows. Let j and k be two clusters in a network              and EGAtmfg (12.9%) diminished. In these cases
+with m and n nodes. If the number of edges between                where EGA and EGAtmfg disagree, it’s important to
+clusters is p, then one-half of fraction of the edges             consider potential alternative solutions (with more or
+linking j and k is ejk ¼ 12 p, so that the total fraction of      fewer dimensions) to those suggested by the methods.
+edges between the two clusters is ejk þ ekj (Newman,              In this case, a fit index specifically designed for
+2004). Conversely, ejj represents the fraction of edges           dimensionality assessment would play a crucial role,
+that
+P fall within cluster j, whose sum equals one:                    motivating the current article.
+   j ejj ¼ 1: Newman (2004) points out that a division               Another issue of central importance is the number
+of networks into clusters is meaningful if the value of           of steps used in the random walk process of the
+the sums of ejj and ekk is maximized. However, in                 Walktrap algorithm. To date, EGA has been evaluated
+cases where only one cluster is presented, the maximalP           using the default value of four steps. Given previous
+value will be one, which is also the value of           j ejj :   simulation evidence, four steps appears to be adequate
+Therefore, for networks composed by only one cluster              for the number of variables typically used in psycho-
+this index is not informative. A solution Newman                  logical constructs, which has been verified in simula-
+(2004)
+P         proposed was to calculate an index that takes
+                                                                  tions outside of the area (Pons & Latapy, 2005).
+   j ejj and  subtract from it the value that it would
+                                                                  Indeed, in Pons and Latapy (2005) seminal study, three
+take if edges were placed at random. For a given clus-
+                                                                  and four steps appeared to be optimal when there are
+ter j, the modularity is calculated as:
+                         X                                        fewer than 100 variables. Selecting the optimal number
+                    Q¼        ðejj  a2j Þ,             (11)      of steps is important since it may increase the precision
+                            j                                     of the EGA estimation, leading to more reliable and
+                        P                                         interpretable factors. Therefore, developing a fit metric
+where aj is given by k ejk , which represent the frac-
+tion of edges that connect to vertices in cluster j.              that could be used to compare the dimensionality
+Therefore, the modularity index penalizes network                 structure estimated via EGA with different numbers of
+structures with only one cluster, since in this condi-            steps used in the Walktrap algorithm (e.g., from 3 to
+tion the value of Q would be zero (Newman, 2004).                 10) could improve the precision of the EGA procedure.
+    Golino and Epskamp (2017) studied the accuracy
+in estimating the number of dimensions of EGA along               Entropy and the structure of multivariate data
+with six classical techniques in a simulation manipu-
+lating the number of factors, number of items, sample             The current paper presents a family of three new fit
+size, and correlation between factors. Golino and                 indices, Entropy Fit Indices, which are based on an
+Epskamp (2017) showed that the most accurate tech-                information-theoretic concept of entropy that can be
+niques were PA (89% of accurate estimates) and EGA                used to check the fit of the dimensionality structures
+(93%). More recently, Golino et al. (2020) compared               estimated via EGA and other factor-analytic methods.
+EGA and EGAtmfg along with five factor-analytic                   This section introduces the main concepts used to
+techniques, including two automated versions of                   develop the EFIs, starting with the concept of
+Cattell’s scree test (Cattell, 1966): scree test optimal          Shannon’s entropy (Shannon, 1948) and later intro-
+coordinate (OC) and acceleration factor (AF) methods              ducing Von Neumann’s entropy (Von Neumann,
+(Raiche et al., 2013). The results presented by Golino            1927). The goal of this section is to help the reader
+et al. (2020) showed that EGA (87.91%), parallel ana-             understand the conceptual and technical origins of the
+lysis (83.01%) and EGAtmfg (74.61%) presented high                entropy fit measures proposed in the current article.
+to moderately high accurate estimations (i.e. correctly
+estimating the number of simulated factors). Golino
+                                                                  Shannon’s entropy: estimation and properties
+et al. (2020) also showed that EGA works well for
+both dichotomous (overall accuracy of 85%) and con-               The study of entropy originated in physics (specific-
+tinuous data (overall accuracy of 91%), although the              ally, thermodynamics) with the work of Boltzmann
+880        H. GOLINO ET AL.
+
+
+and others (Watanabe, 1960). Although a specific               probability of p(x, y). The entropy of the joint distri-
+type of entropy was being used in communication                bution is (Shannon, 1948):
+theory as early as 1928 (Watanabe, 1960), a formal                                 XX
+                                                                     HðX, YÞ ¼            pðx, yÞlogpðx, yÞ:     (16)
+mathematical theory of communication based on                                       x2X y2Y
+entropy was later developed by Shannon (1948).
+The use of entropy has increased significantly over               In the case where X and Y are independent varia-
+the years and across many different areas such as              bles, their joint entropy will always be less than or
+communication, neuroscience (Paninski, 2003), biol-            equal to the sum of their individual entropies:
+ogy (Tsuruyama, 2018), ecology (Harte & Newman,                               HðX, YÞ  HðXÞ þ HðYÞ:                     (17)
+2014), physics (Zurek, 2018), chemistry (Ferenci &
+Kovacs, 2014), and other fields (Volkenstein, 2009).             If X and Y are not independent variables, present-
+   The entropy of a discrete random variable X                 ing a conditional probability distribution for Y given
+characterizes the uncertainty associated with X or             X as pðyjxÞ, then the conditional entropy HðYjXÞ is
+                                                               “the average of the entropy of Y, for each value of X,
+the degree of disorganization of X (Wiener, 1961).
+                                                               weighted according to the probability of getting that
+In other words, it depicts the average amount of
+                                                               particular X” (Shannon, 1948, p. 12). Mezard and
+unpredictability that is removed when the outcome
+                                                               Montanari (2009) summarizes the idea of conditional
+of X is known (Yeung, 2008), which can also be
+                                                               entropy as the amount of information we obtain from
+considered a measure of information in X (entropy
+                                                               the value of y if we know x. The MLE estimation of
+and information are negatively related). Entropy
+                                                               conditional entropy is:
+depends on the distribution of p(X), and is maxi-
+mized when all events of X are equiprobable (i.e.,                                X            X
+pðxÞ ¼ N1 , where N is the number of elements of X;                HðYjXÞ ¼            pðxÞ         pðyjxÞlogpðyjxÞ:    (18)
+Shannon, 1948).                                                                   x2X          y2Y
+
+   The maximum likelihood estimator (MLE) or the                  The joint entropy of X and Y can be re-written as
+plug-in method (Antos & Kontoyiannis, 2001) is one             the entropy of X plus the entropy of Y given X:
+of the most common methods to estimate the entropy
+of a random variable. Let X be a discrete random vari-                       HðX, YÞ ¼ HðXÞ þ HðYjXÞ:                    (19)
+able that takes on values in a set X ¼ ðx1 , x2 , :::, xn Þ,      In other words, the uncertainty of the joint
+with a probability mass function pðxÞ ¼ PðX ¼ xÞ:              event (X, Y) is the uncertainty of X plus the
+Antos and Kontoyiannis (2001) showed that consider-            uncertainty of Y when X is known (Shannon, 1948).
+ing additive functionals with the general form:                Hence, the uncertainty of Y never increases by know-
+                     X                                       ledge of X:
+                F¢g        f ðx, pðxÞÞ ,               (12)
+                              x2X                                 HðXÞ þ HðYÞ  HðX, YÞ ¼ HðXÞ þ HðYjXÞ
+                                                                                                                         (20)
+where f and g are non-negative arbitrary real-valued                     [HðYÞ  HðYjXÞ:
+functions, the plug-in estimate for F is F^ ¼ Fðpn Þ,
+                                                                  Also,  if  X    and                Y    are    independent,
+where pn is the empirical distribution:
+                                                               then HðYÞ ¼ HðYjXÞ:
+                                  X
+                                 1 n
+                      pn ðxÞ ¼        IðX ¼xÞ :        (13)
+                                 n j¼1 j
+                                                               Total correlation
+      The MLE of entropy is, thus:                             In his seminal paper, Watanabe (1939) created a
+                          X                                    modified index of entropy termed total correlation
+               ^ ðp Þ  
+               H              pnðxÞ logpnðxÞ :         (14)
+                   n
+                               x2X
+                                                               to measure not only the uncertainty of random var-
+                                                               iables, but also the strength of their correlation
+      Or, more directly:                                       beyond their average interaction (Watanabe, 1960).
+                                 X
+                  HðXÞ ¼              pðxÞlogpðxÞ:    (15)    The total correlation of a set of variables X ¼
+                                 x2X                           ðx1 , x2 , :::, xn Þ is a non-negative index that increases
+                                                               as entropy of individual variables increases or as
+where p(x) is the relative frequency of the ele-
+                                                               entropy of the set of variables (the joint entropy of
+ments x 2 X :
+                                                               X ) decreases (Watanabe, 1960), and is calculated as
+   Entropy can also be extended to multiple variables.
+                                                               follows:
+Let X and Y be discrete random variables with a joint
+                                                                                       MULTIVARIATE BEHAVIORAL RESEARCH     881
+
+                         !
+              X
+              n                                                      cardinalities is supra-additive, making the K-function
+   CtotX ¼          Hðxi Þ      Hðx1 , x2 , :::, xn Þ  0:   (21)   non-positive:
+              i¼1
+                                                                        n1 HðXt Þ þ n2 HðXx Þ  ðn1 þ n2 ÞHðXt , Xx Þ
+    The interpretation of total correlation provided by                                                                   (23)
+                                                                                   [kðXt , Xx Þ  0:
+Watanabe (1960) can be illustrated with a very simple
+example. Suppose the set of variables X is divided in                    Using the notation above, the K-function is the dif-
+two subsets: t containing half the elements of X and                 ference between the average entropy of Xt and Xx
+x containing the other half. Observing the variables                 from the entropy of the super-set X : The K-function
+contained in t and x separately, the information in                  can be used as a measure of entropy reduction by par-
+each subset is HðtÞ and HðxÞ: The individual infor-                  titioning through which the minimization is the
+mation in each subset of variables individually is                   reduction of the uncertainty or unstableness
+higher than the information carried by X if and only                 (Watanabe, 2000, 2001) in the partition of a multidi-
+if t and x are independent. In this scenario of inde-                mensional space. It can also be interpreted as the
+pendence, total correlation is the loss of information               maximization of information gain by the partitioning
+or redundancy. If HðtÞ and HðxÞ are dependent, then                  of a multidimensional space (Watanabe, 2000).
+the difference between their joint entropy and the                   Despite its interesting characteristics, the K-function
+sum of their individual entropies is a measure of the                could not be used as a fit index for dimensionality
+correlation between them, reflecting ignorance before                assessment (or for clustering) because it decreases
+observation. Watanabe (1960) points out that without                 with the increase in the number of subgroups of vari-
+any observation, the ignorance about a subset t is                   ables (i.e., clusters). Therefore, the application of K-
+HðtÞ, but after observing t the ignorance becomes                    function to decide on the number of clusters, factors,
+HðX Þ  HðtÞ: The decrease of ignorance is thus the                  or partitionings of a multidimensional space is lim-
+information about x provided by the observation                      ited.
+of t:
+    Total correlation was used as the basis for a tech-
+nique termed interdependence analysis (Watanabe,                     The entropy fit indices: properties
+1969), which replaced a metric of distance to this                   and estimation
+entropic measure of correlation in cluster identifica-
+tion. The general idea of interdependence analysis is                Given the limitation of the K-function proposed by
+to partition a set into subsets until interdependence is             Watanabe (2000), it is necessary to develop a new
+minimized (Watanabe, 2000). Watanabe (2000)                          metric that does not decrease with the increase in the
+showed that the construction of clusters using total                 number of partitions of a multidimensional space (or
+correlation could lead to unwanted problems in the                   clusters, factors, and so on). The Entropy Fit Index
+partitioning of a multidimensional space of variables.               (EFI) was developed as an alternative to the K-func-
+                                                                     tion with the goal to identify the best structure of a
+In particular, by not considering the size of the sub-
+                                                                     given set of random variables from two or more alter-
+sets of a multidimensional space, small subsets could
+                                                                     native structures. In other words, EFI can be used to
+be removed due to their small entropy value, irre-
+                                                                     identify the best partitioning of a multidimensional
+spective of the relationship to the other subsets.
+                                                                     space that better reflects the underlying latent factors
+Watanabe (2000, 2001) introduced a slight modifica-
+                                                                     without necessarily decreasing with the increase in the
+tion to the interdependence analysis process by modi-
+                                                                     number of factors.
+fying the total correlation index (Equation 21) and
+                                                                        Let g be a set with two latent factors (g ¼ ðga , gb Þ)
+replacing it with the K-function. Considering a set of
+                                                                     with variance-covariance matrix R :
+variables X ¼ ðx1 , x2 , :::, xn Þ, Xt , and Xx with cardinal-
+ities n1 and n2 (respectively), the K-function represent-                                R ¼ KUK0 þ H,                    (24)
+ing the interdependence between Xt and Xx is given                   where lambda (K) is a k  2 factor loading matrix for
+by:                                                                  k variables and two factors, phi (U) is the structure
+           kðXt , Xx Þ ¼ n1 HðXt Þ þ n2 HðXx Þ                       matrix of the latent variables (i.e., a 2  2 matrix of
+                                                                     correlations among factors), and theta (H) is the
+                              ðn1 þ n2 ÞHðXt , Xx Þ:         (22)   covariance matrix of the residuals. Now, let ga and gb
+   Contrary to the entropy index that is infra-additive              be two latent factors associated with the following
+(see Equation 17), the product of entropy by the                     matrices of observable scores:
+882     H. GOLINO ET AL.
+
+              2                                  3
+              a11        a12      a13    a1n                        In sum, Equation 27 calculates the difference
+            6 a21
+            6            a22      a23    a2n 77                 between the average entropy for the individual factors
+            6
+        A ¼ 6 a31        a32      a33    a3n 77                 and the joint entropy of the factors, while including a
+            6 ..           ..       .. . .    .. 7
+            4 .             .        .     .   .5                  penalization for the number of factors. The penaliza-
+               ap1 ap2            ap3    apn                    tion modulates the EFI to not decrease with an
+                                                                   increase in the number of factors, except if each add-
+               2                                        3
+                 b11 b12            b13        b1m              itional factor decreases the uncertainty or disorder of
+               6 b21 b22
+               6                    b23        b2m 7 7          the system of variables. Equation 27 can be easily
+               6
+           B ¼ 6 b31 b32            b33        b3m 7 7          extended to NF factors:
+               6 ..    ..             ..   ..        .. 7                      "XN                                          #
+               4 .      .              .      .       .5                             F
+                                                                                       HðS    Þ
+                                                                                           gi
+                   bp1      bp2     bp3        bpm                   EFI ¼      i¼1
+                                                                                                 H ðSg1 , Sg2 , :::, SNF Þ
+                                                                             "       N                    !               #
+                                                                                       F
+                                                                                         XNF                                  (28)
+where p is the number of participants (subjects), n is                                           HðS g   Þ      p  ﬃﬃﬃﬃﬃﬃ
+                                                                          þ Hmax                            NF
+                                                                                             i¼1       i
+the number of variables associated with ga, and m is
+                                                                                                NF
+the number of variables associated with gb. Sum
+scores can be computed as:                                             The EFI can be used as a measure of entropy
+                          2 3                                      reduction by partitioning of a multidimensional space
+                            sa1                                    into several groups of variables, in which the mini-
+                          6s 7
+                          6 a2 7                                   mization is the minimization of the uncertainty or dis-
+                          6s 7
+                   S ga ¼ 6  a3 7                 (25)             order due to the correct identification of the
+                          6 .7
+                          6 .7
+                          4 .5                                     underlying factors. In contrast with the K-function,
+                            sap                                    EFI does not decrease with the increase in the number
+                                                                   of factors. The EFI will be lower if the correct struc-
+                                   2   3
+                                   sb1                             ture is provided (i.e., the correct number of factors
+                                 6s 7                              and the correct composition of items per factor), irre-
+                                 6 b2 7
+                                 6s 7                              spective of the number of factors. This principle is due
+                           Sgb ¼ 6  b3 7                    (26)
+                                 6 .7
+                                 6 .7                              to the entropy and the fineness of classification (e.g.,
+                                 4 .5                              classifying items into subgroups) theorem (Watanabe,
+                                   sbp
+                                                                   2000) that states the following:
+                                                                   Theorem 1 (Entropy and the Fineness of
+where sa1 and sb1 are the sum scores of variables in A             Classification). Let XI and XJ be subsets of X, and A be
+and B (respectively) for participant one.                          a fixed set of predicates. If a classification of A with
+  The entropy fit index of the structure formed by ga              respect to the latter is a refinement of the classification
+and gb can now be computed as:                                     with respect to the former then the formal entropy of
+                                                                 XI is never larger than that of XJ.
+                HðSga Þ þ HðSgb Þ
+        EFI ¼                      HðSga , Sgb Þ                      Theorem 1 implies that a structure that splits a set of
+                        2
+                                                                   random variables into groups, which reflect the underly-
+                                          
+                   HðSga Þ þ HðSgb Þ    pﬃﬃ                        ing latent factors, will have a lower entropy than a
+     þ Hmax                            2 ,        (27)           structure that does not reflect the latent factors. An
+                           2
+                                                                   example helps illustrate this principle. Let g1 and g2 be
+where HðSga Þ and HðSga Þ are the entropy of the sum               two latent factors with four variables each. For every
+scores of the variables from factors ga and gb (respect-           unique combination of the items into two sets of four,
+ively), HðSga , Sga Þ is the joint entropy of the sum              the EFI is recorded, generating the result showed in
+scores, and 2 is the number of factors. The entropy of             Figure 1. The first and last elements of the x-axis repre-
+the sum scores for all variables from ga and ga is                 sent the correct structure (1, 1, 1, 1, 2, 2, 2, 2 or
+Hmax. So, Hmax can be considered as the entropy esti-              2, 2, 2, 2, 1, 1, 1, 1), while the other elements of the x-axis
+mated for a single factor containing all the n þ m vari-           presents all the other possible combinations of the vari-
+ables in ga and gb. Finally, the difference between the            ables into two factors (e.g., 1, 1, 1, 2, 1, 2, 2, 2). At the
+maximum entropy (i.e., entropy estimated for a single              bottom of Figure 1, a matrix representing the distribu-
+factor containing all the n þ m variables) and the aver-           tion of the variables into two factors (black representing
+age entropy of the factors is multiplied by the square             variables from factor g1, white representing variables
+root of the number of factors (from now on this dif-               from factor g2) is shown. The columns of the matrix
+ference will be termed difference entropy).                        show the distribution of the items into two groups,
+                                                                                      MULTIVARIATE BEHAVIORAL RESEARCH     883
+
+
+
+
+Figure 1. Entopy fit index per combination of variables into two factors.
+
+while the rows are divided into two parts, the first four           latter always decreases with the increase in the num-
+rows represents g1, the last four rows represents g2.               ber of groups of variables (or factors).
+   Figure 1 shows a perfect symmetric relationship                     To illustrate this principle, consider a multidimen-
+between the distribution of variables per factor and                sional structure with 100 factors, four variables per
+the EFI index (y-axis). The EFI is the same for the                 factor, and a process with 100 steps. In the first steps,
+structure ð1, 1, 1, 1, 2, 2, 2, 2Þ and ð2, 2, 2, 2, 1, 1, 1, 1Þ:    the EFI, total correlation, K-function, and the differ-
+Also, ð1, 1, 1, 2, 1, 2, 2, 2Þ, second element in the x-axis,       ence between Hmax and the average entropy of the
+and ð2, 2, 2, 1, 2, 1, 1, 1Þ, 69th element of the x-axis,           factors (difference entropy) is recorded using the cor-
+has the same EFI. This symmetric behavior of EFI can                rect structure (i.e., 100 factors, four variables per fac-
+be explained by the nature of the entropy measures                  tor). In each subsequent step one factor is split into
+based on total correlation or on the K-function: it                 two sub-factors, with two variables each and all the
+reflects the relationship among groups of variables                 indices used in the first step are recorded. The result
+rather than the relationship between variables. Thus,               of this process shows the variability of the EFI, total
+every time a group of variables is classified in an                 correlation, K-function, and difference entropy as the
+incorrect way (i.e., not reflecting the true underlying             factors are sequentially sub-divided into two factors.
+latent factors) there is loss of information and the EFI               Figure 2 shows exactly the pattern described above.
+increases. For example, if EFI were computed in the                 The K-Function of the factors (or average entropy of
+same data used to generate Figure 1, but with a three-              the factors) decreasing with the number of latent vari-
+factor structure instead of two (i.e., 1, 1, 1, 1, 2, 2, 3, 3),     ables, while the difference entropy increases following
+the EFI would increase from -0.402 to -0.328.                       an exponential function (see Equation 29).
+   It is important to note that Figure 1 focuses on a
+                                                                                                   eð0:0335NF Þ
+multidimensional structure with two factors and all                            HDif ’ 1:1568                      :     (29)
+combinations of variables in two groups of four varia-                                           1 þ eð0:0335NF Þ
+bles. The pattern is different if we vary the number of                In sum, what Figure 2 shows is that how EFI dif-
+factors, in which the EFI value would be lower only if              fers from the K-function and makes it more suitable
+the correct structure is provided, increasing linearly              as a measure of fit due to the difference entropy,
+with the number of factors. This is an important dif-               which penalizes the number of partitions of the multi-
+ference between EFI and the K-function since the                    dimensional space or number of factors.
+884      H. GOLINO ET AL.
+
+
+
+
+Figure 2. Entopy fit index per combination of variables into two factors.
+
+
+
+   In terms of estimation, several estimators are avail-            entropy (Von Neumann, 1927)—an index that was
+able for entropy (especially empirical entropy or                   developed to quantify the amount of disorder in a sys-
+Shannon entropy; Paninski, 2003). In the current art-               tem. It’s also been used to quantify the entanglement
+icle, the maximum likelihood estimator of entropy                   between two subsystems in quantum physics (Preskill,
+(Equation 15) is used to calculate the EFI. In the MLE              2018), which occurs when two (or more) particles
+of entropy, the number of bins to compute the empir-                become inextricably linked. The entanglement of two
+ical distribution of the continuous variables needs to              photons can be verified using specific visualizations of
+be provided. The optimal number of bins can be esti-                the spatial correlations and momentum correlations
+mated using the formula suggested by Cellucci et al.                (Moreau et al., 2019). In this case, the visualization
+(2005), where the number of bins is the greatest inte-              provides a clue to how linked (entangled or mixed)
+ger such that:                                                      two systems (or particles) are. The entanglement of
+                              rﬃﬃﬃﬃ                                 two or more systems can also be expressed in terms
+                               N
+                      NBins       ,               (30)             of a density matrix, a type of matrix used in quantum
+                                5
+                                                                    mechanics that is akin to the probability distribution
+where N is the sample size. So, after calculating the               of position and momentum (i.e., phase-state probabil-
+number of bins, the sum score of each group of varia-               ity) in classical statistical mechanics (Hall, 2013). Any
+bles (indicating a specific latent factor) is partitioned           density matrix has three main characteristics: (1) it is
+into NBins elements, and Equation 28 is computed. It                real symmetric, (2) positive semi-definite, and (3) has
+is important to note that the plug-in estimator of                  trace equal to one.
+entropy, as used in the current paper, can only be                     Preskill (2018) shows that for any density matrix
+computed with raw data.                                             q, Von Neumann entropy is:
+                                                                                     SðqÞ ¼ trðq log qÞ:               (31)
+Entropy fit index with Von Neumann’s entropy
+                                                                       Any correlation matrix can be transformed into a
+and the total entropy index: estimations using
+                                                                    density-like matrix by using the number of variables
+a correlation matrix
+                                                                    as a scaling factor that will make the trace of the
+Because it’s common in the areas of psychology, edu-                matrix equal to one (Anderson, 1963). By dividing
+cation, health and related fields for a researcher to               the elements of the matrix by the number of variables,
+have access only to the correlation matrix of multi-                the correlation matrix will hold the same properties as
+variate datasets, it is valuable to have an alternative             any density matrix.
+estimation for the EFI that could be computed using                    Wihler et al. (2014) show that eigenvalues can be
+correlations. A plausible and approximate solution is               used to estimate Von Neumann entropy. Given a
+to use matrix algebra to calculate Von Neumann                      density matrix q with eigenvalues k1 , k2 , :::, km  0,
+                                                                                                   MULTIVARIATE BEHAVIORAL RESEARCH              885
+
+
+Von Neumann entropy is:                                                    penalization now is subtracted instead of added as in
+                       SðqÞ ¼ trðLðDÞÞ,                          (32)     Equation 28. EFI.vn can be computed for two factors
+                                                                           as follows:
+where L is a continuous function on the real interval                                                                    
+½0, 1Þ that takes values x log ðxÞ if x > 0 and 0 if                                         Sðqa Þ þ Sðqb Þ
+                                                                                   EFIVN ¼                    Sðqa  qb Þ
+x ¼ 0, and LðDÞ ¼ diagðLðk1 Þ, Lðk2 Þ, :::, Lðkm ÞÞ: In                                             2
+other words, the Von Neumann entropy of a density                                                                 
+                                                                                             Sðqa Þ þ Sðqb Þ     pﬃﬃ
+matrix is the Shannon entropy of the vector of eigen-                              SðqÞ                       2 :        (33)
+                                                                                                    2
+values (Preskill, 2018).
+    As presented earlier, to calculate the entropy fit                     where Sðqa Þ and Sðqb Þ are the Von Neumann entro-
+index of a given structure using Shannon’s entropy                         pies for factors ga and gb, SðqÞ is the total entropy of
+the joint entropy of the factors must be computed.                         the matrix q and Sðqa  qb Þ is the joint entropy of
+The joint Von Neumann entropy of two (or more)                             the factors, which can be calculated using the
+density matrices can be calculated as the Kronecker                        Kronecker product of the matrices or (in case of mul-
+product of the matrices. Given two density matri-                          tiple factors) as the product of eigenvalues, as pointed
+ces, qA and qB , the product state qAB is given by                         out earlier. Equation 33 can be easily expanded to NF
+qA  qb (Preskill, 2018). Therefore, after calculating                     factors:
+qAB , Equation 32 can be used to estimate the Von                                       2X                                          3
+                                                                                              NF
+Neumann entropy of the joint state (or the joint                                        4 i¼1    Sðq i Þ                            5
+Von Neumann entropy). If the number of joint                                  EFIVN ¼                     Sðq1  q2      qNF Þ
+                                                                                               NF
+states is large (e.g., more than five), the resulting                               20           XNF          1          3
+Kronecker product can be very large. To avoid this                                                       Sðq Þ
+                                                                                    4@              i¼1     i A   pﬃﬃﬃﬃﬃﬃ5
+issue, the product of the individual eigenvalues can                                   SðqÞ                    NF                 (34)
+be used instead of the Kronecker products,                                                           NF
+since          the         eigenvalues              of     AB        is      The use of the joint entropy of the factors can be a
+k1 l1 , :::, k1 lm , :::, k2 l1 , :::, k2 lm , :::, kn lm (Laub, 2005).    possible limitation for EFI.vn. In the EFI the joint
+    Since the EFI is estimated using the raw data (i.e.,                   entropy is estimated directly using the raw data, but
+Shannon’s entropy), while Von Neumann entropy is                           in the EFI.vn it’s calculated using the Kronecker prod-
+estimated using a density-like, scaled version of a cor-                   uct of the individual factors (or the product of the
+relation matrix, two modifications from Equation 28                        individual eigenvalues per factor, as shown above).
+are necessary to estimate the EFI Von Neumann                              This strategy seems useful to detect superposition of
+(EFI.vn; see Equation 33). First, the sum scores of var-                   states (in the present case the superposition is when
+iables belonging to the factors are replaced by sub-                       two factors are merged into one) since this is a typical
+matrices of q: So, two factors (ga and gb) can be rep-                     property of quantum information theory (Preskill,
+resented as a different combination of sub-elements                        2018; Zhao et al., 2015). However, if one pure state
+(rows and columns) from q : as qa and qb : If the first
+                                                                           (one factor) is split into two, generating a plausible
+factor is composed by variables i, j and k of q, the
+                                                                           but incorrect structure, then the performance of the
+sub-matrix qa will be:
+                                2                      3                   EFI.vn may not be very accurate.
+                                    aii aij aik                               An alternative approach to EFI.vn is to use the
+                        qa ¼ 4 aji ajj ajk 5                               total entropy in the correlation matrix, which can be
+                                    aki akj akk                            calculated using Equation 32, instead of the joint
+   The second factor being composed by variables m,                        entropy of the factors in the left side of Equation 33.
+n and o of q, the sub-matrix qb will be:                                   This alternative EFI.vn measure, hereafter named total
+                    2                 3                                    entropy fit index with Von Neumman entropy
+                      bmm bmn bmo                                          (TEFI.vn)1, maintains the same properties as EFI and
+               qb ¼ 4 bnm bnn bno 5                                        EFI.vn by modifying the penalization using only the
+                      bom bon boo
+   The Von Neumann entropy of qa and qb are Sðqa Þ                         1
+                                                                            It is important to note that in the TEFI.vn code used in the current
+                                                                           paper, entropy is estimated as the negative of the trace of the product of
+and Sðqb Þ, respectively.                                                  the density matrix by the log of elements of the density matrix, instead
+   The second modification relates to the penalization                     of using the matrix logarithm or the eigenvalues of the density matrix (as
+                                                                           implemented to calculate EFI.vn). Therefore, in the current
+in which the maximum entropy is replaced by the                            implementation, TEFI.vn is based on an entropy-like quantity. We should
+total entropy of the matrix SðqÞ: Also, the                                explore this difference in future papers.
+886     H. GOLINO ET AL.
+
+
+sum of the factor entropies instead of the mean.            decrease in total entropy going from 1 to 2 factors
+Then, TEFI.vn can be calculated as:                         would be higher than the expected decrease in
+                    2X                   3                  entropy going from 100 to 101 factors. Multiplication
+                          NF
+                    4 i¼1Sðqi Þ          5                  by the square root of the number of factors models
+         TEFIVN ¼                  SðqÞ                    this behavior.
+                           NF
+            "                    !          #
+                       XNF
+                                    pﬃﬃﬃﬃﬃﬃ
+          þ SðqÞ          Sðqi Þ  NF :      (35)          Methods
+                           i¼1
+                                                            Two Monte-Carlo simulations were used to compare
+   In sum, the entropy fit indices (EFI, EFI.vn and         the entropy fit indices (i.e., EFI, EFI.vn and TEFI.vn)
+TEFI.vn) represent a combination of both a theoretic        with the traditional fit indices used in factor models
+framework and empirical refinement. For example,            (CFI, RMSEA, TLI, and SRMR). The goal of the first
+Equation 27 (and the general case in equation 28) can       simulation was to check which fit index is more
+be broken into two components, separated as EFI ¼           accurate in detecting the correct structure simulated,
+½A þ ½B : Component ½A is similar to that of the            assuming the number of latent factors is known. In
+mutual information of a two variables IðA, BÞ ¼             other words, given two latent factors with four varia-
+HðAÞ þ HðBÞ  HðA, BÞ (or the total correlation of          bles each, which fit index is the most accurate in iden-
+multiple variables), with a modification that divide the    tifying the correct placement of variables within the
+summation on individual entropies by the number of          two factors?
+factors yielding what Watanabe (2001) termed ‘K-                The second Monte-Carlo simulation, on the other
+function’: KðA, BÞ ¼ ½ðHðAÞ þ HðBÞÞ=2  HðA, BÞ: This       hand, aims to compare the entropy fit indices and the
+is the theoretical basis for this section. However, in      traditional fit indices in multiple scenarios, varying,
+development we noticed that the K-function alone            for example, the number of factors (same, less, or
+was not enough to separate factors as KðA, BÞ strongly      more than the population structure used to generate
+favors having a larger number of dimensions. This is        the observable data) and how the items are placed in
+because the entropy within individual factors showed        each factor (randomly or not). This second simulation
+a decrease as the number of items included in the           was implemented to answer the following question:
+sum scores within a factor decreased. That is H(A)          what happens with the fit indices (in terms of their
+and H(B) tend to be lower if less items are used to         accuracy to correctly identify the number of factors
+calculate the distribution of sum scores defining A         and their item composition) when the dimensionality
+and B. Meaning that this section of KðA, BÞ is inflated     structure being investigated contains the same number
+with the number of factors given a constant number          of factors, less factors, or more factors than the popu-
+of items.                                                   lation structure? Although the first simulation emu-
+   To account for this, we included a component ½B          lates conditions that are not commonly observed in
+that reduces the influence of ½A by the number of           empirical studies (we never actually know the number
+factors used to describe a given data set. That is, while   of factors), the second simulation presents a more
+½A is expected to decrease monotonically as the num-        realistic set of conditions.
+ber of factors increases, ½B is expected to increase as
+the number of factors increase. ½B is a measure of the
+                                                            Design
+difference from the theoretically maximally entropic
+factor structure (a single factor) versus the average       To investigate the adequacy of the entropy fit indices
+amount of entropy seen across individual factors of a       (i.e., EFI, EFI.vn and TEFI.vn) and the traditional fit
+given factor structure. In other words, ½B represents       indices used in factor models (CFI, RMSEA, TLI, and
+the reduction in average entropy of a set of data con-      SRMR) two Monte-Carlo simulations are presented.
+ditional on a given factor structure. The square root       The first simulation identifies the best fit indices
+of the number of factors was chosen in ½B in order to       under the assumption that the correct number of fac-
+control the expected growth trajectory of ½B as the         tors is known. In other words, given two latent factors
+number of factors increases. We would expect that the       with four variables each, which fit index is the most
+effect of adding an additional factor would be condi-       accurate in identifying the correct placement of varia-
+tional on the number of factors already being esti-         bles within the two factors? To answer this question, a
+mated in the model, showing a decreasing effect as          permutation strategy is implemented, similar to the
+the number of factors increases. That is, the expected      first example showed in the last section. The fit
+                                                                                     MULTIVARIATE BEHAVIORAL RESEARCH   887
+
+
+
+
+Figure 3. Population structure and examples of models tested, 4 items per factor.
+
+
+indices are computed for every unique combination of               incorrect structures were set as follows: One structure
+the items into two sets of four (in a total of 70 unique           presents the same number of factors as the population
+combinations, from (1,1,1,1,2,2,2,2), (1,1,1,2,1,2,2,2),           structure, but with a random distribution or place-
+ … , to (2,2,2,1,2,1,1,1), (2,2,2,2,1,1,1,1). Four between-        ment of items per factor (shuffled condition; Figures
+subject data factors were systematically manipulated:              3.B and 4.B). A second structure reflects the number
+the skew of the items (-2; 2; 2 and 2; 2 to 2 in                 of factors in the population minus one (underfactoring
+increments of 0.5), sample size (1000 and 5000), factor            condition; Figures 3.C and 4.C), while a third organ-
+loadings (.40, .55 and .70), and factor correlations (0,           ization presents the same underfactoring structure,
+.5 and .7).                                                        but with a random assignment of items per factor
+   In the second Monte-Carlo simulation, the fit indi-             (underfactoring condition with random placement of
+ces will be compared in terms of their capacity to                 items; Figures 3.D and 4.D).
+identify the correct structure (number of factors and                 The fifth and sixth structures reflect the number of
+the correct placement of items per factor) in four dif-            factors in the population plus one (overfactoring con-
+ferent set of conditions (shuffled, underfactoring,                dition with mixed items; Figures 3.E and 4.E), with
+overfactoring with mixed items, and overfactoring                  only one pure factor (containing items from one sin-
+with a more extreme condition; i.e., no mixed items).              gle factor) and a random assignment of items per fac-
+For each set of conditions, the fit index for the correct          tor overfactoring condition with random placement of
+structure (i.e., the structure that corresponds exactly            items; Figures 3.F and 4.F). The last condition reflects
+to the simulated population structure; see Figures 3.A             the number of factors in the population plus one with
+and 4.A) is compared to an incorrect structure. The                a more extreme condition where the factors contain
+888      H. GOLINO ET AL.
+
+
+
+
+Figure 4. Population structure and examples of models tested, 8 items per factor.
+
+items from one single dimension (overfactoring condi-              dimensionality assessment (Golino et al., 2020; Golino &
+tion with a more extreme condition; i.e., no mixed                 Epskamp, 2017; Velicer, 1976; Widaman, 1993). Sample
+items; Figures 3.G and 4.G).                                       sizes 1,000 and 5,000 can be considered large (Li, 2016)
+    Finally, four between-subject data factors were sys-           and very large with the latter allowing for the evaluation
+tematically manipulated in the second simulation: fac-             of the dimensionality methods in conditions that can
+tor loadings (.40, .55, and .70), factor correlations (0,          approximate their population performance. Additionally,
+0.5, and 0.7), number of items per factor (4 and 8)                these sample sizes were selected by taking into account
+and sample size (1000 and 5000). The number of fac-                that tetrachoric correlations require large sample sizes to
+tors was held constant (i.e., three factors).                      achieve acceptable sampling errors (Timmerman &
+    Factor loadings of .40, .55, and .70 can be considered as      Lorenzo-Seva, 2011).
+poor, good, and excellent, respectively; thus, representing
+a wide range of factor saturations (Comrey & Lee, 2016).           Data generation
+The factor correlations simulated include the orthogonal
+(.00), large (.50), and very large (.70) factor correlations,      For each of part of the simulation, 500 sample data
+according to Cohen (1988). The reason to simulate data             matrices of binary variables were generated according
+with very high factor correlations (.70) is because in some        to a common factor model procedure that works as fol-
+areas within psychology (e.g., intelligence) researchers           lows. First, the reproduced population correlation
+sometimes have to distinguish between constructs that are          matrix (with communalities in the diagonal) was
+highly correlated (e.g., Kane et al., 2005). The factors gen-      computed:
+erated were composed of four and eight indicators with                                   RR ¼ KUK0 ,                     (36)
+salient loadings, following previous simulation studies in
+                                                                                 MULTIVARIATE BEHAVIORAL RESEARCH      889
+
+
+where RR is the reproduced population correlation            6:10 from the specified value. For example, if the
+matrix, lambda (K) is a k  r factor loading matrix for      main loadings are set at 0.70, the function generates
+k variables and r factors, and phi (U) is the structure      loading values between 0.60 and 0.80.
+matrix of the latent variables (i.e., a r  r matrix of
+correlations among factors). This procedure implies
+                                                             Data analysis
+that the generated data does not contain correlated
+residuals (minor factors) at the population level.           We used R (R Core Team, 2017) for all our analyses.
+   The population correlation matrix RP was then             The EFI, EFI.vn, and TEFI.vn were computed using
+obtained by inserting unities in the diagonal of RR ,        the EGAnet package (Golino & Christensen, 2019),
+thereby raising the matrix to full rank. The next step       while CFI, RMSEA, TLI, and SRMR were calculated
+was performing a Cholesky decomposition of RP ,              using lavaan (Rosseel, 2012). Confirmatory factor
+such that:                                                   models were estimated using the WLSMV estimator.
+                       RP ¼ U0 U:                    (37)    The choice to use the WLSMV estimator was due to
+                                                             the discrete nature of the simulated data (dichotom-
+   If either RP was not semi-positive definite (i.e., at     ous) since this estimator is theoretically justified for
+least one eigenvalue was  0) or an item’s communal-         the factor analysis of discrete data and it gives the
+ity was greater than 0.90, the K matrix was replaced         best results in simulation studies (Barendse et al.,
+and a new RP matrix was computed following the               2015; Beauducel & Herzberg, 2006). The figures were
+same procedure. Subsequently, the sample data matrix         generated using the ggplot2 package (Wickham, 2016)
+of continuous variables was computed as:                     and the ggpubr package (Kassambara, 2018). To esti-
+                        X ¼ ZU,                      (38)    mate the EFI.vn and TEFI.vn, a tetrachoric correlation
+where Z is a matrix of random standard normal devi-          was computed using the qgraph package (Epskamp
+ates with rows equal to the sample size and columns          et al., 2012).
+equal to the number of variables.                               In order to evaluate the performance of the fit indi-
+    The resulting continuous variables were dichotom-        ces, the percentage of correct structure selection (PC)
+ized by applying a set of thresholds according to spe-       was used:
+                                                                                                                
+cific levels of skewness. In the first part of the                     RC             1 if Sselected ¼ Scorrect
+                                                               PC ¼       , for C ¼                               , (39)
+simulation (the permutation of items per factors), the                 N              0 if Sselected 6¼ Scorrect
+following levels of skewness were used: 2, 2 and 2,
+from –2 to 2 in increments of 0.5, and 2. In the             where N is the number of sample data matrices simu-
+second part of the simulation, because binary variables      lated, Sselected is the selected structure and Scorrect is the
+are not necessarily symmetrically distributed in prac-       correct structure. The PC criterion has boundaries of
+tice, the level of skewness of each item was randomly        0% and 100%, with 0% signaling complete inaccuracy
+assigned with equal probability from a set of possible       and 100% indicating perfect accuracy. Since in the
+values that ranged from –2 to 2 in steps of 0.50. The        current simulation only one structure out of seven is
+thresholds used to generate these levels of skewness         correct, PC has a theoretical base rate near 14%.
+for the binary variables were taken from (Garrido               The strategies used to select a structure depend on
+et al., 2011, 2013).                                         the fit index used. For EFI and EFI.vn, the selected
+    It is common in practice to find complex structures      structure is always the one presenting the lower value.
+in which items present non-zero loadings in multiple         For the other indices, two main strategies were used.
+factors. To generate cross-loadings with magnitudes          The first one is based on the cutoff values only:
+consistent to those commonly found in real data              CFI and TLI  :95, RMSEA and SRMR  :05:                  CFI
+(Bollmann et al., 2015), the procedure described in          and TLI values equal to or greater than .95 can be
+Meade (2008) was followed for the second part of the         considered to reflect an excellent fit to the data
+simulation: cross-loadings were randomly drawn from          (Garrido et al., 2016; Hu & Bentler, 1999; Marsh
+a normal distribution (with mean zero and variance           et al., 2004) as well as RMSEA and SRMR values
+of .05) for all the items except for the first two in        equal to or lower than .05 (Browne & Cudeck, 1992;
+each factor, which were set as markers (i.e., all of their   Chen et al., 2008; Garrido et al., 2016; Hu & Bentler,
+cross-loadings were fixed to zero). Of note, regarding       1999; Marsh et al., 2004). If a structure other than the
+the generation of the main loadings: The function            correct structure presented a value that is considered
+generates the main loadings by drawing random val-           adequate (passes the cutoff points), then the fit index
+ues from a uniform distribution that has a range of          received a score of zero (i.e., failed to identify the
+890      H. GOLINO ET AL.
+
+
+                                                                       Figure 6 shows how the accuracy varies per level of
+                                                                   factor loadings and correlations. In general, the accur-
+                                                                   acy improves with the increase in factor loadings (over-
+                                                                   all accuracy of 54.41% for loadings of .40, 76.29% for
+                                                                   loadings of .55 and 86.45% for loadings of .70) and
+                                                                   decreases with higher factor correlation (overall accur-
+                                                                   acy of 87.41% for correlations of 0, 76.96% for correla-
+                                                                   tions of .50 and 52.87% for correlations of .70).
+                                                                       TEFI.vn and EFI.vn presented an almost perfect
+                                                                   accuracy for factor loadings of .55 and .70 (PCTEFI:vn
+                                                                   ¼98.41%, PCEFI:vn ¼98.24% and PCTEFI:vn ¼99.96%,
+                                                                   PCEFI:vn ¼99.92%, respectively), and an impressive
+                                                                   accuracy for factor loadings of .40 (PCTEFI:vn ¼83.87%,
+Figure 5. Percentage Correct per Fit Index. The horizontal lines   PCEFI:vn ¼82.56%). EFI presented a good accuracy for
+indicate the median values, the numbers inside the plots are       a loading of .40 (74.73%), and high accuracies for
+the mean values.                                                   loadings of .55 and .70 (89.92% and 93.40%, respect-
+                                                                   ively). TLI.rel, RMSEA.rel and CFI.rel presented lower
+correct structure). The second strategy uses the fit               accuracies for small loadings (68.13%, 62.78% and
+indices as relative measures of fit. Considering all the           59.86%, respectively), but high accuracies for loadings
+conditions where the correct structure presented an                of .55 (93.44%, 92.38% and 90.79% respectively) and
+adequate fit value, the structure with the highest (CFI            .70 (93.32%, 96.46% and 95.86% respectively).
+and TLI) or lowest (RMSEA and SRMR) fit values is                      Considering the size of the correlation, it is inter-
+selected. If the selected structure is not the correct             esting to note that TEFI.vn, EFI.vn and TLI.rel pre-
+one, the respective score is zero. Scores of one are               sented a moderately high accuracy, even when the
+only achieved when the selected structure is the cor-              correlation is .70 (PCTEFI:vn ¼87.61%, PCEFI:vn
+rect structure. From now on, when the traditional fit              ¼86.97% and PCTLI:rel ¼ 80.02%), followed by
+indices are used as relative measures of fit they will be          SRMR.rel (78.51%). EFI was the fifth best fit measure
+referenced using the abbreviation.rel: CFI.rel, TLI.rel,           when correlations between factors was .70 (74.43%),
+RMSEA.rel and SRMR.rel.                                            followed by RMSEA.rel (70.82%) and CFI.rel
+   For reproducibility purposes, all R scripts used in             (70.78%). Tables 1 and 2 shows the mean percentage
+the current article, as well as the Rmarkdown file with            correct and its 95% confidence interval for each level
+the manuscript and codes used in the analysis of the               of correlation and factor loading, respectively.
+result, are available in an online repository at the                   The skew of the items also plays a role in the
+Open Science Framework platform here.                              accuracy. When the skew is -2 (skew 1 in Figure 6),
+                                                                   the overall accuracy is 72.98%, when the skew is -2
+                                                                   and 2 (skew 2 in Figure 6), the overall accuracy is
+Results                                                            66.61%. For a skew ranging from -2 to 2, by incre-
+Simulation 1: combination of variables into                        ments of .5 (skew 3), the general accuracy is 74.63%,
+two factors                                                        and when the skew is 2 (skew 4 in Figure 6) the over-
+                                                                   all accuracy is 75.30%.
+The results of the first simulation shows that the fit                 TEFI.vn and EFI.vn stands out once again in the
+indices can be separated into two groups: one with                 worst condition in terms of skew, presenting an accuracy
+high PC (TEFI.vn, EFI.vn, SRMR.rel, EFI, TLI.rel,                  of 92.64% and 91.80% for the skew -2 and 2, respectively,
+RMSEA.rel and CFI.rel) and the other with low PC                   followed by SRMR.rel (80.56%), RMSEA.rel (77.78%),
+(TLI, CFI, RMSEA, SRMR). The most accurate fit                     CFI.rel (75.66%), TLI.rel (75.44%) and EFI (74.26%).
+indices were (from best to worst): TEFI.vn (94.08%),                   Overall, TLI (47.53%), CFI (49.44%), RMSEA
+EFI.vn (93.58%), SRMR.rel (88.80%), EFI (86.02%),                  (46.81%), and SRMR (44.56%) presented low accuracies,
+TLI.rel (84.96%), RMSEA.rel (83.87%) and (CFI.rel                  and will not be presented in detail. Their low accuracy
+82.17%). The least accurate fit indices were (from best            can be explained by the values of these fit indexes, that
+to worst): TLI (65.51%), CFI (57.45%), RMSEA                       has a tendency to be in a range considered adequate by
+(32.43%), and SRMR (27.31%). Figure 5 shows the                    the cutoff points used ( :95 for CFI and TLI;  :05
+distribution of the percentage correct per fit index.              for RMSEA and SRMR). Figure 7 shows the
+                                                                                           MULTIVARIATE BEHAVIORAL RESEARCH   891
+
+
+
+
+Figure 6. Percentage correct per levels of correlation (columns), skew (rows), loadings (color), and fit index.
+
+
+distribution of the fit indices values across all combin-             Simulation 2: shuffled, underfactoring and
+ation of four items into two factor for factor loadings of            overfactoring conditions
+.40 and correlation between factors of .70. The values of
+                                                                      In terms of the overall performance, the fit indices
+the traditional indices indicates that all the incorrect
+                                                                      can be separated into four groups (see Figure 8): (1)
+structures could be considered as presenting a good fit,
+                                                                      high accuracy (PC) in the four conditions tested
+if the cutoff values are used. Note that all tested struc-
+                                                                      (TEFI.vn), (2) high or moderately high PC in three of
+tures present CFI and TLI values higher than .95 and
+                                                                      the four conditions (EFI, RMSEA.rel, CFI.rel,
+RMSEA and SRMR values lower than .05. Notably, the
+                                                                      SRMR.rel, TLI.rel), (3) high PC in two conditions
+CFI and TLI values are maximized when the correct
+                                                                      (EFI.vn), and (4) moderate or low PC across condi-
+structure is specified, while RMSEA and SRMR values
+                                                                      tions (TLI, CFI, SRMR and RMSEA). TEFI.vn pre-
+are minimized. This pattern helps to understand why
+                                                                      sented an overall accuracy of 92% (see Figure 8),
+using these indices as relative fit measures works much
+better than using their cutoff values.                                followed by EFI (PC ¼ 84%) and TLI.rel (PC ¼ 82%).
+                                                                      On the one hand, TEFI.vn presented very high PCs
+892         H. GOLINO ET AL.
+
+
+Table 1. Mean percentage correct and its confidence interval                 Table 2. Mean percentage correct and its 95 confidence inter-
+for each level of correlation.                                               val for each level of factor loadings.
+Method        Correlations     Mean    95% C.I. - Lower   95% C.I. - Upper   Method      Loadings   Mean    95% C.I. - Lower   95% C.I. - Upper
+TEFI.vn            0           99.25        99.09              99.40         TEFI.vn       40       83.87        83.21              84.52
+TEFI.vn           50           95.41        95.04              95.79         TEFI.vn       55       98.41        98.18              98.63
+TEFI.vn           70           87.61        87.02              88.20         TEFI.vn       70       99.96        99.92              99.99
+EFI.vn             0           98.85        98.66              99.04         EFI.vn        40       82.56        81.88              83.24
+EFI.vn            50           94.91        94.51              95.30         EFI.vn        55       98.24        98.01              98.48
+EFI.vn            70           86.97        86.36              87.57         EFI.vn        70       99.92        99.88              99.97
+SRMR.rel           0           96.76        96.44              97.07         SRMR.rel      40       74.85        74.07              75.62
+SRMR.rel          50           91.20        90.70              91.71         SRMR.rel      55       96.39        96.05              96.72
+SRMR.rel          70           78.51        77.78              79.25         SRMR.rel      70       95.17        94.79              95.56
+EFI                0           96.63        96.31              96.96         EFI           40       74.73        73.96              75.51
+EFI               50           86.99        86.39              87.59         EFI           55       89.92        89.39              90.46
+EFI               70           74.43        73.65              75.21         EFI           70       93.40        92.96              93.84
+RMSEA.rel          0           94.09        93.67              94.52         RMSEA.rel     40       62.78        61.92              63.65
+RMSEA.rel         50           86.78        86.18              87.39         RMSEA.rel     55       92.38        91.91              92.86
+RMSEA.rel         70           70.82        70.01              71.64         RMSEA.rel     70       96.46        96.13              96.79
+TLI.rel            0           86.15        85.53              86.77         TLI.rel       40       68.13        67.30              68.97
+TLI.rel           50           88.72        88.16              89.29         TLI.rel       55       93.44        93.00              93.88
+TLI.rel           70           80.02        79.30              80.73         TLI.rel       70       93.32        92.87              93.76
+CFI.rel            0           89.46        88.91              90.01         CFI.rel       40       59.86        58.98              60.74
+CFI.rel           50           86.27        85.65              86.88         CFI.rel       55       90.79        90.27              91.31
+CFI.rel           70           70.78        69.97              71.60         CFI.rel       70       95.86        95.50              96.21
+TLI                0           94.73        94.33              95.13         TLI           40       48.84        47.95              49.74
+TLI               50           81.09        80.39              81.79         TLI           55       69.57        68.75              70.39
+TLI               70           20.96        20.23              21.69         TLI           70       78.12        77.38              78.86
+CFI                0           93.75        93.32              94.18         CFI           40       42.86        41.97              43.74
+CFI               50           74.18        73.40              74.97         CFI           55       62.12        61.25              62.99
+CFI               70            4.73         4.35               5.11         CFI           70       67.38        66.54              68.22
+RMSEA              0           61.06        60.19              61.93         RMSEA         40        0.00         0.00               0.00
+RMSEA             50           32.69        31.85              33.53         RMSEA         55       30.03        29.21              30.85
+RMSEA             70            3.69         3.35               4.03         RMSEA         70       67.32        66.48              68.16
+SRMR               0           50.73        49.83              51.62         SRMR          40        0.00         0.00               0.00
+SRMR              50           28.29        27.48              29.09         SRMR          55       17.94        17.25              18.62
+SRMR              70            3.00         2.69               3.31         SRMR          70       64.06        63.20              64.92
+
+
+even in the most extreme overfactoring conditions                            conditions as well as very low PC in the more extreme
+(see Figure 9), especially with correlated factors (PC                       overfactoring condition (see Figure 8).
+¼ 96.57%). On the other hand, TEFI.vn did not per-                              Figure 9 shows a more detailed description of the
+form as well in the underfactoring condition with                            performance of the fit indices across conditions.
+high factor loading and high interfactor correlation                         TEFI.vn presents a very high accuracy to detect the
+(PC ¼ 58.95%). This problem does seem to vanish if                           simulated number of dimensions with PC equaled to
+the number of items is high (PC ¼ 100%).                                     (or very close to) 100%. Even in the most extreme
+   EFI presented a very high PC in the shuffled                              overfactoring condition, TEFI.vn presents an impres-
+(99.68%) and underfactoring condition (99.98%), but                          sive accuracy in which most of the other fit indices
+only a moderately high PC in the overfactoring condi-                        (except EFI) present moderately low to low accuracy
+tion (85.72%) and a moderate PC in the more extreme                          (see Table 3). In this condition, and with factor
+overfactoring condition (52.45%). EFI.vn, by its turn,                       loadings of .70, TEFI.vn presents a PC of 50.85% for
+presented a very high PC in the shuffled (100%) and                          inter-factor correlations of 0, 100% for inter-factor
+underfactoring condition (100%), but basically zero                          correlations of .50, and 100% for inter-factor correla-
+accuracy in both overfactoring conditions. The CFA                           tions of .70 (see Figure 9). Considering only the
+indices used as relative fit measures (RMSEA.rel,                            shuffled, underfactoring, and overfactoring conditions,
+CFI.rel, TLI.rel, and SRMR.rel) were stable across the                       the only situation where the accuracy of TEFI.vn is
+shuffled, underfactoring, and overfactoring conditions,                      not very high is in the underfactoring condition with
+presenting PCs ranging from 98% and 100%.                                    high interfactor correlation and high factor loading.
+However, in the more extreme overfactoring condi-                               EFI, RMSEA.rel, CFI.rel, SRMR.rel, and TLI.rel pre-
+tions their PCs dropped to 36.94% for TLI.rel, 26.23%                        sented very high PCs across conditions (shuffled,
+for RMSEA.rel, 15.84% for CFI.rel, and 0.50% for                             underfactoring or overfactoring) when the loadings
+SRMR.rel. When applied using cutoff values only, the                         were .70, irrespective of the correlation between factors,
+CFA fit measures presented low to moderate PCs in                            sample size, and number of items. In the more extreme
+the shuffled, underfactoring, and overfactoring                              overfactoring condition, however, RMSEA.rel, CFI.rel,
+                                                                                           MULTIVARIATE BEHAVIORAL RESEARCH   893
+
+
+
+
+Figure 7. Distribution of the fit indices values across all combination of four items into two factors.
+
+SRMR.rel, and TLI.rel presented low accuracies while                    Table 3 shows the percentage correct and its 95%
+EFI presented a moderate accuracy. For factor loadings                confidence interval for each condition tested (shuffled,
+of .70 in the extreme overfactoring condition, EFI pre-               underfactoring,      overfactoring    and       extreme
+sented a PC of 62.95% for inter-factor correlations of                overfactoring).
+0, 69.75% for inter-factor correlations of .50, and
+69.40% for inter-factor correlations of .70 (see Figure
+9). Conversely, EFI presented PCs similar to the other                Applied example
+CFA fit indices for factor loadings of .50, while EFI.vn
+                                                                      The world health organization study on global
+failed almost in all overfactoring conditions.
+                                                                      ageing and adult health (SAGE)
+    In terms of the CFA fit indices, TLI.rel was the
+third most accurate fit index in the more extreme                     This empirical example investigates the dimensionality
+overfactoring condition. For factor loadings of .70 it                structure of a large dataset from the World Health
+presented a PC of 15.15% for inter-factor correlations                Organization (WHO) Study on global ageing and
+of 0, 40.12% for inter-factor correlations of .50, and                adult health (SAGE). Although being a longitudinal
+50.31% for inter-factor correlations of .70.                          study focusing on adults aged 50 years and older,
+894      H. GOLINO ET AL.
+
+
+
+
+Figure 8. Mean percentage correct (PC) per fit index (simulation two).
+
+
+
+
+Figure 9. Mean percentage correct (PC) per fit index, in the shuffling, underfactoring and overfactoring conditions, for different
+levels of factor loadings and correlation between factors.
+
+WHO’s SAGE also collects data from nationally repre-               answered all 52 questions related to broader domain
+sentative adult samples (aged between 18 and 49 years)             labeled activities and participation, containing items
+in China. In the current paper, only data from the                 related to six theoretical domains: (1) social, commu-
+first wave of data collection will be used.                        nity and civic activities/involvement, (2) interpersonal
+    The original sample is composed of 9,283 adults                relations, (3) mobility, (4) self-care, (5) domestic life
+aged between 18 and 99 years (Mean ¼ 60.53, SD ¼                   and (6) personal history of work and employment.
+11.91) with 53.40% being females. In terms of the                     The dataset was split into two random subsamples
+highest level of education completed, 25.09% finished              (training and testing set), each containing 50% of the
+primary school, 18.22% high school (or equivalent),                data, for cross-validation. The results of both EGA
+27.96% secondary school, 21.82% less than primary                  estimations were compared to the theoretical dimen-
+school, and 6.7% have college/pre-university/university            sionality structure (six domains) briefly described
+or post-graduate degree. The 9,283 participants                    above. The EFI, TEFI.vn, and traditional factor-
+                                                                                           MULTIVARIATE BEHAVIORAL RESEARCH     895
+
+
+Table 3. Mean percentage correct and its 95 confidence inter-            comparing the dimensionality structure estimated via
+val for each condition tested (shuffled, underfactoring, over-           EGA using from three to 10 steps.
+factoring and extreme overfactoring).
+                                                                             Table 4 shows the factor-analytic fit values of the
+Method       Condition    Mean    95% C.I. - Lower   95% C.I. - Upper
+                                                                         theoretical model in the training (CFI ¼ 0.90, TLI ¼
+TEFI.vn      Shuffled    100.00       100.00             100.00
+TEFI.vn      Under        93.05        92.60              93.51          0.89, RMSEA ¼ 0.04, SRMR ¼ 0.06) and test set (CFI
+TEFI.vn      Over        100.00       100.00             100.00          ¼ 0.89, TLI ¼ 0.89, RMSEA ¼ 0.04, SRMR ¼ 0.06),
+TEFI.vn      Over.Ext     76.74        75.98              77.50
+EFI          Shuffled     99.68        99.57              99.78          suggesting a poorer fit of this model compared with
+EFI          Under        99.98        99.95             100.00          the other two empirical models.
+EFI          Over         85.72        85.10              86.35
+EFI          Over.Ext     52.45        51.56              53.34              The structure estimated via EGA presented the
+EFI.vn       Shuffled    100.00       100.00             100.00          lowest TEFI.vn in both samples, compared with the
+EFI.vn       Under       100.00       100.00             100.00
+EFI.vn       Over          0.00         0.00               0.00          theoretical structure and the structure estimated via
+EFI.vn       Over.Ext      0.00         0.00               0.00          EGAtmfg. Both EGA and EGAtmfg estimated five fac-
+TLI.rel      Shuffled     99.26        99.11              99.41
+TLI.rel      Under        99.20        99.04              99.36          tors, but with a different composition of items per
+TLI.rel      Over         99.03        98.85              99.20          factor. The factor-analytic fit measures were basically
+TLI.rel      Over.Ext     36.94        36.08              37.81
+CFI.rel      Shuffled     99.31        99.16              99.46          identical for the factors estimated via EGA and
+CFI.rel      Under        97.30        97.01              97.59          EGAtmfg, while TEFI.vn was lower for the structure
+CFI.rel      Over         97.65        97.38              97.92
+CFI.rel      Over.Ext     15.84        15.18              16.49          estimated using EGA in both samples (in the training
+RMSEA.rel    Shuffled     99.60        99.48              99.71          and testing/validation sample).
+RMSEA.rel    Under        97.60        97.32              97.87
+RMSEA.rel    Over         97.97        97.72              98.22              Figure 10 shows the structure estimated via EGA
+RMSEA.rel    Over.Ext     26.23        25.44              27.01          and EGAtmfg, while Table 4 presents the variables,
+SRMR.rel     Shuffled    100.00       100.00             100.00
+SRMR.rel     Under       100.00       100.00             100.00          the EGA and EGAtmfg factor numbers per variable,
+SRMR.rel     Over         99.66        99.56              99.77          the description of the variables and the theoretical fac-
+SRMR.rel     Over.Ext      0.50         0.38               0.63
+TLI          Shuffled     62.73        61.86              63.59          tor per variable. Factor one (red nodes in Figure 10)
+TLI          Under        49.98        49.08              50.87          represents a socialization factor, with items such as
+TLI          Over         49.53        48.63              50.42
+TLI          Over.Ext      0.18         0.11               0.26          Q6001 (attending public meeting), Q6005 (had friends
+CFI          Shuffled     60.38        59.50              61.25          over to your home) and Q6009 (went out of house to
+CFI          Under        43.76        42.87              44.65
+CFI          Over         43.84        42.95              44.73          see friends or relatives), among others. Factor two
+CFI          Over.Ext      0.06         0.02               0.10          (yellow/green-ish nodes) contains items related to
+RMSEA        Shuffled     41.90        41.02              42.79
+RMSEA        Under        19.85        19.13              20.56          work and employment (e.g. Q6020: Do/did you usu-
+RMSEA        Over          0.00         0.00               0.00          ally work throughout the year, or do/did you work
+RMSEA        Over.Ext      0.00         0.00               0.00
+SRMR         Shuffled     42.37        41.48              43.25          seasonally, or only once in a while for your main
+SRMR         Under        19.24        18.54              19.95          job?) and to the participation in the political life (e.g.
+SRMR         Over         18.68        17.99              19.38
+SRMR         Over.Ext      0.00         0.00               0.00          Q6021: Lots of people find it difficult to get out and
+                                                                         vote. Did you vote in the last state/national/presiden-
+                                                                         tial election?). Factor three (light green nodes) con-
+Table 4. Fit measures for the SAGE dataset.                              tains items related to overall difficulty in the past
+                    Walktrap                                             30 days with self-care (e.g., Q2036: In the last 30 days,
+Data    Model        Steps    EFI  TEFI.vn CFI TLI RMSEA SRMR
+Train EGA              3     5.03 69.51 0.92 0.92 0.03  0.06
+                                                                         how much difficulty did you have bathing/washing
+      EGAtmfg          3     5.89 55.95 0.93 0.93 0.03  0.06           your whole body?), domestic work (e.g., Q2039: In the
+      Theoretical            4.89 46.53 0.90 0.89 0.04  0.06
+        Model
+                                                                         last 30 days, how much difficulty did you have day to
+Test EGA                    5.52 68.61 0.92 0.92      0.03      0.06   day work?), mobility (e.g., Q2026: In the last 30 days,
+      EGAtmfg               5.99 54.64 0.93 0.93      0.03      0.06
+      Theoretical           4.89 46.01 0.90 0.89      0.04      0.06
+                                                                         how much difficulty did you have walking 100
+        Model                                                            meters), and with engaging in social events (Q2033: In
+                                                                         the last 30 days, how much difficulty did you have
+                                                                         joining community activities?). Factor four (blue
+analytic fit measures were computed for each struc-                      nodes) presents items related to overall difficulty in
+ture (i.e. the structures estimated using EGA with                       daily activities (work or household activities, moving
+GGM, EGAtmfg, plus the theoretical model) in the                         around, doing vigorous activities, bathing, taking care
+training and testing sample. The TEFI.vn index was                       of appearance and staying by yourself). Factor five, by
+used to select the optimal number of steps in the                        its turn, contains items related to overall difficulty
+Walktrap algorithm (used in the EGA technique),                          with interpersonal relations and activities.
+896     H. GOLINO ET AL.
+
+
+
+
+Figure 10. Structure of the SAGE data using EGA.
+
+Discussion                                                 cursing, walking out, and slapping, but to build law-
+                                                           fulness that has generality, latent variables are key.
+Reducing the dimensions of multivariate data has pro-
+                                                           The relations among latent variables are central to
+ven to be an extremely worthwhile task in the study
+                                                           constructing or inferring mechanisms that help build
+of behavior. This has generally taken the form of pro-
+                                                           common explanations of behavior. Extracting the
+cedures inferring the number and nature of unmeas-
+ured (latent) variables (e.g., factors) that can account   most out of one’s multivariate data relies heavily on
+for the calculated relations among the observed varia-     model fitting that best estimates the dimensionality
+bles. Willingness to ascribe causal properties to these    and nature of the latent variables. Therefore, powerful
+latent variables varies between investigators and is not   methods for fitting models to data and judging the
+the primary concern of this article; however, accur-       goodness of that fit are indispensable.
+ately estimating the number of dimensions (e.g., latent        It is common practice among applied researchers
+variables) is our primary concern and often the main       and methodologists to use traditional fit indices from
+concern of investigators.                                  factor analysis and structural equation modeling to
+   For many researchers with a causal latent variable      assess the factor solutions of their data because it pro-
+perspective, the relations between latent variables can    vides useful diagnostic information, but also enables
+provide the generality needed to articulate useful law-    the comparison of different dimensionality structures.
+fulness. An example used by Nesselroade and                As pointed out earlier, there are only a few simulation
+Molenaar (2016) concerned the frustration produces         studies investigating the accuracy of traditional fit
+aggression hypothesis. Some students, frustrated           indices (such as CFI and RMSEA) to estimate the cor-
+because they cannot solve a difficult mathematics          rect number of factors (Clark & Bowles, 2018; Frazier
+problem, might curse the teacher whereas other stu-        & Youngstrom, 2007; Garrido et al., 2016; Yang &
+dents might slam down their books and walk out of          Xia, 2015) and, in general, they suggest that the trad-
+class and still others might slap at a fellow student      itional fit indices should be used with caution, espe-
+nearby. To say that “inability to solve a difficult math   cially when analyzing dichotomous data. Clark and
+problem leads to slapping a fellow student” might hold     Bowles (2018), for example, concluded that the com-
+for some students but it does not have generality          mon fit statistics cutoffs are, at best, imperfect tools
+whereas at the latent variable level “frustration produ-   for guiding decisions regarding dimensionality. The
+ces aggression” covers all three situations above.         final suggestion is to use fit indices in conjunction
+Obviously, the properties of frustration and aggression    with other methods for assessing dimensionality. This
+must be inferred from the observable variables such as     suggestion is perhaps best exemplified by combining
+                                                                               MULTIVARIATE BEHAVIORAL RESEARCH     897
+
+
+EGA with the new fit indices presented in the current        EFI.vn value increases when two factors are merged
+paper (especially TEFI.vn and EFI) to obtain optimal         into one relative to the EFI.vn value of the original
+dimension identification.                                    simulated structure. However, the EFI.vn measure
+    The accuracy of the entropy fit measures in cor-         could not detect the correct simulated structure when
+rectly identifying the number of simulated factors was       one factor is split into two factors. When a state is
+compared to RMSEA, CFI, TLI, and SRMR in two                 not mixed but instead separated, then EFI.vn value
+Monte Carlo simulations. In the first simulation, two        remains low because the states are still reflecting
+latent factors with four variables each were simulated       homogeneous states. This may also be a consequence
+and the fit indices were used to check the fit of 70 dif-    of the strategy used to penalize the number of factors.
+ferent combinations of variables within the two fac-         Future studies should investigate different penalization
+tors. The goal of the first simulation was to identify       methods to verify if it is possible to increase the
+the accuracy of the fit indices in detecting the correct     accuracy of EFI.vn in the overfactoring conditions. A
+simulated structure, given that the number of factors        possible explanation to the difference in accuracy
+is correct but the placement of items per factor isn’t.      between EFI.vn and the TEFI.vn is that the former
+The results show that TEFI.vn and EFI.vn are the             replaced the joint entropy of the factors by the total
+most accurate fit measures, followed by SRMR (when           entropy of the correlation matrix, which can be more
+used as a relative measure of fit) and EFI. In general,      robust in conditions where the partition of the multi-
+the RMSEA/SRMR cutoffs presented very low accura-            dimensional space is plausible but incorrect (i.e.,
+cies in almost all conditions tested, except when the        extreme overfactoring condition).
+factor loadings were high and the interfactor correl-           The traditional fit indices, when used as absolute
+ation was zero or .50. Even in this favorable condi-         measures of fit, presented moderate to high accuracies
+tion, the accuracy dropped for highly skewed items           in the shuffled and underfactoring conditions with
+(skew 2; skew –2 and 2). For conditions with high            interfactor correlations of zero (orthogonal structures).
+interfactor correlation (.70), the accuracy of the trad-     Notably, the accuracies dropped with the increase of
+itional fit indices, using the cutoff values only, was       interfactor correlations becoming very low for interfac-
+very low. When used as relative measures of fit, the         tor correlations of .70. A very similar pattern occurred
+traditional fit indices (CFI, TLI, RMSEA and SRMR)           for the overfactoring condition. However, when the
+presented high accuracies, comparable to TEFI.vn,            overfactoring condition was more extreme (one factor
+EFI.vn and EFI, in almost all conditions.                    split into two pure factors), the cutoff values presented
+    In the second simulation, we investigated the            low accuracies irrespective of the interfactor correlation
+accuracy of the fit indices to identify the correct struc-   and factor loadings. Finally, when used as relative
+ture compared to shuffled, underfactored, and over-          measures, the traditional fit indices presented very high
+factored conditions. TEFI.vn was the most accurate fit       accuracies for all conditions, except for the more
+index to correctly identify the correct dimensionality       extreme overfactoring condition. These measures,
+structure. TEFI.vn presented a very high accuracy            which are usually thought of as absolute are actually
+even in the most extreme overfactoring condition, a          not. Instead, our results show that they are better
+condition in which all the other fit indices (except         thought of as relative measures. Therefore, our results
+EFI) presented moderately low or low accuracies. EFI         suggest that these measures should not be used as
+presented a very high accuracy in the shuffled and           absolute but rather relative fit measures.
+underfactor conditions, a moderately high accuracy in           In sum, the current paper corroborates previous
+the overfactoring condition, and was the second most         simulation studies, showing that the traditional factor-
+accurate fit measure in the most extreme overfactoring       analytic fit indices should be avoided for dimensional-
+condition (i.e. when one factor is split into two fac-       ity assessment purposes and not used as absolute
+tors, without any items from other factors).                 measures of fit (based on cutoff values). They are,
+    EFI.vn was also very accurate in the shuffled and        however, very accurate when used as relative measures
+underfactoring conditions, but completely failed in the      of fit specifically for the shuffled, underfactoring, and
+overfactoring conditions. This result makes sense,           non-extreme overfactoring conditions. Also, the three
+since Von Neumman’s entropy was developed to                 new fit indices (EFI, EFI.vn, and TEFI.vn) were accur-
+understand entangled quantum states. In the current          ate in identifying the simulated number of factors and
+simulation, the underfactor condition can be thought         the respective placement of items per factor in the
+as reflecting mixed “states”, since two simulated fac-       shuffled and underfactoring conditions. Notably, only
+tors are merged as one single factor. Therefore, the         TEFI.vn presented a high accuracy in both
+898     H. GOLINO ET AL.
+
+
+overfactoring conditions. These results represent an      relative measures of fit that present higher accuracies
+important advance in the area of measures of fit for      in detecting the correct dimensionality structure than
+structural and dimensionality analysis.                   traditional fit measures used in exploratory factor ana-
+   Finally, an empirical example was presented, using     lysis and SEM. However, contrary to CFI, RMSEA,
+data from the WHO’s Study on Global Ageing and            TLI and SRMR, the entropy fit measures cannot be
+Adult Health (SAGE) from China. Exploratory graph         used to evaluate the absolute fit of a model. EFI and
+analysis was used to estimate the dimensionality struc-   TEFI.vn were developed to compare alternative
+ture using the GGM and the TMFG approaches, and           dimensionality solutions, evaluating the partitioning of
+their fit were compared to the fit of a theoretical       a multidimensional space in terms of its uncertainty
+model, in two random subsamples. The TEFI.vn index        or unstableness. As with the K-function, EFI and
+pointed to the EGA (GGM) structure (five factors) as      TEFI.vn are measures of entropy reduction by parti-
+the structure with the best fit to the data (compared     tioning, but unlike the latter, the new fit measures do
+to the theoretical model and to the structure estimated   not decrease with the increase in the number
+via EGAtmfg) in both samples (training and testing/       of factors.
+validation). Basically, CFI, TLI, RMSEA and SRMR
+could not differentiate between the EGA and the
+EGAtmfg structures, both presenting five factors but      Article information
+with a different composition of items per factor.
+                                                          Conflict of interest disclosures: Each author signed a form
+                                                          for disclosure of potential conflicts of interest. No authors
+Limitations                                               reported any financial or other conflicts of interest in rela-
+                                                          tion to the work described.
+The limitations of the current paper can be summar-
+ized in two main aspects. The first one related to the    Ethical principles: The authors affirm having followed pro-
+                                                          fessional ethical guidelines in preparing this work. These
+data simulation approach used, which did not include
+                                                          guidelines include obtaining informed consent from human
+correlated residuals (minor factors) at the population    participants, maintaining ethical treatment and respect for
+level. Moreover, only dichotomous data was used in        the rights of human or animal participants, and ensuring
+the simulation. Future studies would bring new light      the privacy of participants and their data, such as ensuring
+into this area by incorporating other types of data       that individual participants cannot be identified in reported
+(e.g., polytomous and mixed type: continuous, dichot-     results or from publicly available original or archival data.
+omous, and polytomous). Second, the entropy fit indi-     Funding: Financial support from Velux Stiftung to World
+ces only work for multidimensional factors (i.e.,         Health Organization (WHO) has supported WHO staff con-
+structures with at least two factors) presenting a sim-   tribution to conduct analysis and prepare this article. Luis
+                                                          Eduardo Garrido is supported by Grant 2018-2019-1D2-085
+ple structure (one item linked only to one factor).
+                                                          from the Fondo Nacional de Innovaci     on y Desarrollo
+EGA uses the Walktrap algorithm, which is a tech-         Cientıfico y Tecnol  ogico (FONDOCYT) of the
+nique that identifies communities in weighted net-        Dominican Republic.
+works where one node (or variable/item) is part of
+                                                          Role of the funders/sponsors: None of the funders or
+only one community (or factor). The entropy fit indi-     sponsors of this research had any role in the design and
+ces were developed as a way to check the fit of differ-   conduct of the study; collection, management, analysis, and
+ent dimensionality structures estimated via EGA (and      interpretation of data; preparation, review, or approval of
+to compare them to theoretical structures). Future        the manuscript; or decision to submit the manuscript for
+studies should extend the entropy fit measures to         publication.
+accommodate unidimensional structures and to allow        Acknowledgments: The authors would like to thank the
+cross-loadings. Moreover, future research should          reviewers, associated editors and the Editor-in-Chief for
+examine the extension of the EFIs to other structural     their comments on prior versions of this manuscript. The
+equation modeling structures, which would greatly         ideas and opinions expressed herein are those of the authors
+                                                          alone, and endorsement by the authors’ institutions is not
+expand their utility to a larger number of researchers.
+                                                          intended and should not be inferred.
+
+Conclusion                                                ORCID
+Our main conclusion is that EFI and TEFI.vn are           Robert Moulder     http://orcid.org/0000-0001-7504-9560
+accurate fit measures that can be used to check the fit   Alexander P. Christensen     http://orcid.org/0000-0002-
+of different dimensionality structures. They are          9798-7037
+                                                                                      MULTIVARIATE BEHAVIORAL RESEARCH        899
+
+
+References                                                           points in rmsea test statistic in structural equation mod-
+                                                                     els. Sociol Methods Res, 36(4), 462–494. https://doi.org/10.
+Anderson, T. W. (1963). Asymptotic theory for principal              1177/0049124108314720
+  component analysis. The Annals of Mathematical                  Christensen, A. P., Cotter, K. N., & Silvia, P. J. (2019).
+  Statistics, 34(1), 122–148. https://www.jstor.org/stable/          Reopening openness to experience: A network analysis of
+  2991288?seq=1\#metadata_info_tab_contents            10.1214/      four openness to experience inventories. Journal of
+  aoms/1177704248                                                    Personality Assessment, 101(6), 574–588. https://doi.org/
+Antos, A., & Kontoyiannis, I. (2001). Convergence proper-            10.1080/00223891.2018.1467428
+  ties of functional estimates for discrete distributions.        Clark, D. A., & Bowles, R. P. (2018). Model fit and item
+  Random Structures and Algorithms, 19(3–4), 163–193.                factor analysis: Overfactoring, underfactoring, and a pro-
+  https://doi.org/10.1002/rsa.10019                                  gram to guide interpretation. Multivariate Behavioral
+Asparouhov, T., & Muthen, B. (2018). SRMR in mplus.                 Research,     53(4),    544–558.     https://doi.org/10.1080/
+  MPlus. http://www.statmodel.com/download/SRMR2.pdf                 00273171.2018.1461058
+Barendse, M. T., Oort, F. J., & Timmerman, M. E. (2015).          Cohen, J. (1988). Statistical power analysis for the behav-
+  Using exploratory factor analysis to determine the dimen-          ioral sciences (2nd ed.). Hillsdale, NJ: Erlbaum
+  sionality of discrete responses. Structural Equation            Comrey, A. L., & Lee, H. B. (2016). A first course in factor
+  Modeling: A Multidisciplinary Journal, 22(1), 87–101.              analysis. Routledge.
+  https://doi.org/10.1080/10705511.2014.934850                    Crawford, A. V., Green, S. B., Levy, R., Lo, W.-J., Scott, L.,
+Beauducel, A., & Herzberg, P. Y. (2006). On the perform-
+                                                                     Svetina, D., & Thompson, M. S. (2010). Evaluation of
+  ance of maximum likelihood versus means and variance
+                                                                     parallel analysis methods for determining the number of
+  adjusted weighted least squares estimation in cfa.
+                                                                     factors. Educational and Psychological Measurement,
+  Structural Equation Modeling: A Multidisciplinary
+                                                                     70(6), 885–901. https://doi.org/10.1177/0013164410379332
+  Journal,      13(2),    186–203.     https://doi.org/10.1207/
+                                                                  DiStefano, C., Liu, J., Jiang, N., & Shi, D. (2018).
+  s15328007sem1302_2
+                                                                     Examination of the weighted root mean square residual:
+Beierl, E. T., B€
+                uhner, M., & Heene, M. (2018). Is that meas-
+                                                                     Evidence for trustworthiness? Structural Equation
+  ure really one-dimensional? Nuisance parameters can
+                                                                     Modeling: A. Structural Equation Modeling: A
+  mask severe model misspecification when assessing fac-
+                                                                     Multidisciplinary Journal, 25(3), 453–466. https://doi.org/
+  torial validity. Methodology, 14(4), 188–196. https://doi.
+                                                                     10.1080/10705511.2017.1390394
+  org/10.1027/1614-2241/a000158
+Bentler, P. M. (1990). Comparative fit indexes in structural      Epskamp, M., S. (2018). Network psychometrics. In B.
+  models. Psychological Bulletin, 107(2), 238–246. https://          Irwing Paul (Ed.), The wiley handbook of psychometric
+  doi.org/10.1037/0033-2909.107.2.238                                testing: A multidisciplinary reference on survey, scale and
+Bollmann, S., Heene, M., K€    uchenhoff, H., & B€   uhner, M.       test development (pp. 953–986). John Wiley & Sons Ltd.
+  (2015). What can the real world do for simulation studies?         https://doi.org/10.1002/9781118489772.ch30
+  A comparison of exploratory methods. LMU.                       Epskamp, S., Cramer, A. O. J., Waldorp, L. J.,
+  Department\%20of\%20Statistics,\%20University\%20of\-              Schmittmann, V. D., & Borsboom, D. (2012). qgraph:
+  %20Munich:\%20https://epub.ub.uni-muenchen.de/24518/               Network visualizations of relationships in psychometric
+Browne, M. W., & Cudeck, R. (1992). Alternative ways of              data. Journal of Statistical Software, 48(4), 1–18. https://
+  assessing model fit. Sociological Methods & Research,              doi.org/10.18637/jss.v048.i04
+  21(2),            230–258.           https://doi.org/10.1177/   Epskamp, S., & Fried, E. (2018). A tutorial on regularized
+  0049124192021002005                                                partial correlation networks. Psychological Methods, 23(4),
+Campbell-Sills, L., Liverant, G. I., & Brown, T. A. (2004).          617–634. https://doi.org/10.1037/met0000167
+  Psychometric evaluation of the behavioral inhibition/           Epskamp, S., Rhemtulla, M., & Borsboom, D. (2017).
+  behavioral activation scales in a large sample of outpa-           Generalized network psychometrics: Combining network
+  tients with anxiety and mood disorders. Psychological              and latent variable models. Psychometrika, 82(4),
+  Assessment, 16(3), 244–254. https://doi.org/10.1037/1040-          904–927. https://doi.org/10.1007/s11336-017-9557-x
+  3590.16.3.244                                                   Ferenci, T., Kovacs, L. (2014). Using total correlation to dis-
+Cattell, R. B. (1966). The scree test for the number of fac-         cover related clusters of clinical chemistry parameters. In
+  tors. Multivariate Behavioral Research, 1(2), 245–276.             12th International Symposium on Intelligent Systems and
+  https://doi.org/10.1207/s15327906mbr0102_10                        Informatics (pp. 49–54). IEEE. https://core.ac.uk/down-
+Cellucci, C. J., Albano, A. M., & Rapp, P. E. (2005).                load/pdf/42930601.pdf
+  Statistical validation of mutual information calculations:      Foygel, R., Drton, M. (2010). Extended bayesian informa-
+  Comparison of alternative numerical algorithms. Physical           tion criteria for gaussian graphical models. In Proceedings
+  Review. E, Statistical, Nonlinear, and Soft Matter Physics,        of the 23rd International Conference on Neural
+  71(6 Pt 2), 066208. https://doi.org/10.1103/PhysRevE.71.           Information Processing Systems (Vol. 1, pp. 604–612).
+  066208                                                          Frazier, T. W., & Youngstrom, E. A. (2007). Historical
+Chen, J., & Chen, Z. (2008). Extended bayesian information           increase in the number of factors measured by commer-
+  criteria for model selection with large model spaces.              cial tests of cognitive ability: Are we overfactoring?
+  Biometrika, 95(3), 759–771. https://www.jstor.org/stable/          Intelligence, 35(2), 169–182. https://doi.org/10.1016/j.
+  20441500 https://doi.org/10.1093/biomet/asn034                     intell.2006.07.002
+Chen, F., Curran, P. J., Bollen, K. A., Kirby, J., & Paxton, P.   Friedman, J., Hastie, T., & Tibshirani, R. (2008). Sparse
+  (2008). An empirical evaluation of the use of fixed cutoff         inverse covariance estimation with the graphical lasso.
+900      H. GOLINO ET AL.
+
+
+   Biostatistics (Oxford, England)), 9(3), 432–441. https://doi.      least squares methods;[user’s guide]. University of
+   org/10.1093/biostatistics/kxm045                                   Uppsala.
+Garrido, L. E., Abad, F. J., & Ponsoda, V. (2011).                 Kane, M. J., Hambrick, D. Z., & Conway, A. R. (2005).
+   Performance of velicer’s minimum average partial factor            Working memory capacity and fluid intelligence are
+   retention method with categorical variables. Educational           strongly related constructs: Comment on ackerman, beier,
+   and Psychological Measurement, 71(3), 551–570. https://            and boyle (2005). Psychological Bulletin, 131(1), 66–77.
+   doi.org/10.1177/0013164410389489                                   https://doi.org/10.1037/0033-2909.131.1.66
+Garrido, L. E., Abad, F. J., & Ponsoda, V. (2013). A new           Kassambara, A. (2018). Ggpubr: ‘Ggplot2’ based publication
+   look at Horn’s parallel analysis with ordinal variables.           ready plots. https://CRAN.R-project.org/package=ggpubr
+   Psychological Methods, 18(4), 454–474. https://doi.org/10.      Keith, T. Z., Caemmerer, J. M., & Reynolds, M. R. (2016).
+   1037/a0030005                                                      Comparison of methods for factor extraction for cogni-
+Garrido, L. E., Abad, F. J., & Ponsoda, V. (2016). Are fit            tive test-like data: Which overfactor, which underfactor?.
+   indices really fit to estimate the number of factors with          Intelligence, 54, 37–54. https://doi.org/10.1016/j.intell.
+   categorical variables? Some cautionary findings via monte          2015.11.003
+   carlo simulation. Psychological Methods, 21(1), 93–111.         Laub, A. J. (2005). Kronecker products (Vol. 91). Society for
+   https://doi.org/10.1037/met0000064                                 Industrial; Applied Mathematics.
+Golino, H. F., & Demetriou, A. (2017). Estimating the              Lauritzen, S. L. (1996). Graphical models (Vol. 17).
+   dimensionality of intelligence like data using exploratory         Clarendon Press.
+   graph analysis. Intelligence, 62, 54–70. https://doi.org/10.    Li, C. (2016). Confirmatory factor analysis with ordinal
+   1016/j.intell.2017.02.007                                          data: Comparing robust maximum likelihood and diag-
+Golino, H. F., & Epskamp, S. (2017). Exploratory graph                onally weighted least squares. Behavior Research Methods,
+   analysis: A new approach for estimating the number of              48(3), 936–949. https://doi.org/10.3758/s13428-015-0619-7
+   dimensions in psychological research. PloS One, 12(6),          Marsh, H. W., Hau, K.-T., & Wen, Z. (2004). In search of
+   e0174035. https://doi.org/10.1371/journal.pone.0174035             golden rules: Comment on hypothesis-testing approaches
+Golino, H., Shi, D., Christensen, A. P., Garrido, L. E., Nieto,       to setting cutoff values for fit indexes and dangers in
+   M. D., Sadana, R., Thiyagarajan, J. A., & Martinez-                overgeneralizing hu and bentler’s (1999) findings.
+                                                                      Structural Equation Modeling: A Multidisciplinary
+   Molina, A. (2020). Investigating the performance of
+                                                                      Journal,      11(3),    320–341.    https://doi.org/10.1207/
+   exploratory graph analysis and traditional techniques to
+                                                                      s15328007sem1103_2
+   identify the number of latent factors: A simulation and
+                                                                   Massara, G. P., Di Matteo, T., & Aste, T. (2016). Network
+   tutorial. Psychological Methods, 25(3), 292–230. https://
+                                                                      filtering for big data: Triangulated maximally filtered
+   doi.org/10.1037/met0000255
+                                                                      graph. Journal of Complex Networks, 5(2), 161–178.
+Golino, H., Christensen, A. P. (2019). EGAnet: Exploratory
+                                                                      https://doi.org/10.1093/comnet/cnw015
+   graph analysis: A framework for estimating the number of
+                                                                   McNeish, D., An, J., & Hancock, G. R. (2018). The thorny
+   dimensions in multivariate data using network psychomet-
+                                                                      relation between measurement quality and fit index cut-
+   rics. https://CRAN.R-project.org/package=EGAnet                    offs in latent variable models. Journal of Personality
+Hall, B. C. (2013). Quantum theory for mathematicians                 Assessment, 100(1), 43–52. https://doi.org/10.1080/
+   (Vol. 267). Springer.                                              00223891.2017.1281286
+Harte, J., & Newman, E. A. (2014). Maximum information             Meade, A. W. (2008). Power of afi’s to detect cfa model mis-
+   entropy: A foundation for ecological theory. Trends Ecol.          fit [Paper presentation]. Paper Presented at the 23th
+   Evol. (Amst.), 29(7), 384–389. https://doi.org/10.1016/j.          Annual Conference of the Society for Industrial and
+   tree.2014.04.009                                                   Organizational Psychology. pdfs.semanticscholar.org/
+Hayton, J. C., Allen, D. G., & Scarpello, V. (2004). Factor           a23c/45ca18db70125a9a0ad983926513d40fa32b.pdf
+   retention decisions in exploratory factor analysis: A tutor-    Mezard, M., & Montanari, A. (2009). Information, physics,
+   ial on parallel analysis. Organizational Research Methods,         and computation. Oxford University Press.
+   7(2), 191–205. https://doi.org/10.1177/1094428104263675         Moreau, P.-A., Toninelli, E., Gregory, T., Aspden, R. S.,
+Heene, M., Hilbert, S., Draxler, C., Ziegler, M., & B€    uhner,      Morris, P. A., & Padgett, M. J. (2019). Imaging bell-type
+   M. (2011). Masking misfit in confirmatory factor analysis          nonlocal behavior. Science Advances, 5(7), eaaw2563.
+   by increasing unique variances: A cautionary note on the           https://doi.org/10.1126/sciadv.aaw2563
+   usefulness of cutoff values of fit indices. Psychological       Muthen, L. K., & Muthen, B. O. (1998). Mplus user’s guide
+   Methods,       16(3),   319–336.     https://doi.org/10.1037/      (version 7). MPlus.
+   a0024917                                                        Nesselroade, J. R., & Molenaar, P. C. (2016). Some behavio-
+Horn, J. L. (1965). A rationale and test for the number of            rial science measurement concerns and proposals.
+   factors in factor analysis. Psychometrika, 30(2), 179–185.         Multivariate Behavioral Research, 51(2–3), 396–412.
+   https://doi.org/10.1007/BF02289447                                 https://doi.org/10.1080/00273171.2015.1050481
+Hu, L.-T., & Bentler, P. M. (1999). Cutoff criteria for fit        Newman, M. E. J. (2004). Fast algorithm for detecting com-
+   indexes in covariance structure analysis: Conventional             munity structure in networks. Physical Review. E,
+   criteria versus new alternatives. Structural Equation              Statistical, Nonlinear, and Soft Matter Physics, 69(6 Pt 2),
+   Modeling: A Multidisciplinary Journal, 6(1), 1–55. https://        066133. https://doi.org/10.1103/PhysRevE.69.066133
+   doi.org/10.1080/10705519909540118                               Paninski, L. (2003). Estimation of entropy and mutual
+Joreskog, K. G., & Sorbom, D. (1981). LISREL 5: Analysis of           information. Neural Computation, 15(6), 1191–1253.
+   linear structural relationships by maximum likelihood and          https://doi.org/10.1162/089976603321780272
+                                                                                        MULTIVARIATE BEHAVIORAL RESEARCH        901
+
+
+Pons, P., & Latapy, M. (2005). Computing communities in            Tucker, L. R., & Lewis, C. (1973). A reliability coefficient
+   large networks using random walks. In P. Yolum, T.                for maximum likelihood factor analysis. Psychometrika,
+   G€ung€ or, F. G€              €
+                  urgen, & C. Ozturan     (Eds.), Computer and       38(1), 1–10. https://doi.org/10.1007/BF02291170
+   information sciences - ISCIS 2005 (pp. 284–293). Springer       Velicer, W. F. (1976). Determining the number of compo-
+   Berlin Heidelberg. https://doi.org/10.1007/11569596_31            nents from the matrix of partial correlations.
+Preskill, J. (2018). Quantum shannon entropy. In J. Preskill         Psychometrika, 41(3), 321–327. https://doi.org/10.1007/
+   (Ed.), Quantum information (p. 94). Cambridge                     BF02293557
+   University Press. https://arxiv.org/pdf/1604.07450.pdf          Ventimiglia, M., & MacDonald, D. A. (2012). An examination
+R Core Team. (2017). R: A language and environment for               of the factorial dimensionality of the marlowe crowne social
+   statistical computing. R Foundation for Statistical               desirability scale. Personality and Individual Differences,
+   Computing. https://www.R-project.org/                             52(4), 487–491. https://doi.org/10.1016/j.paid.2011.11.016
+Raiche, G., Walls, T. A., Magis, D., Riopel, M., & Blais, J.-      Volkenstein, M. V. (2009). Entropy and information (1st
+   G. (2013). Non-graphical solutions for cattell’s scree test.      ed.). Birkhauser.
+   Methodology, 9(1), 23–29. https://doi.org/10.1027/1614-         Von Neumann, J. (1927). Wahrscheinlichkeitstheoretischer
+   2241/a000051                                                      aufbau der quantenmechanik. Nachrichten von Der
+Rosseel, Y. (2012). lavaan: An R package for structural              Gesellschaft     Der     Wissenschaften      Zu     G€ottingen.
+   equation modeling. Journal of Statistical Software, 48(2),        Mathematisch-Physikalische Klasse, 1927, 245–272.
+   1–36. https://doi.org/10.18637/jss.v048.i02                     Ward, J. H. (1963). Hierarchical grouping to optimize an
+Ruscio, J., & Roche, B. (2012). Determining the number of            objective function. Journal of the American Statistical
+   factors to retain in an exploratory factor analysis using         Association, 58(301), 236–244. https://doi.org/10.2307/
+   comparison data of known factorial structure.                     2282967
+   Psychological Assessment, 24(2), 282–292. https://doi.org/      Watanabe, S. (1939). €   Uber die anwendung thermodyna-
+   10.1037/a0025697                                                  mischer begriffe auf den normalzustand des atomkerns.
+Sanne, B., Torsheim, T., Heiervang, E., & Stormark, K. M.            Zeitschrift f€
+                                                                                  ur Physik, 113(7–8), 482–513. https://doi.org/
+   (2009). The strengths and difficulties questionnaire in the       10.1007/BF01341697
+   bergen child study: A conceptually and methodically             Watanabe, S. (1960). Information theoretical analysis of multi-
+                                                                     variate correlation. IBM Journal of Research and
+   motivated structural analysis. Psychological Assessment,
+                                                                     Development, 4(1), 66–82. https://doi.org/10.1147/rd.41.0066
+   21(3), 352–364. https://doi.org/10.1037/a0016317
+                                                                   Watanabe, S. (1969). Knowing and guessing: A formal and
+Santos, L., Vagos, P., & Rijo, D. (2018). Dimensionality and
+                                                                     quantitative study. John Wiley & Sons. https://doi.org/10.
+   measurement invariance of a brief form of the young
+                                                                     1086/ahr/75.3.922
+   schema questionnaire for adolescents. Journal of Child
+                                                                   Watanabe, H. (2000). A new view of the formal entropy as a
+   and Family Studies, 27(7), 2100–2111. https://doi.org/10.
+                                                                     measure of interdependence and its application to pattern
+   1007/s10826-018-1050-3
+                                                                     recognition [Paper presentation]. SMC 2000 Conference
+Savalei, V. (2012). The relationship between root mean
+                                                                     Proceedings. 2000 Ieee International Conference on
+   square error of approximation and model misspecifica-
+                                                                     Systems, Man and Cybernetics:” Cybernetics Evolving to
+   tion in confirmatory factor analysis models. Educational          Systems, Humans, Organizations, and Their Complex
+   and Psychological Measurement, 72(6), 910–932. https://           Interactions (Vol. 4, pp. 2827–2832). https://doi.org/10.
+   doi.org/10.1177/0013164412452564                                  1109/ICSMC.2000.884426
+Schermelleh-Engel, K., Moosbrugger, H., & M€           uller, H.   Watanabe, H. (2001). Clustering as average entropy minimiza-
+   (2003). Evaluating the fit of structural equation models:         tion and its application to structure analysis of complex sys-
+   Tests of significance and descriptive goodness-of-fit             tems [Paper presentation]. 2001 Ieee International
+   measures. Methods of Psychological Research Online, 8(2),         Conference on Systems, Man and Cybernetics”:” E-Systems
+   23–74.                                                            and e-Man for Cybernetics in Cyberspace (Vol. 4, pp.
+Shannon, C. E. (1948). A mathematical theory of communi-             2408–2414). https://doi.org/10.1109/ICSMC.2001.972918
+   cation. Bell System Technical Journal, 27(3), 379–423.          Wickham, H. (2016). Ggplot2: Elegant graphics for data ana-
+   https://doi.org/10.1002/j.1538-7305.1948.tb01338.x                lysis. Springer-Verlag. http://ggplot2.org
+Steiger, J. H. (1980). Statistically based tests for the number    Widaman, K. F. (1993). Common factor analysis versus
+   of common factors. In The Annual Meeting of the                   principal component analysis: Differential bias in repre-
+   Psychometric Society.                                             senting model parameters? Multivariate Behav Res, 28(3),
+Tibshirani, R. (1996). Regression shrinkage and selection via        263–311. https://doi.org/10.1207/s15327906mbr2803_1
+   the lasso. Journal of the Royal Statistical Society: Series B   Wiener, N. (1961). Cybernetics or control and communica-
+   (Methodological)), 58(1), 267–288. https://doi.org/10.1111/       tion in the animal and the machine (Vol. 25). MIT Press.
+   j.2517-6161.1996.tb02080.x                                      Wihler, T. P., Bessire, B., & Stefanov, A. (2014). Computing
+Timmerman, M. E., & Lorenzo-Seva, U. (2011).                         the entropy of a large matrix. Journal of Physics A:
+   Dimensionality assessment of ordered polytomous items             Mathematical and Theoretical, 47(24), 245201. https://doi.
+   with parallel analysis. Psychological Methods, 16(2),             org/10.1088/1751-8113/47/24/245201
+   209–220. https://doi.org/10.1037/a0023353                       Xia, Y., & Yang, Y. (2018). The influence of number of cat-
+Tsuruyama, T. (2018). Entropy in cell biology: Information           egories and threshold values on fit indices in structural
+   thermodynamics of a binary code and szilard engine                equation modeling with ordered categorical data.
+   chain model of signal transduction. Entropy, 20(8), 617.          Multivariate Behavioral Research, 53(5), 731–755. https://
+   https://doi.org/10.3390/e20080617                                 doi.org/10.1080/00273171.2018.1480346
+902      H. GOLINO ET AL.
+
+
+Yang, Y., & Xia, Y. (2015). On the number of factors to             outcomes.       https://pdfs.semanticscholar.org/7a22/ae22
+  retain in exploratory factor analysis for ordered categor-        553f78582fc61c6cab4567d36998293b.pdf
+  ical data. Behavior Research Methods, 47(3), 756–772.           Zhao, C., Yang, G-w., Hung, W. N., & Li, X-y. (2015). A
+  https://doi.org/10.3758/s13428-014-0499-2                         multipartite entanglement measure based on coefficient
+Yeung, R. W. (2008). Information theory and network cod-            matrices. Quantum Information Processing, 14(8),
+  ing. Springer Science & Business Media.                           2861–2881. https://doi.org/10.1007/s11128-015-1023-z
+Yu, C.-Y. (2002). Evaluating cutoff criteria of model fit indi-   Zurek, W. H. (2018). Complexity, entropy and the physics of
+  ces for latent variable models with binary and continuous         information. CRC Press.
+

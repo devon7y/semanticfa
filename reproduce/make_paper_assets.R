@@ -287,6 +287,16 @@ add("valPhiMean", r3(mean(matched)), "results$tucker_matrix mean matched phi")
 add("valFrob",    r3(ch$frobenius),  "results$congruence_human frobenius")
 add("valNliMinEig", nli_mineig, "reproduce.Rout, NLI PSD projection message")
 add("valPairR",     r2(prr["mean_centered_pearson", "r_raw"]), "results$pair_level_r mcp raw (2 dp)")
+## delete-one-item jackknife CIs (output/ci_jackknife.csv, from make_ci_assets.R;
+## the asserts guard against a stale CSV after a re-run of reproduce.R)
+ci  <- read.csv("output/ci_jackknife.csv")
+civ <- setNames(ci$value, ci$quantity)
+stopifnot(abs(civ[["pair_r_mcp_raw"]] - prr["mean_centered_pearson", "r_raw"]) < 1e-8,
+          abs(civ[["phi_mean_matched"]] - mean(matched)) < 5e-4)
+add("valPairRLo",   r2(civ[["pair_r_mcp_raw_lo"]]), "output/ci_jackknife.csv, item-jackknife lower (Fisher z)")
+add("valPairRHi",   r2(civ[["pair_r_mcp_raw_hi"]]), "output/ci_jackknife.csv, item-jackknife upper (Fisher z)")
+add("valPhiMeanLo", r3(civ[["phi_mean_matched_lo"]]), "output/ci_jackknife.csv, item-jackknife lower")
+add("valPhiMeanHi", r3(civ[["phi_mean_matched_hi"]]), "output/ci_jackknife.csv, item-jackknife upper")
 add("valMcpRRaw",   r3(prr["mean_centered_pearson", "r_raw"]), "results$pair_level_r mcp raw (3 dp)")
 add("valMcpRKeyed", r3(prr["mean_centered_pearson", "r_keyed"]), "results$pair_level_r mcp keyed (3 dp)")
 add("valAtRKeyed",  r3(enc["atomic", "r_keyed"]),          "results$encoding_table atomic r_keyed")
@@ -338,7 +348,7 @@ writeLines(c(
 enc_names <- c(atomic = "atomic", atomic_reversed = "atomic\\_reversed",
                squid = "squid", mean_centered_pearson = "mean\\_centered\\_pearson",
                nli = "nli")
-enc_cell <- function(x, fmt) if (is.na(x)) "---" else fmt(x)
+enc_cell <- function(x, fmt) if (is.na(x)) "--" else fmt(x)
 enc_rows <- vapply(rownames(enc), function(rn) {
   e <- enc[rn, ]
   sprintf("%s & %s & %s & %s & %s & %s & %s & %s & $%s$ & %s & %s \\\\",

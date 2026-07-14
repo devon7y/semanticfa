@@ -1,0 +1,176 @@
+                                                                                                                                                            EDITORIAL
+                                                                                                                                                 published: 23 July 2021
+                                                                                                                                        doi: 10.3389/fpsyg.2021.720559
+
+
+
+
+                                                Editorial: Semantic Algorithms in the
+                                                Assessment of Attitudes and
+                                                Personality
+                                                Jan Ketil Arnulf 1*, Kai R. Larsen 2 , Øyvind Lund Martinsen 1 and Kim F. Nimon 3
+                                                1
+                                                 BI Norwegian Business School, Oslo, Norway, 2 Leeds School of Business, University of Colorado, Boulder, CO,
+                                                United States, 3 Soules College of Business, The University of Texas at Tyler, Tyler, TX, United States
+
+                                                Keywords: latent semantic analysis, survey research, organizational behavior, voting behavior, trust, motivation,
+                                                clinical psychology, artificial intelligence
+
+
+
+                                                Editorial on the Research Topic
+
+                                                Semantic Algorithms in the Assessment of Attitudes and Personality
+
+                                                The methodological tools available for psychological and organizational assessment are rapidly
+                                                advancing through natural language processing (NLP). Computerized analyses of texts are
+                                                increasingly available as extensions of traditional psychometric approaches. The present Research
+                                                Topic is recognizing the contributions but also the challenges in publishing such inter-disciplinary
+                                                research. We therefore sought to provide an open-access avenue for cutting-edge research to
+                                                introduce and illustrate the various applications of semantics in the assessment of attitudes and
+                                                personality. The result is a collection of empirical contributions spanning from assessment of
+            Edited and reviewed by:
+                                                psychological states through methodological biases to construct identity detection.
+                        Giovanni Pilato,
+                                                    To understand previous research leading up to this issue, one important starting point was the
+        Institute for High Performance
+           Computing and Networking             application of machine learning to the assessment of attitudes measured by Larsen et al. (2008).
+                            (ICAR), Italy       Observing how the output from semantic algorithms could identify high correlations among items,
+                  *Correspondence:
+                                                Larsen et al. (2008, p. 3) introduced a mechanism to check for language-driven survey results:
+                       Jan Ketil Arnulf             “Manifest validity is expected to support researchers during the data analysis stage in that
+                    jan.k.arnulf@bi.no          researchers can compare measures of manifest validity (evaluating the extent of semantic difference
+                                                between different scales) to item correlations computed from actual responses. In cases where there
+                  Specialty section:            is little difference between distances proposed by correlation coefficients, the respondents are more
+        This article was submitted to           likely to have employed shallow processing during questionnaire analysis.”
+   Personality and Social Psychology,               Since then, researchers have expanded the use of semantic similarity of scale items to explore
+               a section of the journal         survey responses in a number of ways. Studies have shown that semantics may predict survey
+               Frontiers in Psychology
+                                                responses in organizational behavior (Arnulf et al., 2014, 2018c), leadership (Arnulf and Larsen,
+            Received: 04 June 2021              2015, Arnulf et al., 2018b,d), employee engagement (Nimon et al., 2016), technology acceptance
+            Accepted: 28 June 2021              (Gefen and Larsen, 2017), and intrinsic motivation (Arnulf et al., 2018a).
+            Published: 23 July 2021
+                                                    In a parallel line of previous research, semantic analysis has been used to complement and extend
+                            Citation:           data from traditional rating scales (e.g., Nicodemus et al., 2014; Bååth et al., 2019; Garcia et al., 2020,
+  Arnulf JK, Larsen KR, Martinsen ØL
+                                                Kjell et al., 2019). Since semantic analysis can detect overlap among items and rating scales, they can
+       and Nimon KF (2021) Editorial:
+           Semantic Algorithms in the
+                                                be used to map relationships and overlap between existing or new scales (e.g., Rosenbusch et al.,
+         Assessment of Attitudes and            2020) and even to detect construct identities and ameliorate the jingle/jangle problem in theory
+                          Personality.          building (e.g., Larsen and Bong, 2016).
+          Front. Psychol. 12:720559.                While the salient points of several of the articles presented in this Research Topic were
+    doi: 10.3389/fpsyg.2021.720559              semantically similar to prior literature, several others were more diverse (see Figure 1).
+
+
+
+Frontiers in Psychology | www.frontiersin.org                                        1                                            July 2021 | Volume 12 | Article 720559
+Arnulf et al.                                                                                              Editorial: Semantic Algorithms in Psychological Assessment
+
+
+
+                                                                                        Kjell O. et al. found that open-ended, computational language
+                                                                                     assessments of well-being were distinctly related to a theoretically
+                                                                                     relevant behavioral outcome, whereas data from standard, close-
+                                                                                     ended numerical rating scales were not. In a similar manner, Kjell
+                                                                                     K. et al. found that freely generated word responses analyzed
+                                                                                     with artificial intelligence significantly correlated with individual
+                                                                                     items connected to the DSM 5 diagnostic criteria of depression
+                                                                                     and anxiety.
+                                                                                        Chen et al. manually annotated Facebook posts to assess
+                                                                                     social media affect and found that extraverted participants
+                                                                                     tended to post positive content continuously, more agreeable
+                                                                                     participants tended to avoid posting negative content, and
+                                                                                     participants with stronger depression symptoms posted more
+                                                                                     non-original content.
+                                                                                        Garcia et al. applied LSA to Reuter news and Facebook status
+                                                                                     updates. In the case of the Reuter corpus, the past was devaluated
+                                                                                     relative to both the present and the future and in the case of the
+                                                                                     Facebook corpus, the past and present were devaluated against
+                                                                                     the future. Based on those findings, the authors concluded that
+                                                                                     people strive to communicate the promotion of a bright future
+  FIGURE 1 | 3D-Plot of Research Topic and prior literature abstracts semantic       and the prevention of a dark future.
+  similarity. Prior encompasses the literature reviewed in the editorial not
+                                                                                        Fredén and Sikstrom applied LSA to voter descriptions of
+  including the articles contributing to the Research Topic. Darkness of lines
+  represents the magnitude of the cosines resulting from conducting LSA on the
+                                                                                     leaders and parties and found that descriptions of leaders
+  abstracts in the Research Topic and prior literature.                              predicted vote choice to a similar extent as descriptions of parties.
+                                                                                        Nimon provided a dataset of documents from Taking the
+                                                                                     Measure of Work and demonstrated how it could be used to build
+                                                                                     a LSA space.
+   Arnulf and Larsen and Arnulf et al. are arguably most                                As the NLP field continues to develop and mature and
+similar to the body of literature previously reviewed. In both                       the opportunity to automatically transform open-ended data to
+articles, LSA of survey items predicted survey responses to                          quantifiable measures, one wonders to what degree the use of
+varying degrees. Arnulf and Larsen’s research questioned the                         rating scales will be warranted in the future. Taken together,
+capability of traditional survey responses to detect cultural                        the applications demonstrated here go a long way in making
+differences. Observed differences in the semantically driven                         free responses accessible to statistical treatment. Similarly, the
+patterns of survey responses from eleven different ethnic                            NLP approaches even seem to allow statistical help in theory
+samples appeared to be caused by different translations                              building, as the constructs themselves and their relationships
+and understanding rather than cultural dependencies.                                 with measurement scales may be modeled independently of
+Arnulf et al. similarly found that different score levels in                         response data. We invite readers to consider how NLP can
+prevalent motivation measures among 18 job types could be                            advance and/or potentially replace the use of rating scales in the
+explained by differences in semantic patterns between the                            assessment of personality and attitudes.
+job types.
+   Gefen et al. conducted LSA on items sets associated with trust                    AUTHOR CONTRIBUTIONS
+and distrust and found that the resulting distance matrix of the
+items yielded a covariance-based structural equation model that                      All authors listed have made a substantial, direct and intellectual
+was consistent with theory.                                                          contribution to the work, and approved it for publication.
+
+
+
+REFERENCES                                                                             survey items. Sage Open 8, 1–18. doi: 10.1177/215824401876
+                                                                                       4803
+Arnulf, J. K., and Larsen, K. R. (2015). Overlapping semantics of leadership         Arnulf, J. K., Larsen, K. R., and Martinsen, Ø. L. (2018b). Semantic algorithms can
+  and heroism: expectations of omnipotence, identification with ideal                  detect how media language shapes survey responses in organizational
+  leaders and disappointment in real managers. Scand. Psychol. 2:e3.                   behaviour. PLoS ONE 13:e0207643. doi: 10.1371/journal.pone.020
+  doi: 10.15714/scandpsychol.2.e3                                                      7643
+Arnulf, J. K., Larsen, K. R., and Dysvik, A. (2018c). Measuring semantic             Arnulf, J. K., Larsen, K. R., Martinsen, O. L., and Bong, C. H.
+  components in training and motivation: a methodological introduction to              (2014). Predicting survey responses: how and why semantics shape
+  the semantic theory of survey response. Hum. Resour. Dev. Q. 30, 17–38.              survey statistics on organizational behaviour. PLoS ONE 9:e106361.
+  doi: 10.1002/hrdq.21324                                                              doi: 10.1371/journal.pone.0106361
+Arnulf, J. K., Larsen, K. R., and Martinsen, Ø. L. (2018a).                          Arnulf, J. K., Larsen, K. R., Martinsen, Ø. L., and Egeland, T. (2018d). The failing
+  Respondent       robotics:    simulating    responses   to     likert-scale          measurement of attitudes: how semantic determinants of individual survey
+
+
+
+
+Frontiers in Psychology | www.frontiersin.org                                    2                                               July 2021 | Volume 12 | Article 720559
+Arnulf et al.                                                                                                    Editorial: Semantic Algorithms in Psychological Assessment
+
+
+
+   responses come to replace measures of attitude strength. Behav. Res. Methods           Nimon, K., Shuck, B., and Zigarmi, D. (2016). Construct overlap between
+   50, 2345–2365. doi: 10.3758/s13428-017-0999-y                                             employee engagement and job satisfaction: a function of semantic
+Bååth, R., Sikström, S., Kalnak, N., Hansson, K., and Sahlén, B. (2019). Latent              equivalence? J. Happ. Stud. 17, 1149–1171. doi: 10.1007/s10902-015-9
+   semantic analysis discriminates children with developmental language disorder             636-6
+   (DLD) from children with typical language development. J. Psycholinguist. Res.         Rosenbusch, H., Wanders, F., and Pit, I. L. (2020). The semantic scale network:
+   48, 683–697. doi: 10.1007/s10936-018-09625-8                                              an online tool to detect semantic overlap of psychological scales and
+Garcia, D., Rosenberg, P., Nima, A. A., Granjard, A., Cloninger, K. M., and                  prevent scale redundancies. Psychol. Methods 25, 380–392. doi: 10.1037/met00
+   Sikström, S. (2020). Validation of two short personality inventories using self-          00244
+   descriptions in natural language and quantitative semantics test theory. Front.
+   Psychol. 11:16. doi: 10.3389/fpsyg.2020.00016                                          Conflict of Interest: The authors declare that the research was conducted in the
+Gefen, D., and Larsen, K. (2017). Controlling for lexical closeness in survey             absence of any commercial or financial relationships that could be construed as a
+   research: a demonstration on the technology acceptance model. J. Assoc.                potential conflict of interest.
+   Inform. Syst. 18, 727–757.doi: 10.17705/1jais.00469
+Kjell, O. N. E., Kjell, K., Garcia, D., and Sikstrom, S. (2019). Semantic
+                                                                                          Publisher’s Note: All claims expressed in this article are solely those of the authors
+   measures: using natural language processing to measure, differentiate,
+   and     describe     psychological    constructs.   Psychol.    Methods     24,        and do not necessarily represent those of their affiliated organizations, or those of
+   92–115. doi: 10.1037/met0000191                                                        the publisher, the editors and the reviewers. Any product that may be evaluated in
+Larsen, K., Nevo, D., and Rich, E. (2008). “Exploring the semantic validity of            this article, or claim that may be made by its manufacturer, is not guaranteed or
+   questionnaire scales,” in Proceedings of the 41st Annual Hawaii International          endorsed by the publisher.
+   Conference on System Sciences (Waikoloa, HI), 1–10.
+Larsen, K. R., and Bong, C. H. (2016). A tool for addressing construct                    Copyright © 2021 Arnulf, Larsen, Martinsen and Nimon. This is an open-access
+   identity in literature reviews and meta-analyses. MIS Q. 40, 529–551.                  article distributed under the terms of the Creative Commons Attribution License (CC
+   doi: 10.25300/Misq/2016/40.3.01                                                        BY). The use, distribution or reproduction in other forums is permitted, provided
+Nicodemus, K., Elvevag, B., Foltz, P. W., Rosenstein, M., Diaz-Asper,                     the original author(s) and the copyright owner(s) are credited and that the original
+   C., and Weinberger, D. R. (2014). Category fluency, latent semantic                    publication in this journal is cited, in accordance with accepted academic practice.
+   analysis and schizophrenia: a candidate gene approach. Cortex 55,                      No use, distribution or reproduction is permitted which does not comply with these
+   182–191. doi: 10.1016/j.cortex.2013.12.004                                             terms.
+
+
+
+
+Frontiers in Psychology | www.frontiersin.org                                         3                                                July 2021 | Volume 12 | Article 720559
+

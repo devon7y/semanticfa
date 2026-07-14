@@ -1,0 +1,4129 @@
+March 13, 2024
+Doi: 10.56296/aip00008
+ISSN: 2976-937X
+
+METHODS
+
+Introducing semantic loadings in factor
+analysis: Bridging network psychometrics
+and cognitive networks for understanding
+depression, anxiety and stress
+Filippo Stanghellini1, Enrico Perinelli2, Luigi Lombardi1, & Massimo Stella1*
+Received: September 25, 2023 | Accepted: February 22, 2023 | Published: March 13, 2024 | Edited by: Hudson Golino
+1
+
+CogNosco Lab, Department of Psychology and Cognitive Science, University of Trento, Italy
+
+2
+
+Department of Psychology and Cognitive Science, University of Trento, Italy
+
+∗Please address correspondence to Massimo Stella, massimo.stella@inbox.com, CogNosco Lab, Department of Psychology
+
+and Cognitive Science, University of Trento, Corso Bettini 31, Rovereto, Italy. This article is published under the Creative
+Commons BY 4.0 license. Users are allowed to distribute, remix, adapt, and build upon the material in any medium or format, so long as attribution is given to the creator.
+
+A psychometric scale reports experiences in terms of items/sentences rated by individuals. In
+this study, we investigate whether psychometric item ratings reflect semantic/syntactic associations between concepts in items. To this aim, we introduce semantic loadings as a semantic counterpart of psychometric factors, i.e. clusters of items obtained by correlations between item ratings. Semantic loadings quantify how clusters of semantically related concepts, as expressed in the texts of items, are allocated across psychometric factors as identified by ratings. As a case study, we focus on 39775 individual responses to the Depression
+Anxiety and Stress Scale (DASS) with 42 items on a 4-point Likert scale. To identify communities of semantically related concepts, we exploit the cognitive network framework of Textual
+Forma Mentis Networks (TFMNs), which reconstruct semantic/syntactic links encoded in the
+texts of items (e.g. "feel" and "sad" in the item "I usually feel sad"). To identify factors we compare eigenvector-based exploratory analysis with Graph Exploratory Analysis (EGA), which
+can both cluster items (and their texts) according to user ratings. We find that EGA is better
+at reconstructing the psychometric structure of DASS along the dimensions of anxiety, stress
+and depression. Following dual coding theory and the Deep Lexical Hypothesis, we posit that
+the act of reading items activates interconnected concepts and this influences user ratings
+and their expressed psychological constructs. Our results show a quantitative match: TFMNbased semantic loadings can identify specific aspects of emotional dysregulation, emotional
+exhaustion, physical distress and tension states of EGA-based psychometric factors, in nonrandom ways. We discuss our results in view of relevant mental distress literature, psychometric scale designing and links with episodic and semantic memories.
+Keywords: network psychometrics, cognitive network science, network clustering, semantic
+framing, text analysis, psychometric measurements
+
+advances.in/psychology
+
+1
+
+Introducing semantic loadings in factor analysis
+
+1. INTRODUCTION
+The methodological framework of network
+
+psychometrics has been gaining increasing
+traction in recent years as it offers a nuanced
+view of psychological phenomena (Christensen & Golino, 2021; Christensen et al., 2018;
+Epskamp et al., 2018; Golino & Epskamp, 2017).
+Predicated upon the principle of conceptualising psychological constructs as a network of interacting components (Christensen et al., 2020;
+Costantini et al., 2019; Epskamp & Fried, 2018),
+rather than latent variables (Lovibond & Lovibond, 1995), it offers a unique perspective that
+challenges conventional understanding. This
+perspective allows researchers to model complex psychological constructs, such as anxiety,
+stress, and depression (Lovibond & Lovibond,
+1995; Van den Bergh et al., 2021), not merely as
+individual, distinct entities, but as interconnected symptom networks wherein each
+symptom can potentially influence and be influenced by others (Costantini et al., 2019; Golino et al., 2020; Van den Bergh et al., 2021). Such
+an approach, while respecting the multidimensionality of these constructs, provides a more
+detailed representation of their intricate structure (Borsboom et al., 2021). Exploratory Graph
+Analysis (EGA) provides results that are informative about the presence and number of
+psychological factors at work in determining
+correlations in psychometric data (Christensen
+et al., 2020; Epskamp et al., 2018; Golino &
+Epskamp, 2017). In this way, EGA can be an alternative solution to standard factor analysis.
+Another methodological framework that has
+been gaining traction in psychology is the field
+of cognitive network science (Siew et al., 2019;
+Stella, 2022). Cognitive networks encode relationships between concepts and thus give
+structure to human knowledge in terms of associative links between concepts, ideas and
+words (Baker et al., 2023; Castro & Siew, 2020).
+Notice that cognitive psychology usually assumes words are expressions of concepts
+(which can be more specific instances of general ideas; Aitchison, 2012; Siew et al., 2019).
+advances.in/psychology
+
+Stanghellini et al., 2024
+
+In cognitive networks, nodes work at the representation
+
+of
+
+individual
+
+ideas,
+
+expressed
+
+through words, so that concepts and words can
+thus be used interchangeably, like we do in the
+following (Siew et al., 2019). Unveiling the networked structure between concepts plays a
+critical role in enhancing our understanding of
+the interactions between different cognitive
+components associated with these constructs,
+in particular in human representations of
+knowledge (Baker et al., 2023; Hills & Kenett,
+2022) and their interplay with personality traits
+(Samuel et al., 2023). Drawing upon graph theory and complex systems science (Newman,
+2012), cognitive network science provides a
+means to visualise and quantify the complex
+web of relationships among various concepts.
+Here we focus on a particular type of cognitive
+networks that has been recently developed by
+Stella (2020): Textual Forma Mentis Networks
+(TFMNs). These specific networks represent the
+structure of knowledge embedded in text via
+either syntactic specifications, e.g. "love" is
+specified as being a "weakness" in the sentence
+"love is weakness", or through overlap in meaning, e.g. "weakness" and "issue" can be synonyms in the sentence "love is a weakness and
+an issue". Importantly, TFMNs can map these
+relationships without resorting to word co-occurrences, i.e. words co-occurring within a
+given number of words in a sentence or text. To
+overcome this limit, TFMNs adopt a unique
+combination of AI and psychological data: The
+AI identifies syntactic relationships in text and
+matches syntactically related or synonymous
+words, whereas psychological data (S. M. Mohammad & Turney, 2013) is used to identify
+which words elicit a positive/negative/neutral
+valence or a given emotion. In this way, TFMNs
+can reconstruct how a given set of texts or communicative intentions framed one or more concepts and which specific emotion-conveying
+words were used to describe key ideas, cf. Stella
+(2022).
+Textual forma mentis networks can be relevant
+for psychometric questionnaires, where a
+
+2
+
+Introducing semantic loadings in factor analysis
+
+Stanghellini et al., 2024
+
+respondent has to read an item and then rate
+
+entwined, as mentioned above (see also Mace
+
+it according to one’s own personal experience
+
+& Unlu, 2020). Whereas semantic memories are
+
+(Rattray & Jones, 2007). In accordance with
+
+coded in TFMNs, the autobiographical compo-
+
+dual coding theory (Paivio, 1991), we consider
+
+nent that modulates the way a specific individ-
+
+the content of a given item as a cue stimulating
+
+ual predisposes their self-report response is im-
+
+both an emotional and cognitive reaction in
+
+plicitly captured by the observed Likert-type
+
+the respondent, whose semantic memory
+
+values without an explicit direct semantic rep-
+
+deals with understanding the content of the
+
+resentation. Following the Deep Lexical Hy-
+
+item itself (Aitchison, 2012; Ciaglia et al., 2023)
+
+pothesis (Cutler & Condon, 2023) we can exploit
+
+and whose autobiographical memory can get
+
+the relationship between item ratings and as-
+
+activated for producing a rating of the same
+
+sociated semantic memories to construct a se-
+
+item (Meléndez et al., 2018; Rubin, 2005).
+
+mantic characterisation of psychometric fac-
+
+Several recent studies have shown how the semantic and autobiographical memories are
+
+tors, representing specific psychological constructs.
+
+not independent but rather interact in com-
+
+Importantly, a core assumption about the ap-
+
+plex ways (Irish & Piguet, 2013; Mace & Unlu,
+
+plication of TFMNs for psychometric question-
+
+2020), e.g. emotions and events in the autobio-
+
+naires entails that the semantic and emotional
+
+graphical memory can influence or alter search
+
+representations behind the items are under-
+
+and retrieval from semantic memory. This in-
+
+stood to be homogeneous across (a population
+
+terplay means that there is a relationship be-
+
+of) individuals (see also Stella, 2020), whose cog-
+
+tween how a respondent rates a given series of
+
+nitive memories are partly mimicked by the
+
+items and the items’ semantic/syntactic con-
+
+network component of the TFMN structure ex-
+
+tent. In our approach with semantic loadings,
+
+tracted from the questionnaire through AI syn-
+
+some of the semantic memories necessary for
+
+tactic parsing and semantic enrichment (see
+
+understanding the content of the question-
+
+the Methods for more details). However, psy-
+
+naire’s items are explicitly modelled using the
+
+chometric scales are usually composed by
+
+forma mentis network representation (Stella,
+
+items that should be fully understandable and
+
+2022).
+
+accessible by the largest portion of a target
+
+According to the recently postulated Deep Lex-
+
+ical Hypothesis, which builds on past approaches for building psychometric personality scales based on language use in communicative intentions (Wood, 2015), the presence of
+psychological constructs percolates through
+language use (Cutler & Condon, 2023). This percolation makes it possible to observe changes
+
+population. This property of the psychometric
+scales is usually called "face validity" (Anastasi,
+1988; Markus & Borsboom, 2013). Consequently,
+the above assumption appears to be naturally
+justified by the way psychometricians normally
+construct psychometric scales (Cutler & Condon, 2023; Lovibond & Lovibond, 1995; Wood,
+2015).
+
+in both expressed and understood semantic
+
+Very importantly, the relationship between self-
+
+memories, based on the presence or absence
+
+reported respondent rates and their seman-
+
+of specific psychological constructs. Here we
+
+tic/syntactic content can be exploited by intro-
+
+do not have access to alterations on the acti-
+
+ducing the concept of semantic loadings. This
+
+vated memories after an individual reads a
+
+novel concept characterises psychometric fac-
+
+given item. However, we can posit that the
+
+tors through the lens of textual forma mentis
+
+presence of a given psychological construct,
+
+networks. To this aim, we represent a whole
+
+e.g. anxiety, interacts with both semantic and
+
+questionnaire as a textual forma mentis net-
+
+autobiographical memory levels, which are
+
+work,
+
+advances.in/psychology
+
+unveiling
+
+the
+
+3
+
+Introducing semantic loadings in factor analysis
+
+syntactic/semantic/emotional
+
+patterns
+
+em-
+
+bedded in the texts of all items. On this structure, we extract semantic communities, i.e.
+clusters of words more tightly connected with
+each other than with other concepts (Newman,
+2012) and which, in the context of a TFMN, all
+share a given semantic set of features and thus
+belong
+
+to
+
+the
+
+same
+
+semantic
+
+context
+
+(Aitchison, 2012). Differently put, these semantic communities represent key interconnected
+topics of ideas being syntactically or semantically related across the whole text of a psychometric questionnaire. We then devote our attention to psychometric factors. When obtained either through either factor analysis or
+network psychometrics, psychometric factors
+are clusters of individual items (Christensen et
+al., 2018; Golino & Epskamp, 2017), grouped together to explain unique aspects of the variance present in the multivariate data of responses to the whole questionnaire (Gorsuch,
+2013). Historically, emphasis has been given to
+the numerical aspects of identifying variance
+patterns (Costantini et al., 2019; Gorsuch, 2013),
+thus focusing on the numerical responses
+given to items themselves within psychometric factors. Only recently some attention was
+devoted to identifying the semantic information in items via artificial neural networks
+
+Stanghellini et al., 2024
+
+involved in the psychometric questionnaire.
+Similarly to how factor loadings indicate the relevance of a given item to the identified factor
+(Gorsuch, 2013), semantic loadings can indicate
+how prominently its ideas were mentioned in a
+given psychometric factor and thus characterised it. Surely psychometricians designing a
+given psychometric scale do encode different
+psychological constructs across items when
+wording items themselves or structuring them
+along subscales. However, psychometricians do
+not know a priori how these ideas will spread
+across psychometric factors since the latter are
+due to individuals’ responses. Semantic loadings unveil this relationship between numerical/categorical responses and clusters of ideas
+in items.
+Adopting the Depression, Anxiety and Stress
+
+Scales (DASS) by Lovibond and Lovibond (1995),
+we show the presence of several semantic
+communities within and among scales, relative
+to different facets of neuroticism and to physical symptoms. We further show how these
+communities are not spread uniformly across
+the identified factors but rather concentrate or
+load only on specific factors, in line with relevant psychological findings.
+
+(Rosenbusch et al., 2020), although only to con-
+
+These factors can greatly automate the inter-
+
+sider and reduce semantic overlap between
+
+pretation of psychometric factors themselves
+
+items, i.e. items coding similar experiences.
+
+by attributing them to more semantic content,
+
+Here, we rather focus on the semantic nature
+
+which can better inform users (e.g., experi-
+
+of the interconnected wording of a given item,
+
+menters and practitioners adopting) of a spe-
+
+considering all the words adopted across items
+
+cific psychometric questionnaire. In case large
+
+in a given psychometric factor as a semantic
+
+language models get better and better at iden-
+
+factor: We define semantic loadings as the
+
+tifying commonalities in semantic communi-
+
+overlaps between semantic factors (from factor
+
+ties, we consider this process as becoming
+
+analysis or EGA) and semantic communities
+
+completely automated and powerfully high-
+
+(from the TFMN of the questionnaire). Seman-
+
+lighting more detailed and multidimensional
+
+tic loadings can thus pinpoint how semantic
+
+semantic descriptions of relevant factors.
+
+contexts or topics, as encoded by experiment
+designers in the questionnaire, distribute
+
+We introduce our specific methodology in the
+
+across semantic factors, i.e. collections of words
+
+Methods Section, which is followed by a Results
+
+coming from items clustered together not be-
+
+Section focused on the DASS case study. We
+
+cause of semantic patterns but rather because
+
+conclude this manuscript with a detailed Dis-
+
+of numerical ratings provided by participants
+
+cussion of our results and a reflection on the
+
+advances.in/psychology
+
+4
+
+Introducing semantic loadings in factor analysis
+
+Stanghellini et al., 2024
+
+pros and cons of our novel methodological
+
+communities for defining and computing se-
+
+pipeline.
+
+mantic loadings in the following subsections.
+
+METHODS
+
+A correlation analysis with Spearman ρ correla-
+
+2.1 Data Processing
+
+tions is reported in Figure 1. When considering
+
+2.
+
+As a case study to showcase the potential of
+our methodology, we here used the Depres-
+
+sion, Anxiety, and Stress Scales (DASS; Lovibond & Lovibond, 1995). This questionnaire is a
+set of 3 self-report scales, designed to quantify
+depression, anxiety and stress. Each of these
+DASS scales contains 14 items, allocated into
+subscales of 2-5 items with similar content. For
+the original structure of DASS please refer to
+Lovibond and Lovibond (1995). The responses
+to the DASS questionnaire are given on a 4point Likert scale, ranging from 0 (did not apply
+
+to me at all) to 3 (applied to me very much, or
+most of the time). Every participant has to read
+a given item and rate it according to how frequently the experience described in the item
+applies to the participant’s life experience. The
+
+items as sequences of numerical/categorical
+responses, e.g. Q1 = {1, 2, 4, 4, ..., 2}, they correlate
+positively with each other. The correlogram also
+provides a visual impression that items in subscales tend to correlate more positively with
+other items in the same subscale. This phenomenon is stronger for items in the Depression
+subscale and more nuanced for items in the
+Anxiety and Stress subscales. We expect these
+patterns to be reflected in Exploratory Factor
+Analysis (EFA) and in EGA, which are outlined in
+the following subsection. All p-values reported
+in this article are two-tailed.
+2.2 Extracting psychometric factors with EFA
+or EGAnet
+2.2.1 Exploratory Factor Analysis of the DASS
+subscales
+
+scores for depression, anxiety and stress are
+
+Exploratory Factor Analysis (EFA) is a statistical
+
+calculated by summing the scores for the rele-
+
+technique used to determine the latent struc-
+
+vant items. Higher scores indicate a higher de-
+
+ture of a set of observed variables (Costello &
+
+gree of emotional distress.
+
+Osborne, 2005). It functions by decomposing
+
+Here we used pre-collected data for DASS as
+stored on openpsychometrics.org and as available on Kaggle (Last Accessed: 17/07/23). This
+dataset consists of 39775 survey responses
+from individuals who completed the DASS
+questionnaire.
+No missing data were found in the dataset,
+thus no data imputation was required. Since
+we focused on exploratory analyses, we aggregated all available data together, without stratifying it for different demographics (Veltri,
+2023). Notice that the methodology implemented in this paper is general enough to be
+applied to different socio-demographic strata
+of this or other scale datasets, e.g. reconstructing psychometric factors for different demographic subgroups. Hence, we here proceed
+with the aggregated data and outline how we
+extract psychometric factors and semantic
+
+advances.in/psychology
+
+the correlation matrix of the observed variables
+into specific and common variance. The common variance, referred to as psychometric factors, demonstrates shared variance among variables, while specific variance is the residual variance unique to each variable (Fabrigar et al.,
+1999). The objective of EFA is to simplify the
+structure of the data by reducing the dimensionality and identifying clusters of interrelated
+variables, thus providing a theoretical frame
+work for further analysis (Thompson, 2004).
+In executing EFA, several steps are crucial. The
+process starts with factor extraction, using estimation methods like Maximum Likelihood or
+Principal Axis Factoring. These methods aim to
+extract the smallest number of factors that account for the common variance in the data
+(Costello & Osborne, 2005). Factor rotation follows, aiming to provide a simpler and more interpretable factor structure (Thompson, 2004).
+
+5
+
+Introducing semantic loadings in factor analysis
+
+Stanghellini et al., 2024
+
+Figure 1
+Correlogram Based on Spearman ρ Correlations for the 42 Items in the DASS Scale. Notice that
+consecutive items are clustered according to the subscales found by (Lovibond & Lovibond,
+1995): Depression (Q3, ..., Q42), Anxiety (Q2, ..., Q41), and Stress (Q1, ..., Q39).
+
+This stage requires a decision between oblique
+
+be accounted for when loading them across
+
+and
+
+on
+
+factors. Factor loadings and EFA statistics are
+
+whether the factors are assumed to be corre-
+
+reported in Tables A1 and A2, respectively. The
+
+lated or not, respectively. Finally, factor inter-
+
+3-factor model reported in these tables was rel-
+
+pretation is conducted by analysing the factor
+
+ative to an AIC of 3942530, a BIC of 3943948, a
+
+loading matrix, where higher loadings indicate
+
+Comparative Fit Index (CFI) of 0.927 (values ≥
+
+a stronger relationship between a variable and
+
+0.9 indicate a good fit; Costello & Osborne, 2005)
+
+a factor (Costello & Osborne, 2005) and thus
+
+and a Root Mean Square Error of Approxima-
+
+motivate the allocation of that variable to that
+
+tion (RMSEA) of 0.052 (values ≤ 0.06 indicate a
+
+cluster of variables, i.e. to that psychometric
+
+good fit; Kline, 2016). The cumulative variances
+
+factor. Here, we performed EFA using the
+
+explained by factors were 0.211 (factor 1), 0.394
+
+lavaan package in R (version 0.6-15, documen-
+
+(factors 1 and 2), and 0.525 (factors 1, 2, and 3).
+
+tation available here, Last Accessed: 17/07/23)
+
+The sums of the squared oblique loadings (ei-
+
+by Rosseel (2012).
+
+genvalues) were 8.87 (factor 1), 7.69 (factor 2),
+
+orthogonal
+
+rotations,
+
+depending
+
+Given the presence of positive correlations
+across items of different subscales, we resorted
+to an oblimin rotation with ∆ = 0.0001, which allows for correlations across different factors to
+
+advances.in/psychology
+
+and 5.50 (factor 3). Considering only loadings
+significant at a .01 level, the EFA identified the
+following non-overlapping allocation of items
+across factors, identified by allocating one item
+to the factor with the highest loading (where S
+
+6
+
+Introducing semantic loadings in factor analysis
+
+Stanghellini et al., 2024
+
+indicates the stress subscale, D the depression
+
+We investigated whether a 4-factor model
+
+subscale and A the anxiety subscale in the orig-
+
+could improve things. The 4-factor EFA did in-
+
+inal DASS):
+
+deed reduce AIC and BIC (3917.8 and 3919.6, re-
+
+• Factor 1: {S = {1, 6, 8, 11, 14, 18, 22, 27, 29, 32, 35,
+39}, A = {9, 30, 40}, D = ∅};
+
+spectively) while increasing the CFI to 0.949,
+however, it also produced a squared total factor
+loading of 0.631 for factor 4 and an increase in
+
+• Factor 2: {S = {12, 33}, A = {2, 4, 7, 15, 19, 20, 23,
+25, 28, 36, 41}, D = ∅};
+
+the cumulative variance of only 0.015 compared
+to the 3-factor model. For these reasons, we
+considered the 4-factor model as being only
+
+• Factor 3: {S = ∅, A = ∅, D = {3, 5, 10, 13, 16, 17, 21,
+24, 26, 31, 34, 37, 38, 42}}.
+
+marginally better than the 3-factor model,
+while providing a less clear partitioning of items
+across factors, and thus discarded it from the
+
+The above notation can be read in the following way: Factor 1 was allocated with items {1, 6,
+
+..., 39} from the Stress subscale of DASS, together with items {9, 30, 40} from the Anxiety
+subscale and no item from the Depression subscale, etc. The Cronbach’s alphas for the above
+clusters were .956, .923, and .921, respectively, all
+above the .80 threshold defining good-quality
+partitioning (Costello & Osborne, 2005).
+
+rest of the analysis.
+We thus focus on the 3-factor model from EFA,
+which however suffers from two limitations: (i)
+this model cannot fully reconstruct the original
+subscale system, (ii) more crucially, in the
+model it is not trivial to identify why items 9, 30,
+and 40 - situations of fear and anxiety - should
+be merged with items from the Stress subscale.
+For these reasons, we proceed with the identi-
+
+We can assess the quality of this partitioning in
+
+fication of psychometric factors through an al-
+
+terms of the ground truth based on the sub-
+
+ternative technique: Exploratory Graph Analy-
+
+scales of the original DASS scale. In quantita-
+
+sis.
+
+tive terms, we can use purity as an evaluation
+
+2.2.2 Exploratory Graph Analysis
+
+metric that compares the results of a given
+clustering (i.e. allocation of items across factors) with a given ground truth. Let X = {x1, x2, ...,
+
+xN } be a set of N elements that have been clustered into k clusters C = {C1, C2, ..., Ck}. Also, let G
+= {G1, G2, ..., Gl} be the known (ground truth) assignments of X into l classes. Purity P is given
+by:
+
+Exploratory Graph Analysis (EGA) is a novel
+technique proposed by Golino and Epskamp
+(2017) that provides a data-driven method to
+determine the number of factors in exploratory
+factor analysis. EGA utilizes a graphical representation of data and community detection
+algorithms to delineate the underlying latent
+variable structure. As already mentioned in the
+
+(1)
+
+Introduction, in a psychometric network where
+
+In our case, the EFA produced a clustering of
+
+tions between items after controlling for all
+
+1
+
+𝑃(𝐺, 𝐶) = ∑𝑘𝑖=1 max|𝐶𝑖 ∩ 𝐶𝑗 |
+𝑁
+𝑗
+
+∈ [0,1].
+
+items across three factors with a purity score of
+.88. The EFA retrieved the Depression subscale
+perfectly but it also contained small allocation
+errors between the Stress and the Anxiety
+scales, due to the fact that some items loaded
+on both relative factors with standardised loadings ≥ .30.
+
+items are nodes, the edges represent associaother items (Costantini et al., 2019; Epskamp et
+al., 2018).
+In the first step of EGA - see for references
+(Christensen et al., 2018; Golino & Epskamp,
+2017; Golino et al., 2020) - a network is constructed by employing filtering methods like
+graphical lasso (GLASSO). Graphical lasso utilizes a lasso penalty to shrink small partial correlations towards zero, thus resulting in a
+
+advances.in/psychology
+
+7
+
+Introducing semantic loadings in factor analysis
+
+Stanghellini et al., 2024
+
+sparse network, whereas TMFG (Triangulated
+
+discarding spurious correlations, followed by a
+
+Maximally Filtered Graph) (Golino et al., 2020;
+
+walktrap algorithm for detecting psychometric
+
+Massara et al., 2016) is an algorithm that selects
+
+factors as network communities.
+
+the three-variable cliques (triangles) with the
+highest mutual information in the network.
+Both methods aim to capture only substantial
+relationships among variables (items), allowing
+the reduction of spurious edges due to sample
+
+We comment on the results of this technique in
+the Results section, where we present results as
+obtained from the EGAnet package in R, version
+
+1.2.3,
+
+available
+
+here
+
+(Last
+
+Accessed:
+
+fluctuations. The next step is to identify com-
+
+17/07/2023).
+
+munities (clusters) of nodes, which is achieved
+
+2.2.3 Creation of the Textual Forma Mentis
+Network (TFMN)
+
+by employing the walktrap algorithm - a community detection method based on random
+walks (Newman, 2018).
+
+(TFMNs) to cognitively map beliefs and atti-
+
+Communities identified in EGA are regarded as
+potential factors, with items (nodes) belonging
+to the same community loading onto the same
+latent factor. In this regard, the walktrap algorithm facilitates the detection of clusters within
+the network by performing short random
+walks and by not requiring the number K of
+factors as an input.
+
+more likely to stay within the same community
+because there are more edges within communities than between communities. The outcome of this analysis is a suggested factor solution (Epskamp & Fried, 2018), with a number of
+factors determined by the walktrap algorithm
+itself, that maximally represents the structure
+inherent in the data. The walktrap algorithm is
+stochastic so its results can change unless the
+network structure is strongly clustered. This
+poses the attention to the need to check for robust item allocations across factors, as evidenced in Figure A2 (bottom). Consequently,
+the EGA approach offers a robust and intuitive
+methodology for exploratory factor analysis,
+particularly advantageous when there is no a
+theory
+
+to
+
+tudes from textual data, where words (nodes)
+are interconnected by semantic and syntactic
+relationships (edges; Stella, 2020). Here, syntactic relationships explore grammatical dependencies between words (e.g. "love" and "weakness" in "love is weakness"), while semantic relationships probe meanings and their overlap
+(e.g. "weakness" and "issue" being synonyms in
+some contexts).
+
+The underlying rationale is that these walks are
+
+priori
+
+We harness Textual Forma Mentis Networks
+
+guide
+
+factor
+
+extraction
+
+(Epskamp & Fried, 2018).
+
+EmoAtlas, the tool we used here, combines AI
+and psychological lexicons to construct TFMNs
+(Semeraro et al., 2023). The tool is available on
+GitHub
+
+(https://github.com/alfon-
+
+sosemeraro/emoatlas) in Python and we used
+its first version (Last Accessed: 12/07/2023).
+Firstly, EmoAtlas tokenises text into discrete
+units or "tokens", i.e. words and punctuation in
+any given sentence. Then, by examining the
+text’s
+
+grammatical
+
+architecture,
+
+EmoAtlas
+
+identifies syntactic relationships in each and
+every sentence of a text. These relationships
+form a syntactic tree, i.e. a dependency model
+illustrating word interactions. For instance, in
+the sentence "this network rocks", the words
+"this" and "network" are syntactically dependent on "rocks". EmoAtlas constructs these trees
+using a multilayer perceptron model in spaCy
+(cf.
+
+spaCy
+
+dependency
+
+parser:
+
+The network was obtained using the cor_auto
+
+https://spacy.io/api/dependencyparser, Last Ac-
+
+parameter, which automatically computes a
+
+cessed: 12/07/2023).
+
+correlation matrix based on polychoric, polyserial and/or Pearson correlations (we used the
+latter). Then, a GLASSO approach was used for
+advances.in/psychology
+
+What sets TFMNs apart from other co-occurrence networks (Joseph et al., 2023; Quispe et
+
+8
+
+Introducing semantic loadings in factor analysis
+
+Stanghellini et al., 2024
+
+al., 2021)? Unlike typical text analyses, which fo-
+
+to cluster together? This information is inte-
+
+cus on word co-occurrences, TFMNs do not link
+
+grated into the TFMN, enriching the network
+
+words close in sentences, since their proximity
+
+representation with emotional information and
+
+might be an effect of grammar rules rather
+
+thereby creating a more comprehensive map
+
+than cognitive associations (Aitchison, 2012;
+
+of the text’s knowledge (Semeraro et al., 2023).
+
+Quispe et al., 2021). Instead, textual forma mentis networks focus on syntactically related
+words, thus close on the undirected syntactic
+dependency tree (Stella, 2020, 2022). Thus, cooccurring
+
+but
+
+syntactically
+
+disconnected
+
+words are not linked. This approach ensures
+flexibility and a more accurate representation
+of syntactic meanings (Semeraro et al., 2022).
+TFMNs only link words that are at a syntactic
+tree distance (D) less than a set value (T), usually 3, based on studies showing most meaning
+processing in English occurs below such syntactic distances because of feature economy in
+language processing (Ferrer i Cancho & Diaz-
+
+To improve readability, TFMNs can make larger
+the font size of words that are more central in
+the network structure. Centrality can be determined in different ways, be it semantic richness/degree (the number of links a concept engages in, see also Semeraro et al., 2022) or closeness centrality (which captures the semantic
+prominence of a word across different contexts;
+see also Stella, 2022). Closeness centrality captures centrality as the inverse average network
+distance separating one node from all its connected ones (Newman, 2018). Thus, the more
+central a node is, the closer it is to all other
+
+Guilera, 2007).
+
+nodes. For a given node/concept v, in a con-
+
+Next, EmoAtlas introduces synonym links from
+
+centrality (C(v)) is defined as:
+
+nected TFMN G with N nodes, the closeness
+
+WordNet (Miller, 1995), creating semantic con𝐶(𝑣) =
+
+nections between words with overlapping
+meanings. Semantic enrichment is performed
+
+𝑁−1
+
+,
+
+(2)
+
+∑𝑢≠𝑣 𝑑(𝑣,𝑢)
+
+by only building semantic links between any
+
+where d(v, u) is the shortest path distance be-
+
+two words pre-existing in the syntactic struc-
+
+tween nodes v and u, i.e. the smallest number
+
+ture of a text, i.e. no synonyms are added ex
+
+of links that connect nodes u and v. In Figure 3,
+
+novo in the network (Semeraro et al., 2023;
+
+node sizes are directly proportional to closeness
+
+Stella, 2020). Lastly, the resulting network is en-
+
+centrality.
+
+riched with psycholinguistic data from vali-
+
+2.2.4 Community Detection in TFMNs for
+Identifying Semantic Communities
+
+dated psychological lexicons - the National Re-
+
+search Council Emotion Lexicon (S. M. Mohammad & Turney, 2013) and the National Research
+Council Valence, Arousal, and Dominance Lexicon (S. Mohammad, 2018).
+
+Here we are interested in extracting key topics
+or the so-called semantic clusters or communities from the knowledge structured in a given
+TFMN. These communities represent key ideas
+
+This hybrid AI/lexicon approach is particularly
+
+or semantic areas described across items of a
+
+powerful because it allows TFMNs to leverage
+
+given questionnaire and which we want to re-
+
+the strengths of both AI and psychological lex-
+
+construct through an automatic approach, re-
+
+icons (Stella, 2022). The AI component facili-
+
+lying on TFMNs (Stella, 2020) and community
+
+tates the processing of large amounts of text
+
+detection (Newman, 2012).
+
+and the identification of complex syntactic and
+semantic relationships. On the other hand, the
+psychological lexicons provide a solid empirical
+foundation for interpreting the perceptions of
+clusters of words, e.g. did negative words tend
+
+advances.in/psychology
+
+Network science conceptualises communities
+as clusters of nodes that are densely connected
+internally, while sparingly linked with nodes
+from other clusters (Citraro & Rossetti, 2020;
+Newman, 2012). In the context of TFMNs and
+
+9
+
+Introducing semantic loadings in factor analysis
+
+Stanghellini et al., 2024
+
+Table 1
+Measures for Each Community Detection Algorithm, Identifying Semantic Communities in the TFMN. For
+each set of communities, we test: (i) the resulting modularity, (ii) the number of communities, (iii) the average
+community size, i.e. how many words are there in average in a community, and (iv) the number of singletons,
+i.e. communities made of one word only.
+Community Detection
+Algorithm
+
+Modularity
+
+# Communities
+
+Average Community Size
+
+# Singletons
+
+Louvain
+
+0.44
+
+9
+
+12 ± 3
+
+0
+
+Centrality-Based
+
+0.44
+
+19
+
+6±1
+
+6
+
+Clique Percolation
+
+0.12
+
+16
+
+7±5
+
+11
+
+Hierarchical Clustering
+
+0.28
+
+15
+
+7±3
+
+5
+
+Spectral Partitioning
+
+0.42
+
+15
+
+7±1
+
+2
+
+cognitive networks, these communities can
+generally represent semantic frames or key
+topics surrounding prominent ideas in texts
+and have been explored in past studies for understanding key perceptions in social media
+data about the gender gap in science (Stella,
+2020), key feelings as expressed by online users
+in mental health discussion on Reddit (Joseph
+et al., 2023), and in reconstructing semantic
+frames of specific concepts in the mental lexicon (Citraro & Rossetti, 2020). To the best of our
+knowledge, this work is the first application of
+semantic community finding through TFMNs
+in psychometric scales.
+
+the weights of the edges incident to vertex i, ci
+is the community to which vertex i is assigned
+in the community partition, the delta function
+δ(u, v) is 1 if u = v and 0 otherwise, and m is the
+number of all of the edges/connections in the
+graph. Maximising modularity is only one way
+among many others for finding an appropriate
+set of communities for a given network. Other
+variables that need to be checked in our cognitive approach rely on size consistency, e.g. all
+communities should have the same order of
+magnitude of words, and on the absence of singletons,
+
+i.e.
+
+communities
+
+made
+
+of
+
+one
+
+word/node only. Different algorithms for community detection can be tested across these
+
+The problem of partitioning a network in nonoverlapping communities can be quantified in
+terms of modularity. Modularity is a quantitative measure used to evaluate the quality of
+community structure in a network. It gauges
+the density of links inside communities as compared to the links between communities. In essence, modularity quantifies the degree to
+which a network can be subdivided into clearly
+delineated communities. It can be formally defined as the fraction of the edges that fall
+within the given network groups minus an expected fraction relative to what would happen
+if edges were distributed at random (Newman,
+2012, 2018):
+
+measurements, including the Louvain algorithm, the centrality-based method, clique percolation, hierarchical clustering and spectral
+partitioning. We compared these algorithms in
+Table 1, where we select the Louvain algorithm
+as the model with the highest modularity, the
+smallest number of different semantic communities and the only model avoiding singletons.
+We thus focus on explaining only this method
+and refer the interested reader to (Newman,
+2018) for the other methods.
+The Louvain algorithm is a widely used method
+for detecting communities in large networks
+(Blondel et al., 2008). It operates as a two-phase
+iterative process. In the first phase, the algo-
+
+𝑄=
+
+1
+2𝑚
+
+𝑘𝑘
+
+∑𝑖𝑗 (𝐴𝑖𝑗 − 𝑖 𝑗 ) 𝛿(𝑐𝑖 , 𝑐𝑗 ),
+2𝑚
+
+(3)
+
+where Aij denotes the presence or weight of the
+edge between i and j, ki represents the sum of
+
+advances.in/psychology
+
+rithm optimises modularity locally. Each node
+is initially considered a community in itself.
+Then, for each node, the change in modularity
+
+Q is calculated when it is removed from its current community and placed in the community
+
+10
+
+Introducing semantic loadings in factor analysis
+
+Stanghellini et al., 2024
+
+of each of its neighbours. If a positive gain in
+
+{Sa} as clusters of prominent ideas in the nar-
+
+modularity is possible, then the node is placed
+
+ratives of items.
+
+in the community for which the gain is maximised. This process is repeated iteratively until no
+
+• psychometric networks in the form of ex-
+
+further increase in modularity is possible. In the
+
+ploratory graph analysis (Golino & Epskamp,
+
+second phase, a new network is constructed
+
+2017) encode non-spurious correlations be-
+
+where each node represents a community
+
+tween items in the questionnaire, outlining
+
+from the first phase. Self-loops are then created
+
+how participants tended to rate different ex-
+
+to
+
+periences, e.g. in similar or in contrastive
+
+represent
+
+intra-community
+
+edges.
+
+Weighted edges, representing the number of
+
+ways.
+
+links between communities, are built across
+
+weighted but undirected and it has been fil-
+
+communities. Once this new aggregated net-
+
+tered through model selection (Costantini et
+
+work is built, it goes through the first phase.
+
+al., 2019). This network is a proxy for the struc-
+
+The entire process is then repeated until there
+
+ture of psychological constructs influencing
+
+is no further improvement in modularity. The
+
+the responses of respondents (Christensen
+
+final outcome can be stochastic or determinis-
+
+et al., 2020; Golino et al., 2020). Such psycho-
+
+tic, according to the specific implementation of
+
+logical structure evidently depends on the
+
+the algorithm, in case random fluctuations to
+
+questionnaire responses. From such a net-
+
+achieve more quickly local maxima of Q are
+
+work, we extracted psychometric factors {Pb}
+
+considered or not (Newman, 2012, 2018). In our
+
+as clusters of items whose responses tended
+
+case, we used the deterministic implementa-
+
+to be the most similar to each other and thus
+
+tion of the algorithm in Mathematica 13.1 (see
+
+reflected latent psychological variables or di-
+
+documentation
+
+mensions.
+
+here,
+
+Last
+
+Accessed:
+
+18/07/2023).
+2.3 Introducing semantic loadings: Bridging
+the semantics of TFMN with network psychometrics
+
+This
+
+network
+
+structure
+
+comes
+
+Notice that, in the end, semantic communities
+{Sa} are collections of words, as reported also in
+Figure 3. Instead, psychometric factors {Pb} are
+collections of items, as reported in Figure 2
+
+As described in the above sections, from a
+
+(top). However, these factors can be mapped
+
+given psychometric dataset with a scale it is
+
+into collections of words too by tokenising and
+
+possible to extract two types of complex net-
+
+then joining the wordings of the items they are
+
+works:
+
+made of. For instance, if in a fictional factor,
+
+• cognitive networks such as textual forma
+mentis networks (Stella, 2020) encode semantic/syntactic/emotional associations between concepts as described in the word-
+
+there were three items with the wordings "I feel
+angry", "I feel sad", and "I feel enraged", respectively, the corresponding semantic factors
+would be {“I”, “feel”, “angry”, “sad”, ”enraged”}.
+
+ings of specific items. This network structure
+
+We introduce semantic loadings Lab as the Jac-
+
+comes unweighted and undirected but with
+
+card index between semantic communities {Sa}
+
+links of multiple types (i.e. syntactic specifi-
+
+and semantic factors {Fb}, as constructed from
+
+cations and synonyms). This network is a
+
+psychometric factors {Pb} through tokenisation
+
+proxy for the structure of knowledge which
+
+and joining duplicates:
+
+stimulated the semantic and autobiographical memories of respondents to items in the
+questionnaire (Aitchison, 2012). Such struc-
+
+𝐿𝑎𝑏 =
+
+|𝑆𝑎 ∩ 𝐹𝑏 |
+|𝑆𝑎 ∪ 𝐹𝑏 |
+
+,
+
+(4)
+
+ture of knowledge is independent of the
+
+where the numerator represents the number of
+
+questionnaire responses. From such a net-
+
+common concepts between a semantic com-
+
+work, we extracted semantic communities
+
+munity in the TFMN Sa and the group of words
+
+advances.in/psychology
+
+11
+
+Introducing semantic loadings in factor analysis
+
+Figure 2
+Psychometric Network as Obtained from the
+EGANet Package (Top) and Item Stability Analysis (Bottom). In a psychometric network,
+nodes represent items and connections represent correlations surviving a graphical lasso
+feature selection. Green links indicate positive
+correlations.
+
+Stanghellini et al., 2024
+
+where 0 indicates no overlap and 1 indicates
+complete overlap or identical sets. In order to
+maximise overlap, we compute semantic loadings between sets of words that are stemmed,
+i.e. whose suffixes or declinations have been removed, so that concepts like "happiness" or
+"happy" and "worse" or "bad", among many others, are counted as being the same.
+Notice that in the above description, we focused on psychometric factors as being obtained from an exploratory graph analysis, because of the emphasis of this manuscript between cognitive and psychometric networks.
+However, the above definition of semantic loadings still applies also in the case of factor analyses or other ways to cluster psychometric
+items together.
+Once empirical semantic loadings are measured for a given TFMN and set of psychometric
+factors, semantic communities can be reshuffled at random, while fixing their lengths, to
+produce sets of random semantic loadings
+{L∗ab}.
+
+Such simulation data can be used
+
+through direct sampling for producing statistical estimates of the probability of getting the
+empirically observed semantic loadings by
+mere chance, due to fluctuations in the underlying data. Here we simulated 1000 random allocations of the same empirical concepts across
+semantic communities and then resorted to a
+location hypothesis test (i.e. signed rank test) to
+check whether the observed semantic loading
+{Lab} was compatible with the resulting random
+semantic loadings {L∗ab}, fixing a .05 significance level.
+
+3. RESULTS
+This section outlines our main findings along
+three stages: (i) comparing psychometric factors from network psychometrics with those
+from factor analysis, (ii) highlighting semantic
+communities in the DASS scale with textual
+
+Fb induced by a psychometric factor Pb, while
+
+forma mentis networks, and (iii) testing the
+
+the denominator represents the total number
+
+presence and loadings of semantic communi-
+
+of concepts mentioned in both Sa and Pb. The
+
+ties
+
+across
+
+the
+
+most
+
+easily
+
+interpretable
+
+Jaccard Index thus ranges between 0 and 1,
+advances.in/psychology
+
+12
+
+Introducing semantic loadings in factor analysis
+
+psychometric factors.
+3.1 Comparing Factor Analysis and Network
+Psychometric Results
+Figure 2 reports the factor analysis as obtained
+from EGA in the form of a psychometric network (top) and its item robustness analysis
+(bottom). The EGA identified four psychometric
+factors, different from factor analysis (see
+Methods):
+•
+
+Network Factor 1: {D = {31, 42, 24, 16, 5, 3, 10,
+26, 13, 37, 38, 21, 34, 17}, A = ∅, D = ∅};
+
+•
+
+Network Factor 2: {S = {14, 35, 32, 29, 27, 6, 1,
+11, 18, 39, 22, 8}, A = ∅, D = ∅};
+
+•
+
+Stanghellini et al., 2024
+
+2005), nervousness is mapped into negative valence and arousal is obviously mapped into
+high arousal, the resulting region where items
+with wordings about "Nervous Arousal" should
+appear, in the circumplex model, would be the
+quadrant for anxiety. Hence, it is expected for
+items 12 and 33 to belong to anxiety-focused
+factors even from non-clinical but relevant psychology literature. Notice that the current results remain unchanged even after updating
+EGAnet to its newer version (as of December
+2023).
+Last but not least, over 50 random iterations of
+the walktrap items, i.e. when performing a
+Bootstrap Graph Exploratory Analysis (Chris-
+
+Network Factor 3: {S = ∅, A = {19, 2, 23, 7, 41, 4,
+
+tensen & Golino, 2021), always 4 factors were
+
+25, 15}, D = ∅};
+
+identified and retrieved. 40 out of 42 items were
+furthermore allocated always to the same fac-
+
+•
+
+Network Factor 4: {S = {12, 33}, A = {9, 40, 30,
+
+tors, whereas items Q22A and Q8A (“A” stand-
+
+20, 36, 28}, D = ∅}.
+
+ing for "answers" in the original dataset) were
+
+The network factors reproduce the DASS subscales with a purity P ≈ 0.95, superior to the pu-
+
+allocated to factors different from 2 for 8% of
+the times.
+
+rity score obtained by factor analysis. For this
+
+This is expected since, from the network layout,
+
+quantitative comparison, considering both
+
+those two items are bridges (Epskamp et al.,
+
+EFA and EGA provided similarly sized factors,
+
+2018) connecting factors 1, 2 and 4. Notice that
+
+we considered network psychometrics as
+
+we tried bootstrapping with 50, 100, 500 and
+
+providing a better allocation of items across
+
+1000 iterations and we did not notice qualita-
+
+factors. Noticeably, by investigating the spe-
+
+tive differences, i.e. items 8 and 22 were placed
+
+cific items, one can spot that EGA produces a
+
+in other factors more than 5% but less than 25%
+
+finer structure for the Anxiety subscale, split-
+
+of the times. Since our allocation rates were
+
+ting it into two factors that could not be identi-
+
+higher than the 75% rate mentioned in a past
+
+fied with EFA. In EGA, these two factors corre-
+
+investigation with the reduced DASS-21 scale
+
+spond with two separate aspects of Anxiety, or-
+
+(Van den Bergh et al., 2021), relative to the inves-
+
+ganised along different sub-subscales, namely
+
+tigation of the same psychological constructs
+
+Physical Anxiety (relative to psycho-somatic
+
+investigated in here, we decided to retain items
+
+symptoms of anxious states, Network Factor 3)
+
+Q22A ("I found it hard to wind down") and Q8A
+
+and Emotional Anxiety (relative to emotional
+
+("I found it hard to relax") in Network Factor 2,
+
+aspects of anxious states, Network Factor 4).
+
+overlapping mostly with Stress.
+
+EGA reproduced the whole Depression subscale (Network Factor 1) and 12 out of 14 items
+in the Stress subscale (Network Factor 2).
+
+3.2 Community Structure of the TFMN for the
+DASS Scale
+Figure 3 reports the textual forma mentis net-
+
+Noticeably, the EGA added to Emotional Anxi-
+
+work for all items in the DASS scale (see Meth-
+
+ety also two items from the "Nervous Arousal"
+
+ods). Synonym relationships are highlighted in
+
+Stress subscale. Considering that in models like
+
+green. Syntactic relationships between con-
+
+the circumplex model of affect (Posner et al.,
+
+cepts/nodes are highlighted in grey (between
+
+advances.in/psychology
+
+13
+
+Introducing semantic loadings in factor analysis
+
+Stanghellini et al., 2024
+
+neutral words), in cyan (between positive
+
+"I" in the centre community, i.e. "I" is the most
+
+words), in red (between negative words), or in
+
+prominent concept across all different contexts
+
+purple (between negative and positive words).
+
+mentioned in the psychometric scale (close-
+
+Communities are encircled in black bubbles.
+
+ness score C ≈ .76), as expected from test design
+
+Although the Louvain algorithm identified 9
+
+methods (Paulhus & Vazire, 2007). In fact, DASS
+
+semantic communities, we clustered together
+
+is a self-reported assessment which focuses on
+
+the trivial community {”enthusiastic”, ”unable”}
+
+personal evaluation about one’s self and per-
+
+with the one mentioning ”state”, for improving
+
+sonal symptoms of emotional distress (Lov-
+
+interpretability.
+
+ibond & Lovibond, 1995): It is thus expected for
+
+As mentioned in the Methods, in Figure 3 node
+
+"I" to be central in the narrative of items here.
+
+sizes are directly proportional to closeness cen-
+
+Whereas "I" is a rather general concept, related
+
+trality. The word with the highest closeness is
+
+to the concept of the self, its syntactic
+
+Figure 3
+Textual Forma Mentis Network (TFMN) Representing Syntactic/Semantic Associations Between
+Concepts as Expressed in the DASS Items. Nodes are highlighted in red (cyan, black) if perceived
+with negative (positive, neutral) valence by participants in a psychological mega-study (cf. Stella
+(2020)). Syntactic links between positive (negative, neutral) words are in cyan (red, grey). Syntactic links between a positive and a negative word are in purple. Green links indicate synonyms.
+Words are clustered in communities as obtained from the Louvain method.
+
+advances.in/psychology
+
+14
+
+Introducing semantic loadings in factor analysis
+
+Stanghellini et al., 2024
+
+associates can better provide insights into the
+
+negative mentions about irritability and physi-
+
+context where "I" is mentioned, across DASS
+
+cal weakness ("irritable", "faintness", "shaki-
+
+items. These associates, within the same se-
+
+ness"). Analogously to the APA-assisted process
+
+mantic community of "I", include negative con-
+
+used for Emotional Dysregulation, we termed
+
+cepts like "upset", "impatient", "agitated", "fear",
+
+this semantic community "Feeling Irritable" to
+
+"unfamiliar" and "difficult", as well as positive
+
+sum up the experiential and faint-related men-
+
+concepts linked to a negation ("not") such as
+
+tions.
+
+(not) "relax" and (not) "calm". The same community features also neutral concepts mentioning social contexts ("work") and blander
+concepts like "tolerate", "thrown" or "wind".
+Given the presence of these contrasting emotional states related to the self, we discussed
+the content of this semantic community and
+related it to past relevant literature about
+emotional dysregulation (Hofmann et al., 2012),
+based on a combination of human coding and
+lexical search on the APA Dictionary of Psychology (available at https://dictionary.apa.org/,
+Last Accessed: 18/07/2023).
+GPT4
+
+from
+
+OpenAI
+
+https://chat.openai.com/,
+
+The other semantic community at the left bottom of Figure 3 combined positive but negated
+mentions like (not) "good" and "reason", (not)
+"pretty", (not) "worthwhile" and (not) "interest".
+These aspects were syntactically linked with
+negative concepts
+
+like "sad",
+
+"depressed",
+
+"scared", "terrified", "meaningless" and "worthless". These concepts all combine the expression of meaninglessness with more fearful/alarmed feelings of emotional exhaustion. In
+line with the APA Dictionary for these terms
+and with ChatGPT, we termed this community
+as "Emotional Exhaustion", which was found to
+
+(available
+Last
+
+at
+
+be a key manifestation of neuroticism in past
+
+Accessed:
+
+psychological inquiries (Alarcon et al., 2009;
+
+18/07/2023) confirmed the same summary of
+
+Alessandri et al., 2018). The semantic communi-
+
+the semantic/emotional content of this com-
+
+ties "Tension State" and "Panic State" were eas-
+
+munity, i.e. labelling it as "Emotional Dysregu-
+
+ier to get semantically identified, since they re-
+
+lations". Words in this "Emotional Dysregula-
+
+spectively mentioned "tension" and "panic" to-
+
+tion" community did not display higher close-
+
+gether with synonym jargon. According to the
+
+ness centralities compared to words outside of
+
+APA Dictionary, panic is a more negative state,
+
+this semantic community (α = 0.05, Kruskal −
+
+relative to higher levels of arousal, whereas ten-
+
+Wallis test, KW = 1.91, p = .164). Three other se-
+
+sion is a more nuanced condition, relative to
+
+mantic communities, on the left in Figure 3,
+
+psychological or physical strain. This is reflected
+
+mentioned mostly physical symptoms of anxi-
+
+in relevant clinical psychology research, which
+
+ety, stress or depression, but clustered seman-
+
+distinguishes between these two states (Van
+
+tically around the key ideas of breathing issues,
+
+den Bergh et al., 2021).
+
+sweating and physiological arousal. The occurrence of these physical manifestations of emotional distress is well-known in clinical psychology, hence their inclusion in the DASS scale
+(Lovibond & Lovibond, 1995). These symptoms
+were mentioned also by social media users engaging in mental health discourse on Reddit
+(Joseph et al., 2023).
+
+3.3 Semantic Loadings for Network Psychometric Factors
+Figure 4 shows the relation between the semantic factors extracted by means of the psychometric network approach and the semantic
+communities extracted by the TFMN. As it can
+be seen through the inspection of the semantic
+loadings, the latent factor of Depression as
+
+The semantic community at the center bottom
+
+identified from network psychometrics over-
+
+of Figure 3 includes mostly positive experiential
+
+laps with 5 semantic communities (L > 0) but
+
+concepts ("feeling, experience, find", "go") and
+
+only three semantic loadings are statistically
+significant: The highest value is "Emotional
+
+advances.in/psychology
+
+15
+
+Introducing semantic loadings in factor analysis
+
+Stanghellini et al., 2024
+
+Exhaustion" (L = .36, p < .001), followed by "Emo-
+
+statistically significant: "Sweating" (L = .30, p <
+
+tional Dysregulation" (L = .21, p < .001) and "Feeling Irritable" (L = .14, p < .001). Furthermore,
+
+.001), "Physiological Arousal" (L = .24, p < .001),
+"Briefing Issues" (L = .18, p < .001), all ideas rela-
+
+Stress, as identified by EGA, significantly over-
+
+tive to physical symptoms and followed closely
+
+laps with three semantic communities, with
+
+by "Feeling Irritable" (L = .18, p < .001). Last but
+
+the highest value being the one of "Emotional
+
+not least, the EGA-identified facet of Emotional
+
+Dysregulation" (L = .38, p < .001) (differently
+
+Anxiety overlaps with four semantic communi-
+
+from Depression), followed by "Feeling Irrita-
+
+ties, although only three semantic loadings are
+
+ble" (L = .19, p < .001) and "Panic State" (L = .09, p
+
+statistically significant: "Panic State" (L = .36, p <
+
+< .001). The EGA-identified facet of Physical
+Anxiety overlaps with 6 semantic communities,
+
+.001), "Tension State" (L = .20, p < .001) and "Emotional Dysregulation" (L = .11, p < .1).
+
+although
+
+only
+
+4
+
+semantic
+
+loadings
+
+are
+
+Figure 4
+Semantic Loadings Obtained as the Overlap (Jaccard index) Between the Psychometric Semantic Factors and the TFMN Semantic Factors. Each semantic loading was compared against numerical simulations randomising psychometric semantic factors. Statistically significant loadings were highlighted with one (p-value ∈].1, .01]), two (p-value <∈].01, .001]) or three (p-value <
+.001) stars.
+
+advances.in/psychology
+
+16
+
+Introducing semantic loadings in factor analysis
+
+4. DISCUSSION
+The linchpin of our study resides in the exploration of a potential interplay between the semantic/syntactic associations in the items of a
+psychometric scale (DASS) and the correlations
+between item responses provided by individuals. Grounded in the theoretical perspective
+that an individual’s interaction with an item introduces a web of networked conceptual associations (Stella, 2022), we hypothesise that
+these associations play a significant role in the
+subsequent appraisal and response to the
+item. This premise manifests in two primary assertions: One, the semantic/syntactic associations potentially cluster concepts together; and
+two, these concept clusters directly can influence the individual’s perceived item response
+(Y. Li et al., 2020; Mace & Unlu, 2020). In this con-
+
+Stanghellini et al., 2024
+
+Our data-driven psychometric approach offers
+several insights that can be interpreted for the
+advancement of theoretical literature. The
+loadings of semantic communities over semantic factors have the potential to advance psychopathology literature tracking similarities
+and differences between mood-, stress-, and
+anxiety-related phenomena (e.g., Sharma et al.,
+2016) in several ways. In what follows, we provide a thorough interpretation of the findings
+reported in Figure 4. First, we focus on a rowwise reading of semantic loadings from Figure
+4 and then proceed with a column-wise interpretation. Lastly, we outline potential future applications and limitations of our proposed approach.
+4.1 Interpretation of Semantic Communities
+with Respect to Semantic Factors
+
+text, we posit that the network structure of se-
+
+We have found that those items having seman-
+
+mantic/syntactic relationships, such as those
+
+tic contents related to "Emotional Dysregula-
+
+existing between “I” and “feel” or “feel” and
+
+tion" proved to significantly overlap with 3 out
+
+“sad” in “I feel sad”, might shed psychological
+
+of 4 latent dimensions. This empirical result is
+
+insights into the way semantic clusters of ideas
+
+consistent with a previous theoretical review,
+
+characterise specific psychometric factors.
+
+which highlighted the pivotal role played by
+
+To examine our hypotheses, we have employed
+the cognitive network framework of textual
+forma mentis networks (Semeraro et al., 2023;
+Stella, 2020) along with graph exploratory analysis for psychometric networks (Christensen et
+al., 2020; Epskamp & Fried, 2018; Epskamp et al.,
+2018; Golino & Epskamp, 2017). The powerful
+combination of these methodologies allows us
+to undertake an in-depth quantitative analysis
+of the collected data. Remarkably, our findings
+corroborate our initial conjecture: DASS items
+do tend to cluster in factors that group concepts in a non-random manner to the network
+communities unearthed within syntactic/semantic forma mentis networks. This pattern
+was observed consistently across the 39775 individual responses we analysed, offering a robust statistical foundation for our findings from
+
+emotion regulation in affecting mood and anxiety disorders (Hofmann et al., 2012). In other
+words, our automatic process is able to detect
+and inform the experimenter about the centrality of emotional dysregulation, i.e. the inability
+to manage and regulate emotions (Vogel et al.,
+2021), across several manifestations of maladjustment and emotional distress indicators, further confirming previous theoretical reviews in
+psychology (Hofmann et al., 2012). Despite this
+spreading of "Emotional Dysregulation" across
+aspects of depression, stress, and anxiety, it has
+to be noted that semantic loadings for this semantic idea are stronger for depression and
+stress compared to emotional aspects of anxiety. This might indicate differences still present
+among these three manifestations of emotional distress.
+
+a statistical perspective. Let us outline our re-
+
+Furthermore, we have found that those items
+
+sults and interpret them in view of their poten-
+
+relative to "Sweating", "Breathing Issues", and
+
+tial impact from a psychologically substantive
+
+"Physiological Arousal" are significantly associ-
+
+perspective.
+
+ated only with the psychometric factor of
+
+advances.in/psychology
+
+17
+
+Introducing semantic loadings in factor analysis
+
+Stanghellini et al., 2024
+
+"Physical Anxiety": This finding offers the op-
+
+models sharing the same irritable/over-reactive
+
+portunity to specifically map these symptoms
+
+items, "differences in model fit can be at-
+
+as main characteristics of physical manifesta-
+
+tributed to the different items that composed
+
+tions of anxiety itself (Keogh et al., 2001), poten-
+
+the Anxiety component" (Clara et al., 2001, p.
+
+tially coming from psycho-somatic reactions to
+
+66), hence supporting the value of our finding
+
+anxious states. Conversely, "Tension State"
+
+about the finer structure of DASS anxiety-re-
+
+showed to be semantically related to the psy-
+
+lated items. Last but not least, we have found
+
+chometric dimension of Emotional Anxiety,
+
+that those items having semantic contents re-
+
+consistently with previous literature (Li et al.,
+
+lated to Emotional Exhaustion mainly over-
+
+2022).
+
+lapped with the dimension of Depression. This
+
+In this way, semantic loadings provide discriminant elements that may be used to unravel differences between physical vs. emotional traits
+of anxiety. Note that this aspect was not captured by the output of our EFA: Results from
+
+finding is consistent with previous studies that
+linked Emotional Exhaustion and Depression
+(e.g. Bianchi et al., 2021).
+4.2 Interpretation of Semantic Factors with
+Respect to Semantic Communities
+
+the psychometric network analysis provided a
+
+Looking at the semantic factors, we found that
+
+finer description of anxiety as encoded in our
+
+Depression significantly overlaps particularly
+
+current dataset (N = 39775).
+
+with the semantic communities of Emotional
+Exhaustion, followed by Emotional Dysregula-
+
+In addition, we have found that items having
+
+tion and Feeling Irritable. Our semantic find-
+
+semantic contents related to "Feeling Irritable"
+
+ings indicate that depression is mainly charac-
+
+are significantly associated with all dimensions
+
+terised by semantic communities that are re-
+
+but Emotional Anxiety. Differently from other
+
+lated to a "negative" system of emotions, which
+
+semantic communities, the range of significant
+
+is consistent with common research attesting
+
+semantic loadings for "Feeling Irritable" across
+
+how "people with depression are more likely to
+
+the 4 network factors is narrow (range: .14 − .19),
+
+suffer from negative emotions than the general
+
+suggesting that the component of irritability
+
+population" (Bian et al., 2023, p. 230).
+
+encoded in DASS provides similar aspects of
+maladjustment across depression, stress and
+
+Second, in terms of semantic loadings, stress
+
+physical aspects of anxiety. In other words,
+
+overlaps particularly with Emotional Dysregula-
+
+these findings may point out that some as-
+
+tion, followed by Feeling Irritable and Panic
+
+pects of irritability - e.g., getting upset rather
+
+State. This finding is consistent with research
+
+easily, being touchy, getting agitated, having
+
+attesting how emotional dysregulation in posi-
+
+difficulties in relaxing (Lovibond & Lovibond,
+
+tive and negative affect may negatively impact
+
+1995) - are transversal semantic ideas that char-
+
+overall functioning (Li et al., 2020; Vogel et al.,
+
+acterise depression, stress and physical anxiety,
+
+2021), thus creating the so-called "roller-coaster
+
+but not emotional anxiety. This further under-
+
+of emotions", where the individual is unable to
+
+lines the necessity to separate physical vs. emo-
+
+exert control on the variability of their emotions
+
+tional aspects of anxiety. This distinction is an
+
+(Madsgaard et al., 2022).
+
+output that the EFA did not reach, while it was
+obtained by our synergistic combination of
+psychometric and cognitive networks, thus
+supporting the utility of our proposed approach. Interestingly, a study that applied a
+CFA to the DASS, more than 20 years ago raised
+the issue that, despite some competing
+
+advances.in/psychology
+
+Third, Physical Anxiety significantly overlaps
+with 3 physical semantic communities (Sweating, Physiological Arousal, and Breathing Issues), as well as with Feeling Irritable. Instead,
+Emotional Anxiety overlaps mostly with psychological, rather than physical, symptoms of
+mental distress, namely states of tension,
+
+18
+
+Introducing semantic loadings in factor analysis
+
+emotional
+
+dysregulation
+
+and,
+
+most
+
+Stanghellini et al., 2024
+
+im-
+
+interpretation
+
+of
+
+semantic
+
+communities
+
+portantly, with mentions of panic states. How-
+
+(Semeraro et al., 2022). The integration or ag-
+
+ever, despite this semantic distinction of these
+
+gregation of meaning across semantically var-
+
+two sub-components of anxiety, the de-facto
+
+ied tokens — ranging from nouns and verbs to
+
+standards of the DSM-5-TR indicate how cen-
+
+qualifiers — requires considerable human ex-
+
+tral both emotional and physical symptoms are
+
+pertise. This limitation implies that without a re-
+
+for a variety of anxiety disorders (American Psy-
+
+fined level of human expertise, the derived
+
+chiatric Association, 2022). This means that de-
+
+meaning could potentially skew or be misinter-
+
+spite the finer structure for the psychological
+
+preted (Citraro & Rossetti, 2020). We here sug-
+
+construct of Anxiety unveiled by psychometric
+
+gest two viable solutions to overcome this limi-
+
+networks and corroborated by semantic load-
+
+tation: (i) integrate the semantic structure with
+
+ings, clinical practitioners should focus on both
+
+external data structures or databases to enrich
+
+emotional and physical aspects of anxiety
+
+its context; (ii) employ a distributional semantic
+
+when dealing with anxiety disorders, such as
+
+model or a generative AI to spot similarities
+
+panic disorder (American Psychiatric Associa-
+
+among words contained in a specific commu-
+
+tion, 2022).
+
+nity. With the current improvements of large
+language models and their spreading in psy-
+
+4.3 Limitations and Future Applications
+
+chology (Semeraro et al., 2023), both options
+
+As mentioned in the Introduction, one of the
+
+could produce analyses where the labelling of
+
+primary limitations noted in the structure of
+
+semantic communities is corroborated by both
+
+TFMNs is their inability to directly link its se-
+
+humans and knowledge modelling systems.
+
+mantic structure with the processing component of an item-based response (Cutler & Con-
+
+Despite the above limitations, it is important to
+
+don, 2023). Essentially, the TFMN’s design lends
+
+underline that, from a scale validation perspec-
+
+itself to a representation of the overall seman-
+
+tive, semantic loadings (as introduced here) al-
+
+tic structure across the entire set of items and
+
+low experimenters to better inspect validity is-
+
+their tokens (see also Stella, 2022), rather than
+
+sues, such as the discriminant validity of the di-
+
+an understanding of how the cognitive pro-
+
+mensions (e.g. testing whether some factors
+
+cessing of individual responses occurs. This dis-
+
+would not overlap with hypothesised different
+
+tinction essentially categorises the TFMN as a
+
+semantic contents), external validity (e.g. test-
+
+descriptive-phenomenological representation,
+
+ing whether some factors would overlap with
+
+sidelining it from cognitive processing models
+
+hypothesised correlated semantic contents),
+
+of individual responses but still providing valid
+
+and – maybe most important – content validity
+
+results in the presence of texts that can be
+
+(e.g. testing whether the items supposed to re-
+
+clearly understood by large populations, like
+
+flect an unobserved construct effectively reflect
+
+most psychometric scales can do by design
+
+the hypothesised semantic underlying con-
+
+(Christensen et al., 2023; Christensen et al.,
+
+tent). Thus, our approach is consistent with re-
+
+2020).
+
+cent proposals, advancements, and integration
+between machine learning techniques and
+
+However, future investigations might address
+
+personality assessment, in case the resulting AI
+
+this aspect by building text appendices of psy-
+
+models are framed within a rich psychological
+
+chometric questionnaires, adapting to the cog-
+
+theoretical framework (Bleidorn & Hopwood,
+
+nitive memory of individuals, and providing
+
+2019) and/or can be interpreted in view of cru-
+
+greater resolution in the presence of more de-
+
+cial cognitive theories thanks to explanaible AI
+
+tailed data, always within the cognitive frame-
+
+approaches (Baker et al., 2023; Samuel et al.,
+
+work of forma mentis networks (Stella, 2020).
+
+2023).
+
+Another
+
+challenge
+
+advances.in/psychology
+
+arises
+
+from
+
+the
+
+19
+
+Introducing semantic loadings in factor analysis
+
+Another intriguing direction for future research
+would be investigating how semantic overlap
+might influence overlap or correlations between psychometric scores, violating the local
+independence assumption (Christensen et al.,
+2023). Both Unique Variable Analysis - and its
+weighted topological overlap (Christensen et
+al. 2023) - and the O-information (Marinazzo et
+al., 2022) represent intriguing techniques for
+quantifying and potentially enable a tuning of
+score correlations due to semantic similarity, in
+view of additional data gatherings and experiments with human respondents.
+
+5. CONCLUSIONS
+This contribution offers a novel automatic approach, grounded in cognitive science and psychometrics, for understanding how the ideas
+described across items of a certain psychometric scale correspond to psychological dimensions/factors, as identified from participants’
+responses to that same scale. Our semantic
+loadings can describe multiple features and
+nuances present in psychometric factors. The
+currently introduced methodological combination of textual forma mentis networks and
+exploratory graph analysis may be used in future research to explore research questions
+akin to the following one: "Are the dimensions
+extracted by data (factors) consistent with the
+semantic content of their items (TFMNs)?". We
+are confident that this synergistic approach
+can further open the way to better understanding psychometric scales and their resulting factors through automatic, yet psychologically informed, combinations of cognitive and psychological networks. We envision these techniques to further grow and better describe
+how semantic and experiential aspects of psychological constructs influence thought, language, and meaning understanding.
+
+6. REPRODUCIBILITY STATEMENT
+
+Stanghellini et al., 2024
+
+repository: https://osf.io/4eqkd/.
+
+7. CONFLICTS OF INTEREST
+The authors declare no competing interests.
+
+REFERENCES
+• Aitchison, J. (2012). Words in the mind: An
+
+introduction to the mental lexicon. John
+Wiley & Sons.
+• Alarcon, G., Eschleman, K. J., & Bowling, N. A.
+(2009). Relationships between personality
+variables and burnout: A meta-analysis. Work
+
+&
+
+Stress,
+
+23(3),
+
+244–263.
+
+https://doi.org/10.1080/02678370903282600
+• Alessandri, G., Perinelli, E., De Longis, E.,
+Schaufeli, W. B., Theodorou, A., Borgogni, L.,
+Caprara, G. V., & Cinque, L. (2018). Job
+burnout: The contribution of emotional
+stability and emotional self-efficacy beliefs.
+
+Journal of Occupational and Organizational
+Psychology,
+91(4),
+823–851.
+https://doi.org/10.1111/joop.12225
+• American Psychiatric Association. (2022).
+
+Diagnostic and statistical manual of mental
+disorders
+(5th
+ed.,
+text
+rev.).
+https://doi.org/10.1176/appi.books.978089042
+5787
+• Anastasi, A. (1988). Psychological Testing (6th
+ed.). Macmillan.
+• Baker, O., Montefinese, M., Castro, N., & Stella,
+M. (2023). Multiplex lexical networks and
+artificial
+
+intelligence
+
+unravel
+
+cognitive
+
+patterns of picture naming in people with
+anomic
+
+aphasia.
+
+Research,
+
+Cognitive
+79,
+
+Systems
+43–54.
+
+https://doi.org/10.1016/j.cogsys.2023.01.007
+• Bian, C., Zhao, W.-W., Yan, S.-R., Chen, S.-Y.,
+Cheng, Y., & Zhang, Y.-H. (2023). Effect of
+interpersonal
+
+psychotherapy
+
+on
+
+social
+
+functioning, overall functioning and negative
+emotions for depression: A meta-analysis.
+
+Journal of Affective Disorders, 320(1), 230–
+240. https://doi.org/10.1016/j.jad.2022.09.119
+• Bianchi, R., Verkuilen, J., Schonfeld, I. S.,
+
+The code and the data required for reproduc-
+
+Hakanen,
+
+ing the results described in this manuscript are
+
+Manzano-Garcıa, G., Laurent, E., & Meier, L. L.
+
+available on this Open Science Foundation
+
+(2021). Is burnout a depressive condition? A
+
+advances.in/psychology
+
+J.
+
+J.,
+
+Jansson-Fröjmark,
+
+M.,
+
+20
+
+Introducing semantic loadings in factor analysis
+
+14-sample
+analytic
+
+meta-analytic
+
+Clinical
+9(4),
+
+study.
+
+Science,
+
+and
+
+Stanghellini et al., 2024
+
+bifactor
+
+Psychological
+579–597.
+
+forms: Examining psychometric network
+filtering
+
+Behavior
+
+approaches.
+
+Methods,
+
+50,
+
+Research
+2531–2550.
+
+https://doi.org/10.1177/2167702620979597
+
+https://doi.org/10.3758/s13428-018-1032-9
+
+• Blondel, V. D., Guillaume, J.-L., Lambiotte, R.,
+
+• Ciaglia, F., Stella, M., & Kennington, C. (2023).
+
+& Lefebvre, E. (2008). Fast unfolding of
+
+Investigating preferential acquisition and
+
+communities in large networks. Journal of
+
+attachment in early word learning through
+
+statistical
+mechanics:
+Theory
+and
+experiment, 2008(10), Article P10008.
+
+cognitive, visual and latent multiplex lexical
+
+https://doi.org/10.1088/1742-
+
+and its Applications, 612, Article 128468.
+
+5468/2008/10/P10008
+
+https://doi.org/10.1016/j.physa.2023.128468
+
+networks. Physica A: Statistical Mechanics
+
+• Borsboom, D., Deserno, M. K., Rhemtulla, M.,
+
+• Citraro, S., & Rossetti, G. (2020). Identifying
+
+Epskamp, S., Fried, E. I., McNally, R. J.,
+
+and exploiting homogeneous communities
+
+Robinaugh, D. J., Perugini, M., Dalege, J.,
+
+in
+
+Costantini, G., et al. (2021). Network analysis
+
+Science,
+
+of multivariate data in psychological science.
+
+https://doi.org/10.1007/s41109-020-00302-1
+
+Nature Reviews Methods Primers, 1(1), 58.
+
+• Clara, I. P., Cox, B. J., & Enns, M. W. (2001).
+
+https://doi.org/10.1038/s43586-021-00055-w
+• Castro, N., & Siew, C. S. (2020). Contributions
+
+labeled
+
+networks.
+
+Applied
+
+Network
+
+5,
+
+Article
+
+55.
+
+Confirmatory
+
+factor
+
+analysis
+
+Depression–Anxiety–Stress
+
+of
+
+the
+
+Scales
+
+in
+
+of modern network science to the cognitive
+
+depressed and anxious patients. Journal of
+
+sciences:
+
+representation and process. Proceedings of
+
+Psychopathology
+Assessment,
+
+the Royal Society A, 476(2238), Article
+
+https://doi.org/10.1023/A:1011095624717
+
+Revisiting
+
+research
+
+spirals
+
+of
+
+20190825.
+
+and
+23(1),
+
+Behavioral
+61–67.
+
+• Costantini, G., Richetin, J., Preti, E., Casini, E.,
+
+https://doi.org/10.1098/rspa.2019.0825
+
+Epskamp, S., & Perugini, M. (2019). Stability
+
+• Christensen, A. P., Garrido, L. E., & Golino, H.
+
+and variability of personality networks. a
+
+(2023). Unique variable analysis: A network
+
+tutorial on recent developments in network
+
+psychometrics
+
+method
+
+psychometrics. Personality and Individual
+
+dependence.
+
+Multivariate
+58(6),
+
+Research,
+
+to
+
+detect
+
+local
+
+Behavioral
+1165-1182.
+
+https://doi.org/10.1080/00273171.2023.219460
+6
+
+Differences,
+
+136,
+
+68–78.
+
+https://doi.org/10.1016/j.paid.2017.06.011
+• Costello, A. B., & Osborne, J. (2005). Best
+practices in exploratory factor analysis: Four
+
+• Christensen, A. P., & Golino, H. (2021).
+
+recommendations for getting the most from
+
+dimensions via bootstrap exploratory graph
+
+Practical
+Assessment,
+Research, and Evaluation, 10, Article 7.
+
+analysis: A monte carlo simulation and
+
+https://doi.org/10.7275/jyj1-4868
+
+Estimating the stability of psychological
+
+tutorial.
+
+Psych,
+
+3(3),
+
+479–500.
+
+https://doi.org/10.3390/psych3030032
+• Christensen, A. P., Golino, H., & Silvia, P. J.
+
+your
+
+analysis.
+
+• Cutler, A., & Condon, D. M. (2023). Deep lexical
+hypothesis: Identifying personality structure
+in natural language. Journal of Personality
+
+(2020). A psychometric network perspective
+
+and
+
+on the validity and validation of personality
+
+https://doi.org/10.1037/pspp0000443
+
+trait questionnaires. European Journal of
+
+Personality,
+
+34(6),
+
+1095–1108.
+
+https://doi.org/10.1002/per.2265
+• Christensen, A. P., Kenett, Y. N., Aste, T., Silvia,
+P. J., & Kwapil, T. R. (2018). Network structure
+of the wisconsin schizotypy scales–short
+
+advances.in/psychology
+
+Social
+
+Psychology,
+
+125(1),
+
+173–197.
+
+• Epskamp, S., & Fried, E. I. (2018). A tutorial on
+regularized partial correlation networks.
+• Psychological
+
+Methods,
+
+23(4),
+
+617-674.
+
+https://psycnet.apa.org/doi/10.1037/met0000
+167
+• Epskamp, S., Maris, G., Waldorp, L. J., &
+
+21
+
+Introducing semantic loadings in factor analysis
+
+Borsboom,
+
+D.
+
+(2018).
+
+Stanghellini et al., 2024
+
+Network
+
+https://doi.org/10.1002/da.21888
+
+psychometrics. In P. Irwing, T. Booth, & D. J.
+
+• Irish, M., & Piguet, O. (2013). The pivotal role of
+
+Hughes (Eds.), The wiley handbook of
+
+semantic memory in remembering the past
+
+psychometric testing: A multidisciplinary
+reference on survey, scale and test
+development (Vol. 2, 953–986). Wiley Online
+
+and imagining the future. Frontiers in
+
+Library.
+
+Behavioral
+
+Neuroscience,
+
+7,
+
+Article
+
+27.
+
+https://doi.org/10.3389/fnbeh.2013.00027
+• Joseph, S. M., Citraro, S., Morini, V., Rossetti, G.,
+
+https://doi.org/10.1002/9781118489772.ch30
+
+&
+
+Stella,
+
+M.
+
+(2023).
+
+Cognitive
+
+network
+
+• Fabrigar, L. R., Wegener, D. T., MacCallum, R.
+
+neighborhoods quantify feelings expressed
+
+C., & Strahan, E. J. (1999). Evaluating the use
+
+in suicide notes and reddit mental health
+
+of
+
+communities.
+
+exploratory
+
+psychological
+
+factor
+
+analysis
+
+Psychological
+
+research.
+
+Methods,
+
+in
+
+4(3),
+
+272–299.
+
+Physica
+A:
+Statistical
+Mechanics and its Applications, 610, Article
+128336.
+
+https://doi.org/10.1037/1082-989X.4.3.272
+
+https://doi.org/10.1016/j.physa.2022.128336
+
+• Ferrer i Cancho, R., & Diaz-Guilera, A. (2007).
+
+• Keogh, E., Dillon, C., Georgiou, G., & Hunt, C.
+
+The global minima of the communicative
+
+(2001).
+
+energy of natural communication systems.
+
+physical threat in physical anxiety sensitivity.
+
+Journal of Statistical Mechanics: Theory and
+Experiment, 2007(06), Article P06009.
+
+Journal of Anxiety Disorders, 15(4), 299–315.
+
+https://doi.org/10.1088/1742-
+
+2
+
+• Golino, H., & Epskamp, S. (2017). Exploratory
+analysis:
+
+A
+
+attentional
+
+biases
+
+for
+
+https://doi.org/10.1016/S0887-6185(01)00065• Kline, R. B. (2016). Principles and practice of
+
+5468/2007/06/P06009
+graph
+
+Selective
+
+new
+
+approach
+
+for
+
+structural equation modeling (4th ed.).
+Guilford publications.
+
+estimating the number of dimensions in
+
+• Li, M., Xu, D., Ma, G., & Guo, Q. (2022). Strong
+
+PloS one, 12(6),
+
+tie or weak tie? Exploring the impact of
+
+e0174035.
+
+group-formation gamification mechanisms
+
+psychological
+
+research.
+
+Article
+
+https://doi.org/10.1371/journal.pone.0174035
+
+on
+
+user
+
+emotional
+
+anxiety
+
+Behaviour
+41(11),
+
+&
+
+in
+
+social
+
+Information
+
+• Golino, H., Shi, D., Christensen, A. P., Garrido,
+
+commerce.
+
+L. E., Nieto, M. D., Sadana, R., Thiyagarajan, J.
+
+Technology,
+
+A., & Martinez-Molina, A. (2020). Investigating
+
+https://doi.org/10.1080/0144929X.2021.1917661
+
+the
+
+performance
+
+analysis
+
+and
+
+of
+
+exploratory
+
+Emotional Recall Task: Juxtaposing recall
+
+identify the number of latent factors: A
+
+and recognition-based affect scales. Journal
+
+Psychological
+
+of Experimental Psychology: Learning,
+Memory, and Cognition, 46(9), 1782–1794.
+
+and
+
+Methods,
+
+techniques
+
+• Li, Y., Masitah, A., & Hills, T. T. (2020). The
+
+to
+
+simulation
+
+traditional
+
+graph
+
+2294–2323.
+
+tutorial.
+
+25(3),
+
+292–320.
+
+https://doi.org/10.1037/met0000255
+• Gorsuch,
+
+R.
+
+L.
+
+(2013).
+
+Factor
+
+https://psycnet.apa.org/doi/10.1037/xlm0000
+
+analysis.
+
+Psychology Press.
+
+• Lovibond, P. F., & Lovibond, S. H. (1995). The
+
+• Hills, T. T., & Kenett, Y. N. (2022). Is the mind a
+network? Maps, vehicles, and skyhooks in
+cognitive
+
+Cognitive
+
+network
+
+Science,
+
+841
+
+science.
+
+14(1),
+
+Topics
+
+structure
+
+of
+
+negative
+
+emotional
+
+states:
+
+Comparison of the Depression Anxiety Stress
+
+in
+
+Scales (DASS) with the Beck Depression and
+
+189–208.
+
+Anxiety Inventories. Behaviour Research and
+
+https://doi.org/10.1111/tops.12570
+• Hofmann, S. G., Sawyer, A. T., Fang, A., &
+Asnaani, A. (2012). Emotion dysregulation
+
+Therapy,
+
+33(3),
+
+335–343.
+
+https://doi.org/10.1016/0005-7967(94)00075U
+
+model of mood and anxiety disorders.
+
+• Mace, J. H., & Unlu, M. (2020). Semantic-to-
+
+Depression and Anxiety, 29(5), 409–416.
+
+autobiographical memory priming occurs
+
+advances.in/psychology
+
+22
+
+Introducing semantic loadings in factor analysis
+
+Stanghellini et al., 2024
+
+across multiple sources: Implications for
+
+436–465.
+
+autobiographical remembering. Memory &
+
+8640.2012.00460.x
+
+Cognition,
+
+48,
+
+931–941.
+
+• Madsgaard, A., Smith-Strøm, H., Hunskår, I., &
+K.
+
+(2022).
+
+A
+
+rollercoaster of
+
+emotions: An integrative review of emotions
+and its impact on health professional
+students’
+
+learning
+
+in
+
+education.
+
+Nursing
+
+Open,
+
+simulation-based
+
+9(1),
+
+• Newman, M. (2012). Communities, modules
+and large-scale structure in networks. Nature
+
+https://doi.org/10.3758/s13421-020-01029-1
+Røykenes,
+
+https://doi.org/10.1111/j.1467-
+
+Physics,
+
+8(1),
+
+25–31.
+
+https://doi.org/10.1038/nphys2162
+• Newman,
+
+M.
+
+Networks.
+
+(2018).
+
+Oxford
+
+university press.
+• Paivio,
+
+A.
+
+(1991).
+
+Dual
+
+coding
+
+theory:
+
+108–121.
+
+Retrospect and current status. Canadian
+
+• Marinazzo, D., Van Roozendaal, J., Rosas, F. E.,
+
+Journal of Psychology / Revue canadienne de
+psychologie,
+45(3),
+255–287.
+
+https://doi.org/10.1002/nop2.1100
+Stella,
+
+M.,
+
+Comolatti,
+
+R.,
+
+Colenbier,
+
+N.,
+
+Stramaglia, S., & Rosseel, Y. (2022). An
+information-theoretic
+
+approach
+
+https://doi.org/10.1037/h0084295
+• Paulhus, D. L., & Vazire, S. (2007). The self-
+
+to
+
+report method. In R. W. Robins, R. C. Fraley, &
+
+hypergraph psychometrics. arXiv preprint
+
+R. F. Krueger (Eds.), Handbook of research
+
+arXiv:2205.01035.
+
+methods in personality psychology (pp. 224–
+
+https://doi.org/10.48550/arXiv.2205.01035
+
+239). Guilford.
+
+• Markus, K. A., & Borsboom, D. (2013). Frontiers
+
+• Posner, J., Russell, J. A., & Peterson, B. S.
+
+of test validity theory: Measurement,
+causation, and meaning. Routledge.
+
+(2005). The circumplex model of affect: An
+
+• Massara, G. P., Di Matteo, T., & Aste, T. (2016).
+
+neuroscience, cognitive development, and
+
+integrative
+
+approach
+
+to
+
+affective
+
+Development
+and
+17(3),
+715–734.
+
+Network filtering for big data: Triangulated
+
+psychopathology.
+
+maximally filtered graph. Journal of complex
+
+Psychopathology,
+
+Networks,
+
+https://doi.org/10.1017/S0954579405050340
+
+5(2),
+
+161–178.
+
+https://doi.org/10.1093/comnet/cnw015
+
+• Quispe, L. V., Tohalino, J. A., & Amancio, D. R.
+
+• Meléndez, J. C., Agusti, A. I., Satorres, E., &
+Pitarque,
+
+A.
+
+(2018).
+
+Are
+
+semantic
+
+and
+
+(2021). Using virtual edges to improve the
+discriminability
+
+of
+
+co-occurrence
+
+text
+
+memories
+
+networks. Physica A: Statistical Mechanics
+
+influenced by the life period remembered?
+
+and its Applications, 562, Article 125344.
+
+comparison of young and older adults.
+
+https://doi.org/10.1016/j.physa.2020.125344
+
+European Journal of Ageing, 15(4), 417–424.
+
+• Rattray, J., & Jones, M. C. (2007). Essential
+
+episodic
+
+autobiographical
+
+https://doi.org/10.1007/s10433-018-0457-4
+• Miller, G. A. (1995). Wordnet: A lexical
+
+elements
+
+of
+
+questionnaire
+
+16(2),
+
+the
+
+2702.2006.01573.x
+
+38(11),
+
+39–41.
+
+https://doi.org/10.1145/219717.219748
+
+and
+
+development. Journal of Clinical Nursing,
+
+database for english. Communications of
+
+ACM,
+
+design
+
+234–243.
+
+https://doi.org/10.1111/j.1365-
+
+• Rosenbusch, H., Wanders, F., & Pit, I. L. (2020).
+
+• Mohammad, S. (2018). Obtaining reliable
+
+The semantic scale network: An online tool to
+
+human ratings of valence, arousal, and
+
+detect semantic overlap of psychological
+
+dominance
+
+scales and prevent scale redundancies.
+
+for
+
+20,000
+
+english
+
+words.
+
+Proceedings of the 56th annual meeting of
+the association for computational linguistics
+(volume
+1:
+Long
+papers),
+174–184.
+https://doi.org/10.18653/v1/P18-1017
+• Mohammad, S. M., & Turney, P. D. (2013).
+Crowdsourcing a word–emotion association
+lexicon. Computational Intelligence, 29(3),
+
+advances.in/psychology
+
+Psychological
+
+Methods,
+
+25(3),
+
+380-392.
+
+https://doi.org/10.1037/met0000244
+• Rosseel, Y. (2012). lavaan: An R package for
+structural equation modeling. Journal of
+
+Statistical
+
+Software,
+
+48,
+
+1–36.
+
+https://doi.org/10.18637/jss.v048.i02
+• Rubin, D. C. (2005). A basic-systems approach
+
+23
+
+Introducing semantic loadings in factor analysis
+
+Stanghellini et al., 2024
+
+Current
+Directions in Psychological Science, 14(2),
+
+concepts
+
+79–83.
+
+https://doi.org/10.1037/10694-000 .
+
+to
+
+autobiographical
+
+memory.
+
+https://doi.org/10.1111/j.0963-
+
+7214.2005.00339.x
+
+and
+
+applications.
+
+Psychological
+
+American
+Association.
+
+• Van den Bergh, N., Marchetti, I., & Koster, E. H.
+
+• Samuel, G., Stella, M., Beaty, R. E., & Kenett, Y.
+
+(2021).
+
+Bridges
+
+over
+
+troubled
+
+waters:
+
+N. (2023). Predicting openness to experience
+
+Mapping the interplay between anxiety,
+
+via a multiplex cognitive network approach.
+
+depression and stress through network
+
+Journal of Research in Personality, 104,
+
+analysis of the DASS-21. Cognitive Therapy
+
+Article
+
+and
+
+104369.
+
+https://doi.org/10.1016/j.jrp.2023.104369
+&
+
+Stella,
+
+emotional
+
+M.
+
+(2023).
+
+profiling
+
+EmoAtlas:
+tool
+
+An
+
+merging
+
+psychological lexicons, artificial intelligence
+and
+
+network
+
+45,
+
+46–60.
+
+https://doi.org/10.1007/s10608-020-10153-w
+
+• Semeraro, A., Vilella, S., Mohammad, S., Ruffo,
+G.,
+
+Research,
+
+science.
+
+Designing online
+experiments for the social sciences. SAGE
+
+• Veltri,
+
+G.
+
+A.
+
+(2023).
+
+Publications Limited.
+• Vogel, A. C., Tillman, R., El-Sayed, N. M.,
+Jackson, J. J., Perlman, S. B., Barch, D. M., &
+
+https://doi.org/10.21203/rs.3.rs-2428155/v1
+
+Luby, J. L. (2021). Trajectory of emotion
+
+• Semeraro, A., Vilella, S., Ruffo, G., & Stella, M.
+
+dysregulation in positive and negative affect
+
+(2022). Emotional profiling and cognitive
+
+across
+
+networks unravel how mainstream and
+
+emotion
+
+alternative press framed astrazeneca, pfizer
+
+functioning.
+
+and
+
+covid-19
+
+Scientific
+
+vaccination
+
+Reports,
+
+12(1),
+
+campaigns.
+
+Article
+
+14445.
+
+https://doi.org/10.1038/s41598-022-18472-6
+• Sharma, S., Powers, A., Bradley, B., & Ressler,
+K.
+
+J.
+
+(2016).
+
+Gene
+
+x
+
+childhood
+
+predicts
+
+dysregulation
+
+adolescent
+
+and
+
+overall
+
+Development
+and
+Psychopathology,
+33(5),
+1722–1733.
+https://doi.org/10.1017/S0954579421000705
+• Wood,
+
+D.
+
+(2015).
+
+Testing
+
+the
+
+lexical
+
+hypothesis: Are socially important traits more
+
+environment
+
+densely reflected in the English lexicon?
+
+determinants of stress-and anxiety-related
+disorders. Annual Review of Psychology, 67,
+
+Journal of Personality and Social Psychology,
+108(2),
+317–335.
+
+239–261.
+
+https://doi.org/10.1037/a0038343
+
+https://doi.org/10.1146/annurev-
+
+psych-122414-033408
+• Siew, C. S., Wulff, D. U., Beckage, N. M., &
+Kenett, Y. N. (2019). Cognitive network
+science: A review of research on cognition
+through the lens of network representations,
+processes, and dynamics. Complexity, 2019,
+Article
+
+2108423
+
+https://doi.org/10.1155/2019/2108423
+• Stella, M. (2020). Text-mining forma mentis
+networks reconstruct public perception of
+the stem gender gap in social media. PeerJ
+
+Computer
+
+Science,
+
+6,
+
+Article
+
+e295.
+
+http://dx.doi.org/10.7717/peerj-cs.295
+• Stella, M. (2022). Cognitive network science
+for understanding online social cognitions: A
+brief review. Topics in Cognitive Science,
+
+14(1), 143–162. https://doi.org/10.1111/tops.12551
+• Thompson, B. (2004). Exploratory and
+confirmatory factor analysis: Understanding
+
+advances.in/psychology
+
+24
+
+Introducing semantic loadings in factor analysis
+
+Stanghellini et al., 2024
+
+Appendix
+
+Factor Analysis
+Table A1
+Exploratory Factor Analysis Results as Obtained with Lavaan and a Varimax Rotation.
+Number of factors: 3
+
+Standardized loadings λ: (* = significant at 1% level)
+
+Items
+
+f1
+
+Q1A
+
+0.835*
+
+Q2A
+
+f2
+
+0.381*
+
+Q3A
+
+0.645*
+
+Q4A
+
+0.693*
+
+Q5A
+Q6A
+
+f3
+
+0.533*
+0.790*
+
+Q7A
+
+0.767*
+
+Q8A
+
+0.449*
+
+Q9A
+
+0.429*
+
+0.343*
+
+Q10A
+
+0.827*
+
+Q11A
+
+0.871*
+
+Q12A
+
+0.382*
+
+Q13A
+
+0.309*
+
+Q14A
+
+0.649*
+
+Q15A
+
+0.446*
+0.568*
+
+0.551*
+
+unique.var
+
+communalities
+
+0.401
+
+0.599
+
+0.751
+
+0.249
+
+0.407
+
+0.593
+
+0.483
+
+0.517
+
+0.457
+
+0.543
+
+0.495
+
+0.505
+
+0.430
+
+0.570
+
+0.501
+
+0.499
+
+0.526
+
+0.474
+
+0.316
+
+0.684
+
+0.372
+
+0.628
+
+0.456
+
+0.544
+
+0.345
+
+0.655
+
+0.661
+
+0.339
+
+0.579
+
+0.421
+
+Q16A
+
+0.681*
+
+0.400
+
+0.600
+
+Q17A
+
+0.708*
+
+0.346
+
+0.654
+
+0.630
+
+0.370
+
+0.662
+
+0.338
+
+Q18A
+Q19A
+
+0.645*
+0.546*
+
+Continued on next page
+
+Introducing semantic loadings in factor analysis
+
+Stanghellini et al., 2024
+
+Table A1 – continued from previous page
+Items
+
+f1
+
+f2
+
+Q20A
+
+0.303*
+
+0.411*
+
+Q21A
+Q22A
+
+0.858*
+0.495*
+
+Q23A
+
+0.549*
+
+Q24A
+
+0.608*
+
+Q25A
+
+0.625*
+
+Q26A
+Q27A
+
+f3
+
+0.530*
+0.795*
+
+Q28A
+
+0.547*
+
+unique.var
+
+communalities
+
+0.480
+
+0.520
+
+0.261
+
+0.739
+
+0.517
+
+0.483
+
+0.639
+
+0.361
+
+0.438
+
+0.562
+
+0.550
+
+0.450
+
+0.409
+
+0.591
+
+0.440
+
+0.560
+
+0.414
+
+0.586
+
+Q29A
+
+0.708*
+
+0.447
+
+0.553
+
+Q30A
+
+0.396*
+
+0.575
+
+0.425
+
+0.460
+
+0.540
+
+0.565
+
+0.435
+
+0.441
+
+0.559
+
+0.329
+
+0.671
+
+0.577
+
+0.423
+
+0.471
+
+0.529
+
+Q31A
+
+0.622*
+
+Q32A
+
+0.658*
+
+Q33A
+
+0.364*
+
+0.451*
+
+Q34A
+Q35A
+
+0.720*
+0.618*
+
+Q36A
+
+0.371*
+
+Q37A
+
+0.814*
+
+0.354
+
+0.646
+
+Q38A
+
+0.873*
+
+0.272
+
+0.728
+
+0.487
+
+0.513
+
+0.329*
+
+0.535
+
+0.465
+
+0.745*
+
+0.476
+
+0.524
+
+0.587
+
+0.413
+
+Q39A
+
+0.648*
+
+Q40A
+
+0.412*
+
+Q41A
+Q42A
+
+0.431*
+
+Introducing semantic loadings in factor analysis
+
+Stanghellini et al., 2024
+
+Table A2
+Summary Statistics for the EFA with 3 Factors as Performed in Lavaan, with
+an Oblimin Rotation.
+f1
+
+f2
+
+f3
+
+total
+
+Sum of sq (obliq) loadings
+
+8.873
+
+7.685
+
+5.502
+
+22.060
+
+Proportion of total
+
+0.402
+
+0.348
+
+0.249
+
+1.000
+
+Proportion var
+
+0.211
+
+0.183
+
+0.131
+
+0.525
+
+Cumulative var
+
+0.211
+
+0.394
+
+0.525
+
+0.525
+
+f2
+
+f3
+
+Factor correlations:
+f1
+f1
+
+1.
+
+f2
+
+.703*
+
+1.
+
+f3
+
+.707*
+
+.540*
+
+1.
+
+*p ≤ .01.
+
+advances.in/psychology
+
+27
+
+

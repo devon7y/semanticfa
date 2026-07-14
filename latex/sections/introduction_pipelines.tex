@@ -2,8 +2,8 @@
 \subsection{Methods, Pipelines, and the Wider Applied Wave}
 
 A first cluster treats the encoding step. Because embeddings compress similarities
-toward the positive---so that pseudo-factor loadings do not differentiate
-reverse-keyed items \citep{suarez-alvarez-etal-2026}---SQuID subtracts the mean
+toward the positive, so that pseudo-factor loadings do not differentiate
+reverse-keyed items \citep{suarez-alvarez-etal-2026}, SQuID subtracts the mean
 ``questionnaire embedding'' from each item, recovering a signed range without
 fine-tuning \citep{pellert-etal-2026}. Fitting confirmatory
 models to mean-centered cosines, \citet{pokropek-2026} shows via Monte Carlo that
@@ -19,16 +19,16 @@ Exploratory Graph Analysis (EGA) estimates dimensionality by community detection
 \citet{garrido-etal-2025} found Kaiser's rule \citep{kaiser-1960} and parallel
 analysis \citep{horn-1965} overestimated dimensionality while EGA recovered it,
 near-perfectly after weighted-topological-overlap filtering
-\citep{christensen-etal-2023}; \citet{golino-2026} adds Dynamic EGA to optimize
+\citep{christensen-etal-2023}. \citet{golino-2026} adds Dynamic EGA to optimize
 recovery.
 The geometry also supports response-free screening: \citet{jung-seo-2025}
 selected centroid-proximal IPIP markers by $k$-means, recovering a 30-item form
-matching response-based reductions \citep{openpsychometrics-2018}; and
+matching response-based reductions \citep{openpsychometrics-2018}. And
 \citet{wang-etal-2026} clustered contextual embeddings by density, cutting items by
 $\approx60\%$ across DASS, IPIP, and EPOCH while preserving structure, scoring the
 embedding--theory alignment by chance-corrected partition agreement
 \citep{hubert-arabie-1985}. \citet{hussain-etal-2024} run on-device models,
-showing item cosines track response correlations; and \citet{low-etal-preprint},
+showing item cosines track response correlations, and \citet{low-etal-preprint},
 flagging a ``psychometric bias'' judging models only by label prediction, name
 embedding-based factor analysis as open.
 
@@ -40,15 +40,15 @@ cluster item embeddings to flag redundancy, recovering in a preliminary study
 Grit--Conscientiousness overlap while keeping gratitude separate. A parallel strand
 uses models as respondents: \citet{liu-etal-2025} calibrate LLM responses with item
 response theory, obtaining difficulties correlating with human values but narrow
-abilities---still a person-by-item matrix. Models also stand in at construction:
+abilities (still a person-by-item matrix). Models also stand in at construction:
 \citet{eberhardt-etal-2025} build an
 \emph{LLM rating scale} from a local model's transcript ratings, reaching strong
-reliability; yet \citet{grobelny-etal-2025} found a ChatGPT-4 adaptation matching
+reliability. Yet \citet{grobelny-etal-2025} found a ChatGPT-4 adaptation matching
 the human one on structure but with lower internal consistency. Validation is then
 constitutive: \citet{bunt-etal-2025} show a model's text coding earns trust only
-after iterative semantic, predictive, and content validity---an \emph{abductive}
-use. \citet{lim-etal-2025} screen items with
-simulated respondents on the Big Five, Schwartz values, and VIA; and
+after iterative semantic, predictive, and content validity (an \emph{abductive}
+use). \citet{lim-etal-2025} screen items with
+simulated respondents on the Big Five, Schwartz values, and VIA.
 \citet{maharjan-etal-2025} scrutinized embeddings as trait measures across
 $\sim$1M Reddit posts. Urgency comes from a threat to response data:
 \citet{westwood-2025} showed an autonomous agent passing $99.8\%$ of attention
@@ -56,15 +56,15 @@ checks, so text-only checks are immune to synthetic-respondent fraud.
 
 A further line asks whether item language carries item-response-theory parameters.
 Synthesizing 37 articles, \citet{peters-etal-2025} find text recovers
-\emph{difficulty} usefully ($r$ up to $.87$); \citet{han-etal-2025} find
-\emph{discrimination} largely text-resistant; and \citet{ormerod-2026} recover it
+\emph{difficulty} usefully ($r$ up to $.87$), \citet{han-etal-2025} find
+\emph{discrimination} largely text-resistant, and \citet{ormerod-2026} recover it
 better by simulating graded-ability responses with fine-tuned generative models. The case is sharpened by critique: \citet{uher-2025}
-argues statistics is not measurement and warns of a \emph{cardinal error}---mistaking
-judgments of verbal statements for measurements of what they describe; yet this same
+argues statistics is not measurement and warns of a \emph{cardinal error} (mistaking
+judgments of verbal statements for measurements of what they describe). Yet this same
 critique supplies the divergence mechanism, items' inbuilt semantics accounting for
 much rated covariance. Finally, the tools carry their provenance: the
 sentence-similarity backbone derives from natural-language-inference training on the
 SNLI corpus \citep{bowman-etal-2015}, which first enabled cosine-comparable
-embeddings \citep{reimers-gurevych-2019}; visualization uses $t$-SNE
-\citep{vandermaaten-hinton-2008}; and interrogation uses semantic projection along
+embeddings \citep{reimers-gurevych-2019}. Visualization uses $t$-SNE
+\citep{vandermaaten-hinton-2008}, and interrogation uses semantic projection along
 antonymic anchors \citep{grand-etal-2022}.

@@ -1,0 +1,103 @@
+Invoke your write-paper Workflow and write an academic paper for the R package "semanticfa"
+
+What you are writing
+A software/methods paper introducing semanticfa (v0.1.0, on CRAN): an R package for
+Semantic Factor Analysis (SFA) — exploratory factor analysis of language-model
+embeddings of psychometric scale items, requiring no human response data.
+Authors: Devon Yanitski & Chris Westbury (Department of Psychology, University of Alberta).
+Target venue style: a methods/software paper (e.g., Behavior Research Methods).
+
+How to work
+- Invoke and follow the write-paper skill: APA-7 (apa7.cls), build a latex/ tree in this
+  directory, Fable 5 to draft / Opus to validate references, single References list.
+- Sources are PDFs only. Every cited claim must come from a file in papers/ (text in
+  papers_txt/). Do not pull citations from memory or the web; flag gaps with \MISSINGCITE.
+
+Where the material lives (this directory: /Users/devon7y/VS_Code/semanticfa)
+- Package: R/, man/, NAMESPACE, DESCRIPTION, README.md, vignettes/introduction.Rmd
+- Literature corpus (already extracted): papers_txt/  (PDFs in papers/)
+- Prior theory draft to mine for Pillar 1: /Users/devon7y/VS_Code/LLM_Factor_Analysis/latex-claude
+  (read sections/introduction_*.tex; condense, do not copy verbatim)
+- Demo data: data(big5) — 50 IPIP Big-Five Factor Markers + precomputed
+  Qwen3-Embedding-8B embeddings (50 x 4096, rounded to 4 dp), runs with no Python/network.
+  The paper's results come from these bundled vectors; use data(big5) directly and state
+  the model (Qwen3-Embedding-8B) in the Method.
+- Human response data (for the semantic-vs-human comparison only — not an input to SFA):
+  /Users/devon7y/VS_Code/LLM_Factor_Analysis/scale_responses/Big5FM_data.csv
+  (Open Psychometrics Project; respondents x 50 items, columns E1..O50).
+
+This paper has three pillars — one major section each, kept roughly balanced. The package
+demonstration is the centerpiece. Fill in all detail yourself; this is only the outline.
+
+Pillar 1 — Theory: what it means to analyze the language of a scale
+Core ideas:
+- Constructs live in a nomological network (Cronbach & Meehl): validity is a web of
+  relations, not a hidden essence.
+- A scale's items are an operationalized semantic proposal for the construct
+  (Wittgenstein meaning-as-use; reflective vs. formative indicators).
+- Two relational structures: behavioral (person x item covariance) vs. semantic (geometry
+  of item meaning). Classical FA recovers behavioral clustering; SFA recovers
+  linguistic-usage clustering — structurally parallel, different data source.
+- New contribution: semantic-behavioral coherence as a relation in the nomological network.
+  Convergence strengthens a construct; divergence is itself informative (compression,
+  ambiguity, jingle-jangle, theoretical underspecification).
+- SFA needs no respondents -> enables scale evaluation before data collection.
+
+Pillar 2 — Review: language models and psychometrics
+Synthesize the papers_txt corpus, organized by what each line of work does:
+- Embeddings predict item correlations / a-priori factor structure (Milano, Casella,
+  Hommel & Arslan, Schoenegger, Ravenda, Feraco).
+- Taxonomy, jingle-jangle, incommensurability (Wulff & Mata 2025/2026, Stanghellini).
+- Clinical / psychopathology structure from embeddings (Kambeitz, Kojima).
+- Methods & pipelines: SQuID centering (Pellert), CFA with embeddings (Pokropek),
+  Unique Variable Analysis (Christensen), EGA on embeddings (Golino, Garrido),
+  short forms (Jung & Seo, Wang), tutorials/overviews (Hussain, Low).
+- Critiques and limits (Uher: statistics is not measurement).
+Position semanticfa as the first general-purpose toolkit unifying these threads in one
+reproducible R workflow.
+
+Pillar 3 — Demonstration: the package end-to-end on the Big Five
+One reproducible worked example on data(big5) that exercises every exported function,
+grouped by workflow stage:
+- Embed & build similarity: the main results use the bundled data(big5)$embeddings
+  (Qwen3-Embedding-8B); also demonstrate sfa_embed and sfa_load_npz as features (how a user
+  would generate or load their own vectors), then sfa_similarity (4 encodings:
+  atomic / atomic_reversed / squid / mean_centered_pearson) and sfa_nli_matrix (signed/NLI).
+- Recover structure: sfa() one-call pipeline; sfa_nfactors (parallel / Kaiser / TEFI / EGA),
+  sfa_parallel (embedding-adapted), sfa_dimselect (depth); as_psych (hand off to psych).
+- Interpret: sfa_anchor (semantic loadings table), sfa_project (bipolar axes),
+  sfa_congruence (Tucker phi, NMI, ARI, Frobenius, disattenuated), sfa_jinglejangle.
+- Refine before data: sfa_redundancy (UVA), sfa_simplify (short forms),
+  sfa_item_fit (vet a new candidate item).
+- Visualize: sfa_corplot, sfa_itemplot (t-SNE / UMAP / PCA / MDS), plot(fit, "scree").
+- Fit diagnostics: KMO, TEFI, RMSR, CAF, McDonald's omega, DAAL; summary(fit);
+  calibrate = TRUE (Monte Carlo null).
+- Compare to human data: readers will want the semantic structure checked against real
+  responses. Run a conventional EFA on the Open Psychometrics responses (Big5FM_data.csv)
+  and compare the semantic (SFA) structure to the empirical one with sfa_congruence
+  (Tucker phi, NMI, ARI, Frobenius, disattenuated). This operationalizes the
+  semantic-behavioral coherence idea from Pillar 1 — report the convergence and discuss
+  any divergence. Emphasize that SFA itself used no responses; the human data is only the
+  validation target.
+Show that the recovered 5-factor solution aligns with the Big-Five and interpret the
+diagnostics. Pre-stage all plots into latex/figures/ for stable \includegraphics paths.
+
+Notes
+- You must actually run the analyses for this paper, not describe them hypothetically.
+  Compute the real embeddings/similarity/EFA/diagnostics and the human-data comparison from
+  the inputs above, and report the real numbers, tables, and figures the runs produce.
+- Reproducibility (OSF): collect every analysis step into a self-contained, runnable script
+  or notebook (e.g., a reproduce/ folder or an .Rmd) that regenerates each number, table,
+  and figure from the inputs. This code will be hosted publicly on OSF so readers can
+  reproduce the paper's results; write it to run cleanly for an outside user.
+- Single reproducible study; show real R code blocks and their output.
+- Do not overclaim: SFA complements, not replaces, response-based FA — cite the
+  convergence-with-divergence evidence (e.g., Kojima, Feraco).
+- Method-provenance papers (now in papers_txt) — cite each as the primary source for the
+  method it underpins: Horn (1965) for sfa_parallel / parallel analysis; van der Maaten &
+  Hinton (2008) for the t-SNE option in sfa_itemplot; Hubert & Arabie (1985) for the
+  adjusted Rand index in sfa_congruence; Bowman et al. (2015, SNLI) for the NLI basis of
+  sfa_nli_matrix.
+- Wittgenstein (1953), Philosophical Investigations, is in papers_txt for the meaning-as-use
+  point in Pillar 1. It is a book — use an @book entry and cite the specific section,
+  \citep[§43]{wittgenstein-1953}, not the whole volume.

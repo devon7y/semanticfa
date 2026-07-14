@@ -45,7 +45,7 @@ Eigenvalues: 29.63   1.92   1.74   1.48   1.27   1.01   0.93   0.88   0.78   0.7
 
 Parallel analysis and EGA indicated \valPaKWord{} factors, Kaiser \valKaiserKWord, the
 empirical Kaiser criterion \valEkcKWord, TEFI
-\valTefiKWord; the consensus of \valConsensusKWord{} matches the theoretical Big Five, and the
+\valTefiKWord. The consensus of \valConsensusKWord{} matches the theoretical Big Five, and the
 dominant first eigenvalue (\valEigFirst), the general positivity of embedding
 similarities, precedes a shallow elbow (Figure~\ref{fig:scree}).
 
@@ -56,7 +56,7 @@ similarities, precedes a shallow elbow (Figure~\ref{fig:scree}).
 \caption{Scree plot of the mean-centered Pearson similarity matrix with the
 embedding-adapted parallel-analysis threshold (dotted line), produced by
 \texttt{plot(fit, type = "scree")}. The first eigenvalue (\valEigFirst) dwarfs the
-rest; \valPaKWord{} eigenvalues clear the parallel-analysis threshold.}
+rest, and \valPaKWord{} eigenvalues clear the parallel-analysis threshold.}
 \label{fig:scree}
 \end{figure}
 
@@ -83,7 +83,7 @@ sfa_dimselect elapsed: 28 s
 \end{verbatim}
 }
 
-The optimum---roughly the first third, \valDepthOpt{} of \valDepthFull
-coordinates---recovered \valDepthNDimWord{} EGA dimensions (NMI = \valDepthNmi), the
-\valDepthNDimWord-factor answer by a different route; the \valDepthEval-depth sweep took
+The optimum (roughly the first third, \valDepthOpt{} of \valDepthFull
+coordinates) recovered \valDepthNDimWord{} EGA dimensions (NMI = \valDepthNmi), the
+\valDepthNDimWord-factor answer by a different route. The \valDepthEval-depth sweep took
 \valTimeDimselect~s.

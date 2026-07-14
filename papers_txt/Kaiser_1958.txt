@@ -1,0 +1,2577 @@
+PSYCHOMETmKA--VOI~. 23~ NO. 3
+S E ~ M B E I ~ , 1958
+
+THE VARIMAX CRITERION FOR ANALYTIC ROTATION IN
+F A C T O R ANALYSIS*
+HENRY F. KAISER
+UNIVERSITY OF ILLINOIS
+
+An analytic criterion for rotation is defined. The scientific advantage
+of analytic criteria over subjective (graphical) rotational procedures is discussed. Carroll's criterion and the quartimax criterion are briefly reviewed;
+the varimax criterion is outlined in detail and contrasted both logically and
+numerically with the quartimax criterion. It is shown that the normal varimax
+solution probably coincides closely to the application of the principle of simple
+structure. However, it is proposed that the ultimate criterion of a rotational
+procedure is factorial invariance, not simple structure-although the two
+notions appear to be highly related. The normal varimax criterion is shown
+to be a two-dimensional generalization of the classic Spearman case, i.e., it
+shows perfect factorial invariance for two pure clusters. An example is
+given of the invariance of a normal varimax solution for more than two
+factors. The oblique normal varimax criterion is stated. A computational outline for the orthogonal normal varimax is appended.
+I n factor analysis, an analytic criterion for rotation is defined as one
+t h a t imposes mathematical conditions beyond the fundamental factor
+theorem, such that a factor matrix is uniquely determined. Historically,
+the first such criterion was Thurstone's treatment of the principal axes
+problem [10]: from a n y arbitrary factor matrix he suggested rotating under
+the criterion that each factor successively accounts for the maximum variance.
+But principal axes have seldom been accepted as psychologically very interesting ([9], p. 139). The rotation problem for psychologically meaningful factors
+is usually handled judgmentally. Scientifically, however, this procedure is
+not very satisfactory: the ad hoc quality of subjective rotation makes
+uniquely determined factors impossible; only factors t h a t are subject to the
+uncertainties and controversies besetting a n y a posteriori reasoning can be
+defined. I n contrast, an analytic criterion for rotation would allow factor
+analysis to become a straightforward methodology stripped of its sub]ectivity and a proper tool for scientific inquiry.
+
+The Quartimax Criterion
+The first analytic criterion for determining psychologically interpretable
+factors was presented in 1953 by Carroll [1]. I n an a t t e m p t to provide a
+*Part of the material in this paper is from the writer's Ph.D. thesis. I am indebted
+to my committee, Professors F. T. Tyler, R. C. Tryon, and It. D. Carter, chairman, for
+many helpful suggestions and criticisms. Dr. John Caffrey suggested the name varimax,
+and wrote the original IBM 602A computer program for this criterion.
+I am also indebted to the staff of the University of California Computer Center for
+help in programming the procedures described in the paper for their IBM 701 electronic
+computer. Since their installation is partially supported by a grant from the National
+Science Foundation, the assistance of this agency is acknowledged.
+187
+
+PSYCHOMETRIKA
+
+188
+
+mathematical explication of Thurstone's simple structure, tie suggested that
+for a given factor matrix,
+
+/ = ~_, ~_,a~a~
+
+(1)
+
+• <t
+
+i
+
+should be a minimum, where j = 1, 2, . . . , n are tests, s, t = 1, 2, . . . , r
+are factors, and a~. is the factor loading of the jth test on the sth factor.
+It appears that Carroll was motivated in writing (1) primarily by a close
+inspection of Thurstone's five formal rules for simple structure ([12], p. 335),
+particularly the requirement that a large loading for one factor be opposite
+a small loading for another factor.
+In his original paper, Carroll provided two numerical examples of the
+application of his method. Without the restriction of orthogonality, these
+illustrations gave somewhat equivocal results--while the application of (1)
+appears to bring one close to the desired simple structure, the criterion has
+an obvious bias in being too strongly, influenced by factorially complex tests.
+In the light of later developments, Carroll's criterion should probably
+be relegated to the limbo of "near misses"; however, this does not detract
+from the fact that it was the first attempt to break away from an inflexible
+devotion to Thurstone's ambiguous, arbitrary, and mathematically unmanageable qualitative rules for his intuitively compelling notion of simple
+structure.
+Almost simultaneously with Carroll's development, Neuhaus and
+Wrigley [7], Saunders [8], and Ferguson [2] proposed what is usually called
+the quartimax method for orthogonal simple structure. Neuhaus and Wrigley
+suggest that a most easily interpretable factor matrix, in the simple structure
+sense, may be found when the variance of all nr squared loadings of the
+factor matrix is a maximum, i.e.,
+(2)
+
+q, = fur ~_, ~
+i
+
+(a~,) 2 -- ( ~ , ~ a~,)']/n2r 2 -- maximum.
+
+*
+
+i
+
+.
+
+Saunders' approach requires that the kurtosis (fourth moment over second
+moment squared) of all loadings and their reflections be a maximum,
+(3)
+
+q2 = nr ~_, ~_~ a~./(~_, ~E] a~.)2 = maximum.
+
+While Ferguson, basing his rationale on certain parallels with information
+theory, calls simply for
+(4)
+
+qa = ~
+
+~ a~. = maximum.
+
+i
+
+All these investigators are concerned with attaining a factor matrix
+with a maximum tendency to have both small and large loadings. While
+less obviously related to Thurstone's rules than Carroll's criterion, the
+emphasis on small loadings coincides with Thurstone's requirements of
+
+HENRY
+
+F.
+
+KAISER
+
+189
+
+zero loadings. For orthogonal factors, criteria (2), (3), and (4) are equivalent
+because of tile invariance of the sum of the communalities, ~ ] ~ ] , a~ .
+(This term, as well as other constants, disappear when differentiated in the
+calculus problem involved in finding the required critical point.)
+Indeed, it turns out that they are also equivalent to Carroll's criterion
+in the orthogonal case. Minimizing (1) is equivalent to maximizing (4)
+since the squared eommunality of a test is
+constant = ( ~ ] a ~ ) 2 = ~]a~, + 2 ~a~,a~,
+,
+
+s
+
+s<t
+
+and tile sum of squared communalities over all tests is
+constant =
+
++
+i
+
+=
+
+q3 +
+
+2
+
+s
+
+i
+
+s<~
+
+2L
+
+Thus, since the quartimax criterion plus twice Carroll's criterion is a constant, maximizing q3 is equivalent to minimizing f.
+Neuhaus and Wrigley- realized that none of these criteria can be realistically applied without the aid of an electronic computer--the calculations
+involved are too extensive for a desk calculator or punched card mechanical
+computers. Consequently, they programmed the quartimax method for the
+Illiac* and provided a rather extensive numerical investigation of the empirical
+properties of the quartimax method.
+Their results were perhaps more encouraging than Carroll's. Under
+the restriction of orthogonality Carroll's criterion (or the equivalent quartimax
+method) does not show nearly so obvious a bias as does Carroll's criterion
+when the restriction of orthogonality is removed. However, as an explication
+of orthogona] simple structure, the quartimax method does have a systematic
+bias which will be more fully examined in the next section.
+
+The Varimax Criterion
+ti'rom the outset, the above methods consider all nr loadings simultaneously. In every ease, however, these criteria m a y be applied separately
+to each row of the factor matrix and summed over rows for the final criterion
+because of the invariance of the comlnunalities. For example, Neuhaus and
+Wrigley could have defined the simplicity, say, of tile factorial composition
+of the jth test as the variance of the squared loadings for this test,
+(5)
+
+q* = [r ~ ] (a~,) ~ -- ( ~ ] a~,)2l/r 2.
+s
+
+*The Illiac is the University of Illinois electronic computer. Subsequently, the quar timax criterion has been programmed for the CRC-102A (Neuhaus), and the IBM 701
+(Kaiser). The varimax criterion described in the next two sections has been programmed
+for SWAC at UCLA (Comrey), the IBM 701 (Kaiser), Illiac (Dickman), and the IBM
+650 (Vandenberg).
+
+190
+
+PSYCHOt~IETRIKA
+
+To obtain the total criterion for the entire factor matrix, (5) could then be
+summed over all tests to give
+(6)
+
+q* = ~
+
+( ~ a~.)2]/r21 -
+
+{It E (a~.)~ -
+
+t
+
+s
+
+s
+
+Maximizing q* is equivalent to maximizing qa, again because constant terms
+vanish when differentiated.
+Equation (6) perhaps provides some insight into the quartimax
+criterion--its aim is to simplify the description of each row, or test, of the
+factor matrix. It is unconcerned with simplifying the columns, or factors, of
+the factor matrix (probably the most fundamental of all requirements for
+simple structure). The implication of this is that the quartimax criterion
+will often give a general factor. Under requirement (5) there is no reason
+why a large loading for each test may not occur on the same factor. In practice,
+this tendency for the quartimax criterion to yield a general factor is most
+pronounced when the unrotated factor matrix has a pronounced general
+factor.
+From the simple structure viewpoint, an immediate modification of the
+quartimax criterion is apparent. Let us define the simplicity of a factor as
+the variance of its squared loadings,
+(7)
+
+v* = [n ~ , (a~) 2 -- ( ~_, a~,) 2]/n 2.
+i
+
+i
+
+And for the criterion for all factors, define the maximum simplicity of a
+factor matrix as the maximization of
+(S)
+
+v'* = ~ v * , = ~
+
+{In ~--~.(a~,)2 -- (~,a~,)2]/n=},
+
+t.he variance of squared loadings by columns rather than by rows.
+Since a factor is a vector of correlation coefficients, the most interpretable factor is one based upon correlation coefficients which are maximally
+interpretable. Those correlations which satisfy this condition are patently
+obvious: correlations of 4- 1, which indicate a functional relationship, and
+correlations of zero, which indicate no linear relationship. On the other hand,
+middle-sized correlations are the most difficult to understand. Thus, it is
+seen why v* in (7) could be maximized for the maximum interpretability or
+simplicity of a factor, and more generally, why the interpretability of an
+entire factor matrix could be considered best when (8) is a maximum.
+Criterion (8) is the original raw varimax criterion [4]. In the original
+proposal of this criterion, it was shown to be mathematically equivalent,
+in the orthogonal case, to minimizing
+(9)
+
+c* = ~ , { In ~_, a ;2, a ~;, _ ( ~ , a~,) ( ~., a~ ,) ]/n 2 }
+• <t
+
+i
+
+i
+
+i
+
+i.e., minimizing the covariance of pairs of columns of squared loadings and
+
+191
+
+HENRY F. KAISER
+
+summing over all possible pairs of columns for the criterion. Criterion (9)
+then bears the analogous relationship to Carroll's criterion (1) that the
+varimax criterion (8) does to the quartimax criterion (6).
+Some distinctions between quartimax and varimax orthogonal solutions
+can be illustrated numerically. In Table 1 solutions for Thurstone's elevenvariable box problem ([12], pp. 373-375) are given. It will be noted that the
+quartimax solution [7] could hardly be called a simple structure. There is
+a large general factor, and the second factor seems only vaguely concerned
+Table I
+Thurstonels ll-Variable ~ox Froblem a
+Subjective
+(oblique)
+Test "
+
+quartimax
+
+Raw Varimax
+
+X
+
+Y
+
+Z
+
+X
+
+Y
+
+Z
+
+X
+
+Y
+
+Z
+
+x
+
+9o
+
+o5
+
+oo
+
+68
+
+65
+
+05
+
+91
+
+19
+
+16
+
+y
+
+04
+
+85
+
+O1
+
+83
+
+-47
+
+O0
+
+05
+
+93
+
+25
+
+z
+
+03
+
+05
+
+79
+
+42
+
+-08
+
+79
+
+ii
+
+17
+
+88
+
+xy
+
+62
+
+63
+
+-06
+
+99
+
+ii
+
+-OL
+
+6h
+
+74
+
+2O
+
+yz
+
+-o5
+
+5h
+
+57
+
+71
+
+-ho
+
+56
+
+o2
+
+65
+
+75
+
+x2y
+
+82
+
+37
+
+-01
+
+92
+
+41
+
+03
+
+8h
+
+51
+
+22
+
+xy 2
+
+35
+
+76
+
+02
+
+96
+
+-18
+
+03
+
+37
+
+86
+
+28
+
+2x + 2y
+
+53
+
+71
+
+-09
+
+i00
+
+O0
+
+-07
+
+5h
+
+82
+
+18
+
+(x2 * 22) ~
+
+52
+
+71
+
+-08
+
+99
+
+-O1
+
+-07
+
+53
+
+81
+
+18
+
+(x 2 * z2) ½
+
+52
+
+-07
+
+65
+
+59
+
+38
+
+68
+
+60
+
+09
+
+77
+
+xyz
+
+42
+
+h3
+
+L3
+
+88
+
+Oh
+
+L5
+
+L8
+
+58
+
+65
+
+aDecimal points omitted.
+
+with dimensions of boxes. On the other hand, the raw varimax solution
+closely parallels Thurstone's original subjective solution, given the restriction of orthogonality.
+In Table 2 are solutions for Holzinger and Harman's 24 psychological
+tests ([3], pp. 229-233). Both the quartimax [7] and the raw varimax methods
+seem to duplicate the subjectively rotated simple structure patterns. But
+the respective variance contributions of the factors are perhaps more interesting. It is seen that the dispersion of the ~i a~ for the subjective solution
+is less than the corresponding figures for the two analytic methods. In other
+words, Holzinger and Harman have made the factors a little more level or
+
+192
+
+PSYCHOMETRIKA
+Table 2
+Holzinger and Harman's Twenty-four Psychological Tests a
+Subjective
+
+Normal Varimax
+
+A
+
+C
+
+D
+
+A
+
+C
+
+D
+
+A
+
+B
+
+C
+
+D
+
+A
+
+B
+
+C
+
+D
+
+i
+2
+3
+4
+5
+6
+7
+8
+9
+IO
+II
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+2h
+
+i0
+32
+62
+07
+15 41
+iO
+12
+53
+15
+18
+53
+75 15
+26
+72 05
+28
+81
+08
+27
+54
+26 38
+76 -04
+29
+28 66 -19
+27
+61 -Oh
+13
+72 09
+2h
+63 31
+23 19 -02
+ii l~ 08
+05
+22 34
+15
+24 -03
+el 39
+20
+12
+22 18
+31 18 46
+17 46 33
+31 12 40
+31
+29 54
+39
+46 14
+
+20
+13
+13
+12
+15
+25
+Ii
+14
+30
+I~
+29
+03
+02
+48
+50
+h5
+62
+52
+39
+29
+2h
+40
+25
+31
+
+37 19
+60
+24 07
+38
+31
+el
+48
+36 07
+h6
+81 14 -02
+81
+03
+OO
+85
+07 -Oh
+66
+20
+20
+86 -06 -02
+23
+70 -12
+31 62 el
+16
+69 19
+35
+57 32
+32
+19 -03
+25 ii
+I0
+29 13
+37
+28
+24 02
+22 32 30
+28
+18
+19
+52
+09
+35
+35
+38
+35
+53
+04
+30
+55 19
+4h
+49
+43
+io
+
+07
+04
+el
+-oi
+-04
+06
+-IO
+-04
+io
+Ii
+23
+-oi
+-08
+42
+h5
+37
+57
+h7
+32
+14
+14
+26
+09
+20
+
+2~
+17
+22
+27
+78
+78
+8h
+60
+84
+17
+22
+06
+2h
+26
+17
+17
+20
+08
+19
+42
+23
+hh
+43
+40
+
+20 65
+07
+42
+02
+52
+08
+52
+21 12
+i0 13
+15
+IO
+25
+31
+el
+12
+71 -08
+63 06
+70
+23
+59
+39
+20 el
+ii
+13
+13
+41
+23 05
+31
+32
+18
+22
+12
+43
+he
+40
+06
+37
+21
+52
+h6 18
+
+13
+08
+06
+Oh
+06
+lh
+O0
+05
+19
+17
+29
+Oh
+-01
+h6
+48
+41
+61
+51
+36
+21
+20
+32
+16
+27
+
+lh
+IO
+15
+20
+75
+75
+82
+54
+80
+15
+17
+02
+18
+22
+12
+08
+14
+09
+13
+35
+15
+36
+35
+34
+
+19
+67
+07
+43
+02
+5h
+09
+~h
+21
+22
+IO
+23
+16
+21
+26
+38
+el
+22
+70 -06
+60 08
+69
+23
+59
+41
+16
+04
+07
+lh
+I0
+41
+18
+06
+26
+32
+15
+2h
+Ii
+h7
+38
+42
+oh
+41
+21
+57
+h4
+22
+
+17
+IO
+08
+07
+13
+21
+08
+12
+25
+24
+36
+ii
+06
+50
+50
+43
+64
+5h
+39
+25
+26
+36
+22
+34
+
+343
+
+236
+
+559
+
+242 196 142
+
+431
+
+260
+
+26~ 186
+
+350
+
+244 308
+
+236
+
+292 268
+
+B
+
+Raw Varimax
+
+Test
+
+~a~
+j -js
+
+B
+
+Quartimax
+
+aDecimal points o~itted.
+
+even in their contribution to variance than the analytic criteria. Of the
+two analytic criteria., the raw varimax solution has given a solution which is
+closer in this respect to Holzinger and Harman's. It is also noteworthy that
+as a result of these differences the large loadings of the factors with the larger
+variance contributions for the analytic methods are larger than the large
+loadings for the smaller factors, and similarly, the small loadings for the
+larger factors are larger than the small loadings for the smaller factors.
+Holzinger and Harman's subjective solution does not show this svstematie
+bias; their solution gives a more equitable patterning of factor loadings.
+How this bias may be removed is indicated in the next section. This
+leads to a revision of the varimax criterion, which appears to have more
+important characteristics than merely satisfying the rules of simple structure.
+Factorial Invariance: Normal Varimax
+
+It seems reasonable to attribute the systematic bias seen in both the
+quartimax and varimax solutions of the Holzinger-Harman data and other
+examples [4] to the divergent weights which implicitly are attached to the
+tests by their communalities. When one deals with fourth-power functions
+
+HENRY 1% KAISER
+
+193
+
+of factor loadings, a test with comnmnality 0.6, for example, would tend to
+influence the rotations four times as much as a test whose eommunality was
+0.3. Thus, while the most obvious weights have been applied to the tests,
+namely the square roots of their communalities, after the fact it seems that
+there is probably a better set of weights--weights which would tend to
+equalize to a greater extent the relative influence of each test during rotation.
+There seems no rational basis for choosing among different weighting
+schemes. Let us then make the agnostic confession of ignorance which pervades
+any form of correlational analysis. For the purposes of rotation, weight
+the tests equally, in the sense that the lengths of the common parts of the
+test vectors have equal length. (The author is indebted to Dr. D. R. Saunders
+for this suggestion.) The varimax criterion could then be rewritten as
+(10)
+
+v = ~
+
+{In ~ (a~Jh~) 2 ,
+
+[~_~ (a~8/h~)]2]jn2},
+i
+
+where h~ is the communality of the jth test. In contrast to (7) and (8), where
+the variance of the squared correlations of the tests with a factor is maximized,
+the variance of the squared correlations of the common parts of the tests
+(the reflections of the tests onto the common-factor space) with a factor is
+now being maximized. [Note from (10) that we are not advocating a permanent
+weightia~g of the tests by a weight inversely as the square root of their communalities. During rotation this weighting extends the common part of
+each test vector to unit length, but after rotation each of these vectors is
+shortened to its proper length by reweighting directly as the square root of
+the test's communality.]
+As will be seen in Table 2, under this modification the varimax criterio~
+(the normal varimax, since rotation is with respect to normalized common
+parts of tests) has effectively removed the small but disturbing bias in the
+raw varimax solution of Holzinger and Harman's example. It also has been
+shown in a number of other examples [61 that the normal varimax does not
+seem to deviate systematically from what may be considered the best
+orthogonal simple structure.*
+Thus far, however, merely a numerical-intuitive basis for a weighting
+procedure which leads to "prettier" results has been provided. Such a basis
+is quite unsatisfactory theoretically. Indeed, this sort of ad hoc thinking
+could conceivably lead to a different set of judgmentally determined weights
+for any particular example--a situation as scientifically reprehensible as
+the subjective graphical methods.
+There is a more fundamental rationale for attempting to establish the
+normal varimax criterion (10) as a mathematical definition for the rotation
+*Professor Andrew Comrey has apparently reached the same conclusion in an extensive application of the normal varimax criterion to interitem correlation matrices of the
+MMPI (personal communication). A further example, available from the writer, is the
+normal varimax solution of Thurstone's classic PMA study[ll] (dittoed).
+
+194
+
+PSYCHOMETRIK&
+
+problem. Consider the situation illustrated in Fig. 1. There are two clusters
+of tests, each of which is pure in the sense t h a t the reflections of the test
+vectors of the cluster onto the two-dimensional, common-factor space are
+eollinear. (While these clusters are drawn less t h a n 90 ° apart, the following
+a r g u m e n t is perfectly general.)
+"n"
+
+='nFzocm~ 1
+Case for which a normal varimax solution is invariant under changes in the composition
+of the test battery.
+I t is shown below t h a t the angle of rotation in a plane which maximizes
+(10) is
+(11)
+
+~b = ~ arctan
+
++
+
+E (u~ - :~) i
+
+'
+
+'
+
+[(E u,): - ( E ~;):] '
+i
+
+i
+
+where
+u+ = ( a i l / h + ) ~ -
+
+(a~2/h+) 2,
+
+and
+vi = 2 ( a ~ l / h i ) ( a i J h i ) .
+
+Let nA (n~ > 1) be the n u m b e r of tests in the first cluster and nB ( n B > 1)
+be the n u m b e r of tests in the second cluster (n = nA =k nB). I t is readily
+a p p a r e n t t h a t all tests of the first cluster have the same values for u, and v~ .
+
+HENRY F. KAISER
+
+195
+
+Let these values be UA and v , . Similarly let the values for the second cluster
+bc uB and v, . In this case (11) reduces to
+(12)
+
+2nAns(u,VA + u~v8 -- naY, -- u,va)
+¢ -- ~ a r c t a n n A n , ( u 2 + us2 -- vA2 -- vB2 -- 2 u a u , + 2vAv,) *
+
+A most important result is shown in (12). The n A n , term may be
+cancelled, indicating that the angle of rotation does not depend on the
+number of tests in each cluster, i.e., Jot the case illustrated in Fig. 1, the normal
+varimax solution is invariant under changes i n the composition of the test battery.
+
+This invariance property would seem to be of greater significance than
+the numerical tendencies of the normal varimax solution to define mathematically the doctrine of simple structure. Although factor analysis seems
+to have many purposes, fundamentally it is addressed to the following
+problem. Given an (infinite) domain of psychological content, infer the
+internal structure of this domain on the basis of a sample of n tests drawn
+from the domain. The possibility of success in such inferences is obviously
+dependent upon the extent which a factor derived from a particular battery
+or sample of tests approximates the corresponding unobservable factor in
+the infinite domain. If a factor is invariant under changing samples of tests,
+i.e., shows factorial invariance ([12], pp. 360-361), there is evidence that
+inferences regarding domain factors are correct.
+The normal varimax solution, according to the above result, allows such
+inferences; regardless of the sampling of tests, for the problem shown in Fig.
+1 it is possible to infer precisely the domain normal varimax factors. This is
+not true for either the quartimax or raw varimax solutions since the angle of
+rotation is a function of nA and ne .
+Note that domain normal varimax factors are not said to be more
+meaningJul than domain factors according to some different criterion; it is
+suggested that observed normal varimax factors will have a greater likelihood
+of portraying the corresponding domain factors.
+Although one often gets the impression that simple structure is the
+ultimate criterion of a rotational procedure, it is suggested here that the
+ultimate criterion is factorial invariance. The normal varimax solution was
+originally devised solely for the purpose of satisfying the simple structure
+criteria. But the fact that it shows mathematically this sort of invariance
+suggests that Thurstone's reasoning was basically directed toward factorial
+invariance. The principle of simple structure may probably be considered
+incidental to the more fundamental concept of factorial i::variance. This
+viewpoint renders meaningless the arguments concerning "psychological
+reality" of general factors, bipolar factors, simple structure factors, etc.
+Admittedly, the result (12) is for a special case. The correlations among
+the variables within each of the two pure clusters must form a perfect
+Spearman matrix, and the reduced correlation matrix as a whole must be
+
+196
+
+PSYOHOMETRIKA
+
+of rank two. Normal wu'imax does however give invariant results for two
+such Spearman clusters simultaneously, and consequently the normal varimax
+criterion is a two-dimensional generalization of the classic Spearman case.
+Obviously, the next step would be a generalization along the same lines to
+the r-dimensional ease; thus far, however, work on this problem suggests
+virtually insuperable mathematical difficulties.
+To investigate numerically the tendency of the criterion to give factoriatIy
+invariant solutions for r larger than two, again consider Holzinger and
+Harman's empirical data. Taking their centroid loadings, the first five tests
+were rotated then the first six, etc., systematically until the analysis of
+all 24 tests was reached, as in Table 2. The results of this application of the
+normal varimax criterion are given in Table 3. There, the normal varimax
+loadings for the four factors as a function of the changing number of tests
+are given.
+Note that factors A and C are essentially invariant from the outset;
+the loading changes, while somewhat systematic, are negligible--24 appears
+to be essentially infinite. On the other hand, factors B and D show more
+movement before they become stable. The reason for this is readily apparent.
+For both B and D, this movement occurs only while they are underdetermined,
+i.e., only while they contain no appreciable Ioadings. However, once they
+pick up a test or two with high loadings, their ambiguous definition abruptly
+stops, and they settle down to exhibit a degree of invnriance similar to the
+Table 3A
+Normal Varimax Loading Changes for Holzinger and Harman's Factor A
+
+(n = 5, 6, ..., 24) a
+
+n
+Test
+i
+2
+3
+4
+5
+6
+7
+8
+9
+iO
+II
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+2h
+
+5
+19
+12
+15
+21
+79
+
+6
+19
+12
+16
+21
+78
+78
+
+7
+18
+12
+15
+21
+78
+77
+83
+
+8
+
+9
+
+I0
+
+ii
+
+12
+
+13
+
+lh
+
+15
+
+16
+
+17
+
+18
+
+19
+
+20
+
+21
+
+22
+
+23
+
+2}~
+
+14
+i0
+
+lh
+i0
+
+15
+
+15
+
+20
+
+20
+
+75
+75
+82
+
+75
+
+19
+13
+16
+22
+79
+77
+8h
+
+18
+12
+16
+21
+78
+78
+83
+
+16
+12
+17
+21
+76
+77
+82
+
+16
+12
+17
+21
+75
+76
+82
+
+16
+12
+17
+21
+76
+77
+82
+
+16
+12
+17
+21
+76
+77
+82
+
+16
+ii
+16
+21
+76
+76
+82
+
+15
+ii
+16
+21
+75
+75
+82
+
+16
+Ii
+16
+21
+75
+75
+82
+
+15
+Ii
+16
+21
+75
+75
+82
+
+16
+12
+17
+21
+76
+75
+83
+
+16
+ii
+17
+21
+76
+75
+82
+
+15
+Ii
+16
+20
+75
+75
+82
+
+15
+II
+16
+20
+75
+75
+82
+
+15
+Ii
+16
+20
+75
+75
+82
+
+59
+
+58
+
+55
+
+55
+
+55
+
+55
+
+55
+
+55
+
+55
+
+55
+
+55
+
+55
+
+55
+
+55
+
+55
+
+82
+
+83
+18
+
+82
+15
+19
+
+83
+17
+21
+03
+
+83
+17
+21
+02
+I~
+
+81
+16
+19
+03
+19
+23
+
+80
+16
+18
+03
+19
+21
+ii
+
+80
+16
+18
+03
+20
+22
+12
+09
+
+80
+15
+18
+03
+20
+21
+ii
+09
+13
+
+80
+16
+18
+03
+20
+22
+12
+iO
+14
+Ol
+
+80
+16
+18
+03
+20
+22
+12
+09
+lh
+Ol
+13
+
+80
+16
+18
+03
+19
+22
+12
+09
+14
+OO
+13
+
+80
+16
+18
+03
+19
+22
+12
+09
+lh
+OO
+13
+
+80
+15
+18
+03
+19
+22
+12
+09
+lh
+oo
+13
+
+35
+
+35
+
+35
+
+16
+
+16
+36
+
+75
+82
+
+54
+
+5h
+
+16
+18
+O2
+18
+22
+12
+O9
+
+15
+17
+O2
+18
+22
+12
+O8
+
+lh
+
+14
+
+OO
+13
+35
+
+OO
+13
+35
+
+16
+
+15
+
+36
+35
+
+36
+35
+
+80
+
+80
+
+34
+
+~
+
+~
+~
+
+o
+~
+
+~
+~
+
+o
+
+~
+
+o
+
+~
+
+~
+
+~
+
+o
+
+~o
+
+~
+
+~
+
+~
+
+~
+
+~
+
+~o
+
+~o
+0
+
+~o
+
+o
+
+~o
+~
+
+~ o
+
+~o
+
+o
+
+~
+
+o
+
+o
+
+~
+
+~
+
+~
+
+~
+
+~
+
+0
+
+!
+
+o
+
+o
+
+~
+
+o
+
+o
+
+o
+
+o
+
+o
+o
+
+~
+
+~
+
+~
+o
+
+o
+
+i
+
+~
+o
+
+~
+
+o
+
+o
+
+~
+
+o
+
+o
+
+i
+
+i
+
+o
+
+o
+
+~
+
+I
+
+i
+
+~
+
+'
+
+~
+
+~
+
+~
+~
+
+~
+
+~
+
+~
+
+~
+
+~
+
+0
+
+0
+
+~
+
+~
+
+o
+
+~
+
+~
+
+o
+
+~
+~
+
+~
+
+~
+
+~
+
+~
+
+P
+
+5"
+
+c~
+
+cl
+
+¢0
+
+~
+
+o
+
+o
+
+~
+
+o
+
+~ o
+~
+
+o
+
+o
+o .....
+
+~
+~
+
+o
+~
+
+o
+
+~
+
+g
+
+~
+
+~
+
+~
+
+~ o
+~
+
+~
+
+o ~
+
+~
+
+0
+
+o
+
+~
+
+~
+
+S
+
+~
+
+o
+
+~
+
+~ o ~
+
+o
+
+0
+
+~
+
+~
+o
+
+0
+o
+
+0
+o
+
+0
+
+~
+
+~
+
+I 0
+
+0
+
+~
+
+~
+
+o
+
+o
+
+0
+
+~
+
+o
+
+o
+
+~
+
+o g oo
+~~
+
+0
+
+~ o ~ o o o ~
+~
+
+o
+~
+
+~ 0 ~ 0 0 0 ~
+
+o~ ~
+
+~
+
+I
+
+I
+
+!
+
+1
+
+o
+
+~ o ~ w ~ o o ~
+
+0
+
+~
+
+~
+
+~
+
+o
+
+~
+
+I
+I
+~0000
+
+P
+
+P
+
+~o
+
+Co
+
+O~
+
+H
+
+c~
+
+~
+o
+
+~
+o
+
+0~
+
+II,
+
+198
+
+FSYCHOMETRIKA
+Table 3D
+
+Nodal Varimm.x Loading Changes for Holzinger and Ha~man's Factor D
+
+(n = 5, 6 . . . . .
+
+2L) a
+
+;q
+
+Test
+
+5
+
+6
+
+7
+
+8
+
+9
+
+i0
+
+ii
+
+i2
+
+13
+
+lh
+
+15
+
+16
+
+17
+
+18
+
+19
+
+20
+
+-~!
+
+22
+
+23
+
+24
+
+1
+2
+3
+
+Ol
+Ol
+-00
+-03
+-00
+
+-00
+Ol
+Ol
+-03
+-06
+06
+
+O0
+02
+Ol
+-03
+
+Ol
+Ol
+~OO
+-Oh
+
+-07
+O0
+05
+-01
+
+Ol
+02
+-00
+-04
+
+Ol
+02
+Ol
+-03
+
+Ol
+02
+-00
+-oh
+
+02
+Ol
+-01
+-Oh
+
+08
+05
+02
+Ol
+
+-0] -02
+
+-09 -06 i06 -05 -05
+
+07
+
+09
+-06
+
+05
+-06
+-lh
+15
+
+17
+03
+05
+22
+15
+27
+-00
+-05
+
+13
+08
+06
+05
+12
+21
+07
+iO
+26
+19
+31
+05
+
+i4
+09
+07
+06
+12
+21
+O?
+iO
+26
+19
+32
+05
+
+15
+09
+07
+06
+lh
+22
+O9
+12
+27
+23
+35
+09
+
+19
+ii
+09
+09
+15
+22
+09
+i4
+26
+25
+37
+13
+
+18
+ii
+09
+08
+lh
+22
+O9
+13
+26
+25
+37
+12
+
+oi
+h9
+49
+
+o4
+50
+50
+
+08
+50
+50
+
+i?
+lO
+08
+08
+ih
+22
+08
+i3
+26
+2L
+J?
+I_1
+07
+
+17
+i0
+08
+o?
+lh
+22
+08
+12
+25
+2h
+37
+I_I
+07
+
+50
+50
+
+08
+50
+50
+
+i~
+i0
+O~
+o~
+1k
+22
+O9
+13
+26
+25
+37
+i2
+07
+
+17
+iO
+08
+o7
+13
+21
+O8
+i2
+25
+2J,
+36
+ii
+
+oo
+~9
+L9
+
+17
+l0
+08
+o7
+lh
+21
+08
+12
+25
+24
+36
+ii
+07
+
+50
+50
+
+50
+50
+
+50
+50
+
+o6
+50
+50
+
+)~2
+
+L2
+6h
+
+L~
+65
+
+&5
+6h
+
+L~4
+6£
+
+L~
+65
+
+~L
+6h
+
+/45
+6L
+
+~3
+65
+
+55
+
+55
+
+5b
+
+51~
+
+~
+
+94
+
+ho
+
+&o
+26
+
+}40
+26
+27
+
+39
+26
+26
+36
+
+39
+25
+26
+36
+22
+
+39
+25
+26
+36
+22
+
+5
+6
+7
+8
+9
+I0
+L1
+12
+13
+
+09
+-06
+-04
+
+05
+-i0
+-07
+II
+-00
+
+o6
+-I0
+-08
+12
+-07
+07
+
+06
+-09
+-07
+12
+O0
+12
+-lh
+
+05
+-i0
+-07
+Ii
+02
+15
+-ii
+-17
+
+L,7
+15
+16
+17
+18
+19
+2O
+21
+22
+23
+2~
+
+5L
+
+3~
+
+aDeci~al points omitted.
+
+other two factors, which had high loadings from the beginning. For n = 24,
+there appear to be good approximations to the domain normal varimax
+factors.
+
+The Oblique Case
+If the restriction of orthogonality is relaxed, it is impossible to apply
+directly the quartimax criterion (4) or the normal varimax criterion (t0).
+This is because interfactor relationships are not considered when the criteria
+are in this form, and when applied all factors will collapse into the same
+factor--that one factor which best meets the criterion. However, Carroll's
+version of the quartimax criterion explicitly considers interfaetor relationships and an oblique solution is attainable. As suggested by (9), if
+(13)
+
+c = E {In E (a~,/h~)(a~/h~) - ( E a~/h~)(E a~tlh~)]/n~},
+• <t
+
+i
+
+i
+
+i
+
+it may be shown that in the orthogonal ease v = - 2c. This alternative form
+of the normal varimax may then be used to obtain oblique factors. The
+mathematical problem of minimizing (13) is exactly analogous to Kaiser's
+[5] treatment for Carroll's criterion. Comput~tionally, the (iterative) solution
+involves finding the latent vector associated with the smallest latent root of
+a constantly changing symmetric matrix of order r.
+
+HENRY
+
+F.
+
+KAISER
+
+199
+
+Computational Appendix
+
+To compute an orthogonal normal varimax solution, the following
+procedure is suggested. The first step is to normalize the rows of the arbitrary
+reference factor matrix (e.g., principal axes or centroids) by dividing each
+element by h;. Rotation to the direction of the normal varimax factors may
+then be carried out with respect to these normalized loadings.
+The criterion (10) will be applied to two factors at a time. For this purpose,
+the following notation for an orthogonal rotation is convenient.
+
+where x; and y~, the present normalized loadings, are constants, and X;
+and Yi , the desired normalized loadings, are functions of ¢, the angle of
+rotation.
+It is immediately seen that
+(14)
+
+X~ = x; cos¢ -b y~ sin ¢,
+
+(15)
+
+Y; = - x t sin ¢ -{- yj cos ¢.
+
+Thus,
+
+(16)
+
+dXJd¢
+
+(17)
+
+d Y~/d¢ = - X i .
+
+= Y~,
+
+According to (10), in this plane,
+(18)
+
+n 2 v~ -- n ~
+
+(X2) 2 -- ( ~
+
+X2) 2 -~ n ~
+
+(y2)2 _ ( ~
+
+y~)2
+
+should be a maximum. Differentiating (18) with respect to ¢, using (16) and
+(17), and setting the derivative equal to zero,
+(19)
+
+n ~
+
+XY(X 2-
+
+y2) _
+
+~..Xy
+
+~
+
+(X ~ -
+
+Y~) = O.
+
+To solve (19) for ¢ in terms of xi and y~, substitute the values of X; and
+Y~ from (14) and (I5), consult a table of trigonometric identities, and, after
+a good deal of algebraic manipulation,
+(20)
+
+¢ = ¼ arctan
+
+2[~ ,, E (x ~ ~ y 2) ( x2 y ) - - E (x ~ y~) E (2xy)]
+~{ E [(2 _ y~)2 _ (2xy)~]} _ { [ E (~ - y~)]~ - [ E (2~y)]~}"
+-
+
+-
+
+If ui = xi,2 -- Yi2 and vi = 2xiy~, (20) reduces to the form (i1) above.
+Of course, (11)or (20) is only a necessary condition for a maximum.
+By taking the second derivative of (18) sufficient conditions for a maximum
+
+200
+
+PSYCHOMETRIKA
+
+m a y be found. These are summarized below.
+sign of numerator
+-}-
+
+sign of
+
+0 ° to
+"~22½°
+
+0 ° to
+--22½°
+
+denominator
+
++22½ °
+
+-22½ °
+
+to ~-45 °
+
+to --45 °
+
+T h e sign of n u m e r a t o r a n d d e n o m i n a t o r refer to t h e r i g h t - h a n d m e m b e r
+of (20); t h e values in the cells refer to ¢.
+These single-plane rotations are m a d e on factors 1 with 2, i with 3, • • • , 1
+w i t h r, 2 with 3, • .- , 2 with r, • • • , (r -- 1) with r, 1 with 2, - . . iteratively
+until r(r - 1)/2 successive rotations of ¢ = 0 are obtained, i.e., until the
+process converges. (It was shown [6] t h a t v in (10) c a n n o t be greater t h a n
+(r - 1)/r, a n d since each successive application of (20) can result 0nly in
+a non-decrease of v, this iterative procedure m u s t converge.) A f t e r convergence, each normalized test v e c t o r is restored to its proper length b y
+m u l t i p l y i n g b y ha .
+Since this article was accepted for publication, t h e a u t h o r has p r e p a r e d
+,~ detailed outline for coding an electronic c o m p u t e r p r o g r a m for tlle v a r i n ~ x
+criterion. This (dittoed) p a p e r is available f r o m t h e writer.
+REFERENCES
+[1] Carroll, J. B. An analytical solution for approximating simple structure in factor
+analysis. Psychometrika, 1953, 18, 23-38.
+[2] Ferguson, G. A. The concept of parsimony in factor analysis. Psychometrika, 1954,
+19, 281-290.
+[3] tIolzinger, K. J. and Harman, H. H. Factor analysis. Chicago: Univ. Chicago Press,
+1941.
+[4] Kaiser, H. F. An analytic rotational criterion for factor analysis. Amcr. Psychologist, 1955, 10~ 438. (Abstract)
+[5] Kaiser, H. F. Note on Carroll's analytic simple structure. Psychometrika, 1956, 21,
+89-92.
+[6] Kaiser, H. F. The v~rimax method of factor analysis. Unpublished doctoral dissertation, Univ. California, 1956.
+[7] Neuhaus, J. 0. and Wrigley, C. The quartimax method: an analytical approach to
+orthogonM simple structure. Brit. J. statist. Psychol., 1954, 7, 81-91.
+[8] Saunders, D. R. An analytic method for rotation to orthogonal simple structure.
+Princeton: Educational Testing Service Research Bulletin 53-10, 1953.
+[9] Thomson, G. H. The factorial analysis of human ability. (Sth ed.) New York: Houghton
+Mifflin, 1951.
+[10] Thurstone, L. L. Theory of multiple factors. Ann Arbor: Edwards Bros., 1932.
+[11] Thurstone, L. L. Primary mental abilities. Psychometric Monogr. No. 1, 1938.
+[12] Thurstone~ L. L. Multiple-factor analysis. Chicago: Univ. Chicago Press, 1947.
+
+Manuscript received 11/15/57
+Revised manuscript received 1/9/58
+
+

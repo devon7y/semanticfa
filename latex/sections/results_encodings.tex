@@ -24,7 +24,7 @@ List of 5
 }
 
 \texttt{sfa\_similarity()} derives all four Methods-defined encodings
-from one matrix; \texttt{atomic\_reversed} sign-flips the 18
+from one matrix. \texttt{atomic\_reversed} sign-flips the 18
 reverse-keyed embeddings, and \texttt{squid} follows
 \citet{pellert-etal-2026}:
 
@@ -50,8 +50,8 @@ mean_centered_pearson  0.394 0.938
 Off-diagonals confirm raw cosines' narrow positive band
 \citep{hommel-arslan-2025, pellert-etal-2026}: \valRangeCosMin--\valRangeCosMax{} over all
 \valNPairs{} pairs, even opposite-keyed ones (Figure~\ref{fig:corplot},
-left); negatives must be manufactured (sign-flipping, $\valRangeArMin$;
-\texttt{squid}, $\valRangeSqMin$), whereas \texttt{mean\_centered\_pearson}
+left). Negatives must be manufactured (sign-flipping, $\valRangeArMin$,
+and \texttt{squid}, $\valRangeSqMin$), whereas \texttt{mean\_centered\_pearson}
 matched the raw-cosine range to three decimals.
 
 \begin{figure}[H]

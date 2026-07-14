@@ -24,9 +24,9 @@ A growing literature shows embedding similarity recovers inventories' a-priori
 factor structure without responses. \citet{milano-etal-2025a} embedded four scales
 (Big-Five markers, RIASEC, Humor Styles, DASS), and a principal component analysis
 of cosines loaded over 70\% of items on their predicted construct, loadings
-correlating with response loadings; \citet{casella-etal-2024} report the same for
+correlating with response loadings. \citet{casella-etal-2024} report the same for
 the Big Five. \citet{guenole-etal-2025} formalize a \emph{substitutability
-assumption}---an item's embedding stands in for its response vector---and run
+assumption} (an item's embedding stands in for its response vector) and run
 \emph{pseudo-factor analysis} on the cosine matrix, recovering the five- and
 six-factor IPIP NEO-300 and HEXACO-240 structures.
 
@@ -35,16 +35,16 @@ The convergence comes with informative divergence, not equivalence:
 thresholds even as matched factors correlate and non-matched do not, while
 \citet{milano-etal-2025a} and \citet{casella-etal-2024} report agreeableness and
 extraversion items bleeding together, mirroring their elevated behavioral
-correlation---semantic compression of distinct dimensions. \citet{guenole-etal-2025}
+correlation (semantic compression of distinct dimensions). \citet{guenole-etal-2025}
 bound substitutability by training--response population similarity and intend
-pseudo-factor analysis as a pre-trial check---the response-free use case
+pseudo-factor analysis as a pre-trial check, the response-free use case
 \citet{milano-etal-2025a} and \citet{milano-etal-2025b} also state.
 
 The most direct evidence predicts the empirical inter-item correlations.
 \citet{hommel-arslan-2025} fine-tuned a sentence transformer so cosine proximity
 estimates behavioral correlation, recovering out of sample, across 79 scales,
 interitem correlations at $r=.59$ and scale intercorrelations and reliabilities at
-$r=.84$. To overcome polarity---cosines rarely turn negative---they relabeled the
+$r=.84$. To overcome polarity (cosines rarely turn negative), they relabeled the
 SNLI corpus with signed magnitudes, training the model to return negative
 similarities for contradiction, letting a similarity matrix stand in for a
 covariance matrix \citep{hommel-arslan-2025, bowman-etal-2015}.
@@ -56,6 +56,6 @@ individual humans, experts included, on item-pair correlations, though the resid
 gap cautions these approximate rather than replace empirical values. It is also
 partial: fitting confirmatory models to the cosine matrix against 31,697 VIA-IS-P
 respondents, \citet{feraco-toffalini-2025} found semantic and empirical correlations
-agreeing only moderately ($r=.67$)---every semantically fitting model fit the data,
-but only half of misfits truly misfit---so coherence is evidence, not identity, and
+agreeing only moderately ($r=.67$). Every semantically fitting model fit the data,
+but only half of misfits truly misfit, so coherence is evidence, not identity, and
 SFA a complement to, not a substitute for, data collection.

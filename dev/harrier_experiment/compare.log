@@ -1,0 +1,26 @@
+dims: 4096 5376 
+There were 48 warnings (use warnings() to see them)
+human n: 874434 
+
+==== Qwen3-8B (dim 4096) ====
+votes:  parallel 5  kaiser 6  TEFI 2  EGA 5  EKC 6  | consensus 5 | MAP 10 
+eig1 29.63 | eig2-6 1.92 1.74 1.48 1.27 1.01 | gap l5/l6 1.257
+CD improvement by k: 15.3 22.2 16.1 14.9 14.2 11.8 12.5 15.2 13.9
+separation: within 0.647 between 0.568 d 1.18
+theory: NMI 0.527 ARI 0.402 | KMO 0.971 RMSR 0.032
+omega(assigned) 0.803 | Phi off mean 0.539 max 0.685 | DAAL gap 0.279
+human: matched Tucker 0.744 | pair-level r 0.434
+
+==== Harrier-27B (dim 5376) ====
+votes:  parallel 3  kaiser 4  TEFI 4  EGA 6  EKC 4  | consensus 4 | MAP 10 
+eig1 35.77 | eig2-6 1.31 1.22 1.06 0.93 0.72 | gap l5/l6 1.292
+CD improvement by k: 18.9 19.1 13.1 10.7 22.2 9.4 6.9 -17.0 15.3
+separation: within 0.758 between 0.698 d 1.34
+theory: NMI 0.557 ARI 0.427 | KMO 0.980 RMSR 0.023
+omega(assigned) 0.785 | Phi off mean 0.607 max 0.787 | DAAL gap 0.270
+human: matched Tucker 0.748 | pair-level r 0.522
+Warning messages:
+1: 'scoring' has reverse-keyed items but is ignored for encoding = "mean_centered_pearson": this method is keying-free by design. Use "atomic_reversed" for keyed sign-flipping. 
+2: 'scoring' has reverse-keyed items but is ignored for encoding = "mean_centered_pearson": this method is keying-free by design. Use "atomic_reversed" for keyed sign-flipping. 
+
+DONE

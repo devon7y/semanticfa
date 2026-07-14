@@ -8,10 +8,12 @@ sfa_coverage(
   items,
   region,
   definition = NULL,
+  keep_frac = NULL,
   construct = NULL,
   factor = NULL,
   cross = FALSE,
   radius_q = 0.95,
+  radius = NULL,
   alpha = 0.05,
   p_adjust = c("none", "BH"),
   n_draws = 20L,
@@ -50,10 +52,24 @@ a message.}
 
 \item{definition}{Optional definition overriding the region's stored
 one - the construct-narrowing workflow. When supplied, the region is
-first restricted to the sentences that the narrower definition explains
-better than the region's original definition (higher embedding
-similarity), then the usual filters apply with the new definition as
-seed. Default \code{NULL} uses \code{region$definition} with no restriction.}
+first restricted to the sentences the narrower definition explains
+best, then the usual filters apply with the new definition as seed.
+How the restriction is made depends on \code{keep_frac} (see below).
+Default \code{NULL} uses \code{region$definition} with no restriction.}
+
+\item{keep_frac}{How much of the region a supplied \code{definition} keeps.
+\code{NULL} (default) uses the comparative rule: keep the sentences more
+similar to the narrower definition than to the region's original one.
+That rule is strict - when the narrower definition is a close
+paraphrase of the original, sentences containing the construct term
+hug the original definition and the rule can keep almost nothing. A
+number in (0, 1] switches to \strong{rank narrowing}: keep the \code{keep_frac}
+fraction of the region most similar to the narrower definition, which
+always yields a region of known size. Rank narrowing is the
+recommended workflow for testing a narrowed construct claim, usually
+together with a fixed \code{radius} from the un-narrowed audit (narrowing
+shrinks the region, and recalibrating on the shrunken region would
+change the yardstick along with the claim).}
 
 \item{construct}{Optional display label for the (possibly narrowed)
 construct. Default: the region's construct, or the first words of a
@@ -79,6 +95,20 @@ states this caveat. \code{\link[=sfa_cross_matrix]{sfa_cross_matrix()}} extracts
 \item{radius_q}{Null quantile defining the coverage radius. Default 0.95
 (ideal scale covers ~95\% of the region; each gap call is a test at
 \code{alpha = 1 - radius_q}).}
+
+\item{radius}{Optional fixed coverage radius, overriding the calibrated
+one - the anchoring workflow, the analogue of holding a test's cut
+score fixed when equating forms. Calibration ties the radius to the
+audited condition, so any comparison that changes the item set or the
+region (deleting items, auditing a short form, rank narrowing) would
+otherwise move the yardstick along with the thing being measured:
+deleting items \emph{grows} the calibrated radius and can raise coverage.
+For such comparisons, take \verb{$radius} from the reference audit and pass
+it here so every condition is scored against the same yardstick. The
+item-relevance null is drawn at the fixed radius, and bootstrap
+resamples hold it fixed rather than recalibrating. The calibrated
+radius is still computed and returned as \verb{$radius_calibrated} for
+comparison. Default \code{NULL} calibrates as usual.}
 
 \item{alpha}{Per-item test level against the ideal-item null. Default
 0.05. An item is flagged when its corroboration count's empirical
@@ -185,8 +215,11 @@ terms and quoted example sentences from the region - real corpus content
 the scale does not reach), or \emph{narrow the construct claim} (the covered
 subregion's distinctive terms describe what the items actually measure).
 Narrowing is cheap to test: re-run \code{sfa_coverage()} on the same region
-with a narrower \code{definition} (for example "academic procrastination"),
-which re-applies the sense gate at audit time - no new extraction.
+with a narrower \code{definition} (for example "academic procrastination")
+and a \code{keep_frac}, which restricts the region at audit time - no new
+extraction. Hold \code{radius} at the un-narrowed audit's value so the
+narrowed claim is scored against the same yardstick (see the two
+parameters below).
 }
 \examples{
 \dontrun{
@@ -206,9 +239,16 @@ battery                    # one row per factor
 battery$Depression         # full report for one subscale
 sfa_coverage(dass_items, reg_dep, factor = "Depression")  # just one
 
-# test a narrower claim against the same region - no new extraction
-sfa_coverage(my_items, region,
+# test a narrower claim against the same region - no new extraction.
+# Rank narrowing keeps the half of the region the narrower definition
+# explains best; the fixed radius anchors the comparison to the full
+# audit's calibration.
+sfa_coverage(my_items, region, keep_frac = 0.5, radius = audit$radius,
              definition = "Academic procrastination is the delay of
                            study-related tasks despite expecting costs.")
+
+# the same anchoring applies to any item-set comparison, e.g. a
+# deletion study: score the reduced scale at the full scale's radius
+sfa_coverage(my_items[-drop_idx, ], region, radius = audit$radius)
 }
 }

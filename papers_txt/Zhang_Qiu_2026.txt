@@ -1,0 +1,316 @@
+EMBEDDINGS PREDICT TEST ITEM CORRELATIONS
+
+Can Large Language Model Embeddings Predict Test Item Correlations? A Multilevel Analysis
+
+Dengdeng Zhang1, and Boyu Qiu1
+1
+
+Department of Applied Psychology, School of Health Management, Guangzhou Medical
+University
+
+Author Note
+Correspondence concerning this article should be addressed to Dr. Boyu Qiu, School of Health
+Management, Guangzhou Medical University, Guangzhou, Guangdong, 511436, China. Email:
+boyuqiu@gzhmu.edu.cn
+
+1
+
+EMBEDDINGS PREDICT TEST ITEM CORRELATIONS
+
+2
+
+Abstract
+Large language model embeddings show promise for modeling psychometric properties directly from
+item text. This study provides a rigorous, condition-sensitive validation by testing whether the cosine
+similarity of sentence embeddings predicts empirical inter-item correlations, and whether this
+relationship is uniform across different psychological constructs. With a sample of 1010 participants, we
+analyzed 463 item pairs nested within nine dimensions across four scales (assessing internet gaming
+disorder, dark triad traits, aggression, and life satisfaction). A multilevel model was fitted with empirical
+correlation as the outcome, LLM cosine similarity as a fixed effect, and random slopes and intercepts
+across dimensions. Results confirmed a significant positive fixed effect, indicating that greater semantic
+similarity predicts stronger empirical correlations. Crucially, significant random slope variance revealed
+that the strength of this predictive relationship differed substantially across dimensions. Furthermore, a
+strong negative correlation was found between the random intercepts and slopes, suggesting that for
+constructs with higher baseline inter-item cohesion, semantic similarity plays a proportionally smaller
+role. The findings offer conditional support for the theory that semantic overlap is a systematic source of
+item covariance while highlighting the moderating role of the psychological construct itself.
+Keywords: sentence embeddings, item correlations, multilevel modeling, computational
+psychology
+
+EMBEDDINGS PREDICT TEST ITEM CORRELATIONS
+
+3
+
+Can Large Language Model Embeddings Predict Test Item Correlations? A Multilevel Analysis
+The covariance among items within a psychological scale is a fundamental psychometric
+property that both defines and is defined by the underlying construct. Traditionally, this covariance is
+assumed to arise primarily because all items share a relationship with the latent construct they aim to
+measure (Streiner, 2003). Empirical and theoretical work suggests that a portion of this inter-item
+covariance can be attributed to the semantic similarity between the items themselves (Ravenda et al.,
+2025). A recent review (Arnulf et al., 2024) has also concluded that the relationship between variables is
+often semantic instead of empirical. While traditionally estimated from large samples of human
+responses, the emerging computational psychology paradigm posits that this covariance may, in part, be
+derivable from the semantic representation of the items themselves.
+Large Language Models (LLMs) offer a powerful, untapped resource for this endeavor,
+generating dense semantic embeddings that quantitatively capture the meaning of items. These models
+introduce new capabilities to follow instructions and be trained for diverse semantic matching tasks
+based on user demands (Zhu et al., 2026). Specifically, LLMs map inputs to high-dimensional vectors
+where points close in the embedding space correspond to similar meanings (Martínez et al., 2024).
+Empirical research has demonstrated a significant correlation between the cosine similarities of these
+embeddings and actual empirical correlations among items (Feraco & Toffalini, 2025). However, existing
+research has yet to rigorously test whether this predictive relationship holds consistently across scales
+with different internal structures (e.g., item pairs nested into dimensions).
+Our study extends previous works by modeling the predictive relationship within a multilevel
+framework. We analyzed item pairs from four scales, nesting them within their respective
+subdimensions in a linear mixed model. This allows us to partition variance and assess whether
+prediction strength differs significantly between a scale’s dimensions. Our aim is not merely to
+
+EMBEDDINGS PREDICT TEST ITEM CORRELATIONS
+
+4
+
+demonstrate an association but to provide a rigorous, condition-sensitive validation of LLM embeddings
+as a computational model.
+Method
+Participants
+Human participants were recruited from local universities. After our screening process through
+the lie detector questions, the final sample consisted of 1,010 valid questionnaires, including 695 male
+students (68.81%; Mean age: 21.14 years, SD: 1.98, Range: 17-37) and 315 female students (31.19%;
+Mean age: 21.44 years, SD: 2.21, Range: 18-32). Informed consent forms, detailing the study’s purpose,
+the voluntary basis of participation, and the commitment to data privacy, were received from
+participants.
+Measures
+Each participant completed the short-form Internet gaming disorder scale, the dirty dozen, the
+aggression questionnaire, and the Life Satisfaction Scale. These scales encompassed both
+unidimensional and multidimensional constructs, positive and negative traits, personality and behavior,
+as well as diverse scoring methodologies.
+The short-form Internet gaming disorder scale: This 9-item unidimensional scale (Pontes &
+Griffiths, 2015) was developed directly from the DSM-5 diagnostic criteria for Internet gaming disorder.
+Respondents indicate their agreement with statements describing gaming-related behaviors and
+psychological consequences on a 5-point scale (1 = strongly disagree, 5 = strongly agree). The
+Cronbach’s alpha of the unidimensional scale in the current study is .928.
+The dirty dozen: The dirty dozen scale (Jonason & Webster, 2010) was employed to assess the
+dark triad traits. This 12-item scale comprises three 4-item subscales measuring Machiavellianism,
+Psychopathy, and Narcissism. Respondents rated their agreement with each statement on a 7-point
+
+EMBEDDINGS PREDICT TEST ITEM CORRELATIONS
+
+5
+
+scale (1 = strongly disagree, 7 = strongly agree). The Cronbach’s alpha of the Machiavellianism,
+Psychopathy, and Narcissism were .911, .912, and .829, respectively.
+The aggression questionnaire: The Buss-Perry Aggression Questionnaire (Buss & Perry, 1992)
+was used to measure aggressive tendencies. This 29-item scale consists of four subdimensions: Physical
+aggression, Verbal aggression, Anger, and Hostility. Participants rated their agreement on a 5-point scale
+(1 = strongly disagree, 5 = strongly agree). The Cronbach’s alpha of the Physical aggression, Verbal
+aggression, Anger, and Hostility subdimensions were .795, .777, .867, and .845, respectively.
+The satisfaction with life scale: The Satisfaction With Life Scale (Diener, 1984) was used to assess
+life satisfaction. This unidimensional scale consisted of five items, which required respondents to
+indicate their agreement on a 7-point scale (1 = strongly disagree, 7 = strongly agree). The Cronbach’s
+alpha of the unidimension in the current study is .905.
+Analysis
+To derive semantic representations of the scale items, we extracted dense embedding vectors
+for each item’s textual content using the BGE-M3 model (Chen et al., 2025). This model generates a
+1024-dimensional dense vector for each input sentence, capturing its semantic information in a
+continuous space. For every possible pair of items within a scale, we computed the cosine similarity (i.e.,
+the cosine of the angle) between their corresponding embedding vectors. This cosine value, ranging
+from -1 to 1, served as the primary predictor, quantifying the computed semantic similarity for each
+item pair. The final dataset for analysis consisted of these item pairs, nested within their respective scale
+dimensions, with each pair containing its LLM-predicted cosine similarity and the corresponding
+empirical correlation coefficient.
+Based on the constructed dataset of item pairs, we employed a multilevel modeling approach
+using the Linear Mixed Models module in JASP (JASP Team, 2025) to account for the hierarchical nesting
+of the item pairs. The empirical correlation coefficient for each item pair served as the dependent
+
+EMBEDDINGS PREDICT TEST ITEM CORRELATIONS
+
+6
+
+variable. The fixed effect structure included the LLM-derived cosine similarity as the primary predictor.
+To model the nesting of item pairs within specific uni- or sub-dimensions of their respective scales, we
+specified dimensions as a random factor, allowing both the intercept and the slope of the cosine
+similarity predictor to vary randomly across these dimensions. This random components structure also
+estimated the potential correlation between the random intercepts and random slopes. For hypothesis
+testing, we specified Type III sum of squares and used likelihood ratio tests to evaluate the significance
+of the fixed effect. Factor contrasts were set to sum coding for the random factor.
+Results
+The final dataset for analysis comprised 463 item pairs nested within nine theoretical
+dimensions. For the linear mixed model, the likelihood ratio test indicated that the fixed effect of cosine
+similarity was statistically significant, χ²(1) = 4.07, p = .044. The fixed effect estimate was b = 0.41, SE =
+0.17, t(7.58) = 2.40, p = .045. This confirms that, on average across all dimensions, a higher cosine
+similarity between item embeddings predicts a stronger empirical correlation between those items. See
+also Table 1 for the results of the linear mixed model.
+Crucially, the random effects structure revealed significant variance between dimensions. The
+estimated SD for the random intercept was 0.31 (variance = 0.09), and for the random slope of cosine
+similarity was 0.43 (variance = 0.18). This indicates substantial variability in both the baseline correlation
+level and the strength of the predictive relationship across different psychological constructs.
+Furthermore, the correlation between the random intercept and slope was strongly negative (r = -.93),
+suggesting that within dimensions where the average empirical correlation is higher, the predictive
+utility of the LLM cosine similarity tends to be weaker.
+Discussion
+The results provide a nuanced answer to our research question: while LLM-derived semantic
+similarity significantly predicts empirical item correlations on average, this predictive relationship is not
+
+EMBEDDINGS PREDICT TEST ITEM CORRELATIONS
+
+7
+
+uniform but is substantially moderated by the psychological dimension. The significant fixed effect
+confirms the fundamental proposition that shared semantic content, as captured by modern embedding
+models, is a systematic source of covariation among scale items. However, the considerable variance
+associated with the random slope indicates that the strength of this relationship differs meaningfully
+across the constructs measured in this study.
+The significant random slope variance indicates that the predictive strength of semantic
+embeddings varies systematically across constructs. This finding aligns with the psychometric
+understanding that items are not pure indicators of a latent trait but are also influenced by constructirrelevant item attributes, such as perspective or phrasing, which systematically affect responses
+(Widhiarso et al., 2025). It can be inferred that LLM embeddings, which primarily capture semantic
+content, are more effective at predicting covariance for constructs where the shared meaning is the
+dominant construct-irrelevant item attributes. Conversely, for constructs where other constructirrelevant item attributes (e.g., social desirability, temporal frame) or non-semantic method factors
+heavily influence responses, the embeddings’ predictive power diminishes.
+The strong negative correlation between the random intercepts and slopes suggests a potential
+compensatory mechanism. Dimensions with higher average empirical correlations (intercepts)
+demonstrated a weaker link between semantic similarity and those correlations (slopes). One plausible
+interpretation is that in dimensions where items already show high intrinsic covariance (potentially due
+to a strong, unified latent trait or other shared method factors), the additional explanatory power
+provided by semantic overlap is relatively diminished. Conversely, for dimensions with lower baseline
+inter-item correlation, semantic similarity emerges as a more salient and distinguishable contributor to
+their observed covariance. This finding implies that in well-defined, high-cohesion constructs, semantic
+similarity may play a relatively smaller role in determining empirical covariance compared to other
+shared factors.
+
+EMBEDDINGS PREDICT TEST ITEM CORRELATIONS
+
+8
+
+Methodologically, this study moves beyond asking if LLM embeddings predict correlations to
+rigorously quantify how much this effect varies across different psychometric contexts. This directly
+addresses the core question raised in our introduction regarding the uniformity of this predictive
+relationship. The framework partitions variance, distinguishing the general predictive signal from the
+substantial dimension-specific heterogeneity, thereby offering a more precise and conditional
+assessment of model validity than a single-level analysis would allow. It provides a template for future
+research to test other computational features or compare different LLMs under the same hierarchical
+structure. Practically, this suggests their potential utility lies in auxiliary roles, such as in the initial stages
+of scale development to generate hypotheses about item relationships or to flag items with potentially
+problematic semantic overlap, rather than as a standalone substitute for empirical validation.
+These contributions must be evaluated within the context of several limitations. First, the LLM
+embeddings used are static, general-purpose semantic representations that may not capture the
+dynamic, context-dependent meaning or the subjective response processes of actual human
+respondents. Second, the analysis was confined to four scales; while they varied in structure, they may
+not fully represent all types of psychological constructs, particularly those more reliant on situational
+context or cultural nuance. Third, our analysis focused on predicting pairwise correlations rather than
+more complex, higher-order factor structures. Finally, we did not explore other textual features of the
+items (e.g., concreteness, emotional valence) that might interact with or enhance the predictive power
+of semantic embeddings. Future work should incorporate these elements to build more comprehensive
+computational models of psychometric structures.
+
+EMBEDDINGS PREDICT TEST ITEM CORRELATIONS
+
+9
+
+References
+Arnulf, J. K., Olsson, U. H., & Nimon, K. (2024). Measuring the menu, not the food: "psychometric" data
+may instead measure "lingometrics" (and miss its greatest potential). Frontiers in
+psychology, 15, 1308098. https://doi.org/10.3389/fpsyg.2024.1308098
+Buss, A. H., & Perry, M. (1992). The aggression questionnaire. Journal of personality and social
+psychology, 63(3), 452–459. https://doi.org/10.1037//0022-3514.63.3.452
+Chen, J., Xiao, S., Zhang, P., Luo, K., Lian, D., & Liu, Z. (2025). M3-Embedding: Multi-Linguality, MultiFunctionality, Multi-Granularity Text Embeddings Through Self-Knowledge Distillation. arXiv.
+https://doi.org/10.48550/arXiv.2402.03216
+Diener E. (1984). Subjective well-being. Psychological bulletin, 95(3), 542–575.
+Feraco, T., & Toffalini, E. (2025). SEMbeddings: how to evaluate model misfit before data collection
+using large-language models. Frontiers in psychology, 15, 1433339.
+https://doi.org/10.3389/fpsyg.2024.1433339
+JASP Team (2025). JASP (Version 0.95.3)[Computer software].
+Jonason, P. K., & Webster, G. D. (2010). The dirty dozen: a concise measure of the dark
+triad. Psychological assessment, 22(2), 420–432. https://doi.org/10.1037/a0019265
+Martínez, G., Conde, J., Merino-Gómez, E., Bermúdez-Margaretto, B., Hernández, J. A., Reviriego, P., &
+Brysbaert, M. (2024). Establishing vocabulary tests as a benchmark for evaluating large language
+models. PloS one, 19(12), e0308259. https://doi.org/10.1371/journal.pone.0308259
+Pontes, H. M., & Griffiths, M. D. (2015). Measuring DSM-5 Internet Gaming Disorder: Development and
+validation of a short psychometric scale. Computers in Human Behavior, 45, 137–143.
+https://doi.org/10.1016/j.chb.2014.12.006
+
+EMBEDDINGS PREDICT TEST ITEM CORRELATIONS
+
+10
+
+Ravenda, F., Preti, A., Poletti, M., Mira, A., & Raballo, A. (2025). Rethinking psychometrics through LLMs:
+how item semantics shape measurement and prediction in psychological
+questionnaires. Scientific reports, 15(1), 37313. https://doi.org/10.1038/s41598-025-21289-8
+Streiner D. L. (2003). Being inconsistent about consistency: when coefficient alpha does and doesn't
+matter. Journal of personality assessment, 80(3), 217–222.
+https://doi.org/10.1207/S15327752JPA8003_01
+Widhiarso, W., Steyer, R., & Perossa, A. (2025). Construct-irrelevant item attributes: a framework to
+classifying items based on context and referent. Frontiers in psychology, 16, 1446798.
+https://doi.org/10.3389/fpsyg.2025.1446798
+Zhu, Y., Yuan, H., Wang, S., Liu, J., Liu, W., Deng, C., … Wen, J.-R. (2026). Large language models for
+information retrieval: A survey. ACM Transactions on Information Systems, 44(1), 1–54.
+https://doi.org/10.1145/3748304
+
+EMBEDDINGS PREDICT TEST ITEM CORRELATIONS
+
+11
+
+Table 1
+Summary of the linear mixed model
+Fixed Effects
+
+b
+
+SE
+
+t(df)
+
+p
+
+Intercept
+
+0.163
+
+0.120
+
+1.36(7.99)
+
+.210
+
+Cosine similarity
+
+0.413
+
+0.172
+
+2.40(7.58)
+
+.045
+
+Random Effects
+
+SD
+
+Variance
+
+Dimensions
+
+0.305
+
+0.093
+
+Residual
+
+0.427
+
+0.183
+
+Model Fit
+Log-Likelihood
+
+302.404
+
+Observations
+
+463
+
+Note. The table presents the estimates of the linear mixed model predicting empirical item correlations
+from LLM-derived cosine similarity. The model included a fixed effect for cosine similarity and random
+intercepts across dimensions. b = unstandardized estimate; SE = standard error.
+
+

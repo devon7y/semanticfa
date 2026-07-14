@@ -1,0 +1,2051 @@
+Psychonomic Bulletin & Review
+2001, 8 (3), 531-544
+
+Characterizing semantic space:
+Neighborhood effects in word recognition
+LORI BUCHANAN and CHRIS WESTBURY
+University of Alberta, Edmonton, Alberta, Canada
+and
+CURT BURGESS
+University of California, Riverside, California
+A specification of the structural characteristicsof the mental lexicon is a central goal in word recognition research. Of various word-level characteristics,semantics remains the most resistant to this endeavor. Although there are several theoretically distinct models of lexical semantics with fairly clear
+operational definitions (e.g., in terms of feature sharing, category membership, associations, or cooccurrences), attempts to empirically ad judicate between these different models have been scarce. In
+this paper, we present several experiments in which we examined the effects of semantic neighborhood
+size as defined by two models of lexical semantics—one that defines semantics in terms of associations, and another that defines it in terms of global co-occurrences. We present data that address the
+question of whether these measures can be fruitfully applied to examinations of lexical activation during visual word recognition. The findings demonstrate that semantic neighborhood can predict performance on both lexical decision and word naming.
+
+Models of visual word recognition describe the processes by which orthographic, phonological, and semantic information is stored and activated during singleword reading. This set of processes is well defined insofar
+as the relevant characteristics of single words can be
+specified along three (orthographic, phonological, and
+semantic) dimensions. Although two of these dimensions
+(phonology and orthography) are characterized by wellunderstood and limited sources of variability, semantics
+is not. This is most evident when one considers neighborhood size (N) effects in word recognition. The effects
+of phonological neighborhood (PN) on lexical decision
+(LD) and word identification are well studied in auditory
+word recognition (see discussions in Luce, Pisoni, &
+Goldinger, 1990; Marslen-Wilson, 1987; McClelland &
+Elman, 1986). Similarly, the effects of orthographic neighborhood (ON) on LD and word identification are well
+studied in written word recognition (e.g., Andrews, 1992;
+Grainger & Jacobs, 1996; Peereman & Content, 1995;
+Sears, Hino, & Lupker, 1995). Most models of visual
+word recognition make the assumption that orthographic
+and semantic lexicons work in a similar fashion. However, there is a paucity of studies investigating semantic
+This research was funded by the Alberta Heritage Foundation for
+Medical Research. The authors thank D. Balota and D. Spieler for their
+generosity in supplying us with variables of interest. We also thank
+P. Dixon, R. Borowsky, M. Masson, K. Forster, and an anonymous reviewer for comments on an earlier draft. Correspondence concerning
+this article should be addressed to L. Buchanan, Psychology Department, University of Windsor, Windsor, ON, N9B 3P4 Canada (e-mail:
+buchanan@uwindsor.ca).
+
+neighborhood size (SN) effects. Semantics remains the
+blackest of boxes in theories of word recognition.
+The relative impoverishment of our knowledge of SN
+effects stems in part from that fact that the size of the
+problem space of semantics is enormous. In contrast to
+phonology and orthography, there are no clear and undisputed semantic components for defining semantic similarity. Words may be semantically related to each other in
+many ways. In the worst case, this means that the problem
+space of semantics may not be definable at anything beyond the level of an individual. In the best case, semantics has an extremely large and highly variable structure
+that, nonetheless, has some shared characteristics. We
+take an intermediate position: Although important individual differences in semantics do exist, the structure of
+semantic space is subject to general organizational influences that can be established and clearly defined. Such a
+view raises several questions. What is the nature of the
+principles that guide this organization? How is semantic
+space developed? How does its structure relate to visual
+word recognition processes? This study primarily addresses the final question. It has been shown in other
+work that SN can predict the word-naming performance
+of impaired readers (Buchanan, Burgess, & Lund, 1998;
+Buchanan, Kiss, & Burgess, 2000). In this paper, we examine whether SN measures can predict normal readers’
+responses during word recognition tasks.
+Object-Based Semantics
+Many models of semantics have attempted to address
+the preceding questions. These models can be categorized
+
+531
+
+Copyright 2001 Psychonomic Society, Inc.
+
+532
+
+BUCHANAN, WESTBURY, AND BURGESS
+
+into two broad classes: feature- or category-based models and association or co-occurrence models. Feature- or
+category-based models are formulated with respect to
+properties of the objects to which a word refers (objectbased views). Association or co-occurrence models are
+defined by properties of the language used to refer to
+those objects (language-based views).
+Broadly, according to object-based views of the semantic system, semantic information is represented in a
+manner that encodes conceptual closeness in terms of
+the similarity of the objects themselves. In a featurebased view, this closeness reflects feature overlap—
+whether physical, in the case of concrete nouns, or abstract, in the case of such concepts as emotions or states
+of being. Thus, concepts that share many features are semantic neighbors. In contrast, the closeness of objects in
+a category-based view would reflect the membership of
+these objects in a given category (DOG and CAT are both
+furry house pets). Treating category membership as a (possibly heavily weighted) feature, however, eliminates the
+difference between these models.
+Under such object-based views of semantics, the spread
+of activation between semantic neighbors is a function
+of the number of shared features. For example, CAT and
+DOG are close semantic neighbors because they share many
+features (e.g., four legs, fur, tail, etc.) and/or because they
+come from the same category of objects. As features for
+CAT are activated, several features of its neighbor DOG
+also become activated. Activation of more specific features (such as meows) provides a reader of the word CAT
+with knowledge that the concept under consideration is
+CAT (see McClelland & Kawamoto, 1986, and Plaut &
+Shallice, 1993, for computational models incorporating
+this type of semantics).
+Others (i.e., Borowsky & Masson, 1996; Masson, 1995;
+Plaut, 1995, 1997) have used a related approach in which
+relationships between word meanings are represented by
+similarity between binary vectors associated with those
+words. In these instantiations, however, the bits of which
+those vectors are composed do not refer to any specifically identified features. Furthermore, local co-occurrence
+plays a role in semantic relationships. Therefore, these
+models provide a hybrid between pure object-based models and local co-occurrence models.
+Language-Based Semantics
+The second main class of semantic models—the class
+of language-based models—classifies concepts together
+in terms of statistical co-occurrence properties in some
+measurable domain other than the properties of referredto objects (e.g., Burgess & Lund, 2000; Landauer & Dumais, 1997; Lund & Burgess, 1996; Nelson, McEvoy, &
+Schreiber, 1994). In this view, concepts like CAT and DOG
+are near neighbors, not because they share features, but
+because they appear in similar contexts in large samples
+of language usage (e.g., global co-occurrence; Burgess &
+Lund, 2000; Landauer & Dumais, 1997) or because the
+words occur in some temporally contiguous fashion in
+
+language (e.g., local co-occurrence; Nelson et al., 1994;
+cf. Lund, Burgess, & Audet, 1996). Such models are
+mute as to the level at which any two words are associated
+and, so, may indirectly capture something of object-based
+semantics, insofar as object relations are correlated with
+co-occurrence relations. However, association models of
+semantics have the advantage of also allowing concepts
+to be considered as semantic neighbors in the absence of
+any shared object features. For example, the concept
+SCRATCH does not have any features in common with the
+concept CAT (if we ignore such question-begging features as has to do with cats or claws). Nevertheless, we
+recognize that the two concepts are semantically related.
+In an association view of semantics, these two concepts
+would reside in the same semantic neighborhood, despite
+their lack of shared features.
+Object-Based Versus Language-Based Semantics
+Object-based and language-based models of semantic
+organization differ in the predictions they make regarding SN effects. Object-based models imply that neighbors must share features and, consequently, either spreading or facilitatory activation will be demonstrated only
+for representations with similar features. Thus, according to object-based models, the word scratch would not
+be expected to prime the word cat in an LD task (although
+see Plaut, 1995, for associate priming in a feature-based
+computational model of semantics). Associational models hold that activation spreads to (or otherwise facilitates
+activation of ) words that are highly related but are not
+necessarily similar in terms of their features. In this view,
+scratch should prime cat.
+The results of semantic-priming and false memory experiments favor the associational models over a strong
+feature- or category-based view. Facilitatory priming does
+occur for word pairs, such as HAIR–BRUSH and CAT– SCRATCH,
+that do not have shared features (e.g., McNamara, 1994;
+Moss, Ostrin, Tyler, & Marslen-Wilson, 1995). Moreover,
+false memory rates for nonpresented targets are higher
+following lists of associated words than following lists of
+category members (Buchanan, Brown, Cabeza, & Maitson, 1999). These findings support the notion that the
+spread of activation from one semantic representation to
+another must be predicated, to some degree, on an associational relationship between the represented concepts.
+Further support for language-based views of semantics comes from developmental and dementia studies.
+For example, Bjorklund and Jacobs (1985) and Ackerman (1986) showed that associated lists result in recall
+facilitation for both young and older subjects but that
+only older subjects had facilitation for categorical lists over
+control lists. On the other end of the age spectrum, patients in the early stages of Alzheimer’s disease produce
+normal associative-priming effects but attenuated priming effects for category member primes, relative to agematched controls (e.g., Glosser, Friedman, Grugan, Lee,
+& Grossman, 1998; Ober, Shenaut, & Reed, 1995). Thus,
+associations appear to develop before categories and re-
+
+SEMANTIC NEIGHBORHOOD EFFECTS
+main relatively impervious to the semantic degradation
+symptomatic of Alzheimer’s disease.
+The examples above do not mean that association is
+the only manner by which priming can occur. Category
+membership and feature overlap relationships also produce priming (e.g., Lund et al., 1996; McRae & Boisvert, 1998), suggesting that we must also reject a strong
+associational view and, instead, conclude that both relationships play some role in the structure of the semantic
+system. However, association measures of semantics
+have one major advantage over feature-based measures:
+They are much more amenable to precise definition and
+quantification. A difficulty with feature-based views is
+that we can never be confident that we have identified
+just the right feature set for any concept. It is always possible to define new, increasingly arcane features to unite
+any two concepts that are shown by empirical study to
+have a relation. In contrast, we are able to have increasing confidence in association-based measures as a function of the size of the defining corpus.
+Despite the advantages of language-based measures of
+semantics, there have not been any clear demonstrations
+of the impact of these measures at the single-word recognition level. In this paper, we examine the ability of two
+different models of language-based semantics—the Lund
+and Burgess (1996) hyperspace analogue to language
+(HAL) model and the Nelson et al. (1994) word-associates
+model—to produce SN values that predict reaction times
+(RTs) in both naming and LD. Although both models
+clearly fall into the language-based camp, they vary considerably in the manner by which semantic space is developed and quantified. Nelson et al.’s (1994) model relies on human association responses to single target items,
+whereas Lund and Burgess establish semantic space
+through calculations of global co-occurrence within a very
+large text-based training corpus of natural language.
+Association Norms
+Nelson et al. (1994; see also Nelson, Bennet, & Leibert, 1997) quantify semantics by using human judgments
+of association obtained by asking subjects to produce
+single associations to target words. Subjects are presented
+with a word and are asked to respond with the first word
+that comes to mind. Nonidiosyncratic responses are tallied from (in most cases) more than 150 responses per
+item. The number of items in the associative list of any target word corresponds to the SN for that word. We will refer
+to this measure as semantic size (SS). An examination of
+these lists reveals both categorical and noncategorical associates. These response counts are analogous to the distance measures generated from the Lund and Burgess
+(1996) model (described below), insofar as both measures
+attempt to capture something about how many words are
+related to the target word.
+Computational Models of Semantics
+Lund and Burgess (1996; Burgess & Lund, 2000) have
+developed a model of semantic memory (HAL) that uses
+
+533
+
+a high-dimensional semantic space constructed from a
+lexical co-occurrence matrix that was formed by an analysis of a word corpus of approximately 320 million words
+obtained from Usenet news groups. This model encodes
+the contexts in which words are found as weighted cooccurrences. The global co-occurrence learning algorithm captures both semantic and grammatical information associated with these contexts (see Burgess & Lund,
+1997).
+The semantic neighborhoodof a word, as defined in the
+HAL model, corresponds to some set of words that are
+close to it. This could be quantified as either some specific
+number of words or as a distance to some criterion, such
+as the 10th furthest word. In the high-dimensional space,
+the distance of a word around other words varies; this variance reflects the variance in semantic density. If words
+tend to be more closely packed in this space, it is a denser
+neighborhood. If the words are more separated, the neighborhood is sparser. Neighborhood density and sparseness
+are illustrated in Figure 1 with two words (Beatles and
+book). The neighborhoodfor book is denser than the neighborhood for Beatles; thus, book’s mean distance will be
+shorter. In this paper, we have defined density as the mean
+distance from the target word of its 10 nearest neighbors.
+This measure of semantics can be likened to the inverse
+of SS: The lower the number, the more semantic neighbors it has within a specified radius in high-dimensional
+meaning space. We will refer to this measure as semantic distance (SD).
+To avoid confusion arising from the inverse relation
+between SD and SS, we will adopt a convention of describing both measures in terms of how they relate to SN:
+A large SN is associated with a high SS value, but with
+a low SD value. This relationship is clear if one considers
+how SD is derived. The average semantic distance of a
+word’s neighborhood is calculated by selecting an arbitrary cutoff point that dictates the number of distances
+that enter into the average (i.e., the number of semantic
+neighbors—in this case, 10). This means that the 10
+closest neighbors contribute to the mean distance. If instead we had selected an arbitrary cutoff in terms of distance, we would simply count the number of neighbors that
+fell within that distance. This latter measure would be akin
+to counting the number of neighbors and would be a satisfactory solution, except that the selection of an appropriate cutoff point requires additionalpilot data that we are
+only now beginning to collect. In the past, we (Buchanan
+et al., 1998) have used the average distance of the 10 closest neighbors and have assumed that this value provides
+a reasonable indication of the likelihood that a selected
+distance cutoff point would allow the inclusion of many
+neighbors for a “close neighborhood and few neighbors
+for a “distant neighborhood. We follow that practice
+here, and consequently, words with low SD values are considered to have a large SN, and words with a high SD value
+are considered to have a small SN. However, the absolute
+effects of the SD measure should be the inverse of effects of the SS measure. Appendix A provides example
+
+534
+
+BUCHANAN, WESTBURY, AND BURGESS
+
+movie
+
+song
+
+Mean distance
+for six neighbours
+= 457 RCUs
+
+BEATLES
+
+album
+
+british
+original
+band
+
+paper
+
+story
+
+BOOK
+new
+
+books
+
+Mean distance
+for six neighbours
+= 379 RCUs
+
+movie
+second
+Figure 1. HAL’s semantic neighborhoods for the words BEATLES and BOOK .
+
+neighborhoods for two words with roughly the same SS,
+but a large difference in semantic distances.
+If SS and SD capture informative aspects of semantic
+representation, these values should predict responses on
+tasks assumed to rely on semantic activation. In the present study, we directly examine these two methods for
+defining semantic space, using multiple regression analyses with LD, as well as with word-naming RTs. We follow
+these analyses with a series of more tightly controlled factorial experiments that directly assess findings of interest
+from the regression analyses with respect to semantics in
+the LD task.
+EXPERIMENT 1
+In this set of analyses, we used hierarchical multiple
+regression to determine whether SS and SD have any impact on performance of LD and naming. We also contrasted semantic effects for young versus elderly readers,
+because evidence exists that the elderly are more sensitive to semantic information than are the young (Myerson,
+Ferraro, Hale, & Lima, 1992; Sommers & Danielson, 1999).
+If this is the case and if SD and SS capture semantic information, we would expect to see a stronger effect in the
+RTs for the elderly than in the RTs for the young.
+Method
+Subjects
+LD reaction times (LD-RTs). One hundred and fifty University
+of Alberta first-year undergraduate psychology students participated in this experiment for credit. The students were randomly assigned to one of five LD list conditions, with each list consisting of
+150 words and 150 nonwords.
+Young and elderly adult naming RTs (young-NTs, old-NTs).
+We were able to conduct the analysis by using word-naming data
+
+provided by Spieler and Balota in their 1998 corpus. The Spieler and
+Balota database contains RTs from young and elderly adults for
+2,820 single-syllable words. From this set, we selected the 750 words
+that were used in the LD task, and we analyzed the young and elderly NTs in separate analyses, because there has been evidence that
+elderly adults are more sensitive to semantic content than are young
+adults (Myerson, Hale, Chen, & Lawrence, 1997).
+Stimuli
+The 750 words (600 four-letter and 150 five-letter words) in this
+experiment were selected from a database of 4,251 words for which
+we have computed a wide range of lexical and sublexical measures.
+They appear in the corpus of the University of South Florida Word
+Association, Rhyme, and Word Fragment Norms Project (Nelson
+et al., 1994) and have HAL-generated SD means (based on a 10-word
+moving window for computing global co-occurrence; see Lund &
+Burgess, 1996). Words with ambiguous (British/American) orthography or inconsistent spelling and words that did not appear in
+the Celex database word-form dictionary (Baayen, Piepenbrock, &
+Gulikers, 1995) were removed. The four-letter words were randomly assigned to one of four lists, each containing 150 four-letter
+words and 150 four-letter nonwords. The five-letter words and fiveletter nonwords were combined to form a fifth list. The 300 nonwords were matched in length to the words and were selected from
+our database of 2,946 nonwords that were randomly generated by
+building a pairwise Markov chain of the words (pseudohomophones
+were eliminated from the set prior to selection). This stochastic
+computational method of generating nonwords guarantees that
+every nonword contains only bigrams that appear in real words and
+that the distribution of bigrams among the nonwords is roughly
+identical to the distribution among the words (Westbury & Buchanan,
+1999).
+Procedure
+For the LD experiment, the subjects were randomly assigned to one
+of the five list conditions and were instructed to decide as quickly
+and accurately as possible whether randomly presented single items
+were real English words. They responded with keypresses to the
+computer keyboard, using the dominant hand for yes responses and
+
+SEMANTIC NEIGHBORHOOD EFFECTS
+
+the nondominant hand for no responses (using the “z and “? keys).
+In every trial, a 50-msec blank screen was followed by a 250-msec
+fixation cross that appeared at the center of the computer display.
+Following the fixation, the item appeared and remained on the
+screen until a response was made. As was mentioned above, the naming data were obtained from the Spieler and Balota (1998) dataset.
+
+Results and Discussion
+LD data from 1 five-letter word were lost owing to coding errors. All responses greater than 2,500 msec or less
+than 250 msec were removed from the data for the remaining 749 words. This outlier analysis resulted in the
+removal of less than 1% of the data, with no discernable
+pattern with respect to the semantic variables (i.e., outliers
+did not cluster around a particular part of the distribution
+of either SS or SD).
+Correct LD-RT and young- and elderly-NTs for the 749
+words acted as dependentvariables in three hierarchical regression analyses that included log frequency, ON, length,
+SS, and SD. These variables combined to account for between 12% and 30% of the variance performance (see
+Table 1). The partial and semipartial correlations in Table 1
+indicate that only log frequency, length, and SD entered
+into the equation that predicts RTs in LD. For elderly
+naming, all but SS entered into the equation, whereas for
+young subjects neither semantic variable predicted NTs.
+In order to evaluate whether SD provides semantic information not captured by a more conventional semantic
+measure, we conducted a hierarchical regression analysis
+that included, when available, imageability ratings (MRC
+Psycholinguistic Database). The inclusion of these values limited our items to 584 words for which we had all
+
+the necessary values. Again, multiple regression that
+forced the following order of variables was conducted:
+log frequency, ON, length, imageability, SS, and SD.
+These analysis accounted for between 11% and 26% of
+the variability in RTs and included all variables except
+SS for elderly-NTs, all but SS and ON for LD times, and
+all but SD for young-NTs (see Table 2).
+In this analysis, the correlation with SS approached
+significance for LD-RTs and reached significance for
+young-NT data, whereas it did not in the previous analyses, despite the fact that the previous analyses had much
+more power than this one. We believe that this difference
+might lie in the higher mean frequency (91/million) in the
+present analysis, owing to the limited number of items in
+the MRC database with imageabilityvalues versus the average frequency in the initial analyses (74/million). It is
+possible that the tenuous effect of SS was tempered by this
+change in frequency. The fact that SS contributed more to
+the prediction of young-NTs than to that of old-NTs is
+likely a function of the manner by which associations are
+generated: Young college-aged people respond with the
+first word that comes to mind. It is possible that elderly
+people would provide a different range of responses to
+some subset of the words.
+Summary of Effects
+These multiple regression analyses indicate that semantic processing plays a significant role in LD and naming. However, it appears that the LD task is somewhat
+more reliant on semantic processing than is naming. The
+effect of SD is best illustrated in the positive sign of the
+partial correlations. This indicates that as SD increases,
+
+Table 1
+Regression Summary for Lexical Decision Reaction Times
+(LD-RTs) and Naming Times (NTs) for Young and Elderly Readers
+for Four-Letter and Five-Letter Words
+Variable
+LD-RT
+R2 = .30, F(5,743) = 62.41, p < .001
+Logfreq
+ON
+Length
+SS
+SD
+Young-NT
+R2 = .12, F(5,743) = 20.99, p < .001
+Logfreq
+ON
+Length
+SS
+SD
+Elderly-NT
+R2 = .17, F(5,743) = 30.84, p < .001
+Logfreq
+ON
+LENGTH
+SS
+SD
+
+535
+
+Partial
+Correlation
+
+Semipartial
+Correlation
+
+t(743)
+
+p Level
+
+.291
+.043
+.096
+.058
+.288
+
+.255
+.036
+.082
+.049
+.251
+
+8.29
+1.17
+2.64
+1.58
+8.17
+
+.000
+.240
+.008
+.116
+.000
+
+.168
+.197
+.168
+.053
+.055
+
+.155
+.182
+.154
+.057
+.050
+
+4.66
+5.48
+4.64
+1.58
+1.50
+
+.000
+.000
+.000
+.114
+.133
+
+.148
+.104
+.151
+.026
+.100
+
+.140
+.098
+.143
+.024
+.094
+
+4.10
+2.84
+4.128
+.710
+2.73
+
+.000
+.004
+.000
+.478
+.006
+
+Note—Logfreq, log frequency; ON, orthographic neighborhood; SS, semantic size; SD, semantic
+distance.
+
+536
+
+BUCHANAN, WESTBURY, AND BURGESS
+
+Table 2
+Regression Summary With Imageability Ratings
+for Lexical Decision Reaction Times (LD-RTs)
+and Elderly- and Young-Naming Times (NTs)
+Variable
+
+Partial
+Correlation
+
+Semipartial
+Correlation
+
+t(577)
+
+p Level
+
+-0.29
+-0.03
+-0.08
+-0.14
+-0.08
+0.27
+
+-0.26
+-0.03
+-0.07
+-0.12
+-0.06
+0.24
+
+-7.41
+-0.82
+-1.91
+-3.42
+-1.82
+6.62
+
+0.00
+0.41
+0.06
+0.00
+0.07
+0.00
+
+-0.15
+-0.09
+0.15
+-0.09
+0.04
+0.10
+
+-0.14
+-0.09
+0.14
+-0.08
+0.04
+0.09
+
+-3.60
+-2.23
+3.62
+-2.12
+0.94
+2.36
+
+0.00
+0.03
+0.00
+0.03
+0.35
+0.02
+
+-0.18
+-0.18
+0.15
+-0.03
+0.09
+0.05
+
+-0.16
+-0.17
+0.14
+-0.03
+0.08
+0.05
+
+-4.30
+-4.38
+3.56
+-0.74
+2.10
+1.21
+
+0.00
+0.00
+0.00
+0.46
+0.04
+0.22
+
+LD-RT
+R2 = .26, F(6,577) = 34.97, p < .001
+Logfreq
+ON
+Length
+IMG
+SS
+SD
+Elderly-NT
+R2 = .11, F(6,577) = 12.71, p < .001
+Logfreq
+ON
+Length
+IMG
+SS
+SD
+Young-NT
+R2 = .15, F(6,577) = 17.90, p < .001
+Logfreq
+ON
+Length
+IMG
+SS
+SD
+
+Note—Logfreq, log frequency; ON, orthographic neighborhood; IMG, imageability rating; SS,
+semantic size; SD, semantic distance.
+
+RTs decrease. Given the inverse relationship between SD
+and SN, these correlations imply a facilitatory effect of
+SN. This facilitatory effect is also reflected in the sign of
+the partial correlation between SS and RTs. The SD and
+SS measures seem to capture different aspects of semantics, as is evidenced by a low single-order correlation (approximately 4%; see Table 3) between the two
+measures and the differential sensitivity of elderly versus
+young readers to these measures.
+EXPERIMENT 2
+In the preceding experiment, we showed that SD was
+a useful predictor of LD time and of NTs for elderly
+adults. In contrast, the results from SS are less clear: The
+effect was found to be marginal in some analyses and not
+a factor at all in other analyses. The two measures presumably capture different types of semantic information,
+given their small single-order correlations. In this 3 ´ 3
+(SD ´ SS) factorial experiment, we attempted to evaluate their relationship more directly with an experimental
+design that examined the extent to which the two semantic measures interact when other variables are held
+constant or statistically controlled.
+Method
+Subjects
+Fifty-one undergraduate subjects participated in this study in
+order to receive course credit. All were native English speakers.
+
+Word Stimuli
+The word stimuli in this experiment were selected from our database (described in the Method section for Experiment 1). We converted each SS and SD value into a standard score (z score) relative
+to the population of 1,570 words for which we have data. This standardization allowed us to directly compare the two association measures in the same units (although, as before, these units differ to the
+extent that SD represents an inverse measure of SN). The magnitude of each word’s SN was then classified as large, medium, or
+small, using cutoff standard scores: Words that had a z SS value
+below -1.0 were classif ied as having a small SN. Words that had a
+z SS value above 1.0 were classified as having a large SN. Words
+that had a z SD above 1.0 were classified as having a small SN,
+whereas words with a z SD below -1.0 were classif ied as having a
+large SN. Words that fell within half a standard score of 0 (the
+mean) were classif ied as medium. From among these classified
+words, we selected 15 words that fell into each of the nine cells
+formed by crossing the three categories within each of the two measures. The words were exactly matched on length, with each cell
+containing 9 four-letter words, 5 five-letter words, and a single six-
+
+Table 3
+Single-Order Correlations of Orthographic Neighborhood
+(ON), Semantic Size (SS), Semantic Distance (SD),
+Log Frequency (Logfreq), and Length
+Combined
+
+ON
+
+SS
+
+SD
+
+Logfreq
+
+ON
+SS
+SD
+Logfreq
+Length
+
+1.000
+0.027
+0.104
+0.153
+0.467
+
+1.000
+0.194
+0.131
+0.010
+
+1.000
+0.551
+0.035
+
+1.000
+0.052
+
+SEMANTIC NEIGHBORHOOD EFFECTS
+
+Table 4
+Characteristics of Word Stimuli for Experiment 2
+SD
+
+SS
+
+zSD
+
+zSS
+
+ON
+
+Logfreq
+
+High SD
+High SD
+High SD
+Medium SD
+Medium SD
+Medium SD
+Low SD
+Low SD
+Low SD
+
+High SS
+Medium SS
+Low SS
+High SS
+Medium SS
+Low SS
+High SS
+Medium SS
+Low SS
+
+2.3
+2.6
+2.2
+0.1
+0.0
+0.1
+1.2
+1.6
+1.3
+
+1.4
+0.1
+1.9
+2.4
+0.0
+1.8
+2.0
+0.1
+1.4
+
+7.9
+5.9
+5.9
+7.1
+7.5
+7.3
+7.2
+8.3
+6.9
+
+0.9
+0.6
+0.4
+1.4
+1.4
+1.2
+1.5
+1.8
+2.1
+
+Note—SD, semantic distance; SS, semantic size; ON, orthographic
+neighborhood; Logfreq, log frequency.
+
+letter word. Because we were highly constrained by the semantic
+values, we could not completely control for either frequency or ON
+(see Table 4). However, these values will be statistically controlled
+in the analyses (i.e., their effects will be covaried out of the analyses). Our measure of ON counts all CELEX dictionary entries that
+are one letter different from the target word. Our frequency measure
+is also based on that database.
+Nonword Stimuli
+As in the previous experiment, the nonwords were generated
+through a Markov chain computer program. We selected 135 unique
+nonwords from a much larger sample, so that the nonwords were
+perfectly matched to the words on length and very closely matched
+for ON on a one-by-one basis with the words.
+
+537
+
+Procedure
+The procedures were identical to those of the LD component of
+Experiment 1. The order of presentation was randomized.
+
+Results and Discussion
+Correct RTs after outlier removal (with cutoffs of 250
+and 2,500 msec; 1.2% of all responses) were analyzed in an
+item analysis that allowed us to covary out any possible effects of word frequency and ON. One word in the large SD,
+large SS category was inadvertentlypresented twice owing
+to a transcription error in the input file. We included only
+each subject’s initial exposure to that word, leaving 14 stimuli in that cell. Average correct RTs for words were analyzed in an analysis of variance, (ANOVA), with log(frequency + 1) and ON covaried out. Both log frequency
+[F(1,123) = 22.9; p < .001] and ON [F(1,123) = 9.4, p <
+.005] covaried out significantly. The adjusted means are
+presented in Figure 2. There was a reliable main effect of
+SD [F(2,123) = 17.2, p < .001]: RTs for small SD, SN words
+were slower than those for large or medium SD words
+( p < .01 in both cases, Tukey’s test). Medium words were
+slower than large SD words ( p < .05). There was also a
+main effect of SS [F(2,123) = 3.2, p < .05]: The large SS,
+SN words were read more quickly than the small SN
+words ( p < .05, Tukey’s test), but neither the small ( p =
+.44) nor the large ( p = .40) SN words differed from the
+medium SN words.
+
+Figure 2. Mean reaction times (RTs) as a function of semantic neighborhood size (SN), defined by semantic size (SS) and by semantic distance (SD).
+
+538
+
+BUCHANAN, WESTBURY, AND BURGESS
+
+The SD ´ SS interaction was also reliable [F(4,123) =
+2.9, p < .05], and as Figure 2 makes clear (and post hoc
+tests confirm), the interaction is due primarily to an
+SS ´ SD interaction in the small SD category: There is
+no effect of SS for large SD words [F(2,40) = 1.68, p =
+.19] or for medium SD words [F(2,40) < 1]. However,
+RTs are longest for the small SD words at small and
+medium levels of SS, relative to the large SS level ( p <
+.05 in both contrasts: Tukey’s test).
+The important findings from this experiment are that
+both SS and SD influence LD times. These results replicate and extend the findings from Experiment 1 and support the hypothesis that increased SN, as defined by SD,
+does play a facilitatory role in LD. This finding is important for two reasons. First, it suggests that our understanding of the processes involved in semantic lexical access can
+be considered by using some of the same assumptions that
+currently guide much work in orthographic and phonological lexical access—the assumption that there is a selection mechanism of some kind that is assisted by the
+presence of a number of similar candidates. Second, we
+now know that semantics does play a role in lexical access and that we have two metrics by which semantic
+characteristics can be manipulated. Consequently, the investigation of lexical access can proceed without having
+to ignore semantics in the controlled manipulation of
+word-level variables. This is a positive step toward the
+development of a complete model of word recognition.
+These values can be used as weights in computational
+models that include semantics or can be manipulated as
+variables in human experimentation to better understand
+the interplay between semantics, orthography, and phonology in word recognition.
+By analogy to other neighborhood measures, the semantic neighborhood effects reported here are not unexpected. Spreading activation models (or, more generally,
+any other “more is better model) predict that large neighborhoods will be associated with facilitation of lexical access (see Andrews, 1997, for a discussion of this with respect to ON). As the means in Figure 2 indicate, SN is
+facilitatory, whether measured by SD or by SS. However,
+the effects are far more robust for SD than for SS. Because SS effects appear to be more tenuous than SD effects and because we are interested in developing tightly
+controlled factorial designs, the remainder of the experiments reported here will focus only on the SD variable
+as a measure of SN.
+EXPERIMENT 3
+The preceding findings indicate that SN does play a
+role in LD and that role is similar to the role played by ON
+(i.e., facilitatory). Following related experiments investigating ON and frequency interactions (Andrews, 1997)
+and based on our observation regarding the sign of the
+correlation from Experiment 1, we hypothesize that effects of semantics should be strongest for low-frequency,
+rather than for high-frequency, words and that it should
+be facilitatory.
+
+Method
+Subjects
+Fifty undergraduate subjects participated in this study in order to
+receive course credit. All were native English speakers.
+Stimuli
+The stimuli were selected from our databases of words and nonwords, as described in Experiment 1. The 100 word stimuli were
+made up of 50 low-frequency words (CELEX frequency < 50 per
+million, average = 15.48, SD = 15) and 50 high-frequency words
+(CELEX frequency > 100 per million, average = 461, SD = 792).
+The words in the small SN had an SD of greater than 300 (average =
+362, SD = 47), whereas the words in the large SN had an SD of less
+than 250 (average = 241, SD = 36). These two groups were crossed
+so that there were 25 items in each of the four cells defined by SN
+and frequency. The 100 nonwords were selected to match the word
+items for length and for ON.
+Procedure
+The procedure was identical to that used in the LD component of
+Experiment 1.
+
+Results and Discussion
+Outlier analysis was conducted as in Experiments 1 and
+2, and again, no relevant pattern was detected with respect
+to the variables of interest (i.e., it did not appear that we
+lost a disproportionatenumber of items from any one cell,
+and there were no specific words that were more likely to
+be discarded). We examined correct RTs to the 100 words in
+an item-level SD ´ frequency ANOVA. This analysis revealed main effects of both SD [F(1,96) = 14.02, p < .005]
+and frequency [F(1,96) = 52.28, p < .001] and a reliable
+interaction [F(1,96) = 9.67, p < .01; see Figure 3]. These
+findings imply that SN may have a role similar to that of
+ON. The interaction indicates that for low-frequency
+words, SN is facilitatory ( p < .05 in a post hoc test). The
+same does not appear to hold for high-frequency words
+( p > .05).
+EXPERIMENT 4
+The following experiment was motivated by our desire to clearly demonstrate that SN influences LD-RTs
+when other variables that we have shown to interact with
+SD are held constant. In this experiment, we therefore
+test SN effects when frequency and ON are very closely
+controlled.
+Method
+Subjects
+Thirty-two undergraduate subjects participated in this study in
+order to receive course credit. All were native English speakers.
+Word Stimuli
+The word stimuli in this experiment were selected from the same
+database of 1,570 single-syllable words as that used in the preceding experiments, but in this case, we used standardized SD scores
+to select items that have either large or small SD, SNs. We first
+eliminated the very large SD items by using a cutoff of 2.5 z SD because the findings from Experiment 2 implied to us that these large
+values might not represent semantic space well (this point is discussed in detail in the General Discussion section). After this elim-
+
+SEMANTIC NEIGHBORHOOD EFFECTS
+
+539
+
+Figure 3. Mean reaction times (RTs) as a function of frequency and semantic
+neighborhood size (N).
+
+ination, we were able to obtain 64 words with a relatively large SN
+(average z SD = –.90). These words were then matched on an itemby-item basis with 64 words that had a relatively small SN (average
+z SD = .90). Appendix B contains the list of words and their corresponding frequencies, ONs, and z SDs. A close look will reveal a
+small overlap in the SD measures that was necessitated by our desire to provide a well-controlled set of items. We point out here that
+this overlap actually makes it more difficult to obtain SD effects
+and, thus, any effects under these conditions of near perfect matching on nonmanipulated variables and overlap on manipulated variables must be quite robust. As Appendix B shows, the words in
+these two groups matched perfectly on length (average length = 4.3
+letters) and almost perfectly on ON (average ON = 7.6 for high SD,
+7.7 for low SD) and log frequency (average log freq = 1.2 for low
+SD, and 1.1 for high SD). Thus, this stimuli set allowed us to test
+for a SN effect while very strictly controlling frequency and ON.
+Procedure
+The procedure is identical to that of the LD procedure in Experiment 1.
+
+Results and Discussion
+All responses under 250 msec or greater than 2,500
+msec (0.2% of all responses) were discarded. The results
+for all correct responses were averaged, and both subject
+and item analyses were conducted on these means. Words
+in the large SN category (average RT = 615 msec) were
+recognized 32.4 msec faster than the closely matched
+words in the small SN category (average RT = 658 msec).
+This difference replicates the results of Experiment 1 by
+showing facilitatory SN effects when length, frequency,
+and ON are controlled [F(1,31) = 22.48, p < .001, in a subject analysis, and F(1,126) = 13.29, p < .005, in an item
+analysis].
+GENERAL DISCUSSIO N
+We began this study by asking two simple questions.
+Do quantifiable measures of semantics with some psychological validity exist? And does semantics, as quantified by a computational model of meaning, play a role
+in word recognition processes? The answer to both of
+
+these questions appears to be yes. This set of experiments presents numerous findings that support the notion that SN, as defined by SD, can be used to predict
+word recognition performance.
+Semipartial correlations indicate that the relation between semantic measures and RT is not due to the values’ coincidentally being similar to nonsemantic orthographic measures: When other factors were ruled out,
+SD still accounted for a reliable and unique proportion of
+the variance associated with LD-RTs. The finding that SD
+correlated with RTs for LD, even when another semantic factor (imageability) was entered into the equation,
+suggests that SD captures unique, semantically relevant
+information about words. The f indings from Experiment 1 therefore suggest that semantics plays an important role in LD and, to some extent, naming. On the basis
+of the sign of the correlations, it appears that this effect is
+facilitatory: Large SN, as defined by SD and, in some
+cases SS, assists in LD and naming for elderly adults.
+This conclusion is bolstered by evidence from the remaining factorial experiments.
+Another finding of interest in Experiment 1 was that
+elderly adults use SN to assist in word naming. We were
+interested in the possibility that the RTs produced by elderly readers would show a greater effect of semantic
+manipulations than do the RTs from young adults. This
+result would provide additional support for our position
+that we are, in fact, measuring semantic activation, given
+the view that elderly people have intact semantic/contextual processing (Madden, 1992; Myerson et al., 1997)
+that plays an increasing role as other processes decline.
+This age effect may be a compensatory strategy on the
+part of the older adults, or it may reflect an overall slowing of responses that allows secondary processes, such
+as semantic analysis, to show up in naming RTs. Additional experimentation is required to determine which (if
+either) of these potential explanations is correct. However, young readers showed an effect for SS in the reduced naming set in the regression containing imageability, whereas elderly readers did not. The appearance
+
+540
+
+BUCHANAN, WESTBURY, AND BURGESS
+
+of SS effects in this reduced data set may be related to an
+increase in the frequency of words owing to the requirement that they exist in the MRC database. The difference
+in sensitivity to SS as a function of age is probably due
+to the fact that young people generated the associates
+used in the norms and that elderly people may have different associates to these target words on the basis of different life experience. We explored the relationship between SS and SD in Experiment 2 because the dissociation
+between the effects for young and elderly readers and because the low single-order correlation between the two
+measures hint that they capture quite different aspects of
+semantics.
+In Experiment 2, we directly examined the relationship
+between SS and SD in a factorial design and produced
+what we considered to be a somewhat surprising SS ´ SD
+interaction that seemed to be due to an effect of manipulating SS on small SN, SD words only. We had anticipated an interaction at both ends of the spectrum, but upon
+consideration of the data, we now suspect that this interaction arises as a function of a particular characteristic of
+semantic measures. The matter is easiest to understand by
+considering SS, since that measure is intuitively accessible. SS data are generated by numerous subjects providing a single associate for each target. Thus, a large number of associates for any given target indicate that there
+are very few strong associates for that word. If a word
+were strongly associated with the target word, many subjects would be expected to generate it as an associate—
+that is what it means to be strongly associated. With
+more subjects giving the same response, the SS value of
+that word would necessarily be lower than it would be if
+fewer give the same response. In the case of SS, then, all
+of the associates produced for items with a large number
+of associates are not necessarily close associates. They are
+generated simply because the task demands that some
+response be given. A large neighborhood, as defined by
+SS, may actually be a very sparse neighborhood.
+A similar logic applies to SD. Outside of some range
+(yet undetermined), a neighbor of a target word is not
+truly a related neighbor at all, but simply the closest, noncontextually relevant word in that space. Thus, in the
+case of words with a very large average SD, the number
+does not truly reflect much about those words’ semantic
+neighborhood.
+These considerations underscore an important difference between the way both measures compute SN and
+the way ON and PN are usually computed. ON and PN
+neighborhoods are bounded by definition, whereas SN,
+using the measures reported here, is not. In light of this
+difference, the failure to find any effect of manipulating
+SS, except when the SD measure reflects a small SN, takes
+on a new significance. To have a high SD (i.e., a small
+SN as defined by SD) is to have a sparse semantic neighborhood. Thus, the effect of SS is discernible only when
+the effect of SD is “switched off. This finding is consistent with a model of semantic access in which the processes underlying SS are slower acting than those under-
+
+lying SD. In such a system, the former processes would
+be unlikely to play a role if the latter were in operation,
+because lexical access would be finished before the SS
+processes were. This is consistent with how the HAL
+model (and its SD metric) and the normative word association (and its SS metric) have been discussed in the
+past. Distance in the HAL model predicts semantic priming (Lund et al., 1996), and it has been argued that HAL
+is best suited to model the initial bottom-up component
+of word meaning activation (Burgess & Lund, 2000;
+Lund et al., 1996), rather than the richer semantics available later in processing. It may be that the normative
+word association metrics are more predictive of slightly
+higher level operations. For example, using the norms, associative strength predicts typicality ratings by humans
+(Janczura & Nelson, 1999), as well as the likelihood of
+cued recall (Nelson et al., 1997; Nelson, McKinney, Gee,
+& Janczura, 1998).
+These data, then, highlight limitations in our current
+understanding of the bounds of semantic measures. Directions for future investigations are indicated, particularly with respect to the need to determine appropriate distance cutoff points. It seems clear that there are upper
+limits in semantic distance, after which the measure does
+not reflect SN. These limits are a reflection of the way we
+have been deriving SN measures. Future research in our
+laboratories will be aimed at attempting to determine the
+appropriate cutoff point in semantic space that discriminates between true semantic neighbors and loosely
+linked nonneighbors.
+In Experiment 3, we investigated the effects of SN
+when frequency was manipulated. RTs for low-frequency
+words appear to be influenced by the SD values more
+than RTs for high-frequency words. This demonstration
+provides a very valuable first step toward the understanding of SN effects and shows that they might be similar to ON effects. Experiment 4 used a very stringently
+controlled stimulus set to determine the effects of SN
+when word frequency and ON were held constant. This
+experiment demonstrates that the SD effects found in the
+preceding experiments are extremely robust, and not an
+artifact of the relationship between SD and these more
+commonly manipulated variables.
+We now briefly discuss potential explanations for SN
+contributions, relying heavily on work previously conducted with other, less easily quantified, semantic variables. We first note, however, that without more exhaustive analyses of semantic neighborhood effects and their
+interaction with phonological and orthographic measures commonly used in word recognition experiments,
+our discussion is speculative. We have no data that directly adjudicate between various potential accounts and,
+given the scarcity of models that truly instantiate semantics, we have few existing models to guide our speculation.
+Polysemy effects in LD have been attributed to feedback from semantics to orthography (for discussions of
+polysemy effects, see Pexman & Lupker, 1999, for LD;
+Lichacz, Herdman, Lefevre, & Baird, 1999, for naming;
+
+SEMANTIC NEIGHBORHOOD EFFECTS
+see Simpson, 1984, for a general review). Increased activation in semantics that reflects the presence of multiple
+entries, for example, provides greater feedback than that
+for unitary entries, thus boosting levels of activation within
+orthography. This increased level of activation makes it
+easier to accept a word in LD. It is possible that large SNs
+are similar to polysemic words in that multiple similar
+items are active in semantics. An additive effect of SN
+with ON would be consistent with this notion, but the
+data confirming such an effect have yet to be collected.
+It is possible that SD captures some degree of polysemy, given that it reflects the strength of association for
+all words with which it appears. Consider the word BAT, a
+word with two very distinct meanings. BAT will occur in
+some instances within baseball contexts, whereas in other
+instances, it will occur in the context of creepy things,
+mammals, or night flyers. Consequently, BAT can develop
+close semantic neighborhoods,because the density cutoff
+point would be likely to select the closest of neighbors for
+both meanings. One prediction that arises from this is that
+the neighborhoodsfor words with multiple distinct meanings should be closer when the meanings are equal in frequency and more distant when they are unbalanced. Future experiments will examine such predictions. Polysemy
+cannot be the only factor in SD, however, because Hino
+and Lupker (1996) demonstrated that polysemy did not interact with frequency in LD, whereas SD does.
+Another explanation that we cannot rule out without a
+great deal of further investigation is the possibility that increased activation in semantics feeds forward to the phonological output lexicon to strongly activate the representation associated with the target word. This explanation is
+more contentiousbut easier to reconcile with the role of SN
+in predicting naming RTs than is a purely orthographic account. The contentionarises from a seemingly pervasive resistance to the notion that phonologicalaccess is a contributor to LD, despite numerous and clear indications of
+phonological access during LD tasks in various experiments conducted by Van Orden and colleagues (e.g.,
+Gibbs & Van Orden, 1998; Stone, Vanhoy, & Van Orden,
+1997). With very careful selection of words that vary with
+respect to ON and PN independently, we hope to resolve
+this question. For now, we simply offer the suggestion that
+a semantic-to-phonology explanation seems more elegant than a feedback-to-orthography explanation in that
+a single mechanism can be used to explain our data, as
+well as the results of studies that report semantic effects
+in naming experiments (e.g., semantic priming).
+The third, and perhaps most parsimonious, explanation is that interactive activation within the semantic lexicon complements and augments interactive activation in
+the orthographic and phonological lexicons and that a response in LD is the result of monitoring overall activation in these three lexicons, rather than the activation
+within a single lexicon. Adjudication between these three
+positions will require further factorial experiments that
+allow us to contrast possible additive effects with interactions. However, it seems clear that SN has a substantial role to play in lexical access. We have demonstrated
+
+541
+
+that the findings cannot simply be due to this measure’s
+correlation with word frequency, ON, or length. Experiment 4 provided the strongest demonstration of the facilitatory effects of SN in that words with a large SN (as
+measured by SD) produced RTs that were much shorter
+than words with a small SN in an almost perfectly
+matched stimulus set.
+In the introduction, we contrasted two views of semantics: linguistic- versus object-based semantics. We argued
+that linguistically emergent semantics plays some role in
+word recognition processes, and we supported that position
+with data from four experiments.However, we do not believe
+that object-based semantics are unimportant during word
+recognition,and it is clear, even from some of the data presented here (the imageabilityeffects), that consideration of
+object properties plays a role in LD. Our objective in this
+study was to determine whether other, previously underexamined linguistic-based semantic variables (e.g., SS
+and SD) also contributed to word recognition processes.
+There is still a great deal to be done with respect to examinations of SN effects, particularly regarding discussions of potential mechanisms. Although we have alluded
+to possible explanations,a more complete model requires
+that we understand how SN interacts with the numerous
+lexical variables already exhaustively studied in this field.
+We are nonetheless encouraged by the strength with
+which SD predicts performance in both LD and naming.
+At a practical level, this suggests that this measure will
+be useful in addressing questions about semantic influences during LD tasks and may, perhaps, guide the development of a more fully realized model of word recognition—one with a theoretically motivated semantic
+component. The strength of semantic effects in the present study suggests that semantics must be considered as
+more than a black box of poorly defined connections.
+The global co-occurrence model, instantiated in HAL,
+seems like a very appropriate way to conceive of at least
+one level of semantics—that level being the one responsible for activation during single-word reading or LD.
+At a more theoretical level, the present study provides
+possible insight into the manner by which semantics is
+derived and language is developed. If semantics is indeed built on frequency detection, as HAL suggests, a
+highly refined frequency detector, which is sensitive to
+weak correlations in the environment, must precede in
+evolutionary time the semantic functionality that uses it.
+It may not be the case that we have the ability to access
+subtle frequency information because we are language
+users, but rather, perhaps we are language users particularly because of the fact that humans first possessed the
+ability to access subtle frequency information.
+REFERENCES
+Ackerman, B. P. (1986). Differences in the associative constraint on
+retrieval search from a context cue for children and adults. Journal of
+Experimental Child Psychology, 42, 315-344.
+Andrews, S. (1992). Frequency and neighborhood effects in lexical decision: Lexical similarity or orthographic redundancy? Journal of Experimental Psychology: Learning, Memory, & Cognition, 18, 234-254.
+
+542
+
+BUCHANAN, WESTBURY, AND BURGESS
+
+Andrews, S. (1997). The effect of orthographic similarity on lexical
+retrieval: Resolving neighborhood conflicts. Psychonomic Bulletin
+& Review, 4, 439-461.
+Baayen, R. H., Piepenbrock, R., & Gulikers, L. (1995). The CELEX
+lexical database [CD-ROM]. Linguistic Data Consortium, University of Pennsylvania, Philadelphia.
+Bjorklund, D. F., & Jacobs, J. W., III (1985). Associative and categorical processes in children’s memory: The role of automaticity in
+the development of organization in free recall. Journal of Experimental Child Psychology, 39, 599-617.
+Borowsky, R., & Masson, M. E. J. (1996). Semantic ambiguity effects
+in word identification. Journal of Experimental Psychology: Learning, Memory, & Cognition, 22, 63-85.
+Buchanan, L., Brown, N. R., Cabeza, R., & Maitson, C. (1999).
+False memories and semantic lexicon arrangement. Brain & Language, 68, 172-177.
+Buchanan, L., Burgess, C., & Lund, K. (1998). Overcrowding in semantic neighborhoods: A computational analysis of deep dyslexia.
+Brain & Cognition, 30, 111-114.
+Buchanan, L., Kiss, I., & Burgess, C. (2000). Phonological and semantic information in word and nonword reading in a deep dyslexic
+patient. Brain & Cognition, 43, 65-68.
+Burgess, C., & Lund, K. (1997). Representing abstract words and emotional connotationin a high-dimensionalmemory space. In M. G. Shafto
+& P. Langley (Eds.), Proceedings of the Nineteenth Annual Conference
+of the Cognitive Science Society (pp. 61-66). Mahwah, NJ: Erlbaum.
+Burgess, C., & Lund, K. (2000). The dynamics of meaning in memory. In E. Dietrich & A. Markman (Eds.), Cognitive dynamics: Conceptual and representational change in humans and machines (pp. 117156). Hillsdale, NJ: Erlbaum.
+Gibbs, P., & Van Orden, G. (1998). Pathway selection’s utility for control of word recognition. Journal of Experimental Psychology:
+Human Perception & Performance, 24, 1162-1187.
+Glosser, G., Friedman, R. B., Grugan, P. K., Lee, J. H., & Grossman, M. (1998). Lexical semantic priming and associative priming in
+Alzheimer’s disease. Neuorpsychology, 12, 218-224.
+Grainger, J., & Jacobs, A. M. (1996). Orthographic processing in visual word recognition: A multiple readout model. Psychological Review, 103, 518-565.
+Hino, Y., & Lupker, S. (1996). Effects of polysemy in lexical decision
+and naming: An alternative to lexical access accounts. Journal of Experimental Psychology: Human Perception & Performance, 22, 13311356.
+Janczura, G. A., & Nelson, D. L. (1999). Concept accessibility as the
+determinant of typicality judgements. American Journal of Psychology, 11, 1-19.
+Landauer, T. K., & Dumais, S. T. (1997). A solution to Plato’s problem:
+The latent semantic analysis theory of acquisition, induction, and
+representation of knowledge. Psychological Review, 104, 211-240.
+Lichacz, F. M., Herdman, C. M., Lefevre, J., & Baird, B. (1999).
+Polysemy effects in word naming. Canadian Journal of Experimental Psychology, 53, 189-193.
+Luce, P. A., Pisoni, D. B., & Goldinger, S. D. (1990). Similarity
+neighborhoods of spoken words. In G. T. Altmann (Ed.), Cognitive
+models of speech processing: Psycholinguistic and computational
+perspectives (pp. 122-147). Cambridge, MA: MIT Press.
+Lund, K., & Burgess, C. (1996). Producing high-dimensional semantic spaces from lexical co-occurrence. Behavior Research Methods,
+Instruments, & Computers, 28, 203-208.
+Lund, K., Burgess, C., & Audet, C. (1996).Dissociating semantic and associative word relationships using high dimensional semantic space. In
+G. W. Cottrell (Ed.), Proceedings of the Eighteenth Annual Conference
+of the Cognitive Science Society (pp. 603-608).Mahwah, NJ: Erlbaum.
+Madden, D. J. (1992).Four to ten milliseconds per year: Age-related slowing of visual word identification. Journal of Gerontology, 47, 59-68.
+Marslen-Wilson, W. D. (1987). Functional parallelism in spoken
+word recognition. Cognition, 25, 71-102.
+Masson, M. E. J. (1995). A distributed memory model of semantic
+priming. Journal of Experimental Psychology: Learning, Memory, &
+Cognition, 21, 3-23.
+McClelland, J. L., & Elman, J. L. (1986). The TRACE model of
+speech perception. Cognitive Psychology, 18, 1-86.
+
+McClelland, J. L., & Kawamoto, A. H. (1986). Mechanisms of sentence processing: Assigning roles to constituent. In D. E. Rummelhart, J. L. McClelland, and the PDP Research Group (Eds.), Parallel
+distributed processing: Explorations in the microstructure of cognition. Vol.2: Psychological and biological models (pp. 272-325). Cambridge, MA: MIT Press.
+McNamara, T. P. (1994). Theories of priming. Journal of Experimental Psychology: Learning, Memory, & Cognition, 20, 507-520.
+McRae, K., & Boisvert, S. (1998). Automatic semantic similarity
+priming. Journal of Experimental Psychology: Learning, Memory, &
+Cognition, 24, 558-572.
+Moss, H. E., Ostrin, R. K., Tyler, L. K., & Marslen-Wilson, W. D.
+(1995). Accessing different types of lexical semantic information:
+Evidence from priming. Journal of Experimental Psychology: Learning, Memory, & Cognition, 21, 863-883.
+MRC Psycholinguistic Database: Machine Usable Dictionary. Version
+2.00 [On-line]. Available http://www.psy.uwa.edu.au/MRCDataBase/mrc2.html.
+Myerson, J., Ferraro, F. R., Hale, S., & Lima, S. D. (1992). General
+slowing in semantic priming and word recognition. Psychology &
+Aging, 7, 257-270.
+Myerson, J., Hale, S., Chen, J., & Lawrence, B. (1997). General lexical slowing and the semantic priming effect: The roles of age and
+ability. Acta Psychologica, 96, 83-101.
+Nelson, D. L., Bennett, D. J., & Leibert, T. W. (1997). One step is
+not enough: Making better use of association norms to predict cued
+recall. Memory & Cognition, 25, 785-796.
+Nelson, D. L., McEvoy, C. L., & Schreiber, T. A. (1994). The University of South Florida word association, rhyme and word fragment
+norms. Unpublished manuscript.
+Nelson, D. L., McKinney, V. M., Gee, N. R., & Janczura, G. A.
+(1998). Interpreting the influence of implicitly activated memories
+on recall and recognition. Psychological Review, 105, 299-324.
+Ober, B. A., Shenaut, G. K., & Reed, B. R. (1995). Assessment of associative relations in Alzheimer’s disease: Evidence for the preservation of semantic memory. Aging & Cognition, 2, 254-267.
+Peereman, R., & Content, A. (1995). Neighborhood size effects in
+naming: Lexical activation or sublexical correspondences? Journal of
+Experimental Psychology: Learning, Memory, & Cognition, 21, 409421.
+Pexman, P., & Lupker, S. (1999). Ambiguity and visual word recognition: Can feedback explain both homophone and polysemy effects?
+Canadian Journal of Experimental Psychology, 53, 323-334.
+Plaut, D. C. (1995). Semantic and associative priming in a distributed
+attractor network. In J. D. Moore & J. F. Lehman (Eds.), Proceedings
+of the Seventeenth Annual Conference of the Cognitive Science Society (pp. 37-42). Mahwah, NJ: Erlbaum.
+Plaut, D. C. (1997). Structure and function in the lexical system: Insights from distributed models of word reading and lexical decision.
+Language & Cognitive Processes, 12, 765-805.
+Plaut, D. C., & Shallice,T. (1993). Deep dyslexia: A case study of connectionist neuropsychology. Cognitive Neuropsychology, 10, 377-500.
+Sears, C. R., Hino, Y., & Lupker, S. J. (1995). Neighborhood size and
+neighborhood frequency effects in word recognition. Journal of Experimental Psychology: Human Perception & Performance, 21, 876900.
+Simpson, G. B. (1984). Lexical ambiguity and its role in models of word
+recognition. Psychological Bulletin, 96, 316-340.
+Sommers, M. S., & Danielson, S. M. (1999). Inhibitory processes and
+spoken word recognition in young and older adults: The interaction
+of lexical competition and semantic context. Psychology & Aging,
+14, 458-472.
+Spieler, D. H., & Balota, D. A. (1998).Naming latencies for 2820 words
+[On-line]. Available at http://www.artsci.wustl.edu/~balota/naming.
+html.
+Stone, G., Vanhoy, M., & Van Orden, G. (1997). Perception is a twoway street: Feedforward and feedback phonology in visual word
+recognition. Journal of Memory & Language, 36, 337-359.
+Westbury, C., & Buchanan, L. (1999). What’s in a word? A sublexical effect in a lexical decision task. In M. Hahn & S. C. Stoness
+(Eds.), Proceedings of the Twenty-First Annual Conference of the
+Cognitive Science Society (p. 824). Hillsdale, NJ: Erlbaum.
+
+SEMANTIC NEIGHBORHOOD EFFECTS
+
+543
+
+APPENDIX A
+Examples of Semantic Neighbors for AMAZE and ACCEPT, Defined by SD and by SS
+SD Neighbors of amaze
+SD Neighbors of accept
+Sparse Distance
+SS Neighbors of amaze
+Dense Neighborhood
+SS Neighbors of accept
+(Average Distance = 531 RCU)
+Many Neighbors—16
+(Average = 239 RCU)
+Many Neighbors—18
+avoid
+defend
+learn
+convince
+keep
+demonstrate
+prove
+make
+remind
+create
+
+wonder
+surprise
+astound
+excite
+astonish
+awe
+wow
+shock
+stun
+impressed
+dazzle
+grace
+magic
+amazement
+enchant
+unbelievable
+
+take
+give
+recognize
+continue
+follow
+make
+keep
+acknowledge
+speak
+use
+
+take
+reject
+deny
+agree
+understand
+allow
+believe
+acknowledge
+unacceptable
+except
+gift
+give
+good
+like
+money
+receive
+want
+yes
+
+APPENDIX B
+Words Used in Experiment 4 With Their Lengths, zSDs, Frequencies, and ONs
+Low SD
+(Large SN) Length
+flip
+chuck
+quit
+suck
+cute
+wipe
+valve
+grab
+strap
+jerk
+solve
+fake
+foam
+bike
+craft
+punch
+shake
+stack
+drum
+fail
+mill
+slide
+spray
+teach
+fill
+rude
+hung
+burn
+treat
+lodge
+curve
+pump
+lean
+
+4
+5
+4
+4
+4
+4
+5
+4
+5
+4
+5
+4
+4
+4
+5
+5
+5
+5
+4
+4
+4
+5
+5
+5
+4
+4
+4
+4
+5
+5
+5
+4
+4
+
+zSD
+
+0.60
+1.84
+0.96
+0.62
+0.75
+1.09
+0.88
+1.17
+0.34
+0.18
+0.86
+0.66
+0.62
+1.11
+0.85
+0.37
+0.89
+1.12
+1.19
+0.61
+0.28
+0.75
+0.46
+1.49
+1.35
+0.43
+0.75
+1.08
+1.08
+0.46
+0.48
+0.73
+0.47
+
+Frequency ON
+
+1
+1
+1
+3
+3
+3
+4
+4
+5
+6
+6
+7
+7
+8
+8
+8
+8
+8
+8
+9
+10
+10
+10
+11
+12
+12
+12
+12
+13
+13
+13
+13
+13
+
+6
+6
+5
+14
+7
+8
+5
+6
+6
+2
+1
+15
+4
+11
+3
+5
+12
+10
+4
+14
+18
+5
+3
+5
+16
+7
+9
+7
+2
+2
+2
+10
+11
+
+High SD
+(Small SN)
+
+Length
+
+zSD
+
+Frequency
+
+ON
+
+clog
+prank
+quiz
+sash
+pane
+moth
+shine
+toad
+wasp
+snack
+mute
+blaze
+dime
+hail
+lease
+scoop
+mule
+thorn
+broom
+bulb
+reef
+surf
+bark
+frail
+torch
+purse
+chill
+lust
+mall
+shout
+bride
+globe
+goat
+
+4
+5
+4
+4
+4
+4
+5
+4
+4
+5
+4
+5
+4
+4
+5
+5
+4
+5
+5
+4
+4
+4
+4
+5
+5
+5
+5
+4
+4
+5
+5
+5
+4
+
+1.54
+1.65
+0.12
+1.78
+0.91
+1.65
+0.60
+0.90
+1.45
+1.54
+1.11
+0.49
+1.36
+1.30
+0.92
+1.32
+1.07
+1.56
+1.04
+1.13
+0.75
+1.20
+0.76
+1.60
+0.92
+1.33
+0.53
+0.50
+0.80
+0.07
+0.05
+0.98
+1.62
+
+0
+1
+1
+2
+2
+3
+3
+3
+3
+3
+3
+4
+4
+4
+4
+4
+5
+5
+7
+7
+7
+7
+8
+9
+9
+9
+10
+10
+10
+10
+11
+11
+12
+
+6
+5
+4
+10
+19
+6
+11
+7
+7
+6
+8
+6
+12
+13
+5
+5
+10
+1
+4
+2
+4
+4
+17
+3
+2
+7
+2
+11
+17
+6
+3
+2
+8
+
+544
+
+BUCHANAN, WESTBURY, AND BURGESS
+APPENDIX B (Continued)
+Low SD
+(Large SN) Length
+snake
+beat
+blame
+spell
+roll
+witch
+pick
+join
+trail
+throw
+draw
+swing
+guess
+tape
+load
+port
+bowl
+learn
+drop
+wait
+blind
+card
+coast
+boat
+hold
+wine
+soft
+club
+turn
+form
+food
+
+5
+4
+5
+5
+4
+5
+4
+4
+5
+5
+4
+5
+5
+4
+4
+4
+4
+5
+4
+4
+5
+4
+5
+4
+4
+4
+4
+4
+4
+4
+4
+
+zSD
+
+0.92
+1.36
+0.71
+0.23
+1.07
+0.25
+1.85
+0.71
+0.65
+1.83
+1.49
+1.04
+1.20
+1.15
+1.26
+1.02
+0.54
+1.42
+1.14
+1.14
+0.90
+0.32
+0.07
+1.25
+1.26
+0.56
+1.04
+0.45
+1.41
+0.50
+1.16
+
+High SD
+Frequency ON (Small SN)
+
+14
+14
+14
+15
+16
+16
+17
+17
+17
+18
+19
+19
+20
+22
+22
+26
+28
+29
+34
+35
+37
+45
+49
+56
+62
+76
+82
+91
+131
+233
+266
+
+6
+19
+5
+5
+8
+7
+16
+3
+5
+2
+6
+6
+1
+11
+10
+12
+8
+1
+3
+12
+4
+13
+3
+10
+12
+22
+5
+2
+7
+11
+10
+
+pine
+slim
+halt
+porch
+stake
+nest
+rays
+scent
+shark
+trout
+charm
+fist
+lamp
+thumb
+wage
+tribe
+text
+tide
+harm
+plus
+loose
+cash
+meal
+flesh
+page
+glad
+mine
+size
+hour
+near
+left
+
+Length
+
+zSD
+
+Frequency
+
+4
+4
+4
+5
+5
+4
+4
+5
+5
+5
+5
+4
+4
+5
+4
+5
+4
+4
+4
+4
+5
+4
+4
+5
+4
+4
+4
+4
+4
+4
+4
+
+0.28
+0.31
+1.22
+1.54
+1.77
+0.21
+1.16
+0.11
+1.52
+0.17
+1.65
+0.44
+0.59
+0.96
+1.31
+0.31
+0.07
+1.66
+0.88
+0.29
+0.99
+0.68
+0.32
+0.97
+0.75
+0.24
+0.94
+0.94
+0.74
+0.10
+0.75
+
+12
+12
+13
+13
+13
+14
+14
+15
+15
+17
+19
+19
+23
+24
+24
+25
+26
+26
+33
+35
+44
+52
+55
+56
+59
+63
+92
+114
+162
+194
+225
+
+7
+
+(Manuscript received June 2, 1999;
+revision accepted for publication December 19, 2000.)
+
+21
+7
+10
+6
+10
+13
+14
+3
+8
+0
+5
+7
+12
+1
+12
+5
+4
+12
+8
+2
+4
+13
+13
+3
+11
+2
+23
+4
+8
+13
+
+

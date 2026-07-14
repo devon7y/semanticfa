@@ -1,0 +1,165 @@
+Invoke your write-paper Workflow 
+
+You task is to write the Introduction for this paper. All other sections have been written. We are writing the Introduction last so that it can provide a guided review of the literature that leads directly into our current paper, which introduces an R package called semanticfa
+
+What you are writing
+A software/methods paper introducing semanticfa (v0.1.0, on CRAN): an R package for
+Semantic Factor Analysis (SFA) — exploratory factor analysis of language-model
+embeddings of psychometric scale items, requiring no human response data.
+Authors: Devon Yanitski & Chris Westbury (Department of Psychology, University of Alberta).
+Target venue style: a methods/software paper (e.g., Behavior Research Methods).
+
+How to work
+- Use Opus Models, not Fable.
+- Before writing anything, load the full existing manuscript into your context /Users/devon7y/VS_Code/semanticfa/latex
+- Make sure your Introduction flows cleanly with the rest of the paper.
+- Sources are in /Users/devon7y/VS_Code/semanticfa/papers_txt only. Every cited claim must come from a file in papers/ (text in
+  papers_txt/). Do not pull citations from memory or the web; flag gaps with \MISSINGCITE.
+- You must use every paper in /Users/devon7y/VS_Code/semanticfa/papers_txt
+- Write 10 PDF-compiled pages maximum. The Introduction should be concise and direct, while containing all of the relevant information. 
+- Each paper must be loaded into context in it's entirety, not read in small sections.
+- All of the papers exceed the Opus context window, so you will need to invoke multiple Opus models to work together to write the Introduction. You must decide amonst yourselves how the papers are split up.
+
+This paper has three pillars. The package demonstration is the centerpiece. Fill in all detail yourself; this is only the outline.
+
+Pillar 1 — Theory: What It Means to Analyze the Language of a Scale
+
+Core Question
+
+If psychometric scales are made of language, and language contains information about conceptual structure, then can we analyze the language of a scale itself to learn something about the construct it measures?
+
+The goal of this pillar is to argue that the semantic structure encoded in scale items is itself a meaningful source of psychometric information.
+
+Meaning as Use
+
+- Wittgenstein argued that meaning is use within a language community.
+- Words acquire meaning through patterns of use rather than through reference to hidden essences.
+- This idea is important because psychometric scales are collections of linguistic statements.
+- However, meaning-as-use does not itself provide a quantitative method for measuring meaning.
+- The key question becomes: if meaning is use, how can patterns of use be quantified?
+
+Distributional Semantics
+
+- Distributional theory provides a quantitative answer.
+- Joos (1950) and Harris (1954) proposed that meaning is reflected in patterns of co-occurrence.
+- Words that occur in similar contexts tend to have similar meanings.
+- Distributional structure therefore provides an empirical representation of meaning.
+
+- Modern language models are built on this principle.
+- Word embeddings compress large-scale co-occurrence patterns into vector spaces.
+- Large language models can be understood as highly abstracted and compressed representations of linguistic co-occurrence structure.
+- Embeddings therefore provide a quantitative representation of patterns of language use.
+
+Constructs and Nomological Networks
+
+- Cronbach and Meehl (1955) argued that constructs are defined by their lawful relations with observations, behaviors, theories, and other constructs.
+- Validity is therefore not a hidden essence but a network of relations.
+- A construct is known through the pattern of associations it participates in.
+- The meaning of a construct emerges from its position within a nomological network.
+
+Scale Items as Semantic Proposals
+
+- A psychometric scale does not directly observe a construct.
+- Instead, researchers write items that express a theoretical interpretation of the construct.
+- The item set therefore acts as a semantic proposal for what the construct means.
+- A procrastination scale, for example, proposes that procrastination involves behaviors such as delaying tasks, avoidance, poor time management, or deadline-related behavior.
+- The language of a scale is therefore not incidental; it is the operationalized theoretical definition of the construct.
+
+The Parallel Between Distributional Meaning and Nomological Networks
+
+- Distributional theory defines word meaning through patterns of co-occurrence with other words.
+- Nomological network theory defines construct meaning through patterns of co-occurrence with behaviors, observations, theories, and other constructs.
+- Both approaches define meaning relationally rather than through hidden essences.
+
+- This creates a clear structural parallel:
+
+  Distributional semantics:
+  Meaning = linguistic relations
+
+  Nomological network theory:
+  Meaning = theoretical and behavioral relations
+
+- Psychometric scales sit at the intersection of these two systems because constructs are communicated through language.
+- If constructs are encoded in language, then some aspects of nomological structure may also be reflected in semantic structure.
+
+Two Relational Structures
+
+- Traditional factor analysis operates on a person × item response matrix.
+- It uses item covariance or correlation to identify latent structure.
+- The resulting factors reflect patterns of behavioral co-occurrence.
+
+- Semantic factor analysis operates on embeddings derived from scale items.
+- It uses semantic similarity between items to identify latent structure.
+- The resulting factors reflect patterns of linguistic co-occurrence.
+
+- Traditional factor analysis therefore recovers behavioral structure.
+- Semantic factor analysis recovers semantic structure.
+- These are structurally parallel analyses that operate on different sources of information.
+
+Semantic–Behavioral Coherence
+
+- The relationship between semantic structure and behavioral structure can itself be viewed as part of a construct's nomological network.
+- When semantic and behavioral structures converge, this strengthens confidence that the scale's language successfully captures the construct's organization.
+- When they diverge, the divergence is informative rather than merely problematic.
+
+- Divergence may reveal:
+  - item ambiguity
+  - theoretical underspecification
+  - construct compression
+  - jingle-jangle problems
+  - measurement artifacts
+  - population-specific effects
+
+- The degree of correspondence between semantic and behavioral structure therefore becomes a theoretically meaningful source of evidence.
+
+Why Semantic Factor Analysis Matters
+
+- Because semantic factor analysis operates directly on item language, it requires no respondent data.
+- Scales can be evaluated before data collection occurs.
+- This enables applications in:
+  - scale development
+  - item screening
+  - construct clarification
+  - taxonomy mapping
+  - jingle-jangle detection
+  - prediction of factor structure
+
+- Semantic factor analysis is not intended to replace response-based factor analysis.
+- Instead, it provides a complementary perspective on construct structure.
+- Together, semantic and behavioral analyses offer two different views of the same construct.
+
+Transition to Pillar 2
+
+- Recent research has increasingly demonstrated that embeddings contain meaningful psychometric information.
+- Studies have shown that embeddings can recover factor structure, predict item correlations, identify construct overlap, detect jingle-jangle problems, and model psychopathology structure.
+- The next section reviews this emerging literature and positions semanticfa as a unified toolkit for conducting these analyses.
+
+Pillar 2 — Review: language models and psychometrics
+Synthesize the papers_txt corpus, organized by what each line of work does:
+- Embeddings predict item correlations / a-priori factor structure (Milano, Casella,
+  Hommel & Arslan, Schoenegger, Ravenda, Feraco).
+- Taxonomy, jingle-jangle, incommensurability (Wulff & Mata 2025/2026, Stanghellini).
+- Clinical / psychopathology structure from embeddings (Kambeitz, Kojima).
+- Methods & pipelines: SQuID centering (Pellert), CFA with embeddings (Pokropek),
+  Unique Variable Analysis (Christensen), EGA on embeddings (Golino, Garrido),
+  short forms (Jung & Seo, Wang), tutorials/overviews (Hussain, Low).
+- Critiques and limits (Uher: statistics is not measurement).
+Position semanticfa as the first general-purpose toolkit unifying these threads in one
+reproducible R workflow.
+
+Pillar 3 — Demonstration: the package end-to-end on the Big Five
+One reproducible worked example on data(big5) that exercises every exported function,
+grouped by workflow stage:
+- This Pillar is already completed.
+
+Notes
+- Do not overclaim: SFA complements, not replaces, response-based FA — cite the
+  convergence-with-divergence evidence (e.g., Kojima, Feraco).
+- Method-provenance papers (now in papers_txt) — cite each as the primary source for the
+  method it underpins: Horn (1965) for sfa_parallel / parallel analysis; van der Maaten &
+  Hinton (2008) for the t-SNE option in sfa_itemplot; Hubert & Arabie (1985) for the
+  adjusted Rand index in sfa_congruence; Bowman et al. (2015, SNLI) for the NLI basis of
+  sfa_nli_matrix.
+- Wittgenstein (1953), Philosophical Investigations, is in papers_txt for the meaning-as-use
+  point in Pillar 1. It is a book — use an @book entry and cite the specific section,
+  \citep[§43]{wittgenstein-1953}, not the whole volume.

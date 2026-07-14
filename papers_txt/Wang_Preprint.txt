@@ -1,0 +1,4540 @@
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+1
+
+arXiv:2602.12575v2 [cs.CL] 8 Mar 2026
+
+Discovering Semantic Latent Structures in Psychological Scales: A
+Response-Free Pathway to Efficient Simplification
+
+Bo Wang1,# , Yuxuan Zhang2,# , Yueqin Hu3,4 , Hanchao Hou2 , Kaiping Peng1 , and Shiguang
+Ni2,*
+1
+
+Department of Psychological and Cognitive Sciences, Tsinghua University, Beijing, China
+2
+
+Shenzhen International Graduate School, Tsinghua University, Shenzehen, China.
+3
+
+4
+
+Faculty of Psychology, Beijing Normal University, Beijing, China.
+
+Beijing Key Laboratory of Applied Experimental Psychology, National Demonstration
+
+Center for Experimental Psychology Education, Faculty of Psychology, Beijing Normal
+University, Beijing, China.
+
+Author Note
+Bo Wang
+
+https://orcid.org/0000-0001-7587-5141
+
+Yuxuan Zhang
+Yueqin Hu
+
+https://orcid.org/0000-0002-6179-4313
+
+https://orcid.org/0000-0002-5533-9277
+
+Hanchao Hou
+
+https://orcid.org/0000-0002-5019-3010
+
+Kaiping Peng
+
+https://orcid.org/0000-0001-8515-3409
+
+Shiguang Ni
+
+https://orcid.org/0000-0002-4303-7386
+
+#
+
+These authors contributed equally: Bo Wang, Yuxuan Zhang. *Correspondence
+
+concerning this article should be addressed to Shiguang Ni, Shenzhen International
+Graduate School, Tsinghua University, China. E-mail: ni.shiguang@sz.tsinghua.edu.cn
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+2
+
+Abstract
+Psychological scale refinement traditionally relies on response-based methods such as factor
+analysis, item response theory, and network psychometrics to uncover latent constructs and
+optimize item composition. While these approaches are methodologically rigorous, they
+require large respondent samples and may be constrained by data availability,
+cross-cultural comparability, and replication challenges. Recent advances in natural
+language processing suggest that the semantic structure of questionnaire items may encode
+latent construct organization, offering a complementary response-free perspective. Here, we
+introduce a topic-modeling framework that operationalizes semantic latent structure for
+systematic scale simplification. Items are encoded using contextual sentence embeddings
+and grouped via density-based clustering to discover latent semantic factors without
+predefining their number. Within each cluster, class-based term weighting identifies the
+most distinctive and representative keywords, forming interpretable semantic factors that
+approximate construct structure. Semantically adjacent clusters are further hierarchically
+merged, and finally representative items are selected using structure-aware membership
+criteria within an integrated reduction pipeline. We benchmarked the framework across
+three widely used instruments: DASS, IPIP, and EPOCH, spanning negative affect,
+personality traits, and well-being. Evaluation encompassed structural recovery, internal
+consistency, factor congruence between original and simplified scales, cross-factor
+correlation preservation, and quantitative reduction efficiency. Three key findings emerged.
+First, density-based semantic clustering consistently recovered coherent factor-like
+groupings that aligned with established construct structures. Second, representative items
+selected through semantic membership probabilities reduced item counts by 60.5% on
+average while maintaining psychometric adequacy. Third, simplified scales demonstrated
+high concordance with original factor solutions and preserved inter-factor correlation
+patterns, indicating that semantic latent organization provides a robust response-free
+approximation of measurement structure. These results position the proposed semantic -
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+3
+
+topic structure modeling as a systematic front-end for scale construction and simplification.
+Rather than replacing psychometric validation, the framework formalizes semantic
+organization as an inspectable and operational guide for efficient, theory-consistent
+simplification. To facilitate adoption, we provide an integrated, visualization-supported
+tool that enables one-click semantic analysis and structured reduction, lowering the barrier
+for researchers without computational expertise.
+Keywords: Psychometric, scale simplification, clustering, topic modeling, large
+language models, natural language processing
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+4
+
+Discovering Semantic Latent Structures in Psychological Scales: A
+Response-Free Pathway to Efficient Simplification
+Psychological questionnaires are a central tool in psychometric assessment,
+translating latent psychological constructs into observable, interpretable scores. Yet
+developing, refining, and administering such instruments is often costly: items must be
+iteratively drafted, piloted, and revised, and longer forms increase respondent burden,
+attrition, and careless responding. Accordingly, there is sustained demand for short-form
+scales that remain psychometrically defensible while improving feasibility, participant
+experience, and downstream analysis.
+Psychometric Methods for Scale Simplification
+The most commonly used approaches to scale simplification are traditional
+psychometric methods. Classic Test Theory (CTT)-based procedures typically rely on
+item-total correlations and internal consistency indices to identify redundant or weak items
+(Patrick, 2019; Stanton et al., 2002). Similarly, Principal Component Analysis (PCA) and
+Factor Analysis (FA) models, as both Exploratory and Confirmatory Factor Analyses
+(EFA, CFA), are widely used to identify a low-dimensional structure in item responses and
+to retain items that load strongly on the resulting components or theoretically meaningful
+factors (Tavakol & Wetzel, 2020; Wise et al., 2023). Item Response Theory (IRT) further
+refines this process by modeling item discrimination and difficulty parameters, often
+yielding highly efficient short forms when adequate response data are available (Leipoldt
+et al., 2018; Morrison et al., 2022; O’Brien et al., 2018).
+More recently, network-based approaches, such as Exploratory Graph Analysis
+(EGA) (Golino et al., 2020), reconceptualize questionnaire items as nodes connected by
+partial correlations, enabling the identification of communities or central items through
+graph topology rather than latent variables. It offers an interpretable structure by
+modeling latent relational patterns among items. The EGA and its extensions (Golino
+et al., 2020; Jamison et al., 2024) have been widely applied to validate and shorten scales
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+5
+
+across clinical and personality domains (Abdelrahman et al., 2025; Fuchshuber et al., 2025;
+Golino et al., 2020; Maertens et al., 2024; Portoghese et al., 2024).
+The scale simplification approaches reviewed above either aim to improve efficiency
+by selecting items that maximize internal consistency or information, such as CTT, PCA,
+and IRT, or seek to provide an interpretable structure by modeling latent dimensions or
+relational patterns among items, such as FA and EGA. In both cases, item selection is
+directly linked to observed responses and established validity evidence. However, reliance
+on large-scale response data causes a practical bottleneck. Estimating covariance
+structures, fitting latent models, and conducting validation often require substantial sample
+sizes, careful preprocessing, and repeated rounds of analysis. These works can be slow,
+resource-intensive, and sensitive to context and population. Moreover, item reduction
+based solely on empirical response correlations may underutilize information already
+present in the item texts themselves: psychological items are designed as linguistic
+expressions of constructs, and their wording frequently contains semantic overlap,
+redundancy, and subthemes that can be examined before any data are collected.
+Conventional Machine Learning-Assisted Simplification
+Parallel to these psychometric traditions, machine learning-assisted approaches have
+been increasingly explored for questionnaire simplification. The first type is supervised
+feature-selection methods, which use predictive models, such as logistic regression, support
+vector machines (SVM), and random forests, to identify minimal item subsets that
+approximate full-scale outcomes. Examples include the reduction of the SCL-90 via SVM
+to a 29-item short form (Yu et al., 2024), the stratified CES-D screening developed using
+logistic models with recursive feature elimination (Xu et al., 2025), and ML-guided pruning
+of the Buss-Warren Aggression Questionnaire (Jiang et al., 2023). Clinical function
+measures for stroke have likewise been shortened via machine learning feature selection
+(Lin et al., 2022). The supervised feature-selection methods enable automated and highly
+predictive item reduction by leveraging labeled outcomes. However, their tendency toward
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+6
+
+overfitting, limited interpretability, and weak linkage to construct validity constrain their
+theoretical transparency and general applicability.
+The second type is evolutionary and optimization-based strategies, including genetic
+algorithms and ant colony optimization, that search for item combinations that maximize
+predefined psychometric criteria under length constraints. Passarelli et al. (2024) compare
+GA-selected short forms to classical selections using reliability and convergent pattern
+criteria. Ant colony optimization has also been proposed for dynamic electronic
+questionnaires and optimal item set generation (Cao et al., 2025). These frameworks are
+flexible but still depend on response datasets and require repeated model evaluation,
+making them less efficient for early-stage scale design.
+The third type is hybrid pipelines, which further combine machine learning with
+classical psychometric checks, such as clustering or grouping the response data, followed by
+CFA or IRT confirmation. For instance, clustering/variable-grouping methods guided the
+derivation of CSCL-11 from SCL-90 (Cai et al., 2025). Deep architectures (e.g., CNN
++Attention, PointNet) have also been used to approximate scale scores from fewer items
+(Lee et al., 2023). While computationally powerful, these pipelines usually neither encode
+item meaning nor perform explicit semantic de-duplication.
+Introducing a Topic-modeling Framework for Scale Simplification
+Natural language processing (NLP) has increasingly been integrated into
+psychological research, evolving from dictionary-based word matching approaches (e.g.,
+LIWC, (Tausczik & Pennebaker, 2010)) to open-vocabulary and embedding-based models
+capable of capturing latent psychological patterns in natural language. Large-scale analyses
+of social media text have demonstrated that linguistic representations can reliably infer
+personality traits and other stable individual differences (Preotiuc-Pietro et al., 2016;
+Schwartz et al., 2013), while clinical applications have shown that language patterns can
+signal psychological risk and distress (Coppersmith et al., 2018; Milne et al., 2016). More
+recently, contextual embedding frameworks have begun to link psychometric theory with
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+7
+
+semantic modeling, operationalizing psychologically grounded dimensions directly from
+text (Araque et al., 2020; Atari et al., 2023; Chen et al., 2024; Oltmanns; 2025). These
+developments suggest that linguistic representations can approximate psychologically
+meaningful constructs, raising the possibility that the semantic structure of questionnaire
+items themselves may encode latent measurement organization.
+Several lines of research suggest that item semantics contain measurable structural
+information. At the word level, Rosenbusch et al. (2020) introduced the Semantic Scale
+Network, using LSA-based representations to quantify semantic overlap between scales
+without participant data. Their work highlighted the importance of systematic lexical
+comparison for detecting redundancy, though analyses were conducted at the scale
+(document) level rather than modeling latent item-level structure. Moving beyond
+token-level representations, Herderich et al. (2024) and Huang et al. (2025) employed
+sentence embeddings and clustering techniques to explore semantic organization among
+psychological texts and questionnaire items, demonstrating that contextual embeddings
+can reveal meaningful grouping patterns. Complementing these structural explorations,
+Ravenda et al. (2025) provided empirical evidence that semantic similarity among items
+strongly correlates with empirical score correlations, suggesting that semantic matrices
+approximate response-based factor structure. Finally, Jung and Seo (2025) applied an
+embedding-based clustering with K-Means to support item reduction, illustrating the
+practical potential of semantic grouping for scale compression.
+To conclude, past studies establish that (a) lexical overlap can signal redundancy,
+(b) contextual embeddings can uncover semantic organization, and (c) semantic similarity
+approximates empirical correlation. However, they either operate at the scale level, rely on
+predefined cluster numbers, focus on pairwise similarity, or treat clustering as a heuristic
+step rather than a structured, inspectable reduction framework. In particular,
+partition-based clustering methods (e.g., (Jung & Seo, 2025)) require the number of
+clusters to be specified a priori and select representative items solely based on geometric
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+8
+
+proximity, which may obscure density structure or blur the semantically adjacent factors.
+Building on these developments, we propose a topic-modeling framework that treats
+semantic structure as a response-free front-end for scale construction and simplification.
+Rather than limiting analysis to word-level matching, pairwise similarity, or fixed clustering
+schemes, our framework explicitly models latent semantic structure at the item level using
+density-based clustering, followed by topic representation and controlled merging
+procedures. By integrating contextual sentence embeddings with cluster-level topic
+modeling, we capture both global semantic geometry and interpretable keyword structure,
+enabling systematic representative item selection within an operational pipeline.
+Figure 1
+Overall framework
+Stage 1: Encoding & Clustering
+Step 1-1
+Encoding
+
+• I found myself getting
+upset by quite trivial things.
+• I was aware of dryness of
+my mouth.
+…
+[-0.2450, 1.4512, -0.0877, …],
+[1.8035, 1.2583, -0.5415, …],
+…
+
+Stage 2: Topic Modeling
+
+Stage 3: Simplification
+
+“I found myself getting upset by quite
+trivial things.”
+Tokenization:
+ [I, found, myself, getting, upset, by,
+quite, trivial, things]
+Stop words deletion & Keywords finding
+ [found, getting, upset, trivial, things]
+
+Step 5
+Representative
+Item Selection
+
+Step 3
+Tokenization, Cleaning
+& Keywords Extraction
+
+‘Semantic
+factor’ 1
+(topic 1)
+
+‘Semantic
+factor’ 2
+(topic 2)
+
+‘Semantic
+factor’ 3
+(topic 3)
+
+(Mapping into
+semantic space)
+
+Step 4
+Topic Modeling
+
+Step 1-2
+Dimension
+Reduction
+
+(Reduce to lower
+dimensional space)
+
+(Topic modeling result)
+
+(Final simplification
+result)
+Topic 1
+
+Step 2
+Clustering
+
+Topic 2
+Topic 3
+
+(Preliminary
+clustering result)
+
+(Rearranging by topic)
+
+Specifically, as shown in Figure 1, our framework first encodes each item into a
+contextual semantic embedding space (step 1-1), where items with similar meanings are
+positioned closer together. We then apply dimensionality reduction (step 1-2) and
+density-based clustering (step 3) to identify coherent semantic groupings. After that, the
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+9
+
+original item textual data are also processed (step 3) and jointly formalize the final topic
+clusters (step 4) by a structured merging of semantically adjacent clusters, where
+high-frequency and distinctive terms (i.e., keywords) are extracted to characterize the
+thematic core, yielding interpretable semantic factors. Finally, representative items are
+selected using membership probability within each factor (step 5), which is analogous in
+spirit to prioritizing high-loading items in traditional factor-analytic reduction, but derived
+from semantic structure rather than response covariance.
+Compared to prior machine learning–assisted simplification approaches, our
+framework formalizes semantic structure as an inspectable, response-free approximation of
+latent organization that guides and constrains subsequent empirical evaluation. By
+combining contextual embeddings, density-based clustering, interpretable topic modeling,
+and structured representative selection within a unified pipeline, our method extends prior
+semantic approaches into a comprehensive framework for scale simplification. A detailed
+comparison with existing approaches is presented in Table 1.
+The Current Study
+Based on the existing literature on psychometric and machine learning-assisted
+approaches to scale simplification, two major limitations were identified. First, most
+scale-shortening techniques require substantial response datasets to estimate covariance
+structures, fit models, or optimize selection criteria, which can be costly during early-stage
+scale development, cross-cultural adaptation, or in data-constrained settings. Second,
+because item texts are typically treated primarily as indicators rather than as objects of
+analysis, semantic redundancy and conceptual overlap embedded in wording often remain
+underexploited. Accordingly, this study aims to (1) propose a response-free, unsupervised
+topic-modeling framework for uncovering latent semantic structure within psychological
+scales, (2) evaluate the proposed method by using multiple validated scales spanning
+distinct construct domains in order to demonstrate that it can recover latent structure in a
+semantically interpretable manner and generate substantially shortened forms that preserve
+
+Proposed topic-modeling framework
+
+clustering number
+
+Embedding-based clustering with fixed
+
+optimization-based)
+
+No
+
+No
+
+Yes
+
+Yes
+
+Network-based psychometrics (EGA, NA)
+
+ML-assisted selection (supervised /
+
+Yes
+
+Response Data
+
+Requires
+
+Classical psychometrics (CTT/FA/IRT)
+
+Approach Category
+
+Interpretability of Structure
+
+High (semantic topics + labels)
+
+Low–Moderate (geometric proximity)
+
+Low–Moderate (model-dependent)
+
+Moderate–High (communities, centrality)
+
+High (factor loadings, item parameters)
+
+Summarization of scale simplification methods
+
+Table 1
+
+No (density-based) / Optional
+
+Yes (predefined K)
+
+Implicitly yes (via objective function)
+
+No (data-driven)
+
+Often yes (theory- or data-driven)
+
+Assumes Fixed Dimensionality
+
+semantic
+structure + short form
+
+Interpretable
+
+Compressed item set
+
+Predictive short form
+
+date items
+
+pre-
+
+Structural representation + candi-
+
+Short form + latent factor model
+
+Primary Output
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+10
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+key psychometric properties, and (3) release an open-source, user-friendly toolkit to
+support future interpretable and efficient scale refinement for psychological researchers.
+
+11
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+12
+
+Methodology
+Constructing a Topic-modeling Framework for Scale Simplification
+Problem Definition
+The proposed framework formulates questionnaire simplification as a response-free
+semantic structure discovery and representative-item selection problem. Let a psychological
+scale consist of a finite set of item texts:
+
+X = {x1 , x2 , ..., xN }
+
+(1)
+
+where each xi is a natural-language statement intended to operationalize a psychological
+construct.
+Inputs. The sole input to the framework is the item text set X . No respondent
+data, item scores, or empirical covariance information are required at any stage of item
+reduction.
+Outputs. The framework produces three complementary outputs:
+1. A set of latent semantic topics (semantic “factors”):
+T = {T1 , T2 , . . . , TK }
+
+(2)
+
+where K is the number of topics that is automatically inferred from items’ semantics.
+2. For each topic Tk , a ranked subset of representative items selected based on semantic
+membership stability.
+3. A low-dimensional semantic embedding space that supports visualization and
+inspection of item–topic relationships.
+These outputs jointly constitute a semantic pre-structure of the scale, which can
+subsequently guide traditional psychometric validation and refinement.
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+13
+
+Basic Workflow
+Given the formal definition above, the framework follows five sequential steps as
+illustrated in Figure 1: encoding-dimensionality reduction, clustering, text preprocessing,
+topic modeling, and representative item selection.
+Step 1-1: Encoding. Each scale item (i.e., text statement) is encoded into a
+dense vector representation using a pre-trained language model. This embedding process
+projects the items into a high-dimensional semantic space, where geometrical proximity
+reflects conceptual similarity between items.
+Step 1-2: Dimension reduction. To extract the most essential information and
+also mitigate the curse of dimensionality, dimensionality-reduction techniques such as
+UMAP are applied. This step preserves both global and local semantic structure while
+yielding a compact space suitable for clustering and visualization.
+Step 2: Clustering. Items are grouped into clusters based on their semantic
+proximity within the embedding space. Each cluster represents a set of conceptually
+similar items that may correspond to a latent psychological dimension or factor.
+Step 3: Tokenization and stop-word removal. In parallel with embedding,
+item texts are tokenized into separate words. Common function words (e.g., “a”, “about”,
+“I”, numeric tokens) are removed to enhance the interpretability of subsequent topic
+extraction. This textual preprocessing enables the identification of representative keywords
+for each emerging topic.
+Step 4: Topic modeling. In parallel with the clustering, a topic description is
+generated for each cluster by extracting high-weight keywords from the text analysis result
+in step 3. These topic labels provide interpretive summaries of semantic domains and are
+utilized to merge adjacent clusters to when their linguistic content substantially overlaps.
+Step 5: Representative-item selection. Within each finalized cluster, items are
+ranked by their membership strength. That is, the probability of belonging to that
+semantic topic. Items with the highest membership scores are retained as representative
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+14
+
+questions, finally outputting a concise yet semantically balanced short form.
+Parameter Settings
+While semantic representation learning and clustering algorithms can be sensitive to
+model choice and parameterization, the present framework adopts empirically grounded
+default settings designed for short- to medium-length psychological questionnaires, where
+the suggestions can be found in Table 2.
+Encoding model. Large language model-based sentence encoders (such as
+openai-embedding (OpenAI, 2024), qwen-embedding (Alibaba Cloud, 2024)) were preferred
+over traditional transformer encoders (such as sentence-transformers) (Reimers &
+Gurevych, 2019) due to their superior performance in capturing fine-grained semantic
+similarity among short item texts. In the present implementation, an open-source LLM
+embedding model: qwen3-embedding-4b (Qwen Team, 2024), was adopted to ensure
+accessibility and reproducibility.
+Dimensionality reduction. UMAP (uniform manifold approximation and
+projection) (McInnes et al., 2018) was selected over linear methods (e.g., PCA) because of
+its ability to preserve both local and global neighborhood structure in high-dimensional
+semantic spaces. For questionnaires with limited item counts, reducing embeddings to
+approximately 5-15 dimensions provided a stable trade-off between separability and noise
+reduction.
+Clustering. Density-based clustering via HDBSCAN (hierarchical density-based
+spatial clustering of applications with noise) (McInnes et al., 2017) was used to avoid
+prespecifying the number of latent dimensions. In practice, parameters such as
+min_cluster_size=3-5 and min_samples=1-3 for HDBSCAN yielded stable and
+interpretable topic structures across short to medium-size scales. These values reflect the
+assumption that each latent construct should be represented by at least a minimal number
+of semantically coherent items, while allowing peripheral or ambiguous items to remain
+unassigned.
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+15
+
+Topic modeling. To prevent over-fragmentation, clusters with highly overlapping
+keyword representations were automatically merged based on cosine similarity of their
+c-TF-IDF topic representations, using a similarity threshold of 0.9. Importantly, this step
+prioritizes conceptual coherence over maximal partitioning.
+Representative-item selection. Items were ranked according to their
+membership probability within each topic, which considers both the semantic stability and
+geometric proximity. Here, empirically, an item with a probability over 0.85 (the higher the
+better) can be regarded as a representative of the corresponding topic.
+Evaluation of the Proposed Framework
+Scales
+This study selects three well-established psychological scales for evaluating the
+proposed method: the Depression Anxiety Stress Scales (DASS), the International
+Personality Item Pool (IPIP), and the Chinese version of the EPOCH Measure of
+Adolescent Well-Being (EPOCH-CN), the details are given in Table 3. The reasons for
+choosing them are as follows:
+1. All three scales are widely used and well-validated, ensuring that their theoretical
+structures and psychometric properties are well understood. They also have large and
+publicly available empirical datasets that enable robust evaluation and reproducible
+analyses afterwards.
+2. They span distinct construct domains, including negative affect, personality traits,
+and positive well-being, allowing the framework to be examined across heterogeneous
+psychological content.
+3. Semantically, these scales differ systematically in item valence and phrasing style:
+DASS consists predominantly of negatively worded items, EPOCH uses exclusively
+positively framed items, and IPIP contains a mixture of positively and negatively
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+Table 2
+Default and recommended parameter settings
+Typical value
+Parameter
+
+Meaning
+used in paper
+
+UMAP
+Controls the balance between preserving local versus
+n_neighbors
+
+global structure by setting the number of
+
+3
+
+neighboring points considered.
+Specifies the dimensionality of the reduced
+5
+
+n_components
+embedding space.
+Determines how tightly points are packed together
+
+0.0
+
+min_dist
+in the low-dimensional embedding.
+HDBSCAN
+Defines the minimum number of items required to
+
+2
+
+min_cluster_size
+form a cluster.
+Controls how conservative the clustering is by
+min_samples
+
+influencing the identification of core versus
+
+1
+
+boundary points.
+BERTopic
+Actual factor
+Specifies the target number of topics, either
+number/+1 of
+nr_topics
+
+predefined based on theoretical structure or
+scale if known, or
+automatically determined.
+“auto”
+Determines the number of top-ranked words used to
+2
+
+top_n_words
+represent and interpret each topic.
+
+16
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+17
+
+keyed statements. This variation provides a stringent test of whether semantic
+structure discovery is robust to surface-level linguistic polarity.
+
+4. Finally, we deliberately include the Chinese version of the EPOCH measure, together
+with data collected from Chinese participants, to provide an initial test of the
+effectiveness, the cross-language and -cultural applicability of the proposed
+framework.
+
+Table 3
+Information of scales and response data for evaluation
+Number and
+Scale
+
+Number
+
+Number
+Scale origin
+
+name
+
+names of the
+
+Data origin
+
+of data
+
+of items
+factors
+(Lovibond,
+
+records
+
+3, Depression,
+
+(OpenPsychometrics.org,
+
+Anxiety, Stress
+
+2019)
+
+42
+
+DASS
+1995)
+
+39,775
+5, Extraversion,
+Agreeableness,
+
+(Goldberg
+
+(OpenPsychometrics.org,
+50
+
+IPIP
+
+Conscientious-
+
+1,015,341*
+
+et al., 1999)
+
+2018)
+ness, Emotional
+Stability, Intellect
+5, Engagement,
+
+(Kern et al.,
+Perseverance,
+
+EPOCH
+
+(Zeng et al., 2019a,
+
+2016)(English),
+20
+
+(Chinese
+
+Optimism,
+
+17,854
+2019b)
+
+(Kern et al.,
+Connectedness,
+
+version)
+2019)(Chinese)
+
+Happiness.
+*: We filtered records with missing item(s), and randomly allocated 20,000 data for evaluation. All reversed items were
+rewritten into their counterparts prior to analysis to prevent the encoding and topic modeling from being driven by
+superficial polarity cues than substantive item meaning (refer to Appendix A - IPIP).
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+18
+
+Evaluation Dimensions
+The evaluation is mainly organized along two complementary dimensions:
+psychometric evidence and methodological evidence. Additionally, robustness analyses
+under parameter perturbation is also considered.
+Psychometric Evidence. To evaluate whether the semantically derived short
+forms retain essential measurement properties, we assess structural validity and internal
+consistency using standard psychometric criteria. Importantly, these analyses are
+conducted post hoc and serve solely as validation, which means no data or these results
+would inform or constrain the semantic item selection process.
+First, structural validity is examined by confirmatory factor analysis (CFA). This
+comparison assesses whether semantic topic–based item selection preserves theoretically
+meaningful latent structure rather than collapsing content into an undifferentiated general
+factor. Model fit is evaluated using commonly reported indices, including the Comparative
+Fit Index (CFI), Tucker–Lewis Index (TLI), and the Root Mean Square Error of
+Approximation (RMSEA). Second, Internal consistency is examined using Cronbach’s α at
+both the total-scale and subscale levels. In addition, corrected item-total correlations
+(CITC) are inspected to evaluate the contribution of individual items to their respective
+dimensions. These indices provide evidence of whether the retained items function
+coherently as indicators of the underlying constructs.
+Methodological Evidence. The methodological analyses address whether the
+semantic structures discovered from item texts are theoretically meaningful, interpretable,
+and capable of preserving substantive information, independent of response data.
+First, alignment between topic modeling result and theoretical factors. A central
+methodological question is: whether the semantic clusters identified by the proposed
+framework correspond to established theoretical dimensions of psychological constructs? To
+examine this alignment, cluster assignments produced by the semantic topic-modeling
+procedure were compared with the original factor labels defined by each questionnaire’s
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+19
+
+theoretical framework. The metric used here is Adjusted Rand index (ARI), which
+measures agreement between two partitions while correcting for chance. In addition, for
+descriptive purposes, each semantic cluster was mapped to its dominant theoretical factor
+based on majority item membership. The ARI is defined as follows:
+
+ARI = 1
+2
+
+P nij  hP ai  P bj i n
+− i 2
+/ 2
+ij
+j 2
+2
+hP   P  i hP   P  i  
+i
+
+ai
+2
+
++
+
+j
+
+bj
+2
+
+−
+
+i
+
+ai
+2
+
+j
+
+bj
+2
+
+/ n2
+
+(3)
+
+where nij is the number of elements in the intersection of clusters i and j, ai is the sum
+over row i, and bj is the sum over column j.
+Second, coverage and information fidelity. We evaluated the fidelity from another
+perspective, as whether the shortened scales preserved substantive information contained in
+the original instruments by two complementary sub-aspects. The first sub-aspect is the
+pattern of inter-factor correlations obtained from the shortened scales with those derived
+from the full-length scales, assessing whether the relational structure among latent
+dimensions was preserved. Structural similarity was also quantified using the normalized
+Frobenius similarity between the full and short subscale correlation matrices. In the second
+sub-aspect, we examined correlations between total and subscale scores of the original and
+shortened scales. These analyses assess information fidelity without requiring score
+rescaling or transformation, and provide evidence that semantic reduction retains
+meaningful variance present in the original measures.
+Third, semantic structure visualization. To enhance interpretability and
+methodological transparency, the semantic embedding space of items was visualized using
+two-dimensional t-SNE projections. Each item was positioned according to its embedding
+vector and colored based on its predefined theoretical factor. In parallel, topic modeling
+assignments were represented by cluster boundaries drawn in the projected space. Two
+complementary boundary representations were employed. First, for each topic cluster, a
+convex hull was constructed to capture the geometric extent of items assigned to that
+cluster. Given a set of projected points {xi }ni=1 , the convex hull corresponds to the minimal
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+20
+
+convex polygon enclosing all cluster members, thereby reflecting the outer semantic limits
+of the cluster:
+
+Conv ({xi }ni=1 ) =
+
+( n
+X
+
+λi xi λi ≥ 0,
+
+i=1
+
+n
+X
+
+)
+
+λi = 1
+
+(4)
+
+i=1
+
+Second, a covariance-based ellipse was overlaid to approximate the statistical
+dispersion of each cluster. Specifically, for a cluster with mean vector µ and covariance
+matrix Σ, the ellipse corresponds to the contour:
+
+n
+
+ϕ= x∈
+
+R2 (x − µ)⊤Σ−1(x − µ) = c
+
+o
+
+(5)
+
+where c controls the scale (e.g., proportional to the chosen standard deviation multiplier).
+This elliptical boundary summarizes the central tendency and principal directions of
+variation within the cluster.
+These visualizations allow qualitative examination of (a) the alignment between
+theoretical factors and data-driven topic clusters, (b) the internal coherence and separation
+of clusters in embedding space, and (c) whether selected items occupy central or
+structurally representative positions within their respective clusters.
+Parameter Setting Guidance and Stability Analysis
+To provide researchers with an intuitive sense of how the proposed framework
+behaves under different configurations,and how to control the degree of parameter settings
+in their situations, we further conducted a series of targeted parameter sensitivity analyses.
+The goal of these evaluations was not to identify a single optimal setting, but to illustrate
+the scale and direction of parameter effects and to support informed, user-guided
+configuration in applied settings.
+We focused on two groups of parameters. First, we examined two structurally
+decisive parameters: the number of semantic topics and the number of items retained per
+topic, which directly shape the semantic partitioning of items and the composition of the
+simplified scale. Here, using the IPIP dataset as an illustrative example, we evaluated how
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+21
+
+varying these parameters affected the structural quality of the resulting short forms, as
+reflected by confirmatory factor analysis indices (CFI and TLI).
+Second, despite having recommended keeping other parameters related to
+dimensionality reduction and clustering (e.g., n_neighbors, n_min_cluster_size, and
+min_samples) at their default values in most applications (as shown in Table 2, we also
+conducted an additional robustness check across all three scale-datasets. These parameters
+were perturbed within a reasonable range, and stability was assessed by examining the
+overlap of selected items across settings using the Jaccard similarity index, which is defined
+as:
+
+J(Sdefault , Sperturbed ) =
+
+|Sdefault ∩ Sperturbed |
+,
+|Sdefault ∪ Sperturbed |
+
+(6)
+
+where S denotes the set of selected representative items.
+Together, these analyses characterize the sensitivity and stability of the framework
+across key configuration choices. By distinguishing parameters that primarily affect
+semantic granularity from those that mainly influence selection stability, this evaluation
+aims to help researchers develop a practical understanding of how different settings shape
+the simplification process and its outcomes, making it more feasible when using the
+simplification algorithm/tool provided.
+Transparency and Openness
+Ethical Statement and Openness. This study focuses on methodological
+development and evaluation using publicly available psychological questionnaires and
+previously collected or openly accessible datasets. No new data were collected from human
+participants for the purposes of this research. For this reason, the study did not require
+institutional ethical approval for data collection. The study’s design and analyses were not
+preregistered, as the primary aim was to introduce and examine a methodological
+framework for scale simplification rather than to test confirmatory hypotheses. All analysis
+code and research materials necessary to reproduce the proposed framework are available
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+22
+
+at https://github.com/bowang-rw-02/sem-scale.
+Software and Tools Usage. In terms of data analysis, Python 3.12.11 (Python
+Software Foundation, 2023) was used as the basic programming framework in the
+questionnaire simplification procedure. The large language encoding framework and
+realization were built upon PyTorch version 2.7.1 (basic model framework, (Paszke et al.,
+2019)), Transformers version 4.54.0 (language model loading, (Wolf et al., 2020)), and
+Sentence Transformers version 5.0.0 (item sentence embedding acquisition, (Reimers &
+Gurevych, 2019)). The dimension reduction tool was implemented using the umap-python
+library version 0.5.9 (McInnes et al., 2018), while the clustering was conducted using the
+hdbscan library version 0.8.40 (McInnes et al., 2017). The topic-modeling and -fitting
+framework was achieved by bertopic version 0.17.3 (Grootendorst, 2022). Besides, SPSS
+version 26.0 (IBM Corp., 2019) was employed for descriptive analyses, correlation tests,
+assessments of internal consistency reliability, and Multivariate Analysis of Variance
+(MANOVA), and Mplus version 8.3 (Muthén & Muthén, 2017) was used to conduct CFA.
+All implementation details are reported to facilitate replication and to support the use of
+the proposed framework as a transparent and reusable methodological tool.
+Reproducibility. To support reproducibility, all stochastic components in the
+analytical pipeline (e.g., dimensionality reduction and visualization) were controlled using a
+fixed random seed 42. Across repeated runs with identical settings, the topic modeling and
+item selection results remained stable, indicating that the proposed framework yields
+consistent solutions under fixed configurations.
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+23
+
+Results
+In this section, we report results in the following order: first, psychometric
+properties of the simplified scales; second, methodological evidence regarding semantic
+structure discovery; and finally, robustness analyses under parameter perturbation.
+Psychometric Results of the Simplified Scales
+Depression Anxiety Stress Scales (DASS)
+The proposed semantic framework was first evaluated on the DASS scale. Using
+only item texts as input, the proposed framework analyzed and finally selected a shortened
+version comprising twelve items out of forty-two items, with four items representing each
+latent dimension. The detailed item selection result and representative keywords are shown
+in Table 4. The detailed scale content can be found in appendix A.
+Table 4
+Scale simplification result of DASS
+Topic No.
+
+Corr. Factor
+
+Selected Items
+
+Topic Keywords (Top 3)
+
+0
+
+Anxiety
+
+Q4, Q7, Q20, Q25
+
+absense, physical, heart
+
+1
+
+Depression
+
+Q3, Q5, Q10, Q13
+
+feel, couldn, life
+
+2
+
+Stress
+
+Q1, Q6, Q8, Q11
+
+get, upset, hard
+
+Structural Validity. CFA was conducted to examine whether the original
+three-factor structure of the DASS was preserved in the shortened scale, results are shown
+in Tables 5, 6 and Figures 2, 3. The three-factor model demonstrated an acceptable to
+good fit to the data, χ2 (df)=8354.955 (51), RMSEA=0.064, CFI=0.956, TLI=0.943,
+SRMR=0.041. In contrast, a competing single-factor model showed substantially poorer
+fit, χ2 (df)=26483.266 (54), RMSEA=0.111, CFI=0.859, TLI=0.828, SRMR=0.061. These
+results indicate that the multidimensional structure of the DASS was retained in the
+semantically derived short form. All standardized factor loadings in the three-factor model
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+24
+
+were high and statistically significant (ps < .001), ranging from 0.673 to 0.821. Items
+selected to represent each dimension loaded strongly on their intended factors, suggesting
+that the semantic selection procedure preserved clear construct differentiation.
+Table 5
+Confirmatory factor analysis fit indices for the shortened DASS
+Model
+
+χ2
+
+df
+
+χ2 /df
+
+RMSEA
+
+CFI
+
+TLI
+
+SRMR
+
+Three-factor
+
+8354.955
+
+51
+
+163.823
+
+0.064
+
+0.956
+
+0.943
+
+0.041
+
+One-factor
+
+26483.266
+
+54
+
+490.431
+
+0.111
+
+0.859
+
+0.828
+
+0.061
+
+Item Quality and Internal Consistency. Item-level analyses further supported
+the quality of the shortened DASS. As shown in Table 7, the CITC values ranged from
+0.553 to 0.719, with no items falling below commonly accepted thresholds for adequate
+discrimination, indicating strong associations between individual items and their respective
+subscale scores. Internal consistency was high for the total scale (Cronbach’s α = 0.899).
+Subscale reliabilities were also satisfactory, with Cronbach’s α values of 0.824 for the
+Depression, 0.862 for the Anxiety, and 0.797 for the Stress subscale. Together, these results
+indicate that the shortened DASS maintains strong internal coherence at both the
+total-scale and subscale levels.
+International Personality Item Pool (IPIP)
+The semantic framework was further evaluated on the IPIP scale. The detailed item
+selection result and representative keywords are shown in Table 8. The complete scale
+content is presented in appendix A.
+Structural Validity. In terms of the CFA results (Tables 9,10 and Figures 4,5),
+the hypothesized five-factor model demonstrated an acceptable fit to the data, χ2 (160) =
+11,258.01, RMSEA = 0.059, CFI = 0.860, TLI = 0.833, SRMR = 0.057. In contrast, a
+competing single-factor model exhibited substantially poorer fit, χ2 (173) = 53,927.25,
+RMSEA = 0.125, CFI = 0.320, TLI = 0.253, SRMR = 0.129. These results indicate that
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+Table 6
+Factor loadings of the shortened DASS (n=39,775)
+Stress
+Item
+
+Depression
+
+Factor Loading
+
+Item
+
+Anxiety
+
+Factor Loading
+
+Item
+
+Factor Loading
+
+Q1
+
+0.788
+
+Q3
+
+0.778
+
+Q4
+
+0.730
+
+Q6
+
+0.696
+
+Q5
+
+0.751
+
+Q7
+
+0.703
+
+Q8
+
+0.673
+
+Q10
+
+0.770
+
+Q20
+
+0.703
+
+Q11
+
+0.800
+
+Q13
+
+0.821
+
+Q25
+
+0.687
+
+Table 7
+Item quality and internal consistency of the shortened DASS
+Depression
+
+Anxiety
+
+Stress
+
+Item
+
+CITC
+
+Item
+
+CITC
+
+Item
+
+CITC
+
+Q1
+
+0.696
+
+Q3
+
+0.714
+
+Q4
+
+0.653
+
+Q6
+
+0.639
+
+Q5
+
+0.684
+
+Q7
+
+0.619
+
+Q8
+
+0.556
+
+Q10
+
+0.719
+
+Q20
+
+0.553
+
+Q11
+
+0.706
+
+Q13
+
+0.719
+
+Q25
+
+0.614
+
+Cronbach’s α
+
+0.824
+
+Cronbach’s α
+
+0.862
+
+Cronbach’s α
+
+0.797
+
+Cronbach’s α (overall)
+
+0.899
+
+25
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+26
+
+Figure 2
+CFA graph of DASS (three-factor model)
+
+the multidimensional structure of the IPIP was largely retained in the shortened version.
+Standardized factor loadings in the five-factor model were statistically significant (ps <
+.001) and predominantly moderate to high, with most values exceeding 0.50. Only two
+items exhibited lower loadings (CSN3 0.330 and OPN2 0.376), reflecting the increased
+heterogeneity and reduced redundancy inherent in brief personality measures.
+Item Quality and Internal Consistency. As shown in Table 11, the CITC
+values for all retained items of the IPIP exceeded 0.30, with the majority above 0.40. Only
+three items fell within the 0.30–0.40 range, suggesting acceptable but relatively weaker
+discrimination compared to the remaining items. Internal consistency estimates varied
+across personality dimensions. Cronbach’s α coefficients ranged from 0.637 to 0.799 across
+the five subscales, while the overall scale demonstrated an internal consistency of α = 0.705.
+These values are consistent with prior research on short-form personality inventories
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+Table 8
+Scale simplification result of IPIP
+
+Topic Keywords (Top
+Topic No.
+
+Corr. Factor
+
+Selected Items
+3)
+Q1, Q2, Q3, Q5
+
+EXT
+0
+
+(original item ids:
+
+people, talk, attention
+
+(Extraversion)
+EXT {1,2,3,5})
+EST (Emotional
+Q12, Q13, Q14, Q16
+1
+
+Stability, or
+
+stay, calm, relax
+(EST {2,3,4,6})
+
+Neuroticism)
+CSN (Conscien-
+
+Q31, Q32, Q33, Q34
+
+tiousness)
+
+(CSN {1,2,3,4})
+
+AGR
+
+Q24, Q25, Q26, Q28
+
+2
+
+order, thing, keep
+
+3
+
+feel, people, other
+(Agreeableness)
+
+(AGR {4,5,6,8})
+
+OPN (Openness,
+
+Q42, Q43, Q45, Q46
+
+idea, understand,
+
+or Intellect)
+
+(OPN{2,3,5,6})
+
+imagination
+
+4
+
+Table 9
+Confirmatory factor analysis fit indices for the shortened IPIP
+Model
+
+χ2
+
+df
+
+χ2 /df
+
+RMSEA
+
+CFI
+
+TLI
+
+SRMR
+
+Five-factor
+
+11258.01
+
+160
+
+70.363
+
+0.059
+
+0.86
+
+0.833
+
+0.057
+
+One-factor
+
+53927.25
+
+173
+
+311.718
+
+0.125
+
+0.32
+
+0.253
+
+0.129
+
+27
+
+0.639
+
+0.673
+
+0.729
+
+0.790
+
+EXT2
+
+EXT3
+
+EXT5
+
+Factor Loading
+
+EXT1
+
+Item
+
+Extraversion
+
+EST6
+
+EST4
+
+EST3
+
+EST2
+
+Item
+
+0.631
+
+0.413
+
+0.697
+
+0.616
+
+Factor Loading
+
+Emotional Stability
+
+Factor loadings of the shortened IPIP (n=20,000)
+
+Table 10
+
+AGR8
+
+AGR6
+
+AGR5
+
+AGR4
+
+Item
+
+0.585
+
+0.615
+
+0.642
+
+0.799
+
+Factor Loading
+
+Agreeableness
+
+CSN4
+
+CSN3
+
+CSN2
+
+CSN1
+
+Item
+
+0.752
+
+0.330
+
+0.569
+
+0.536
+
+Factor Loading
+
+Conscientiousness
+
+OPN6
+
+OPN5
+
+OPN3
+
+OPN2
+
+Item
+
+0.764
+
+0.457
+
+0.732
+
+0.376
+
+Factor Loading
+
+Intellect
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+28
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+29
+
+Figure 3
+CFA graph of DASS (one-factor model)
+
+(Goldberg et al., 1999) and reflect the trade-off between scale brevity and reliability.
+The Chinese Version of EPOCH Measure of Adolescent Well-Being
+(EPOCH-CN)
+The proposed framework was finally evaluated on the EPOCH-CN scale. The
+original scale consists of twenty items, resulting in relatively limited redundancy within
+each dimension. Based on semantic structure discovery, a shortened 10-item version was
+derived, as shown in Table 12. The detailed scale content is presented in the appendix A.
+Structural Validity. Results of CFA (Tables 13,14 and Figures 6,7) showed that
+the hypothesized five-factor model demonstrated an excellent fit to the data, with χ2 (25) =
+771.534, RMSEA = 0.041, CFI = 0.983, TLI = 0.970, SRMR = 0.018, indicating strong
+structural validity. In contrast, a competing single-factor model showed substantially
+
+0.593
+0.612
+0.665
+0.799
+
+EXT2
+
+EXT3
+
+EXT5
+
+Cronbach’s α
+
+Cronbach’s α (overall)
+
+0.578
+
+CITC
+
+EXT1
+
+Item
+
+Extraversion
+
+Cronbach’s α
+
+EST6
+
+EST4
+
+EST3
+
+EST2
+
+Item
+
+0.664
+
+0.472
+
+0.336
+
+0.508
+
+0.476
+
+Cronbach’s α
+
+AGR8
+
+AGR6
+
+AGR5
+
+AGR4
+
+0.749
+
+0.513
+
+0.498
+
+0.524
+
+0.649
+
+0.705
+
+Cronbach’s α
+
+CSN4
+
+CSN3
+
+CSN2
+
+CSN1
+
+0.637
+
+0.490
+
+0.318
+
+0.424
+
+0.452
+
+Intellect
+
+Cronbach’s α
+
+OPN6
+
+OPN5
+
+OPN3
+
+OPN2
+
+CITC Item
+
+Conscientiousness
+
+CITC Item
+
+Agreeableness
+
+CITC Item
+
+Emotional Stability
+
+Item quality and internal consistency of the shortened IPIP
+
+Table 11
+
+0.686
+
+0.563
+
+0.425
+
+0.534
+
+0.367
+
+CITC
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+30
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+31
+
+Figure 4
+CFA graph of IPIP (five-factor model)
+
+poorer fit χ2 (35) = 5895.535, RMSEA = 0.097, CFI = 0.870, TLI = 0.833, SRMR = 0.050.
+These results indicate that the multidimensional structure of the EPOCH-CN was clearly
+retained despite the substantial reduction in item number. All standardized factor loadings
+in the five-factor model were statistically significant (ps < .001) and exceeded 0.50.
+Loadings ranged from 0.583 to 0.870, with particularly strong loadings observed for items
+representing Happiness (0.828–0.870). The clear separation among the five latent
+dimensions suggests that semantic clustering was able to recover the intended well-being
+structure from item texts alone, even in a scale with limited item redundancy.
+Item Quality and Internal Consistency. The CITC values for all retained
+items exceeded 0.40 (Table 15). This pattern suggests generally satisfactory item quality
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+32
+
+Figure 5
+CFA graph of IPIP (one-factor model)
+
+given the extreme brevity of the scale. The overall shortened EPOCH-CN demonstrated
+high internal consistency (Cronbach’s α = 0.875), while subscale-level reliability varied
+slightly across dimensions. Cronbach’s α coefficients were 0.837 for Happiness, 0.668 for
+Engagement, 0.647 for Perseverance, and 0.642 for Optimism, indicating acceptable
+reliability for brief subscales. In contrast, the Connectedness subscale exhibited lower
+internal consistency (α = 0.588). This variability is consistent with well-documented
+psychometric constraints of two-item subscales and reflects a reliability ceiling imposed by
+scale length rather than deficiencies in semantic structure discovery.
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+33
+
+Table 12
+Scale simplification result of EPOCH-CN
+
+Topic Keywords (Top
+Topic No.
+
+Corr. Factor
+
+Selected Items
+3)
+Q7, Q12 (original item
+
+0
+
+E (Engagement)
+
+time, forget,involve
+ids: E2, E4)
+
+1
+
+O (Optimism)
+
+Q13, Q18 (O2, O4)
+
+believe, good, thing
+
+2
+
+H (Happiness)
+
+Q4, Q20 (H1, H4)
+
+happy, fun, life
+
+3
+
+P (Perseverance)
+
+Q2, Q9 (P1, P2)
+
+finish, until, stick
+
+Q1, Q10 (C1, C2)
+
+care, people, share
+
+C
+4
+(Connectedness)
+
+Methodological Evidence
+Alignment Between Semantic Clusters and Theoretical Factors
+To further examine whether the semantic structure discovered by the proposed
+framework corresponds to established psychometric theory, we quantified the alignment
+between semantic cluster assignments and the original factor structures (as “ground
+truth”) of the evaluated questionnaires. Importantly, this analysis does not assess
+predictive accuracy, but rather evaluates the extent to which latent semantic organization
+mirrors theoretically defined dimensions across instruments.
+For each questionnaire, cluster assignments were compared with the original factor
+labels using the Adjusted Rand index (ARI), supplemented by majority-vote
+correspondence analyses. These metrics quantify structural agreement without requiring
+predefined label mappings or supervised optimization.
+Across the three instruments, substantial alignment was observed between semantic
+clusters and theoretical factor structures, as shown in Tables 16,17 and 18. For the DASS,
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+34
+
+Table 13
+Confirmatory factor analysis fit indices and standardized factor loadings for the shortened
+EPOCH-CN
+Model
+
+χ2
+
+df
+
+χ2 /df
+
+RMSEA
+
+CFI
+
+TLI
+
+SRMR
+
+Five-factor
+
+771.534
+
+25
+
+30.861
+
+0.041
+
+0.983
+
+0.970
+
+0.018
+
+One-factor
+
+5895.535
+
+35
+
+168.444
+
+0.097
+
+0.870
+
+0.833
+
+0.050
+
+which assesses negative affect across three related dimensions, semantic clustering showed
+strong correspondence with the Depression, Anxiety, and Stress factors (ARI = 0.745),
+with 92.9% of items assigned to clusters whose dominant factor matched their theoretical
+classification. For the IPIP, representing a trait-based personality inventory with mixed
+item valence, alignment was even higher (ARI = 0.855), with 96.0% of items exhibiting
+factor-consistent cluster assignments. For the EPOCH-CN, semantic clustering fully
+recovered the original five-factor structure (ARI = 1.00), with complete correspondence
+between clusters and theoretical dimensions.
+Taken together, these results indicate that the proposed semantic structure
+discovery reliably aligns with established psychometric organization across diverse
+measurement domains. The observed variation in alignment strength across instruments
+suggests that semantic–theoretical correspondence is sensitive to construct characteristics
+and item composition, a pattern that is examined further in the Discussion section.
+Information Fidelity
+Structural Similarity of Subscale Correlation Patterns (Full vs. Short
+Forms). To examine whether the proposed semantic framework preserves the internal
+relational structure of psychological constructs, we compared the subscale-level correlation
+patterns of the full and shortened versions of each questionnaire. For each scale, Pearson
+correlation matrices were computed among subscale scores derived from the full form and
+
+0.583
+
+0.715
+
+C2
+
+H4
+
+H1
+
+Factor Loading Item
+
+C1
+
+Item
+
+Connectedness
+
+0.870
+
+0.828
+
+Factor Loading
+
+Happiness
+
+E4
+
+E2
+
+0.646
+
+0.778
+
+Item Factor Loading
+
+Engagement
+
+Factor loadings of the shortened EPOCH-CN (n=17,854)
+
+Table 14
+
+P2
+
+P1
+
+0.662
+
+0.722
+
+Item Factor Loading
+
+Perseverance
+
+O4
+
+O2
+
+0.777
+
+0.609
+
+Item Factor Loading
+
+Optimism
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+35
+
+0.417
+0.588
+
+C2
+
+Cronbach’s α
+
+Cronbach’s α (overall)
+
+0.417
+
+CITC
+
+C1
+
+Item
+
+Connectedness
+
+Cronbach’s α
+
+H4
+
+H1
+
+Item
+
+0.837
+
+0.720
+
+0.720
+
+Cronbach’s α
+
+E4
+
+E2
+
+0.668
+
+0.503
+
+0.503
+
+0.875
+
+Cronbach’s α
+
+P2
+
+P1
+
+0.647
+
+0.478
+
+0.478
+
+0.642
+
+0.473
+
+0.473
+
+CITC
+
+Optimism
+
+Cronbach’s α
+
+O4
+
+O2
+
+CITC Item
+
+Perseverance
+
+CITC Item
+
+Engagement
+
+CITC Item
+
+Happiness
+
+Item quality and internal consistency of the shortened IPIP
+
+Table 15
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+36
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+37
+
+Figure 6
+CFA graph of EPOCH-CN (five-factor model)
+
+the short form, respectively. Heatmaps of these matrices are presented in Figures 8
+(DASS), 9 (IPIP), and 10 (EPOCH-CN).
+DASS.
+
+In the full DASS, correlations among Depression, Anxiety, and Stress
+
+were moderate to strong (e.g., r = .67–.80), reflecting the well-established overlap among
+negative affective states. The corresponding short-form matrix showed a closely matching
+structure, with all inter-factor correlations remaining positive and within a comparable
+range (r = .57–.69). Notably, the relative ordering of associations was preserved in the
+short form, despite a modest overall attenuation in correlation magnitudes. Consistent
+with this visual correspondence, the normalized Frobenius similarity between the two
+correlation matrices was high (similarity = 0.889), indicating substantial preservation of
+the original relational structure.
+IPIP.
+
+For the IPIP, the full-form correlation matrix exhibited the characteristic
+
+Big Five pattern, with generally low to moderate inter-factor correlations (most |r| < .30).
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+38
+
+Figure 7
+CFA graph of EPOCH-CN (one-factor model)
+
+The short-form matrix closely mirrored this structure, with inter-factor correlations
+remaining weak (typically |r| ≤ .25) and no emergence of spurious strong associations. The
+overall configuration of trait relationships observed in the full scale was therefore
+maintained in the shortened version. The normalized Frobenius similarity between the full
+and short matrices was 0.872, further supporting structural consistency.
+EPOCH-CN.
+
+In the EPOCH-CN measure, the full-form subscale correlations
+
+were moderate to high (r ≈ .55–.73), consistent with the presence of a shared higher-order
+well-being factor. The short-form matrix displayed a similar relational pattern, with
+inter-factor correlations ranging approximately from .44 to .58. While correlations were
+systematically lower in the short form, the relative strength of associations among
+dimensions remained stable. Structural similarity remained high (similarity = 0.861),
+despite a small attenuation in inter-factor correlations.
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+39
+
+Table 16
+Correspondence between semantic clusters and DASS factors
+Discovered topic
+Dominant factor
+
+Proportion
+
+Number of items
+
+(semantic “factor”)
+Topic 0
+
+Anxiety
+
+0.8
+
+15
+
+Topic 1
+
+Depression
+
+1
+
+14
+
+Topic 2
+
+Stress
+
+1
+
+11
+
+Topic 3
+
+Anxiety
+
+1
+
+2
+
+ARI
+
+0.745
+
+To conclude, across all three instruments, the short forms reproduced the
+characteristic subscale correlation patterns of their full-length counterparts. Although
+correlation magnitudes were generally reduced, the relative configuration of relationships
+among dimensions was preserved, indicating that the proposed semantic-based item
+selection maintained the internal structural organization of the original scales.
+Convergent and Discriminant Associations Between Full and Short
+Forms (Cross-Form Subscale Correlations). To assess whether the shortened versions
+accurately captured the intended constructs of the original scales, we computed cross-form
+Pearson correlations between subscale scores derived from the full and short forms. For
+each questionnaire, a k × k cross-correlation matrix was obtained (k as the number of
+factors, k = 3 for DASS; k = 5 for IPIP and EPOCH-CN), where diagonal elements reflect
+convergent associations between corresponding dimensions, and off-diagonal elements
+reflect discriminant associations between non-corresponding dimensions. Heatmaps of these
+matrices are presented in Figures 11(a) (DASS), 11(b) (IPIP), and 11(c) (EPOCH-CN).
+DASS.
+
+For the DASS, strong convergent correlations were observed between
+
+corresponding subscales of the full and short forms. Diagonal correlations ranged from
+approximately r = .92 to .95, indicating a high degree of alignment between the two
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+40
+
+Table 17
+Correspondence between semantic clusters and IPIP factors
+Semantic cluster
+
+Dominant factor
+
+Topic 0
+
+Extraversion (EXT)
+
+0.83
+
+12
+
+Topic 1
+
+Emotional Stability (EST)
+
+1
+
+10
+
+Topic 2
+
+Conscientiousness (CSN)
+
+1
+
+10
+
+Topic 3
+
+Agreeableness (AGR)
+
+1
+
+8
+
+Topic 4
+
+Intellect/Openness (OPN)
+
+1
+
+8
+
+Topic 5
+
+Intellect/Openness (OPN)
+
+1
+
+2
+
+ARI
+
+Proportion
+
+Number of items
+
+0.855
+
+versions for Depression, Anxiety, and Stress. In contrast, off-diagonal correlations were
+consistently lower (generally r < .75), reflecting partial overlap among negative affect
+dimensions while remaining clearly below the corresponding diagonal values.
+IPIP.
+
+In the IPIP, convergent correlations between full-form and short-form
+
+subscales were uniformly high across all five personality traits, with diagonal correlations
+ranging from approximately r = .87 to .93. Off-diagonal correlations were substantially
+lower, typically falling below .30. This pattern indicates that the shortened version
+preserved strong trait-specific correspondence with the full scale while maintaining the
+relative independence among distinct personality dimensions.
+EPOCH-CN.
+
+For the EPOCH-CN, convergent correlations between full and
+
+short forms were similarly strong, with diagonal values ranging from approximately r = .91
+to .95 across the five well-being dimensions. Off-diagonal correlations were moderate
+(approximately r = .50–.66), consistent with the presence of a shared higher-order
+well-being factor in both versions of the scale. Importantly, for all dimensions, diagonal
+correlations exceeded off-diagonal correlations, indicating clear construct alignment
+between the full and short forms.
+Across all three instruments, cross-form correlation analyses demonstrated strong
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+41
+
+Table 18
+Correspondence between semantic clusters and EPOCH-CN factors
+Semantic cluster
+
+Dominant factor
+
+Topic 0
+
+Engagement (E)
+
+1
+
+4
+
+Topic 1
+
+Optimism (O)
+
+1
+
+4
+
+Topic 2
+
+Happiness (H)
+
+1
+
+4
+
+Topic 3
+
+Positivity (P)
+
+1
+
+4
+
+Topic 4
+
+Connectedness (C)
+
+1
+
+4
+
+ARI
+
+Proportion
+
+Number of items
+
+1.000
+
+convergent associations between corresponding subscales of the full and short forms,
+alongside comparatively weaker discriminant associations between non-corresponding
+dimensions. This pattern indicates that the proposed semantic framework yields shortened
+scales that closely align with their full-length counterparts at the construct level.
+Semantic Structure Visualization
+Figures 12,13 and 14 present two-dimensional t-SNE visualizations of item
+embeddings for the DASS, IPIP and EPOCH-CN scales, respectively. In each figure,
+individual items are colored according to their original theoretical factors, while topic
+boundaries reflect the clusters derived from the topic modeling procedure. Items selected
+for the simplified versions are highlighted with red rings. Across all three scales, the topic
+modeling results show a high degree of correspondence with the original factor structures,
+despite the absence of any explicit constraint or setting on the number or composition of
+factors during clustering.
+DASS. For the DASS scale (Figure 12), three major topic clusters emerged and
+broadly aligned with the Depression (D), Anxiety (A), and Stress (S) factors. Most items
+associated with each theoretical factor were grouped within the same topic boundary,
+indicating that the semantic embedding space preserved the original tripartite structure of
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+IPIP Full Subscale Correlations
+D
+
+1.00
+
+0.67
+
+IPIP Short Subscale Correlations
+
+1.00
+
+0.74
+
+0.95
+
+D
+
+1.00
+
+0.57
+
+0.69
+
+A
+
+0.67
+
+1.00
+
+0.80
+
+A
+
+0.57
+
+1.00
+
+0.64
+
+0.80
+
+0.70
+S
+
+1.00
+
+0.69
+
+0.64
+
+1.00
+
+0.70
+D
+
+A
+
+0.80
+0.75
+
+0.75
+0.74
+
+0.95
+
+0.85
+
+0.80
+
+S
+
+1.00
+
+0.90
+
+0.90
+0.85
+
+42
+
+S
+
+0.65
+0.60
+
+D
+
+(a)
+
+A
+
+S
+
+(b)
+
+Figure 8
+Structural similarity of subscale correlation patterns (DASS)
+
+the scale. A small number of items appeared near the boundaries between adjacent
+clusters. For example, several stress-related items were positioned close to the anxiety
+cluster. Despite that, these boundary cases did not disrupt the overall alignment between
+topics and factors, but instead reflected localized deviations within an otherwise coherent
+structure. The selected items were distributed across all three clusters and tended to
+occupy central or representative positions within their respective topic regions.
+IPIP. For the IPIP scale (Figure 13), which contains a larger number of items and
+greater semantic heterogeneity, topic modeling nevertheless produced coherent clusters
+corresponding to the Big Five dimensions. The majority of items within each topic shared
+the same factor label (AGR, CSN, EST, EXT, or OPN), and topic boundaries largely
+aligned with the theoretical structure of the scale.
+Some clusters exhibited more elongated or irregular shapes in the embedding space,
+and a limited number of items were positioned closer to neighboring factor clusters. For
+instance, a small subset of agreeableness items appeared adjacent to extraversion-related
+items. Despite these localized deviations, the overall correspondence between topics and
+factors remained strong. Selected items were spread across all five dimensions and were
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+IPIP Full Subscale Correlations
+AGR
+
+1.00
+
+0.14
+
+0.04
+
+0.29
+
+IPIP Short Subscale Correlations
+
+1.0
+AGR
+
+0.11
+
+1.00
+
+0.04
+
+-0.12
+
+0.25
+
+1.0
+0.06
+
+0.8
+
+0.8
+CSN
+
+0.14
+
+1.00
+
+0.23
+
+0.04
+
+0.06
+
+CSN
+
+0.04
+
+1.00
+
+0.16
+
+0.03
+
+0.07
+
+EST
+
+-0.12
+
+0.16
+
+1.00
+
+0.20
+
+0.09
+
+EXT
+
+0.25
+
+0.03
+
+0.20
+
+1.00
+
+0.15
+
+0.2
+
+OPN
+
+0.06
+
+0.07
+
+0.09
+
+0.15
+
+1.00
+
+0.0
+
+AGR
+
+CSN
+
+EST
+
+EXT
+
+OPN
+
+0.6
+EST
+
+0.04
+
+0.23
+
+1.00
+
+0.22
+
+0.09
+
+43
+
+0.6
+0.4
+
+0.4
+EXT
+
+0.29
+
+0.04
+
+0.22
+
+1.00
+
+0.15
+
+OPN
+
+0.11
+
+0.06
+
+0.09
+
+0.15
+
+1.00
+
+AGR
+
+CSN
+
+EST
+
+EXT
+
+OPN
+
+0.2
+
+(a)
+
+(b)
+
+Figure 9
+Structural similarity of subscale correlation patterns (IPIP)
+
+typically located near the centers of their respective topic clusters, suggesting that the
+simplified version retained broad semantic coverage of the original scale.
+EPOCH-CN. For the EPOCH-CN scale (Figure 14), the five topic clusters
+exhibited a near one-to-one correspondence with the theoretical dimensions of Engagement
+(E), Perseverance (P), Connectedness (C), Optimism (O), and Happiness (H). Each topic
+boundary predominantly enclosed items from a single factor, with minimal overlap between
+clusters. Compared to DASS and IPIP, the clusters in EPOCH-CN were more compact
+and clearly separated in the semantic space. Selected items were consistently drawn from
+within the core regions of each cluster. No topic was dominated by items from multiple
+factors, and no factor was split across multiple topics.
+Taken together, the visualization results demonstrate that the proposed topic
+modeling method can recover the primary factor structures of established psychological
+scales while allowing for limited, interpretable deviations at the item level. Across scales
+with differing numbers of dimensions and degrees of semantic heterogeneity, the selected
+items consistently reflected the central semantic content of each topic cluster.
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+EPOCH Full Subscale Correlations
+C
+
+1.00
+
+0.57
+
+0.67
+
+0.68
+
+EPOCH Short Subscale Correlations
+
+1.00
+
+0.58
+
+0.95
+
+C
+
+1.00
+
+0.48
+
+0.55
+
+0.55
+
+0.57
+
+1.00
+
+0.55
+
+0.60
+
+0.63
+
+H
+
+0.67
+
+0.55
+
+1.00
+
+0.73
+
+0.60
+
+O
+
+0.68
+
+0.60
+
+0.73
+
+1.00
+
+0.63
+
+0.85
+0.80
+0.75
+0.70
+
+1.0
+
+0.44
+
+0.9
+
+0.90
+E
+
+44
+
+E
+
+0.48
+
+1.00
+
+0.51
+
+0.54
+
+0.58
+
+H
+
+0.55
+
+0.51
+
+1.00
+
+0.55
+
+0.49
+
+O
+
+0.55
+
+0.54
+
+0.55
+
+1.00
+
+0.53
+
+0.6
+
+P
+
+0.44
+
+0.58
+
+0.49
+
+0.53
+
+1.00
+
+0.5
+
+C
+
+E
+
+H
+
+O
+
+P
+
+0.8
+0.7
+
+0.65
+P
+
+0.58
+
+0.63
+
+0.60
+
+0.63
+
+1.00
+
+C
+
+E
+
+H
+
+O
+
+P
+
+0.60
+
+(a)
+
+(b)
+
+Figure 10
+Structural similarity of subscale correlation patterns (EPOCH-CN)
+
+Parameter Setting Guidance and Stability Analysis
+Structural Analysis Under Key Parameter Change.
+Number of items retained.
+
+We first examined how the number of items
+
+retained per semantic topic influences the structural fit of the simplified scale, with the
+IPIP items fixed to five topics. Table 19 and Figure 15 report the resulting CFI and TLI
+values across different items-per-topic settings. As shown, retaining only three to four
+items per topic was sufficient to achieve relatively good model fit. Specifically, when three
+items were retained per topic, CFI = 0.857 and TLI = 0.812; when four items were
+retained, CFI = 0.860 and TLI = 0.833. Beyond this range, both fit indices exhibited a
+non-monotonic pattern, characterized by an initial decline, a brief recovery, and a
+subsequent downward trend as more items were included.
+This pattern reflects a trade-off between information sufficiency and semantic focus
+during scale simplification: When too few items are retained within each topic (e.g., one or
+two items), the latent structure cannot be reliably identified, and model estimation even
+failed to converge, indicating insufficient information to support a stable measurement
+model. Conversely, as additional items are incorporated, the apparent increase in
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+IPIP Cross-Form Correlations (Full vs Short)
+D
+
+0.95
+
+0.59
+
+0.70
+
+EPOCH Cross-Form Correlations (Full vs Short)
+
+IPIP Cross-Form Correlations (Full vs Short)
+
+0.95
+0.90
+0.85
+
+AGR
+
+0.91
+
+0.09
+
+-0.03
+
+0.34
+
+0.12
+
+CSN
+
+0.08
+
+0.90
+
+0.13
+
+0.06
+
+0.04
+
+EST
+
+-0.07
+
+0.26
+
+0.89
+
+0.21
+
+0.11
+
+EXT
+
+0.19
+
+0.02
+
+0.20
+
+0.93
+
+0.18
+
+OPN
+
+0.05
+
+0.08
+
+0.07
+
+0.11
+
+0.87
+
+AGR
+
+CSN
+
+EST
+
+EXT
+
+OPN
+
+0.8
+0.6
+
+0.80
+A
+
+0.65
+
+0.92
+
+0.73
+
+S
+
+0.73
+
+0.71
+
+0.93
+
+0.75
+0.70
+
+A
+
+0.4
+0.2
+
+0.65
+0.60
+
+D
+
+S
+
+(a) DASS
+
+45
+
+0.0
+
+(b) IPIP
+
+C
+
+0.91
+
+0.55
+
+0.62
+
+0.61
+
+0.52
+
+E
+
+0.50
+
+0.92
+
+0.52
+
+0.55
+
+0.56
+
+H
+
+0.60
+
+0.54
+
+0.95
+
+0.62
+
+0.56
+
+O
+
+0.62
+
+0.57
+
+0.67
+
+0.91
+
+0.56
+
+P
+
+0.50
+
+0.66
+
+0.54
+
+0.59
+
+0.91
+
+C
+
+E
+
+H
+
+O
+
+P
+
+0.9
+
+0.8
+
+0.7
+
+0.6
+
+0.5
+
+(c) EPOCH-CN
+
+Figure 11
+Cross-form subscale Correlations
+
+information is accompanied by the inclusion of items that are semantically more peripheral
+to the core topic, thereby reducing semantic coherence and structural clarity. This effect
+becomes observable as early as selecting five items per topic. Although a temporary
+improvement in fit was observed when six items per topic were retained, which is likely due
+to increased item information, both CFI and TLI subsequently declined as more items were
+added. Overall, these results indicate that scale simplification does not benefit
+monotonically from retaining more items. Instead, optimal performance emerges from
+balancing semantic representativeness with a sufficient, but not excessive, number of items
+per topic.
+For practical parameter settings, researchers may therefore consider starting with
+relatively aggressive simplification strategies, that is, retaining only the highest-probability
+items within each topic (approximately 30%–40% of the original scale length), and then
+refining the resulting short form through standard psychometric evaluation.
+Number of topics.
+
+We next examined the effect of varying the number of
+
+semantic topics (by setting the nr_topics parameter) on the structural fit of the simplified
+scale using the IPIP dataset. To isolate the impact of topic granularity, the total number of
+retained items was fixed at 20 across all conditions, with the number of items allocated to
+each topic determined proportionally based on topic size.
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+46
+
+Figure 12
+Two-dimensional visualization of the semantic representation space (DASS). Each point
+represents an item of the scale, and the color as the true factor it belongs to. The boundary
+is judged and drawn by the proposed method, and the items with red dashed ring refer to
+those selected as the new items of shortened scale.
+DASS Items - t-SNE (perplexity=13) (point color=Factor, boundary=Topic, Selected=red dashed ring)
+Factor / Selected
+D
+A
+S
+Selected
+
+Q23
+
+3 Q2
+
+Q30
+Q40
+Q20
+
+Q9
+Q36
+
+Q19
+Q41
+
+0
+
+Q7
+
+Q28
+
+Q12
+
+Q39
+Q14
+
+Q32
+
+Q1
+
+Q6 2
+
+Q35
+
+Q25
+Q15
+
+Q33
+
+Q27
+
+Q4
+
+Q11
+Q18
+
+Q29
+
+Q8
+Q22
+
+Q42
+
+Q5
+
+Q31
+Q24
+
+Q16
+Q101
+
+Q3
+Q38
+
+Q13
+Q37
+Q21
+
+Q26
+Q34
+
+Q17
+
+As shown in Table 20 and Figure 16, the results largely align with our prior
+expectation that “model fit is optimized when the number of semantic topics approximates
+the scale’s underlying factor structure”. In the present case, the best overall fit was
+obtained when topics = 5 (CFI = 0.875, TLI = 0.852). In contrast, both fewer and more
+fine-grained topic settings were associated with reduced model fit.
+A notable deviation from this general trend was observed at topics = 4, where CFI
+= 0.845, TLI = 0.815, both were substantially lower than in adjacent conditions. Further
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+Table 19
+CFI and TLI analysis under different number of items
+No. of items per topic
+
+CFI
+
+TLI
+
+3
+
+0.857
+
+0.812
+
+4
+
+0.860
+
+0.833
+
+5
+
+0.808
+
+0.782
+
+6
+
+0.821
+
+0.803
+
+7
+
+0.807
+
+0.791
+
+8
+
+0.776
+
+0.760
+
+9
+
+-
+
+-
+
+10
+
+0.748
+
+0.735
+
+Table 20
+CFI and TLI analysis under different number of topics
+Topics (nr_topic)
+
+CFI
+
+TLI
+
+2
+
+0.841
+
+0.811
+
+3
+
+0.864
+
+0.838
+
+4
+
+0.845
+
+0.815
+
+5
+
+0.875
+
+0.852
+
+6
+
+0.860
+
+0.833
+
+‘auto’ (6)
+
+0.857
+
+0.830
+
+7
+
+0.843
+
+0.813
+
+8
+
+0.830
+
+0.798
+
+9
+
+0.831
+
+0.799
+
+10
+
+0.838
+
+0.808
+
+47
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+48
+
+Figure 13
+Two-dimensional visualization of the semantic representation space (IPIP).
+IPIP-50 Items - t-SNE (perplexity=16) (point color=Factor, boundary=Topic, Selected=red ring)
+AGR8
+
+3 AGR1
+
+AGR3
+
+AGR4
+AGR6
+
+EST3
+
+AGR7
+
+1
+
+AGR10
+EXT3
+
+0
+
+EST1
+
+EST2
+
+AGR2
+
+EXT9
+EXT8
+
+Factor / Selected
+AGR
+CSN
+EST
+EXT
+OPN
+Selected
+
+AGR9
+
+AGR5
+
+EST10EST4
+
+EST5
+EST8
+
+EST9
+EST6
+
+EST7
+
+EXT1
+
+EXT4
+EXT5
+
+EXT7
+EXT10
+EXT2
+EXT6
+CSN1
+CSN7
+OPN7
+OPN1
+5 OPN8
+
+CSN2
+
+CSN9
+
+CSN6 CSN4
+2
+
+OPN2
+
+CSN3
+
+OPN4
+
+CSN5
+CSN10
+
+CSN8
+
+4OPN5
+OPN6
+OPN3
+
+OPN10
+
+OPN9
+
+inspection revealed that this decrease was not due to random variability, but rather likely
+to be the changes in the semantic clustering structure. When topics = 3, Extraversion
+(EXT) and Agreeableness (AGR) were actually grouped into a single topic, as were
+Conscientiousness (CSN) and Openness (OPN), while Emotional Stability (EST) formed a
+separate topic. Despite the reduced number of topics, the resulting item selection remained
+relatively balanced in terms of semantic coverage and item quality, yielding comparatively
+strong model fit. In contrast, under the topics = 4 condition, semantically atypical OPN
+items (e.g., OPN1 and OPN8) were separated into an additional topic distinct from the
+main OPN cluster, whose items primarily emphasize ideas and imagination. As a
+consequence, the final selection step was forced to retain at least one item from this extra
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+49
+
+Figure 14
+Two-dimensional visualization of the semantic representation space (EPOCH-CN).
+EPOCH Items - t-SNE (perplexity=6) (point color=Factor, boundary=Topic, Selected=red ring)
+Factor / Selected
+E
+C
+H
+O
+P
+Selected
+
+O2
+P4
+
+3
+
+O4
+
+1
+O3
+
+P2
+
+O1
+
+P3
+P1
+E2
+
+E3
+
+0
+E4
+
+H3
+E1
+
+H4
+
+2
+H1
+
+H2
+
+C1
+
+C2
+
+C4
+
+4
+C3
+
+topic such as OPN8 (“I use difficult words”), thereby constraining the selection of more
+representative items from other topics and ultimately degrading overall model fit. When
+the automatic topic-determination mode was used (nr_topics = ’auto’), the resulting
+model also achieved reasonably strong fit (CFI = 0.857, TLI = 0.830), comparable to
+manually specified topic settings in the same range.
+For practical parameter settings, when researchers have prior knowledge of the
+approximate number of latent factors underlying a scale, it is suggested that setting
+nr_topics equal to that number or slightly higher (e.g., n or n + 1), which should offer a
+pragmatic balance between semantic differentiation and structural stability.
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+50
+
+Table 21
+Simplification result and Jaccard value under key parameter perturbation (DASS)
+Parameter
+
+Setting
+
+Reduction result
+
+Jaccard
+
+Kept
+
+Changed
+
+n_neighbors=3
+default
+
+min_cluster_size=2
+
+{1,3,4,5,6,7,8,10,11,13,20,25}
+
+min_samples=1
+
+n_neighbors
+
+2
+
+{1,3,4,5,7,8,9,10,12,13,14,19}
+
+0.500
+
+8
+
+4
+
+(UMAP)
+
+10
+
+{1,2,3,4,5,6,7,8,10,13,16,17}
+
+0.600
+
+9
+
+3
+
+min_cluster_size
+
+4
+
+{1,3,4,6,7,9,10,11,15,16,17,18}
+
+0.412
+
+7
+
+5
+
+(HDBSCAN)
+
+6
+
+{1,3,4,5,6,7,10,11,12,15,16,19}
+
+0.500
+
+8
+
+4
+
+min_samples
+
+2
+
+{1,3,4,6,7,8,9,10,11,15,17,21}
+
+0.500
+
+8
+
+4
+
+(HDBSCAN)
+
+3
+
+{1,4,6,9,11,15,19,21,24,27,31,38}
+
+0.200
+
+4
+
+8
+
+Table 22
+Simplification result and Jaccard value under key parameter perturbation (IPIP)
+Parameter
+
+Setting
+
+Reduction result
+
+Jaccard
+
+Kept
+
+Changed
+
+0.538
+
+14
+
+6
+
+0.481
+
+13
+
+7
+
+0.481
+
+13
+
+7
+
+0.379
+
+11
+
+9
+
+0.429
+
+12
+
+8
+
+0.250
+
+8
+
+12
+
+n_neighbors=3
+{1,2,3,5,12,13,14,16,24,25,26,28,
+default
+
+min_cluster_size=2
+31,32,33,34,42,43,45,46}
+min_samples=1
+
+{1,2,3,6,7,11,12,13,14,23,24,25,
+n_neighbors
+
+2
+32,33,34,35,42,43,44,46}
+{1,2,3,11,12,13,14,15,16,17,20,21,
+
+(UMAP)
+
+10
+22,31,32,33,34,41,42,43}
+{1,2,3,4,11,14,15,16,21,23,24,25,
+
+min_cluster_size
+
+4
+31,32,33,34,41,42,43,44}
+{1,2,3,4,5,6,8,9,11,14,15,16,
+
+(HDBSCAN)
+
+6
+31,32,34,36,41,42,43,44}
+{3,5,6,7,11,14,15,16,24,26,27,28,
+
+min_samples
+
+2
+31,32,34,35,42,44,45,47}
+{3,5,6,7,8,9,10,11,14,15,16,21,
+
+(HDBSCAN)
+
+3
+32,34,36,37,41,42,43,44}
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+51
+
+Figure 15
+CFI and TLI trend under different number of items
+0.900
+
+CFI
+TLI
+
+0.875
+
+Fit index value
+
+0.850
+0.825
+0.800
+0.775
+0.750
+0.725
+0.700
+
+3
+
+4
+
+5
+
+6
+7
+No. of items per topic
+
+8
+
+9
+
+10
+
+Stability Analysis Under Parameter Perturbation. The simplification result
+under key parameter perturbations are shown in Tables 21, 22 and 23. Across the three
+scales, representative item selection showed systematic but interpretable variation under
+targeted hyperparameter perturbations.
+For DASS, overlap with the default selection remained moderate under most
+perturbations (Jaccard = 0.41-0.60; 3-5 items replaced out of 12), indicating relatively
+stable core representatives. Notably, stability decreased under the most stringent
+core-point setting (min_samples = 3; Jaccard = 0.20; 8 items replaced), suggesting that
+extreme density requirements can substantially shift representative items.
+For IPIP, overlap decreased more noticeably as perturbations became stronger
+(Jaccard = 0.25-0.54; 6-12 items replaced out of 20) in all three parameter changes,
+reflecting greater semantic heterogeneity and multiple near-equivalent candidates within
+broader personality content.
+For EPOCH-CN, min_samples seemed to have a stronger impact than the other
+two parameters when setting to a higher value, giving lower Jaccard incides (Jaccard =
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+52
+
+Figure 16
+CFI and TLI trend under different number of topics
+0.90
+
+CFI
+TLI
+
+0.88
+
+Fit index value
+
+0.86
+0.84
+0.82
+0.80
+0.78
+
+2
+
+3
+
+4
+
+5
+6
+'auto' (6)
+7
+Number of topics (max, nr_topics)
+
+8
+
+9
+
+10
+
+0.333, 5 items replaced out of 10 for both situations). Notably, when min_cluster_size =
+6, the clustering procedure returned all items as “unassigned”. This outcome is expected
+since the specified min_cluster_size exceeded the typical number of items per factor in
+EPOCH-CN (five factors with four items each). The fact that no larger merged clusters
+were formed suggests that items in EPOCH-CN were well-designed, where items belonging
+to different factors were sufficiently well-separated in semantic space.
+Overall, a larger departure from the default configuration tended to yield lower
+overlap with the default item set, consistent with the expectation that increasingly
+conservative or aggressive neighborhood and density settings alter topic granularity and
+core-point identification.
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+53
+
+Table 23
+Simplification result and Jaccard value under key parameter perturbation (EPOCH-CN)
+Parameter
+
+Setting
+
+Reduction result
+
+Jaccard
+
+Kept
+
+Changed
+
+n_neighbors=3
+default
+
+min_cluster_size=2
+
+{1,2,4,7,10,12,13,18,20}
+
+min_samples=1
+
+n_neighbors
+
+2
+
+{2,4,5,6,7,9,10,14,15,18}
+
+0.429
+
+6
+
+4
+
+(UMAP)
+
+10
+
+{1,2,4,5,6,7,9,10,13,18}
+
+0.667
+
+8
+
+2
+
+min_cluster_size
+
+4
+
+{1,2,3,4,5,6,7,9,10,13}
+
+0.538
+
+7
+
+3
+
+(HDBSCAN)
+
+6
+
+Unassigned*
+
+/
+
+/
+
+/
+
+min_samples
+
+2
+
+{4,7,10,11,13,14,15,17,19,20}
+
+0.333
+
+5
+
+5
+
+(HDBSCAN)
+
+3
+
+{4,5,10,11,13,14,17,18,19,20}
+
+0.333
+
+5
+
+5
+
+*: We failed to obtain the reduction results due to all items under this setting are judged as “-1” (noisy points).
+
+Discussion
+Technical Highlights and Main Contributions
+This work specifies a semantic - topic modeling-based framework for scale
+construction and simplification that formalizes an often implicit stage in scale development:
+using item wording to generate a content-informed structural hypothesis and to narrow
+candidate pools before response-based modeling. The framework uses topic modeling to
+organize items into inspectable semantic clusters and to select representative candidates in
+a reproducible manner, thereby making early selection decisions more transparent and
+easier to audit.
+The semantic structure is treated as a proposal, and then is carried forward into
+standard psychometric evaluation. Candidate short forms are therefore assessed using
+model fit and loadings, reliability, score correspondence, and stability, which constrain
+semantic compactness by measurement requirements. Across the three case studies in
+above sections, this semantic analysis - simplification - validation flow provides a potential
+of impact to support transparent early-stage decisions while remaining compatible with
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+54
+
+conventional validation workflows.
+Result and Performance Discussion Through Case Studies
+Across the three case studies, a consistent lesson is that the proposed text-first
+simplification method performs best when the target scale originally exhibits high
+within-factor semantic coherence and clear semantic boundaries between factors.
+EPOCH-CN provides the clearest illustration. In the semantic space, clusters were
+distinctly separated with minimal apparent mixing across factors (see Figure 14),
+suggesting that the item pool contains well-differentiated content themes that align closely
+with the intended subscales. This strong semantic separability translated into robust
+measurement performance even under an aggressive length constraint (two items per
+factor). In the short-form CFA, standardized loadings remained moderate-to-strong across
+factors (approximately .58–.87; e.g., C items .58–.72, H items .83–.87, E items .65–.78, P
+items .66–.72, O items .61–.78; see Table 14). Collectively, these results suggest that when
+a scale’s content structure is linguistically well-partitioned, semantic clustering and topic
+modeling can serve as an effective front-end for generating short-form candidates that
+remain psychometrically defensible after validation.
+EPOCH-CN also demonstrates that semantic alignment can help preserve relational
+structure among dimensions, not merely within-dimension measurement quality. The
+full-scale’s subscale correlation matrix showed a coherent pattern of moderate inter-factor
+associations (e.g., .55–.73 among several pairs), and the short form reproduced a similar
+rank-order pattern, albeit with expected attenuation due to reduced item counts (generally
+.44–.58; see Figure 10). When comparing off-diagonal entries, the correspondence between
+the full and short inter-factor correlation patterns was substantial (Spearman ρ ≈ .77;
+Pearson r ≈ .63; MAD ≈ .10; see Figure 11(c)), indicating that the short form retained
+much of the structural “signature” of the original scale even under severe compression.
+Practically, this supports the view that the proposed text-driven item selection, when
+followed by standard psychometric checks, can preserve both factor-level measurement and
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+55
+
+between-factor network structure when the construct domains are semantically distinct and
+consistently expressed in item wording.
+At the same time, the case studies clarify that topic–factor alignment is not
+guaranteed, especially when constructs are inherently “sticky” in language (i.e., overlapping
+semantics across theoretical dimensions). DASS is informative here: the three subscales
+(Depression, Anxiety, Stress) are known to be interrelated, and the item pool contains
+wording that naturally blurs boundaries between anxious arousal and stress-related
+tension. This semantic overlap can manifest as less stable topic–factor correspondences and
+localized “misassignments” that are arguably conceptually plausible rather than purely
+algorithmic errors. For example, three items theoretically keyed to Stress were grouped
+with Anxiety by the model, with all items emphasized nervous activation and agitation: “I
+felt that I was using a lot of nervous energy” (Q12), “I was in a state of nervous tension”
+(Q33), and “I found myself getting agitated” (Q39) (Figure 12). From a construct
+perspective, these statements contain strong anxious-arousal connotations, making their
+placement near anxiety-themed content unsurprising. In other words, the
+“misclassification” may may not only demonstrate one limitation of the model, but also
+reflect the lexical and phenomenological proximity of stress-related tension to anxiety
+rather than a failure of the pipeline.
+Conversely, the DASS visualization also shows that the pipeline may separate items
+into distinct topics when they share a narrow, concrete semantic theme that is not central
+to the broader factor narrative (Figure 12). Two Anxiety items, “I was aware of dryness of
+my mouth” (Q2) and “I had difficulty in swallowing” (Q23), were isolated into a separate
+topic. This split is defensible semantically: both items describe specific somatic sensations,
+and their co-occurrence as a “bodily symptom” micro-theme is linguistically coherent.
+Whether such separation is desirable depends on one’s measurement goal: it may improve
+content coverage transparency (by highlighting a somatic-symptom subtheme), but it may
+also risk over-fragmentation if the target is to reproduce a pre-specified theoretical factor
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+56
+
+model with minimal deviation.
+Overall, these case studies position semantic clustering and visualization as a
+reliable decision-support for early-stage scale simplification: the approach is most
+straightforward when factors are linguistically well separated (as in EPOCH-CN), and
+most informative when constructs overlap or item pools contain narrow symptom-like
+subthemes (as in DASS). In the latter case, localized deviations are diagnostically useful,
+highlighting where theoretical partitions are linguistically “sticky” and where refinement
+may be warranted, rather than being obscured by opaque selection procedures.
+Practical Guidance for Using the Framework
+When to use the framework. The proposed text-first pipeline is particularly
+suitable when researchers (a) need a principled short form to reduce participant burden,
+(b) are adapting or revising an existing scale for a new context, or (c) wish to generate an
+initial structural hypothesis for item pools where response data are limited or expensive to
+obtain. It can also serve as a pre-registration-friendly procedure for defining candidate
+short forms before examining response patterns, thereby reducing researcher degrees of
+freedom at the item selection stage.
+How to set expectations. The pipeline outputs candidate short forms whose
+adequacy should be established empirically. A minimum validation package should include:
+(1) CFA model fit and factor loadings for the short form, (2) reliability evidence (e.g.,
+internal consistency) for each dimension, and (3) correspondence between full- and
+short-form scores and/or inter-factor correlation patterns (as shown in Figures 8-11).
+Stability checks across reasonable parameter perturbations can further strengthen
+confidence that selected items are not artifacts of a single configuration.
+How to diagnose issues. When semantic clusters do not align with theoretical
+factors, researchers should (a) inspect whether factor definitions overlap linguistically, (b)
+check whether reversed items or wording style create “method clusters”, and (c) consider
+increasing the number of retained items for factors that show high semantic diversity. If
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+57
+
+the short form shows acceptable score correspondence but weaker CFA fit, the likely
+implication is that semantic coverage is preserved but the measurement model is
+underspecified with too few indicators; conversely, if CFA fit is acceptable but score
+correspondence is degraded, item selection may have narrowed the construct content too
+aggressively. In either case, the pipeline’s transparency facilitates targeted adjustments:
+adding representatives from under-covered semantic subthemes or replacing items that
+dominate a cluster due to stylistic rather than substantive features.
+Limitations and Boundary Conditions
+Dependence on language representations. The semantic space induced by an
+embedding model inevitably reflects its training data and inductive biases. As a result,
+topic solutions and the consequently selected item representatives may vary across
+embedding choices, domains, and languages. In the present study, we partially address this
+concern by applying our framework to both English (DASS and IPIP) and a Chinese
+(EPOCH-CN) scales with data collected from the corresponding regions, providing initial
+evidence of cross-language and cross-cultural robustness. Nevertheless, this evaluation
+remains limited in scope. Future work should more systematically examine multilingual
+generalizability, including broader language coverage, alternative embedding models, and
+formal measurement invariance designs.
+Semantic similarity as non-sole measurement equivalence. Items that are
+close in semantic space can still differ in response processes (e.g., difficulty, extremity, or
+framing). This is particularly relevant when surface wording introduces strong “method
+cues” (e.g., explicit negations). In the present work, DASS and EPOCH-CN did not
+involve reverse-keyed items in the administered versions; for IPIP, however, as a light
+preprocessing step, we rewrote reverse-keyed items into the same scoring direction, which
+also reduced salient negation markers and harmonized surface phrasing. Importantly, such
+preprocessing is intended only to stabilize the semantic representation and does not replace
+psychometric validation.
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+58
+
+Degrees of freedom in topic modeling and selection. Topic modeling
+introduces tunable choices (e.g., clustering hyperparameters and representative selection
+rules) that can affect the selected items. We therefore emphasize transparent reporting of
+key settings in our article, and recommend routine stability checks under reasonable
+perturbations. When the stability is low, researchers may consider retaining more items
+per factor or incorporating additional constraints (e.g., theory-guided inclusion rules)
+before proceeding to confirmatory testing.
+Short-form length constraints. Very short scales reduce redundancy and can
+amplify the influence of item idiosyncrasies. However, this also makes it harder to preserve
+within-factor breadth and to maintain stable structural estimation. Thus, the feasibility of
+aggressive reduction depends not only on the pipeline but also on the scale’s inherent
+semantic coherence and the minimum number of indicators required for reliable
+measurement.
+Future Directions
+The present work opens several directions for extending and strengthening the
+semantic - topic modeling-based scale simplification method: First, building on the initial
+cross-language and cross-cultural validation provided in this study, future work may pursue
+more systematic examinations of generalizability across languages and populations. Such
+efforts could involve broader multilingual benchmarks, explicit translation-based
+comparisons, and formal measurement invariance analyses to disentangle linguistic,
+cultural, and semantic sources of variation.
+Second, future work can formalize a practical human-machine collaboration
+workflow for scale construction and simplification. In applied settings, we envision a staged
+process in which the framework first produces an inspectable semantic organization and
+candidate representatives (e.g., cluster keywords, exemplar items, and a structured
+summary for selection), after which substantive experts conduct a targeted review to
+confirm content coverage, resolve ambiguous boundaries, and ensure alignment with
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+59
+
+intended construct definitions. When the response data are available, this same process can
+incorporate response-informed evidence to prioritize candidates with stronger psychometric
+utility (e.g., higher loadings or information), providing an additional refinement signal
+alongside semantic representativeness. Framed this way, the framework functions as a
+transparent front-end that accelerates and documents early decisions, while expert review
+and downstream validation provide principled refinement and confirmation.
+Finally, future work can examine how text-driven selection relates to traditional
+response-driven reduction (e.g., IRT). Rather than treating these methods as substitutes, a
+controlled comparison using the same item pool and sample could reveal differences in
+selection priorities, for example, content representativeness versus information efficiency,
+and clarify when the two approaches converge, diverge, or can be combined.
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+60
+
+The One-Click Psychological Scale Simplification Tool
+To facilitate adoption of the proposed framework by researchers without
+programming experience, we implemented the topic modeling-based simplification method
+as an interactive, one-click software tool with a graphical user interface. The tool provides
+an end-to-end implementation of the response-free semantic pipeline described in the
+preceding sections, enabling psychologists to explore semantic structure, identify
+representative items, and generate interpretable visualizations directly from item texts,
+without writing code or configuring complex pipelines. In this way, the tool thus serves as
+a practical bridge between methodological innovation and routine psychometric practice.
+Functionality. Specifically, the software implements the proposed framework as a
+set of tightly integrated functional modules: (a) direct input and pre-processing of
+questionnaire item texts, (b) semantic encoding and response-free structure discovery via
+clustering and topic modeling, (c) interpretable topic labeling and representative-item
+selection based on probabilistic topic membership, and (d) visualization of semantic
+organization in a low-dimensional embedding space.
+Interface Design and User Workflow. The graphical interface is organized into
+four sequential panels that correspond to the main stages of the framework and guide users
+through a transparent, step-by-step workflow (Figures 17,18,19,20).
+Part 1: Scale Text Input and Pre-processing.
+
+Users paste questionnaire
+
+items directly into the input box, optionally adding a standardized question prefix. After
+pre-processing, the processed item texts are displayed to allow inspection before further
+analysis. Note that if the scale contains reverse-worded items, currently users are required
+to manually rewrite these items into their counterparts forms prior to input. An example
+of this rewriting procedure is provided in Appendix A using the IPIP scale.
+Part 2: Model and Parameter Settings.
+
+High-level parameters, such as the
+
+maximum number of topics and the number of representative items per topic, are exposed
+with recommended defaults. Advanced parameters related to dimensionality reduction and
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+61
+
+clustering are visually separated and accompanied by guidance encouraging users to retain
+default values unless they have specific methodological reasons to modify them.
+Part 3: One-Click Scale Simplification.
+
+With pre-processing completed,
+
+users can execute the full pipeline with a single action. The output panel presents
+discovered semantic “factors” (topics), associated keywords, and selected representative
+items for each topic.
+Part 4: Visualization.
+
+A visualization panel generates a two-dimensional
+
+embedding map with each topic-cluster coloring and item annotations. This visualization
+supports qualitative inspection and explanation of the semantic structure and
+item-selection results, helping users understand why particular items were grouped and
+selected.
+Notes and Software Availability. Importantly, the software is intended as an
+instantiation of the proposed simplification framework rather than a replacement for
+response-based psychometric validation, nor as a full-featured psychometric analysis
+platform. It does not perform confirmatory factor analysis, reliability estimation, or model
+comparison. Instead, it produces an explicit and inspectable semantic pre-structure that
+can inform subsequent psychometric evaluation and decision-making.
+The tool with source code, documentation, and example materials are available at
+https://github.com/bowang-rw-02/sem-scale to support transparency, reproducibility, and
+reuse. A standalone Python implementation is also provided for researchers who wish to
+incorporate the method into custom analysis pipelines or conduct large-scale experiments
+programmatically.
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+62
+
+Conclusion
+In this paper, we introduced a semantic - topic modeling framework for
+psychological scale simplification that connects item-level semantic structure to standard
+measurement practice. Using topic modeling, the framework organizes item content and
+selects representative candidates prior to analyzing response data, yielding a transparent
+and reproducible front-end for short-form construction. Across three case studies, the
+resulting short forms showed acceptable psychometric performance under conventional
+evaluations (e.g., CFA, reliability, and cross-form correspondence), supporting the
+feasibility of the proposed method.
+More broadly, these results also draw a pragmatic view of computational text
+analysis as a complement to psychometrics: semantic modeling can reduce the search space
+of candidate items and clarify content coverage, but does not replace measurement
+evaluation. To facilitate adoption, we also provide a one-click tool that operationalizes the
+full pipeline and makes key intermediate outputs inspectable, thereby lowering the barrier
+to transparent scale reduction in applied settings. Future work will further examine the
+framework’s generalizability across languages and populations and clarify how the semantic
+- topic modeling-based method complements traditional response-driven simplification
+methods.
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+Figure 17
+One Click Simplification Tool Interface (Idle, Steps 1 and 2)
+
+63
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+Figure 18
+One Click Simplification Tool Interface (Idle, Steps 3 and 4)
+
+64
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+65
+
+Figure 19
+One Click Simplification Tool Interface (Working on DASS simplification, Steps 1 and 2)
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+66
+
+Figure 20
+One Click Simplification Tool Interface (Working on DASS simplification, Steps 3 and 4)
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+67
+
+References
+Abdelrahman, R. M., Fakhrou, A., Moussa, M. A., & Roshan, M. (2025). Psychometric
+properties and network analysis of the arabic version of reinforcement sensitivity
+theory of personality scale-short version in patients with anxiety disorders.
+Psychiatric Quarterly, 96 (1), 145–167. https://doi.org/10.1007/s11126-024-10109-3
+Alibaba Cloud. (2024). Qwen embedding models.
+https://www.alibabacloud.com/help/en/model-studio/embedding
+Araque, O., Gatti, L., & Kalimeri, K. (2020). Moralstrength: Exploiting a moral lexicon
+and embedding similarity for moral foundations prediction. Knowledge-based
+systems, 191, 105184. https://doi.org/10.1016/j.knosys.2019.105184
+Atari, M., Omrani, A., & Dehghani, M. (2023). Contextualized construct representation:
+Leveraging psychometric scales to advance theory-driven text analysis. PsyArXiv.
+https://doi.org/10.31234/osf.io/m93pd
+Cai, X., Zhang, Y., Su, M., Chang, F., Quan, L., Liu, Y., & Wang, B. (2025). A machine
+learning-based method for developing the chinese symptom checklist-11 (cscl-11).
+Behavioral Sciences, 15 (4), 459. https://doi.org/10.3390/bs15040459
+Cao, Y., Shan, X., Ma, H., Liu, X., Zhu, J., & Gao, Y. (2025). A method and system for
+generating a combination of psychological testing scales. Royal Society Open
+Science, 12 (7). https://doi.org/10.1098/rsos.241859
+Chen, Y., Li, S., Li, Y., & Atari, M. (2024). Surveying the dead minds:
+Historical-psychological text analysis with contextualized construct representation
+(ccr) for classical chinese. Proceedings of the 2024 Conference on Empirical Methods
+in Natural Language Processing, 2597–2615.
+https://doi.org/10.18653/v1/2024.emnlp-main.151
+Coppersmith, G., Leary, R., Crutchley, P., & Fine, A. (2018). Natural language processing
+of social media as screening for suicide risk. Biomedical informatics insights, 10,
+1178222618792860. https://doi.org/10.1177/1178222618792860
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+68
+
+Fuchshuber, J., Zeldovich, M., Aranyi, G., Winter, L., Kuska, M., Dumont, D., Humer, E.,
+& Unterrainer, H.-F. (2025). Uncovering the internal structure of the german
+version of the core-om: A network analysis. Clinical Psychology & Psychotherapy,
+32 (2), 1–11. https://doi.org/10.1002/cpp.70063
+Goldberg, L. R., et al. (1999). A broad-bandwidth, public domain, personality inventory
+measuring the lower-level facets of several five-factor models. Personality psychology
+in Europe, 7 (1), 7–28.
+Golino, H., Shi, D., Christensen, A. P., Garrido, L. E., Nieto, M. D., Sadana, R.,
+Thiyagarajan, J. A., & Martinez-Molina, A. (2020). Investigating the performance
+of exploratory graph analysis and traditional techniques to identify the number of
+latent factors: A simulation and tutorial [Place: US Publisher: American
+Psychological Association]. Psychological Methods, 25 (3), 292–320.
+https://doi.org/10.1037/met0000255
+Grootendorst, M. (2022). Bertopic: Neural topic modeling with a class-based tf-idf
+procedure. arXiv preprint arXiv:2203.05794.
+https://doi.org/10.48550/arXiv.2203.05794
+Herderich, A., Freudenthaler, H. H., & Garcia, D. (2024). A computational method to
+reveal psychological constructs from text data. Psychological Methods.
+https://doi.org/10.1037/met0000700
+Huang, Z., Long, Y., Peng, K., & Tong, S. (2025). An embedding-based semantic analysis
+approach: A preliminary study on redundancy detection in psychological concepts
+operationalized by scales. Journal of Intelligence, 13 (1), 11.
+https://doi.org/10.3390/jintelligence13010011
+IBM Corp. (2019). Ibm spss statistics. https://www.ibm.com/products/spss
+Jamison, L., Christensen, A. P., & Golino, H. F. (2024). Metric Invariance in Exploratory
+Graph Analysis via Permutation Testing. Methodology, 20 (2), 144–186.
+https://doi.org/10.5964/meth.12877
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+69
+
+Jiang, X., Yang, Y., & Li, J. (2023). Developing a short-form buss–warren aggression
+questionnaire based on machine learning. Behavioral Sciences, 13 (10), 799.
+https://doi.org/10.3390/bs13100799
+Jung, S.-J., & Seo, J.-W. (2025). A transformer-based embedding approach to developing
+short-form psychological measures. Frontiers in Psychology, 16, 1640864.
+https://doi.org/10.3389/fpsyg.2025.1640864
+Kern, M. L., Benson, L., Steinberg, E. A., & Steinberg, L. (2016). The epoch measure of
+adolescent well-being. Psychological assessment, 28 (5), 586.
+https://doi.org/10.1037/pas0000201
+Kern, M. L., Zeng, G., Hou, H., & Peng, K. (2019). The chinese version of the epoch
+measure of adolescent well-being: Testing cross-cultural measurement invariance.
+Journal of Psychoeducational Assessment, 37 (6), 757–769.
+https://doi.org/10.1177/0734282918789561
+Lee, W., Kim, H., Shim, J., Kim, D., Hyeon, J., Joo, E., Joo, B.-E., & Oh, J. (2023). The
+simplification of the insomnia severity index and epworth sleepiness scale using
+machine learning models. Scientific Reports, 13 (1), 6214.
+https://doi.org/10.1038/s41598-023-33474-8
+Leipoldt, J. D., Kayed, N. S., Harder, A. T., Grietens, H., & Rimehaug, T. (2018). Refining
+the copes to measure social climate in therapeutic residential youth care. Child &
+youth care forum, 47 (2), 173–197. https://doi.org/10.1007/s10566-017-9424-z
+Lin, G.-H., Li, C.-Y., Sheu, C.-F., Huang, C.-Y., Lee, S.-C., Huang, Y.-H., & Hsieh, C.-L.
+(2022). Using machine learning to develop a short-form measure assessing 5
+functions in patients with stroke. Archives of physical medicine and rehabilitation,
+103 (8), 1574–1581. https://doi.org/10.1016/j.apmr.2021.12.006
+Lovibond, S. H. (1995). Manual for the depression anxiety stress scales. Sydney psychology
+foundation.
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+70
+
+Maertens, R., Götz, F. M., Golino, H. F., Roozenbeek, J., Schneider, C. R.,
+Kyrychenko, Y., Kerr, J. R., Stieger, S., McClanahan, W. P., Drabot, K., et al.
+(2024). The misinformation susceptibility test (mist): A psychometrically validated
+measure of news veracity discernment. Behavior Research Methods, 56 (3),
+1863–1899. https://doi.org/10.3758/s13428-023-02124-2
+McInnes, L., Healy, J., & Astels, S. (2017). Hdbscan: Hierarchical density based clustering.
+Journal of Open Source Software, 2 (11), 205. https://doi.org/10.21105/joss.00205
+McInnes, L., Healy, J., Saul, N., & Großberger, L. (2018). Umap: Uniform manifold
+approximation and projection. Journal of Open Source Software, 3 (29), 861.
+https://doi.org/10.21105/joss.00861
+Milne, D. N., Pink, G., Hachey, B., & Calvo, R. A. (2016). Clpsych 2016 shared task:
+Triaging content in online peer-support forums. Proceedings of the third workshop
+on computational linguistics and clinical psychology, 118–127.
+https://doi.org/10.18653/v1/W16-0312
+Morrison, A. S., Ustun, B., Horenstein, A., Kaplan, S. C., de Oliveira, I. R., Batmaz, S.,
+Gross, J. J., Sadikova, E., Hemanny, C., Pires, P. P., et al. (2022). Optimized
+short-forms of the cognitive distortions questionnaire. Journal of Anxiety Disorders,
+92, 102624. https://doi.org/10.1016/j.janxdis.2022.102624
+Muthén, L. K., & Muthén, B. O. (2017). Mplus. Muthén & Muthén.
+https://www.statmodel.com
+O’Brien, H. L., Cairns, P., & Hall, M. (2018). A practical approach to measuring user
+engagement with the refined user engagement scale (ues) and new ues short form.
+International Journal of Human-Computer Studies, 112, 28–39.
+https://doi.org/10.1016/j.ijhcs.2018.01.004
+Oltmanns; J. B. G. R. (2025). Large language models for psychological assessment: A
+comprehensive overview. Advances in Methods and Practices in Psychological
+Science, 2025 (7). https://doi.org/10.1177/25152459251343582
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+71
+
+OpenAI. (2024). Openai embedding models.
+https://platform.openai.com/docs/guides/embeddings
+OpenPsychometrics.org. (2018). International personality item pool (ipip) five-factor model
+data [Publicly available dataset].
+https://openpsychometrics.org/_rawdata/IPIP-FFM-data-8Nov2018.zip
+OpenPsychometrics.org. (2019). Depression anxiety stress scales (dass) raw data [Publicly
+available dataset].
+https://openpsychometrics.org/_rawdata/DASS_data_21.02.19.zip
+Passarelli, M., Casetta, L., Rizzi, L., Chiorri, C., Cassina, F., Voi, S., & Rocco, D. (2024).
+Short and sweet: Comparing strategies for the reduction of questionnaires on
+self-criticism and social safeness while preserving construct validity. International
+Journal of Psychology, 59 (6), 1234–1244. https://doi.org/10.1002/ijop.13249
+Paszke, A., Gross, S., Massa, F., Lerer, A., Bradbury, J., Chanan, G., Killeen, T., Lin, Z.,
+Gimelshein, N., Antiga, L., et al. (2019). Pytorch: An imperative style,
+high-performance deep learning library. Advances in neural information processing
+systems, 32.
+Patrick, D. L. (2019). Many ways to skin a cat: Psychometric methods options illustrated.
+Journal of Patient-Reported Outcomes, 3 (1), 48.
+https://doi.org/10.1186/s41687-019-0133-2
+Portoghese, I., Sardu, C., Bauer, G., Galletta, M., Castaldi, S., Nichetti, E., Petrocelli, L.,
+Tassini, M., Tidone, E., Mereu, A., & Contu, P. (2024). A network perspective to
+the measurement of sense of coherence (SOC): An exploratory graph analysis
+approach. Current Psychology, 43 (18), 16624–16636.
+https://doi.org/10.1007/s12144-023-05567-0
+Preotiuc-Pietro, D., Carpenter, J., Giorgi, S., & Ungar, L. (2016). Studying the dark triad
+of personality through twitter behavior. Proceedings of the 25th ACM international
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+72
+
+on conference on information and knowledge management, 761–770.
+https://doi.org/10.1145/2983323.2983822
+Python Software Foundation. (2023). Python (Version 3.12). https://www.python.org
+Qwen Team. (2024). Qwen3-embedding-4b [Pretrained embedding model released on
+Hugging Face]. Alibaba Cloud. https://huggingface.co/Qwen/Qwen3-Embedding-4B
+Ravenda, F., Preti, A., Poletti, M., Mira, A., & Raballo, A. (2025). Rethinking
+psychometrics through llms: How item semantics shape measurement and prediction
+in psychological questionnaires. Scientific Reports, 15 (1), 37313.
+https://doi.org/10.1038/s41598-025-21289-8
+Reimers, N., & Gurevych, I. (2019). Sentence-bert: Sentence embeddings using siamese
+bert-networks. Proceedings of the 2019 Conference on Empirical Methods in Natural
+Language Processing and the 9th International Joint Conference on Natural
+Language Processing (EMNLP-IJCNLP), 3982–3992.
+https://doi.org/10.18653/v1/D19-1410
+Rosenbusch, H., Wanders, F., & Pit, I. L. (2020). The semantic scale network: An online
+tool to detect semantic overlap of psychological scales and prevent scale
+redundancies. Psychological methods, 25 (3), 380–392.
+https://doi.org/10.1037/met0000244
+Schwartz, H. A., Eichstaedt, J. C., Kern, M. L., Dziurzynski, L., Ramones, S. M.,
+Agrawal, M., Shah, A., Kosinski, M., Stillwell, D., Seligman, M. E., et al. (2013).
+Personality, gender, and age in the language of social media: The open-vocabulary
+approach. PloS one, 8 (9), e73791. https://doi.org/10.1371/journal.pone.0073791
+Stanton, J. M., Sinar, E. F., Balzer, W. K., & Smith, P. C. (2002). Issues and strategies for
+reducing the length of self-report scales. Personnel psychology, 55 (1), 167–194.
+https://doi.org/10.1111/j.1744-6570.2002.tb00108.x
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+73
+
+Tausczik, Y. R., & Pennebaker, J. W. (2010). The psychological meaning of words: Liwc
+and computerized text analysis methods. Journal of language and social psychology,
+29 (1), 24–54. https://doi.org/10.1177/0261927X09351676
+Tavakol, M., & Wetzel, A. (2020). Factor analysis: A means for theory and instrument
+development in support of construct validity. International journal of medical
+education, 11, 245. https://doi.org/10.5116/ijme.5f96.0f4a
+Wise, T., Robinson, O. J., & Gillan, C. M. (2023). Identifying transdiagnostic mechanisms
+in mental health using computational factor modeling. Biological Psychiatry, 93 (8),
+690–703. https://doi.org/10.1016/j.biopsych.2022.09.034
+Wolf, T., Debut, L., Sanh, V., Chaumond, J., Delangue, C., Moi, A., Cistac, P., Rault, T.,
+Louf, R., Funtowicz, M., et al. (2020). Transformers: State-of-the-art natural
+language processing. Proceedings of the 2020 conference on empirical methods in
+natural language processing: system demonstrations, 38–45.
+https://doi.org/10.18653/v1/2020.emnlp-demos.6
+Xu, R.-F., Liu, Z.-J., Ouyang, S., Dong, Q., Yan, W.-J., & Xu, D.-W. (2025). Machine
+learning-driven development of a stratified ces-d screening system: Optimizing
+depression assessment through adaptive item selection. BMC psychiatry, 25 (1), 286.
+https://doi.org/10.1186/s12888-025-06693-8
+Yu, Z., Yang, J., Tan, J., Zou, X., Su, J., & Xue, J. (2024). The simplification of the
+symptom checklist-90 scale utilizing machine learning techniques. Journal of
+Affective Disorders, 366, 181–188. https://doi.org/10.1016/j.jad.2024.08.121
+Zeng, G., Peng, K., & Hu, C.-P. (2019a). Epoch adolescent well-being dataset [Data
+associated with Zeng et al. (2019)]. Center for Open Science.
+https://osf.io/9ts76/files
+Zeng, G., Peng, K., & Hu, C.-P. (2019b). The network structure of adolescent well-being
+traits: Results from a large-scale chinese sample. Frontiers in psychology, 10, 2783.
+https://doi.org/10.3389/fpsyg.2019.02783
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+Appendix
+A Scale Full Question List
+DASS
+Question No./ Factor/ Item text
+Q1 S I found myself getting upset by quite trivial things.
+Q2 A I was aware of dryness of my mouth.
+Q3 D I couldn’t seem to experience any positive feeling at all.
+Q4 A I experienced breathing difficulty (eg, excessively rapid breathing,
+breathlessness in the absence of physical exertion).
+Q5 D I just couldn’t seem to get going.
+Q6 S I tended to over-react to situations.
+Q7 A I had a feeling of shakiness (eg, legs going to give way).
+Q8 S I found it difficult to relax.
+Q9 A I found myself in situations that made me so anxious I was most relieved
+when they ended.
+Q10 D I felt that I had nothing to look forward to.
+Q11 S I found myself getting upset rather easily.
+Q12 S I felt that I was using a lot of nervous energy.
+Q13 D I felt sad and depressed.
+Q14 S I found myself getting impatient when I was delayed in any way (eg,
+elevators, traffic lights, being kept waiting).
+Q15 A I had a feeling of faintness.
+Q16 D I felt that I had lost interest in just about everything.
+Q17 D I felt I wasn’t worth much as a person.
+Q18 S I felt that I was rather touchy.
+Q19 A I perspired noticeably (eg, hands sweaty) in the absence of high
+temperatures or physical exertion.
+
+74
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+75
+
+Q20 A I felt scared without any good reason.
+Q21 D I felt that life wasn’t worthwhile.
+Q22 S I found it hard to wind down.
+Q23 A I had difficulty in swallowing.
+Q24 D I couldn’t seem to get any enjoyment out of the things I did.
+Q25 A I was aware of the action of my heart in the absence of physical exertion (eg,
+sense of heart rate increase, heart missing a beat).
+Q26 D I felt down-hearted and blue.
+Q27 S I found that I was very irritable.
+Q28 A I felt I was close to panic.
+Q29 S I found it hard to calm down after something upset me.
+Q30 A I feared that I would be "thrown" by some trivial but unfamiliar task.
+Q31 D I was unable to become enthusiastic about anything.
+Q32 S I found it difficult to tolerate interruptions to what I was doing.
+Q33 S I was in a state of nervous tension.
+Q34 D I felt I was pretty worthless.
+Q35 S I was intolerant of anything that kept me from getting on with what I was
+doing.
+Q36 A I felt terrified.
+Q37 D I could see nothing in the future to be hopeful about.
+Q38 D I felt that life was meaningless.
+Q39 S I found myself getting agitated.
+Q40 A I was worried about situations in which I might panic and make a fool of
+myself.
+Q41 A I experienced trembling (eg, in the hands).
+Q42 D I found it difficult to work up the initiative to do things.
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+76
+
+IPIP
+qid Reversed/ Original factor-id/ Original item text/ Processed item text (reversed
+item was rewritten)
+1 EXT1 I am the life of the party. I am the life of the party.
+2 (R) EXT2 I don’t talk a lot. I talk a lot.
+3 EXT3 I feel comfortable around people. I feel comfortable around people.
+4 (R) EXT4 I keep in the background. I put myself forward.
+5 EXT5 I start conversations. I start conversations.
+6 (R) EXT6 I have little to say. I have a lot to say.
+7 EXT7 I talk to a lot of different people at parties. I talk to a lot of different
+people at parties.
+8 (R) EXT8 I don’t like to draw attention to myself. I like to draw attention to
+myself.
+9 EXT9 I don’t mind being the center of attention. I don’t mind being the center of
+attention.
+10 (R) EXT10 I am quiet around strangers. I am talkative around strangers.
+11 (R) EST1 I get stressed out easily. I stay calm under pressure.
+12 EST2 I am relaxed most of the time. I am relaxed most of the time.
+13 (R) EST3 I worry about things. I am generally free from worry.
+14 EST4 I seldom feel blue. I seldom feel blue.
+15 (R) EST5 I am easily disturbed. I remain composed and unbothered.
+16 (R) EST6 I get upset easily. I stay calm and even-tempered.
+17 (R) EST7 I change my mood a lot. I stay in a steady mood.
+18 (R) EST8 I have frequent mood swings. I remain emotionally stable.
+19 (R) EST9 I get irritated easily. I stay patient and calm.
+20 (R) EST10 I often feel blue. I feel cheerful and upbeat.
+21 (R) AGR1 I feel little concern for others. I feel concern and empathy for others.
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+77
+
+22 AGR2 I am interested in people. I am interested in people.
+23 (R) AGR3 I insult people. I treat people with respect.
+24 AGR4 I sympathize with others’ feelings. I sympathize with others’ feelings.
+25 (R) AGR5 I am not interested in other people’s problems. I care about other
+people’s problems.
+26 AGR6 I have a soft heart. I have a soft heart.
+27 (R) AGR7 I am not really interested in others. I am genuinely interested in
+others.
+28 AGR8 I take time out for others. I take time out for others.
+29 AGR9 I feel others’ emotions. I feel others’ emotions.
+30 AGR10 I make people feel at ease. I make people feel at ease.
+31 CSN1 I am always prepared. I am always prepared.
+32 (R) CSN2 I leave my belongings around. I keep my belongings organized.
+33 CSN3 I pay attention to details. I pay attention to details.
+34 (R) CSN4 I make a mess of things. I keep things neat and in order.
+35 CSN5 I get chores done right away. I get chores done right away.
+36 (R) CSN6 I often forget to put things back in their proper place. I put things
+back in their proper place.
+37 CSN7 I like order. I like order.
+38 (R) CSN8 I shirk my duties. I take responsibility for my duties.
+39 CSN9 I follow a schedule. I follow a schedule.
+40 CSN10 I am exacting in my work. I am exacting in my work.
+41 OPN1 I have a rich vocabulary. I have a rich vocabulary.
+42 (R) OPN2 I have difficulty understanding abstract ideas. I easily understand
+abstract ideas.
+43 OPN3 I have a vivid imagination. I have a vivid imagination.
+44 (R) OPN4 I am not interested in abstract ideas. I am interested in abstract ideas.
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+78
+
+45 OPN5 I have excellent ideas. I have excellent ideas.
+46 (R) OPN6 I do not have a good imagination. I have a good imagination.
+47 OPN7 I am quick to understand things. I am quick to understand things.
+48 OPN8 I use difficult words. I use difficult words.
+49 OPN9 I spend time reflecting on things. I spend time reflecting on things.
+50 OPN10 I am full of ideas. I am full of ideas.
+EPOCH-CN and original EPOCH
+Qid/ Original factor-id/ Item text in Chinese/ Corresponding English item text
+1 C1 当有好事发生在我身上的时候，我有喜欢的人可以去分享。 When something
+good happens to me, I have people who I like to share the good news with.
+2 P1 只要开始做一件事情，我就会完成它。 I finish whatever I begin.
+3 O1 我对自己的未来充满乐观。 I am optimistic about my future
+4 H1 我很快乐。 I feel happy.
+5 E1 当我做一项活动的时候，我非常乐在其中以至于忘了时间。 When I do an
+activity, I enjoy it so much that I lose track of time.
+6 H2 我有很多的欢乐。 I have a lot of fun.
+7 E2 我会全神贯注于我正在做的事。 I get completely absorbed in what I am doing.
+8 H3 我热爱生活。 I love life.
+9 P2 我会一直坚持做作业直到完成为止。 I keep at my schoolwork until I am done
+with it.
+10 C2 当我遇到问题时，总有人支持我。 When I have a problem, I have someone
+who will be there for me.
+11 E3 我会专心致志地投入到当下的活动以至于忘记了其他事情。 I get so involved
+in activities that I forget about everything else.
+12 E4 当我学习新东西时，我是那么地投入以至于忘记时间的流逝。 When I am
+learning something new, I lose track of how much time has passed.
+13 O2 在不明确的情况下，我期待最好的结果。 In uncertain times, I expect the
+
+A RESPONSE-FREE PATHWAY TO EFFICIENT SCALE SIMPLIFICATION
+
+79
+
+best.
+14 C3 我的生命中有一些人真心地关心我。 There are people in my life who really
+care about me.
+15 O3 我相信好事会发生在我身上。 I think good things are going to happen to me.
+16 C4 我有我真正关心的朋友。 I have friends that I really care about.
+17 P3 一旦我计划了要做某事，我就会按计划进行。 Once I make a plan to get
+something done, I stick to it.
+18 O4 我相信事情总会好起来，不管它看起来有多困难。 I believe that things will
+work out, no matter how difficult they seem.
+19 P4 我是一个勤奋的人。 I am a hard worker.
+20 H4 我是一个快乐的人。 I am a cheerful person.
+
+

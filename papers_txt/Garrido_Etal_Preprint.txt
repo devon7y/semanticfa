@@ -1,0 +1,3677 @@
+Running head: ESTIMATING DIMENSIONAL STRUCTURE IN GENERATIVE
+PSYCHOMETRICS
+
+1
+
+Estimating Dimensional Structure in Generative Psychometrics: Comparing PCA and
+
+2
+
+Network Methods Using Large Language Model Item Embeddings
+
+3
+
+Luis Eduardo Garrido1 , Lara Lee Russell-Lasalandra2 , & Hudson F. Golino2
+
+4
+
+1
+
+School of Psychology, Pontificia Universidad Católica Madre y Maestra, Santo Domingo,
+Dominican Republic
+
+5
+
+6
+
+7
+
+1
+
+2
+
+Department of Psychology, University of Virginia, Charlottesville, VA, USA
+
+Author Note
+
+ESTIMATING DIMENSIONAL STRUCTURE IN GENERATIVE PSYCHOMETRICS 2
+
+8
+
+Luis Eduardo Garrido https://orcid.org/0000-0001-8932-6063 Lara L.
+
+9
+
+Russell-Lasalandra https://orcid.org/0009-0000-3014-1937 Hudson Golino
+
+10
+
+https://orcid.org/0000-0002-1601-1447
+
+11
+
+Acknowledgements: The authors report there are no competing interests to declare.
+
+12
+
+The authors did not preregister the study. All data, code, and materials can be found on the
+
+13
+
+Open Science Framework: Luis Eduardo Garrido is supported by Grant 2024-3-5A5-0993
+
+14
+
+from the Fondo Nacional de Innovación, Desarrollo Científico y Tecnológico (FONDOCYT)
+
+15
+
+of the Dominican Republic. Hudson Golino is supported by a Grant from the Jefferson Trust.
+
+16
+
+The authors made the following contributions. Luis Eduardo Garrido:
+
+17
+
+Conceptualization, Methodology, Writing - Original Draft Preparation, Writing - Review &
+
+18
+
+Editing; Lara Lee Russell-Lasalandra: Software, Writing - Review & Editing; Hudson F.
+
+19
+
+Golino: Conceptualization, Methodology, Software, Formal analysis, Writing - Review &
+
+20
+
+Editing.
+
+21
+
+22
+
+Correspondence concerning this article should be addressed to Hudson F. Golino, 409
+McCormick Road, Room 102, Charlottesville, VA. E-mail: hfg9s@virginia.edu
+
+ESTIMATING DIMENSIONAL STRUCTURE IN GENERATIVE PSYCHOMETRICS 3
+
+Abstract
+
+23
+
+24
+
+As large language models (LLMs) increasingly inform psychometric practice through item
+
+25
+
+generation and semantic analysis, embedding-based approaches offer a pre-empirical pathway
+
+26
+
+for assessing dimensional structure before human response data become available. However,
+
+27
+
+the methodological choices used to recover dimensions from embedding spaces remain
+
+28
+
+underexamined. The present study compared the performance of principal component
+
+29
+
+analysis (PCA), which currently dominates generative psychometric applications, with
+
+30
+
+network-based exploratory graph analysis (EGA) for estimating dimensional structure from
+
+31
+
+item embeddings. Using Monte Carlo simulations across six personality facets nested within
+
+32
+
+two domains, we generated 180 items per condition via LLM prompting and represented
+
+33
+
+them as semantic embeddings. Dimensional recovery was evaluated across four analytic
+
+34
+
+pipelines: Kaiser’s rule with PCA extraction and varimax rotation, parallel analysis with
+
+35
+
+PCA extraction and varimax rotation, EGA, and EGA combined with network-integrated
+
+36
+
+item filtering. Results showed that PCA-based methods severely overestimated
+
+37
+
+dimensionality and yielded poorer recovery of the generating structure. EGA demonstrated
+
+38
+
+markedly improved performance relative to PCA-based approaches, whereas EGA combined
+
+39
+
+with network filtering procedures achieved near-perfect dimensional accuracy and structural
+
+40
+
+recovery. These findings indicate that network psychometric workflows provide more accurate
+
+41
+
+structural representations than component-based approaches when analyzing embedding
+
+42
+
+spaces, with direct implications for generative psychometric workflows in which item pools
+
+43
+
+are evaluated prior to data collection. More broadly, the findings demonstrate that analytic
+
+44
+
+choices made during pre-empirical assessment have substantive consequences for item
+
+45
+
+selection, construct validity, taxonomic clarity, and downstream theoretical interpretation.
+
+46
+
+47
+
+48
+
+Keywords: scale development, large language models, item embeddings, principal
+component analysis, exploratory graph analysis, network psychometrics
+Word count: 5583
+
+ESTIMATING DIMENSIONAL STRUCTURE IN GENERATIVE PSYCHOMETRICS 4
+
+49
+
+Estimating Dimensional Structure in Generative Psychometrics: Comparing PCA and
+
+50
+
+Network Methods Using Large Language Model Item Embeddings
+
+51
+
+Introduction
+
+52
+
+Generative artificial intelligence (AI) is increasingly reshaping core activities in
+
+53
+
+psychometrics, reflecting a broader shift toward treating language as a scalable behavioral
+
+54
+
+trace for psychological science and cognitive modelling (Brickman & Oltmanns, 2025;
+
+55
+
+Debelak & Stachl, 2025; Feuerriegel & Van Bavel, 2025; Jackson & Lindquist, 2022; Kjell,
+
+56
+
+Kjell, & Schwartz, 2024; Van Quaquebeke & Banks, 2025). Large language models (LLMs)
+
+57
+
+are now integrated into item-generation workflows, where they are used to generate, expand,
+
+58
+
+and refine item pools, as well as to support translation and cross-cultural adaptation (Fyffe
+
+59
+
+& Kaplan, 2024; Grobelny & Strozyk, 2025; Hernandez & Nie, 2023; Keane & McNaughton,
+
+60
+
+2025; Kowal & Kantrowitz, 2025; Lee, Son, & Jia, 2025; Perrin et al., 2025; Ruiz-Mendoza &
+
+61
+
+Pedroza-Zúñiga, 2025; Russell-Lasalandra, Christensen, & Golino, 2024; Salah et al., 2025).
+
+62
+
+These applications typically operate under structured human oversight or multi-agent
+
+63
+
+quality-control pipelines (e.g., LLMs evaluating and critiquing each other’s outputs) to
+
+64
+
+reduce redundancy while anchoring item content in theory and lived experience. In parallel,
+
+65
+
+transformer-based models trained on naturally occurring language are increasingly used to
+
+66
+
+predict personality traits and related constructs from open-ended text. In this role, such
+
+67
+
+models function as automated raters and, when fine-tuned, as scoring engines for assessment
+
+68
+
+and psychological text-classification tasks (Bunt & Gillespie, 2025; Hommel, 2023; Kjell et
+
+69
+
+al., 2024; Lee et al., 2025; Maharjan, Jin, Zhu, & Kenne, 2025). As these embedding-based
+
+70
+
+approaches move beyond proof-of-concept demonstrations toward routine application,
+
+71
+
+however, fundamental questions remain unresolved, particularly regarding how to reliably
+
+72
+
+recover dimensional structure from language-based representations.
+
+73
+
+74
+
+Text embeddings sit at the center of many of these developments, providing a general
+mechanism for transforming language into quantitative data suitable for psychological
+
+ESTIMATING DIMENSIONAL STRUCTURE IN GENERATIVE PSYCHOMETRICS 5
+
+75
+
+analysis (Brickman & Oltmanns, 2025; Feuerriegel & Van Bavel, 2025; Jackson & Lindquist,
+
+76
+
+2022). An embedding model maps a unit of text, such as an item stem, construct label, or
+
+77
+
+self-description, into a dense vector in a high-dimensional space. Through this mapping,
+
+78
+
+scale items and survey questions can be treated as numeric representations of their semantic
+
+79
+
+content (Fang & Oberski, 2022; Russell-Lasalandra et al., 2024; Stanton & Sang, 2024).
+
+80
+
+These vectors are learned from large text corpora such that semantically similar texts tend
+
+81
+
+to occupy nearby locations, whereas dissimilar texts lie farther apart, yielding a geometric
+
+82
+
+space that encodes graded semantic relations among words, items, and other psychologically
+
+83
+
+relevant concepts (Fang & Oberski, 2022; Golino, 2025; Hussain, Binz, Mata, & Wulff, 2024).
+
+84
+
+Once texts have been embedded, researchers can compute similarity metrics between items,
+
+85
+
+derive distance-based neighborhoods and clusters, or use embeddings as inputs to supervised
+
+86
+
+models that classify items into constructs (Fang & Oberski, 2022; Fyffe & Kaplan, 2024). In
+
+87
+
+this sense, language is rendered into numerical form that can be analyzed using many of the
+
+88
+
+same tools applied to Likert-type response data, including similarity matrices, matrix
+
+89
+
+factorizations, clustering algorithms, and predictive models of scale characteristics (Hommel
+
+90
+
+& Arslan, 2025; Hussain et al., 2024; Stanton & Sang, 2024).
+
+91
+
+Capitalizing on evidence that embedding-based distances and configurations can mirror
+
+92
+
+patterns observed in human response data (Fang & Oberski, 2022; Hommel & Arslan, 2025;
+
+93
+
+Hussain et al., 2024; Russell-Lasalandra et al., 2024; Stanton & Sang, 2024), researchers have
+
+94
+
+applied embedding-based approaches to scale abbreviation without collecting response data,
+
+95
+
+to mapping nomological neighborhoods across hundreds of thousands of indicators, and to
+
+96
+
+pre-data-collection diagnostics of content and construct validity (Fyffe & Kaplan, 2024;
+
+97
+
+Kilmen & Bulut, 2025a; Larsen & Edmondson, 2025; Ravenda & Raballo, 2025; Wulff &
+
+98
+
+Mata, 2025a, 2025b).
+
+99
+
+Complementing these diagnostics, LLMs can also be prompted to emulate specific
+
+100
+
+profiles and generate synthetic respondents whose answers approximate human response
+
+101
+
+patterns, producing pseudo-response data that can be analyzed using conventional
+
+ESTIMATING DIMENSIONAL STRUCTURE IN GENERATIVE PSYCHOMETRICS 6
+
+102
+
+psychometric models (Cipriani & Grassini, 2025; Niszczota & Misiak, 2025; Rosenfelder &
+
+103
+
+Gilead, 2025). Together, these tools have the potential to make scale development,
+
+104
+
+validation, and structural analysis more efficient and less dependent on large human samples
+
+105
+
+during early stages of instrument development. Realizing this potential, however, depends
+
+106
+
+critically on the methods used to recover dimensional structure from embedding spaces, a
+
+107
+
+choice that has received limited scrutiny despite its downstream implications for construct
+
+108
+
+validity and measurement quality.
+
+109
+
+Current approaches to this structural analysis problem rely heavily on methods that
+
+110
+
+may be poorly suited to the task. In embedding-based psychometric applications,
+
+111
+
+dimensional structure assessment is dominated by principal component analysis (PCA)
+
+112
+
+applied to cosine- or correlation-based similarity matrices derived from item, adjective, or
+
+113
+
+construct embeddings (Bhandari & Pardos, 2024; Cutler & Condon, 2023; Huang & Tong,
+
+114
+
+2025; Jung & Seo, 2025; Linden, Cutler, Van der Linden, & Dunkel, 2025; Milano &
+
+115
+
+Marocco, 2025; Teitelbaum & Simchon, 2025). The dominance of PCA in these workflows
+
+116
+
+reflects a long historical tradition in fields such as personality and psychopathology, where
+
+117
+
+PCA has served as the default tool for deriving multilevel structure from large item pools
+
+118
+
+(Ashton & Goldberg, 2004; Forbes & Clark, 2025; Goldberg, 2013; Saucier & Iurino, 2020).
+
+119
+
+Proponents of PCA argue that it offers advantages due to its mathematical simplicity,
+
+120
+
+reduced susceptibility to problematic solutions, and absence of score indeterminacy (Sellbom
+
+121
+
+& Goretzko, 2023a). However, a long-standing methodological literature raises concerns
+
+122
+
+about relying on PCA as a primary basis for determining the dimensional structure of
+
+123
+
+psychological variables, particularly when paired with eigenvalue-greater-than-one or
+
+124
+
+scree-plot heuristics (Goretzko & Bühner, 2021; Kaçak & Kılıç, 2025; Sellbom & Goretzko,
+
+125
+
+2023b; Widaman, 1993; Widaman, 2018).
+
+126
+
+Conceptually, PCA is a descriptive decomposition of total variance rather than a
+
+127
+
+representation of common variance. As a result, components maximize variance in observed
+
+128
+
+variables without separating common, unique, and error variance, providing no guarantee
+
+ESTIMATING DIMENSIONAL STRUCTURE IN GENERATIVE PSYCHOMETRICS 7
+
+129
+
+that the resulting dimensions correspond to psychological attributes (Goretzko & Bühner,
+
+130
+
+2021; Widaman, 2018). Simulation studies indicate that, under conditions typical of
+
+131
+
+psychological data, including low to moderate communalities, few indicators per dimension,
+
+132
+
+and ordinal-level measurement, PCA tends to overestimate factor loadings and can yield
+
+133
+
+biased recovery of the generating structure (Kaçak & Kılıç, 2025; Widaman, 1993).
+
+134
+
+Moreover, the PCA framework is poorly suited to address issues that are particularly
+
+135
+
+relevant for generative AI-based psychometric pipelines, such as item redundancy, structural
+
+136
+
+instability (Russell-Lasalandra et al., 2024), and hierarchical assessment (Samo &
+
+137
+
+Christensen, 2025). Taken together, these conceptual and empirical critiques suggest that
+
+138
+
+PCA-based dimensional solutions, while convenient and historically entrenched, provide an
+
+139
+
+uncertain foundation for inferences about dimensional structure. This concern becomes
+
+140
+
+especially salient when PCA is used to characterize the geometry of embedding spaces and
+
+141
+
+guide downstream modeling choices in generative AI-based psychometrics.
+
+142
+
+143
+
+Generative AI Psychometrics with Network Models
+Network modeling conceptualizes psychological variables as nodes in a network, with
+
+144
+
+conditional associations between variables represented as edges, typically estimated using
+
+145
+
+Gaussian graphical models estimated via regularized partial correlations, or estimated via
+
+146
+
+triangulated maximally filtered graphs (Christensen, Garrido, Guerra-Peña, & Golino, 2024;
+
+147
+
+Golino, Shi, et al., 2020). Within this framework, Exploratory Graph Analysis (EGA)
+
+148
+
+integrates sparse network estimation with community detection algorithms, such as Walktrap
+
+149
+
+or Louvain, to identify clusters of densely connected nodes corresponding to latent or
+
+150
+
+emergent dimensions (Christensen, Golino, Abad, & Garrido, 2024; Cosemans, Rosseel, &
+
+151
+
+Gelper, 2022; Golino, Thiyagarajan, et al., 2020; Jimenez & Garrido, 2025; Samo &
+
+152
+
+Christensen, 2025). Simulation studies demonstrate that EGA recovers the number of
+
+153
+
+dimensions with high accuracy across a wide range of factor structures and data types, often
+
+154
+
+matching or outperforming traditional factor-retention methods for both continuous and
+
+ESTIMATING DIMENSIONAL STRUCTURE IN GENERATIVE PSYCHOMETRICS 8
+
+155
+
+156
+
+categorical indicators (Cosemans et al., 2022; Golino, Thiyagarajan, et al., 2020).
+
+Building on EGA’s core framework, several specialized network-based tools have been
+
+157
+
+developed to address challenges that are amplified in large item pools. Bootstrap EGA
+
+158
+
+(bootEGA) extends the base approach by repeatedly re-estimating networks across bootstrap
+
+159
+
+samples, yielding indices of structural consistency and item stability (Christensen & Golino,
+
+160
+
+2021). To address item redundancy, Unique Variable Analysis (UVA) integrates network
+
+161
+
+estimation with weighted topological overlap to identify locally dependent items prior to
+
+162
+
+dimensionality assessment, demonstrating strong performance across data types and
+
+163
+
+favorable comparisons to alternative diagnostics (Christensen & Golino, 2023). For
+
+164
+
+interpretation, network loadings provide factor-loading-like coefficients that yield dimension
+
+165
+
+scores whose correlation patterns reflects the generating correlations among dimensions,
+
+166
+
+without requiring rotational decisions (Christensen & Garrido, 2025). When response styles
+
+167
+
+or wording effects are present, random intercept EGA partials out these sources of variance
+
+168
+
+prior to network estimation, improving dimensionality recovery (Garcia-Pardina, Abad,
+
+169
+
+Christensen, Golino, & Garrido, 2024). Finally, hierarchical EGA enables accurate recovery
+
+170
+
+of both general and group factors from item-level data (Jiménez et al., 2023).
+
+171
+
+These developments converge in Taxonomic Graph Analysis (TGA), a comprehensive
+
+172
+
+framework for recovering hierarchical construct structures from large item pools (Samo &
+
+173
+
+Christensen, 2025). TGA integrates the tools described above into a bottom-up workflow:
+
+174
+
+UVA identifies redundant items, random intercept EGA mitigates wording effects, EGA with
+
+175
+
+consensus clustering estimates dimensionality across successive hierarchical levels, bootEGA
+
+176
+
+evaluates structural stability, and network loadings quantify indicator strength and derive
+
+177
+
+scores for higher-order structure estimation. This integrated approach yields multilevel
+
+178
+
+taxonomies that coherently link item-level facets, traits, and meta-traits within a single
+
+179
+
+hierarchy (Christensen & Golino, 2021; Christensen & Garrido, 2025; Christensen & Golino,
+
+180
+
+2023; Samo & Christensen, 2025).
+
+ESTIMATING DIMENSIONAL STRUCTURE IN GENERATIVE PSYCHOMETRICS 9
+
+181
+
+The Automatic Item Generation with Network-Integrated Evaluation (AI-GENIE)
+
+182
+
+framework (Russell-Lasalandra et al., 2024) extends this taxonomic logic to generative AI
+
+183
+
+psychometrics by coupling LLM-based item generation with embedding models and applying
+
+184
+
+the same UVA-EGA-bootEGA pipeline to embedding-based similarity structures. This
+
+185
+
+approach identifies nonredundant, structurally stable items from large LLM-generated pools
+
+186
+
+and produces concise scales whose structural properties align with established trait measures,
+
+187
+
+illustrating how network psychometrics can automate early-stage scale development in
+
+188
+
+generative AI contexts (Russell-Lasalandra et al., 2024). To date, however, no study has
+
+189
+
+systematically compared these network-based approaches with the predominant PCA
+
+190
+
+pipeline for recovering dimensional structure from embedding-derived similarity matrices.
+
+191
+
+The Present Study
+
+192
+
+The present study addresses this methodological gap by directly comparing PCA and
+
+193
+
+network approaches to dimensional structure estimation in embedding-based psychometrics.
+
+194
+
+We conducted a Monte Carlo simulation in which LLMs generated item pools for multiple
+
+195
+
+psychological constructs. Text embeddings were then derived from these AI-generated items
+
+196
+
+to construct cosine similarity matrices analogous to those used in current embedding-based
+
+197
+
+structural analysis pipelines (Russell-Lasalandra et al., 2024). Dimensional structure was
+
+198
+
+estimated from these embedding-based similarity matrices using PCA with traditional
+
+199
+
+retention criteria, including the eigenvalue-greater-than-one criterion (K1) or Kaiser’s rule
+
+200
+
+(Kaiser, 1960) and parallel analysis [PA; Horn (1965)], as well as the EGA framework.
+
+201
+
+The accuracy of each method was evaluated based on its ability to recover the
+
+202
+
+generating dimensional structure. Because AI-GENIE’s redundancy and stability filtering
+
+203
+
+procedures are inherently network-based, post–item-filtering analyses were conducted
+
+204
+
+exclusively within the EGA framework. Specifically, we examined how filtering via UVA and
+
+205
+
+bootEGA affected dimensional structure recovery within the network approach. Given the
+
+206
+
+conceptual and empirical limitations of PCA documented in the psychometric literature
+
+ESTIMATING DIMENSIONAL STRUCTURE IN GENERATIVE PSYCHOMETRICS 10
+
+207
+
+(Goretzko & Bühner, 2021; Kaçak & Kılıç, 2025; Sellbom & Goretzko, 2023b; Widaman,
+
+208
+
+1993; Widaman, 2018), we hypothesized that EGA would demonstrate superior accuracy in
+
+209
+
+recovering dimensional structure from embedding spaces and would yield more informative
+
+210
+
+item-level diagnostics following network-based filtering. These comparisons have direct
+
+211
+
+implications for the methodological foundations of generative AI-based scale development,
+
+212
+
+where early structural inferences guide downstream validation and application contexts.
+
+Method
+
+213
+
+214
+
+Simulation Design
+
+215
+
+The accuracy of the dimensional structure estimates was evaluated using Monte Carlo
+
+216
+
+simulation. The GPT-4o model (OpenAI, 2023a) under the default nucleus sampling (p = 1)
+
+217
+
+and temperature (1.0) was used to generate item pools measuring six personality facets
+
+218
+
+taken from two domains (Irwing & Booth, 2024): (1) the facets of achievement striving,
+
+219
+
+perseverance, and self-efficacy for the domain of conscientiousness, and (2) the facets of
+
+220
+
+abstract thinking, aesthetics, and introspection for the domain of openness to experience.
+
+221
+
+A target pool of 90 items per domain was set (180 total), which the LLM distributed
+
+222
+
+approximately equally across the specified facets. We chose to generate a large number of
+
+223
+
+items per facet (30) to mimic expected procedures in real-life scenarios of AI-aided test
+
+224
+
+development where 3, 4 or more times the intended final number of items are generated
+
+225
+
+initially (Koweszko & Silczuk, 2025; Lee & Yao, 2023). A total of 500 replications were
+
+226
+
+simulated.
+
+227
+
+Item Generation and Prompt Engineering
+
+228
+
+Effective use of LLMs for psychological assessment requires systematic prompt
+
+229
+
+engineering—the deliberate design and optimization of input prompts to guide model
+
+230
+
+responses toward accurate, relevant, and coherent output (Chen, Zhang, Zheng, & Luo,
+
+ESTIMATING DIMENSIONAL STRUCTURE IN GENERATIVE PSYCHOMETRICS 11
+
+231
+
+2025). The quality of prompts plays a significant role in determining the consistency and
+
+232
+
+viability of generated content (Jin, Cheng, Shen, Chen, & Ren, 2022; White, Hays, Fu,
+
+233
+
+Spencer-Smith, & Schmidt, 2023), making careful prompt construction essential for
+
+234
+
+psychometric applications. This study employed a comprehensive set of prompt engineering
+
+235
+
+techniques following the AI-GENIE approach (Russell-Lasalandra et al., 2024): role
+
+236
+
+prompting, clear and precise prompting, and few-shot prompting. Such a multi-faceted
+
+237
+
+approach is necessary because the vast universe of potential LLM responses can lead to
+
+238
+
+highly variable outputs; detailed, unambiguous prompts help constrain the model toward
+
+239
+
+generating content aligned with specific research goals (Ekin, Yilmaz, Erol, & Karagöz, 2023;
+
+240
+
+Giray, 2023; see: OpenAI, 2023b).
+
+241
+
+The pipeline began with role or persona prompting, which assigns a specific expert
+
+242
+
+identity to guide the model’s responses. Research demonstrates that priming a model with a
+
+243
+
+knowledgeable persona improves performance by producing more coherent, domain-relevant
+
+244
+
+responses and reducing generalization errors (Zheng et al., 2023). When focused on a
+
+245
+
+particular professional role, the model generates outputs that are more logically consistent
+
+246
+
+and tailored to the specific context. Accordingly, the model was informed: “You are an
+
+247
+
+expert psychometrician and test developer specializing in personality assessment.”
+
+248
+
+Second, clear and precise prompting was used to specify the nature of the task,
+
+249
+
+including the target domains, facets, and operational definitions for the items to be
+
+250
+
+generated (Irwing & Booth, 2024). Providing relevant context and detailed constraints helps
+
+251
+
+the model understand the prompt’s purpose and produce appropriately targeted content.
+
+252
+
+The prompt stated: “Your task is to create high-quality, psychometrically robust items for a
+
+253
+
+personality inventory measuring the following Big Five traits: Conscientiousness and
+
+254
+
+Openness to Experience. Conscientiousness reflects self-efficacy (Propensity to hold the
+
+255
+
+subjective perception that one is capable of performing), achievement-striving (Propensity to
+
+256
+
+be ambitious and goal-oriented), and perseverance (Propensity to continue with and finish a
+
+257
+
+task despite obstacles). Openness reflects introspection (Propensity to examine one’s thoughts,
+
+ESTIMATING DIMENSIONAL STRUCTURE IN GENERATIVE PSYCHOMETRICS 12
+
+258
+
+feelings, motives, and behaviour), aesthetics (Enjoyment of artistic and aesthetic activities),
+
+259
+
+abstract-thinking (Propensity to explore and discuss abstract ideas).”
+
+260
+
+Third, detailed formatting guidelines were provided to ensure predictable, extractable
+
+261
+
+output. LLMs attend closely to emphasized instructions using atypical casing, and repeating
+
+262
+
+key directives improves adherence (Amatriain, 2024; Google Developers, 2025). The
+
+263
+
+formatting instructions were: “Generate psychometrically reliable and valid personality
+
+264
+
+assessment items for each trait’s example item characteristics. Do NOT mix characteristics
+
+265
+
+in single items. EACH item should represent ONE and ONLY ONE characteristic in ONE
+
+266
+
+trait. EACH item should be ONE sentence. You should format your output using: [trait]:
+
+267
+
+[item content]. Do NOT number or add ANY other text to your response. ONLY output the
+
+268
+
+traits EXACTLY as provided. ONLY output the trait and item content – NOTHING else.”
+
+269
+
+Finally, few-shot prompting was employed by providing five to six example items for
+
+270
+
+each facet. This technique encourages quality and consistency by allowing the model to
+
+271
+
+discern patterns from exemplars, improving performance and enabling nuanced
+
+272
+
+generalization (Brown et al., 2020). Including multiple trait-relevant examples also helps
+
+273
+
+ensure that generated items capture important aspects of the target construct rather than
+
+274
+
+being unidimensional. The example items were drawn from the Facet-level Multidimensional
+
+275
+
+Assessment of Personality (Facet MAP) version I (Irwing & Booth, 2024), with all inventory
+
+276
+
+items for the selected facets included in the prompt.
+
+277
+
+Data Structure Assessment
+
+278
+
+The dimensional structure of the generated items was assessed using cosine similarity
+
+279
+
+matrices derived from item embeddings (Kilmen & Bulut, 2025b). Item embeddings were
+
+280
+
+obtained using OpenAI’s text-embedding-3-small model (OpenAI, 2024). Three analytic
+
+281
+
+procedures were employed to evaluate the dimensional structure of the resulting item pools:
+
+282
+
+K1-PCA-Varimax: Commonly referred to as the “Little Jiffy” procedure (Kaiser,
+
+ESTIMATING DIMENSIONAL STRUCTURE IN GENERATIVE PSYCHOMETRICS 13
+
+283
+
+1970), this approach combines the K1 dimensionality rule with PCA extraction and varimax
+
+284
+
+orthogonal rotation. For over five decades, this procedure has been amongst the most widely
+
+285
+
+used methods for dimensional structure assessment in the behavioral sciences (Fabrigar,
+
+286
+
+Wegener, MacCallum, & Strahan, 1999; Howard & Henderson, 2023; Howard & O’Sullivan,
+
+287
+
+2025; Izquierdo, Olea, & Abad, 2014; Kaiser, 1970; Preacher & MacCallum, 2003).
+
+288
+
+PA-PCA-Varimax: this procedure represents a modification of the Little Jiffy
+
+289
+
+approach in which the K1 rule is replaced with parallel analysis, one the best-performing and
+
+290
+
+most extensively validated dimensionality estimation methods (Garrido & Ponsoda, 2013;
+
+291
+
+Golino, Shi, et al., 2020; Goretzko, 2025; Xia, 2021). This modification is critical, as the K1
+
+292
+
+rule is known to perform poorly at the sample level, particularly in conditions with a large
+
+293
+
+number of variables per dimension (Auerswald & Moshagen, 2019; Golino, Thiyagarajan, et
+
+294
+
+al., 2020; Martínez Ramos & Rondón Sepúlveda, 2025). PA was computed using the
+
+295
+
+component eigenvalues, the mean aggregation criterion, and 100 simulated data matrices per
+
+296
+
+analysis.
+
+297
+
+EGA: the EGA approach was included as a modern, state-of-the-art alternative for
+
+298
+
+dimensional structure assessment on cosine similarity matrices of item embeddings
+
+299
+
+(Russell-Lasalandra et al., 2024). EGA was estimated using the graphical least absolute
+
+300
+
+shrinkage and selection operator with extended Bayesian information criterion for model
+
+301
+
+selection (EBICglasso) (Chen & Chen, 2008; Epskamp & Fried, 2018; Friedman, Hastie, &
+
+302
+
+Tibshirani, 2008), with variable clustering determined via the Walktrap algorithm (Brusco &
+
+303
+
+Watts, 2023; Pons & Latapy, 2006).
+
+304
+
+Item Filtering
+
+305
+
+AI-based psychometric pipelines typically begin with the generation of a large number
+
+306
+
+of initial items per dimension that vary in psychometric quality and may include overlapping
+
+307
+
+content. Consequently, identifying and removing redundant or structurally unstable items is
+
+ESTIMATING DIMENSIONAL STRUCTURE IN GENERATIVE PSYCHOMETRICS 14
+
+308
+
+essential for obtaining robust dimensional structure estimates. In the present study, item
+
+309
+
+filtering was conducted using the Network-Integrated Evaluation approach included in
+
+310
+
+AI-GENIE (Russell-Lasalandra et al., 2024). The filtering procedure began with UVA
+
+311
+
+(Christensen & Golino, 2023), which was used to automatically detect and remove redundant
+
+312
+
+items from the initial item pool. EGA was then applied to estimate the dimensional
+
+313
+
+structure of the retained items. In the final step, bootEGA (Christensen & Golino, 2021) was
+
+314
+
+used to evaluate item stability within each dimension, resulting in the removal of items that
+
+315
+
+did not meaningfully contribute to dimensional stability. A cutoff value of 0.20 was used for
+
+316
+
+UVA to identify item redundancy (Christensen & Golino, 2023; Samo & Christensen, 2025),
+
+317
+
+and a minimum stability threshold of 0.75 was required for item retention in bootEGA
+
+318
+
+(Russell-Lasalandra et al., 2024; Samo & Christensen, 2025). The bootEGA procedure
+
+319
+
+employed the same analytical methods as EGA and was iteratively repeated until all retained
+
+320
+
+items demonstrated adequate stability. Each bootEGA run was based on 500 parametric
+
+321
+
+bootstrap samples generated from the matrix of cosine similarities (Christensen & Golino,
+
+322
+
+2021; Samo & Christensen, 2025). Both UVA and bootEGA were computed using a sparse
+
+323
+
+embedding matrix rather than the full embedding matrix (Russell-Lasalandra et al., 2024).
+
+324
+
+Performance Criteria
+
+325
+
+Dimensionality estimation accuracy was evaluated using the percentage of correct
+
+326
+
+estimates (PC) and the mean bias error (MBE). The formulas for these criteria are provided
+
+327
+
+in Equations 1 and 2:
+
+P
+
+PC =
+
+C
+× 100,
+Nr
+
+where C =
+
+(θ̂ − θ)
+Nr
+
+
+
+
+
+1
+
+if θ̂ = θ
+
+
+
+
+0
+
+if θ̂ ̸= θ
+
+(1)
+
+P
+
+MBE =
+
+(2)
+
+ESTIMATING DIMENSIONAL STRUCTURE IN GENERATIVE PSYCHOMETRICS 15
+
+328
+
+329
+
+330
+
+where Nr is the number of replicates being aggregated, θ̂ is the number of dimensions
+estimated, and θ is the number of generating dimensions.
+The PC metric is bounded between 0 and 100, where 0 denotes no accuracy and 100
+
+331
+
+indicates perfect accuracy. By contrast, a value of 0 on the MBE metric reflects the
+
+332
+
+absence of bias, whereas negative and positive values indicate underestimation and
+
+333
+
+overestimation of the number of generating dimensions, respectively.
+
+334
+
+Recovery of the dimensional structure was assessed using the normalized mutual
+
+335
+
+information (NMI, see Equation 3) index (Danon & Arenas, 2005). NMI is an
+
+336
+
+information-theoretic measure that compares the composition of estimated and generating
+
+337
+
+structures in terms of item groupings. The index ranges from 0, indicating completely
+
+338
+
+dissimilar structures, to 1, indicating identical structures, and can be computed for solutions
+
+339
+
+that differ in the number of dimensions. NMI is computed from a confusion matrix, in which
+
+340
+
+rows represent the generating dimensions and columns represent the estimated dimensions.
+
+341
+
+Each entry denotes the number of items belonging to generating dimension that are assigned
+
+342
+
+to estimated dimension. For PCA, items were assigned to the dimension on which they
+
+343
+
+exhibited the highest loading, whereas EGA assigns items to dimensions as part of its
+
+344
+
+clustering procedure. Based on the information-theoretic concept of mutual information,
+
+345
+
+NMI is then defined as:
+
+
+
+
+Nij N
+j=1 Nij log Ni· N·j
+
+
+  P
+NMI = PC
+N·j
+Ni·
+A
+B
++ C
+j=1 N·j log N
+i=1 Ni· log N
+
+−2
+
+346
+
+PCA PCB
+i=1
+
+(3)
+
+where CA is the number of generating dimensions and CB is the number of estimated
+
+347
+
+dimensions.
+
+348
+
+Statistical Software
+
+349
+
+All statistical analyses were conducted in R (version 4.5.2). Eigenvalues required for
+
+350
+
+computing the K1 rule were obtained using the base R function eigen. PA and PCA with
+
+ESTIMATING DIMENSIONAL STRUCTURE IN GENERATIVE PSYCHOMETRICS 16
+
+351
+
+varimax rotation were performed using the psych package (version 2.5.6) via the fa.parallel
+
+352
+
+and principal functions, respectively. EGA, bootEGA and UVA were conducted using the
+
+353
+
+EGAnet package (version 2.4.0) with the corresponding functions. NMI was computed using
+
+354
+
+the aricode package (version 1.0.3) via the NMI function. All R code and simulation results
+
+355
+
+are available at [OSF repository URL].
+
+Results
+
+356
+
+357
+
+The LLM was prompted to generate 90 items for conscientiousness and 90 for openness
+
+358
+
+to experience, corresponding to 30 items per facet. In practice, however, LLMs generate and
+
+359
+
+distribute items approximately rather than exactly. To illustrate the resulting distributions,
+
+360
+
+Table 1 reports the mean number of items generated and retained for each facet across
+
+361
+
+simulation replicates. As shown in the table, all the facets had mean item counts close to the
+
+362
+
+intended value of 30, ranging from a low of 27.54 for abstract thinking to a high of 34.27 for
+
+363
+
+introspection.
+
+364
+
+The performance of the analytic procedures in dimensional structure estimation is
+
+365
+
+summarized in Table 2. The poorest performance was observed for K1-PCA-Varimax, which
+
+366
+
+severely overestimated the number of dimensions (MBE = 15.06) and yielded the weakest
+
+367
+
+recovery of the dimensional structure (NMI = 0.82). Although PA-PCA-Varimax improved
+
+368
+
+both structural recovery (NMI = 0.88) and dimensionality estimation relative to
+
+369
+
+K1-PCA-Varimax, it still markedly overestimated the number of dimensions (MBE = 7.37).
+
+370
+
+Consistent with these findings, the PC was 0.0% for both PCA-based methods, indicating
+
+371
+
+that neither correctly recovered the generating number of dimensions in any simulation
+
+372
+
+replicate. In contrast, EGA demonstrated strong overall performance, with a PC of 43.4%,
+
+373
+
+only a small upward bias in dimensionality estimation (MBE = 0.83), and substantially more
+
+374
+
+accurate recovery of the dimensional structure (NMI = 0.95).
+
+375
+
+Following the Network-Integrated Evaluation filtering procedure, approximately
+
+ESTIMATING DIMENSIONAL STRUCTURE IN GENERATIVE PSYCHOMETRICS 17
+
+Table 1
+Number of items generated and retained per personality facet
+Generated Items
+
+Retained Items
+
+Dimension / Facet
+
+Generated Items Mean
+
+SD
+
+Retained Items Mean
+
+SD
+
+% Retained
+
+Achievement striving
+
+30.40
+
+1.19
+
+17.31
+
+3.67
+
+56.9%
+
+Perseverance
+
+29.13
+
+1.50
+
+16.90
+
+3.80
+
+58.0%
+
+Self-efficacy
+
+32.63
+
+1.55
+
+22.28
+
+4.23
+
+68.3%
+
+Abstract thinking
+
+27.54
+
+1.99
+
+16.41
+
+3.85
+
+59.6%
+
+Aesthetics
+
+30.02
+
+1.68
+
+17.51
+
+3.83
+
+58.3%
+
+Introspection
+
+34.27
+
+2.23
+
+20.97
+
+4.28
+
+61.2%
+
+Note. Retained items are those that remained after the Network-Integrated Evaluation filtering
+procedure.
+
+376
+
+one-half to two-thirds of the items were retained across the facets (Table 1). Retention rates
+
+377
+
+ranged from a low of 56.9% obtained for achievement striving to a high of 68.3% for
+
+378
+
+self-efficacy. Notably, the standard deviation of retained item counts was roughly twice that
+
+379
+
+of the generated item counts, indicating increased variability across replicates as a
+
+380
+
+consequence of the filtering procedure.
+
+381
+
+As shown in Table 2, applying EGA to the filtered item pools substantially improved
+
+382
+
+dimensional structure recovery. With respect to dimensionality estimation, the PC increased
+
+383
+
+to 95.6%, bias was eliminated (MBE = 0.00), and recovery of the dimensional structure was
+
+384
+
+nearly perfect (NMI = 0.99). To further illustrate these results, Figure 1 displays the
+
+385
+
+distributions of MBE and NMI across the 500 simulation replicates.
+
+ESTIMATING DIMENSIONAL STRUCTURE IN GENERATIVE PSYCHOMETRICS 18
+Table 2
+Performance of analytic procedures in
+dimensional structure estimation
+Analytic procedure
+
+PC
+
+MBE
+
+NMI
+
+K1-PCA-Varimax
+
+0.0%
+
+15.06
+
+0.82
+
+PA-PCA-Varimax
+
+0.0%
+
+7.37
+
+0.88
+
+EGA
+
+43.4%
+
+0.83
+
+0.95
+
+EGA (filtered)
+
+95.6%
+
+0.00
+
+0.99
+
+Note. K1 = Kaiser’s rule; PCA = principal
+component analysis; Varimax = orthogonal
+varimax rotation; EGA = exploratory graph
+analysis. Item pools were filtered using the
+Network-Integrated Evaluation procedure.
+Method Performance Comparison
+Bias
+
+NMI
+
+20.0
+
+Normalized Mutual Information
+
+1.0
+
+Bias
+
+15.0
+
+10.0
+
+5.0
+
+0.9
+
+0.8
+
+0.7
+
+0.0
+
+Method
+
+PC
+A
+PA
++
+
+K1
++P
+
+C
+
+A
+
+A
+EG
+
+PC
+A
+PA
++
+
+A
+C
+K1
++P
+
+EG
+
+A
+
+0.6
+
+Method
+
+Data Type
+
+Filtered
+
+Original
+
+Points show means ± 95% confidence intervals
+
+Figure 1 . Performance comparison of analytic procedures for dimensional structure estimation.
+Panels show mean bias error (MBE), normalized mutual information (NMI), and estimated
+dimensionality for original and filtered item pools. Points represent means with 95% confidence
+intervals.
+
+ESTIMATING DIMENSIONAL STRUCTURE IN GENERATIVE PSYCHOMETRICS 19
+
+386
+
+Discussion
+
+387
+
+The present study compared PCA and network-based approaches for estimating
+
+388
+
+dimensional structure from LLM item embeddings, addressing a critical gap in the rapidly
+
+389
+
+evolving field of generative AI psychometrics. Our primary aim was to evaluate whether the
+
+390
+
+predominant reliance on PCA in embedding-based applications (Bhandari & Pardos, 2024;
+
+391
+
+Cutler & Condon, 2023; Huang & Tong, 2025; Jung & Seo, 2025; Linden et al., 2025; Milano
+
+392
+
+& Marocco, 2025; Teitelbaum & Simchon, 2025) is justified, or whether network methods
+
+393
+
+such as Exploratory Graph Analysis and the related AI-GENIE pipeline (Russell-Lasalandra
+
+394
+
+et al., 2024) offer meaningful advantages for this specific psychometric task. The results
+
+395
+
+revealed substantial and consequential differences in favor of the network approach across
+
+396
+
+multiple criteria, including dimensionality estimation accuracy and coherence of item
+
+397
+
+clustering. These differences have important implications for the validity of dimensional
+
+398
+
+structures recovered from embedding spaces and, by extension, for downstream applications
+
+399
+
+that depend on accurate early-stage structural characterization of psychological constructs.
+
+400
+
+Main Findings
+
+401
+
+Of the two PCA-based pipelines, the popular “Little Jiffy” approach (Kaiser, 1970),
+
+402
+
+which combines Kaiser’s eigenvalue-greater-than-one rule (K1) with PCA extraction and
+
+403
+
+varimax rotation (K1-PCA-Varimax), displayed the poorest performance, with severe
+
+404
+
+overestimation of dimensionality and the weakest recovery of the generating structure. These
+
+405
+
+results are consistent with a long line of research showing that the K1 rule performs poorly
+
+406
+
+in finite samples, exhibiting a pronounced tendency toward overextraction (Auerswald &
+
+407
+
+Moshagen, 2019; Golino, Thiyagarajan, et al., 2020; Martínez Ramos & Rondón Sepúlveda,
+
+408
+
+2025), and that PCA is a data reduction method that is not recommended for identifying
+
+409
+
+dimensions arising from common variance among variables (Widaman, 1993). Proponents of
+
+410
+
+PCA have argued that it offers procedural advantages, including mathematical simplicity,
+
+ESTIMATING DIMENSIONAL STRUCTURE IN GENERATIVE PSYCHOMETRICS 20
+
+411
+
+reduced susceptibility to improper solutions, and absence of score indeterminacy (Sellbom &
+
+412
+
+Goretzko, 2023a). Although these arguments may appear compelling given the method’s
+
+413
+
+widespread adoption and default status in statistical software, the present findings,
+
+414
+
+consistent with decades of methodological research, demonstrate that such conveniences
+
+415
+
+come at the cost of substantial systematic distortions in dimensional structure estimation.
+
+416
+
+The findings also showed that substituting the K1 rule with parallel analysis (PA) in
+
+417
+
+the PA-PCA-Varimax pipeline yielded meaningful improvements in both dimensionality
+
+418
+
+estimation and structural recovery, consistent with PA’s well-established superiority over
+
+419
+
+Kaiser’s rule in traditional psychometric contexts (Garrido & Ponsoda, 2013; Goretzko,
+
+420
+
+2025). Despite this improvement, however, PA-PCA-Varimax continued to markedly
+
+421
+
+overestimate the number of dimensions and yielded less accurate structural recovery than
+
+422
+
+EGA. This persistent overextraction, even with one of the most extensively validated and
+
+423
+
+recommended retention methods in psychometrics, underscores fundamental limitations in
+
+424
+
+applying traditional dimensionality workflows to LLM-generated item pools and
+
+425
+
+embedding-based representations.
+
+426
+
+Eigenvalue-based dimensionality methods such as PA are more susceptible than
+
+427
+
+network approaches to nuisance variance arising from minor dimensions (Jimenez & Garrido,
+
+428
+
+2025). In generative psychometrics, such nuisance variance can stem from multiple sources,
+
+429
+
+including item redundancy and the emergence of narrow subdimensions driven by the large
+
+430
+
+number of items generated by LLMs. In addition, large LLM-generated item pools are more
+
+431
+
+likely to contain solitary items, defined as items that do not load saliently on any dimension.
+
+432
+
+These items can inflate the eigenvalues of noise dimensions, thereby increasing the likelihood
+
+433
+
+that they are retained by methods such as PA (Turner, 1998). Under these conditions, PA
+
+434
+
+may yield dimensionality estimates that conflate major and minor dimensions, resulting in
+
+435
+
+systemic overextraction (Garcia-Pardina et al., 2024).
+
+436
+
+In contrast, EGA demonstrated substantially superior performance in recovering
+
+ESTIMATING DIMENSIONAL STRUCTURE IN GENERATIVE PSYCHOMETRICS 21
+
+437
+
+dimensional structure from unfiltered embedding matrices. The network approach correctly
+
+438
+
+identified the generating number of dimensions in nearly half of all replicates, whereas the
+
+439
+
+PCA-based approaches never provided correct dimensionality estimates, and did so with only
+
+440
+
+a slight upward bias and high structural recovery accuracy. These results extend prior
+
+441
+
+simulation evidence supporting EGA’s robust performance in traditional response-based data
+
+442
+
+(Cosemans et al., 2022; Golino, Thiyagarajan, et al., 2020; Jimenez & Garrido, 2025) to the
+
+443
+
+novel context of embedding-derived similarity matrices, demonstrating that the method’s
+
+444
+
+advantages persist when applied to semantic representations produced by contemporary
+
+445
+
+LLMs. Unlike eigenvalue-based methods, EGA derives dimensional structure from sparse,
+
+446
+
+regularized partial correlation networks and community detection algorithms that identify
+
+447
+
+clusters of variables remaining conditionally dependent after accounting for all other variables
+
+448
+
+in the system. This property makes EGA less susceptible to nuisance variance arising from
+
+449
+
+minor dimensions, which are less likely to disrupt the substantive clustering of the variables
+
+450
+
+in network representations (Garcia-Pardina et al., 2024; Jimenez & Garrido, 2025).
+
+451
+
+The incorporation of network-based item filtering yielded notable improvements in
+
+452
+
+EGA performance. Following redundancy detection with UVA and stability filtering with
+
+453
+
+bootEGA, which together removed one-third to one-half of the generated items, EGA’s
+
+454
+
+performance approached near-ceiling levels across all evaluation criteria. Dimensionality
+
+455
+
+estimation became highly accurate with bias effectively eliminated, correct structure
+
+456
+
+identification occurred in the vast majority of replicates, and structural recovery reached
+
+457
+
+near-perfect levels. These improvements illustrate how network psychometric methods
+
+458
+
+address core challenges in generative AI psychometrics that extend beyond the scope of
+
+459
+
+traditional dimensional structure estimation procedures.
+
+460
+
+The necessity of this filtering reflects fundamental differences between LLM-generated
+
+461
+
+item pools and traditionally developed measures. When human experts craft scale items,
+
+462
+
+they explicitly avoid redundant phrasing, prioritize conceptual distinctiveness within
+
+463
+
+dimensions, and iteratively refine items through qualitative review processes before data
+
+ESTIMATING DIMENSIONAL STRUCTURE IN GENERATIVE PSYCHOMETRICS 22
+
+464
+
+collection (Gehlbach & Brinkworth, 2011). LLMs, by contrast, generate items through
+
+465
+
+probabilistic sampling from learned language distributions, producing item pools that
+
+466
+
+inherently contain paraphrastic variants, semantically overlapping expressions, and variable
+
+467
+
+degrees of construct specificity (Fyffe & Kaplan, 2024; Lee et al., 2025; Russell-Lasalandra et
+
+468
+
+al., 2024). Although this generative process is efficient and yields large item pools rapidly, it
+
+469
+
+also introduces redundancy and potential structural instability that can confound
+
+470
+
+dimensionality estimation when left unaddressed. The AI-GENIE network-based filtering
+
+471
+
+pipeline systematically identifies and removes such problematic content through explicit
+
+472
+
+detection of redundancy and instability, producing refined item pools whose
+
+473
+
+embedding-based similarity structures more clearly represent the intended psychological
+
+474
+
+constructs (Russell-Lasalandra et al., 2024).
+
+475
+
+Taken together, these findings provide clear evidence that current default practices in
+
+476
+
+embedding-based psychometrics, specifically the application of PCA with traditional
+
+477
+
+retention criteria to similarity matrices, yield systematically biased dimensional structure
+
+478
+
+estimates and warrant reconsideration. The substantial overextraction observed even with
+
+479
+
+parallel analysis suggests that the problem reflects fundamental incompatibilities between
+
+480
+
+eigenvalue-based PCA procedures and the properties of similarity matrices derived from
+
+481
+
+large LLM-generated item pools. By contrast, the EGA and AI-GENIE approaches
+
+482
+
+demonstrated robust performance that improved further when integrated with specialized
+
+483
+
+network methods for addressing item redundancy and structural instability.
+
+484
+
+Limitations
+
+485
+
+There are some limitations in this study that should be noted. First, the study relied
+
+486
+
+on a single LLM (GPT-4o) for item generation and a single embedding model (OpenAI’s
+
+487
+
+text-embedding-3-small) to derive semantic representations. Different LLMs or embedding
+
+488
+
+models may produce items or semantic spaces with differing characteristics, which could
+
+489
+
+affect absolute levels of structural recovery. Nonetheless, the observed performance patterns
+
+ESTIMATING DIMENSIONAL STRUCTURE IN GENERATIVE PSYCHOMETRICS 23
+
+490
+
+closely aligned with well-established limitations of PCA-based methods documented across
+
+491
+
+diverse psychometric contexts (Goretzko & Bühner, 2021; Samo & Christensen, 2025;
+
+492
+
+Widaman, 1993). This convergence suggests that the relative superiority of network
+
+493
+
+approaches is likely to persist across different combinations of generative and embedding
+
+494
+
+models, even if absolute accuracy levels vary.
+
+495
+
+Second, the simulation held constant the number of dimensions, consisting of six facets
+
+496
+
+nested within two domains, the target number of items per dimension (30), and the content
+
+497
+
+area (personality). Accordingly, the findings are tied to these constraints, and caution is
+
+498
+
+warranted when generalizing to structures with different characteristics or content domains.
+
+499
+
+It should be noted, however, that these simulation specifications created challenging
+
+500
+
+conditions representative of LLM-based workflows (Lee & Yao, 2023; Russell-Lasalandra et
+
+501
+
+al., 2024), including relatively high dimensionality, large item pools, and hierarchical nesting.
+
+502
+
+Another limitation of the present study is that we did not compare network approaches
+
+503
+
+against the full range of traditional dimensional structure estimation methods that have been
+
+504
+
+applied to embedding-based representations. Although alternative methods to PCA, such as
+
+505
+
+multidimensional scaling, k-means clustering, and factor or structural equation models have
+
+506
+
+been used in embedding contexts, our comparison focused on PCA because it dominates
+
+507
+
+current applications and because traditional factor analytic and clustering approaches also
+
+508
+
+face well-documented challenges that network psychometric methods were explicitly
+
+509
+
+developed to address (Samo & Christensen, 2025). Nonetheless, future research should
+
+510
+
+systematically evaluate the performance of these alternative methods in embedding-based
+
+511
+
+contexts to provide a more comprehensive methodological comparison.
+
+512
+
+Practical Implications
+
+513
+
+514
+
+Our findings provide practical guidance for generative psychometric workflows in which
+item pools are produced by LLMs, represented in semantic vector spaces, and evaluated
+
+ESTIMATING DIMENSIONAL STRUCTURE IN GENERATIVE PSYCHOMETRICS 24
+
+515
+
+before human response data are available. In conventional exploratory practice, large item
+
+516
+
+pools require proportionally large samples to stabilize covariance and dimensional structure
+
+517
+
+estimates (Hirschfeld & Thielsch, 2014; MacCallum & Hong, 1999), creating a bottleneck for
+
+518
+
+early prototyping. The present results indicate that embedding-based similarity matrices can
+
+519
+
+be used as a pre-empirical screening step to examine the semantic organization of an item
+
+520
+
+pool, remove redundant or unstable items, and refine construct specifications prior to data
+
+521
+
+collection. This approach is consistent with recent proposals to integrate LLMs into test
+
+522
+
+development while retaining expert oversight (Brickman & Oltmanns, 2025; Fyffe & Kaplan,
+
+523
+
+2024; Kowal & Kantrowitz, 2025; Lee & Yao, 2023; Terry & Waychoff, 2025). Importantly,
+
+524
+
+however, the study shows that dimensional recovery in embedding space depends critically
+
+525
+
+on analytic choices. Across simulations, PCA-based pipelines applied to similarity matrices
+
+526
+
+severely overestimated dimensionality and yielded poorer structural recovery, whereas
+
+527
+
+network psychometric workflows using EGA produced more accurate structural
+
+528
+
+representations, particularly when combined with AI-GENIE filtering procedures based on
+
+529
+
+UVA and bootEGA. Methodological choices at this pre-empirical stage are therefore
+
+530
+
+foundational rather than preliminary, as dimensional structure estimation errors propagate
+
+531
+
+through item selection, dimension definition, construct labeling, and downstream theoretical
+
+532
+
+interpretation in ways that subsequent empirical data analyses may not be able to fully
+
+533
+
+correct.
+
+534
+
+Beyond these procedural considerations, the study also reinforces that semantic
+
+535
+
+structure should be treated as a substantive component of measurement rather than merely
+
+536
+
+a convenient proxy for later psychometric structure. Emerging evidence suggests that item
+
+537
+
+semantics can anticipate empirical item covariation and support cross-instrument prediction,
+
+538
+
+implying that observed dimensional organization is partly constrained by wording and
+
+539
+
+content decisions (Ravenda & Raballo, 2025). This perspective aligns with work arguing that
+
+540
+
+LLM-based embeddings can quantify construct overlap, diagnose jingle–jangle problems, and
+
+541
+
+address taxonomic incommensurability by locating items and construct labels within a
+
+ESTIMATING DIMENSIONAL STRUCTURE IN GENERATIVE PSYCHOMETRICS 25
+
+542
+
+543
+
+shared semantic space (Wulff & Mata, 2025a, 2025b).
+Embeddings permit taxonomic evaluation across multiple instruments and broad
+
+544
+
+construct domains simultaneously, a scope of comparison that empirical validation cannot
+
+545
+
+achieve because administering all candidate items together and collecting the necessary
+
+546
+
+sample would be infeasible (Hirschfeld & Thielsch, 2014). In practical terms,
+
+547
+
+embedding-based EGA, taxonomic graph analysis, and AI-GENIE pipelines
+
+548
+
+(Russell-Lasalandra et al., 2024; Samo & Christensen, 2025) provide methodological tools for
+
+549
+
+assessing content validity and conceptual clarity by identifying dimensions that are
+
+550
+
+semantically indistinguishable despite distinct labels, detecting drift of item sets toward
+
+551
+
+adjacent constructs, and revealing misalignment between construct labels and item content.
+
+552
+
+By treating item semantics as an independent source of construct validity evidence rather
+
+553
+
+than a proxy awaiting empirical confirmation, embedding-based workflows position
+
+554
+
+measurement science to more directly address persistent taxonomic ambiguities that have
+
+555
+
+remained difficult to resolve within purely response-based validation frameworks.
+
+ESTIMATING DIMENSIONAL STRUCTURE IN GENERATIVE PSYCHOMETRICS 26
+
+556
+
+References
+
+557
+
+Amatriain, X. (2024). Prompt design and engineering: Introduction and advanced methods.
+
+558
+
+559
+
+arXiv Preprint arXiv:2401.14423.
+Ashton, L., M. C., & Goldberg, L. R. (2004). A hierarchical analysis of 1,710 english
+
+560
+
+personality-descriptive adjectives. Journal of Personality and Social Psychology, 707,
+
+561
+
+707–721. https://doi.org/10.1037/0022-3514.87.5.707
+
+562
+
+Auerswald, M., & Moshagen, M. (2019). How to determine the number of factors to retain in
+
+563
+
+exploratory factor analysis: A comparison of extraction methods under realistic
+
+564
+
+conditions. Psychological Methods, 24, 468–491. https://doi.org/10.1037/met0000200
+
+565
+
+Bhandari, L., S., & Pardos, Z. A. (2024). Evaluating the psychometric properties of
+
+566
+
+ChatGPT-generated questions. Computers and Education: Artificial Intelligence, 100284.
+
+567
+
+https://doi.org/10.1016/j.caeai.2024.100284
+
+568
+
+Brickman, G., J., & Oltmanns, J. R. (2025). Large language models for psychological
+
+569
+
+assessment: A comprehensive overview. Advances in Methods and Practices in
+
+570
+
+Psychological Science, 25152459251343582, 25152459251343582.
+
+571
+
+Brown, T., Mann, B., Ryder, N., Subbiah, M., Kaplan, J. D., Dhariwal, P., et al. (2020).
+
+572
+
+Language models are few-shot learners. Advances in Neural Information Processing
+
+573
+
+Systems, 33, 1877–1901.
+
+574
+
+575
+
+576
+
+577
+
+578
+
+Brusco, S., M. J., & Watts, A. L. (2023). On maximization of the modularity index in
+network psychometrics. Behavior Research Methods, 3549, 3549–3565.
+Bunt, G., H. L., & Gillespie, A. (2025). Validating the use of large language models for
+psychological text classification. Frontiers in Social Psychology, 1460277.
+Chen, J., & Chen, Z. (2008). Extended bayesian information criteria for model selection with
+
+579
+
+large model spaces. Biometrika, 95 (3), 759–771. Retrieved from
+
+580
+
+https://www.jstor.org/stable/20441500
+
+581
+
+Chen, J., Zhang, T., Zheng, C., & Luo, J. (2025). Unleashing the potential of prompt
+
+582
+
+engineering in large language models: A comprehensive review. arXiv Preprint
+
+ESTIMATING DIMENSIONAL STRUCTURE IN GENERATIVE PSYCHOMETRICS 27
+
+583
+
+584
+
+arXiv:2502.07715. Retrieved from https://arxiv.org/abs/2502.07715
+Christensen, A. P., Garrido, L. E., Guerra-Peña, K., & Golino, H. (2024). Comparing
+
+585
+
+community detection algorithms in psychometric networks: A monte carlo simulation.
+
+586
+
+Behavior Research Methods, 56 (3), 1485–1505.
+
+587
+
+Christensen, A. P., & Golino, H. F. (2021). Estimating the stability of psychological
+
+588
+
+dimensions via bootstrap exploratory graph analysis: A monte carlo simulation and
+
+589
+
+tutorial. Psych, 3 (3), 479–500.
+
+590
+
+591
+
+592
+
+593
+
+594
+
+Christensen, A. P., Golino, H. F., Abad, F. J., & Garrido, L. E. (2024). Revised network
+loadings. PsyArXiv. https://doi.org/10.31234/osf.io/3zdxg
+Christensen, G., A. P., & Garrido, L. E. (2025). Revised network loadings. Behavior
+Research Methods, 1, 1–18. https://doi.org/10.3758/s13428-025-02640-3
+Christensen, G., A. P., & Golino, H. (2023). Unique variable analysis: A network
+
+595
+
+psychometrics method to detect local dependence. Multivariate Behavioral Research,
+
+596
+
+1165, 1165–1182.
+
+597
+
+Cipriani, O., E., & Grassini, S. (2025). In silico development of psychometric scales:
+
+598
+
+Feasibility of representative population data simulation with LLMs.
+
+599
+
+https://doi.org/10.48550/arXiv.2512.02910
+
+600
+
+Cosemans, T., Rosseel, Y., & Gelper, S. (2022). Exploratory graph analysis for factor
+
+601
+
+retention: Simulation results for continuous and binary data. Educational and
+
+602
+
+Psychological Measurement, 82 (5), 880–910.
+
+603
+
+Cutler, A., & Condon, D. M. (2023). Deep lexical hypothesis: Identifying personality
+
+604
+
+structure in natural language. Journal of Personality and Social Psychology, 173,
+
+605
+
+173–173. https://doi.org/10.1037/pspp0000443
+
+606
+
+607
+
+608
+
+609
+
+Danon, D.-G., L., & Arenas, A. (2005). Comparing community structure identification.
+Journal of Statistical Mechanics: Theory and Experiment.
+Debelak, K., R., & Stachl, C. (2025). From embeddings to explainability: A tutorial on
+large-language-model-based text analysis for behavioral scientists. Advances in Methods
+
+ESTIMATING DIMENSIONAL STRUCTURE IN GENERATIVE PSYCHOMETRICS 28
+
+610
+
+and Practices in Psychological Science, 25152459251351285, 25152459251351285.
+
+611
+
+Ekin, A., Yilmaz, E., Erol, M. D., & Karagöz, P. (2023). Prompt engineering for large
+
+612
+
+language models: A comprehensive survey. arXiv Preprint arXiv:2312.16171. Retrieved
+
+613
+
+from https://arxiv.org/abs/2312.16171
+
+614
+
+615
+
+Epskamp, S., & Fried, E. (2018). A tutorial on regularized partial correlation networks.
+Psychological Methods, 23 (4), 617–634. https://doi.org/10.1037/met0000167
+
+616
+
+Fabrigar, L. R., Wegener, D. T., MacCallum, R. C., & Strahan, E. J. (1999). Evaluating the
+
+617
+
+use of exploratory factor analysis in psychological research. Psychological Methods, 4 (3),
+
+618
+
+272–299.
+
+619
+
+Fang, N., Q., & Oberski, D. L. (2022). Evaluating the construct validity of text embeddings
+
+620
+
+with application to survey questions. EPJ Data Science, 39, 39.
+
+621
+
+https://doi.org/10.1140/epjds/s13688-022-00353-7
+
+622
+
+623
+
+Feuerriegel, M., S., & Van Bavel, J. J. (2025). Using natural language processing to analyse
+text data in behavioural science. Nature Reviews Psychology, 96, 96–111.
+
+624
+
+Forbes, B., M. K., & Clark, L. A. (2025). Reconstructing psychopathology: A data-driven
+
+625
+
+reorganization of the symptoms in the diagnostic and statistical manual of mental
+
+626
+
+disorders. Clinical Psychological Science, 462, 462–488.
+
+627
+
+https://doi.org/10.1177/21677026241268345
+
+628
+
+Friedman, J., Hastie, T., & Tibshirani, R. (2008). Sparse inverse covariance estimation with
+
+629
+
+the graphical lasso. Biostatistics, 9 (3), 432–441.
+
+630
+
+https://doi.org/10.1093/biostatistics/kxm045
+
+631
+
+Fyffe, L., S., & Kaplan, S. (2024). “Transforming” personality scale development:
+
+632
+
+Illustrating the potential of state-of-the-art natural language processing. Organizational
+
+633
+
+Research Methods, 265, 265–300.
+
+634
+
+Garcia-Pardina, A., Abad, F. J., Christensen, A. P., Golino, H. F., & Garrido, L. E. (2024).
+
+635
+
+Dimensionality assessment in the presence of wording effects: A network psychometric
+
+636
+
+and factorial approach. Behavior Research Methods, 1–19.
+
+ESTIMATING DIMENSIONAL STRUCTURE IN GENERATIVE PSYCHOMETRICS 29
+
+637
+
+638
+
+639
+
+Garrido, A., L. E., & Ponsoda, V. (2013). A new look at horn’s parallel analysis with ordinal
+variables. Psychological Methods, 454, 454–474.
+Gehlbach, H., & Brinkworth, M. E. (2011). Measure twice, cut down error: A process for
+
+640
+
+enhancing the validity of survey scales. Review of General Psychology, 380, 380–387.
+
+641
+
+https://doi.org/10.1037/a0025704
+
+642
+
+643
+
+644
+
+Giray, L. (2023). Prompt engineering with ChatGPT: A guide for academic writing and
+research. arXiv. Retrieved from https://arxiv.org/abs/2312.02283
+Goldberg, L. R. (2013). An alternative “description of personality”: The big-five factor
+
+645
+
+structure. Journal of Personality and Social Psychology, 59 (6), 1216–1229.
+
+646
+
+https://doi.org/10.1037/0022-3514.59.6.1216
+
+647
+
+Golino, H. (2025). What i learned with john: On the depth of language and how to measure
+
+648
+
+it with large language models and algorithm (kolmogorov) complexity.
+
+649
+
+https://doi.org/10.31234/osf.io/b92n5_v4
+
+650
+
+Golino, H. F., Shi, D., Garrido, L. E., Christensen, A. P., Nieto, M. D., Sadana, R., . . .
+
+651
+
+Martinez-Molina, A. (2020). Investigating the performance of exploratory graph analysis
+
+652
+
+and traditional techniques to identify the number of latent factors: A simulation and
+
+653
+
+tutorial. Psychological Methods, 25 (3), 292–230. https://doi.org/10.1037/met0000255
+
+654
+
+Golino, H. F., Thiyagarajan, J. A., Sadana, R., Teles, M., Christensen, A. P., & Boker, S. M.
+
+655
+
+(2020). Investigating the broad domains of intrinsic capacity, functional ability and
+
+656
+
+environment: An exploratory graph analysis approach for improving analytical
+
+657
+
+methodologies for measuring healthy aging.
+
+658
+
+659
+
+660
+
+Google Developers. (2025). Prompting: introduction.
+https://developers.google.com/machine-learning/resources/prompting.
+Goretzko, D. (2025). How many factors to retain in exploratory factor analysis? A critical
+
+661
+
+overview of factor retention methods. Psychological Methods. *Advance Online
+
+662
+
+Publication.
+
+663
+
+Goretzko, P., D., & Bühner, M. (2021). Exploratory factor analysis: Current use,
+
+ESTIMATING DIMENSIONAL STRUCTURE IN GENERATIVE PSYCHOMETRICS 30
+
+664
+
+methodological developments and recommendations for good practice. Current
+
+665
+
+Psychology, 3510, 3510–3521. https://doi.org/10.1007/s12144-019-00300-2
+
+666
+
+Grobelny, S., J., & Strozyk, Z. (2025). Act as an expert in psychometry. The Evaluation of
+
+667
+
+Large Language Models Utility in Psychological Tests Cross-Cultural Adaptations. *Acta
+
+668
+
+**Psychologica, 105813.
+
+669
+
+Hernandez, I., & Nie, W. (2023). The AI-IP: Minimizing the guesswork of personality scale
+
+670
+
+item development through artificial intelligence. Personnel Psychology, 1011, 1011–1035.
+
+671
+
+Hirschfeld, von B., G., & Thielsch, M. (2014). Selecting items for big five questionnaires: At
+
+672
+
+what sample size do factor loadings stabilize? Journal of Research in Personality, 54.
+
+673
+
+https://doi.org/10.1016/j.jrp.2014.08.003
+
+674
+
+Hommel, B. E. (2023). Expanding the methodological toolbox: Machine-based item
+
+675
+
+desirability ratings as an alternative to human-based ratings. Personality and Individual
+
+676
+
+Differences, 112307.
+
+677
+
+Hommel, B. E., & Arslan, R. C. (2025). Language models accurately infer correlations
+
+678
+
+between psychological items and scales from text alone.
+
+679
+
+https://doi.org/10.31234/osf.io/kjuce
+
+680
+
+681
+
+Horn, J. L. (1965). A rationale and test for the number of factors in factor analysis.
+Psychometrika, 30 (2), 179–185. https://doi.org/10.1007/BF02289447
+
+682
+
+Howard, M. C., & Henderson, J. (2023). A review of exploratory factor analysis in tourism
+
+683
+
+and hospitality research: Identifying current practices and avenues for improvement.
+
+684
+
+Journal of Business Research, 113328.
+
+685
+
+Howard, M. C., & O’Sullivan, R. (2025). A systematic review of exploratory factor analysis
+
+686
+
+in marketing: Providing recommended guidelines and evaluating current practices.
+
+687
+
+Journal of Marketing Theory and Practice, 627, 627–648.
+
+688
+
+Huang, L., Z., & Tong, S. (2025). An embedding-based semantic analysis approach: A
+
+689
+
+preliminary study on redundancy detection in psychological concepts operationalized by
+
+690
+
+scales. Journal of Intelligence, 11, 11. https://doi.org/10.3390/jintelligence13010011
+
+ESTIMATING DIMENSIONAL STRUCTURE IN GENERATIVE PSYCHOMETRICS 31
+
+691
+
+692
+
+693
+
+Hussain, Z. et al. (2024). Novel embeddings improve the prediction of risk perception. EPJ
+Data Science. https://doi.org/10.1140/epjds/s13688-024-00478-x
+Hussain, Z., Binz, M., Mata, R., & Wulff, D. U. (2024). A tutorial on open-source large
+
+694
+
+language models for behavioral science. Behavior Research Methods.
+
+695
+
+https://doi.org/10.3758/s13428-024-02413-0
+
+696
+
+697
+
+698
+
+699
+
+700
+
+Irwing, H., P., & Booth, T. (2024). Towards a taxonomy of personality facets. European
+Journal of Personality, 494, 494–515.
+Izquierdo, I., Olea, J., & Abad, F. J. (2014). Exploratory factor analysis in validation
+studies: Uses and recommendations. Psicothema, 26 (3), 395–400.
+Jackson, W., J. C., & Lindquist, K. A. (2022). From text to thought: How analyzing
+
+701
+
+language can advance psychological science. Perspectives on Psychological Science, 805,
+
+702
+
+805–826.
+
+703
+
+Jimenez, A., M., & Garrido, L. E. (2025). Dimensionality assessment in bifactor structures
+
+704
+
+with multiple general factors: A network psychometrics approach. Psychological Methods,
+
+705
+
+30, 770–792. https://doi.org/10.1037/met0000590
+
+706
+
+Jiménez, M., Abad, F. J., Garcia-Garzon, E., Golino, H. F., Christensen, A. P., & Garrido,
+
+707
+
+L. E. (2023). Dimensionality assessment in bifactor structures with multiple general
+
+708
+
+factors: A network psychometrics approach. Psychological Methods.
+
+709
+
+https://doi.org/doi.org/10.1037/met0000590.supp
+
+710
+
+Jin, W., Cheng, Y., Shen, Y., Chen, W., & Ren, X. (2022). A good prompt is worth millions
+
+711
+
+of parameters: Low-resource prompt-based learning for vision-language models. arXiv.
+
+712
+
+Retrieved from https://arxiv.org/abs/2110.08484
+
+713
+
+Jung, S. J., & Seo, J. W. (2025). A transformer-based embedding approach to developing
+
+714
+
+short-form psychological measures. Frontiers in Psychology, 1640864.
+
+715
+
+https://doi.org/10.3389/fpsyg.2025.1640864
+
+716
+
+Kaçak, T., & Kılıç, A. F. (2025). Factor extraction in exploratory factor analysis for ordinal
+
+717
+
+indicators: Is principal component analysis the best option? International Journal of
+
+ESTIMATING DIMENSIONAL STRUCTURE IN GENERATIVE PSYCHOMETRICS 32
+
+718
+
+Assessment Tools in Education, 12 (1), 113–130. https://doi.org/10.21449/ijate.1481201
+
+719
+
+Kaiser, H. F. (1960). The application of electronic computers to factor analysis. Educational
+
+720
+
+and Psychological Measurement, 20 (1), 141–151.
+
+721
+
+Kaiser, H. F. (1970). A second generation little jiffy. Psychometrika, 401, 401–415.
+
+722
+
+Keane, D., & McNaughton, R. B. (2025). Using generative AI to enhance psychometric scale
+
+723
+
+development in market research. International Journal of Market Research,
+
+724
+
+14707853251384769. https://doi.org/10.1177/14707853251384769
+
+725
+
+726
+
+727
+
+Kilmen, S., & Bulut, O. (2025b). Shortening psychological scales: Semantic similarity
+matters. Educational and Psychological Measurement*. Advance Online Publication.
+Kilmen, S., & Bulut, O. (2025a). Shortening psychological scales: Semantic similarity
+
+728
+
+matters. Educational and Psychological Measurement.
+
+729
+
+https://doi.org/10.1177/00131644251319047
+
+730
+
+Kjell, O. N., Kjell, K., & Schwartz, H. A. (2024). Beyond rating scales: With targeted
+
+731
+
+evaluation, large language models are poised for psychological assessment. Psychiatry
+
+732
+
+Research, 333, 115667. https://doi.org/10.1016/j.psychres.2023.115667
+
+733
+
+Kowal, B., J. M., & Kantrowitz, T. (2025). Harnessing generative AI for assessment item
+
+734
+
+development: Comparing AI-generated and human-authored items. International Journal
+
+735
+
+of Selection and Assessment.
+
+736
+
+Koweszko, K., T., & Silczuk, A. (2025). Construction and initial psychometric validation of
+
+737
+
+the morana scale: A multidimensional projective tool developed using AI-generated
+
+738
+
+illustrations. Journal of Clinical Medicine, 7069, 7069.
+
+739
+
+Larsen, Y., K. R., & Edmondson, D. (2025). ALIGNS: Unlocking nomological networks in
+
+740
+
+psychological measurement through a large language model.
+
+741
+
+https://doi.org/10.48550/arXiv.2509.09723
+
+742
+
+Lee, F., P., & Yao, Z. (2023). A paradigm shift from “human writing” to “machine
+
+743
+
+generation” in personality test development: An application of state-of-the-art natural
+
+744
+
+language processing. Journal of Business and Psychology, 163, 163–190.
+
+ESTIMATING DIMENSIONAL STRUCTURE IN GENERATIVE PSYCHOMETRICS 33
+
+745
+
+Lee, P., Son, M., & Jia, Z. (2025). AI-powered automatic item generation for psychological
+
+746
+
+tests: A conceptual framework for an LLM-based multi-agent AIG system. Journal of
+
+747
+
+Business and Psychology, 1–29. https://doi.org/10.1007/s10869-025-10067-y
+
+748
+
+Linden, D. van der, Cutler, A., Van der Linden, P. A., & Dunkel, C. S. (2025). The general
+
+749
+
+factor of personality (GFP) in natural language: A deep learning approach. Journal of
+
+750
+
+Research in Personality, 104635. https://doi.org/10.1016/j.jrp.2025.104635
+
+751
+
+752
+
+753
+
+MacCallum, W., R. C., & Hong, S. (1999). Sample size in factor analysis. Psychological
+Methods, 84, 84–99. https://doi.org/10.1037/1082-989X.4.1.84
+Maharjan, J., Jin, R., Zhu, J., & Kenne, D. (2025). Psychometric evaluation of large
+
+754
+
+language model embeddings for personality trait prediction. Journal of Medical Internet
+
+755
+
+Research, 27, e75347. https://doi.org/10.2196/75347
+
+756
+
+Martínez Ramos, N., & Rondón Sepúlveda, M. (2025). Assessing the performance of kaiser’s
+
+757
+
+rule in categorical principal component analysis: A comparison with contemporary
+
+758
+
+methods for factor retention. Measurement: Interdisciplinary Research and Perspectives,
+
+759
+
+1.
+
+760
+
+Milano, L., N., & Marocco, D. (2025). Semantic analysis of test items through large language
+
+761
+
+model embeddings predicts a-priori factorial structure of personality tests. Current
+
+762
+
+Research in Behavioral Sciences, 100168. https://doi.org/10.1016/j.crbeha.2025.100168
+
+763
+
+764
+
+Niszczota, J., P., & Misiak, M. (2025). Large language models can replicate cross-cultural
+differences in personality. https://doi.org/10.1016/j.jrp.2025.104584
+
+765
+
+OpenAI. (2023a). GPT-4 technical report. arXiv Preprint arXiv:2303.08774.
+
+766
+
+OpenAI. (2023b). Prompt engineering.
+
+767
+
+768
+
+769
+
+770
+
+771
+
+https://platform.openai.com/docs/guides/prompt-engineering.
+OpenAI. (2024). New embedding models and API updates. Retrieved from
+https://platform.openai.com/docs/guides/embeddings
+Perrin, P. B., Christ, B. R., Vargas, T. A., Dini, M. E., Ertman, B., Cull, S. L., et al. (2025).
+The internalized ableism inventory: Scale development using a hybrid artificial
+
+ESTIMATING DIMENSIONAL STRUCTURE IN GENERATIVE PSYCHOMETRICS 34
+
+772
+
+intelligence and community-based participatory research design. Rehabilitation
+
+773
+
+Psychology. https://doi.org/10.1037/rep0000639
+
+774
+
+775
+
+776
+
+777
+
+Pons, P., & Latapy, M. (2006). Computing communities in large networks using random
+walks. Journal of Graph Algorithms and Applications, 10.
+Preacher, K. J., & MacCallum, R. C. (2003). Repairing tom swift’s electric factor analysis
+machine. Understanding Statistics: Statistical Issues in Psychology, 13, 13–43.
+
+778
+
+Ravenda, P., F., & Raballo, A. (2025). Rethinking psychometrics through LLMs: How item
+
+779
+
+semantics shape measurement and prediction in psychological questionnaires. Scientific
+
+780
+
+Reports, 37313, 37313. https://doi.org/10.1038/s41598-025-21289-8
+
+781
+
+Rosenfelder, L., A., & Gilead, M. (2025). Towards social superintelligence? AI infers diverse
+
+782
+
+psychological traits from text without specific training, outperforming human judges.
+
+783
+
+Computers in Human Behavior: Artificial Humans, 100228.
+
+784
+
+https://doi.org/10.1016/j.chbah.2025.100228
+
+785
+
+Ruiz-Mendoza, K. K., & Pedroza-Zúñiga, L. H. (2025). Rasch-based comparison of items
+
+786
+
+created with and without generative AI. Journal of Technology and Science Education,
+
+787
+
+15 (2), 479–494. https://doi.org/10.3926/jotse.3135
+
+788
+
+Russell-Lasalandra, L. L., Christensen, A. P., & Golino, H. (2024). Generative psychometrics
+
+789
+
+via AI-GENIE: Automatic item generation and validation via network-integrated
+
+790
+
+evaluation. PsyArXiv. https://doi.org/10.31234/osf.io/fgbj4
+
+791
+
+Salah, M., Abdelfattah, F., Al Halbusi, H., Jassem, S., Mohammed, M., Ismail, M. M., & Al
+
+792
+
+Balghouni, A. (2025). Can generative AI craft scale items? A mixed-method study on
+
+793
+
+AI’s capability to adapt and create new scales with recommendations for best practices.
+
+794
+
+Social Sciences & Humanities Open, 12, 101698.
+
+795
+
+https://doi.org/10.1016/j.ssaho.2025.101698
+
+796
+
+Samo, G., A., & Christensen, A. P. (2025). Revisiting the IPIP-NEO personality hierarchy
+
+797
+
+with taxonomic graph analysis. European Journal of Personality, 08902070251352590.
+
+798
+
+Saucier, G., & Iurino, K. (2020). High-dimensionality personality structure in the natural
+
+ESTIMATING DIMENSIONAL STRUCTURE IN GENERATIVE PSYCHOMETRICS 35
+
+799
+
+language: Further analyses of classic sets of english-language trait-adjectives. Journal of
+
+800
+
+Personality and Social Psychology, 119 (5), 1188–1219.
+
+801
+
+https://doi.org/10.1037/pspp0000273
+
+802
+
+Sellbom, M., & Goretzko, D. (2023a). Introduction to exploratory factor analysis: An
+
+803
+
+applied approach. In *The Cambridge Handbook of Research Methods and Statistics for
+
+804
+
+the Social and Behavioral Sciences* (Pp. 513-534). Cambridge University Press.
+
+805
+
+Https://Doi.org/10.1017/9781009010054. https://doi.org/10.1017/9781009010054
+
+806
+
+Sellbom, M., & Goretzko, D. (2023b). Introduction to exploratory factor analysis: An
+
+807
+
+applied approach. In The cambridge handbook of research methods and statistics for the
+
+808
+
+social and behavioral sciences (pp. 513–534). Cambridge University Press.
+
+809
+
+https://doi.org/10.1017/9781009010054
+
+810
+
+Stanton, R.-R., J., & Sang, Y. (2024). Evaluating item content and scale characteristics
+
+811
+
+using a pretrained neural network model. Survey Research Methods, 153, 153–165.
+
+812
+
+https://doi.org/10.18148/srm/2024.v18i2.8240
+
+813
+
+814
+
+815
+
+Teitelbaum, L., & Simchon, A. (2025). Neural text embeddings in psychological research: A
+guide with examples in r. Psychological Methods. https://doi.org/10.1037/met0000768
+Terry, S., J., & Waychoff, A. (2025). Artificial intelligence in scale development: Evaluating
+
+816
+
+AI-generated survey items against gold standard measures. Current Psychology, 1.
+
+817
+
+https://doi.org/10.1007/s12144-025-08240-w
+
+818
+
+Turner, N. E. (1998). The effect of common variance and structure pattern on random data
+
+819
+
+eigenvalues: Implications for the accuracy of parallel analysis. Educational and
+
+820
+
+Psychological Measurement, 541, 541–568. https://doi.org/10.1177/0013164498058004001
+
+821
+
+Van Quaquebeke, T., N., & Banks, G. C. (2025). Beyond efficiency: How artificial
+
+822
+
+intelligence (AI) will reshape scientific inquiry and the publication process. The
+
+823
+
+Leadership Quarterly, 101895, 101895.
+
+824
+
+825
+
+White, J., Hays, S., Fu, Q., Spencer-Smith, J., & Schmidt, D. C. (2023). A prompt pattern
+catalog to enhance prompt engineering with ChatGPT. arXiv. Retrieved from
+
+ESTIMATING DIMENSIONAL STRUCTURE IN GENERATIVE PSYCHOMETRICS 36
+
+826
+
+827
+
+https://arxiv.org/abs/2302.11382
+Widaman, K. F. (1993). Common factor analysis versus principal component analysis:
+
+828
+
+Differential bias in representing model parameters? Multivariate Behavioral Research,
+
+829
+
+28 (3), 263–311. https://doi.org/10.1207/s15327906mbr2803_1
+
+830
+
+Widaman, K. F. (2018). On common factor and principal component representations of data:
+
+831
+
+Implications for theory and for confirmatory replications. Structural Equation Modeling:
+
+832
+
+A Multidisciplinary Journal, 829, 829–847.
+
+833
+
+Wulff, D. U., & Mata, R. (2025a). Embeddings quantify the semantic content of
+
+834
+
+psychological questionnaires. Nature Human Behaviour.
+
+835
+
+https://doi.org/10.1038/s41562-024-02089-y
+
+836
+
+Wulff, D. U., & Mata, R. (2025b). Questionnaire embeddings: Quantifying the semantic
+
+837
+
+content of psychological questionnaires. Current Directions in Psychological Science.
+
+838
+
+https://doi.org/10.1177/09637214251382083
+
+839
+
+Xia, Y. (2021). Determining the number of factors when population models can be closely
+
+840
+
+approximated by parsimonious models. Educational and Psychological Measurement,
+
+841
+
+1143, 1143–1171.
+
+842
+
+Zheng, C., Li, Z., Zhou, S., Meng, H., Li, J., Zhang, T., & Luo, J. (2023). Is “a helpful
+
+843
+
+assistant” the best role for large language models? A systematic evaluation of social roles
+
+844
+
+in system prompts. arXiv. Retrieved from https://arxiv.org/abs/2311.10054
+
+

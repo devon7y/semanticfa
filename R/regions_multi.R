@@ -43,13 +43,18 @@
 # sentences come back to R.
 .cvg_stream_fineweb_multi <- function(registry, target, max_docs, per_doc,
                                       min_chars, max_chars, progress) {
+  import_err <- NULL
   ok <- tryCatch({reticulate::import("datasets"); TRUE},
-                 error = function(e) FALSE)
+                 error = function(e) {
+                   import_err <<- conditionMessage(e)
+                   FALSE
+                 })
   if (!ok) {
     stop("Streaming FineWeb needs the Python 'datasets' package in the ",
          "reticulate environment. Install it with ",
          "reticulate::py_install(\"datasets\"), or pass your own corpus via ",
-         "the 'corpus' argument.", call. = FALSE)
+         "the 'corpus' argument.\nUnderlying import error: ", import_err,
+         call. = FALSE)
   }
   reticulate::py_run_string("
 import re as _sfa_re
@@ -58,6 +63,12 @@ _SFA_SENT_M = _sfa_re.compile(r\"(?<=[.!?])\\s+(?=[A-Z\\\"'(])\")
 
 def sfa_stream_corpus_multi(registry, target, max_docs, per_doc,
                             min_chars, max_chars, progress):
+    # long streams hit transient hub 503s; be patient rather than die
+    import datasets.config as _sfa_dcfg
+    if hasattr(_sfa_dcfg, 'STREAMING_READ_MAX_RETRIES'):
+        _sfa_dcfg.STREAMING_READ_MAX_RETRIES = 50
+    if hasattr(_sfa_dcfg, 'STREAMING_READ_RETRY_INTERVAL'):
+        _sfa_dcfg.STREAMING_READ_RETRY_INTERVAL = 15
     from datasets import load_dataset
     ds = load_dataset('HuggingFaceFW/fineweb', name='sample-10BT',
                       split='train', streaming=True)

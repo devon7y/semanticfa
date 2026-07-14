@@ -1,0 +1,4374 @@
+An Alternative "Description of Personality": The Big-Five Factor Structure
+Lewis R. Goldberg
+University o f Oregon and Oregon Research Institute, Eugene
+In the 45 years since Cattell used English trait terms to begin the formulation of his "description of
+personality" a number of investigators have proposed an alternative structure based on 5 orthngonal factors. The generalityof this 5-factor model is here demonstrated across unusually comprehensive sets of trait terms. In the first of 3 studies, 1,431 trait adjectives grouped into 75 clusters were
+analyzed; virtually identical structures emerged in 10 replications, each based on a different factoranalytic procedure. A 2nd study of 479 common terms grouped into 133 synonym dusters revealed
+the same structure in 2 samples of self-ratingsand in 2 samples of peer ratings. None of the factors
+beyond the 5th generalized across the samples. In the 3rd study, analyses of 100 clusters derived
+from 339 trait terms suggest their potential utility as Big-Five markers in future studies.
+
+The variety o f individual differences is nearly boundless, yet
+most o f these differences are insignificant in people's daily interactions with others and have remained largely unnoticed. Sir
+Francis Galton may have been among the first scientists to
+recognize explicitly the fundamental lexical h y p o t h e s i s d
+namely that the most important individual differences in human transactions will come to be encoded as single terms in
+some or all of the world's languages. Indeed, Galton (1884)
+attempted to tap "the more conspicuous aspects o f the character by counting in an appropriate dictionary" and he "estimated that it contained fully one thousand words expressive o f
+character, each of which has a separate shade o f meaning, while
+each shares a large part o f its meaning with some o f the rest"
+(p. 181).
+Galton's (I 884) estimate of the number of personality-related
+terms in English was later sharpened empirically, first by Allport and Odbert (I 936), who culled such terms from the second
+edition of Webster~ Unabridged Dictionary o f the English Language, and later by Norman (1967), who supplemented the earlier list with terms from the third edition. Galton's insight concerning the relations among personality terms has been
+mirrored in the efforts o f later investigators to discover the
+nature o f those relations, so as to construct a structural representation o f personality descriptors (for historical reviews o f such
+efforts, see John, 1990; John, Angleitner, & Ostendorf, 1988;
+and Wiggins & Trapnell, in press).
+
+This project was supported by Gram MH-39077 from the National
+Institute of Mental Health.
+I am enormously indebted to Sarah E. Hampson, Willem K. B. Hofstee, Oliver P. John, Henry Kaiser, Kevin Lanning, Dean Peabody,
+Tina K. Rosolack, and Auke Tellegen for their thoughtful suggestions.
+Correspondence concerning this article should be addressed to
+Lewis R. Goidberg, Oregon Research Institute, 1899 Willamette
+Street, Eugene, Oregon 97401.
+
+One o f the first o f these investigators was L. L. Thurstone, a
+pioneer in the development o f factor analysis, and the report o f
+his initial findings reads today with almost haunting clairvoyance:
+Sixty adjectives that are in common use for describing p e o p l e . . .
+were given to each of1300 raters. Each rater was asked to think of a
+person whom he knew well and to underline every adjective that
+he might use in a conversational description of that person . . . .
+The tetrachoric correlation.., coefficients for the sixty personality traits were then analyzed by means of multiple factor methods
+and we found that five factors are sufficient to account for the
+coefficients.
+It is of considerable psychological interest to know that the
+whole list of sixty adjectives can be accounted for by postulating
+only five[italics added I independent common factors . . . . We did
+not foresee that the list could be accounted for by as f e w . . .
+factors. This fact leads us to surmise that the scientific description of
+personality may not be quite so hopelessly complex as it is sometimes thought to be (Thurstone, 1934, pp. 12-14 [italics added ]).
+T h e Big Five
+One o f the most influential scientists to apply empirical procedures to the task o f constructing a personality taxonomy was
+Raymond B. Cattell, who began with a perusal of English personality-descriptive terms. Allport and Odbert (1936) had catalogued about 18,000 such terms and had divided them into four
+alphabetical lists, the first o f which included approximately
+4,500 terms that they had classified as stable traits. Cattell
+0943) used this trait list as a starting point (adding some concepts gleaned from the psychological literature, including
+various aspects o f psychopathology) to construct 171 scales,
+most o f which were bipolar. Guided by the correlations among
+the 171 scales in some empirical analyses, Cattell (1943) developed a set of 35 bipolar clusters of related terms. Rating scales
+based on these clusters were then employed in various studies,
+in each o f which the correlations among the variables were
+factored using oblique rotational procedures (Cattell, 1945).
+
+Journal of Personality and Social Psychologs 1990, VoL 59, No. 6, 1216-1229 7
+Copyright 1990 by the American Psychological Association, Inc. 0022-3514/90/$00. 5
+
+1216
+
+PERSONALITY FACTOR STRUCTURE
+Cattell has repeatedly claimed to have identified at least a
+dozen oblique factors. However, when Cattell's variables were
+analyzed by orthogonal rotational methods, only five factors
+proved to be replieable (e.g, Digman & Takemoto-Chock, 1981;
+Fiske, 1949; Norman, 1963; Tupes & Christal, 1961). Similar
+five-factor structures based on other sets o f variables have been
+reported by Borgatta (1964), Digman and Inouye (1986), and
+McCrae and Costa (1985, 1987).
+These "Big-Five" factors have traditionally been numbered
+and labeled as follows: (I) Surgency (or Extraversion), (II)
+Agreeableness, (III) Conscientiousness (or Dependability), (IV)
+Emotional Stability (vs. Neuroticism), and (V) Culture. Alternatively, Factor V has been interpreted as Intellect (e.g, Digman &
+Takemoto-Chock, 1981; Peabody & Goldberg, 1989) and as
+Openness (e$, McCrae & Costa, 1987).
+Because the Big-Five factor structure was originally discovered in studies using Cattell's 35 variables, some critics have
+argued that these five factors have not been sufficiently generalized beyond that initial set o f variables. Indeed, Waller and
+Ben-Porath (1987) have asserted
+Much of the evidence that has been offered in support of the
+five-factor model stems from an assemblage of cognate studies
+better thought of as demonstrating the reliability rather than the
+validity (or comprehensiveness) of the five-factor paradigm. In
+other words, we feel that many of these studies are better thought
+of as a series of quasi-literal replications, rather than conceptual
+validations of the five-factor model. (p. 887)
+The present article is an attempt to rebut such arguments by
+demonstrating the generality o f the Big-Five representation
+within sets o f trait terms that are far more representative o f the
+total English trait lexicon than were those included in any
+previous studies. The article begins with analyses o f the most
+comprehensive pool o f English trait-descriptive adjectives ever
+studied empirically. Specifically, 1,431 trait terms grouped into
+75 clusters are used to (a) discover whether the Big-Five structure can be confirmed with these data, (b) determine the robustness o f the structure across different procedures for factor
+extraction and rotation, and (c) examine the nature o f any additional factors beyond the first five. In a second study employing
+479 commonly used English trait adjectives, four different factor structures are compared, two based on samples ofindividuais describing themselves and two based on samples o f individuals describing others whom they know well. The use o f four
+independent samples permits an analysis o f the across-sample
+generality o f the factor structures, thus providing a crucial test
+o f the dimensionality o f English trait adjectives. Finally, a third
+study focuses on the refinement o f 100 synonym clusters based
+on a pool o f 339 c o m m o n trait terms, to be available for use as
+Big-Five marker variables in future studies.
+
+1217
+
+ies. Nonoverlapping sets o f 200 terms were administered to
+samples of100 university students (50 men and 50 women), who
+for each term (a) provided a definition (or indicated that they
+could not do so), (b) rated its social desirability, and (c) indicated
+the extent to which it characterized themselves and each o f
+three peers. On the basis o f these data, ambiguous terms and
+terms that were unfamiliar to the typical college student were
+culled from the set.
+Later, Norman classified the remaining 1,431 terms into 75
+categories based on his understanding o f their similarities in
+meaning. In making his classifications, Norman began by sorting the terms into a few broad categories, and then he subsequently developed more fine-grained classifications within
+each o f the initial categories. Table I lists the number o f terms
+in each of his final 75 categories, along with a few terms as
+examples.
+
+Method
+From the 2,800 trait terms included in Norman (1967), Goldberg
+(1982) selected a subset of 1,710 (which included the 1,431 described
+earlier) to be included in a self-report inventory of trait-descriptive
+adjectives (see Goldberg, 1982, for the procedural details). Under instructions to work on this task for no more than an hour at a time, 187
+college students (70 men and 117 women) described themselves on
+each of the 1,710 terms, using an 8-step rating scale ranging from extremely inaccurateto extremelyaccurateas a self-descriptor. After all
+omitted responses were given a middle (5) value in a transformed 1-9
+rating scale, the responses for each subject in turn were standard
+scored, thereby eliminating all intersubjeet differences in their means
+and variances across the 1,710 items.
+Responses to the terms in each of the Norman categories were aggregated to obtain 75 scale scores for every subject. The coefficient
+alpha reliabilityestimates for each of these variables, which are listed
+in Table 1, are quite high for scales constructed without recourse to any
+internal-consistency analyses: For the 74 scales including more than
+one item, 95% of the reliability coefficients were larger than .60, and
+73% were at least .70; the median scale obtained a coefficient of.76.
+Because the scales vary markedly in their number of items and because
+coefficient alpha is highly sensitive to scale length, Table 1 also ineludes the mean intercorrelation among the items in each scale.
+The variables are listed in Table 1 by the factor on which they had
+their highest loading in this first study, and within each factor by the
+size of their loadings on that factor. Consequently, the first variables
+listed for each factor (the factor definers) exemplify its core meaning
+and are likely to be the most robust across studies. On the other hand,
+the last variables listed for each factor, which are only peripherally
+related to its core content, may be equally related to other factors, and
+therefore the factor with which they are most highly related may tend
+to vary from study to study.
+
+Results
+Effects of different methods of factor extraction and rotation.
+
+Study 1
+
+Rationale and Background
+This study was designed to investigate the structure o f a
+nearly comprehensive set o f c o m m o n English trait adjectives,
+probably the largest subset o f the total pool that has yet been
+studied in this way. Initially, Norman (1967) had investigated
+2,800 trait terms selected from unabridged English dictionar-
+
+At the outset, it is important to try to allay the qualms o f any
+readers who assume that, in factor analysis, what one finds
+depends primarily on how one looks. If that were so, the general
+goal o f developing a scientificallycompelling taxonomy o f individual differences could be a foolish quest, as Eysenck (1981)
+once argued:
+Correlational psychology cannot in the nature of things come up
+with objective, universally agreed dimensions or categories; there
+
+1218
+
+LEWIS R. GOLDBERG
+Table 1
+
+The 75 Categories in the Norman Taxonomy of 1,431 Trait-DescriptiveAdjectives
+Reliability
+
+No.
+
+Factor pole/category
+
+terms
+
+a
+
+Jolly, merry, witty, lively, peppy
+Talkative, articulate, verbose, gossipy
+Companionable, social, outgoing
+Impulsive, carefree, playful, zany
+Mischievous, rowdy, loud, prankish
+Brave, venturous, fearless, reckless
+Active, assertive, dominant, energetic
+Boastful, conceited, egotistical
+Affected, vain, chic, dapper, jaunty
+Nosey, snoopy, indiscreet, meddlesome
+Sexy, passionate, sensual, flirtatious
+
+26
+23
+9
+28
+11
+44
+36
+13
+5
+6
+12
+
+.88
+.86
+.77
+.77
+.78
+.86
+.77
+.76
+.28
+.55
+.76
+
+.22
+.21
+.27
+.11
+.24
+.12
+.08
+.20
+.07
+.17
+.20
+
+Reserved, lethargic, vigorless, apathetic
+Cool, aloof, distant, unsocial, withdrawn
+Quiet, secretive, untalkative, indirect
+Humble, modest, bashful, meek, shy
+Joyless, solemn, sober, morose, moody
+Tactless, thoughtless, unfriendly
+
+19
+26
+22
+18
+19
+20
+
+.74
+.86
+.87
+.76
+.79
+.70
+
+.13
+.19
+.23
+.15
+.17
+.10
+
+Trustful, unsuspicious, unenvious
+Democratic, friendly, genial, cheerful
+Generous, charitable, indulgent, lenient
+Conciliatory, cooperative, agreeable
+Tolerant, reasonable, impartial, unbiased
+Patient, moderate, tactful, polite, civil
+Kind, loyal, unselfish, helpful, sensitive
+Affectionate, warm, tender, sentimental
+Moral, honest, just, principled
+
+20
+29
+18
+17
+19
+17
+29
+18
+16
+
+.83
+.81
+.70
+.71
+.76
+.73
+.76
+.82
+.67
+
+.19
+.13
+.11
+.13
+.14
+.14
+.10
+.20
+.11
+
+Sadistic, vengeful, cruel, malicious
+Bitter, testy, crabby, sour, surly
+Harsh, severe, strict, critical, bossy
+Derogatory, caustic, sarcastic, catty
+Negative, contrary, argumentative
+Belligerent, abrasive, unruly, aggressive
+Biased, opinionated, stubborn, inflexible
+Irritable, explosive, wild, short-tempered
+Jealous, mistrustful, suspicious
+Stingy, selfish, ungenerous, envious
+Scheming, sly, wily, insincere, devious
+
+13
+16
+33
+16
+Il
+21
+49
+29
+8
+18
+29
+
+.79
+.75
+.79
+.74
+.75
+.79
+.78
+.86
+.65
+.61
+.80
+
+.22
+.16
+.10
+.15
+.21
+.15
+.07
+.17
+.19
+.08
+.12
+
+Persistent, ambitious, organized, thorough
+Orderly, prim, tidy
+Discreet, controlled, serious, earnest
+Crusading, zealous, moralistic, prudish
+Predictable, rigid, conventional, rational
+Courtly, dignified, genteel, suave
+Conscientious, dependable, prompt, punctual
+Blas6, urbane, cultured, refined
+Formal, pompous, smug, proud
+Aimful, calculating, farseeing, progressive
+Mystical, devout, pious, spiritual
+Mature
+Coy, demure, chaste, unvoluptuous
+Economical, frugal, thrifty, unextravagant
+
+43
+3
+17
+13
+27
+8
+11
+16
+13
+17
+13
+1
+4
+4
+
+.85
+.62
+.64
+.71
+.77
+.73
+.68
+.72
+.67
+.62
+.86
+
+.12
+.35
+.10
+.16
+.11
+.26
+.16
+.14
+.13
+.09
+.31
+
+.13
+.74
+
+.04
+.42
+
+Messy, forgetful, lazy, careless
+Changeable, erratic, fickle, absent-minded
+Impolite, impudent, rude, cynical
+Nonreligious, informal, profane
+Awkward, unrefined, earthy, practical
+Thriftless, excessive, self-indulgent
+
+51
+17
+22
+9
+27
+13
+
+.90
+.72
+.81
+.73
+.63
+.67
+
+.14
+.13
+.16
+.23
+.06
+.13
+
+Examples
+
+I+
+Spirit
+Talkativeness
+Sociability
+Spontaneity
+Boisterousness
+Adventure
+Energy
+Conceit
+Vanity
+Indiscretion
+Sensuality
+ILethargy
+Aloofness
+Silence
+Modesty
+Pessimism
+Unfriendliness
+II+
+Trust
+Amiability
+Generosity
+Agreeableness
+Tolerance
+Courtesy
+Altruism
+Warmth
+Honesty
+IIVindictiveness
+Ill humor
+Criticism
+Disdain
+Antagonism
+Aggressiveness
+Dogmatism
+Temper
+Distrust
+Greed
+Dishonesty
+III+
+Industry
+Order
+Self-discipline
+Evangelism
+Consistency
+Grace
+Reliability
+Sophistication
+Formality
+Foresight
+Religiosity
+Maturity
+Passionlessness
+Thrift
+IIINegligence
+Inconsistency
+Rebelliousness
+Irreverence
+Provinciality
+Intemperance
+
+PERSONALITY FACTOR STRUCTURE
+
+1219
+
+Table I (continued)
+Reliability
+Factor pole/category
+IV+
+Durability
+Poise
+Self-reliance
+Callousness
+Candor
+IVSelf-pity
+Anxiety
+Insecurity
+
+Timidity
+Passivity
+Immaturity
+V+
+Wisdom
+Originality
+Objectivity
+Knowledge
+Reflection
+Art
+VImperceptivity
+
+Examples
+
+No.
+terms
+
+¢x
+
+7
+
+Tough, rugged, unflinching
+Wordless, calm, stable, sedate, peaceful
+Confident, independent, resourceful
+Ruthless, insensitive, cold, stern
+Frank, blunt, explicit, curt, terse
+
+11
+23
+11
+17
+31
+
+.66
+.83
+.71
+.78
+.69
+
+.15
+.18
+.18
+.17
+.07
+
+Touchy, careworn, whiny, oversensitive
+Fearful, nervous, fussy, unstable
+Unconfident, self-critical, unpoised
+Cowardly, timid, unventurous, wary
+Docile, dependent, submissive, pliant
+Naive, gullible, superstitious, childlike
+
+14
+30
+17
+14
+22
+18
+
+.77
+.85
+.84
+.72
+.80
+.70
+
+.19
+.16
+.24
+.15
+.15
+.11
+
+Intelligent, philosophical, complex, deep
+Insightful, clever, creative, curious
+Alert, perceptive, logical, certain
+Informed, literate, studious, intellectual
+Pensive, thoughtful, meditative
+Literary, poetic, artistic, musical
+
+16
+17
+23
+16
+10
+4
+
+.72
+.78
+.72
+.80
+.63
+.49
+
+.14
+.17
+.10
+.20
+.15
+.19
+
+Simple, ignorant, dull, illogical, narrow
+
+45
+
+.85
+
+.11
+
+Note. The two estimates of internal consistency--the coefficient alpha value for the total scale and the
+mean interitem correlation (r-)--were based on the standardized (Z-scored) responses of 187 college
+students (70 men and 117 women) who described themselves using an inventory ofl,710 trait-descriptive
+terms.
+
+are innumerable, mathematically equivalent ways of rotating factors, for instance, and no statistical magic key (not even simple
+structure) can eluse the door on alternative solutions. . . . Alternative solutions and rotations are in principle, and usually in practice, not only possible but also appeal to different people. . . . The
+final factors never completelyescape the shadow o f . . . the selection of methods of extraction and rotation. (p. 13)
+Eysenck argued that scientific agreement on a structural representation is impossible, in part because alternative methods
+o f factor extraction and rotation will generate different factors.
+In an attempt to examine the extent to which factor structures
+are influenced by the particular methods that are used, the 75
+Norman categories were analyzed using a wide variety o f such
+procedures, specifically five methods o f factor extraction (principal-components, principal-factors, alpha-factoring, imagefactoring, and maximum-likelihood procedures), each rotated
+by an orthogonal (varimax) and an oblique (oblimin) algorithm.
+Of the 3,750 total factor loadings (75 variables × 10 methods × 5 factors) generated by these analyses, in only 30 cases
+(fewer than 1%) was the highest loading on a different factor
+than the modal one; in those few eases, moreover, the variables
+loaded about equally on two factors, one o f which was the modal one. This high degree o f intermethod congruence can be
+quantified more precisely by correlating across the 187 subjects
+the factor scores derived from each o f the 10 factoring methods.
+W h e n averaged across the five corresponding factors in each
+pair o f analyses, the mean correlation o f the factor scores between the orthogonal and oblique rotational procedures (holding constant the method o f factor extraction) ranged from .991
+to .995, and the mean intercorrelations among the five methods
+
+of factor extraction (holding constant the procedure for rotation) ranged from .950 to .996. Table 2 lists the factor loadings
+from varimax rotations o f both principal factors and principal
+components, the uniformity o f the values in the table demonstrates the robustness o f the solutions across these procedural
+variations.
+Although it would be foolish to contend that factors are never
+influenced by the particular algorithm that is used, such procedural effects are typically quite small in size. For the data sets
+analyzed in this article, findings based on principal components have been compared with those based on principal factors, and orthogonal rotations have been c o m p a r e d with
+oblique ones. In none o f these analyses have the findings
+changed in any substantial way as a function o f the particular
+method used. As a consequence, this article will include only
+the varimax-rotated solutions based on an initial principalcomponents analysis o f the variable intercorrelations. For convenience, however, these components will typically be referred
+to as ~factors7
+Effects of the number offactors rotated. The intercorrelations
+among the factor scores derived from the analyses described
+earlier were averaged across the l0 methods so as to provide
+mean congruence correlations for each o f the five factors.
+These mean intermethod correlations for Factors I and II ~99
+for both) and for Factors III and IV (.98 for both) were somewhat
+higher than that for Factor V ~96). Nonetheless, the latter factor
+(Intellect) remained invariant as more factors were rotated. Instead, Factor III bifurcated wher~ six factors were rotated, providing a more homogeneous version o f the Conscientiousness
+factor, plus one that included the more peripheral categories
+
+1220
+
+LEWIS R. GOLDBERG
+Table 2
+
+The 75 Norman Categories: FactorLoadings From Varimax Rotations
+of Principal Components and Principal Factors
+Factor
+II
+
+l
+
+Factor pole/category
+
+Corn
+
+Fac
+
+Corn
+
+III
+Fac
+
+IV
+
+Corn
+
+V
+
+Fac
+
+Corn
+
+Fac
+
+Corn
+
+Fac
+
+Factor I: Surgency
+I+
+Spirit
+Talkativeness
+Sociability
+Spontaneity
+Boisterousness
+Adventure
+Energy
+Conceit
+Vanity
+Indiscretion
+Sensuality
+ILethargy
+Aloofness
+Silence
+Modesty
+Pessimism
+Unfriendliness
+
+79"
+77"
+75 =
+68 =
+63"
+58 =
+56=
+46"
+41 =
+38=
+25 =
+
+78"
+75"
+74 =
+67"
+61 =
+57 =
+55"
+44=
+39 =
+36 =
+24 =
+
+23
+-07
+24
+01
+-31
+-14
+-19
+-39
+-08
+-32
+-17
+
+22
+-07
+24
+01
+-31
+-14
+-19
+-37
+-07
+-31
+-16
+
+02
+11
+17
+-37
+-31
+-31
+13
+00
+31
+-12
+-01
+
+02
+11
+17
+-37
+-31
+-30
+12
+-01
+28
+-12
+-01
+
+05
+-08
+18
+-14
+02
+44
+42
+14
+-27
+-16
+-13
+
+05
+-08
+18
+-13
+02
+44
+41
+14
+-24
+-15
+-10
+
+01
+08
+04
+03
+-02
+04
+18
+-09
+-18
+-07
+22
+
+01
+07
+04
+03
+-02
+05
+18
+-08
+-17
+-07
+18
+
+01
+-16
+20
+44
+-34
+-27
+
+00
+-16
+20
+44
+-33
+-26
+
+01
+-11
+-12
+-08
+07
+-35
+
+01
+-11
+-12
+-08
+07
+-34
+
+13
+-06
+-18
+-13
+-46
+17
+
+13
+-06
+-18
+-13
+-45
+16
+
+-27
+02
+-17
+01
+09
+-04
+
+-26
+02
+-17
+01
+08
+-03
+
+-78"
+
+-77"
+
+-78 =
+-76 =
+
+-76 =
+-75 =
+
+-66 =
+
+-65 =
+
+-61 =
+-53"
+
+-60*
+-51"
+
+Factor II: Agreeableness
+II+
+Trust
+Amiability
+Generosity
+Agreeableness
+Tolerance
+Courtesy
+Altruism
+Warmth
+Honesty
+IIVindictiveness
+Ill humor
+Criticism
+Disdain
+Antagonism
+Aggressiveness
+Dogmatism
+Temper
+Distrust
+Greed
+Dishonesty
+
+-25
+41
+06
+-37
+-25
+26
+33
+-11
+
+-25
+41
+29
+06
+-37
+-24
+25
+32
+-11
+
+-01
+00
+08
+12
+-07
+30
+08
+30
+-15
+-26
+28
+
+-01
+00
+09
+12
+-06
+29
+08
+30
+-14
+-25
+26
+
+30
+
+82"
+
+81"
+
+69"
+68 =
+61 =
+61"
+56=
+43"
+33 =
+
+68 =
+66 =
+66 =
+60 a
+60~
+55 =
+43 =
+31"
+
+05
+08
+07
+11
+-30
+33
+36
+38
+27
+
+05
+08
+07
+11
+-29
+32
+36
+37
+26
+
+10
+22
+-14
+-13
+17
+20
+-30
+-41
+18
+
+09
+22
+-14
+-13
+17
+19
+-30
+-40
+16
+
+-10
+-02
+05
+00
+19
+15
+15
+-04
+11
+
+-09
+-02
+05
+-01
+19
+15
+14
+-04
+I1
+
+-79"
+-74 =
+-73"
+-67"
+-65 =
+-64=
+-63 =
+-58=
+-52 a
+-51 =
+-42 =
+
+-77"
+-72 =
+-72 =
+-64"
+-63 =
+-63 =
+-61"
+-57"
+-50 a
+-49"
+-39"
+
+00
+-09
+32
+-10
+-12
+-21
+1O
+-28
+-11
+03
+-06
+
+00
+-09
+32
+-10
+-13
+-21
+10
+-27
+-il
+02
+-06
+
+08
+-15
+12
+-11
+-18
+30
+31
+02
+-33
+-09
+11
+
+08
+-15
+11
+-10
+-17
+29
+30
+02
+-31
+-09
+11
+
+-09
+03
+11
+14
+01
+-15
+-20
+18
+25
+-14
+00
+
+-09
+03
+11
+13
+00
+-14
+-18
+17
+22
+-13
+00
+
+17
+-18
+
+16
+-17
+
+35
+01
+
+34
+01
+
+6~
+
+Factor III: Conscientiousness
+Ill+
+Industry
+Order
+Self-discipline
+Evangelism
+Consistency
+Grace
+Reliability
+Sophistication
+Formality
+Foresight
+Religiosity
+Maturity
+
+-I1
+-03
+-30
+31
+-23
+27
+-05
+05
+29
+00
+-14
+-20
+
+-11
+-02
+-30
+30
+-23
+26
+-05
+05
+28
+01
+13
+-18
+
+-13
+-04
+34
+01
+-02
+23
+11
+20
+-25
+14
+22
+17
+
+-12
+-03
+34
+01
+-02
+23
+11
+20
+-23
+14
+21
+17
+
+71 =
+68 °
+
+70"
+65 =
+
+65"
+
+64 =
+
+03
+
+02
+
+03
+
+03
+
+61"
+59.
+59.
+53 =
+52"
+48 =
+49.
+43"
+35"
+
+58"
+59.
+561
+51 =
+49 ~
+45 =
+47"
+
+-07
+45
+-01
+24
+06
+-15
+16
+
+-07
+43
+-01
+22
+06
+-14
+15
+
+-25
+-20
+14
+
+-23
+- 19
+13
+
+40 ~
+
+-10
+
+-10
+
+34=
+
+31
+
+29
+
+13
+
+13
+
+31
+-17
+44
+-21
+11
+
+28
+-16
+41
+-18
+11
+
+PERSONALITY FACTOR STRUCTURE
+
+1221
+
+Table 2 (continued)
+Factor
+II
+
+I
+
+III
+
+Factor pole/category
+
+Com
+
+Fac
+
+Corn
+
+Fac
+
+Com
+
+Passionlessness
+Thrift
+IIINegligence
+Inconsi~ncy
+Rebelliousness
+Irreverence
+Provinciality
+Intemperance
+
+-11
+-21
+
+-10
+-19
+
+19
+17
+
+18
+16
+
+31•
+26"
+
+-04
+-03
+13
+-19
+-24
+16
+
+-04
+-03
+12
+-18
+-23
+14
+
+19
+05
+-54
+-18
+06
+- 14
+
+19
+05
+-53
+-17
+05
+- 14
+
+-73"
+-62"
+-55"
+-53"
+-53"
+-44"
+
+IV
+Fac
+
+V
+
+Corn
+
+Fac
+
+Corn
+
+Fac
+
+29~
+25•
+
+-13
+09
+
+-12
+08
+
+-23
+13
+
+-19
+12
+
+-73"
+-61"
+-55"
+-50"
+-49"
+-42"
+
+- 10
+-50
+09
+08
+08
+-21
+
+-09
+-48
+09
+08
+07
+-20
+
+-36
+-03
+31
+28
+- 11
+-24
+
+-35
+-04
+30
+
+25
+- 10
+-22
+
+Factor IV: Emotional Stability
+IV+
+Durability
+Poise
+Self-reliance
+Callousness
+Candor
+I VSelf-pity
+Anxiety
+Insecurity
+Timidity
+Passivity
+Immaturity
+
+77"
+
+01
+
+02
+
+60*
+
+-01
+
+00
+
+49"
+47"
+39"
+
+39
+-07
+18
+
+37
+-06
+17
+
+-81"
+-75 °
+-69"
+-60 ~
+-55"
+-52"
+
+-80 ~
+-74"
+
+-04
+
+-05
+
+-05
+-11
+-07
+
+-06
+-12
+-08
+
+-30
+-42
+
+-30
+-41
+
+-06
+-37
+16
+-46
+20
+
+-06
+-37
+15
+-45
+19
+
+-10
+42
+14
+-45
+03
+
+-10
+42
+14
+-45
+03
+
+-01
+14
+14
+-06
+11
+
+-01
+14
+15
+-06
+11
+
+79"
+61"
+51"
+48"
+43•
+
+-14
+25
+-31
+-42
+-01
+15
+
+-14
+26
+-30
+-41
+-O 1
+14
+
+-05
+-26
+-05
+16
+39
+22
+
+-04
+-26
+-05
+16
+38
+21
+
+15
+05
+-21
+05
+16
+-26
+
+14
+05
+-21
+05
+15
+-26
+
+-67.
+-58"
+-53"
+-51"
+
+Factor V: Intellect
+V+
+Wisdom
+Originality
+Objectivity
+Knowledge
+Reflection
+Art
+VImperceptivity
+
+-02
+19
+-05
+01
+-43
+15
+
+-02
+18
+-05
+01
+-41
+14
+
+- 10
+12
+04
+11
+15
+25
+
+- 10
+11
+04
+11
+14
+24
+
+-06
+-09
+24
+27
+-07
+03
+
+-06
+-09
+24
+26
+-07
+03
+
+01
+20
+46
+15
+-32
+-08
+
+01
+20
+44
+15
+-30
+-06
+
+75"
+70"
+60~
+60"
+45"
+42"
+
+71"
+67.
+59.
+56~
+41"
+36"
+
+-18
+
+-18
+
+25
+
+24
+
+-21
+
+-21
+
+-17
+
+-17
+
+-78"
+
+-78"
+
+Note. All values equal to or greater than _+.30 are listed in boldface. These analyses are based on the
+standardized responses of187 college students (70 men and 117 women) who described themselves using
+an inventory of 1,710 trait-descriptive terms. Decimal points are omitted. Corn = components. Fac =
+factors.
+• Highest factor loading of the variable in each analysis.
+
+labeled Grace, Formality, Vanity, Sophistication, Order, Evangelism, and Religiosity (positive loadings) versus Provinciality,
+Irreverence, and Rebelliousness (negative loadings). W h e n
+seven factors were rotated, the three Religiosity categories (Religiosity and Evangelism versus Irreverence) formed their own
+small factor.
+Moreover, beyond these 7 factors, all additional ones were
+defined by only one or two variables (e.g, Thrift versus Intemperance, Sensuality versus Passionlessness), whereas the initial
+7 factors remained nearly invariant across rotations o f up to 13
+factors. For this set o f variables, then, the factor structures seem
+to be remarkably robust, regardless o f the number o f factors
+that are rotated. Thus, one can conclude from this first study
+that this five-factor structure seems to be nearly impervious to
+variations in the specific factor procedures that are used, and it
+
+remains quite stable across variations in the number o f factors
+that are rotated.
+Factor structures are, however, known to be especially sensitive to the selection o f variables under analysis (Peabody &
+Goldberg, 1989). Indeed, the structural representation displayed in Table 2 shows some anomalies when compared with
+analyses o f other sets o f variables. Some o f these anomalies can
+be traced to the use o f unfortunate terms as category labels; for
+example, the trait adjectives conceited, vain, and unfriendly
+(which normally are highly related to the negative pole o f Factor
+II) were unfortunately used as the labels for categories that
+combine aspects o f Surgency (Factor I) and Disagreeableness
+(Factor II). Nonetheless, although one should expect some differences in factor structures from study to study, the basic
+meaning o f the factors must remain constant if they are to be
+
+1222
+
+LEWIS R. GOLDBERG
+
+given the same labels. Specifically, to demonstrate the robustness of the Big-Five factor structure, it is necessary to show that
+the core variables associated with each factor (the factor definers in Table 2) play the same role when analyzed within other
+subsets of variables.
+Study 2
+
+Rationale and Method
+For inclusion in other studies, Norman's 75 categories have
+two major disadvantages. In the first place, the 1,431 terms in
+that taxonomy are too numerous to be administered in a single
+testing session. In addition, all of the classification decisions
+were made by a single individual. To provide a more objective
+basis for such classifications, dictionaries and synonym finders
+were used to classify trait adjectives into clusters of quasi-synonyms. As the criteria for this sorting task, the terms in a cluster
+had to be independently judged by lexicographers as synonyms;
+in addition, their mean social-desirability ratings (Norman,
+1967) had to fall within a reasonably narrow range. The result
+was a set of133 synonym clusters based on 479 commonly used
+trait adjectives. These 479 terms, all of which had been included in the inventory of 1,710 trait adjectives (1,710-TDA),
+were augmented by some others to form inventories of 566 and
+587 terms (for further details concerning the construction of
+these shorter inventories, see Goldberg, 1982).
+Each of the 133 synonym clusters was treated as a personality
+scale. Separate factor analyses of these 133 variables were
+carried out within each of four samples, two of which provided
+self-descriptions and two of which provided peer descriptions.
+Sample D included the self-descriptions from those 187 subjects already described in Study 1, each of whom completed the
+1,710-TDA. Sample C included 320 other college students who
+described themselves on the 587-TDA using the item format
+that was described in Studies 3 and 4 of Goldberg (198 l b); four
+middle response options were provided (average or neutral, it
+depends on the situation, don't know, and term unclear or ambiguous), all of which were here given a midscale value of 0 on a
+scale ranging from - 3 to +3. Sample A included 316 of the
+subjects from Sample C, who used the 587-TDA to describe
+someone of their sex and approximate age whom they knew
+well and liked. Sample B included 205 students in law school
+and in an upper-division psychology course, roughly one third
+of whom were randomly assigned to describe one of three types
+of peer targets: (a) "someone whom you know well and like as a
+persons (b) "someone whom you know well but neither like nor
+dislike" or (c) "someone whom you know well and dislike as a
+person: The targets were further specified in all three conditions to be"ofthe same sex as you are, and about your own age:
+Subjects in Sample B used the 566-TDA, with the same 8-step
+(transformed to 9-step) rating scale used by the subjects in Sample D. Ratings of the three types of targets were pooled in the
+analyses of Sample B.
+
+coefficient alpha reliability estimates, and the mean correlations among the items. Because each of the clusters was designed to include only quasi-synonyms, they were all quite short
+(averaging fewer than 4 items each), and therefore their reliability coefficients would be expected to be low. The median of
+these alpha coefficients turned outto be .54, which is quite high
+for scales of this length.
+Also available from the author are tables presenting the factor loadings from varimax rotations of five principal components analyzed separately in each of the four samples. Within
+each sample, the Big-Five factor structure emerged quite clearly.
+Tucker's coefficient of factor congruence (Harman, 1967, p.
+257) was used as a quantitative index of the similarity between
+the factors derived in each of the four samples. The mean congruence coefficients across the five factors ranged from .86
+(Samples B vs. D) to .94 (Samples A vs. C) and averaged .91.
+Moreover, the overall factor congruence between the two samples of peer ratings (93) and between the two samples of selfratings (.91) was not appreciably higher than that between the
+self and peer samples 690).
+Of more theoretical interest, however, intersample congruence varied substantially by factor; the values for Factors I,
+II, and III were all about.95, whereas those for Factors IV and V
+were both about .85. These findings, which replicate those reported by Peabody and Goldberg (1989) based on a set of 57
+bipolar scales selected to be representative of common trait
+adjectives (Peabody, 1987), reflect the differential distribution
+of variables associated with each of the Big-Five factors. Specifically, within any pool of variables that is based on a reasonably
+representative sampling of the English lexicon of trait adjectives, there will be substantially more variables associated with
+each of the first three factors than with each of the last two. For
+example, within the set of133 synonym clusters there were, on
+average, twice as many variables associated with each ofF-actors
+I, II, and III than with each of Factors IV and V.
+What lies beyond the Big-Five domains? The design of this
+study permits a critical examination o f the five-factor representation, both because of the relatively large number of variables
+under study and because the simultaneous analysis of four samples permits a direct test of factor replicability. Specifically, as
+progressively more factors are rotated, one can discover how
+many factors remain invariant across the four samples.
+When additional factors were rotated in each of the four
+samples, the results paralleled those from the analyses of the 75
+Norman categories in Study 1: The five original factors remained virtually invariant. Of even more significance, none of
+the additional factors replicated across the four samples. In
+three of the samples, Religiosity (Religious and Reverent) and
+Nonreligiosity (Nonreligious and Irreverent) loaded highly in
+opposite directions on one additional factor, but the other variables associated with that factor varied from sample to sample.
+In summary, then, this search for replieable domains beyond
+the Big Five was not successful.
+
+Results
+Self-ratings versus peer ratings. Because of space limitations,
+the findings from this study could not be presented in tabular
+form. Available from the author are the 133 variables analyzed
+in this study, including each of the terms in each cluster, the
+
+Study 3
+
+Rationale
+The inclusion in the 479 set of some peripheral terms such as
+those tapping Religiosity and Nonreligiosity, the inelegance of
+
+PERSONALITY FACTOR STRUCTURE
+including among the 133 "clusters" a few single terms (for which
+there were no synonyms in the 1,710-TDA), and the low reliabilities of a few of the remaining clusters stimulated efforts to
+refine the set further. For this purpose, a new sample of subjects
+was used to develop a refined set o f synonym dusters, and then
+two of the samples from Study 2 were used to provide independent evidence of their factor structure.
+
+Derivation o f the 1 O0 Revised Clusters
+As a first step, the 479 trait adjectives were ordered alphabetically and administered with instructions to describe oneself"as
+accurately as possible; using a 9-step rating scale where 1 =
+extremely inaccurate as a self-description, 5 = I?n uncertain or
+the meaning of the term is unclear, and 9 = extremely accurate as
+a self-description. Subjects in this study were 192 university undergraduates enrolled in an introductory course in personality
+who elected to complete a course-related battery of self-report
+measures for extra credit. Subjects responded to these measures
+semi-anonymously, using only numbers for identification. To
+correct for individual differences in their rating means and
+variances, the responses o f each subject were standard (Z)
+scored across the items, and all analyses were carried out separately using both the original and the standard-scored response
+values.
+For each of the original 133 synonym clusters that had been
+derived in Study 2, internal-consistency analyses were carried
+out separately within each data set. As would be expected, the
+clusters tended to be slightly more homogeneous when based
+on the original response values (M alpha = .55) than when
+based on the Z-scored data (Malpha = .48), demonstrating that
+part of the covariation in the original responses can be attributed to individual differences in usage of the rating scales. Consequently, the standard-scored data were used to cull out the
+least homogeneous items from each cluster, and in rare cases to
+add an item that had been excluded from another cluster.
+Through an iterative process, the least homogeneous clusters
+were eliminated, including all of the single items, and a few new
+synonym sets were formed.
+The result is a set ofl00 clusters based on 339 trait adjectives.
+Table 3 lists the terms in each of the clusters, as well as their
+coefficient alpha reliability estimates and mean item intercorrelations. Whereas the original 133 synonym clusters averaged 3.7 items, the corresponding length of the 100 revised
+clusters was 3.4. Moreover, as would be expected to occur in
+this derivation sample, the reliabilities o f the new clusters were
+higher than the old ones; the mean alpha was raised from .55 to
+.66 (original responses) and from .48 to .61 (Z-scores), whereas
+the mean item intercorrelation was raised from .29 to .40 (original responses) and from .23 to .34 (Z-scores).
+Five principal components were rotated by varimax separately within the original and Z-scored responses from this derivation sample, and clear versions o f the Big-Five structure
+emerged; a table presenting both of these factor structures is
+available from Lewis R. Goldberg.
+To provide independent replications of these factor structures, two of the data sets from Study 2 were used. The self
+sample included those 320 subjects in Sample C of Study 2 who
+used the 587-TDA to describe themselves. The liked-peer sam-
+
+1223
+
+pie included a subset of 316 of those subjects (called Sample A
+in Study 2), who used the same inventory o f 587 trait adjectives
+to describe someone of their own age and sex whom they knew
+well and liked.
+
+Results
+Table 4 presents the factor loadings from varimax rotations
+of five principal components separately in the liked and the self
+samples. The congruence coefficients between the corresponding factors in the two data sets were .97, .97, .97, .93, and .92 for
+Factors I through V, respectively. Moreover, when the factor
+scores based on the 100 clusters were related to those based on
+the original 133 synonym clusters derived in Study 2, the correlations were .99, .99, .98, .93, and .97 in the liked sample and
+.97, .98, .98, .93, and .96 in the self sample.
+Clearly, then, the factors derived from the 100 clusters are
+virtually identical to those derived from the 133 clusters, even
+though the former are based on 140 fewer terms. Moreover, the
+100 clusters provide essentially the same factor structure for
+self-descriptions as for descriptions of liked peers. And, finally,
+the factors displayed in Table 4 are nearly perfect examples of
+the Big-Five: Not only do each of the clusters load highly on the
+factor with which they are normally most highly associated, but
+instances of extreme factorial complexity are quite rare.
+General Discussion
+The major aim of this article has been to provide sufficient
+evidence to alleviate any qualms about the generality of the
+Big-Five structure. To this end, findings were presented to demonstrate factor robustness within a near-comprehensive set of
+1,431 trait adjectives across a wide variety of factor-analytic
+procedures (Study 1), and within a representative set of 479
+commonly used terms across samples of both self- and peer
+descriptions (Study 2). Moreover, in both studies it was possible
+to assess the overall dimensionality of the pool of common
+English trait adjectives by examining successively more factors
+beyond the initial five. In no case was any additional factor of
+any substantial size, and in Study 2 no additional factor demonstrated any significant amount of across-sample generality.
+Consequently, it now seems reasonable to conclude that analyses of any reasonably large sample of English trait adjectives in
+either self- or peer descriptions will elicit a variant of the BigFive factor structure, and therefore that virtually all such terms
+can be represented within this model. In other words, trait adjectives can be viewed as blends of five major features, features
+that relate in a gross way to Power, Love, Work, Affect, and
+Intellect (Peabody & Goldberg, 1989). These features are clearly
+dimensional, rather than categorical, in nature (Chaplin, John,
+& Goldberg, 1988). Moreover, it has been shown that it is possible to uncover a variant of the Big-Five structure from analyses
+of judgments of the semantic similarity among a representative
+selection of trait descriptors (Peabody & Goldberg, 1989).
+Given that the Big-Five structure seems to characterize the
+relations among English trait adjectives, it is reasonable to try to
+discover its generality to other types of stimuli, as well as to
+other languages (Goldberg, 1981 a). ARhough a preliminary taxonomy of common English trait nouns has been constructed
+
+1224
+
+LEWIS R. GOLDBERG
+Table 3
+
+The 100 Revised Synonym Clusters
+a
+
+?
+
+NO.
+
+Factor pole/cluster
+I+
+Spirit
+Gregariousness
+Playfulness
+Expressiveness
+Spontaneity
+Unrestraint
+Energy level
+Talkativeness
+Assertion
+Animation
+Courage
+Self-esteem
+Candor
+Humor
+Ambition
+Optimism
+
+Terms included
+
+terms
+
+Raw
+
+Z
+
+Raw
+
+Z
+
+4
+3
+4
+
+.76
+.62
+.57
+
+.71
+.58
+.55
+
+.45
+.35
+.25
+
+.38
+.31
+.24
+
+3
+3
+3
+3
+3
+3
+3
+3
+3
+3
+2
+3
+4
+
+.71
+.64
+.52
+.75
+.68
+.61
+.55
+.71
+.67
+.74
+.61
+.63
+.71
+
+.67
+.67
+.49
+.66
+.64
+.55
+.48
+.69
+.65
+.73
+.58
+.54
+.71
+
+.45
+.37
+.26
+.50
+.42
+.34
+.29
+.46
+.41
+.49
+.45
+.36
+.38
+
+.40
+.39
+.24
+.39
+.38
+.29
+.24
+.43
+.38
+.48
+.42
+.28
+.38
+
+Seclusive, unsociable, withdrawn
+Quiet, silent, untalkative
+Detached, tvserved, secretive
+Bashful, shy, timid
+Inhibited, restrained
+Unadventurous, unaggressive,uncompetitive
+Docile, passive, submissive
+Lethargic, sluggish
+Bitter, joyless, melancholic, moody, morose,
+pessimistic, somber
+
+3
+3
+3
+3
+2
+3
+3
+2
+7
+
+.74
+.80
+.62
+.79
+.59
+.56
+.60
+.65
+.79
+
+.68
+.79
+.55
+.77
+.58
+.58
+.57
+.49
+.65
+
+.48
+.57
+.35
+.55
+.42
+.29
+.34
+.48
+.35
+
+.41
+.55
+.29
+.52
+.41
+.31
+.31
+.33
+.21
+
+Accommodating, agreeable, cooperative,
+helpful, patient, peaceful, reasonable
+Amiable, cordial, friendly, genial, pleasant
+Considerate, kind, sympathetic, trustful,
+understanding
+Lenient'
+uncritical, .
+undemanding
+jj~
+.
+.
+C o ~ u s , diplomatm, pohte, respectful,
+tactful
+Benevolent, charitable, generous
+Adaptable, flexible,obliging
+Humble, modest, selfless, unassuming
+Ethical, honest, moral, principled, sincere,
+truthful
+Affectionate, compassionate, sentimental,
+warm
+Down-to-earth, earthy, folksy, homespun,
+simple
+Casual, easygoing,informal, natural, relaxed
+
+7
+
+.66
+
+.68
+
+.23
+
+.25
+
+5
+5
+
+.68
+.72
+
+.68
+.72
+
+.30
+.36
+
+.30
+.35
+
+3
+5
+
+.50
+.75
+
+.59
+.72
+
+.24
+.39
+
+.31
+.36
+
+3
+3
+4
+6
+
+.59
+.45
+.45
+.77
+
+.58
+.46
+.48
+.74
+
+.33
+.21
+.17
+.38
+
+.32
+.22
+.19
+.35
+
+4
+
+.70
+
+.66
+
+.38
+
+.34
+
+5
+
+.49
+
+.51
+
+.16
+
+.18
+
+5
+
+.57
+
+.59
+
+.21
+
+.23
+
+4
+
+.78
+
+.67
+
+.47
+
+.34
+
+4
+
+.66
+
+.45
+
+.33
+
+.17
+
+4
+6
+
+.73
+.75
+
+.65
+.45
+
+.41
+.34
+
+.31
+.13
+
+3
+4
+4
+5
+3
+4
+3
+3
+5
+4
+
+.74
+.71
+.87
+.83
+.64
+.68
+.66
+.72
+.79
+.76
+
+.55
+.60
+.82
+.73
+.63
+.60
+.57
+.62
+.63
+.68
+
+.48
+.39
+.62
+.50
+.38
+.36
+.39
+.47
+.44
+.45
+
+.29
+.28
+.55
+.35
+.37
+.28
+.30
+.35
+.26
+.35
+
+Enthusiastic, spirited, vivacious, zestful
+Extroverted, gregarious, sociable
+Adventurous, mischievous, playful,
+rambunctious
+Communicative, expressive, verbal
+Carefree, happy-go-lucky, spontaneous
+Impetuous, uninhibited, unrestrained
+Active, energetic, vigorous
+Talkative, verbose, wordy
+Assertive, dominant, forceful
+Demonstrative, exhibitionistic, flamboyant
+Brave, courageous, daring
+Assured, confident, proud
+Direct, frank, straightforward
+Humorous, witty
+Ambitious, enterprising, opportunistic
+Cheerful, jovial, merry, optimistic
+
+IAloofness
+Silence
+Reserve
+Shyness
+Inhibition
+Unegsressiveness
+Passivity
+Lethargy
+Pessimism
+II+
+Cooperation
+Amiability
+Empathy
+Leniency
+Courtesy
+Generosity
+Flexibility
+Modesty
+Morality
+Warmth
+Earthiness
+
+Naturalness
+IIBelligerence
+Overcriticalness
+Bossiness
+Rudeness
+Cruelty
+Pomposity
+Irritability
+Conceit
+Stubbornness
+Distrust
+Selfishness
+Callousness
+Surliness
+Cunning
+
+Antagonistic, argumentative, combative,
+quarrelsome
+Faultfinding, harsh, unforgiving,
+unsympathetic
+Bossy, demanding, domineering, manipulative
+Abusive, disrespectful, impolite, impudent,
+rude, scornful
+Cruel, ruthless, vindictive
+Condescending, pompous, smug, snobbish
+Crabby, cranky, irritable, grumpy
+Boastful, conceited, egocentric, egotistical,vain
+Bullheaded, obstinate, stubborn
+Cynical, distrustful, skeptical, suspicious
+Greedy, selfish, self-indulgent
+Cold, impersonal, insensitive
+Caustic, curt, flippant, gruff, surly
+Crafty, cunning, devious, sly
+
+1225
+
+PERSONALITY FACTOR STRUCTURE
+Table 3 (continued)
+tx
+Factor pole/cluster
+Prejudice
+Unfriendliness
+Volatility
+Stinginess
+Deceit
+Thoughtlessness
+III+
+Organization
+Efficiency
+Dependability
+Precision
+Persistence
+Caution
+Punctuality
+Deeisiveness
+Dignity
+Predictability
+Thrift
+Conventionality
+Logic
+IllDisorganization
+Negligence
+Inconsistency
+Forgetfulness
+Recklessness
+Aimlessness
+Sloth
+Indecisiveness
+Frivolity
+Nonconformity
+IV+
+Placidity
+Independence
+VIInsecurity
+Fear
+Instability
+Emotionality
+Envy
+Gullibility
+Intrusiveness
+V+
+Intellectuality
+Depth
+Insight
+Intelligence
+Creativity
+Curiosity
+Sophistication
+
+No.
+terms
+
+F
+
+Raw
+
+Z
+
+Raw
+
+Z
+
+.68
+.76
+.68
+.67
+.69
+
+.59
+.65
+.56
+.56
+.45
+
+.51
+.52
+.42
+.51
+.35
+
+.41
+.38
+.31
+.39
+.17
+
+.69
+
+.60
+
+.45
+
+.34
+
+3
+5
+
+.84
+.61
+
+.84
+.62
+
+.63
+.24
+
+.62
+.24
+
+3
+3
+4
+2
+2
+4
+3
+3
+2
+2
+2
+
+.85
+.71
+.59
+.70
+.86
+.53
+.51
+.60
+.68
+.57
+.45
+
+.82
+.68
+.52
+.66
+.87
+.46
+.47
+.64
+.70
+.54
+.43
+
+.66
+.46
+.26
+.54
+.76
+.22
+.27
+.34
+.51
+.40
+.30
+
+.60
+.42
+.21
+.50
+.77
+.17
+.23
+.38
+.53
+.37
+.28
+
+Disorganized, haphazard, inefficient,
+scatterbrained, sloppy, unsystematic
+Careless, negligent, undependable,
+unconscientious, unreliable
+Erratic, inconsistent, unpredictable
+Forgetful, absent-minded
+Foolhardy, rash, reckless
+Aimless, unambitious
+Lazy, slothful
+Indecisive, wishy-washy
+Extravagant, frivolous, impractical
+Nonconforming, rebellious, unconventional
+
+6
+
+.80
+
+.73
+
+.41
+
+.32
+
+5
+
+.78
+
+.67
+
+.43
+
+.30
+
+3
+2
+3
+2
+2
+2
+3
+3
+
+.50
+.80
+.70
+.56
+.52
+.49
+.61
+.46
+
+.44
+.77
+.58
+.57
+.41
+.50
+.53
+.43
+
+.25
+.67
+.44
+.39
+.36
+.33
+.34
+.22
+
+.21
+.63
+.31
+.40
+.26
+.34
+.27
+.20
+
+Passionless, unexcitable, unemotional
+Autonomous, independent, individualistic
+
+3
+
+3
+
+.63
+.52
+
+.49
+.46
+
+.36
+.27
+
+.23
+.22
+
+Defensive, fretful, insecure, negativistic, selfcritical, self-pitying
+Anxious, fearful, nervous
+Temperamental, touchy, unstable
+Emotional, excitable
+Envious, jealous
+Gullible, naive, suggestible
+Intrusive, meddlesome, nosey
+
+6
+
+.78
+
+.70
+
+.36
+
+.27
+
+3
+3
+2
+2
+3
+3
+
+.61
+.66
+.57
+.73
+.58
+.71
+
+.48
+.53
+.44
+.71
+.56
+.60
+
+.34
+.40
+.40
+.57
+.31
+.46
+
+.24
+.28
+.29
+.55
+.29
+.33
+
+Contemplative, intellectual, introspective,
+meditative, philosophical
+Complex, deep
+Foresighted, insightful, perceptive
+Bright, intelligent, smart
+Artistic, creative, imaginative, innovative,
+inventive
+Curious, inquisitive
+Cosmopolitan, cultured, refined, sophisticated,
+worldly
+
+5
+
+.74
+
+.71
+
+.36
+
+.32
+
+2
+3
+3
+5
+
+.63
+.59
+.81
+.84
+
+.55
+.56
+.76
+.81
+
+.46
+.35
+.60
+.53
+
+.38
+.3 l
+.52
+.47
+
+2
+5
+
+.61
+.74
+
+.56
+.74
+
+.46
+.37
+
+.40
+.36
+
+3
+2
+2
+3
+3.4
+
+.63
+.84
+.52
+.59
+.66
+
+.51
+.84
+.41
+.49
+.61
+
+.36
+.74
+.35
+.33
+.40
+
+.25
+.73
+.26
+.25
+.34
+
+Terms included
+Bigoted, prejudiced
+Unfriendly, ungracious, unkind
+Explosive, tempestuous, volatile
+Miserly, stingy
+Deceitful, dishonest, underhanded,
+unscrupulous
+Inconsiderate, tactless, thoughtless
+Orderly, organized, systematic
+Concise, exacting, efficient, fastidious, selfdisciplined
+Dependable, reliable, responsible
+Meticulous, peffectionistic, precise
+Industrious, persistent, tenacious, thorough
+Careful, cautious
+Prompt, punctual
+Decisive, deliberate, firm, purposeful
+Dignified, formal, mannerly
+Consistent, predictable, steady
+Economical, thrifty
+Conventional, traditional
+Analytical, logical
+
+V-
+
+Shallowness
+Unimaginativeness
+Imperceptiveness
+Stupidity
+M
+
+Shallow, unintellectual, unreflective
+Uncreative, unimaginative
+Imperceptive, unobservant
+Dull, ignorant, unintelligent
+
+Note, The two estimates of internal consistency--coefficient alpha and the mean interitem correlation
+(r)---were based on the original (raw) and standardized (Z) responses of192 college students who described
+themselves using an inventory of 479 terms.
+
+1226
+
+LEWIS R. GOLDBERG
+Table 4
+
+Varimax-Rotated Factor Loadings From the 100 Clusters in the Liked and the Self Samples
+Factor
+I
+Factor pole/cluster
+
+Liked
+
+II
+Self
+
+Liked
+
+III
+Self
+
+Liked
+
+IV
+
+V
+
+Self
+
+Liked
+
+Self
+
+Liked
+
+Self
+
+Factor I: Surgency
+I+
+Spirit
+Gregariousness
+Playfulness
+Expressiveness
+Spontaneity
+Unrestraint
+Energy level
+Talkativeness
+
+Assertion
+Animation
+Courage
+Self-esteem
+Candor
+Humor
+Ambition
+Optimism
+
+.70"
+.70"
+• 1"
+.58"
+.55"
+.54"
+.53 a
+.49"
+.46"
+.40
+.48"
+.44"
+.35"
+.37"
+.59"
+
+~3"
+.73"
+.58"
+.60"
+.48"
+.55"
+.60j
+.58"
+.56"
+.45*
+.45"
+.51"
+.34"
+.21"
+A2*
+A7
+
+.27
+.07
+.01
+.09
+.26
+-.01
+.09
+-.02
+-.46
+-.16
+-.04
+-.07
+-.01
+.29
+-.06
+.50
+
+.35
+.13
+.01
+.05
+.29
+.01
+.18
+-.05
+-.33
+-.14
+-.03
+.08
+-.10
+.07
+-.10
+.59"
+
+.05
+-.06
+-.18
+.04
+-.28
+-.32
+.19
+-.14
+.14
+-.21
+.06
+.25
+.12
+-.12
+.36
+.08
+
+.08
+-.03
+-.17
+-.01
+-.21
+-.14
+.16
+-.09
+.15
+-.14
+.06
+.24
+.03
+-.04
+.28
+.01
+
+-.07
+.03
+.00
+-.07
+.11
+.17
+.18
+-.24
+.24
+-.07
+.42"
+.44
+.29
+.08
+.29
+.09
+
+-.09
+-.07
+.04
+-.08
+.03
+.07
+.15
+-.14
+.28
+.02
+.33
+.38
+.29
+-.07
+.15
+.07
+
+.10
+.02
+.10
+.19
+-.07
+.07
+.06
+-.06
+.11
+.08
+.10
+.08
+.06
+.14
+.19
+-.03
+
+-.01
+.03
+-.10
+.21
+-.16
+.09
+-.09
+-.00
+.09
+.11
+-.09
+.07
+.17
+.17
+.21
+-.05
+
+-.78"
+-.78 °
+-.66"
+-.66"
+-.59"
+-.57 °
+-.48"
+-.46"
+-.55 °
+
+-.71"
+-.75"
+-.53"
+-.66"
+-.64"
+-.62"
+-.48"
+-.28
+-.52"
+
+-.07
+.18
+-.02
+.35
+.16
+.46
+.33
+-.06
+-.37
+
+-.13
+.10
+-.08
+.20
+.08
+.19
+.28
+-.12
+-.35
+
+-.01
+.14
+.04
+.06
+.15
+-.06
+.01
+-.26
+-.09
+
+-.07
+.11
+.03
+-.01
+.12
+-.21
+-.07
+-.30"
+-.02
+
+.01
+.08
+.00
+-.19
+-.13
+- . 11
+-.35
+-.07
+-.29
+
+.13
+.14
+.17
+-.18
+.01
+- . 14
+-.20
+-.15
+-.24
+
+-.02
+.05
+-.02
+-.06
+-.13
+- . 10
+-.27
+-.10
+-.07
+
+.05
+-.04
+-.05
+-.18
+-.08
+.05
+-.32
+-.19
+-.06
+
+lAloofness
+Silence
+Reserve
+Shyness
+Inhibition
+Unagsressiveness
+Passivity
+Lethargy
+Pessimism
+
+Factor II: Agreeableness
+II+
+Cooperation
+Amiability
+Empathy
+Leniency
+Courtesy
+Generosity
+Flexibility
+Modesty
+Morality
+Warmth
+Earthiness
+Naturalness
+IIBelligerence
+Overcriticalness
+Bossiness
+Rudeness
+Cruelty
+Pomposity
+Irritability
+Conceit
+Stubbornness
+Distrust
+Selfishness
+Callousness
+Surliness
+Cunning
+Prejudice
+Unfriendliness
+Volatility
+Stinginess
+
+.04
+.32
+.17
+-.19
+.00
+.16
+.13
+-.30
+- . 10
+.37
+-.03
+.22
+
+-.06
+.24
+.04
+-.21
+.04
+.03
+.05
+-.39
+-.09
+.19
+- . 11
+.19
+
+.77"
+.61 °
+.74"
+•63"
+•55"
+•56"
+•55"
+.56"
+.50"
+.54"
+•45"
+•45"
+
+.72"
+.60a
+.7r
+.49"
+.48"
+.48"
+.54"
+o40"
+.418"
+.50~
+.4r
+.44"
+
+.25
+.04
+.21
+-.10
+.37
+.02
+.15
+.12
+.45
+.09
+.08
+-.17
+
+.27
+-.02
+.16
+-.15
+.38
+.04
+.05
+.11
+.24
+.08
+.08
+-.09
+
+.13
+-.11
+-.21
+.24
+-.23
+-.04
+.12
+.08
+-.05
+-.37
+.18
+.35
+
+.15
+-.08
+-.18
+.16
+-.14
+.03
+.11
+.02
+.25
+-.44
+.12
+.37
+
+.00
+.08
+.06
+-.18
+.18
+.14
+.04
+-.05
+.10
+.13
+-.21
+-.06
+
+-.13
+.07
+-.07
+-.16
+.08
+.06
+.03
+-.16
+.01
+.00
+-.32
+-.19
+
+.10
+- . 11
+.34
+-.04
+•02
+-.04
+-.13
+• 14
+•08
+-.29
+-.01
+-.38
+.02
+• 18
+-.04
+-.33
+•23
+-.32*
+
+.22
+- . 19
+.40
+-.07
+.05
+.05
+-.18
+.16
+. 12
+- .35
+-.05
+-.32
+.09
+.23
+-.03
+-.38
+.29"
+-.04
+
+-.74"
+-.70"
+-.68"
+-.63"
+-.59"
+-.54"
+-.61"
+-.64"
+-.5"P
+- .53"
+-.51"
+-.50"
+-.44"
+-.41"
+-.44"
+-.41"
+-.41"
+-.31
+
+-.56"
+-.671
+-__~4"
+-.53"
+-.46"
+-.50*
+-.42"
+-.43*
+-.35"
+-.49"
+-.44"
+-.48 °
+-.37 °
+-.35"
+-.34"
+-.38"
+-.23
+-.36"
+
+-.02
+.01
+.07
+-.29
+-.02
+-.06
+-.04
+-.16
+-.07
+- . 13
+-.22
+.00
+-.08
+-.10
+-.09
+-.19
+-.10
+.04
+
+-.12
+-.07
+•15
+-.29
+.03
+.00
+-.07
+-.21
+- . 15
+- . 12
+- . 18
+-.05
+-.10
+.12
+.01
+-.26
+-.17
+.04
+
+-.14
+•08
+-.09
+.26
+.13
+-.15
+-.30
+-.02
+.00
+-.02
+- . 13
+.33
+.07
+.07
+.08
+.28
+-.20
+-.03
+
+-.07
+.08
+.04
+.28
+.12
+-.07
+-.41
+.02
+-.07
+-.01
+- . 18
+.42
+.08
+.05
+.04
+.30
+-.26
+-.07
+
+.01
+-.14
+.00
+-.16
+-.22
+-.10
+-.05
+.03
+.04
+.05
+.04
+- . 17
+-.26
+.08
+-.17
+-.14
+-.06
+-.06
+
+-.11
+-.03
+.06
+-.07
+-.27
+-.12
+-.06
+.21
+-.03
+•14
+.22
+-.01
+-.34
+.08
+-.08
+-.07
+-.12
+.04
+
+1227
+
+PERSONALITY FACTOR STRUCTURE
+Table 4 (continued)
+Factor
+I
+Factor pole/duster
+
+Liked
+
+II
+Self
+
+Liked
+
+III
+Self
+
+Liked
+
+IV
+Self
+
+V
+
+Liked
+
+Self
+
+Liked
+
+Self
+
+.08
+.27
+
+.02
+.21
+
+-.21
+-.24
+
+-.17
+- . 14
+
+Factor II: Agreeableness (continued)
+Deceit
+Thoughtlessness
+
+.09
+- . 15
+
+.02
+-.O4
+
+-.43"
+-.49*
+
+-.31"
+-.34
+
+-.37
+-.37
+
+-.10
+-.44"
+
+Factor III: Conscientiousness
+Ill+
+Organization
+Efficiency
+Dependability
+Precision
+Persistence
+Caution
+Punctuality
+Decisiveness
+
+V~ity
+Predictability
+Thrift
+Conventionality
+Logic
+IIlDisorganization
+Negligence
+Inconsistency
+Forgetfulness
+Recklessness
+Aimlessness
+Sloth
+Indecisiveness
+Frivolity
+Nonconformity
+
+-.09
+-.06
+.04
+-.13
+.13
+-.26
+.00
+.18
+-.12
+-.20
+-.22
+-.21
+-.11
+
+-.08
+-.05
+-.02
+-.06
+.21
+-.24
+-.07
+.19
+.00
+-.12
+-.10
+- . 15
+-.14
+
+.03
+.03
+.31
+-.06
+-.05
+.14
+.10
+-.09
+.18
+.20
+.20
+.24
+.01
+
+.02
+.10
+.29
+-.08
+.00
+.10
+.08
+-.02
+.05
+.21
+.10
+.09
+-.01
+
+.71 °
+.75"
+~7"
+.54P
+-$6"
+-$5"
+-$8"
+.56"
+-$3"
+.49"
+.49*
+.41"
+.45"
+
+.74*
+.73"
+.61 a
+.62"
+-$2"
+.42"
+.40*
+-$1"
+-$4"
+.4r
+.43"
+.37
+.30
+
+-.02
+.19
+.12
+-.05
+.31
+-.13
+.06
+.39
+-.18
+.30
+.06
+-.05
+.22
+
+.03
+.12
+-.02
+.09
+.24
+-.02
+-.07
+.36
+-.18
+.26
+.13
+-.03
+34
+
+-.05
+.10
+.00
+.16
+.18
+.O4
+-.01
+.11
+.14
+-.20
+-.16
+-.33
+34
+
+-.03
+.11
+-.10
+.14
+.15
+-.10
+-.01
+.06
+.02
+-.31
+-.09
+-.42"
+.39*
+
+.05
+-.10
+.04
+-.10
+.20
+-.31
+-.20
+-.28
+.14
+.11
+
+-.08
+.03
+.09
+-.09
+.18
+-.26
+-.26
+-.25
+.13
+.07
+
+-.02
+-.22
+-.22
+-.05
+-.21
+.06
+-.15
+.O4
+-.13
+-.15
+
+.O4
+-.12
+-.17
+.03
+-.25
+.12
+-.10
+.07
+-.12
+-.08
+
+-.81"
+-.75 a
+--$5"
+-.55 a
+-.55"
+-.50"
+-.46°
+-.45"
+-.45"
+-A2"
+
+-.81"
+-.68"
+-.54"
+-.49"
+-.4"P
+-.29"
+-.42*
+-.45"
+-.40"
+-.33
+
+.00
+-.04
+-.19
+.00
+.01
+-.07
+.00
+-.35
+-.22
+.22
+
+-.02
+.03
+-.12
+-.15
+.00
+.03
+-.13
+-.25
+-.32
+.24
+
+-.04
+-.09
+.12
+-.01
+-.14
+-.26
+-.11
+-.11
+.06
+.36
+
+-.08
+-.06
+.21
+.01
+-.14
+-.08
+-.16
+-.O4
+-.01
+.39*
+
+Factor IV: Emotional Stability
+IV+
+Placidity
+Independence
+IVInsecurity
+Fear
+Instability
+Emotionality
+Envy
+Gullibility
+Instrusiveness
+
+-.49
+.14
+
+-.37
+.04
+
+-.09
+-.07
+
+-.14
+-.09
+
+.O4
+.21
+
+.03
+.09
+
+-$4"
+.38"
+
+.59.
+.3"P
+
+-.06
+.26
+
+-.09
+.31
+
+-.45
+-.15
+-.20
+.37
+-.03
+-.15
+
+-.46
+-.21
+-.16
+.30
+-.11
+-.08
+.17
+
+-.30
+-.08
+-.42
+.21
+-.26
+.27
+-.24
+
+-.28
+-.08
+-.27
+.10
+-.30
+.27
+-.27
+
+-.15
+.01
+-.17
+-.05
+-.12
+-.22
+-.15
+
+-.11
+-.02
+-.15
+-.07
+-.01
+-.20
+-.13
+
+--$6"
+-.551
+--$3"
+--$3"
+-.49*
+-.3"P
+-.18
+
+-.53"
+-~1"
+--$8"
+--$9*
+--$2"
+-.46~
+-.29"
+
+.02
+-.05
+-.06
+.08
+-.10
+-.32
+-.12
+
+.04
+-.08
+.11
+-.02
+-.15
+-.18
+-.22
+
+Factor V: Intellect
+V+
+Intellectuality
+
+Depth
+Insight
+Intelligence
+Creativity
+Curiosity
+Sophistication
+VShallowness
+Unimaginativencss
+Imperceptiveness
+Stupidity
+
+-.27
+-.12
+.06
+-.05
+•09
+.21
+
+.23
+.11
+.25
+.19
+.13
+.01
+.12
+
+.14
+.14
+.14
+.08
+.01
+.03
+-.01
+
+.02
+-.08
+.24
+.19
+.02
+.00
+.26
+
+-.08
+-.11
+.18
+.06
+.05
+-.13
+
+.09
+.02
+.26
+.24
+.I0
+.II
+
+.13
+-.02
+.07
+.08
+.12
+.00
+
+.64"
+~2"
+.qP
+.54"
+-$9*
+.34"
+
+.71"
+
+•08
+
+-.21
+-.11
+.00
+-.01
+.09
+.II
+.15
+
+.29"
+
+-.15
+
+-.01
+
+.41 °
+
+.29
+
+-.10
+-.23
+-.20
+-.27
+
+-.03
+-.16
+- . 17
+-.28
+
+-.09
+.04
+.08
+-.08
+
+-.O4
+.09
+.13
+.10
+
+-.06
+.09
+-.23
+-.07
+
+-.O4
+-.03
+-.20
+-.16
+
+.O4
+.09
+.06
+.00
+
+.01
+.02
+.08
+-.05
+
+-.66"
+-.51"
+-.49.
+-.49.
+
+-.67"
+-.49"
+-.45"
+-.41"
+
+39*
+.58"
+-$5"
+.24"
+
+Note. All values equal to or greater than+.30 are listed in boldface. The values are based on subject-standardized responses in the liked (n = 316) and the self (n = 320) samples.
+• Highest factor loading of each variable.
+
+1228
+
+LEWIS R. GOLDBERG
+
+(Goldberg, 1980), no empirical analyses of these terms have
+been undertaken. On the other hand, analyses o f Dutch trait
+nouns are already under way (de Raad & Hoskens, 1990), and
+the first analyses of German trait adjectives suggest that the
+Big-Five structure may well characterize the terms in that
+closely related language (Angleitner, Ostendorf, & John, 1990;
+Ostendorf, 1990).
+When one turns from single terms to multiword statements,
+the picture is less clear. In some factor analyses of scales from
+one or more personality inventories, the investigators have interpreted their findings in terms of the Big-Five structure (e.g.,
+Noller, Law, & Comrey, 1987), as have some reviewers (e.g., Digman, 1990; John, 1990), whereas other investigators have not
+(e.g., Zuckerman, Kuhlman, & Camac, 1988). However, only in
+studies in which markers o f the Big-Five structure have been
+included is it possible to discover the actual degree of convergence. To solve this problem, Costa and McCrae (1985) have
+used questionnaire statements to construct a personality inventory (the NEO Personality Inventory [NEO-PI]) based on the
+Big-Five structure, and these investigators have been actively
+trying to assimilate the scales from a host o f other inventories
+within the Big-Five framework (e.g., Costa, Busch, Zonderman,
+& McCrae, 1986; Costa & McCrae, 1988; McCrae & Costa,
+1985, 1987, 1989).
+In addition, the scales included in the NEO-PI have also been
+used as Big-Five factor markers in an extensive study by Borkenau and Ostendorf(1989). In a sample of 300 German adults,
+these investigators analyzed 36 scales, including the 5 from the
+NEO-PI, 14 from the Personality Research Form (PRF; Jackson, 1967), 11 from the Freiburger Personality Inventory (FPI;
+Fahrenberg, Hampel, & Selg, 1984), 3 from the Eysenck Personality Inventory (EPI; Eysenck & Eysenck, 1964), and 3 measures
+of response bias. Within this set of scales, the congruence with
+the Big-Five structure was exquisite: Factor I was defined by the
+Extraversion scales of the FPI, EPI, and NEO-PI; Factor II by
+Agreeableness (NEO-PI), Nurturance (PRF), Social Orientation (FPI), and Affiliation (PRF) versus Aggression (PRF and
+FPI); Factor III by Achievement (PRF), Conscientiousness
+(NEO-PI), Endurance (PRF), Order (PRF), and Achievement
+Orientation (FPI) versus Impulsivity (PRF); Factor IV by Emotionality (FPI), Neuroticism (EPI), Edwards's (1957) Social Desirability scale, Proneness to Stress (FPI), Somatic Complaints
+(FPI), and Irritability (FPI); and Factor V by Openness (NEOPI) and Understanding (PRF).
+The 100 new synonym clusters developed in Study 3 provide
+another set of Big-Five markers, which might now be included
+in future investigations. An inventory of the 339 adjectives used
+to score the 100 clusters is roughly the same size as the NEO-PI,
+and they both take about the same amount of time for self-descriptions. On the other hand, it should probably be easier to
+collect descriptions of a target from knowledgeable informants
+using the adjective inventory than using the NEO-PI. A description of the development of a number of more economical
+sets of adjective-based Big-Five markers is the topic of another
+report (Goldberg, 1990).
+References
+Allport, G. W., & Odbert, H. S. (1936). Trait-names: A psycho-lexical
+study. Psychological Monographs, 47(1, Whole No. 211).
+
+Angleitner, A., Ostendorf, E, & John, O. P. (1990). Towards a taxonomy
+of personality descriptors in German: A psycho-lexical study. European Journal of Personality. 4, 89-118.
+Borgatta, E. E (1964). The structure of personality characteristics. Behavioral Science, 9, 8-17.
+Borkenau, P., & Ostendorf, E (1989). Descriptive consistency and social desirability in self- and peer reports. European Journal of Personalit~ 3, 31-45.
+Cattell, R. B. (1943). The description of personality: Basic traits resolved into clusters. Journal of Abnormal and Social Psychology. 38,
+476-506.
+Cattell, R. B. (1945). The description of personality: Principles and
+findings in a factor analysis. American Journal of Psychology, 58,
+69-90.
+Chaplin, W. E, John, O. E, & Goldberg, L. R. (1988). Conceptions of
+states and traits: Dimensional attributes with ideals as prototypes.
+Journal of Personality and Social Psychology. 54, 541-557.
+Costa, P. T., Jr., Busch, C. M., Zonderman, A. B., & McCrae, R. R.
+(1986). Correlations of MMPI factor scales with measures of the five
+factor model of personality. Journal of Personality Assessment, 50,
+640-650.
+Costa, E T., Jr., & McCrae, R. R. (i 985). The NEO Personality Inventory
+manual. Odessa, FL: Psychological Assessment Resources.
+Costa, E T., Jr., & McCrae, R. R. (1988). From catalog to classification:
+Murray's needs and the five-factor model. Journal of Personality and
+Social Psychology, 55, 258-265.
+de Raad, B.,& Hoskens, M. (1990). Personality descriptive nouns. European Journal of Personality, 4, 13 I-146.
+Digman, J. M. (1990). Personality structure: Emergence of the five-factor model. In M. R. Rosenzweig & L. W.Porter (Eds.), Annualreview
+of psychology (Vol. 41, pp. 417--440). Palo Alto, CA: Annual Reviews.
+Digman, J. M., & Inouye, J. (1986). Further specification of the five
+robust factors of personality. Journal of Personality and Social Psychology, 50, 116-123.
+Digman, J. M., & Takemoto-Choek, N. K. (1981). Factors in the natural language of personality: Re-analysis, comparison, and interpretation of six major studies. Multivariate Behavioral Research, 16,
+149-170.
+Edwards, A. L. (1957). The social desirability variable in personality
+assessment and research. New York: Dryden.
+Eysenck, H. J. (1981). General features of the model. In H. J. Eysenek
+(Ed.), A model for personality (pp. 1-37). New York:Springer-Verlag.
+Eysenck, H. J., & Eysenek, S. B. (3. (1964). Manualofthe Eysenck Personality Inventory. London: University of London Press.
+Fahrenberg, J., Hampel, R., & Selg, H. (1984). Das Freiburger Personlichkeitsinventar [The Freiburg Personality Inventory]. Gtttingen,
+Federal Republic of Germany: Hogrefe.
+Fiske, D. W.(1949). Consistency of the factorial structures of personality ratings from different sources. Journal of Abnormal and Social
+Psychology, 44, 329-344.
+Galton, E (1884). Measurement of character. Fortnightly Review, 36,
+179-185.
+Goldberg, L. R. (1980). A catalogue of 1947 nouns that can be used to
+describe personality and a taxonomy of 1342 nouns that are typically
+so used. Unpublished report, Oregon Research Institute.
+Goldberg, L. R. (1981a). Language and individual differences: The
+search for universals in personality lexicons. In L. Wheeler (Ed.),
+Review of personality and social psychology (Vol. 2, pp. 141-165).
+Beverly Hills, CA: Sage.
+Goldberg, L. R. (1981b). Unconfounding situational attributions from
+uncertain, neutral, and ambiguous ones: A psychometric analysis of
+descriptions of oneselfand various types ofothers. JournalofPersonality and Social Psychology, 41, 517-552.
+Goldberg, L. R. (1982). From Ace to Zombie: Some explorations in the
+language of personality. In C. D. Spielberger & J. N. Butcher (Eds.),
+
+PERSONALITY FACTOR STRUCTURE
+
+Advances m personality assessment (Vol. 1, pp. 203-234). Hillsdale,
+NJ: Erlbaum.
+Goldberg, L. R. (1990). Standard markers of the Big-Fivefactor structure. Unpublished report, Oregon Research Institute,
+Harman, H. H. (1967). Modern factor analysis (2nd ed~. Chicago: University of Chicago Press.
+Jackson, D. N. (1967). Personality Research Form Manual. Goshen,
+NY."Research Psychologists Press.
+John, O. E (1990). The "Big Five" factor taxonomy: Dimensions of
+personality in the natural language and in questionnaires. In L. A.
+Pervin (Ed.), Handbook of personality theory and research (pp. 66100). New York: Guilford Press.
+John, O. P., Angleitner, A., & Ostendorf, E (1988). The lexical approach
+to personality: A historical review of trait taxonomic research. European Journal of Personality, 2, 171-203.
+McCrae, R. R., & Costa, E T., Jr. (1985). Comparison of EPI and psychoticism scales with measures of the five-factor model ofpersonality. Personality and Individual Differences, 6, 587-597.
+McCrae, R. R., & Costa, P. T., Jr. (1987). Validation of the five-factor
+model of personality across instruments and observers. Journal of
+Personality and Social Psychology, 52, 81-90.
+McCrae, R. R~ & Costa, E T., Jr. (1989). Reinterpreting the MyersBriggs Type Indicator from the perspective of the five-factor model
+of personality. Journal of Personality, 57, 17-40.
+Noller, E, Law, H., & Comrey, A. L. (1987). Cattell, Comrey, and Eysenck personality factors compared: More evidence for the five robust factorS?.Journal of Personality and Social Psychology, 53, 775782.
+Norman, W. T. (1963). Toward an adequate taxonomy of personality
+attributes: Replicated factor structure in peer nomination personality rat ings. Journal of Abnormal and Social Psychology, 66, 574- 583.
+Norman, W. T. (1967). 2800 personality trait descriptors: Normative
+
+1229
+
+operating characteristics for a university population. Ann Arbor: Department of Psychology, University of Michigan.
+Ostendoff, E (1990). Sprache und Personlichkeitsstruktur: Zur Validitat
+des Funf-Faktoren-Modeiisder Personlichkeit [Language and personality structure: On the validity of the five-factor model of personality]. Regensburg, Federal Republic of Germany: Roderer Verlag.
+Peabody, D. (1987). Selecting representative trait adjectives. Journal of
+Personality and Social Psychology, 52, 59-71.
+Peabody, D, & Goldberg, L. R. (1989). Some determinants of factor
+structures from personality-traitdescriptors. Journal of Personality
+and Social Psychology,, 57, 552-567.
+Thurstone, L. L. (1934). The vectors ofmind. PsychologicalReview,41,
+1-32.
+Tupes, E. C, & Christal, R. E. (1961). Recurrent personality factors
+based on trait ratings (Technical Report No. ASD-TR-61-97). Lackland Air Force Base, TX: U.S. Air Force.
+Waller, N. G., & Ben-Porath, Y. S. (1987). Is it time for clinical psychology to embrace the five-factor model of personality? American Psychologist, 42, 887-889.
+Wiggins, J. S., & Trapnell, E D. (in press). Personality structure: The
+return of the Big Five. In S. R. Briggs, R. Hogan, & W. H. Jones (Eds.),
+Handbook of personality psychology, San Diego, CA: Academic
+Press.
+Zuckerman, M., Kuhlman, D. M., & Camac, C. (1988). What lies
+beyond E and N? Factor analyses of scales believed to measure basic
+dimensions of personality. Journal of Personality and Social Psychology, 54, 96-107.
+
+Received September 5, 1989
+Revision received March 7, 1990
+Accepted June 19, 1990 •
+
+

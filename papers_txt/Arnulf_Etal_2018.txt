@@ -1,0 +1,1404 @@
+Behavior Research Methods (2018) 50:2345–2365
+https://doi.org/10.3758/s13428-017-0999-y
+
+
+
+
+The failing measurement of attitudes: How semantic determinants
+of individual survey responses come to replace measures
+of attitude strength
+Jan Ketil Arnulf 1 & Kai Rune Larsen 2 & Øyvind Lund Martinsen 1 & Thore Egeland 3
+
+Published online: 12 January 2018
+# Psychonomic Society, Inc. 2018
+
+Abstract
+The traditional understanding of data from Likert scales is that the quantifications involved result from measures of attitude
+strength. Applying a recently proposed semantic theory of survey response, we claim that survey responses tap two different
+sources: a mixture of attitudes plus the semantic structure of the survey. Exploring the degree to which individual responses are
+influenced by semantics, we hypothesized that in many cases, information about attitude strength is actually filtered out as noise
+in the commonly used correlation matrix. We developed a procedure to separate the semantic influence from attitude strength in
+individual response patterns, and compared these results to, respectively, the observed sample correlation matrices and the
+semantic similarity structures arising from text analysis algorithms. This was done with four datasets, comprising a total of
+7,787 subjects and 27,461,502 observed item pair responses. As we argued, attitude strength seemed to account for much
+information about the individual respondents. However, this information did not seem to carry over into the observed sample
+correlation matrices, which instead converged around the semantic structures offered by the survey items. This is potentially
+disturbing for the traditional understanding of what survey data represent. We argue that this approach contributes to a better
+understanding of the cognitive processes involved in survey responses. In turn, this could help us make better use of the data that
+such methods provide.
+
+Keywords Semantic analysis . Surveys . Survey response . Semantic theory of survey response (STSR) . Attitude strength
+
+
+
+What do the numbers in survey statistics measure—what do              2014; Gefen & Larsen, 2017; Larsen & Bong, 2013; Nimon,
+they represent? A growing series of studies have shown that           Shuck, & Zigarmi, 2015). Statistical patterns in responses may
+the statistical properties of survey research are partly or even      therefore express more of the respondents’ cognitive opera-
+largely predictable a priori because of their semantic structures     tions than of their attitudes, as is explained in the recently
+(Arnulf & Larsen, 2015; Arnulf, Larsen, Martinsen, & Bong,            proposed semantic theory of survey response (STSR; Arnulf
+                                                                      et al., 2014; Arnulf, Larsen, Martinsen, & Bong, 2015).
+                                                                         In his original work on response scales, Likert (1932) was
+* Jan Ketil Arnulf                                                    insistent that the object of measurement should be attitude
+  jan.k.arnulf@bi.no                                                  strength. If the emerging statistics are caused by other psycho-
+                                                                      logical operations, such as the cognitive processing of items, it
+    Kai Rune Larsen                                                   would cast doubt about their nature as measurements and pose
+    kai.larsen@colorado.edu
+                                                                      a problem for interpretation (Lamiell, 2013; Slaney & Racine,
+    Øyvind Lund Martinsen                                             2013). On the other hand, the possibility to explore and mea-
+    oyvind.martinsen@bi.no
+                                                                      sure these cognitive operations might open new applications
+    Thore Egeland                                                     in survey research, possibly improving the predictive validity
+    thore.egeland@gmail.com                                           of such measurements and expanding the use of such
+1
+                                                                      instruments.
+    BI Norwegian Business School, Oslo, Norway
+                                                                         The purpose of this study is to show how commonly ap-
+2
+    Leeds Business School, University of Colorado, Boulder, CO, USA   plied statistical techniques actually may frequently filter out
+3
+    Norwegian University of Life Sciences, Aas, Norway
+2346                                                                                                   Behav Res (2018) 50:2345–2365
+
+
+its purported subject matter—that is, attitude strength—leav-      influence of semantic operations in individual response pat-
+ing only traces of cognitive language parsing operations, con-     terns. By using an individual level analysis, we can track the
+trary to central assumptions in construct validation (American     sources of influence on individual response patterns and de-
+Educational Research Association, American Psychological           termine which aspects of individual respondents that are most
+Association, and National Council on Measurement in                likely to accumulate and determine the ensuing sample statis-
+Education, 2014; Cronbach & Meehl, 1955; MacKenzie,                tics. The data materials in this study will be the same four
+Podsakoff, & Podsakoff, 2011). This is important for at least      datasets as used in Arnulf et al.’s (2014) study, but this time
+two reasons: Primarily, establishing a model of the cognitive      broken down to the level of individual responses. This kind of
+framework activated in survey responses can give us more           reanalysis is important because the previous study merely
+knowledge about how attitudes and mental models are con-           documented the influence of semantics on the sample statis-
+nected. Secondarily, it is principally a serious concern for the   tics. To explain why semantics may explain between the neg-
+interpretation of psychometric models if the numbers are           ligible and 86% of observed variation in samples, the separate
+representing a different phenomenon than commonly                  sources of variation in individual responses need to be
+purported.                                                         assessed. For example, if responses measuring stable person-
+    Since Likert published his scales for assessing attitudes 80   ality traits are indeed different from responses to shifting per-
+years ago (Likert, 1932), they have turned into one of the most    ceptions, we need more incisive methods to explore and ex-
+prevalent methods of social science in general, and of organi-     plain this. The present study is also a methodological innova-
+zational behavior (OB) in particular (Cascio, 2012).               tion, since there is no previously established way to disentan-
+Respondents assign numbers (or answer in categories later          gle semantics from attitude strength in survey data. For this
+translated to numbers), and the numbers should reflect the         reason, we also refrain from stating hypotheses, but stick to
+degrees to which they endorse the survey items (MacKenzie          outlining the methodological steps and report the ensuing
+et al., 2011; Michell, 2013; Nunnally & Bernstein, 2010).          findings.
+Increasingly sophisticated statistical procedures are applied
+to analyze patterns in the ensuing statistics, and common to
+many of these is that they take the covariance or correlation      Attitude strength and semantic relationships
+matrix as their point of departure (Borsboom, 2008; Jöreskog,
+1993). Yet, researchers have intermittently published suspi-       The relationship between semantics and attitude strength is
+cions concerning the role of cognitive processes involved in       well illustrated by Bertrand Russell’s introduction to
+reading and processing the items. These may influence the          Wittgenstein’s Tractatus Logico-Philosophicus (1922). Here,
+observed statistics, distort measures, or even create artificial   the two philosophers make a distinction between three types
+numbers in cases in which respondents do not really hold any       of scientific facts: empirical, psychological, and logical facts.
+attitudes (Borsboom, 2009; Feldman & Lynch, 1988; Maul,                Take as an example the sentence BIt is raining.^ The
+2017; Schwarz, 1999).                                              Bempirical^ fact would be a demonstration of whether or not
+    With the development of digital text analysis in recent        it is raining. A Bpsychological^ fact would be whether some-
+years, the cognitive properties of survey items are now open       one believes it to be raining. The Blogical^ fact, however, is
+to direct assessment. Recent studies have applied various se-      likely to be taken for granted by many people, but still reflects
+mantic algorithms to compute overlap in meaning among fre-         a cognitive process in the brain: The expression BIt is raining^
+quently used Likert scales across fields such as OB and infor-     needs to be logically comprehensible and recognizably differ-
+mation science (IS). Text algorithms alone were able to ex-        ent from other statements. This condition is, de facto, a pre-
+plain between 54 and 86% of the variation in correlation ma-       requisite for the other two: believing in rain and possibly fal-
+trices from leadership research (Arnulf et al., 2014), displayed   sifying its empirical justification.
+comparable factor structures in surveys on IS (Gefen &                 Generally, the object of empirical science is to establish
+Larsen, 2017), and demonstrated wide semantic overlap be-          empirical facts, such that people with different opinions (in
+tween employee engagement and job satisfaction (Nimon              the state of harboring different psychological facts) can sub-
+et al., 2015). Semantic properties do not always seem to play      sequently agree on the empirical support for their different
+an important role, as in the personality test NEO-FFI in which     beliefs. But to determine the nature of their (dis)agreement,
+semantics had negligible predictive value (Arnulf et al., 2014).   people need to state their beliefs in terms clear enough to
+As yet there is no theoretical or empirical framework to ex-       display their differing opinions (Wittgenstein, 1922).
+plain the reason why stable personality traits such as the Big         This distinction is not mere hair-splitting, for it concerns
+Five may not be as semantically predictable as the responses       the interpretation of latent variable modeling of survey data
+to surveys on perceptions in organizations.                        (Bagozzi, 2011; Borsboom, 2008). In surveys, people are
+    This study aims to explore and explain why semantics may       asked about their attitudes or opinions—Bpsychological
+influence survey statistics by developing a way to track the       facts,^ in Russell’s terminology. The ensuing data are taken
+Behav Res (2018) 50:2345–2365                                                                                                  2347
+
+
+as measures of Bempirical facts,^ used to test social scientific        To achieve the aim of this study, we must find a way to
+hypotheses about how such empirical facts are related               differentiate the influence of item semantics from attitude
+(Shadish, Cook, & Campbell, 2002). If the detected patterns         strength in individual survey response patterns. We do this
+can be shown to be created by semantics (i.e., the mutual           by computing two different response matrices for each respon-
+relationships of meaning in the items), the data are probably       dent—one that is sensitive to response strength, and one that is
+not measuring the purported Bempirical^ domain, but instead,        insensitive to response strength but closer to mere semantic
+what is represented are the semantic relationships (or the          influence.
+Blogical relationships,^ in Russell’s and Wittgenstein’s                The rationale behind these two types of matrices starts with
+vocabulary).                                                        how the Pearson product-moment correlation formula picks
+   In light of modern psychology, we need to make an adjust-        up the individuals’ contributions, as this is the central condi-
+ment to Russell’s and Wittgenstein’s terminology. Strictly          tion for what happens in further steps of the analysis. The
+speaking, the Blogical^ relationships may also be regarded          individual contribution in this formula consists of multiplying
+as the workings of psychological mechanisms, but these are          two variables x and y for every participant, thus the name
+of a fundamentally different kind than attitudes. The ability to    Bproduct-moment,^ and preserves the magnitude of the vari-
+read and recognize meaning in verbal statements is also a           ables in each subject. The other elements in the formula sim-
+psychological process, but it is created by the language-           ply serve to standardize the variables and centralize the scale
+parsing mechanisms in the cerebral cortex (Jackson,                 around zero. In principle, a matrix of correlations for a sample
+Hoffman, Pobric, & Ralph, 2016; LaPointe, 2013; van                 consists of the average, normalized values of x multiplied by y.
+Berkum, Koornneef, Otten, & Neuwland, 2007).                            If we multiply each response with all other responses on an
+   The capacity of the cerebral cortex for processing semantic      individual level, we have for each person what we call an
+structures in language is central to logical reasoning, but does    individual co-product matrix. It is structurally similar to the
+not in itself process attitudes or truth values of statements.      sample correlation matrix, but contains no information about
+This is necessary for our ability to assess statements with         other people’s responses—nothing about the sample variation.
+which we do not agree or even products of mere fantasy.             It should hence preserve information about the respondents’
+The assessment of attitudes and agreement are linked to a           attitude strength. For example, a person scoring 4 and 5 on x
+broader range of cerebral structures including sub-cortical         and y will obtain a co-product of 20, but the co-product for a
+emotional processing (de Vries, Byrne, & Kehoe, 2015;               person scoring 1 and 2 will only be 2.
+Fisher, Island, Rich, Marchalik, & Brown, 2015; Honey,                  We can compute another, but similar matrix for each person
+Thomson, Lerner, & Hasson, 2012; Nakagawa, Takahashi,               that is relatively decoupled from the individual’s attitude
+Okada, Matsushima, & Matsuda, 2015; Regev, Honey, &                 strength. By subtracting the score on each variable from every
+Hasson, 2013). For analytical reasons, it is important to keep      other variable and keeping the absolute difference, we obtain
+these two domains apart, and so in the following we will keep       what we call an individual item distance matrix. Again, it is
+the distinction between the three types of facts: Empirical facts   structurally similar to the sample correlation matrix,
+established by scientific observation, psychological facts          displaying a numerical value for each combination of vari-
+concerning what subjects believe, and logical facts that are        ables. This matrix contains little or no information about the
+simply constituted by coherent and meaningful propositions          subject’s attitude strength. To repeat the example above, the
+unrelated to their truth or credibility.                            item distances for a person scoring 4 and 5 will be 1, but the
+   The core element in our method is to use natural language        distance score for a person scoring 2 and 1 will also be 1.
+parsing algorithms to compute estimates of how the meaning              The individual item distance matrix is theoretically akin to
+of survey items overlap. We are using two types of algorithms,      the semantic similarity matrix because of two conditions re-
+one called latent semantic analysis (LSA; Landauer, 2007)           garding the distances: (A) Any two items containing the same
+and another termed MI after its inventor (Mihalcea, Corley,         proposition should logically be rated in the same way regard-
+& Strapparava, 2006; Mohler & Mihalcea, 2009). The nature           less of the subjects’ endorsements of the items. (B)
+of these will be more closely described in the methods section      Conversely, for two items to have different scores, the respon-
+below. The output of these algorithms is structurally similar to    dents would need to perceive them as different. So, although
+the correlation matrix for the survey variables, but the num-       there may be other reasons why items are scored similarly,
+bers do not in any way represent attitude strength. Instead,        these two conditions together should make the item distance
+they are simply estimates of the degree to which the items          matrix converge around how similarly any subject perceives
+contain similar propositions. We call the output Bsemantic          these items, regardless of the subject’s attitude strength. In
+similarity indices^ and they are similar to what we described       contrast, the same individual’s co-product matrix would ex-
+as Blogical facts^ above, in that they only represent the cog-      press similar information, but with the added information of
+nitive similarity of statements.                                    the individual’s attitude strength.
+2348                                                                                                      Behav Res (2018) 50:2345–2365
+
+
+    The purpose of these two matrices is to compare how sim-         may object that difference between the scores 4 and 3 depend
+ilar the responses of each individual are to our two criteria: the   on attitude strength, the difference is the same as between 4
+observed sample correlation matrix and the semantic similar-         and 5 or 2 and 1. From the point of view of attitude measure-
+ity matrix. We may then proceed to explore the relative impact       ment, the distances take the Bquanta^ out of the numbers, as
+of semantics and attitude strength for each subject, and for         can be seen in Table 1.
+each sample in our study.                                                The strength of attitudes is important because it could con-
+    Since it may be hard for the reader to keep track of the         ceivably signal a propensity for action if the attitude strength
+different types of matrices, we have created a sample for com-       reaches a certain level, which has been a core problem in
+parison in Table 1. It displays the statistics for a survey scale    attitude research since the 1930s (Fishbein & Ajzen, 1975;
+with six items measuring intrinsic motivation, originally pub-       Kim, Hahn, & Lee, 2015; LaPiere, 1934; Likert, 1932;
+lished by Kuvaas (2006b). The wordings of these items are:           Prinz, Aschersleben, & Koch, 2009; Triandis, 1980;
+                                                                     Zimbardo, Ebbesen, & Maslach, 1977). If the recordings of
+1. The tasks that I do at work are themselves representing a         attitude strength are only used to compare similarity of re-
+   driving power in my job.                                          sponses, the information about attitude strength is left out of
+2. The tasks that I do at work are enjoyable.                        the picture. The item distances represent information about the
+3. My job is meaningful.                                             similarity between responses without considering the absolute
+4. My job is very exciting.                                          level of these responses. Seen as item distances, the Likert
+5. My job is so interesting that it is a motivation in itself.       scale numbers simply provide a medium for expressing prox-
+6. Sometimes I become so inspired by my job that I almost            imity in meaning.
+   forget everything else around me.                                     A main proposition of this study is that we can separate
+                                                                     attitude strength from semantic processing in individual re-
+                                                                     cords by computing these two matrices for each respondent.
+    In Table 1, the correlations among these items in the sample     We can explore if the compliance with semantic structures is
+from our second dataset (N = 255) are displayed on the top           related to attitude strength, or if this information is simply a
+left. The matrix on the top right displays the semantic similar-     product of response proximities. We can do this by exploring
+ity indices (MI values) for the same items. On the bottom, we        their relationships to the two criteria: the semantic similarity
+have displayed the item distance matrix (left) and the co-           matrix, which we know is unrelated to attitudes (because it is
+product matrix (right) for a randomly selected respondent in         created by a computer using the text alone), and the sample
+this sample, who scored 5, 5, 4, 5, 5, and 4 on these six items.     correlation matrix, which is a result of respondents expressing
+    The two different computations may seem a bit confusing          their attitudes.
+at first, so a quick recapitulation and comparison may be help-          The sample correlation matrix commonly serves as the in-
+ful. The main purpose is to explore how individual response          put for further modeling, together with its derived relative the
+patterns are informed by semantics, and how this influence           covariance matrix (Abdi, 2003; Fornell & Larcker, 1981;
+contributes to the sample statistics. The co-product procedure       Jöreskog, 1993; Jöreskog & Sörbom, 1993; Marsh et al.,
+of multiplying all items with all other items was chosen for         2010; Podsakoff, MacKenzie, & Podsakoff, 2012). To the
+two main reasons: First, because we will use the sample cor-         extent that this data structure contains information about atti-
+relation matrix as a criterion for our further analyses (this, or    tude strength, it should be statistically more strongly related to
+its closely related derivative the covariance matrix, being the      the individual subjects’ co-product matrices. Conversely, the
+point of departure for much psychometric modeling). The co-          item distance matrices should be more strongly related to the
+product is the individual value that comes closest to the indi-      semantic values matrix. The relative influence of semantics on
+vidual’s contribution to the sample correlation matrix. Hence,       each subject would then be the degree to which the response
+the co-product should ideally be the values informing the cor-       patterns of individuals are more closely resembling the seman-
+relation matrix. Second, a frequent assumption in quantitative       tic patterns than the sample correlation matrix.
+models is that factors interact to create their effects. As an           The sample correlation matrix and the semantic values ma-
+example, the Binteraction term^ in multiple regression is usu-       trix are used here and referred to as Bcriteria^ because of the
+ally entered as a multiplication of the interaction variables        following conditions: If a single respondent’s matrix is struc-
+(Aiken, West, & Reno, 1991). On the basis of these arguments         turally similar to the sample correlation matrix, then this per-
+and traditional practice, the co-products are the most obvious       son is simply responding in a statistically average way—the
+candidate for examining the individual’s contribution to sam-        pattern that emerges is characteristic of the whole sample.
+ple data patterns based on measurements of attitude strength.        With varying departures from this pattern, the respondent is
+    On the contrary, the item differences that come from             responding in a way that differs from the statistically common
+subtracting the item scores from each other are practically          pattern. Conversely, if a person’s matrix is similar to the se-
+devoid of information about attitude strength. Although one          mantic values matrix, he or she is in accordance with what is
+Behav Res (2018) 50:2345–2365                                                                                                          2349
+
+Table 1   Examples of the four different matrices used in the study
+
+            Item #1      Item #2      Item #3      Item #4      Item #5              Item #1    Item #2     Item #3     Item #4   Item #5
+
+            Sample Correlations Matrix                                               Semantic MI-Values Matrix
+Item #2     .67                                                           Item #2    .78
+Item #3     .52          .58                                              Item #3    .73        .73
+Item #4     .59          .71          .53                                 Item #4    .64        .73         .83
+Item #5     .68          .76          .53          .79                    Item #5    .59        .61         .81         .66
+Item #6     .46          .52          .36          .49          .60       Item #6    .52        .56         .63         .56       .55
+            Distance Matrix for Respondent 002                                       Co-Product Matrix for Respondent 002
+Item #2     0                                                             Item #2    25
+Item #3     1            1                                                Item #3    20         20
+Item #4     0            0            1                                   Item #4    25         25          20
+Item #5     0            0            1            0                      Item #5    25         25          20          25
+Item #6     1            1            0            1            1         Item #6    20         20          16          20        20
+
+
+
+semantically expected. We can therefore explore at least three            such as Dennis, Landauer, Kintsch, and Quesada (2013) for
+characteristics of individual responses: (1) the degree to which          LSA or Mihalcea et al. A quick and user-friendly introduction
+their responses are congruent with what is semantically given,            can be found at lsa.colorado.edu for LSA. An approach more
+(2) the degree to which patterns in their attitude strength is            suitable for analyses like the present study can be found at
+similar to what is semantically given, and (3) which aspect of            http://sims.theorizeit.org/.
+their response pattern—attitude strength or semantic congru-                 When comparing individual responses to semantics, we
+ence—is more likely to be contributing to the final statistics            use only a single text algorithm termed MI, originally devel-
+for the whole sample.                                                     oped by Mihalcea et al. (2006; Mohler & Mihalcea, 2009). We
+    The various matrices can be compared in terms of the re-              do this to avoid complexities in establishing a joint semantic
+lationships visualized in Fig. 1. The sample correlation matrix           matrix with values from several types of algorithms. From the
+(upper left triangle) includes the empirically obtained numbers           previous studies, the MI values seem to be the single most
+from the whole sample. The semantic matrix (upper right tri-              powerful predictor of the responses (Arnulf & Larsen, 2015;
+angle) has the same structure of items, but their relationships           Arnulf et al., 2014). MI is particularly well-suited for short
+are only computed by semantic algorithms, and no responses                sentences and derives its information about the meaning of
+are involved. The two individual matrices (lower central tri-             words from a semantic knowledge base and term ontology
+angles) exemplify the same structures for individuals, obtain-            called WordNet (Miller, 1995; Poli, Healy, & Kameas,
+ed in the form of either a co-product matrix (bottom left) or an          2010). In WordNet, words are organized into a hierarchical
+item distance matrix (center right).                                      structure (an upside-down tree) with synsets (groups) of syn-
+                                                                          onymous words throughout the tree. The further down in the
+                                                                          tree a word occurs, the more specific it is, so two words that
+STSR and linguistic algorithms                                            are part of the same Bbranch^ but at different depths have
+                                                                          different specificity (e.g., pear –> edible fruit –> produce).
+We have assessed the semantic properties of the items using               Words may be at the same depth in the hierarchy but in dif-
+several available algorithms, primarily focused around LSA                ferent branches. For example, the words car and pear may be
+and WordNet-based approaches (e.g., Dennis, Landauer,                     similar in that they are as far down in their branches as
+Kintsch, & Quesada, 2003; Landauer, 2007; Larsen &                        WordNet will go (Asian Pears and BMW models are not in-
+Monarchi, 2004; Larsen, Nevo, & Rich, 2008; Li, McLean,                   cluded). WordNet allows word similarity to be computed by
+Bandar, O’Shea, & Crockett, 2006; Mihalcea et al., 2006).                 measuring the path length and path depth between two words
+They share the commonality of only analyzing pure text                    in the database. MI’s word specificity juxtaposes subtle nu-
+(i.e., no data about how respondents may endorse propositions             ances of meaning (e.g., apple and pear) and generic concep-
+in these texts).                                                          tual meaning (e.g., fruit and vegetable). WordNet is a general
+    Text algorithms are a complex topic and a detailed                    lexical database, and MI therefore reflects neutral, Beveryday^
+presentation of the procedures involved is not possible                   language and lacks domain-specific knowledge.
+within the present format, so we will only describe them on                  The MI algorithm first identifies single words in each sen-
+a superficial level below. For more details, we must refer to the         tence and computes similarity as the shortest distance between
+appendix of Arnulf et al. (2014) or more technical sources,               these words’ synsets (sets of synonymous words) in WordNet
+2350                                                                                                                    Behav Res (2018) 50:2345–2365
+
+
+
+
+Fig. 1 The four types of data matrices used in this study and their mutual relationships
+
+
+(Mihalcea et al., 2006; Mohler & Mihalcea, 2009). Word sim-                        component of language learning and use can be achieved^
+ilarity scores are taken as inputs for a formula on sentence-                      (Landauer, 2007, p. 31). The way LSA extracts Bmeaning^ from
+level similarity. Thus, MI is built first on word-level meaning,                   sentences is by relying on huge volumes of text fragments orga-
+moving up to sentence-level structures embedding the words.                        nized along a specified number of dimensions (a usual number of
+The output of MI is a similarity score between 0 and 1, where                      dimensions is 300). The multidimensionally represented texts are
+0 indicates no semantic overlap and 1 indicates an exact                           called Bsemantics spaces^ in which all terms have specific loca-
+match. In the following, these numbers will be referred to as                      tions, represented as vectors. New combinations of words can be
+Bsemantic similarity indices.^                                                     mapped as vectors in these spaces, resulting in quantitative mea-
+    Semantic similarity indices are then computed through the                      sures of their similarity with other expressions. For this reason,
+MI algorithm as the semantic distance between any pair of                          LSA has by some of its pioneers been argued as a mathematically
+items (Item 1–Item 2), (Item 1–Item 3), and so forth. The                          based theory of meaning (Deerwester, Dumais, Furnas,
+resulting output is a matrix representing the semantic relation-                   Landauer, & Harshman, 1990; Landauer, 2007). It is possible
+ships across all items. The following two items may serve as                       for LSA to determine that two sentences share the same meaning
+examples: BGenerally, I like to work here,^ and BI would be                        even if they do not share words or appear in the same passage.
+very happy to spend the rest of my career with this                                The reason for this is that the aggregated patterns of the semantic
+organization.^ In our surveyed data, these are found to have                       spaces will indicate the intended meaning of a sentence relative
+a correlation of .51, and their MI similarity index is .50 (a                      to all other possibilities in the semantic space.
+magnitude equivalent to their correlation).1                                          Comparing two texts BDoctors operate on patients^
+    However, when estimating the influence of semantics on the                     with Bphysicians do surgery,^ LSA returns a cosine of
+whole sample, we can use multiple regression to complete the MI                    .80. Comparing BThe radius of spheres^ with Ba circle’s
+values with the values from LSA used in previous analyses                          diameter^ the cosine returns .55, but between BThe radius
+(Arnulf et al., 2014). LSA is different from MI in that it                         of spheres^ and Bthe music of spheres,^ the cosine is as
+Bdemonstrates a computational method by which a major                              weak as .01 (Dennis et al., 2003). Because these methods
+                                                                                   have been presented in detail elsewhere (Arnulf et al.,
+1
+  It should be noted that we do not generally expect MI similarity indices to be   2014; Gefen & Larsen, 2017; Larsen & Bong, 2016;
+interchangeable with correlations, but that insofar as semantics have influ-
+enced the correlation matrix, there should be a measurable relationship be-
+                                                                                   Nimon et al., 2015), we refrain from elaborating on LSA
+tween the two.                                                                     here. The main point is that each of these algorithms have
+Behav Res (2018) 50:2345–2365                                                                                                            2351
+
+
+limitations so that a bundle of MI values and LSA extract-                   in this field, it is important that methods distinguish
+ed cosines performs better in predicting human language                      between the cognitive, semantic relationships between
+parsing than each of them in isolation.                                      words describing workplaces and the affective or attitu-
+                                                                             dinal dynamics that shape loyalty, commitment or their
+                                                                             negative counterparts.
+Attitude strength or semantics—Does it
+matter?
+                                                                             The problem of signs
+At first glance, one may ask whether the difference
+between semantics and attitude strength matters in prac-                     MI values do not take negative values at all, and when LSA
+tice, here operationalized as item distances and co-prod-                    cosines are negative, it does not signal a contrary statement.
+ucts. Many researchers are used to constructing mea-                         Thus, the algorithms cannot detect that an item is reversed, as
+surement scales with different wordings of the same                          is sometimes the case in surveys. Some survey structures de-
+items. This is a frequent way to ensure that the scale                       pend heavily on negative relationships and so finding a way to
+taps different facets of a construct while keeping it in-                    deal with this is important to estimate the actual relationship
+ternally consistent and delimited from other measures                        between the semantic and the surveyed matrices.
+included in the instrument (Nunnally & Bernstein,                                In this study, we follow the same procedure described pre-
+2010). So far, the semantic similarities would be                            viously by Arnulf et al. (2014), simply correcting the sign of
+expected.                                                                    the semantic values for reverse-scored items. One special case
+    The real problem, however, appears if the other con-                     is the Multifactor Leadership Questionnaire (Avolio, Bass, &
+structs tested are similarly determined by the semantic                      Jung, 1995), which does not contain reversed items. Instead,
+relationships, such that there is a necessary semantic                       about one fourth of the 990 item pairs were negatively corre-
+relationship between the independent and dependent var-                      lated because their subscales are theoretically devised to be the
+iables. In that case, the Bfactors^ are not separate, but                    opposite of effective leadership (Blaissez-faire^ and Bpassive
+still only facets of the same phenomenon. To prevent                         management by exception^). As we have described elsewhere
+this, researchers commonly apply various techniques                          (Arnulf et al., 2014), their negative relationships can be argued
+such as factor analysis to ensure the relative indepen-                      a priori, similarly to using one-tailed instead of two-tailed
+dence of these measures (Abdi, 2003).                                        significance tests. We tested this argument by making signs
+    The theoretical insufficiency of this assumption was                     of semantic identity negative when items combine positive
+poignantly outlined by van Knippenberg and Sitkin                            leadership with the subscales Blaissez-faire^ and Bpassive
+(2013), who showed that the construct of                                     management by exception^ and thereby correctly identified
+Btransformational leadership^ conflates the independent                      255 of the 264 negative correlations (p < .001).
+with the dependent variable through definitions and
+operationalizations. Empirically, the tautological link be-
+tween leadership and other constructs was demonstrated                       Samples and measures
+in the first article on STSR (Arnulf et al., 2014), where
+the relationship between all constructs was found to be                      We compared individual response patterns from the following
+determined by semantics, notwithstanding the rotated fac-                    four datasets, establishing a sample correlation matrix and a
+tor structures.                                                              semantic similarity matrix for each dataset. For each respon-
+    If research models simply end up with Bwhat can be                       dent in each sample, we computed their respective co-product
+said,^ this may explain why inflated statistics and a lack                   and item distance matrices.
+of predictive validity often result from such models
+( B a g o z z i , 2 0 11 ; G o l l w i t z e r & S h e e r a n , 2 0 0 6 ;   Dataset 1
+Podsakoff, MacKenzie, & Podsakoff, 2012; Podsakoff
+& Organ, 1986). From a research point of view, it                            A sample of 1,220 respondents filled out the Multifactor
+may actually be more interesting to see if attitude                          Leadership Questionnaire (MLQ) (Avolio et al., 1995) rating
+strength may override cognitive restraints on behavior.                      their immediate superior manager. The original sample
+Theories on organizational behavior frequently hypothe-                      consisted of 1,649 persons from a Norwegian bank who
+size that affective responses to leaders, job characteris-                   responded to a Norwegian translation of the survey. In the
+tics and social environments reduce calculative behav-                       present analysis, we only included respondents for whom
+iors (e.g., Conger & Kanungo, 1998; Felfe & Schyns,                          the demographics were known. Overall, 48.9% were females,
+2014; Ilies, Nahrgang, & Morgeson, 2007; Kuvaas,                             the sample age mean was 46 years, 71% were not managers,
+Arnulf, & Dysvik, 2008). For research to make progress                       middle managers made up 26% and 2% listed themselves as
+2352                                                                                                    Behav Res (2018) 50:2345–2365
+
+
+top managers. The MLQ contains 45 items, yielding a matrix         Analytic procedures
+of 990 unique pairs of items.
+                                                                   We computed the co-products and distances matrices for all
+                                                                   respondents in all four datasets. This included a total of 7,787
+Dataset 2                                                          respondents supplying one co-product matrix and one dis-
+                                                                   tance matrix each, yielding a total of 27,461,502 observed
+This contains responses from 255 scientists and engineers in a     item pair responses. For each respondent, we explored how
+governmental research agency. They responded to the MLQ            similar each of the matrices were to the two criterion matrices,
+(Avolio et al., 1995) rating their own superior managers, but in   the observed sample correlation matrix and the semantic ma-
+addition responded to scales measuring perceptions of eco-         trix, respectively. To describe similarity, we simply used the
+nomic and social exchange (seven and eight items each;             Pearson correlation between the individual’s matrix and the
+Shore, Tetrick, Lynch, & Barksdale, 2006), six items measur-       two criteria. If a person’s co-product matrix correlates highly
+ing intrinsic motivation (Kuvaas, 2006b), seven items measur-      with the correlation matrix (regardless of response strength),
+ing organizational citizenship behavior (OCB; van Dyne &           this person contributes to the observed pattern in sample sta-
+LePine, 1998), five items measuring turnover intention (TI;        tistics (in the form of alphas and factor structures derived from
+Kuvaas, 2006a), as well as ten items measuring work quality        these). On the contrary, if the person’s co-product matrix cor-
+and work effort (Kuvaas, 2006b). In total, the survey              relates weakly with the observed sample matrix, this person’s
+contained 79 items producing 3,081 unique pairs in each of         contribution to the sample contains noise that is filtered out in
+the matrices. Demographics revealed 66.7% were male with a         the sample matrix.
+mean age of 38 years.                                                  We measured the individual’s similarity with the semantic
+                                                                   indices in the same way. A person whose individual matrices
+                                                                   correlate highly with the semantic similarity matrix can be
+Dataset 3                                                          said to comply with the expected semantic patterns of the
+                                                                   survey. In the case of weak correlations, the individual can
+In this sample, 981 employees from the Norwegian Armed             be said to depart from the semantically expected pattern. As
+Forces responded to a broad range of diverse items concerning      we argued above, we expect the semantic similarity index
+leadership and other OB variables rating their own superior        matrix to be closer to the individuals’ item distance matrices
+managers: 20 items from the MLQ (Avolio et al., 1995); eight       than to their item co-product matrices.
+items measuring leader–member exchange (LMX; Bernerth,                 For each individual, we computed these similarities (corre-
+Armenakis, Feild, Giles, & Walker, 2007); 20 items from the        lations between their individual matrices and the two criteria)
+Leadership Behavior Development Questionnaire (LBDQ;               and retained these for further explorations. We also averaged
+Stogdill, 1963), of which ten items are related to initiation of   the co-products and differences across individuals and obtain-
+structure and ten items to consideration. Additionally, eight      ed another two measures: The average item distance matrices
+items were from a scale measuring affective organizational         and the average co-products for each of the four samples.
+commitment (Meyer, Allen, & Smith, 1993), job satisfaction             The literature on partialing independent variables some-
+(three items) (Cammann, Fichman, Jenkins, & Klesh, 1979),          times suggests that such comparisons should be done using
+TI (Kuvaas, 2006a), and a scale measuring self-rated work          intraclass coefficients (Lynam, Hoyle, & Newman, 2006).
+quality and work effort, with altogether ten items (Kuvaas,        However, in this case we chose to stay with the simplest pro-
+2006b). In total, the 69 items in this survey provided 2,346       cedures possible. The sources we compare are identical con-
+unique pairs of items in the various matrices computed. No         structs (the contents of the scales) and the only differences that
+demographics were available in this sample.                        we compare are between the calculations of co-products and
+                                                                   distances. We are simply exploring which aspects of the indi-
+                                                                   vidual response patterns are most similar to the observed sam-
+Dataset 4                                                          ple statistics. In no case did we try to nest analyses as these
+                                                                   procedures have not been tried before, and we want to reduce
+This consisted of a sample of 5,332 students responding to an      complexities until a solid methodology is established in the
+officially translated Norwegian version the NEO-FFI, which         field of survey semantics.
+is a commonly used five-factor personality inventory (Costa
+& McCrae, 1992; Martinsen, Nordvik, & Østbø, 2003). This
+is a short form with 60 items, yielding 1,770 unique pairs of      Results
+correlations in the various matrices. Demographics for the
+sample showed the mean age to be 25 years, and 44.7% were          Table 2 shows the distributions for co-product and distance
+male.                                                              similarities. Although the values vary, the relationships are
+Behav Res (2018) 50:2345–2365                                                                                                                2353
+
+Table 2   Descriptive statistics for the individual co-product and distance matrices of all four datasets
+
+                    Co-Products Similarity With          Co-Products Similarity         Item Distances Similarity With   Item Distances Similarity
+                    Sample Correlation Matrix            With Semantic Matrix           Sample Correlation Matrix        With Semantic Matrix
+
+DATASET 1           MLQ only
+  Mean              .44                                  .42                            .45                              .42
+  Maximum           .86                                  .91                            .93                              .96
+  Minimum           – .49                                – .51                          – .17                            – .16
+DATASET 2           MLQ with measures of motivation and outcomes
+  Mean              .25                                  .31                            .27                              .26
+  Maximum           .55                                  .69                            .66                              .77
+  Minimum          – .15                         – .13                           .00                                     – .06
+DATASET 3          INDIVIDUAL LEVEL (Three types of leadership, div. motivation, outcomes)
+  Mean             .23                                   .35                            .37                              .34
+  Maximum          .75                                   .92                            .78                              .97
+  Minimum          – .51                                 – .56                          – .02                            – .16
+DATASET 4          NEO-FFI five-factor personality measures only
+  Mean             .21                               – .01                              .23                              .02
+  Maximum          .45                                   .31                            .65                              .22
+  Minimum          – .06                                 – .33                          – .05                            – .19
+
+
+
+strong for the first three datasets containing OB surveys, but                 responses, there is a relationship between response strength
+they break down in the case of the NEO. The differences                        and the sample correlation matrix.
+among all the means are statistically significant, with the fol-                  We therefore turn to an exploration of how the individuals’
+lowing exceptions: In Samples 1 and 2, the co-product matri-                   score levels (indicating attitude strength) relate to how similar
+ces’ similarities with the sample matrix are nonsignificantly                  the individuals’ co-product and distance matrices are to the
+different from the distance matrices’ similarity with the se-                  two criteria: sample correlations and semantics. Table 3 dis-
+mantics. In Samples 3 and 4, there is a nonsignificant differ-                 plays the data for all four datasets.
+ence between the co-product and difference matrices in their                      The findings in Table 3 show that attitude strength (score
+similarity with semantics.                                                     levels) are more strongly related to the co-products than to the
+    Generally, there does not seem to be much difference be-                   item distance matrices. This is expected theoretically, both
+tween the distance and co-product matrices in terms of their                   because measuring attitude strength is the purpose of the sur-
+distributions. The distance matrices seem to reach higher max-                 veys and because of the correlation coefficient formula.
+imum similarities with the observed correlation matrix as well                 However, for the first three datasets, the scale levels are not
+as with the semantic values, and their minimum values are                      only related to how similar the co-products are to the correla-
+also not as low. The latter phenomenon may be due to the fact                  tion matrix—they are also related to how the co-products re-
+that an individual’s co-product matrices can be negatively re-                 late to the semantics. It is as if people who respond strongly to
+lated to the sample correlation matrix.                                        the theoretically favorable conditions in the OB surveys are
+    Figures 2, 3, 4 and 5 show the distributions of two                        also more compliant with the semantic patterns, possibly be-
+individual-level variables: How similar the individual co-                     cause they pay more attention to the exact wording of the
+products are to the correlation matrix (sorted in this order),                 survey. Conversely, people expressing more moderate attitude
+and the item distance matrix similarity with semantics for                     strengths are responding with less compliance to the semanti-
+the same individuals:                                                          cally expected patterns.
+    The plots show that for the first three datasets, to the extent               This relationship is much weaker for the NEO data, and
+that the individual’s co-products are similar to the observed                  Table 3 also holds more differential information about possi-
+correlation matrix, the same person’s item distance matrix will                ble explanations. It turns out that the personality scores are
+be similar to the semantic values. In the fourth dataset, con-                 differently sensitive to semantic values. Table 4 shows that the
+taining the NEO data, this phenomenon is not obviously pres-                   five traits have very different impacts on an individual’s re-
+ent. Also, in the first three datasets, an extreme negative rela-              sponse patterns—both in the way they relate to the sample
+tionship between the co-product matrix and the sample corre-                   matrix and in the extent to which they are influenced
+lation matrix implies higher compliance with what is seman-                    by semantics. Not surprisingly, people scoring high on
+tically expected. This suggests that in the individual                         conscientiousness are compliant with semantics, as are
+2354                                                                                                                 Behav Res (2018) 50:2345–2365
+
+
+            1.00
+
+
+            0.80
+
+
+            0.60
+
+
+            0.40
+
+
+            0.20
+
+
+            0.00
+
+
+            -0.20
+
+
+            -0.40
+
+
+            -0.60
+
+Fig. 2 Dataset 1: MLQ values, sorted by co-product similarity (correlation) to the sample matrix (thick line) and plotted with the same individual’s
+distance similarity to semantics (N = 1,220)
+
+people who score low on openness. These individuals                          terms, and hence be more semantically predictable.
+may be more inclined to interpret the text in literal                        People who score low on neuroticism display a strong
+
+
+              1
+
+
+
+
+            0.8
+
+
+
+
+            0.6
+
+
+
+
+            0.4
+
+
+
+
+            0.2
+
+
+
+
+              0
+
+
+
+
+            -0.2
+
+Fig. 3 Dataset 2: Individual responses to an MLQ with motives and outcomes, sorted by co-product similarity to the sample matrix (thick line) and the
+same individual’s distance similarity to semantics (thin line) (N = 255)
+Behav Res (2018) 50:2345–2365                                                                                                                         2355
+
+
+               1
+
+
+             0.8
+
+
+             0.6
+
+
+             0.4
+
+
+             0.2
+
+
+               0
+
+
+            -0.2
+
+
+            -0.4
+
+
+            -0.6
+
+Fig. 4 Dataset 3: Individual responses to three leadership styles, motives, and outcomes, sorted by co-product similarity to the sample matrix (thick line)
+and the same individual’s distance similarity to semantics (thin line) (N = 981)
+
+
+tendency to respond very differently from all other                             people—their responses are negatively predicted by the
+                                                                                sample correlation matrix.
+
+
+             0.50
+
+
+             0.40
+
+
+             0.30
+
+
+             0.20
+
+
+             0.10
+
+
+             0.00      1
+                     142
+                     283
+                     424
+                     565
+                     706
+                     847
+                     988
+                    1129
+                    1270
+                    1411
+                    1552
+                    1693
+                    1834
+                    1975
+                    2116
+                    2257
+                    2398
+                    2539
+                    2680
+                    2821
+                    2962
+                    3103
+                    3244
+                    3385
+                    3526
+                    3667
+                    3808
+                    3949
+                    4090
+                    4231
+                    4372
+                    4513
+                    4654
+                    4795
+                    4936
+                    5077
+                    5218
+            -0.10
+
+
+            -0.20
+
+
+            -0.30
+
+Fig. 5 Dataset 4: Individual NEO profiles, sorted by co-product similarity to the sample correlation matrix (thick continuous line) and the same
+individual’s distance similarity to semantics (thin jagged line) (N = 5,331)
+2356                                                                                                                    Behav Res (2018) 50:2345–2365
+
+Table 3   How the relationships between subscale scores (attitude strength) relate to individuals’ co-product and distance matrix properties
+
+Survey Subscale                           Co-Products Resembling        Co-Products Resembling       Distances Resembling       Distances Resembling
+                                          Sample Matrix                 MI (Semantics)               Sample Correlations        MI Values
+
+DATASET 1: How co-products and distances related to respondents’ scale levels (N = 1,220, p all values < .01)
+  Transformational leadership             .86                           .83                          .70                        .67
+  Transactional leadership                .25                           .31                          .26                        .32
+  Laissez-faire                           – .83                         – .85                        – .66                      – .66
+DATASET 2: How co-products and distances related to respondents’ scale levels (N = 255, p all values < .01)
+  Transformational leadership             .81                           .77                          .73                        .82
+  Transactional leadership                .28                           .29                          .23                        .33
+  Laissez-faire                           – .66                         – .62                        – .63                      – .66
+  Economic exchange                       – .60                         – .62                        – .47                      – .44
+  Social exchange                         .41                           .45                          .35                        .36
+  Intrinsic motivation                    .58                           .59                          .47                        .42
+  Work effort                             .36                           .38                          .32                        .30
+  Work quality                            .22                           .24                          .19                        .19
+  Turnover intentions                     – .54                         – .59                        – .40                      – .45
+  Organizational citizenship behavior .32                          .33                            .30                           .27
+AVERAGE ABSOLUTE VALUES               .48                          .49                            .41                           .42
+DATASET 3: How co-products and distances related to respondents’ scale levels (N = 981, p all values < .01)
+  Initiating structure                   .52                            .44                          .35                        .45
+  Consideration                          .74                            .55                          .41                        .51
+  Transformational leadership            .79                            .57                          .50                        .58
+  Leader–member exchange                 .72                            .54                          .45                        .53
+  Job satisfaction                       .62                            .67                          .38                        .44
+  Work effort                            .19                            .29                          .22                        .18
+  Work quality                           .12                            .22                          .20                        .17
+  Affective commitment                   .53                            .67                          .47                        .54
+  Turnover intention                 – .78                         – .92                          – .61                   – .67
+AVERAGE ABSOLUTE VALUES              .56                           .54                            .40                     .45
+                                                                                                                          ns
+DATASET 4: How co-products and distances related to respondents’ scale levels (N = 5,331, p all values < .01 except marked )
+  Neuroticism                        – .83                         .33                            – .77                   .20
+  Extraversion                       .57                           – .16                          .52                     – .17
+  Openness to experience                  .15                           – .45                        .09                        – .28
+  Agreeableness                           .17                           – .11                        .16                        – .06
+  Conscientiousness                       .64                           .01ns                        .57                        .09
+AVERAGE ABSOLUTE VALUES                   .47                           .21                          .42                        .16
+
+
+
+
+  One reason why neuroticism correlates so highly with se-                      these individuals respond differently from others, they proba-
+mantics in Table 4 is that it may be due to noise. If many of                   bly also respond differently from each other. It is possible that
+
+
+Table 4   Each personality trait regressed on the respondent’s similarity with the sample matrix and semantic matrix
+
+Adjusted R2                                     Neuroticism       Extraversion          Openness             Agreeableness       Conscientiousness
+
+                                                .69               .32                   .20                  .03                 .46
+                                                St. Beta   Sig.   St. Beta       Sig.   St. Beta   Sig.      St. Beta    Sig.    St. Beta      Sig.
+
+Co-products similarity with sample matrix       – .81      .00    .58            .00    .00        .80       .15         .00     .71           .00
+Co-products similarity with semantics           .07        .00    .03            .03    – .45      .00       – .06       .00     .24           .00
+Behav Res (2018) 50:2345–2365                                                                                                                           2357
+
+           5.00
+
+
+
+
+           4.00
+
+
+
+
+           3.00
+
+
+
+
+           2.00
+
+
+
+
+           1.00
+
+
+
+
+           0.00      1
+                    87
+                   173
+                   259
+                   345
+                   431
+                   517
+                   603
+                   689
+                   775
+                   861
+                   947
+                  1033
+                  1119
+                  1205
+                  1291
+                  1377
+                  1463
+                  1549
+                  1635
+                  1721
+                  1807
+                  1893
+                  1979
+                  2065
+                  2151
+                  2237
+                  2323
+                  2409
+                  2495
+                  2581
+                  2667
+                  2753
+                  2839
+                  2925
+                  3011
+                  3097
+                  3183
+                  3269
+                  3355
+                  3441
+                  3527
+                  3613
+                  3699
+                  3785
+                  3871
+                  3957
+                  4043
+                  4129
+                  4215
+                  4301
+                  4387
+                  4473
+                  4559
+                  4645
+                  4731
+                  4817
+                  4903
+                  4989
+                  5075
+                  5161
+                  5247
+
+
+          -1.00
+
+
+
+
+          -2.00
+
+
+
+
+          -3.00
+
+
+
+
+          -4.00
+
+Fig. 6 NEO: Individual respondents’ co-product matrices sorted by their similarity to the sample correlation matrix (thick straight line), plotted with their
+z scores on neuroticism (thin jagged line). (N = 5,331)
+
+the only thing such people have in common is the semantic                        between semantic compliance and neuroticism. This is illus-
+properties of these items, thus strengthening the relationship                   trated as a plot in Fig. 6. Figure 7 shows that the personality
+
+
+            3.00
+
+            2.00
+
+            1.00
+
+            0.00         1
+                       146
+                       291
+                       436
+                       581
+                       726
+                       871
+                      1016
+                      1161
+                      1306
+                      1451
+                      1596
+                      1741
+                      1886
+                      2031
+                      2176
+                      2321
+                      2466
+                      2611
+                      2756
+                      2901
+                      3046
+                      3191
+                      3336
+                      3481
+                      3626
+                      3771
+                      3916
+                      4061
+                      4206
+                      4351
+                      4496
+                      4641
+                      4786
+                      4931
+                      5076
+                      5221
+
+          -1.00
+
+          -2.00
+
+          -3.00
+
+          -4.00
+Fig. 7 NEO: Individual respondents’ co-product matrices sorted by their similarity to the sample correlation matrix (thick straight line), plotted with their
+z scores on conscientiousness (thin jagged line) (N = 5,331)
+2358                                                                                                                   Behav Res (2018) 50:2345–2365
+
+
+trait conscientiousness has the opposite relationship to the                   this, we averaged the item co-products and item dis-
+sample matrix.                                                                 tances across respondents for each pair of items in all
+    Dataset 4 is therefore particularly valuable in show-                      datasets. This level of analysis corresponds to the sec-
+ing that people need not respond in ways that are se-                          ond step in the formulas for correlations or covariances,
+mantically determined. Compliance with what is seman-                          in which the sums of products are divided by sample
+tically expected seems to depend on a number of con-                           size. Table 6 displays the relationships between the sam-
+ditions, including attitude strength and personality traits.                   ple correlation matrix, the semantic matrix, and the av-
+    Dataset 1 originally contained a shortened version of the                  eraged co-products and distance matrices for all four
+NEO that was not included in the previously published study                    samples. For all samples, the average-distance matrix
+by Arnulf et al. (2014). Including information about person-                   is more closely related to both the sample correlation
+ality in the present analysis allows us to check how demo-                     matrix and the semantic matrix. Interestingly, in the first
+graphics and personality may affect semantic compliance in                     three datasets, the sample correlation matrix is also
+the MLQ data, which is usually where semantics show the                        more strongly correlated with the semantic values than
+strongest influence. We regressed the similarity of the co-                    with any data generated by respondents (co-products or
+product and distance matrices with either the sample correla-                  distances).
+tions or semantics, on demographics, NEO scores, the MLQ                          In Tables 7, 8, and 10, the sections display the fol-
+scale values, and finally the respondents’ management level.                   lowing analyses: Tables 7 and 8 explore the degree to
+The results can be seen in Table 5. It appears that demo-                      which the co-products (Table 7) or distances (Table 8)
+graphics are not important, but personality and respondents’                   are explained by semantics. As we argued initially, for
+satisfaction with their own manager play roles for all matrices.               Datasets 1–3, the item distance matrices are much closer
+    It can thus be demonstrated that the co-product ma-                        to the semantic values than to the co-products.
+trices capture diverse sources of variance influencing                            In Table 9, we use hierarchical regression to explore the
+individuals’ responses, such as their attitude strength,                       degree to which the observed sample correlation matrix is
+personality dispositions, and management level. All of                         differentially explained by semantics, co-products, or dis-
+these variables seem to influence the attitude strength of                     tances. We entered the semantic values in Step 1. It appears
+individuals, as well as their coherence with expected                          that the co-products have a minute impact on the observed
+semantic properties of the scale.                                              sample correlations, since only the distance matrix scores im-
+    But how much of this individual-level information is                       prove the models in Step 2. This also holds for Dataset 4, the
+carried over into the sample characteristics? To explore                       NEO scores.
+
+
+Table 5     Dataset 1: Individual respondents’ matrices explained by demographics, personality, and leadership score
+
+Variables                     Co-Products                                                  Distances
+
+                              Similarity With Sample Matrix Similarity With Semantics Similarity With Sample Matrix Similarity With Semantics
+
+                              Standard Beta        Sig.        Standard Beta      Sig.     Standard Beta        Sig.       Standard Beta     Sig.
+
+(Constant)                    – 1.17               .24         – 0.80             .42      – 1.25               .21        – 1.44            .15
+Birth year                    1.13                 .26         0.85               .40      1.24                 .22        1.42              .16
+Sex                           – 3.37               .00         – 2.80             .01      – 1.14               .25        – 1.11            .27
+Education                     0.89                 .37         0.82               .41      – 0.27               .79        – 0.82            .41
+Tenure                        2.66                 .01         1.89               .06      0.02                 .98        0.23              .82
+Neuroticism                   0.96                 .34         0.47               .64      – 2.66               .01        – 2.62            .01
+Extraversion                  – 2.74               .01         – 2.49             .01      0.05                 .96        0.03              .98
+Openness                      0.00                 1.00        – 0.57             .57      2.17                 .03        1.66              .10
+Agreeableness                 – 1.80               .07         – 1.35             .18      – 2.03               .04        – 1.66            .10
+Conscientiousness             – 0.88               .38         – 1.18             .24      2.41                 .02        2.01              .04
+Transformational leadership   45.56                .00         31.70              .00      14.72                .00        1.84              .00
+Transactional leadership      – 9.66               .00         1.25               .21      – 0.39               .69        3.82              .00
+Laissez-faire                 – 35.53              .00         – 39.48            .00      – 13.75              .00        – 15.12           .00
+Management level              0.53                 .60         – 2.03             .04      2.27                 .02        0.71              .48
+Model adj. R2                 .91                              .88                         .58                             .54
+Behav Res (2018) 50:2345–2365                                                                                                                         2359
+
+Table 6    Correlations between the sample correlation matrix, semantic matrix, and average co-product and distances matrices
+
+                        Sample Correlation      Semantic (MI)       Average Co- Product Sample Correlation          Semantic (MI)      Average Co- Product
+                        Matrix                  Matrix              Matrix              Matrix                      Matrix             Matrix
+
+                        DATASET 1 MLQ ONLY                                                  DATASET 2 MLQ MOTIVES OUTCOMES
+Semantic (MI) ma- .81**                                                                     .70**
+  trix
+Average co-products .83**           .71**                                                   .40**                   .50**
+  matrix
+Average distances   .97**           .80**        .82**                                      .59**                   .56**              .39**
+  matrix
+                    DATASET 3 DIV LEADERSHIP OUTCOMES                                       DATASET 4 NEO-FFI
+Semantic (MI) ma- .70**                                                                     .03
+  trix
+Average co-products .40**                       .50**                                       .39**                   – .02
+  matrix
+Average distances   .59**                       .56**               .39**                   .67**                   .05*               .68**
+  matrix
+
+**Correlation is significant at the .01 level (two-tailed). *Correlation is significant at the .05 level (two-tailed)
+
+   Finally, as is displayed in Table 10, we regressed the aver-                   form of semantic structures influence individual survey re-
+age co-product and distance matrices on the semantic values,                      spondents. Also, we wanted to show how the commonly ap-
+keeping the residuals, using these as estimates of scores after                   plied statistical techniques departing from correlation or co-
+controlling for semantics. We then used hierarchical regres-                      variance matrices run a real risk of filtering out attitude
+sion to predict the sample correlation matrices. Entering the                     strength, its own subject matter, to instead reflect the cognitive
+residuals of the co-products in Step 1, these still had predictive                language parsing mechanisms of the respondents.
+power until the residuals of the distance scores were entered in                      Since no previously validated method exists to answer this
+Step 2. Here again, the co-products lost most of their predic-                    question, we have argued that individual-level analyses can be
+tive power, becoming nonsignificant in one case, and of min-                      performed by calculating two different types of individual-
+ute practical importance in the other cases.                                      level response matrices: the co-product and item distance ma-
+   In this way, it appears that although the co-products carry                    trices. Departing from the formula for product-moment corre-
+substantial amounts of information about individuals’ response                    lation coefficients, we argue that by multiplying the paired
+patterns (and their sources of variance), this information is                     responses for all individuals, the co-products should capture
+largely lost in the average sample matrices. What appears in-                     the response strength. Conversely, individual matrices com-
+stead is a function of the item distances, which are mainly                       puted as absolute distances (subtracting response X from re-
+informed by semantics.                                                            sponse Y) should be relatively distinct from attitude strength
+                                                                                  and closer to the expected semantic values.
+                                                                                      Our analysis seems to support these assumptions. Although
+                                                                                  the two kinds of matrices contain much of the same information
+Discussion                                                                        and display similar distributions, the individual co-product ma-
+                                                                                  trices are most sensitive to the respondents’ scale score levels,
+This study has served two purposes: Primarily, we sought to
+                                                                                  indicating their attitude strength. The distance matrices seem
+develop a method for assessing how cognitive processes in the
+
+Table 7    Average co-products predicted by semantics in linear regression
+
+                     DATASET 1                           DATASET 2                           DATASET 3                         DATASET 4
+
+                     Standard                  Adj.      Standard                  Adj.      Standard                   Adj.   Standard               Adj.
+                     Beta           Sig.       R2        Beta           Sig.       R2        Beta           Sig.        R2     Beta            Sig.   R2
+
+(Constant)                          .000                                .000                                .000                               .000
+MI values            .42            .000                 .67            .000                 .66            .000               – .06           .028
+NEWS cosines         .06            .428                 – .45          .000                 .19            .000               .15             .000
+BIZ cosines          – .08          .479                 – .08          .373                 – .09          .077               – .10           .000
+PR Cosines           .42            .000       .58       .32            .000       .26       – .07          .297        .47    – .06           .139   .02
+2360                                                                                                                     Behav Res (2018) 50:2345–2365
+
+Table 8      Average distances predicted by semantics in linear regression
+
+                      DATASET 1                         DATASET 2                         DATASET 3                        DATASET 4
+
+                      Standard                Adj.      Standard                Adj.      Standard                Adj.     Standard                Adj.
+                      Beta          Sig.      R2        Beta          Sig.      R2        Beta          Sig.      R2       Beta          Sig.      R2
+
+(Constant)                          .000                              .000                              .000                             .000
+MI values             – .44         .000                – .31         .000                – .84         .000               – .09         .001
+NEWS cosines          – .12         .042                – .64         .000                .17           .000               – .05         .189
+BIZ cosines           – .11         .191                – .16         .042                .12           .008               .02           .312
+PR Cosines            – .26         .001      .75       .52           .000      .35       – .25         .000      .65      .15           .000      .01
+
+
+
+less sensitive to score level (attitude strength) and are more                 for all respondents does not reach a higher similarity than a
+strongly related to the semantic properties of the scales.                     correlation of .21 with the matrix for the whole sample, and no
+    The exploration of the individual co-product matrices                      individual had a correlation higher than .45 with the sample
+shows that these contain rich information about a number of                    structure. This means that for each individual, there is consid-
+respondent characteristics. Among the sources of variation                     erable variation in the ways that response patterns emerge, and
+found were personality, satisfaction with one’s own manager,                   no one displays an entirely Bnormal^ response structure in the
+and personal management level. In the case of the NEO-FFI,                     statistical sense. This can be assumed to contribute to the
+the personality trait levels exerted a much stronger influence                 predictive validity of the Big Five in many areas (van der
+on the individual response patterns than did the semantic prop-                Linden, te Nijenhuis, & Bakker, 2010) because individual
+erties of the items, in line with previous findings (Arnulf et al.,            response patterns are allowed to be widely different from the
+2014). However, when aggregated on sample levels, the ex-                      norm, hence capturing more idiosyncratic patterns character-
+planatory power of the distance matrices dominated complete-                   izing the individuals. Responses to the items in NEO-FFI may
+ly, and almost nothing was left of the information from attitude               reflect stable behavioral dispositions that are pervasive in the
+strength. This was even true in the case of NEO-FFI scores,                    respondents’ autobiographic memory. Hypothetically, person-
+but in this case, the distances were still only weakly informed                ality may be a part of how the respondents apply their cogni-
+by the semantic properties of the items.                                       tive semantic processes, hence reflecting more Bfundamental^
+    To understand how and why this happens, the NEO matri-                     psychological processes than those normally applied when
+ces were informative. The aggregated correlation matrix for                    answering surveys.
+the whole sample displayed a structure that most individuals                       This is not so for the OB scales in the three other datasets,
+do not display themselves. Even the mean co-product matrix                     in which the similarity is much higher. The mean correlation is
+
+
+
+Table 9      Semantics, with average co-products and distances, in a hierarchical regression with sample correlation matrix as the dependent variable
+
+Model               DATASET 1                        DATASET 2                         DATASET 3                         DATASET 4
+
+                    Standard Beta Sig.     Adj. R2 Standard Beta Sig.        Adj. R2 Standard Beta Sig.        Adj. R2 Standard Beta Sig.       Adj. R2
+
+1. (Constant)                       .000                              .000                             .000                              .174
+MI values           .43             .000             .64              .000             .71             .000              .03             .207
+NEWS cosines        .17             .001             .70              .000             – .15           .001              – .08           .046
+BIZ cosines         .06             .456             .21              .002             .00             .971              – .01           .791
+PR Cosines          .30             .000 .79         – .83            .000 .53         .12             .057 .47          .06             .140 .00
+2. (Constant)                       .000                              .000                             .000                              .000
+MI values           .07             .000             .52              .000             .04             .036              – .04           .034
+NEWS cosines        .08             .002             .58              .000             .04             .193              – .11           .001
+BIZ cosines         – .02           .669             .18              .006             .09             .017              .00             .954
+PR Cosines          .07             .047             – .73            .000             – .11           .013              .17             .000
+AvgCoProds          .09             .000             .07              .000             – .16           .000              – .13           .000
+AvgDist             – .73           .000 .95         .23              .000 .57         – .91           .000 .75          – .76           .000 .46
+Behav Res (2018) 50:2345–2365                                                                                                                   2361
+
+Table 10   Co-products and distances controlled for semantics, in a hierarchical regression with sample correlation matrix as the dependent variable
+
+Model                             DATASET 1                    DATASET 2                    DATASET 3                    DATASET 4
+
+                                  Standard      Sig. Adj.      Standard      Sig. Adj.      Standard       Sig. Adj.     Standard       Sig. Adj.
+                                  Beta               R2        Beta               R2        Beta                R2       Beta                R2
+
+1. (Constant)                                   .000                         .000                          .000                         .000
+Co-products controlled for        .24           .000 .06       .09           .000 .01       .01            .635 .00      .39            .000 .15
+   semantics
+2. (Constant)                                   .000                         .000                          .000                         .000
+Co-products controlled for        .06           .080           .06           .002           .11            .000          .13            .000
+   semantics
+Distances controlled for          .37           .000 .16       .19           .000 .04       .54            .000 .27      .76            .000 .46
+   semantics
+
+
+
+
+around .45 and the maximum values as high as .90. This                      (Podsakoff et al., 2012). When the matrix of average distances
+distribution may even have been a goal for the scholars devel-              emerges as the most powerful predictor of the observed cor-
+oping the scales, since this will greatly enhance the alpha                 relation matrix, it can only be explained by reducing the role
+reliability, factor structure, and model fit indices of the scales,         of attitude strength to a mere carrier of semantic information.
+which are taken by many journals as quality criteria (Abdi,                     These findings are troublesome for the interpretation of
+2003; Arnulf et al., 2014; Fabrigar, Wegener, MacCallum, &                  factor analyses and latent factor modeling on a theoretical
+Strahan, 1999; Nunnally & Bernstein, 2010). Failing to com-                 level. Correlation as a method has always been known as
+ply with such criteria has even been raised as an objection                 being vulnerable to the problem of the Bthird variable^ in
+against the five-factor model (McKenzie, 1998).                             whatever form (Antonakis, Bendahan, Jacquart, & Lalive,
+    When item semantics become the main common factor                       2010). The present study suggests that the relationships picked
+shaping the responses to the survey, it implies either that the             up in correlation matrices may not even be due to extraneous
+respondents have little else in common, or that the survey                  factors influencing relationships. As was recently shown by
+elicits few other types of responses. In the NEO sample,                    Maul (2017), data structures with good psychometric proper-
+Neuroticism seemed to make people answer in dissimilar                      ties can be obtained not only with nonsensical, but even with
+ways that left little other than semantics in common. It also               empty items that cannot possibly reflect any attitude strength
+appears as if conscientiousness increases the effort to comply              whatsoever. From the semantic perspective in our case, it ap-
+with the requirements of the survey, and low values of open-                pears that the method of correlating Likert-scale data may
+ness to experience seemed to create a propensity to answer the              easily become detached from its own subject matter—the at-
+survey items in very literal ways, akin to the stale patterns               titude strength—and instead pick up patterns created by the
+detected by the computerized semantic algorithms.                           cognitive process of linguistic parsing when reading the items.
+    The key to understanding the influence of semantics in                  Such a situation is clearly in conflict with Likert’s original
+surveys may reside in the well-known tenet of classical psy-                viewpoints on the value of his method (Likert, 1932), and
+chometrics, that all sources of variance in responses will be               shows how Thurstone was right in his doubts about the num-
+filtered out as noise if they are randomly distributed (Nunnally            bers collected by Likert’s scales (Andrich, 1996).
+& Bernstein, 2010). In our study, this seems to happen with                     When this happens, the method has lost its purported object
+many sources of variation that determine attitude strength in               and the findings are no longer concerned with the attitudes
+surveys on OB. Even if attitude strength appears to be an                   toward the contents of the survey. When factor structures
+important determinant of individual co-product matrices,                    and other model characteristics of survey data are based on
+reflecting meaningful differences among the respondents, the                semantics, they are no longer empirical, but semantic, similar
+effects of attitude strength seem to disappear in the averaged              to what Russell and Wittgenstein thought of as Blogical^ facts
+sample matrices. What is left is the common denominator of                  (Russell, 1922).
+most respondents—their compliance with the semantic                             We believe that the reason for these important differences
+criteria in the items.                                                      between the OB scales and the NEO personality items may be
+    It is compelling that the observed sample matrices, them-               found in a subtle difference in the construction of items and
+selves computed by adding the co-products of items, seem to                 scales. Psychometric techniques originate from intelligence
+lose their roots in these values. The co-products should have               testing (Likert, 1932, p. 50), where the focus of interest was
+emerged as important if only due to common method bias                      actual behaviors (e.g., response time or error rate) and not the
+since these were the input values for the correlation matrix                endorsement of propositions. The items in personality tests
+2362                                                                                                     Behav Res (2018) 50:2345–2365
+
+
+such as the NEO sample from observations of earlier behav-          to share in order to respond in reliably different ways. The
+iors—for example, work habits, episodes of self-control, and        common ways of using Likert-scale data until now has largely
+aesthetic experiences. Although the personality test items may      been to find statistically significant patterns using null hypoth-
+superficially look similar to the OB counterparts, they are         esis significance testing (Krueger, 2001). This may be one of
+actually sampling a wide range of behavior frequencies. To          the reasons why models based on survey data suffer from
+the extent that respondents report overt and quantifiable be-       common method variance and poor predictive validity
+haviors, the information is non-semantic. Some authors argue        (Bagozzi, 2011; McClelland, Koestner, & Weinberger, 1989;
+that test items should include broad samples of behavior in-        Podsakoff et al., 2012). If we had a way of establishing an
+stead of seeking high alpha reliabilities through similarly         expected semantic pattern of responses, it may serve as a bet-
+worded items (Kline, 2000). This approach probably creates          ter platform for testing nonobvious behavioral relationships
+messier factor structures and alphas, but it does seem to cluster   than simply rejecting a null hypothesis (Arnulf, Larsen,
+non-semantic relationships between behaviors in peoples’            Martinsen, & Bong, 2015; Rodgers, 2010; Smedslund, 1994).
+lives.                                                                  Secondly, and conjunctive to this, it may be much more
+    The OB items are much closer to Likert’s original view of       interesting and informative to explore how survey data deviate
+his instruments as Bdispositions toward overt action^ or an         from the semantically expected. Our capacity for abstract
+Bindirect method^ (Likert, 1932 p. 9). Following Likert’s           thinking seems to originate from the brain’s spatial capabili-
+work, measures of attitudes have been asking the respondents        ties, and these spatial representations are always distorted
+to rate opinions on anything from US-Japanese relations             (Tversky, 1993). It is conceivable that individual idiosyncra-
+(Likert, 1932) to ease of use in computer software (Davis,          sies may distort the semantic spaces of individuals also, and
+1989). Such questions rarely tap information about observed         that these differences are valuable psychological information.
+behaviors, but are much more likely to address purely cogni-        The findings of the present study show that respondents leave
+tive constructions (Gefen & Larsen, 2017). As was shown by          multiple types of information in their response patterns. If this
+Gollwitzer and Sheeran (2006), attitudinal measures can only        information is reduced to the semantic commonalities of the
+modestly predict behavior unless the subject has previous ob-       participants, we may miss the true value of the collected in-
+servations of own behavior. Researchers may infuse instru-          formation. A better understanding of the semantic structures
+ments with semantic relationships that will raise alpha reliabil-   and how they are bent by respondents may offer new insights
+ities, but this will not necessarily improve the predictive va-     with better predictive validity because they are closer to the
+lidity of the measures.                                             characteristics of the respondents.
+    The application of statistical methods to the purported mea-        Two examples may be useful here: The semantic algo-
+surements of latent, but verbally defined constructs is mathe-      rithms predict that transformational leadership will be linked
+matically complex and fraught with unsolved questions about         to intrinsic motivation and work outcomes simply because the
+quantification (Slaney, 2017). To the degree that items tap         items have overlapping meanings. A person who endorses his
+information about more or less overt behaviors, their quanti-       boss (transformational leadership) and likes his tasks (intrin-
+fication may be more straightforward than measurements of           sically motivated) will also not look for a job (turnover inten-
+attitudes. We are currently working on designs to explore the       tion) because this is simply what these sentences imply. These
+relationships between semantics and behavioral assessments          connections will be discernible in a large sample of people
+in more detail. On the other hand, we think this opens up a         simply because this is how they read the items, on average.
+fascinating new perspective on Likert scales as a psychologi-       It might be more interesting to know whether or how people
+cal method. If the semantic influence on survey responses has       with strong positive or negative attitudes toward their supe-
+been both pervasive and neglected for decades, it means that        riors or jobs also bend their cognitions to fit their world views.
+the language parsing mechanisms of the brain have been taken        So far, we have had no agreements on methods to explore
+almost for granted. The capability of a fluent reader to parse      such relationships.
+and understand language is usually quite effortless
+(Kahneman, 2011), and at the same time remarkably precise           Limitations and implications for further research
+in its ability to recognize minute differences between short
+items in surveys (Michell, 1994). An improved theory of cog-        This is a type of analysis that has never been undertaken be-
+nitive processes involved in survey responses—STSR—of-              fore. Thus, we have few or no criteria for assessing the quality
+fers at least two interesting further paths.                        of the displayed statistics. Also, the four samples fall into two
+    First, the cognitive structure needs to be consistent across    very distinct groups—although the OB scales seem strongly
+subjects, because this is a prerequisite to hold different opin-    determined by semantics, this does not seem to be the case for
+ions about the same subject matter (Coombs & Kao, 1960;             the personality scales. This opens up a possibility that different
+Russell, 1922). It would be interesting to establish a method to    types of Likert scales may display very different properties
+describe the common cognitive model that respondents need           with semantics. This selection of data samples may have
+Behav Res (2018) 50:2345–2365                                                                                                              2363
+
+
+influenced or biased our findings, but we believe that the           Author note We thank the U.S. National Science Foundation for research
+                                                                     support under Grant NSF 0965338, and the National Institutes of Health
+present study has opened a path to more direct investigations
+                                                                     through Colorado Clinical & Translational Sciences Institute for research
+of this topic.                                                       support under Grant NIH/CTSI 5 UL1 RR025780.
+    An important set of limitations come from the semantic
+algorithms. As anyone who has tried automatic translation
+tools will know, text algorithms are not perfect. The MI algo-       References
+rithm has no context-specific knowledge, but is more suitable
+to short texts like survey items. The LSA cosines are con-           Abdi, H. (2003). Factor rotations in factor analysis. In M. Lewis-Beck, A.
+versely dependent on the semantic spaces used and the num-               Bryman, & T. Futing (Eds.), Encyclopedia of social sciences re-
+ber of dimensions applied (usually denoted k). We simply do              search methods (pp. 792–795). Thousand Oaks, CA: Sage.
+not possess knowledge about how variations in these charac-          Aiken, L. S., West, S. G., & Reno, R. R. (1991). Multiple regression:
+teristics shape the statistics we report here.                           Testing and interpreting interactions. Thousand Oaks, CA: Sage.
+                                                                     American Educational Research Association, American Psychological
+    Furthermore, we have chosen only to analyze data from the            Association, & National Council on Measurement in Education.
+most commonly used types of response scales, on which re-                (2014). Standards for educational and psychological testing.
+spondents are asked to indicate their attitudes in ways that are         Washington, DC: American Educational Research Association.
+later quantified along a dimension. There are many more types        Andrich, D. (1996). A hyperbolic cosine latent trait model for unfolding
+                                                                         polytomous responses: Reconciling Thurstone and Likert method-
+of scales (e.g., Brennan, 2010; Michell, 2013; van Schuur,
+                                                                         ologies. British Journal of Mathematical and Statistical Psychology,
+2003) that are likely to display other relationships with                49, 347–365.
+semantics.                                                           Antonakis, J., Bendahan, S., Jacquart, P., & Lalive, R. (2010). On making
+    Also, none of our analyses considered how responses were             causal claims: A review and recommendations. The Leadership
+nested within surveys, departments or organizations. We are              Quarterly, 21, 1086–1120.
+                                                                     Arnulf, J. K., & Larsen, K. R. (2015). Overlapping semantics of leader-
+currently preparing multisource–multimethod studies of new
+                                                                         ship and heroism: Expectations of omnipotence, identification with
+datasets to explore the effect of more complex analyses. We              ideal leaders and disappointment in real managers. Scandinavian
+therefore call for further research along these lines. It would be       Psychologist, 2, 1–28. doi:https://doi.org/10.15714/scandpsychol.
+interesting to have more incisive studies of the statistics we           2.e3
+introduce here. Further exploration of the statistics of individ-    Arnulf, J. K., Larsen, K. R., Martinsen, Ø. L., & Bong, C. H. (2014).
+                                                                         Predicting survey responses: How and why semantics shape survey
+ual response patterns and the influence of semantics is neces-           statistics in organizational behavior. PLoS ONE, 9, e106361:1–13.
+sary to establish a more solid foundation for further empirical          doi:https://doi.org/10.1371/journal.pone.0106361
+analyses.                                                            Arnulf, J. K., Larsen, K. R., Martinsen, Ø. L., & Bong, C. H. (2015). A
+    With the rapidly increasing use of big data and other ana-            new approach to psychological measures in leadership research.
+                                                                          Scandinavian Psychologist, 2, e4. doi:https://doi.org/10.15714/
+lytical techniques, the role of surveys is changing (Kern et al.,
+                                                                          scandpsychol.2.e4
+2014; Kosinski, Bachrach, Kasneci, Van-Gael, & Graepel,              Avolio, B. J., Bass, B. M., & Jung, D. I. (1995). Multifactor Leadership
+2012; Kosinski, Stillwell, & Graepel, 2013). The study of                 Questionnaire (Technical Report). Redwood City, CA: Mind
+how computer algorithms can be applied to psychological                   Garden.
+materials is a promising field for psychological methodology,        Bagozzi, R. P. (2011). Measurement and meaning in information systems
+                                                                          and organizational research: Methodological and philosophical
+already applied in practice by a series of technological com-             foundations. MIS Quarterly, 35, 261–292.
+panies (Markowetz, Blaszkiewicz, Montag, Switala, &                  Bernerth, J. B., Armenakis, A. A., Feild, H. S., Giles, W. F., & Walker, H.
+Schlaepfer, 2014). Another line of future research would be               J. (2007). Leader–member social exchange (LMSX): Development
+to explore how these findings generalize to other domains of              and validation of a scale. Journal of Organizational Behavior, 28,
+Likert-scale data. A more nuanced series of findings could                979–1003. doi:https://doi.org/10.1002/job.443
+                                                                     Borsboom, D. (2008). Latent variable theory. Measurement, 6, 25–53.
+help establish a more solid theoretical foundation for the
+                                                                     Borsboom, D. (2009). Educational measurement [Book review].
+STSR.                                                                     Structural Equation Modeling, 16, 702–711. doi:https://doi.org/10.
+    Our final goal would be the establishment of a general                1080/10705510903206097
+model for the semantic processes involved in survey re-              Brennan, R. L. (2010). Generalizability theory. In P. P. B. McGaw (Ed.),
+sponses. Attempts at this or calls for such endeavors have                International encyclopedia of education (3rd ed., pp. 61–68).
+                                                                          Oxford, UK: Elsevier.
+been published intermittently over the years (Feldman &
+                                                                     Cammann, C., Fichman, M., Jenkins, D., & Klesh, J. (1979). The
+Lynch, 1988; Michell, 1994, 2013; Schwarz, 1999). With                    Michigan organizational assessment questionnaire. Ann Arbor,
+the increasing capability of digital tools (Landauer, 2007;               MI: University of Michigan.
+Larsen & Bong, 2016) and neurobiological methods in                  Cascio, W. F. (2012). Methodological issues in international HR manage-
+mapping semantic understanding (Honey et al., 2012),                      ment research. International Journal of Human Resource
+                                                                          Management, 23, 2532–2545. doi:https://doi.org/10.1080/
+the time seems ripe for a better understanding of the ac-                 09585192.2011.561242
+tual psychological processes that end up in the form of              Conger, J. A., & Kanungo, R. N. (1998). Charismatic leadership in orga-
+scores on Likert scales.                                                  nizations. Thousand Oaks, CA: Sage.
+2364                                                                                                                      Behav Res (2018) 50:2345–2365
+
+Coombs, C. H., & Kao, R. C. (1960). On a connection between factor            Kahneman, D. (2011). Thinking, fast and slow. New York, NY: Farrar,
+      analysis and multidimensional unfolding. Psychometrika, 25, 219–             Straus & Giroux.
+      231.                                                                    Kern, M. L., Eichstaedt, J. C., Schwartz, H. A., Park, G., Ungar, L. H.,
+Costa, P. T., & McCrae, R. R. (1992). Revised NEO personality                      Stillwell, D. J., … Seligman, M. E. P. (2014). From Bsooo
+      Inventory: Professional manual. Odessa, FL: Psychological                    excited!!!^ to Bso proud^: Using language to study development.
+      Assessment Resources.                                                        Developmental Psychology, 50, 178–188. doi:https://doi.org/10.
+Cronbach, L. J., & Meehl, P. E. (1955). Construct validity in psycholog-           1037/a0035048
+      ical tests. Psychological Bulletin, 52, 281–302.                        Kim, S., Hahn, H. J., & Lee, J. (2015). Organizational attitudes as pre-
+Davis, F. D. (1989). Perceived usefulness, perceived ease of use, and user         cursors to training performance. Human Resource Development
+      acceptance of information technology. MIS Quarterly, 13, 319–340.            Quarterly, 26, 409–429. doi:https://doi.org/10.1002/hrdq.21218
+      doi:https://doi.org/10.2307/249008                                      Kline, P. (2000). Handbook of psychological testing (2nd ed.). London,
+de Vries, J., Byrne, M., & Kehoe, E. (2015). Cognitive dissonance induc-           UK: Routledge.
+      tion in everyday life: An fMRI study. Social Neuroscience, 10, 268–     Kosinski, M., Bachrach, Y., Kasneci, G., Van-Gael, J., & Graepel, T.
+      281. doi:https://doi.org/10.1080/17470919.2014.990990                        (2012). Crowd IQ: measuring the intelligence of crowdsourcing
+Deerwester, S., Dumais, S., Furnas, G., Landauer, T., & Harshman, R.               platforms. Proceedings of the 4th Annual ACM Web Science
+      (1990). Indexing by Latent Semantic Analysis. Journal of the                 Conference, Evanston, Illinois, June 22–24 (pp. 151–160). New
+      American Society for Information Science, 41, 391–407.                       York, NY: ACM. doi:https://doi.org/10.1145/2380718.2380739
+Dennis, S., Landauer, T., Kintsch, W., & Quesada, J. (2003). Introduction     Kosinski, M., Stillwell, D., & Graepel, T. (2013). Private traits and attri-
+      to latent semantic analysis. Paper presented at the 25th Annual              butes are predictable from digital records of human behavior.
+      Meeting of the Cognitive Science Society, Boston, MA.                        Proceedings of the National Academy of Sciences, 110, 5802–
+Dennis, S., Landauer, T., Kintsch, W., & Quesada, J. (2013). Introduction          5805. doi:https://doi.org/10.1073/pnas.1218772110
+      to latent semantic analysis. Boulder, CO: University of Colorado.       Krueger, J. (2001). Null hypothesis significance testing: On the survival
+Fabrigar, L. R., Wegener, D. T., MacCallum, R. C., & Strahan, E. J.                of a flawed method. American Psychologist, 56, 16–26.
+      (1999). Evaluating the use of exploratory factor analysis in psycho-    Kuvaas, B. (2006a). Performance appraisal satisfaction and employee
+      logical research. Psychological Methods, 4, 272–299.                         outcomes: Mediating and moderating roles of motivation.
+                                                                                   International Journal of Human Resource Management, 17, 504–
+Feldman, J. M., & Lynch, J. G. J. (1988). Self-generated validity and
+                                                                                   522.
+      other effects of measurement on belief, attitude, intention, and be-
+                                                                              Kuvaas, B. (2006b). Work performance, affective commitment, and work
+      havior. Journal of Applied Psychology, 73, 421–435.
+                                                                                   motivation: The roles of pay administration and pay level. Journal of
+Felfe, J., & Schyns, B. (2014). Romance of leadership and motivation to
+                                                                                   Organizational Behavior, 27, 365–385.
+      lead. Journal of Managerial Psychology, 29, 850–865. doi:https://
+                                                                              Kuvaas, B., Arnulf, J. K., & Dysvik, A. (2008). Social and economic
+      doi.org/10.1108/jmp-03-2012-0076
+                                                                                   exchange perceptions and intrinsic motivation among knowledge
+Fishbein, M., & Ajzen, I. (1975). Belief, attitude, intention and behavior:
+                                                                                   workers. Paper presented at the Academy of Management Annual
+      An introduction to theory and research. Reading, MA: Addison-
+                                                                                   Meeting, Anaheim, CA.
+      Wesley.
+                                                                              Lamiell, J. T. (2013). Statisticism in personality psychologists’ use of trait
+Fisher, H. E., Island, H. D., Rich, J., Marchalik, D., & Brown, L. L.              constructs: What is it? How was it contracted? Is there a cure? New
+      (2015). Four broad temperament dimensions: Description, conver-              Ideas in Psychology, 31, 65–71. doi:https://doi.org/10.1016/j.
+      gent validation correlations, and comparison with the Big Five.              newideapsych.2011.02.009
+      Frontiers in Psychology, 6, 1098. doi:https://doi.org/10.3389/          Landauer, T. K. (2007). LSA as a theory of meaning. In T. K. Landauer,
+      fpsyg.2015.01098                                                             D. S. McNamara, S. Dennis, & W. Kintsh (Eds.), Handbook of
+Fornell, C., & Larcker, D. F. (1981). Evaluating structural equation               latent semantic analysis (pp. 3–34). Mahwah, NJ: Erlbaum.
+      models with unobservable variables and measurement error.               LaPiere, R. T. (1934). Attitudes vs. actions. Social Forces, 13, 230–237.
+      Journal of Marketing Research, 18, 39–50.                               LaPointe, L. L. (2013). Paul Broca and the origins of language in the
+Gefen, D., & Larsen, K. R. (2017). Controlling for lexical closeness in            brain. San Diego, CA, US: Plural Publishing.
+      survey research: A demonstration on the Technology Acceptance           Larsen, K. R., & Bong, C. H. (2013). Construct identity detection. Leeds
+      Model. Journal of the Association for Information Systems,                   School Working Paper Series (pp. 1–70). Boulder, CO: University
+      18(10), 1.                                                                   of Colorado, Boulder.
+Gollwitzer, P., & Sheeran, P. (2006). Implementation intentions and goal      Larsen, K. R., & Bong, C. H. (2016). A tool for addressing construct
+      achievement: A meta-analysis of effects and processes. Advances in           identity in literature reviews and meta-analyses. MIS Quarterly,
+      Experimental Social Psychology, 38, 69–118.                                  40, 529–551.
+Honey, C. J., Thomson, C. R., Lerner, Y., & Hasson, U. (2012). Not lost       Larsen, K. R., & Monarchi, D. E. (2004). A mathematical approach to
+      in translation: Neural responses shared across languages. Journal of         categorization and labeling of qualitative data: The latent categori-
+      Neuroscience, 32, 15277–15283.                                               zation method. Sociological Methodology, 34, 349–392.
+Ilies, R., Nahrgang, J. D., & Morgeson, F. P. (2007). Leader–member           Larsen, K. R., Nevo, D., & Rich, E. (2008). Exploring the semantic
+      exchange and citizenship behaviors: A meta-analysis. Journal of              validity of questionnaire scales. Paper presented at the Proceedings
+      Applied Psychology, 92, 269–277.                                             of the 41st Hawaii International Conference on System Sciences,
+Jackson, R. L., Hoffman, P., Pobric, G., & Ralph, M. A. L. (2016). The             Waikoloa, Hawaii.
+      semantic network at work and rest: Differential connectivity of an-     Li, Y., McLean, D., Bandar, Z. A., O’Shea, J. D., & Crockett, K. (2006).
+      terior temporal lobe subregions. Journal of Neuroscience, 36, 1490–          Sentence similarity based on semantic nets and corpus statistics.
+      1501. doi:https://doi.org/10.1523/jneurosci.2999-15.2016                     IEEE Transactions on Knowledge and Data Engineering, 18,
+Jöreskog, K. G. (1993). Testing structural equation models. In K. A.               1138–1150.
+      Bollen & J. S. Long (Eds.), Testing structural equation models          Likert, R. (1932). A technique for the measurement of attitudes. Archives
+      (pp. 294–316). Newbury Park, CA: Sage.                                       of Psychology, 140, 1–55.
+Jöreskog, K. G., & Sörbom, D. (1993). LISREL 8: Structural equation           Lynam, D. R., Hoyle, R. H., & Newman, J. P. (2006). The perils of
+      modeling with the SIMPLIS command language. Chicago, IL: SSI                 partialling. Assessment, 13, 328–341. doi:https://doi.org/10.1177/
+      Scientific Software.                                                         1073191106290562
+Behav Res (2018) 50:2345–2365                                                                                                                          2365
+
+MacKenzie, S. B., Podsakoff, P. M., & Podsakoff, N. P. (2011). Construct     Poli, R., Healy, M., & Kameas, A. (2010). WordNet. In C. Fellbaum
+    measurement and validation procedures in MIS and behavioral re-               (Ed.), Theory and applications of ontology: Computer applications
+    search: Integrating new and existing techniques. MIS Quarterly, 35,           (pp. 231–243). New York, NY: Springer.
+    293–334.                                                                 Prinz, W., Aschersleben, G., & Koch, I. (2009). Cognition and action. In
+Markowetz, A., Blaszkiewicz, K., Montag, C., Switala, C., & Schlaepfer,           E. Morsella, J. A. Bargh, & P. M. Gollwitzer (Eds.), Oxford hand-
+    T. E. (2014). Psycho-Informatics: Big data shaping modern psycho-             book of human action (pp. 33–70). New York, NY: Oxford
+    metrics. Medical Hypotheses, 82, 405–411. doi:https://doi.org/10.             University Press.
+    1016/j.mehy.2013.11.030                                                  Regev, M., Honey, U., & Hasson, U. (2013). Modality-selective and
+Marsh, H. W., Ludtke, O., Muthén, B., Asparouhov, T., Morin, A. J. S.,            modality-invariant neural responses to spoken and written narra-
+    Trautwein, U., & Nagengast, B. (2010). A new look at the big five             tives. Journal of Neuroscience, 33, 15978–15988.
+    factor structure through exploratory structural equation modeling.       Rodgers, J. L. (2010). The epistemology of mathematical and statistical
+    Psychological Assessment, 22, 471–491. doi:https://doi.org/10.                modeling: A quiet methodological revolution. American
+    1037/a0019227                                                                 Psychologist, 65, 1–12. doi:https://doi.org/10.1037/a0018326
+Martinsen, Ø. L., Nordvik, H., & Østbø, L. (2003). Norske versjoner av       Russell, B. (1922). An introduction to the Tractatus Logico-
+    NEO PI- R og NEO FFI (Norwegian versions of the NEO PI-R and                  Philosophicus. In L. Wittgenstein, Tractatus logico-philosophicus.
+    NEO FFI). Oslo, Norway: Gyldendal Akademisk forlag.                           London, UK: Kegan Paul.
+Maul, A. (2017). Rethinking traditional methods of survey validation.        Schwarz, N. (1999). Self-reports: How the questions shape the answers.
+    Measurement: Interdisciplinary Research and Perspectives, 15,                 American Psychologist, 54, 93–105.
+    51–69. doi:https://doi.org/10.1080/15366367.2017.1348108                 Shadish, W. R., Cook, T. D., & Campbell, D. T. (2002). Experimental and
+                                                                                  quasi-experimental designs for generalized causal inference.
+McClelland, D. C., Koestner, R., & Weinberger, J. (1989). How do self-
+                                                                                  Boston, MA: Houghton Mifflin.
+    attributed and implicit motives differ. Psychological Review, 96,
+                                                                             Shore, L. M., Tetrick, L. E., Lynch, P., & Barksdale, K. (2006). Social and
+    690–702.
+                                                                                  economic exchange: Construct development and validation. Journal
+McKenzie, J. (1998). Fundamental flaws in the five factor model: A re-            of Applied Social Psychology, 36, 837–867.
+    analysis of the seminal correlation matrix from which the                Slaney, K. L. (2017). Validating psychological constructs: Historical,
+    Bopenness-to-experience^ factor was extracted. Personality and                philosophical, and practical dimensions. London, UK: Palgrave
+    Individual Differences, 24, 475–480. doi:https://doi.org/10.1016/             MacMillan.
+    s0191-8869(97)00223-7                                                    Slaney, K. L., & Racine, T. P. (2013). What’s in a name? Psychology’s
+Meyer, J. P., Allen, N. J., & Smith, C. A. (1993). Commitment to orga-            ever evasive construct. New Ideas in Psychology, 31, 4–12. doi:
+    nizations and occupations: Extension and test of a three-component            https://doi.org/10.1016/j.newideapsych.2011.02.003
+    conceptualization. Journal of Applied Psychology, 78, 538–551.           Smedslund, J. (1994). Nonempirical and empirical components in the
+Michell, J. (1994). Measuring dimensions of belief by unidimensional              hypotheses of 5 social-psychological experiments. Scandinavian
+    unfolding. Journal of Mathematical Psychology, 38, 244–273.                   Journal of Psychology, 35, 1–15.
+Michell, J. (2013). Constructs, inferences, and mental measurement. New      Stogdill, R. M. (1963). Manual for the leader behavior description ques-
+    Ideas in Psychology, 31, 13–21. doi:https://doi.org/10.1016/j.                tionnaire, form XII. Columbus, OH: Bureau of Business Research,
+    newideapsych.2011.02.004                                                      Ohio State University.
+Mihalcea, R., Corley, C., & Strapparava, C. (2006). Corpus-based and         Triandis, H. C. (1980). Value, attitudes and interpersonal behavior. In M. M.
+    knowledge-based measures of text semantic similarity. Paper pre-              Page (Ed.), Nebraska Symposium on Motivation, Beliefs, Attitudes and
+    sented at the 21st National Conference on Artificial Intelligence,            Values (pp. 159–295). Lincoln, NE: University of Nebraska.
+    Boston, MA.                                                              Tversky, B. (1993). Cognitive maps, cognitive collages, and spatial men-
+Miller, G. (1995). WordNet: A lexical database for English.                       tal models. In A. U. Frank & I. Campari (Eds.), Spatial information
+    Communications of the ACM, 38, 39–41. doi:https://doi.org/10.                 theory: A theoretical basis for GIS (pp. 14–24). Berlin, Germany:
+    1145/219717.219748                                                            Springer.
+Mohler, M., & Mihalcea, R. (2009). Text-to-text semantic similarity for      Van Berkum, J. J. A., Koornneef, A. W., Otten, M., & Neuwland, M. S.
+    automatic short answer grading. Paper presented at the 12th                   (2007). Establishing reference in language comprehension: An elec-
+    Conference of the European Chapter of the Association for                     trophysiological perspective. Brain Research, 1146, 158–171. doi:
+    Computational Linguistics (EACL 2009), Athens, Greece.                        https://doi.org/10.1016/j.brainres.2006.06.091
+                                                                             van der Linden, D., te Nijenhuis, J., & Bakker, A. B. (2010). The general
+Nakagawa, J., Takahashi, M., Okada, R., Matsushima, E., & Matsuda, T.
+                                                                                  factor of personality: A meta-analysis of Big Five intercorrelations and
+    (2015). Women’s preference for a male acquaintance enhances so-
+                                                                                  a criterion-related validity study. Journal of Research in Personality, 44,
+    cial reward processing of material goods in the anterior cingulate
+                                                                                  315–327. doi:https://doi.org/10.1016/j.jrp.2010.03.003.
+    cortex. PLoS ONE, 10, e136168:1–14. doi:https://doi.org/10.1371/
+                                                                             Van Dyne, L., & LePine, J. A. (1998). Helping and voice extra-role
+    journal.pone.0136168
+                                                                                  behaviors: Evidence of construct and predictive validity. Academy
+Nimon, K., Shuck, B., & Zigarmi, D. (2015). Construct overlap between             of Management Journal, 41, 108–119.
+    employee engagement and job satisfaction: A function of semantic         Van Knippenberg, D., & Sitkin, S. B. (2013). A critical assessment of
+    equivalence? Journal of Happiness Studies, 17, 1149–1171. doi:                charismatic–transformational leadership research: Back to the draw-
+    https://doi.org/10.1007/s10902-015-9636-6                                     ing board? Academy of Management Annals, 7, 1–60. doi:https://
+Nunnally, J. C., & Bernstein, I. H. (2010). Psychometric theory (3rd ed.).        doi.org/10.1080/19416520.2013.759433
+    New York, NY: McGraw-Hill.                                               van Schuur, W. H. (2003). Mokken scale analysis: Between the Guttman
+Podsakoff, P. M., MacKenzie, S. B., & Podsakoff, N. P. (2012). Sources            scale and parametric item response theory. Political Analysis, 11,
+    of method bias in social science research and recommendations on              139–163. doi:https://doi.org/10.1093/pan/mpg002
+    how to control it. Annual Review of Psychology, 63, 539–569. doi:        Wittgenstein, L. (1922). Tractatus logico-philosophicus. London, UK:
+    https://doi.org/10.1146/annurev-psych-120710-100452                           Kegan Paul.
+Podsakoff, P. M., & Organ, D. W. (1986). Self-reports in organizational      Zimbardo, P. G., Ebbesen, E. B., & Maslach, C. (1977). Influencing
+    research—Problems and prospects. Journal of Management, 12,                   attitudes and changing behavior (2nd ed.). Reading, MA: Addison
+    531–544.                                                                      Wesley.
+

@@ -1,7 +1,7 @@
 % results_fit.tex
 \subsection{Model Fit and Diagnostics}
 
-\texttt{sfa()} runs the whole pipeline in one call; automatic retention
+\texttt{sfa()} runs the whole pipeline in one call. Automatic retention
 chose five factors, fixed as \texttt{nfactors~=~5}, and the warning
 confirms the keying-free encoding ignores the scoring column.
 
@@ -45,7 +45,7 @@ MR4 0.539 0.555 0.446 0.398 1.000
 \end{verbatim}
 }
 
-KMO was \valKmo, RMSR \valRmsr, TEFI $\valTefiMain$, and CAF \valCaf; substantial factor
+KMO was \valKmo, RMSR \valRmsr, TEFI $\valTefiMain$, and CAF \valCaf. Substantial factor
 correlations ($\phi = \valPhiLo$--$\valPhiHi$) again reflect the similarities'
 shared positive component. \texttt{summary(fit)} adds the per-factor
 McDonald's omegas:
@@ -63,12 +63,12 @@ McDonald's omega per factor:
 }
 
 The solution recovers the Big Five: Neuroticism anchors \valMrN,
-Conscientiousness \valMrC, Openness \valMrO; \valMrA{} and \valMrE{} split Agreeableness and
+Conscientiousness \valMrC, Openness \valMrO. \valMrA{} and \valMrE{} split Agreeableness and
 Extraversion items into warmth/other-orientation and gregariousness
-factors (Figure~\ref{fig:loadings};
+factors (Figure~\ref{fig:loadings} and
 Table~\ref{tab:s-semantic-loadings}). Communalities ranged from \valCommMin
-(\valCommMinItem) to \valCommMax{} (\valCommMaxItem); the assigned--theoretical omega gaps---\valMrA{} \valOmegaAsgnA
-vs.\ \valOmegaTheoA, \valMrE{} \valOmegaAsgnE{} vs.\ \valOmegaTheoE---quantify this mixing: internally
+(\valCommMinItem) to \valCommMax{} (\valCommMaxItem). The assigned--theoretical omega gaps (\valMrA{} \valOmegaAsgnA
+vs.\ \valOmegaTheoA, \valMrE{} \valOmegaAsgnE{} vs.\ \valOmegaTheoE) quantify this mixing: internally
 coherent factors that cross the theoretical boundary.
 
 \begin{figure}[H]
@@ -77,7 +77,7 @@ coherent factors that cross the theoretical boundary.
 \includegraphics[width=0.6\textwidth]{figures/loadings.pdf}
 \caption{Item-by-factor loading heatmap for the five-factor semantic
 solution, produced by \texttt{plot(fit, type = "loadings")}. Items are
-sorted by their dominant factor; \valMrN{} = Neuroticism, \valMrC{} =
+sorted by their dominant factor. \valMrN{} = Neuroticism, \valMrC{} =
 Conscientiousness, \valMrA{} and \valMrE{} = Agreeableness/Extraversion blends, \valMrO{} =
 Openness.}
 \label{fig:loadings}
@@ -101,9 +101,9 @@ calibrate=TRUE elapsed: 123.9 s
 }
 
 Across the 100 nulls, RMSR ranged from \valCalRmsrMin{} to \valCalRmsrMax, CAF from \valCalCafMin{} to
-\valCalCafMax, and TEFI from $\valCalTefiMin$ to $\valCalTefiMax$; the observed TEFI ($\valTefiMain$)
-undercut every null---a more entropically organized five-factor
-partition---while the observed RMSR (\valRmsr) and CAF (\valCaf) fell above and
+\valCalCafMax, and TEFI from $\valCalTefiMin$ to $\valCalTefiMax$. The observed TEFI ($\valTefiMain$)
+undercut every null (a more entropically organized five-factor
+partition), while the observed RMSR (\valRmsr) and CAF (\valCaf) fell above and
 below their ranges: the real similarities carry residual structure beyond
 five factors that nulls lack, an index-by-index recalibration that raw
 thresholds would obscure. \texttt{as\_psych(fit)} lets

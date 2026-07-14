@@ -1,0 +1,1611 @@
+Received: 18 June 2024
+
+| Accepted: 24 January 2025
+
+DOI: 10.1111/bjet.13570
+
+ORIGINAL ARTICLE
+
+Leveraging LLM respondents for item
+evaluation: A psychometric analysis
+Yunting Liu | Shreya Bhandari
+School of Education, University
+of California, Berkeley, Berkeley,
+California, USA
+Correspondence
+Zachary A. Pardos, School of Education,
+University of California, Berkeley, CA, USA.
+Email: pardos@berkeley.edu
+Funding information
+UC Berkeley VPUE MicroGrant; Tools
+Competition
+
+| Zachary A. Pardos
+
+Effective educational measurement relies heavily on
+the curation of well-­designed item pools. However,
+item calibration is time consuming and costly,
+requiring a sufficient number of respondents to
+estimate the psychometric properties of items. In this
+study, we explore the potential of six different large
+language models (LLMs; GPT-­3.5, GPT-­4, Llama 2,
+Llama 3, Gemini-­Pro and Cohere Command R Plus)
+to generate responses with psychometric properties
+comparable to those of human respondents. Results
+indicate that some LLMs exhibit proficiency in College
+Algebra that is similar to or exceeds that of college
+students. However, we find the LLMs used in this
+study to have narrow proficiency distributions, limiting
+their ability to fully mimic the variability observed
+in human respondents, but that an ensemble of
+LLMs can better approximate the broader ability
+distribution typical of college students. Utilizing item
+response theory, the item parameters calibrated by
+LLM respondents have high correlations (eg, >0.8 for
+GPT-­3.5) with their human calibrated counterparts.
+Several augmentation strategies are evaluated
+for their relative performance, with resampling
+methods proving most effective, enhancing the
+Spearman correlation from 0.89 (human only) to 0.93
+(augmented human).
+KEYWORDS
+data augmentation, item response theory, large language
+models, psychometric analysis, simulation
+
+This is an open access article under the terms of the Creative Commons Attribution-NonCommercial License, which permits
+use, distribution and reproduction in any medium, provided the original work is properly cited and is not used for commercial
+purposes.
+© 2025 The Author(s). British Journal of Educational Technology published by John Wiley & Sons Ltd on behalf of British
+Educational Research Association.
+1028
+
+| wileyonlinelibrary.com/journal/bjet
+	﻿
+
+Br J Educ Technol. 2025;56:1028–1052.
+
+  
+
+| 1029
+
+Practitioner notes
+What is already known about this topic
+• The collection of human responses to candidate test items is common practice in
+educational measurement when designing an assessment tool.
+• Large language models (LLMs) have been found to rival human abilities in a
+variety of subject areas, making them a low-­cost option for testing the efficacy of
+educational assessment items.
+• Data augmentation using AI has been an effective strategy for enhancing machine
+learning model performance.
+What this paper adds
+• This paper provides the first psychometric analysis of the ability distribution of a
+variety of open-­source and proprietary LLMs as compared to humans.
+• The study finds that item parameters similar to those produced by 50 undergraduate
+respondents.
+• Using LLM respondents to augment human response data yields mixed results.
+Implications for practice and/or policy
+• The moderate performance of LLM respondents by themselves suggests that they
+could provide a low-­cost option for curating quality items for low-­stakes formative
+or summative assessments.
+• This methodology offers a scalable way to evaluate vast amounts of generative
+AI-­produced items.
+
+I NTRO DUCTI O N
+Generating sets of well-­functioning items for mathematics assessments often requires multiple iterations of calibration, involving extensive human participation. One of the most common techniques used in building an item pool is item response theory (IRT), where ample
+response-­level data are typically required for accurate item calibration and scaling (Kim &
+Kolen, 2019; König et al., 2021). This process is time consuming and costly and significantly
+limits the rapid adaptation of educational assessments to different sets of students. For
+example, the Program for International Student Assessment (PISA) main survey requires
+between N = 250 and N = 750 respondents per item per country (Mazzeo & Davier, 2014).
+Thus, the time and cost involved in obtaining responses from human respondents remain a
+significant area of resource expenditure.
+With the advent of advanced AI technologies, novel ways to address these challenges
+have arisen. Recent developments in large language models (LLMs) are achieving
+near-­human performance (Liu et al. 2023; Chang et al., 2024; Katz et al., 2024; OpenAI
+et al., 2024), leading to speculation about whether they can competently generate high-­
+fidelity synthetic data without the traditional need for full data collection (Ding et al., 2024;
+Whitehouse et al., 2023; Ye et al., 2024). In our domain, we explore whether the capabilities of LLMs can be leveraged to provide responses resulting in psychometric properties
+similar to those derived from human respondents' answers. Since a single LLM might not
+have the full potential to resemble humans, as revealed from previous work in the literature (He-­Yueya et al., 2024), we additionally explore what the most cost-­effective strategy
+
+14678535, 2025, 3, Downloaded from https://bera-journals.onlinelibrary.wiley.com/doi/10.1111/bjet.13570, Wiley Online Library on [03/06/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+LEVERAGING LLM RESPONDENTS FOR ITEM EVALUATION
+
+|   
+
+LIU et al.
+
+to gather partial human data and augment it with synthetic data is. This research is guided
+by three critical research questions:
+• RQ1: Which language model or configuration of language models best mimic human respondent abilities in mathematics, as measured by IRT?
+• RQ2: How do the psychometric properties of items fit to human respondents compare to
+those fit to LLM respondents?
+• RQ3: Can the augmentation of human respondent data with LLM respondent contributions yield item parameters comparable to those obtained from solely increasing human
+data collection?
+If we are able to successfully utilize LLM respondents to simulate or augment human
+data collection, it would mean that questions, including those produced via generative AI
+(Bhandari et al., 2024), could be tested and evaluated en masse nearly instantly for use in a
+variety of educational contexts, such as computer tutoring systems and other formative and
+summative assessment scenarios.
+In this study, we investigate the capabilities of various LLMs, including GPT-­4 (OpenAI
+et al., 2024), GPT-­3.5 (Brown et al., 2020), Llama 3 (Dubey et al., 2024), Llama 2 (Touvron
+et al., 2023), Gemini-­
+Pro (Gemini Team Google, 2024) and Cohere Command R Plus
+(Cohere, 2023), to generate assessment responses. Specifically, we prompt each model
+with 20 items sourced from the OpenStax Creative Commons textbook for College Algebra,
+producing 150 responses per model. Our analysis focuses on assessing whether these models can effectively replicate the response characteristics of our target population, which consists of undergraduate students in the United States, and on comparing the performance of
+these models against each other. To this end, we compare the model-­generated responses
+to those obtained from U.S. undergraduates on the popular crowdsourcing platform, Prolific.
+We also evaluate whether an ensemble of these LLMs can better fit the response characteristics of human respondents utilizing an augmentation procedure. Specifically, we use data
+from 50 human respondents and incorporate the closest LLM-­generated respondent to each
+human in our dataset. Based on the proportions of each LLM in this dataset, we experiment
+with randomly selecting 50 synthetic respondents according to these proportions and then
+expand this selection to 100 LLM respondents.
+
+R EL ATED WO R K
+This section introduces data simulation and augmentation, both of which involve generating
+synthetic data. Section “Simulated data in educational measurement and educational data
+mining” discusses fully synthetic data generation for scenarios without human data, while
+section “Data augmentation” addresses augmentation, where synthetic data supplements
+partially collected human data for cost-­effectiveness. Finally, we explore the relationship
+between automatic item generation and simulated/augmented data.
+
+Simulated data in educational measurement and educational
+data mining
+Analyzing examinee responses to test questions is indispensable in the field of measurement. While gathering real data can be time consuming, costly and often incomplete,
+simulation is a useful and economical technique since it can usually be done on a laptop without additional costs. Therefore, researchers commonly use simulation to validate
+
+14678535, 2025, 3, Downloaded from https://bera-journals.onlinelibrary.wiley.com/doi/10.1111/bjet.13570, Wiley Online Library on [03/06/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+1030
+
+  
+
+| 1031
+
+models (Swaminathan et al., 2006), compare different models (Harwell et al., 1996) and
+evaluate estimation methods (Wang & Vispoel, 1998). In fact, among a random sample of
+publications in the field, 60% of the studies use simulation, while the ratio for real data is just
+41% (Feinberg & Rubright, 2016). Typically, a respondent proficiency distribution is specified (usually normal distribution), and then the item response-­level data (ie, dichotomous or
+polytomous response) are simulated according to the distribution. The authentic student response data (ie, students' open-­ended answers for constructed response items or students'
+choice for selected response items) are ignored and not generated during the process. To
+sum up, the primary reason for conducting simulation studies in the pre-­GenAI era was to
+allow researchers to compare estimated parameters against their respective true parameters, which are unknown in real data applications (Feinberg & Rubright, 2016).
+Now, thanks to advancements in generative AI, we can simulate response-­level data
+and potentially gain insights into the cognitive structures underlying the response process.
+While most simulation work in educational settings is based on dialogue (Markel et al., 2023;
+Shaikh et al., 2024), some researchers are focusing on item response-­level data simulation. For example, Xu and Zhang (2023) demonstrated the possibility of simulating student
+behaviour based on assessment history. He-­Yueya et al. (2024) showed how fully synthetic
+responses generated by GPT could help calibrate items. Lu and Wang (2024) used insights
+from teachers to create generative student profiles and then used the outcomes of these
+generative students to guide item development.
+In the realm of educational data mining, gathering real learner data can pose privacy
+concerns (Hutt et al., 2023) and present challenges with the costs of managing logged data
+(Jacob et al., 2015). To address these challenges and evaluate the fidelity of student models, researchers have at times leveraged simulated data (Badrinath et al., 2021; Beheshti
+et al., 2012; Desmarais, 2012; Desmarais & Pelczer, 2010; Ding et al., 2024; Hu et al., 2022;
+Ndukwe et al., 2018). LLMs are often used to generate the training datasets needed to train
+and test other models. For example, by using pseudocode to generate synthetic datasets,
+researchers have been able to develop test cases of teaching activities to inform the development of a teaching outcome model (TOM) (Ndukwe et al., 2018). Similarly, researchers
+have proposed using LLMs as data annotators to create synthetic data that can be used to
+train other models (Ding et al., 2024), mimicking the framework of teacher–student learning
+(TSL) (Hu et al., 2022). Simulated data have also been used within the educational data mining community to evaluate latent trait models (Badrinath et al., 2021; Beheshti et al., 2012).
+
+Data augmentation
+Data augmentation is a method often employed to increase the volume and diversity of
+data, and it can also be applied to enlarge the training data and improve model performance
+for various tasks (Cochran et al., 2022; Fang et al., 2023). Having a limited number of data
+points often leads to weaker generalization capabilities, which can act as an obstacle to
+the effectiveness of studies (Kieser et al., 2023). Thus, data augmentation is used to enrich
+datasets and enhance their suitability for training models. For example, to augment image
+data, techniques such as resizing, rotating and shifting images are frequently used (Shorten
+& Khoshgoftaar, 2019; Xie et al., 2017). Researchers have also explored introducing noise
+in LLM training data (Xie et al., 2017), adding audio tracks or temporal shifts in speech
+recognition (Deng et al., 2000; Hannun et al., 2014), and leveraging Generative Adversarial
+Networks (GANs) to generate training data for medical imaging (Frid-­Adar et al., 2018),
+ultimately creating datasets that are more generalizable and effective.
+Researchers often view data augmentation as a ‘task-­agnostic’ technique (ie, derived
+from the training data itself) to reduce overfitting and thus facilitate the process of building
+
+14678535, 2025, 3, Downloaded from https://bera-journals.onlinelibrary.wiley.com/doi/10.1111/bjet.13570, Wiley Online Library on [03/06/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+LEVERAGING LLM RESPONDENTS FOR ITEM EVALUATION
+
+|   
+
+LIU et al.
+
+machine learning (ML) models for supervised learning tasks (Pellicer et al., 2023). Notably,
+researchers find that using less data with data augmentation methods can provide the
+same level of accuracy as incorporating the entire dataset. One example is a technique
+called Easy Data Augmentation (EDA) in which data are augmented in a text-­based dataset
+through synonym replacement, random insertion, random swap and random deletion (Wei &
+Zou, 2019). Using this technique, Wei and Zou find that a model trained on only 50% of the
+available training data can achieve the same accuracy as training the model on all the provided data (Wei & Zou, 2019). Additionally, by training models with semi-­supervised learning
+techniques and using augmented datasets created through methods such as RandAugment
+(Cubuk et al., 2020) and back-­translation (Sennrich et al., 2016), researchers have demonstrated that models trained on significantly fewer labelled examples (ie, with only 20 labelled
+examples) can surpass the performance of state-­of-­the-­art models trained on 25,000 labelled examples (Xie et al., 2020). Furthermore, data augmentation is regarded to be a powerful implicit regularization technique (Balestriero et al., 2022; Huang et al., 2022; LeJeune
+et al., 2019), making neural networks more adaptable to a variety of architectures and datasets, compared to widely known regularization methods such as weight decay and dropout
+(Hernández-­García & König, 2018).
+
+Automatic item generation
+With the significant growth of open educational resources (OERs), researchers are
+secondary beneficiaries, being provided with a corpus of educational resources at no cost
+and open materials that can be freely distributed, remixed and adapted to create item pools
+(Henderson & Ostashewski, 2018). In the classroom, teachers are able to utilize items from
+OERs as homework or assessment problems (Wiley & Green, 2012). With the rise of LLMs,
+many researchers have begun exploring utilizing the capabilities of LLMs to generate math
+questions (Bhandari et al., 2024; CH & Saha, 2023; Keller, 2021; Lee et al., 2024; Onal &
+Kulavuz- ­Onal, 2024; Shridhar et al., 2022; Zhou et al., 2023), which can ultimately contribute
+to the adaptability and scalability of OERs. Through these methods, while the speed of
+item generation has greatly accelerated, the speed of evaluating the appropriateness and
+effectiveness of these questions has not kept pace due to the manual process of gathering
+responses and refining the items. Therefore, this paper aims to study the feasibility and
+effectiveness of leveraging LLMs to simulate responses to items. This would allow for nimble
+testing of LLM-­generated questions, expediting the creation of OERs for both classroom,
+testing, and research purposes.
+
+M ETHO DS
+Model selection
+We selected six LLMs to generate responses that simulate answers from undergraduate
+college students in the U.S. to assessment questions. Our selection included GPT-­4, GPT-­
+3.5, Llama 3, Llama 2, Gemini-­Pro and Cohere Command R Plus. These models were chosen for their varying levels of sophistication, reported accuracy on mathematics items and
+widespread popularity, allowing us to simulate a broad spectrum of student abilities, from
+lower to higher academic proficiency. For implementation, we utilized APIs for each model.
+As Llama does not offer a direct API, we accessed Llama 2 and Llama 3 via the Replicate
+API.1 We used the default sampling parameters for each model, which included non-­zero
+temperature values.
+
+14678535, 2025, 3, Downloaded from https://bera-journals.onlinelibrary.wiley.com/doi/10.1111/bjet.13570, Wiley Online Library on [03/06/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+1032
+
+  
+
+| 1033
+
+Selection of items and prompt engineering
+College Algebra was chosen as the subject because pre-­authored questions were available under a CC BY licence from an open textbook publisher, OpenStax.2 Additionally, we
+used a dataset from an earlier study that calibrated its item pool and had already collected
+responses from human participants via Prolific for 20 of the OpenStax College Algebra
+questions in Lesson 2.2: Linear Equations in One Variable (Bhandari et al., 2024) using the
+OATutor system (Pardos et al., 2023). This prior data collection contained some missingness
+in the data, so we were able to effectively use N ≥ 99 for all items.
+We distinctively formatted the questions, each prefixed with a label in the following format: ‘Q1: <question 1>’ followed by a double newline, then ‘Q2: <question 2>’, and continued this pattern for all 20 questions. The full prompt is shown in Appendix A. Specifically, the
+questions were structured as follows:
+Q1: Given m = 4, find the equation of the line in slope-­intercept form passing through the
+point (2, 5).
+Q2: Find the slope of a line that passes through the points (2, − 1) and (−5, 3).
+Q20: For the following exercises, solve the equation for x. State all x-­values that are excluded from the solution set. 2 − 3 ∕ (x + 4) = (x + 2) ∕ (x + 4). Answer choices: Excluded
+values: −4 and x = −3; Excluded values: 4 and x = −3.
+We simulated 150 respondents for each LLM, as this number is equivalent to the effective number of human participants originally used to calibrate the item pool. The first
+response produced by each model is provided in Appendix B. To assess the accuracy of
+the responses, the second author of the study, who has extensive prior tutoring experience in College Algebra, manually graded them and noted the accuracy for each one. In
+particular, a single response by an LLM provided answers to all 20 questions. The second
+author of the paper scored each answer in the response using the OpenStax answer key,
+preparing the dataset for IRT calibration. Answers were considered correct if it either
+exactly matched the answer provided in the key or was an equivalent response (ie, can
+be simplified or rearranged to the provided answer). This grading matched the method
+used by the OATutor system (Pardos et al., 2023) and thus aligns with how the human
+respondents were graded.
+
+Augmentation procedure
+In a real-­world case, sometimes only partial data are gathered. To explore the possibility
+of augmenting the data, we treated each human respondent in our dataset as a centroid, using only 50 human responses to represent the partial data. We then identified
+the nearest synthetic respondent from our pool of synthetically generated answers for
+each human centroid, allowing us to map the AI responses directly onto the characteristics of individual human responses. To do this, we first created binary vectors representing the pattern of answers for each LLM respondent and human respondent across
+all the questions (1 for correct and 0 for incorrect). Then, we computed the Euclidean
+distances between each human respondent and LLM respondent using these binary
+vectors.
+Next, we conducted a resampling procedure to create a dataset from an ensemble of LLMs.
+First, we identified the proportion of each LLM that was closest to the human respondents in the
+initial set of 50. Then, using these proportions, we randomly selected 50 synthetic respondents,
+ensuring that the proportions of each LLM model in this new subset reflected the percentages
+
+14678535, 2025, 3, Downloaded from https://bera-journals.onlinelibrary.wiley.com/doi/10.1111/bjet.13570, Wiley Online Library on [03/06/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+LEVERAGING LLM RESPONDENTS FOR ITEM EVALUATION
+
+|   
+
+LIU et al.
+
+observed in the initial set (eg, if 60% of the synthetic respondents came from GPT-­4, 20% from
+Llama 2 and 20% from Gemini-­Pro in the original 50, then we randomly sampled 60% of the
+new set from GPT-­4, 20% from Llama 2 and 20% from Gemini-­Pro). This aims to maintain the
+proportionality observed in the initial sampling that might generalize to other domain areas with
+a similar target demographic of respondents. Lastly, we expanded this by resampling a subset
+of 100 synthetic respondents using the same criteria.
+
+IRT analysis
+Contrary to sum-­score analysis or percentage correct metrics, we plan to use IRT to estimate
+the latent ability of human and LLM respondents. This method has several advantages over
+sum-­score analysis (DeMars, 2010). First, IRT assumes a latent trait theta, transforming
+all estimations onto a logit scale instead of the sum-­score scale, which greatly improves
+measurement precision. Second, IRT provides person-­level fit data, which can be done
+independently of other respondents. Lastly, and most relevant to our purpose, IRT maps
+both persons and items onto the same scales, enabling equating to be carried out without
+assuming population score distributions. In fact, IRT equating may be the best method when
+tests of differing difficulties are given to non-­random groups of examinees who differ in
+ability (Cook & Eignor, 1991).
+The simplest IRT model is often called the Rasch model or the one-­parameter logistic
+model (1PL). Packages like TAM (Robitzsch et al., 2020) and mirt (Chalmers, 2012) in the R
+environment can help carry out the analysis. The probability of individuals responding to a
+binary item (ie, True/False) is determined by the individual's trait level and the difficulty of the
+item, which is often presented as:
+(
+)
+exp 𝜃 i − 𝛽 j
+(
+)
+P Xij = 1| 𝜃 i , 𝛽 j =
+(
+)
+1 + exp 𝜃 i − 𝛽 j
+where
+• Xij refers to the response made by individual i to item j . If the response is correct/true,
+then Xij = 1.
+• 𝜃 i refers to the trait level of individual i .
+• 𝛽 j refers to the difficulty of item j .
+A significant merit of using the Rasch model is that the estimates of latent trait and difficulty are mapped onto the same logit scale. The logits are interval units, which make the
+Wright Map (also known as the item-­person map) a useful tool for presenting both item difficulties and person abilities arranged along the same logit scale. The location of item difficulty denotes the ability level at which the individual has approximately a 50% probability
+of answering the item correctly. The results from human calibration using Rasch analysis
+are shown in Figure 1. Items were ranked by their difficulties in ascending order from top
+to bottom (Wilson, 2023).
+IRT analysis was carried out for two purposes: First, we used the item parameters calibrated by human respondents as a standard so that the parameters for LLM respondents
+can be estimated. By treating item parameters as fixed, we were able to compare the proficiency distribution of college students and LLM respondents (Kim, 2006). Second, separate
+calibrations were carried out on human and AI respondent groups, informing us of the practicality of item calibration using AI-­generated data.
+
+14678535, 2025, 3, Downloaded from https://bera-journals.onlinelibrary.wiley.com/doi/10.1111/bjet.13570, Wiley Online Library on [03/06/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+1034
+
+  
+
+| 1035
+
+F I G U R E 1 Wright map showing item parameters calibrated by human respondents. Items are ranked in
+ascending order of difficulty, ranging from −2 to 2 (top to bottom), with the respondent distribution overlaid in the
+upper histogram for reference.
+
+R ESULTS
+LLM-­respondent simulation (RQ1 and RQ2)
+The initial item parameters for the item pool were calibrated on a group of current college
+students in the United States. Since multiple forms were used, there was missingness at
+random in the data, effectively resulting in N ≥ 99 for all items, satisfying the basic requirement
+for a Rasch analysis (Wang & Chen, 2005). The results are shown in Figure 1. We then fixed
+the item parameters estimated from the model to obtain the proficiency estimates for the
+six LLMs used in this study. Results showed that most LLM proficiency distributions had a
+significant overlap with the human respondents. In particular, Llama 3 and GPT-­3.5 had the
+highest mean proficiency distribution, which was higher than the human mean, indicating
+these AI models' greater proficiency in College Algebra compared to the sampled college
+students. The mean proficiency of GPT-­4 was comparable to the mean proficiency of human
+respondents, while Cohere and Gemini were lower than the humans. Llama 2 was the worst
+among all six models.
+Besides the findings on the average proficiency of each model, an interesting observation was that the variability in proficiency distribution for LLM respondents (standard deviation ranging from 0.29 to 0.58) was greatly reduced compared to the human distribution
+(SD = 0.98). Most of the studied GenAI distributions appear to be sharper than their human
+counterparts (kurtosis larger than 3). Detailed distributional information can be found in
+Table 1 and Figure 2. Further analysis might explore ways to increase the variability in proficiency and response patterns.
+To increase generalizability and account for the fact that all the OpenStax items used
+in this study have publicly available solutions that might appear in the training data of the
+LLMs, we compared model performance on these items with a set of newly generated items
+which do not have publicly available solutions in OpenStax. We find similarity in accuracies
+and thus conclude that the presence of answers in the LLMs' training data does not alter the
+results. Detailed results of this analysis are included in Appendix C, Table C1.
+We also performed item calibration on fully simulated data, comparing it against human-­
+calibrated data and AI-­calibrated data. Notably, the IRT estimated item difficulties showed
+a significant correlation between AI-­generated and human-­generated data, especially for
+GPT-­3.5 and GPT-­4 (Pearson 𝜌 > 0.7), as shown in Table 2. Rank correlation (ie, Spearman
+correlation) is also reported since not all distributions had the same mean, and the difficulty
+
+14678535, 2025, 3, Downloaded from https://bera-journals.onlinelibrary.wiley.com/doi/10.1111/bjet.13570, Wiley Online Library on [03/06/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+LEVERAGING LLM RESPONDENTS FOR ITEM EVALUATION
+
+|   
+
+TA B L E 1
+
+LIU et al.
+
+Statistical measures of response distributions by model.
+
+Generating model
+
+Mean
+
+Standard deviation (SD)
+
+Human
+
+0.00
+
+0.98
+
+GPT-­4
+
+0.00
+
+0.31
+
+GPT-­3.5
+
+0.27
+
+0.58
+
+Llama 3
+
+0.37
+
+0.51
+
+Llama 2
+
+−1.81
+
+0.44
+
+Gemini
+
+−0.54
+
+0.29
+
+Cohere
+
+−0.40
+
+0.34
+
+Note: This table summarizes the mean and standard deviation (SD) of response distributions generated by different models.
+The comparison includes human responses as well as outputs from six generative models. Human responses serve as a
+benchmark for comparison.
+
+F I G U R E 2 Proficiency distribution across generating models. The human distribution is used as the
+reference group, with a mean of 0 and a standard deviation of 1. Among all LLM models, GPT-­3.5 and Llama
+3 demonstrate higher mean proficiency compared to sampled humans but exhibit a narrower range. Llama 2
+shows the lowest mean proficiency among the models.
+
+scale may not have been an interval scale for different estimates. Given that one Gen-­AI
+model may not have the power to represent the human distribution, we decided to use an
+ensemble method (also denoted as data augmentation) to create a representative pool of
+LLM respondents whose similarity with human respondents was boosted.
+
+Data augmentation using LLM respondent (RQ3)
+Given that none of the LLM models have proficiency distributions resembling that of humans,
+it is not feasible at this time to fully substitute human respondents with LLM respondents
+from a single LLM. However, LLMs could be used in a hybrid approach where half the
+respondents are human and half are LLM respondents. With this in mind, we proposed three
+hybrid, or data augmentation, strategies listed below:
+• An enlarged sample of 50 humans: 50 human respondents (examples) and 50 LLM
+respondents
+
+14678535, 2025, 3, Downloaded from https://bera-journals.onlinelibrary.wiley.com/doi/10.1111/bjet.13570, Wiley Online Library on [03/06/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+1036
+
+TA B L E 2
+
+| 1037
+
+Evaluation metrics for simulation and augmentation experiments.
+
+Generating source
+
+Pearson r
+
+Spearman 𝝆
+
+RMSE
+
+GPT-­4
+
+0.72
+
+0.78
+
+2.27
+
+GPT-­3.5
+
+0.83
+
+0.87
+
+1.90
+
+Llama 3
+
+0.18
+
+0.32
+
+4.03
+
+Llama 2
+
+−0.01
+
+−0.07
+
+1.37
+
+Gemini
+
+0.68
+
+0.61
+
+2.67
+
+Cohere
+
+0.65
+
+0.72
+
+2.02
+
+Experiment 1
+
+0.92
+
+0.89
+
+0.55
+
+Experiment 2
+
+0.91
+
+0.89
+
+0.54
+
+Experiment 3
+
+0.93
+
+0.93
+
+0.71
+
+Experiment 4
+
+0.75
+
+0.86
+
+1.78
+
+Note: This table presents the evaluation metrics—Pearson correlation coefficient ( r ), Spearman rank correlation coefficient (𝜌)
+and root mean square error (RMSE)—for each model and experiment.
+
+• A mixture of human respondents and resampled LLM respondents using proportions
+learned from humans
+• Fully LLM respondents using the mixing proportions learned from humans
+The resampling, LLM ensemble analysis resulted in a set with significant variation in the
+proportions of each model used. GPT-­3.5 was the most prevalent, comprising 36% of the
+synthetic respondents, followed by Llama 2 at 30%. Gemini accounted for 12%, while both
+Llama 3 and GPT-­4 were represented at 8% each. Cohere was the least represented model,
+constituting only 6% of the respondents.
+To evaluate the relative performance of these three strategies, we conducted four experiments to test the effectiveness of different strategies on the item calibration process. The
+benchmark performance of the calibration was set by the human respondents; namely, we
+use all available data from human respondents to calibrate the item pool and gather item
+parameter estimates. Each experiment was designed to explore a different augmentation
+strategy. The proposed experiments were as follows:
+Experiment 1 We use only half the number of the respondent pool and do the calibration
+(N = 50), representing a real-­world scenario where there is a limitation in the budget, so
+only part of the intended respondents were collected.
+Experiment 2 In addition to Experiment 1, we enlarge the data size by twice using augmentation strategies (N = 100).
+Experiment 3 We use a mixture of human respondents and resampled ensemble data
+in a 1:1 ratio (N = 100).
+Experiment 4 We use resampled ensemble data, with a size equal to the number of the
+benchmark dataset (N = 100).
+In terms of evaluation criteria, Pearson correlations and Spearman correlations with the
+benchmark conditions are reported. We also use root mean square error (RMSE) to evaluate how accurate the new estimates are. RMSE measures the
+�average difference between
+values predicted by a model and the actual values. RMSE =
+
+∑N
+
+̂ 2
+i=1 ∥ y(i) − y(i)∥
+N
+
+. RMSE is al-
+
+ways non-­negative, and a value of 0 (almost never achieved in practice) would indicate a
+perfect recovery of the true/benchmark data.
+
+14678535, 2025, 3, Downloaded from https://bera-journals.onlinelibrary.wiley.com/doi/10.1111/bjet.13570, Wiley Online Library on [03/06/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+  
+
+LEVERAGING LLM RESPONDENTS FOR ITEM EVALUATION
+
+|   
+
+LIU et al.
+
+F I G U R E 3 Proficiency distribution across augmentation experiments. Experiments 1, 2 and 4 exhibit a
+bimodal distribution, while Experiment 3 most closely resembles the benchmark distribution.
+
+Results showed that when there are not sufficient number of respondents (Experiment
+1), some difficulty estimates from the IRT analysis are not trustworthy, especially at the very
+ends of the respondent distribution (too-­easy or too-­hard items), resulting in a relatively
+high but not perfect correlation (Pearson r = 0.92, Spearman 𝜌 = 0.89) and RMSE of 0.55.
+Experiment 4 had the lowest Pearson and Spearman correlations and the highest RMSE,
+indicating that it was the least effective in preserving the item diffculty estimates. However,
+despite its weaker correlation with the benchmark, it produced a respondent proficiency
+distribution with a peak that most closely matched the benchmark distribution, as shown
+in Figure 3. Among all augmentation strategies, Experiment 3 had the best result; it raised
+the Spearman 𝜌 from 0.89 to 0.93, indicating it proved as an effective strategy for recovering the order of item difficulties. However, since the mean of the respondent distribution
+in Experiment 3 is tilted to the left (𝜇 = − 0.29) compared to Experiment 1 (𝜇 = 0.08), the
+RMSE is larger since a universal shift is applied to all item parameters. Experiment 2 yielded
+results comparable to Experiment 1, suggesting that the strategy might not be beneficial in
+the current setting; practical reasons are discussed in the Discussion section. As a validation, we also calibrated the respondent proficiency distribution using the fixed item parameter methods, and the results are shown in Figure 3.
+
+D I SCUSS I O N A ND CO NCLUS I O NS
+In this study, we explored six different LLMs (GPT-­3.5, GPT-­4, Llama 2, Llama 3, Gemini-­Pro
+and Cohere Command R Plus) and various combinations using sampling methods to arrive
+at psychometric properties similar to those from human respondents' answers. Our findings are structured around three key conclusions: the proficiency of LLMs in approximating
+ability distributions (RQ1), item parameter correlation (RQ2) and the effectiveness of data
+augmentation (RQ3). First, when comparing the proficiency between LLM respondents and
+human respondents, the results showed that although some LLMs have comparable or even
+
+14678535, 2025, 3, Downloaded from https://bera-journals.onlinelibrary.wiley.com/doi/10.1111/bjet.13570, Wiley Online Library on [03/06/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+1038
+
+  
+
+| 1039
+
+higher abilities in College Algebra, their distributions alone cannot fully represent the human
+distribution due to their narrow spread. Interestingly, this novel application of IRT to LLM
+abilities reveals a first-­of-­its-­kind distribution spread of abilities from multiple promptings, as
+opposed to the point estimates or percent-­correct scores reported in other studies. Second,
+we compared the item parameters calibrated by AI respondents and human respondents,
+finding a relatively high Spearman correlation of 0.87 for GPT-­3.5 and a lower 0.78 for GPT-­
+4. Notably, GPT-­3.5 emerged as the most human-­like AI respondent, exhibiting Spearman
+correlations within 0.02 of those from 50 human respondents. On the contrary, Llama 2
+yielded a null correlation (r = −0.01) with the human counterpart. This is primarily due to
+Llama 2's extremely poor performance on the 20 college algebra problems (accuracy less
+than 13%), which provided little to no information for statistical inference on item parameters.
+Finally, since no single LLM currently had the capability to represent humans by itself, we
+explored ensembling approaches using three strategies. Among these, a mixture of human
+respondents and fully resampled data in a 1:1 ratio (Experiment 3) provided the best result,
+raising the Spearman correlation from 0.89 to 0.93. However, these augmentation results
+were mixed; while Spearman and Pearson correlations improved by 0.04 and 0.01 respectively, this approach substantially increased the RMSE.
+To summarize, when solely using LLM respondents, we suggest using GPT-­3.5 since
+it provides the best approximation of ability distribution. If gathering a subset of human respondents is feasible, then an augmented approach with a mixture of human respondents
+and fully resampled data in a 1:1 ratio (Experiment 3) would provide the best results.
+Our findings hold much promise for the automatic curation of items for tutoring systems.
+Simply put, it seems plausible to leverage AI respondents to curate an item pool that has
+a desirable spread of difficulty. Given the performance of 150 AI respondents from GPT-­
+3.5 closely mirroring that of 50 humans (Experiment 1), AI respondents could be used as
+an initial filtering phase to reliably narrow down a larger item pool, and then have human
+respondents further refine the selection using the more manageable subset of items. This
+would significantly help optimize human resources, saving production time and money. For
+classroom environments, this research may allow for efficient auditing of newly generated
+questions, created by humans or AI, enabling a first-­pass quality check for assessments to
+present in the classroom.
+
+LI M ITATI O NS A N D FUTUR E WO R K
+There were several limitations to our study. First, we only utilized a single College Algebra
+lesson, which makes it difficult to generalize the results to other lessons within the same
+subject or to different subject areas. Additionally, our OpenStax item pool consisted only of
+questions without images, figures or tables because not all the LLMs support multimodal
+capabilities. Furthermore, in our experiment, the original partial human dataset displayed
+bimodality (Experiment 1), atypical of a respondent pool. Therefore, when augmenting the
+data without resampling (Experiment 2), bimodality was also exhibited. While Experiment
+3 mitigated this impact by using an effective resampling strategy, it would be beneficial to
+utilize a pool of human respondents that portray a normal distribution from the start. Due to
+leveraging prior data collection, we used the respondent sample size from their study, rather
+than calculating what the effective size should actually be. We also did not examine how the
+quality of partial data collection impacts the augmentation results. A natural extension of
+this work would be to formalize the effectiveness of augmentation strategy across varying
+levels of data quality and systematically quantify its performance while accounting for the
+randomness in data collection. This may require multiple experiment replications to analyze
+the distribution of performance improvements.
+
+14678535, 2025, 3, Downloaded from https://bera-journals.onlinelibrary.wiley.com/doi/10.1111/bjet.13570, Wiley Online Library on [03/06/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+LEVERAGING LLM RESPONDENTS FOR ITEM EVALUATION
+
+|   
+
+LIU et al.
+
+In the future, analyses should be conducted to determine how valid the estimated proficiencies are when derived from a measurement tool calibrated by augmentation experiments versus those from benchmark data. To address this, we should investigate whether
+the structure of the tool with augmented respondents is the same as it is with the original
+human population (Ahmad et al., 2016). Typically, this is done by investigating the reliability
+of the measurement tool and conducting statistical analyses such as explanatory factor
+analysis (EFA) or confirmatory factor analysis (CFA) (Arafat et al., 2016). Moreover, future
+studies should examine the performance of the proposed method on item pools other than
+College Algebra, despite the fact that algebra is considered a hard subject for GenAI. In
+particular, most of our current GenAI models/configurations yield satisfactory results (with
+the exception of Llama 2) in terms of creating synthetic data for algebraic items. Whether
+the good performance in the simulation stage can still hold for other subject areas, and if
+not, whether the data augmentation procedure can mitigate the issue by ensembling several
+unsatisfactory GenAI responses together, remains to be answered.
+The field should also aim to refine and expand methodologies to significantly improve
+the accuracy of responses generated by the models. In our study, we presented all 20
+questions in a single prompt. However, it may be beneficial to question the model independently for each item. Although our initial trials with this technique for GPT-­3.5 resulted
+in degenerate outcomes, this method could be extended to other models to assess its effectiveness more comprehensively. Additionally, more sophisticated prompt engineering
+techniques should be explored. Our prompt was simple and uniform across all models.
+However, it may be advantageous to customize prompts based on the model to better suit
+the specific strengths and design of each model. Incorporating few-­shot learning by including one or two example responses in the prompt may also be effective. While we used
+the default sampling parameters for each model, further exploration should be conducted
+on varying these sampling parameters (ie, setting the temperature to an unusually high
+value). Finally, employing hallucination mitigation techniques such as self-­c onsistency
+(Wang et al., 2022), in which the model is prompted multiple times for the same question and the modal response is selected, may help minimize erroneous outputs and thus
+increase accuracy. This technique has proven effective in reducing hallucination rates
+to near zero for answering mathematics questions (Pardos & Bhandari, 2024). Thus, expanding this technique, along with exploring other hallucination mitigation methods, may
+prove beneficial.
+ACK N O W LE D G E M E NT S
+This work was supported in part by the UC Berkeley Vice Provost of Undergraduate
+Education's Micro Grant Program and the 2023-­2024 Tools Competition.
+CO N FL I C T O F I NT E R EST STAT E M E NT
+The authors declare no conflicts of interest.
+DATA AVA I L A B I L I T Y STAT E M E NT
+The data that support the findings of this study are openly available in figshare at https://​doi.​
+org/​10.​6084/​m9.​figsh​are.​27263496, reference number 27263496.
+E T H I C S STAT E M E NT
+This study was approved by the UC Berkeley Committee for the Protection of Human
+Subjects under IRB Protocol #2022-­12-­15943.
+O RC I D
+Zachary A. Pardos
+
+https://orcid.org/0000-0002-6016-7051
+
+14678535, 2025, 3, Downloaded from https://bera-journals.onlinelibrary.wiley.com/doi/10.1111/bjet.13570, Wiley Online Library on [03/06/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+1040
+
+  
+
+| 1041
+
+Endnotes
+1
+
+https://​repli​cate.​com/​home.
+
+2
+
+https://​opens​tax.​org/​detai​ls/​books/​​colle​ge-­​algeb​ra-­​2e.
+
+REFERENCES
+
+Ahmad, S., Zulkurnain, N., & Khairushalimi, F. (2016). Assessing the validity and reliability of a measurement
+model in structural equation modeling (SEM). British Journal of Mathematics & Computer Science, 15(3),
+1–8. https://​doi.​org/​10.​9734/​BJMCS/​​2016/​25183​
+Arafat, S., Chowdhury, H. R., Qusar, M., & Hafez, M. (2016). Cross cultural adaptation and psychometric validation of research instruments: A methodological review. Journal of Behavioral Health, 5(3), 129–136.
+Badrinath, A., Wang, F., & Pardos, Z. (2021). pyBKT: An accessible python library of Bayesian knowledge tracing
+models. In Proceedings of the 14th International Conference on Educational Data Mining, Paris, France
+(pp. 468–474).
+Balestriero, R., Bottou, L., & LeCun, Y. (2022). The effects of regularization and data augmentation are class
+dependent. Advances in Neural Information Processing Systems, 35, 37878–37891.
+Beheshti, B., Desmarais, M. C., & Naceur, R. (2012). Methods to find the number of latent skills. In Proceedings of
+the 5th International Conference on Educational Data Mining (EDM 2012) Chania, Greece (pp. 81–86).
+Bhandari, S., Liu, Y., Kwak, Y., & Pardos, Z. A. (2024). Evaluating the psychometric properties of ChatGPT-­
+generated questions. Computers and Education, 7, 100284. https://​doi.​org/​10.​1016/j.​caeai.​2024.​100284
+Brown, T. B., Mann, B., Ryder, N., Subbiah, M., Kaplan, J., Dhariwal, P., Neelakantan, A., Shyam, P., Sastry,
+G., Askell, A., Agarwal, S., Herbert-­Voss, A., Krueger, G., Henighan, T., Child, R., Ramesh, A., Ziegler,
+D. M., Wu, J., Winter, C., … Amodei, D. (2020). Language models are few-­shot learners. arXiv preprint.
+arXiv:2005.14165. https://doi.org/10.48550/arXiv.2005.14165
+CH, D. R., & Saha, S. K. (2023). Generation of multiple-­choice questions from textbook contents of school-­
+level subjects. IEEE Transactions on Learning Technologies, 16(1), 40–52. https://​doi.​org/​10.​1109/ ​TLT.​2022.​
+3224232
+Chalmers, R. P. (2012). MIRT: A multidimensional item response theory package for the R environment. Journal
+of Statistical Software, 48, 1–29. https://​doi.​org/​10.​18637/​​jss.​v048.​i06
+Chang, Y., Wang, X., Wang, J., Wu, Y., Yang, L., Zhu, K., Chen, H., Yi, X., Wang, C., Wang, Y., Ye, W., Zhang,
+Y., Chang, Y., Yu, P. S., Yang, Q., & Xie, X. (2024). A survey on evaluation of large language models. ACM
+Transactions on Intelligent Systems and Technology, 15(3), 1–45. https://​doi.​org/​10.​1145/​3641289
+Cochran, K., Cohn, C., Hutchins, N., Biswas, G., & Hastings, P. (2022). Improving automated evaluation of formative assessments with text data augmentation. In International Conference on Artificial Intelligence in
+Education (pp. 390–401). Springer. https://​doi.​org/​10.​1007/​978-­​3 -­​031-­​11644​- ­​5 _​32
+Cohere. (2023). Cohere language model. https://​cohere.​com
+Cook, L. L., & Eignor, D. R. (1991). IRT equating methods. Educational Measurement: Issues and Practice, 10(3),
+37–45. https://​doi.​org/​10.​1111/j.​1745-­​3992.​1991.​tb002​07.​x
+Cubuk, E. D., Zoph, B., Shlens, J., & Le, Q. V. (2020). Randaugment: Practical automated data augmentation with a reduced search space. In Proceedings of the IEEE/CVF Conference on Computer Vision
+and Pattern Recognition Workshops, Virtual (pp. 702–703). https://​d oi.​o rg/​10.​1109/​CVPRW​5 0498.​2 020.​
+00359​
+DeMars, C. (2010). Item response theory. Oxford University Press. https://​doi.​org/​10.​1093/​acprof:​oso/​97801​
+95377​033.​0 01.​0 001
+Deng, L., Acero, A., Plumpe, M., & Huang, X. (2000). Large-­vocabulary speech recognition under adverse acoustic environments. In Proc. 6th International Conference on Spoken Language Processing (ICSLP 2000),
+Beijing, China, vol. 3, (pp. 806–809). https://​doi.​org/​10.​21437/​​ICSLP.​2000- ­​657
+Desmarais, M. C. (2012). Mapping question items to skills with non-­negative matrix factorization. ACM SIGKDD
+Explorations Newsletter, 13(2), 30–36. https://​doi.​org/​10.​1145/​22072​43.​220724
+Desmarais, M. C., & Pelczer, I. (2010). On the faithfulness of simulated student performance data. In R. S. J. de
+Baker, A. Merceron, & P. Pavlik, Jr. (Eds.), Educational Data Mining 2010, The 3rd International Conference
+on Educational Data Mining, Pittsburgh, PA, USA, June 11–13, 2010. Proceedings (pp. 21–30).
+Ding, B., Qin, C., Zhao, R., Luo, T., Li, X., Chen, G., Xia, W., Hu, J., Luu, A. T., & Joty, S. (2024). Data augmentation using LLMs: Data perspectives, learning paradigms and challenges. arXiv preprint. arXiv:2403.02990.
+https://​doi.​org/​10.​48550/​​arXiv.​2403.​02990​
+Dubey, A., Jauhri, A., Pandey, A., Kadian, A., Al-­Dahle, A., Letman, A., Mathur, A., Schelten, A., Vaughan, A.,
+Yang, A., Fan, A., Goyal, A., Hartshorn, A., Yang, A., Mitra, A., Sravankumar, A., Korenev, A., Hinsvark, A.,
+Rao, A., … Jia, J. (2024). The llama 3 herd of models. arXiv preprint. arXiv: 2407.21783. https://​doi.​org/​10.​
+48550/​​arXiv.​2407.​21783​
+
+14678535, 2025, 3, Downloaded from https://bera-journals.onlinelibrary.wiley.com/doi/10.1111/bjet.13570, Wiley Online Library on [03/06/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+LEVERAGING LLM RESPONDENTS FOR ITEM EVALUATION
+
+|   
+
+LIU et al.
+
+Fang, L., Lee, G. G., & Zhai, X. (2023). Using GPT-­4 to augment unbalanced data for automatic scoring. arXiv
+preprint. arXiv:2310.18365. https://​doi.​org/​10.​48550/​​arXiv.​2310.​18365​
+Feinberg, R. A., & Rubright, J. D. (2016). Conducting simulation studies in psychometrics. Educational
+Measurement: Issues and Practice, 35(2), 36–49. https://​doi.​org/​10.​1111/​emip.​12111​
+Frid-­Adar, M., Diamant, I., Klang, E., Amitai, M., Goldberger, J., & Greenspan, H. (2018). GAN-­based synthetic
+medical image augmentation for increased CNN performance in liver lesion classification. Neurocomputing,
+321, 321–331. https://​doi.​org/​10.​1016/j.​neucom.​2018.​09.​013
+Gemini Team Google. (2024). Gemini: A family of highly capable multimodal models. arXiv preprint.
+arXiv:2312.11805. https://​doi.​org/​10.​48550/​​arXiv.​2312.​11805​
+Hannun, A., Case, C., Casper, J., Catanzaro, B., Diamos, G., Elsen, E., Prenger, R., Satheesh, S., Sengupta,
+S., Coates, A., & Ng, A. Y. (2014). Deep speech: Scaling up end-­to-­end speech recognition. arXiv preprint.
+arXiv:1412.5567. https://​doi.​org/​10.​48550/​​arXiv.​1412.​5567
+Harwell, M., Stone, C. A., Hsu, T. C., & Kirisci, L. (1996). Monte Carlo studies in item response theory. Applied
+Psychological Measurement, 20(2), 101–125. https://​doi.​org/​10.​1177/​01466​21696​02000201
+Henderson, S., & Ostashewski, N. (2018). Barriers, incentives, and benefits of the open educational resources (OER)
+movement: An exploration into instructor perspectives. First Monday. https://​doi.​org/​10.​5210/​fm.​v23i12.​9172
+Hernández-­García, A., & König, P. (2018). Further advantages of data augmentation on convolutional neural
+networks. In Artificial neural networks and machine learning–ICANN 2018: 27th International Conference on
+Artificial Neural Networks, Rhodes, Greece, October 4–7, 2018, Proceedings, Part I (pp. 95–103). Springer.
+https://​doi.​org/​10.​1007/​978-­​3 -­​030-­​01418​- ­​6 _​10
+He-­Yueya, J., Ma, W. A., Gandhi, K., Domingue, B. W., Brunskill, E., & Goodman, N. D. (2024). Psychometric
+alignment: Capturing human knowledge distributions via language models. arXiv preprint. arXiv:2407.15645.
+https://​doi.​org/​10.​48550/​​arXiv.​2407.​15645​
+Hu, C., Li, X., Liu, D., Chen, X., Wang, J., & Liu, X. (2022). Teacher-­student architecture for knowledge learning:
+A survey. arXiv preprint. arXiv:2210.17332. https://​doi.​org/​10.​48550/​​arXiv.​2210.​17332​
+Huang, T., Halbe, S. A., Sankar, C., Amini, P., Kottur, S., Geramifard, A., Razaviyayn, M., & Beirami, A. (2022). DAIR:
+Data augmented invariant regularization. OpenReview. https://​openr​eview.​net/​forum?​id=​PKdNR​KjwL4​
+Hutt, S., Das, S., & Baker, R. (2023). The right to Be forgotten and educational data mining: Challenges and paths
+forward. In M. Feng, T. Käser, & P. Talukdar (Eds.), Proceedings of the 16th International Conference on
+Educational Data Mining, Bengaluru, India (pp. 251–259). International Educational Data Mining Society.
+https://​doi.​org/​10.​5281/​zenodo.​8115655
+Jacob, J., Jha, K., Kotak, P., & Puthran, S. (2015). Educational data mining techniques and their applications.
+In 2015 International Conference on Green Computing and Internet of Things (ICGCIoT) (pp. 1344–1348).
+IEEE. https://​doi.​org/​10.​1109/​ICGCI​oT.​2015.​7380675
+Katz, D. M., Bommarito, M. J., Gao, S., & Arredondo, P. (2024). GPT-­4 passes the Bar exam. Philosophical
+Transactions of the Royal Society A, 382(2270), 20230254. https://​doi.​org/​10.​1098/​rsta.​2023.​0254
+Keller, S. U. (2021). Automatic generation of word problems for academic education via natural language processing (NLP). arXiv preprint. arXiv:2109.13123. https://​doi.​org/​10.​48550/​​arXiv.​2109.​13123​
+Kieser, F., Wulff, P., Kuhn, J., & Küchemann, S. (2023). Educational data augmentation in physics education
+research using ChatGPT. Physical Review Physics Education Research, 19(2), 020150. https://​doi.​org/​10.​
+1103/​PhysR​evPhy​sEduc​Res.​19.​020150
+Kim, S. (2006). A comparative study of IRT fixed parameter calibration methods. Journal of Educational
+Measurement, 43(4), 355–381. https://​doi.​org/​10.​1111/j.​1745-­​3984.​2006.​0 0021.​x
+Kim, S., & Kolen, M. J. (2019). Application of IRT fixed parameter calibration to multiple-­group test data. Applied
+Measurement in Education, 32(4), 310–324. https://​doi.​org/​10.​1080/​08957​3 47.​2019.​1660344
+König, C., Khorramdel, L., Yamamoto, K., & Frey, A. (2021). The benefits of fixed item parameter calibration for parameter accuracy in small sample situations in large-­scale assessments. Educational Measurement: Issues
+and Practice, 40(1), 17–27. https://​doi.​org/​10.​1111/​emip.​12381​
+Lee, J., Smith, D., Woodhead, S., & Lan, A. (2024). Math multiple choice question generation via human-­large
+language model collaboration. arXiv preprint. arXiv:2405.00864. https://​doi.​org/​10.​48550/​​arXiv.​2405.​0 0864​
+LeJeune, D., Balestriero, R., Javadi, H., & Baraniuk, R. G. (2019). Implicit Rugosity regularization via data augmentation. arXiv preprint. arXiv:1905.11639. https://​doi.​org/​10.​48550/​​arXiv.​1905.​11639​
+Liu, X., Yu, H., Zhang, H., Xu, Y., Lei, X., Lai, H., Gu, Y., Ding, H., Men, K., Yang, K., Zhang, S., Deng, X., Zeng,
+A., Du, Z., Zhang, C., Shen, S., Zhang, T., Su, Y., Sun, H., … Tang, J. (2023). Agentbench: Evaluating LLMs
+as agents. arXiv preprint. arXiv:2308.03688. https://​doi.​org/​10.​48550/​​arXiv.​2308.​03688​
+Lu, X., & Wang, X. (2024). Generative students: Using LLM-­simulated student profiles to support question item
+evaluation. arXiv preprint. arXiv:2405.11591. https://​doi.​org/​10.​48550/​​arXiv.​2405.​11591​
+Markel, J. M., Opferman, S. G., Landay, J. A., & Piech, C. (2023). GPTeach: Interactive TA training with GPT-­
+based students. In Proceedings of the Tenth ACM Conference on Learning@Scale, Copenhagen, Denmark
+(pp. 226–236). https://​doi.​org/​10.​1145/​35730​51.​3593393
+
+14678535, 2025, 3, Downloaded from https://bera-journals.onlinelibrary.wiley.com/doi/10.1111/bjet.13570, Wiley Online Library on [03/06/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+1042
+
+  
+
+| 1043
+
+Mazzeo, J., & von Davier, M. (2014). Linking scales in international large-­scale assessments. In Handbook of
+international large-­scale assessment background, technical issues, and methods of data analysis, Chapman
+& Hall/CRC (pp. 229–258). https://​doi.​org/​10.​1201/​b1606​1-­​15
+Ndukwe, I. G., Daniel, B. K., & Butson, R. J. (2018). Data science approach for simulating educational data:
+Towards the development of teaching outcome model (TOM). Big Data and Cognitive Computing, 2(3), 24.
+https://​doi.​org/​10.​3390/​bdcc2​030024
+Onal, S., & Kulavuz-­Onal, D. (2024). A cross-­disciplinary examination of the instructional uses of ChatGPT in
+higher education. Journal of Educational Technology Systems, 52(3), 301–324. https://​doi.​org/​10.​1177/​
+00472​39523​1196532
+OpenAI, Achiam, J., Adler, S., Agarwal, S., Ahmad, L., Akkaya, I., Aleman, F. L., Almeida, D., Altenschmidt, J.,
+Altman, S., Anadkat, S., Avila, R., Babuschkin, I., Balaji, S., Balcom, V., Baltescu, P., Bao, H., Bavarian, M.,
+Belgum, J., … Jain, S. (2024). GPT-­4 technical report. arXiv preprint. arXiv:2303.08774. https://​doi.​org/​10.​
+48550/​​arXiv.​2303.​08774​
+Pardos, Z. A., & Bhandari, S. (2024). ChatGPT-­generated help produces learning gains equivalent to human
+tutor-­authored help on mathematics skills. PLoS One, 19(5), e0304013. https://​doi.​org/​10.​1371/​journ​al.​pone.​
+0304013
+Pardos, Z. A., Tang, M., Anastasopoulos, I., Sheel, S. K., & Zhang, E. (2023). OATutor: An open-­source adaptive
+tutoring system and curated content library for learning sciences research. In Proceedings of the 2023 CHI
+Conference on Human Factors in Computing Systems, Hamburg, Germany (pp. 1–17). https://​doi.​org/​10.​
+1145/​35445​48.​3581574
+Pellicer, L. F. A. O., Ferreira, T. M., & Costa, A. H. R. (2023). Data augmentation techniques in natural language
+processing. Applied Soft Computing, 132, 109803. https://​doi.​org/​10.​1016/j.​asoc.​2022.​109803
+Robitzsch, A., Kiefer, T., Wu, M., Robitzsch, M. A., Adams, W., & Rcpp, L. (2020). Package ‘TAM’. Test Analysis
+Modules–Version, 3, 26. https://​doi.​org/​10.​32614/​​CRAN.​packa​ge.​TAM
+Sennrich, R., Haddow, B., & Birch, A. (2016). Improving neural machine translation models with monolingual data.
+arXiv preprint. arXiv:1511.06709. https://​doi.​org/​10.​48550/​​arXiv.​1511.​0 6709​
+Shaikh, O., Chai, V. E., Gelfand, M., Yang, D., & Bernstein, M. S. (2024). Rehearsal: Simulating conflict to teach
+conflict resolution. In Proceedings of the CHI Conference on Human Factors in Computing Systems,
+Honolulu, HI, USA (pp. 1–20). https://​doi.​org/​10.​1145/​36139 ​0 4.​3642159
+Shorten, C., & Khoshgoftaar, T. M. (2019). A survey on image data augmentation for deep learning. Journal of Big
+Data, 6(1), 1–48. https://​doi.​org/​10.​1186/​s 4053​7-­​019-­​0197-­​0
+Shridhar, K., Macina, J., El-­Assady, M., Sinha, T., Kapur, M., & Sachan, M. (2022). Automatic generation of
+Socratic subquestions for teaching math word problems. In Proceedings of the 2022 Conference on Empirical
+Methods in Natural Language Processing, Abu Dhabi, United Arab Emirates (pp. 4136–4149). Association
+for Computational Linguistics. https://​doi.​org/​10.​18653/​​v1/​2022.​emnlp​-­​main.​277
+Swaminathan, H., Hambleton, R. K., & Rogers, H. J. (2006). 21 assessing the fit of item response theory models.
+In C. R. Rao & S. Sinharay (Eds.), Psychometrics, vol. 26 of Handbook of statistics (pp. 683–718). Elsevier.
+https://​doi.​org/​10.​1016/​S0169​-­​7161(06)​26021​- ­​8
+Touvron, H., Martin, L., Stone, K., Albert, P., Almahairi, A., Babaei, Y., Bashlykov, N., Batra, S., Bhargava, P.,
+Bhosale, S., Bikel, D., Blecher, L., Ferrer, C. C., Chen, M., Cucurull, G., Esiobu, D., Fernandes, J., Fu,
+J., Fu, W., … Scialom, T. (2023). Llama 2: Open foundation and fine-­tuned chat models. arXiv preprint.
+arXiv:2307.09288. https://​doi.​org/​10.​48550/​​arXiv.​2307.​09288​
+Wang, T., & Vispoel, W. P. (1998). Properties of ability estimation methods in computerized adaptive testing.
+Journal of Educational Measurement, 35(2), 109–135. https://​doi.​org/​10.​1111/j.​1745-­​3984.​1998.​tb005​30.​x
+Wang, W. C., & Chen, C. T. (2005). Item parameter recovery, standard error estimates, and fit statistics of the
+WINSTEPS program for the family of Rasch models. Educational and Psychological Measurement, 65(3),
+376–404. https://​doi.​org/​10.​1177/​0 0131​6 4404​268673
+Wang, X., Wei, J., Schuurmans, D., Le, Q., Chi, E., & Zhou, D. (2022). Self-­c onsistency improves chain of
+thought reasoning in language models. arXiv preprint. arXiv:2203.11171. https://​doi.​org/​10.​4 8550/​​arXiv.​
+2203.​11171​
+Wei, J., & Zou, K. (2019). EDA: Easy data augmentation techniques for boosting performance on text classification tasks. arXiv preprint. arXiv:1901.11196. https://​doi.​org/​10.​48550/​​arXiv.​1901.​11196​
+Whitehouse, C., Choudhury, M., & Aji, A. F. (2023). LLM-­powered data augmentation for enhanced Crosslingual
+performance. arXiv preprint. arXiv:2305.14288. https://​doi.​org/​10.​48550/​​arXiv.​2305.​14288​
+Wiley, D., & Green, C. (2012). Why openness in education? In D. Oblinger (Ed.), Game changers: Education and
+information technologies (pp. 81–89). Educause.
+Wilson, M. (2023). Constructing measures: An item response modeling approach. Routledge. https://​doi.​org/​10.​
+4324/​97810​03286929
+Xie, Q., Dai, Z., Hovy, E., Luong, T., & Le, Q. (2020). Unsupervised data augmentation for consistency training.
+Advances in Neural Information Processing Systems, 33, 6256–6268.
+
+14678535, 2025, 3, Downloaded from https://bera-journals.onlinelibrary.wiley.com/doi/10.1111/bjet.13570, Wiley Online Library on [03/06/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+LEVERAGING LLM RESPONDENTS FOR ITEM EVALUATION
+
+|   
+
+LIU et al.
+
+Xie, Z., Wang, S. I., Li, J., Lévy, D., Nie, A., Jurafsky, D., & Ng, A. Y. (2017). Data noising as smoothing in neural
+network language models. arXiv preprint. arXiv:1703.02573. https://​doi.​org/​10.​48550/​​arXiv.​1703.​02573​
+Xu, S., & Zhang, X. (2023). Leveraging generative artificial intelligence to simulate student learning behavior.
+arXiv preprint. arXiv:2310.19206. https://​doi.​org/​10.​48550/​​arXiv.​2310.​19206​
+Ye, J., Xu, N., Wang, Y., Zhou, J., Zhang, Q., Gui, T., & Huang, X. (2024). LLM-­DA: Data augmentation via large
+language models for few-­shot named entity recognition. arXiv preprint. arXiv:2402.14568. https://​doi.​org/​10.​
+48550/​​arXiv.​2402.​14568​
+Zhou, Z., Ning, M., Wang, Q., Yao, J., Wang, W., Huang, X., & Huang, K. (2023). Learning by analogy: Diverse
+questions generation in math word problem. In A. Rogers, J. Boyd-­Graber, & N. Okazaki (Eds.), Findings of
+the association for computational linguistics: ACL 2023 (pp. 11091–11104). Association for Computational
+Linguistics. https://​doi.​org/​10.​18653/​​v1/​2023.​f indi​ngs-­​acl.​705
+
+How to cite this article: Liu, Y., Bhandari, S., & Pardos, Z. A. (2025). Leveraging
+LLM respondents for item evaluation: A psychometric analysis. British Journal of
+Educational Technology, 56, 1028–1052. https://doi.org/10.1111/bjet.13570
+
+A PPE N D I X A
+PROMPT UTILIZED FOR ALL LLMS
+Q1: Given m = 4, find the equation of the line in slope-­intercept form passing through the
+point (2, 5).
+Q2: Find the slope of a line that passes through the points (2, − 1) and (−5, 3).
+Q3: Solve the following equation. 2x + 1 = − 9.
+Q4: State whether the two lines are parallel, perpendicular or neither: 3y = − 4x + 3 and
+3x − 4y = 8. Answer choices: parallel, perpendicular or neither.
+Q5: For the following exercises, state whether they are parallel, perpendicular or neither:
+x = 4 and y = − 3. Answer choices: parallel, perpendicular or neither.
+Q6: Write the equation of line parallel to 5x + 3y = 1 and passing through the point (3, 5).
+1
+1
+2
+Q7: Solve the rational equation: 3x = 4 − 6x.
+Q8: Solve the following equation: 2x + 7 = 19.
+Q9: Identify the slope given the equation y = − 34 x − 4.
+Q10: Find the slope of a line that passes through the points (−2, 6) and (1, 4).
+Q11: Find the equation of the line passing through the given points: (−5, 2) and (2, 2).
+Q12: Find the equation of the line parallel to 5x = 7 + y and passing through the point
+( − 1, − 2).
+Q13: Find the equation of the line perpendicular to 5x − 3y + 4 = 0 and passing through
+the point (−4, 1).
+Q14: Solve the equation in one variable: − 2(3x − 1) + x = 14 − x .
+5
+7
+Q15: Solve the rational equation 2x
+.
+− 3x
+= 22
+3
+Q16: Solve the following rational equations and state the excluded values. x −3 6 = 5x. Answer
+choices: Excluded values: 6, 0 and x = 15; Excluded values: 6 and x = 15; Excluded values: 6, 0 and x = 3; Excluded values: 6 and x = 3.
+Q17: Solve the equation in one variable. 4x − 3 = 5.
+7
+Q18: Solve the following rational equation: 2x − 32 = 2x
+.
+Q19: For the following exercises, solve the equation for x . State all x -­values that are excluded from the solution set. 1x = 51 + 2x3 . Answer choices: Excluded value: 0 and x = − 52;
+Excluded value: None and x = − 52; Excluded value: 0 and x = − 72; Excluded value: None
+and x = − 72.
+Q20: For the following exercises, solve the equation for x . State all x -­values that are
++2
+excluded from the solution set. 2 − x +3 4 = xx +
+. Answer choices: Excluded values: −4 and
+4
+
+14678535, 2025, 3, Downloaded from https://bera-journals.onlinelibrary.wiley.com/doi/10.1111/bjet.13570, Wiley Online Library on [03/06/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+1044
+
+  
+
+| 1045
+
+x = − 3; Excluded values: 4 and x = − 3; Excluded values: −4 and x = 1; Excluded values:
+4 and x = 1.
+
+A PPE N D I X B
+SAMPLE RESPONSE OUTPUTS
+GPT-­4 sample response output
+A1: The equation of the line in slope-­intercept form is given by y = mx + c, where m is the
+slope and c is the y-­intercept. We are given the slope m = 4, and the point (2, 5) lies on
+the line, so we can substitute these into the equation: 5 = 4 × 2 + c. Solving for c gives
+c = − 3 . Therefore, the equation of the line is y = 4x(− 3. )
+(
+)
+y −y
+A2: The slope of a line passing through the points x1 , y1 and x2 , y2 is given by x2 − x1 .
+2
+1
+3 − (−1)
+4
+Substituting for x1 = 2, y1 = − 1, x2 = − 5, y2 = 3 gives a slope of (−5) − 2 = − 7.
+A3: Subtract 1 from both sides to give 2x = − 10, then divide by 2 to give x = − 5.
+A4: Neither. Line 1 has a slope of − 4 ∕ 3 and Line 2 has a slope of 3 ∕ 4. They are neither
+parallel (they would have the same slope) nor perpendicular (they would have negative
+reciprocal slopes).
+A5: Perpendicular. The lines x = 4 and y = − 3 are perpendicular to each other. This is
+because one is a vertical line and the other is a horizontal line.
+A6: The slope of line a is − 5 ∕ 3. Parallel lines have the same slope, so the slope of the
+new line is also − 5 ∕ 3. Using the slope-­intercept form y = mx + b and the point (3, 5), we
+find b = 5 − (3 × − 5 ∕ 3) = 20∕ 3. So, the equation of the line is y = − 53 x + 20
+.
+3
+A7: Multiply through by 18x : 12 − 3 = 4x , giving x = 94.
+A8: Subtract 7 from both sides: 2x = 12. Divide by 2: x = 6.
+A9: The slope of a line in the form y = mx
+4)x − 4, the slope is − 34.
+( + b)is m.(For y =
+) −y(3∕
+2 − y1
+A10: The slope m between two points x1 , y1 and x2 , y2 is x − x . Substituting the given
+4−6
+2
+2
+1
+values gives m = 1 − (−2) = − 3.
+A11: Both points have the same y-­coordinate, so the line is horizontal and the equation
+is y = 2.
+A12: The line 5x = 7 + y can be rewritten as y = 5x − 7. The slope of this line is 5. A
+line parallel to this line also has a slope of 5. The equation of the line in slope-­intercept
+form y = mx + b passing through the point ( − 1, − 2) is y = 5x + b. Substituting in the
+point gives − 2 = 5 × − 1 + b, so b = − 2 + 5 = 3. Therefore, the equation of the line is
+y = 5x + 3.
+A13: The line 5x − 3y + 4 = 0 can be rewritten as y = 53 x + 43. The slope of this line is 53 . A
+line perpendicular to this line has a slope of − 35. The equation of the line in slope-­intercept
+form y = (mx )+ b passing through the point (−4, 1) is y = − 35 x + b. Substituting in the point
+3
+7
+gives 1 = − 35 × (−4) + b, so b = 1 − 12
+= − 75. Therefore, the equation of the line is y = − 5 x − 5.
+5
+A14: Distribute the left side to get − 6x + 2 + x = 14 − x . Combine like terms to get
+− 5x + 2 = 14 − x . Add 5x to both sides to get 2 = 14 + 4x . Subtract 14 from both sides to
+get − 12 = 4x . Divide both sides by 4 to get x = − 3.
+A15: Multiply through by 6x gives 21 − 10 = 44x , so x = 11
+or 14.
+44
+A16: Excluded values: 6 and x = 15. Solving the equation gives x = 15 and x cannot be
+equal to 0 or 6 because these would make the denominator of a fraction 0.
+A17: Solving gives 4x = 8, so x = 2.
+A18: Multiply through by 2x gives 4 − 3x = 7, so x = − 1.
+A19: Excluded value: 0 and x = − 5∕ 2. Solving the equation gives x = − 5 ∕2 and x cannot be equal to 0 because it would make the denominator of a fraction 0.
+A20: Excluded values: −4 and x = − 3. Solving the equation gives x = − 3 and x cannot
+be equal to −4 because it would make the denominator of a fraction 0.
+
+14678535, 2025, 3, Downloaded from https://bera-journals.onlinelibrary.wiley.com/doi/10.1111/bjet.13570, Wiley Online Library on [03/06/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+LEVERAGING LLM RESPONDENTS FOR ITEM EVALUATION
+
+|   
+
+LIU et al.
+
+GPT-­3.5 sample response output
+**Q1:** Given that m = 4 and the point (2, 5), the equation (of the line
+) in slope-­intercept
+form can be found using the point-­slope formula: y − y1 = m x − x1
+y − 5 = 4(x − 2)
+y − 5 = 4x − 8
+y = 4x − 3. Therefore, the equation of the line passing through the point (2, 5) with slope
+4 is y = 4x − 3.
+**Q2:** The slope of a line passing through the points (2, −1) and (−5, 3) can be calculated
+y −y
+as: Slope = x2 − x1
+2
+
+1
+
+Slope = 3−−5(−1)
+−2
+Slope = −47
+Slope = − 47. Therefore, the slope of the line passing through the given points is − 47.
+**Q3:** To solve the equation 2x + 1 = − 9: 2x + 1 = − 9
+2x = − 10
+x = − 5. Therefore, the solution to the equation is x = − 5.
+**Q4:** The two lines 3y = − 4x + 3 and 3x − 4y = 8 can be rewritten in slope-­intercept
+form: First line: y = −34 x + 1.
+Second line: y = 34 x − 2. Since the slopes of the lines are not negative reciprocals of each
+other, they are neither parallel nor perpendicular.
+**Q5:** The equations x = 4 and y = − 3 represent vertical and horizontal lines respectively. Therefore, they are perpendicular.
+**Q6:** To find the equation of a line parallel to 5x + 3y = 1 and passing through the point
+(3, 5), we first find the slope of the given line: 5x + 3y = 1
+3y = − 5x + 1
+y = −35 x + 13. The slope of the given line is − 53. A line parallel to this line will have the same
+slope. Using the point-­slope formula: y − 5 = −35 (x − 3)
+
+y − 5 = −35 x + 5
+y = −35 x + 10. Therefore, the equation of the line parallel to 5x + 3y = 1 and passing through
+
+the point (3, 5) is y = −35 x + 10.
+**Q7:** To solve the rational equation 3x2 = 14 − 6x1 , we first find a common denominator:
+− 2x
+2
+1.
+− 2x
+. Therefore, the equation becomes: 312x
+= 312x
+= 41 − 6x
+3x
+−2
+3 − 2x
+. This equation has no solution as the variables cancel out.
+= 312
+12x
+
+**Q8:** To solve the equation 2x + 7 = 19: 2x = 12.
+x = 6. Therefore, the solution to the equation is x = 6.
+**Q9:** Identifying the slope in the equation y = −43 x − 4, the slope is − 34.
+**Q10:** The slope of a line passing through (−2, 6) and (1, 4) can be calculated as:
+6
+Slope = 1 4−−(−2)
+.
+2
+−2
+Slope = 3 . Therefore, the slope of the line passing through the given points is − .
+3
+**Q11:** To find the equation of the line passing through (−5, 2) and (2, 2), we first find the
+2−2
+slope: Slope = 2 − (−5)
+Slope = 07
+Slope = 0. Since the slope is 0, the equation of the line is y = 2.
+**Q12:** To find the equation of the line parallel to 5x = 7 + y and passing through (−1, −2),
+we first rewrite the given equation in slope-­intercept form: y = 5x − 7. The slope of the line
+is 5. Since the line we are looking for is parallel, it will have the same slope. Using the
+given point, we find the equation to be: y + 2 = 5(x + 1)
+y + 2 = 5x + 5
+
+14678535, 2025, 3, Downloaded from https://bera-journals.onlinelibrary.wiley.com/doi/10.1111/bjet.13570, Wiley Online Library on [03/06/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+1046
+
+  
+
+| 1047
+
+y = 5x + 3. Therefore, the equation of the line parallel to 5x = 7 + y and passing through
+(−1, −2) is y = 5x + 3.
+**Q13:** To find the equation of the line perpendicular to 5x − 3y + 4 = 0 and passing
+through (−4, 1), we first rewrite the given equation in slope-­intercept form: 3y = 5x + 4.
+y = 53 x + 43. The slope of this line is 53. The perpendicular line will have a negative reciprocal slope, which is −53. Using the point (−4, 1), the equation of the line is: y − 1 = −53 (x + 4)
+y − 1 = −53 x − 12
+5
+
+y = −53 x − 75. Therefore, the equation of the line perpendicular to 5x − 3y + 4 = 0 and pass-
+
+ing through (−4, 1) is y = −53 x − 75.
+**Q14:** To solve the equation − 2(3x − 1) + x = 14 − x : − 6x + 2 + x = 14 − x
+− 5x + 2 = 14 − x
+− 5x + x = 14 − 2
+− 4x = 12
+x = − 3. Therefore, the solution to the equation is x = − 3.
+5
+7
+**Q15:** To solve the rational equation 2x
+: Find a common denominator:
+− 3x
+= 22
+3
+22
+21 − 10x
+.
+Therefore,
+the
+equation
+becomes:
+3(21
+−
+10x)
+= 44x
+=
+6x
+3
+63 − 30x = 44x
+63 = 74x
+.
+x = 63
+74
+**Q16:** To solve the rational equation x −3 6 = 5x: The excluded values are x = 6 and x = 0 .
+The solution is x = 15. Answer: Excluded values: 6, 0 and x = 15.
+**Q17:** To solve the equation 4x − 3 = 5: 4x = 8.
+x = 2. Therefore, the solution to the equation is x = 2.
+7
+7
+**Q18:** To solve the rational equation 2x − 32 = 2x
+: Find a common denominator: 4 −2x6x = 2x
+.
+Therefore, the equation becomes: 4 − 6x = 7
+− 6x = 3
+x = − 12. Therefore, the solution to the equation is x = − 1.
+2
+3
+**Q19:** To solve the equation 1x = 51 + 2x
+: Find a common denominator: 2(2x) = 2x
+10x + 30 = 2(5) + 3x
+10x + 30 = 10 + 3x
+7x = − 20
+x = −720. Therefore, the solution to the equation is x = − 20.
+7
+**Q20:** To solve the equation 2 − 3 ∕ (x + 4) = (x + 2) ∕(x + 4): Find a common denominator: 2(x + 4) − 3 = x + 2
+2x + 8 − 3 = x + 2
+2x + 5 = x + 2
+x = − 3. Therefore, the solution to the equation is x = − 3.
+B.1.1. | Llama 3 sample response output
+I’ll do my best to help you with each question.
+Q1: Given m = 4, find the equation of the line in slope-­intercept form passing through the
+point (2, 5).
+The slope-­intercept form is y = mx + b. We know the slope (m) is 4, and the point (2, 5)
+lies on the line. Plugging in the values, we get: 5 = 4(2) + b
+5=8+b
+b= −3
+So, the equation of the line is y = 4x − 3.
+Q2: Find the slope of a line that passes through the points (2, −1) and (−5, 3).
+
+14678535, 2025, 3, Downloaded from https://bera-journals.onlinelibrary.wiley.com/doi/10.1111/bjet.13570, Wiley Online Library on [03/06/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+LEVERAGING LLM RESPONDENTS FOR ITEM EVALUATION
+
+|   
+
+LIU et al.
+
+y −y
+
+To find the slope, we use the formula m = x2 − x1 . Plugging in the values, we get: m = 3−−5(−1)
+−2
+
+m = 3−+71
+
+m = −47
+m = − 74
+
+2
+
+1
+
+So, the slope of the line is − 47.
+Q3: Solve the following equation 2x + 1 = − 9.
+Subtract 1 from both sides: 2x = − 10
+Divide both sides by 2: x = −210
+x= −5
+So, the solution is x = − 5.
+Q4: State whether the two lines are parallel, perpendicular or neither: 3y = − 4x + 3 and
+3x − 4y = 8.
+Rearrange the equations to slope-­intercept form: y = −34 x + 1 (first equation).
+y = 34 x − 2 (second equation)
+The slopes are − 43 and 34, which are negative reciprocals of each other. Therefore, the
+lines are perpendicular.
+Q5: For the following exercises, state whether they are parallel, perpendicular or neither:
+x = 4 and y = − 3.
+These are not lines in slope-­intercept form, but rather horizontal and vertical lines. Since
+they are not in the same form, they are neither parallel nor perpendicular.
+Q6: Write the equation of a line parallel to 5x + 3y = 1 and passing through the point (3, 5).
+First, rearrange the given equation to slope-­intercept form: 3y = − 5x + 1
+y = −35 x + 13
+The slope is − 53. Since we want a parallel line, we’ll keep the same slope. The point (3, 5)
+lies on the new line, so we can plug in the values: 5 = −35 (3) + b
+5= −5+b
+b = 10
+So, the equation of the parallel line is y = −35 x + 10.
+1
+2
+Q7: Solve the rational equation: 3x
+.
+= 14 − 6x
+First, find a common denominator, which is 12x. Multiply both sides by 12x: 2(4) = 3x − 2.
+Simplify: 8 = 3x − 2
+10 = 3x
+x = 10
+3
+So, the solution is x = 10
+.
+3
+Q8: Solve the following equation. 2x + 7 = 19.
+Subtract 7 from both sides: 2x = 12
+Divide both sides by 2: x = 12
+2
+x=6
+So, the solution is x = 6.
+( )
+Q9: Identify the slope given by the equation y = − 34 x − 4.
+The slope is the coefficient of x , which is − 34.
+Q10: Find the slope of a line that passes through the points (−2, 6) and (1, 4).
+6
+Use the slope formula: m = 1 4−−(−2)
+−2
+m= 3
+So, the slope of the line is − 23.
+Q11: Find the equation of the line passing through the given points: (−5, 2) and (2, 2).
+Since the y-­coordinates are the same, this is a horizontal line. The equation is y = 2.
+Q12: Find the equation of the line parallel to 5x = 7 + y and passing through the point
+(−1, −2).
+Rearrange the given equation to slope-­intercept form: y = − 5x + 7
+
+14678535, 2025, 3, Downloaded from https://bera-journals.onlinelibrary.wiley.com/doi/10.1111/bjet.13570, Wiley Online Library on [03/06/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+1048
+
+  
+
+| 1049
+
+The slope is −5. Since we want a parallel line, we‘ll keep the same slope. The point (−1, −2)
+lies on the new line, so we can plug in the values: − 2 = − 5(−1) + b
+−2=5+b
+b= −7
+So, the equation of the parallel line is y = − 5x − 7.
+Q13: Find the equation of the line perpendicular to 5x − 3y + 4 = 0 and passing through
+the point (−4, 1).
+Rearrange the given equation to slope-­intercept form: 3y = 5x − 4
+y = 53 x − 43
+The slope is 53. Since we want a perpendicular line, we‘ll find the negative
+− 35 .
+( reciprocal:
+)
+3
+The point (−4, 1) lies on the new line, so we can plug in the values: 1 = − 5 (−4) + b
+
+1 = 12
++b
+5
+b = − 75
+
+( )
+So, the equation of the perpendicular line is y = − 35 x − 75.
+Q14: Solve the equation in one variable: − 2(3x − 1) + x = 14 − x .
+Distribute the negative 2: − 6x + 2 + x = 14 − x
+Combine like terms: − 5x + 2 = 14 − x
+Add x to both sides: − 4x + 2 = 14
+Subtract 2 from both sides: − 4x = 12
+Divide both sides by −4: x = −412
+x= −3
+So, the solution is x = − 3.
+5
+7
+Q15: Solve the rational equation. 2x
+− 3x
+= 22∕ 3.
+Find a common denominator, which is 6x. Multiply both sides by 6x: 7(3) − 5(2) = 44x
+.
+3
+Simplify: 21 − 10 = 44x
+3
+11 = 44x
+3
+Multiply both sides by 3: 33 = 44x
+Divide both sides by 44: x = 33
+44
+x = 34
+So, the solution is x = 34.
+Q16: Solve the rational equation. x −3 6 = 5x.
+Cross-­multiply: 3x = 5(x − 6)
+Distribute the 5: 3x = 5x − 30
+Subtract 5x from both sides: − 2x = − 30
+Divide both sides by −2: x = 30
+2
+x = 15
+The excluded values are x = 6 and x = 0. So, the correct answer is Excluded values: 6,
+0 and x = 15.
+Q17: Solve the equation in one variable. 4x − 3 = 5.
+Add 3 to both sides: 4x = 8.
+Divide both sides by 4: x = 84
+x=2
+So, the solution is x = 2.
+7
+Q18: Solve the following rational equation: 2x − 32 = 2x
+.
+Find a common denominator, which is 2x. Multiply both sides by 2x: 4 − 3x = 7
+Add 3x to both sides: 4 = 3x + 7
+Subtract 7 from both sides: − 3 = 3x .
+Divide both sides by −3: x = −11
+x= −1
+So, the solution is x = − 1.
+
+14678535, 2025, 3, Downloaded from https://bera-journals.onlinelibrary.wiley.com/doi/10.1111/bjet.13570, Wiley Online Library on [03/06/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+LEVERAGING LLM RESPONDENTS FOR ITEM EVALUATION
+
+|   
+
+LIU et al.
+
+Q19: For the following exercises, solve the equation for x . State all x -­values that are ex3
+cluded from the solution set. 1x = 51 + 2x
+.
+Find a common denominator, which is 10x. Multiply both sides by 10x: 10 = 2x + 15.
+Subtract 2x from both sides: − 2x = − 5
+x = 52
+The excluded value is x = 0. So, the correct answer is Excluded value: 0 and x = 52.
+Q20: For the following exercises, solve the equation for x . State all x -­values that are ex+2
+cluded from the solution set. 2 − x +3 4 = xx +
+.
+4
+Cross-­multiply: 2(x + 4) − 3 = x + 2
+Distribute the 2: 2x + 8 − 3 = x + 2
+Simplify: 2x + 5 = x + 2
+Subtract x from both sides: x + 5 = 2
+x= −3
+The excluded value is x = − 4. So, the correct answer is Excluded values: − 4 and x = − 3 .
+B.1.2. | Llama 2 sample response output
+Sure, I‘d be happy to help you with these questions! Here are my responses:
+Q1: The equation of the line in slope-­intercept form passing through the point (2, 5) is
+y = 5 − 2x .
+Q2: The slope of the line passing through the points (2, −1) and (−5, 3) is 43.
+Q3: The solution to the equation 2x + 1 = − 9 is x = − 5.
+Q4: The two lines 3y = − 4x + 3 and 3x − 4y = 8 are parallel.
+Q5: The two lines x = 4 and y = − 3 are neither parallel nor perpendicular.
+Q6: The equation of the line parallel to 5x + 3y = 1 and passing through the point (3, 5) is
+5x + 3y = 13.
+1
+2
+Q7: The solution to the rational equation 3x
+is x = 2 or x = 3.
+= 14 − 6x
+Q8: The solution to the equation 2x + 7 = 19 is x = 11.
+Q9: The slope of the line given by the equation y = −43 x − 4 is −43.
+Q10: The slope of the line passing through the points (−2, 6) and (1, 4) is 23.
+Q11: The equation of the line passing through the points (−5, 2) and (2, 2) is y = 2x + 1.
+Q12: The equation of the line parallel to 5x = 7 + y and passing through the point (−1, −2)
+is 5x + 7 = − 2y − 9.
+Q13: The equation of the line perpendicular to 5x − 3y + 4 = 0 and passing through the
+point (−4, 1) is 5x − 3y + 4 = 16.
+Q14: The solution to the equation − 2(3x − 1) + x = 14 − x is x = 7.
+Q15: The solution to the rational equation 2x7 − 3x5 = 223 is x = 4 or x = 6.
+Q16: The solution to the rational equation x −3 6 = 5x is x = 15. The excluded values are 6
+and 0.
+Q17: The solution to the equation 4x − 3 = 5 is x = 7.
+3
+7
+2
+Q18: The solution to the rational equation x − 2 = 2x is x = 4 or x = 6.
+1
+3
+1
+5
+Q19: The solution to the equation x = 5 + 2x is x = 2 or x = −27. The excluded value is 0.
+Q20: The solution to the equation 2 − x +3 4 = xx ++ 42 is x = − 3 or x = 1. The excluded values
+are x = − 4 and x = 1.
+I hope these responses are helpful! Please let me know if you have any further questions.
+B.1.3. | Gemini sample response output
+**Q1:** y = 2x − 3.
+**Q2:** 47.
+**Q3:** x = − 5.
+
+14678535, 2025, 3, Downloaded from https://bera-journals.onlinelibrary.wiley.com/doi/10.1111/bjet.13570, Wiley Online Library on [03/06/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+1050
+
+  
+
+| 1051
+
+**Q4:** parallel.
+**Q5:** perpendicular.
+**Q6:** y = 5x − 10.
+**Q7:** x = 2orx = 4.
+**Q8:** x = 6.
+**Q9:** − 34.
+**Q10:** − 13.
+**Q11:** y = 0.
+**Q12:** y = 75 x − 29
+.
+5
+**Q13:** y = 35 x + 11
+.
+5
+**Q14:** x = 5.
+**Q15:** x = 12.
+**Q16:** Excluded values: 6 and x = 15.
+**Q17:** x = 2.
+**Q18:** x = − 6orx = 1.
+**Q19:** Excluded values: 0 and x = − 52.
+**Q20:** Excluded values: −4 and x = 1.
+B.1.4. | Cohere sample response output
+Here are the answers to the questions:
+A1: The equation of the line in slope-­intercept form is y = 4x + 3. The y-­intercept is (0, 3),
+and the slope is 4.
+A2: The slope of the line is − 2.5.
+A3: The solution to the equation is x = − 4.
+A4: The two lines are neither parallel nor perpendicular.
+A5: The two lines are parallel.
+A6: The equation of the line parallel to the given line and passing through the point (3, 5)
+is y = 53 x − 43.
+A7: The solution to the rational equation is x = 49.
+A8: The solution to the equation is x = 6.
+A9: The slope given by the equation is − 34.
+A10: The slope of the line passing through these points is 23, indicating that for every move
+of 3 units to the right, the line goes up by 2 units.
+A11: The equation of the line passing through these points is x + y = − 3.
+A12: The equation of the line is y = −75 x − 97.
+A13: The equation of the line is 3x + 5y = − 24.
+A14: The solution to the equation is x = 4.
+A15: The solution to the rational equation is x = 67.
+A16: Solving the equation, we get x = 15, indicating that the line crosses the x-­axis at
+x = 15. The excluded values are 0 and 6.
+A17: Solving for x , we get x = 2.
+A18: The solution to the rational equation is x = 27.
+A19: Solving the equation, we get x = −52. The excluded value is 0.
+A20: The equation holds true for all values of x ; hence there are no excluded values.
+The values given in the choices do not satisfy the equation; hence they are excluded.
+
+14678535, 2025, 3, Downloaded from https://bera-journals.onlinelibrary.wiley.com/doi/10.1111/bjet.13570, Wiley Online Library on [03/06/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+LEVERAGING LLM RESPONDENTS FOR ITEM EVALUATION
+
+|   
+
+LIU et al.
+
+A PPE N D I X C
+ANALYSIS OF TRAINING DATA INFLUENCE
+To explore whether the inclusion of OpenStax Algebra questions with their publicly available
+answers in the training data of the LLMs influenced their performance, we compared the
+performance of LLMs on two sets of questions:
+• Original Items: The 20 OpenStax Algebra items used in the study, all of which have solutions available in the OpenStax textbook and may have been included in LLM training
+data.
+• New Items: 20 additional OpenStax items, which do not have provided solutions in the
+textbook.
+TA B L E C 1 Comparison of LLM performance on original OpenStax items (with publicly available answers)
+and new OpenStax items (without publicly available answers).
+Set
+
+Average accuracy (%)
+
+Original items
+
+46.42
+
+New items
+
+47.31
+
+For each condition, we regenerated 150 responses from each LLM. The results were as
+follows:
+Given the similarity in accuracies, we conclude that the presence of answers in the LLMs‘
+training data does not seem to significantly alter the results.
+
+14678535, 2025, 3, Downloaded from https://bera-journals.onlinelibrary.wiley.com/doi/10.1111/bjet.13570, Wiley Online Library on [03/06/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+1052
+
+

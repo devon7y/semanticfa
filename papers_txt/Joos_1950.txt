@@ -1,0 +1,990 @@
+Description of Language Design
+Martin Joos
+J. Acoust. Soc. Am. 22, 701-707 (1950)
+https://doi.org/10.1121/1.1906674
+
+LANGUAGE DESIGN 701
+
+frequency distribution of vowels in the monsyllabic
+words. We have investigated several languages from
+this point of view. Figure 6 shows three examples.
+
+For German, we have divided the phonemes |e| and
+|o| into their two qualities [e, ¢ ] and [o, 2] respectively.
+This was not done for the front rounded vowels where
+the different qualities are phonemic in the pronunciation
+of some native speakers. In a later version of our in-
+vestigation we shall take these factors into considera-
+tion. We were mainly interested in the comparison of
+qualities of the vowels from the point of view of their
+production. We have also omitted the analysis into
+distinctive features which might make possible a more
+expressive mode of formulation.‘
+
+4 See paper by Lotz, “Speech and Language,” elsewhere in this
+
+volume. I express my appreciation to Professor Lotz also for
+details communicated to me directly.
+
+In French, the palatal vowels, namely [a, e, i], domi-
+nate. In English, the vowels are crowded in the neigh-
+borhood of [a ] and these vowels are relatively similar to
+each other. In German, on the other hand, the distribu-
+tion is very different. There is a large difference between
+the predominant vowels. The dominating vowels in
+German are [a, i, u], that is to say, the most remote
+points of the vowel-triangle. This agrees well with
+the above-mentioned precision, characteristic of Ger-
+mans.®
+
+Probably this vowel arrangement of the three lan-
+guages depends simply on the basis of articulation.
+
+Other investigations along these lines have been be-
+gun, but not yet finished.
+
+6 The overlapping of the circles depends only on the value of the
+relative frequencies; it has no phonetic value.
+
+THE JOURNAL OF THE ACOUSTICAL SOCIETY OF AMERICA
+
+VOLUME 22, NUMBER 6
+
+Description of Language Design
+
+MartTIN Joos
+University of Wisconsin, Madison, Wisconsin
+(Received August 8, 1950)
+
+Physicists describe speech with continuous mathematics, such as Fourier analysis or the autocorrelation
+function. Linguists describe language instead, using a discontinuous or discrete mathematics called “‘linguis-
+tics.” The nature of this odd calculus is outlined and justified here. It treats speech communication as
+having a telegraphic structure. (Non-linguists normally fail to orient themselves in this field because they
+treat speech as analogous to telephony.) The telegraph-code structure of language is examined from top to
+bottom, and at each of its several levels of complexity (compared to the two levels of Morse code) its
+structure is shown to be defined by possibilities and impossibilities of combination among the units of that
+level. Above the highest level we find, instead of such absolute restrictions, conditional probabilities of
+occurrence: this is the semantic field, outside linguistics, where sociologists can work. Below the lowest
+level we find, instead of such absolute restrictions, conditional probabilities of phonetic quality: this is the
+phonetic field, outside linguistics, where physicists can work. Thus linguistics is peculiar among mathe-
+matical systems in that it abuts upon reality in two places instead of one. This statement is equivalent to
+
+NOVEMBER, 1950
+
+defining a language as a symbolic system; that is, as a code.
+
+HE word “design” may be interpreted in at least
+two senses without violating engineering usage.
+First, there is the work of the engineer who is designing
+something, for example a telephone system. Second,
+there is the finished something, such as that same tele-
+phone system, considered now as something to be
+analyzed and described. Our description of it, then,
+can also be called its ‘design.’ It is in this last sense
+that the word “‘design” has to be understood when we
+are talking about the design of language and how it is
+analyzed for description.
+
+Engineers never have occasion to analyze a gadget the
+way linguists do a language. The nearest thing to it
+might be this sort of episode: A supplier had been
+asked to furnish a band-pass filter, single T section,
+with rather modest cut-off requirements. Instead of the
+expected classical constant-k filter—two series arms,
+‘one parallel arm, total three coils and three condensers
+
+—he furnished a filter with three coils and four con-
+densers connected in an unexpected way. The writer
+was asked to analyze the design and report whether it
+was worth adopting for future routine construction of
+band-pass filters. It turned out that the odd design
+had two advantages: one of the coils could be a large
+stock-size coil used without trimming, and the design
+gave any desired impedance-transformation without a
+transformer. But—and here is the crucial point—it did
+not seem to be possible to arrive at these conclusions
+without taking into consideration the designer’s in-
+tentions; and the experience seemed to show that a
+
+“why” question has an answer only when intention is
+
+in the picture—when the presence of intention is given,
+so to speak, as a boundary-condition.
+
+Linguists have described numerous languages, and
+have observed language design-changes through the
+centuries. But although quite a body of “how” knowl-
+
+702 M.
+
+edge concerning these matters has been built up, we
+have so far nothing but a number of unconfirmable
+guesses concerning the “why.” Hence most of us are
+now pretty sure about one thing: there is nothing
+conscious, nothing deliberate, about language-design.
+(Naturally we don’t mean to study Basic English or
+Esperanto until we have first built up the theory of
+natural language design.) Accordingly we do not present
+the design of any language as the result of intentions—
+we do not answer “why” questions about the design of
+a language.
+
+Having thus limited our problem, we proceed with
+greater confidence to look for answers to the ‘“‘how”
+questions of language-design. In other words, we try to
+describe precisely; we do not try to explain. Anything
+in our description that sounds like explanation is simple
+loose talk—deliberately loose, perhaps, for the sake of
+persuasion by analogy—and is not to be considered
+part of current linguistic theory.
+
+We can allow other people—telephone engineers or
+sociologists, for example—to speak artistically, im-
+precisely, about language. But as linguists we lay upon
+ourselves the condition that we must speak precisely
+about language or not at all. We can do that, of course,
+only under two conditions, of which the first has already
+been hinted at. First, we must limit our field, leaving
+outside it certain things to be treated precisely by
+engineers or by sociologists, while we speak of them
+more or less artistically. Second, within our field we
+must adopt a technique of precise treatment, which is
+by definition a mathematics. We must make our
+“linguistics” a kind of mathematics, within which in-
+consistency is by definition impossible. True, miscalcu-
+lations may occur through inadvertence. And different
+workers describing the same language may arrive at
+conflicting statements because they have started out
+from different sets of axioms. But in principle every
+possible statement of ours must be either true or false—
+nothing half-way.
+
+Have linguists succeeded in setting up such a mathe-
+matical style for describing language designs? Well, not
+quite; but our science is still young. In its mathematical
+phase it is just a quarter of a century old, for we date it
+from Bloomfield’s ‘Set of Postulates for the Science of
+Language” (in the journal Language in 1925). And even
+physics has not yet entirely resolved the conflict be-
+tween quantum theory and the wave theory of light.
+But of all the sciences and near-sciences which deal
+with human behavior, linguistics is the only one which
+is in a fair way to becoming completely mathematical,
+and other social scientists are already beginning to
+imitate the strict methods of the linguists.
+
+Presenting only “how” statements without regard to
+“why,” we of course have no assurance that we are
+“right” in the sense that would satisfy a theologian.
+And we feel that our descriptive statements fit actual
+speech-behavior, but we have no right to claim that
+they are “‘correct” in the sense that they fit the neural
+
+JOOS
+
+events in the brains of the speaker and listener. Such
+arrogant modesty is not peculiar to linguists; it is
+simply the normal attitude of mathematicians con-
+fronting the real world. The mathematical description
+for reality has been most illuminatingly called a “‘map.”
+Now when one holds a map (in the ordinary sense) in
+one’s hands, one may say, “I feel that this is a map of
+the countryside around me here,” but there is no way
+to prove logically that it is not instead a map of a
+piece of Australia or perhaps of some imaginary
+Treasure Island. Undeterred by the impossibility of
+logical justification, explorers use maps, scientists use
+mathematics, and linguists use the descriptive technique
+called “‘linguistics.” All three have the same attitude
+toward the map. One proceeds across the terrain and
+simultaneously traces a line across the map; one notes
+discrepancies between the map and the direct appre-
+hension of the real world, until the discrepancies seem
+to form a pattern themselves; then one corrects the
+map and starts all over again. All this is intuitive be-
+havior, and logically unjustifiable. Nor does it need
+justification. The place for logic is inside the map,
+not between the map and the real world.
+
+Ordinary mathematical techniques fall mostly into
+two classes, the continuous (e.g. the infinitesimal cal-
+culus) and the discrete or discontinuous (e.g. finite
+group theory). Now it will turn out that the mathe-
+matics called ‘‘linguistics”’ belongs in the second class.
+It does not even make any compromise with continuity,
+as does statistics, or infinite-group theory. Linguistics is
+a quantum mechanics in the most extreme sense. All
+continuity, all possibilities of infinitesimal gradation,
+are shoved outside of linguistics in one direction or the
+other. There are in fact two such directions in which
+we can and resolutely do expel continuity: semantics
+and phonetics.
+
+Every language has “meaningful” molecules called
+“‘morphemes,” sub-assemblies which roughly correspond
+to subdivisions of the real world outside language. The
+word nose, for example, consists of one such morpheme;
+the word noses consists of two, the second having as its
+real-world correspondent the conventional category of
+numerousness, one of our customary subdivisions or
+categorizations of the real world. Now consider these
+facts. The English word nose may refer to a part
+(how much?) of an airplane. With a lipstick draw a
+loop on your own face enclosing your nose and nothing
+else; another person will say that you have enclosed
+either too much or too little. Say in English: “The
+councillors all put their glasses on their noses’ and then
+get the sentence translated into German; for English
+noses you will get the singular noun-form Nase, not the
+plural Nasen. The German knows that numerous
+councillors have equally numerous noses, and he has a
+word for ‘“‘noses,”’ but in this sentence he uses his word
+for ‘‘nose” instead. In linguistic terminology we simply
+say that the form Nase belongs to the category which
+we have called “singular.” We chose that name the way
+
+LANGUAGE DESIGN 703
+
+the physicist chose the name “work,” because in
+German the category most often refers to lack of
+numerousness in the things referred to; but this is
+not a logical reason, it is only a motivation out of con-
+venience. High-school physics teachers often have good
+reason to regret the choice of the term “work” for
+force times distance, and in expounding linguistic
+theory we often have the same reason for regretting
+the choice of terms “‘singular” and “plural.” The trained
+listener, the listening linguist in this case, is not de-
+ceived; he knows that in cauing Nase “singular” we
+have not said whether one nose or more than one nose
+was involved.
+
+We keep on and say a few thousand things like this,
+but as long as we are talking about German or English
+we never place a noun-form in a third category side by
+side with “singular” and “plural,” say a category which
+is neither singular nor plural, or is both, or is ambiguous
+as to number. The listening linguist, noting the absence
+of this other kind of statement, sooner or later decides
+that in German or in English every noun-form is either
+singular or else plural—tertium non datur. This may be
+called the tyranny of linguistic categories. It is found
+in every language. It is not a question of “correctness”
+in the popular sense of the word, for every kind of
+speech, elegant or sub-standard, has its own categorical
+tyrannies. For example, in the writer’s dialect the form
+whom cannot follow a pause: it is permissible to say
+“To whom did you give it?” or “Who did you give
+it to?” but not “Whom did you give it to?” In situations
+where the normal language-design is not quite adequate,
+such as in the composition of a paper like this, we get
+amusing difficulties, such as finding it necessary to say
+either ‘one nose or more than one nose was involved”
+or else “‘one nose or several noses were involved.” The
+difficulty is just as severe if we say “‘one sheep or more-
+than-one/several sheep was/were involved.” That is,
+it is the category that tyrannizes over us, not the form,
+and not the meaning either ; and even a word like sheep
+must be, each time that it is used, either singular or
+else plural. We might like to replace was/were with a
+verb-form which was, like the Irishman’s trousers,
+singular at the top and plural at the bottom, but we
+haven’t got any such category in English. In fact, in
+every known language there is a limit to the kinds and
+numbers of its categories, a limit which may seem very
+low compared to the elaborations which philosophers
+and poets indulge in. Then when an unusual message
+is to be transmitted, the categories are never split or
+supplemented, but are instead used in unusual com-
+binations. The listener’s total reaction may or may not
+be as expected, but his detail reactions are predictable
+at least to this extent: For every form-class represented
+in the utterance (“noun” is one form-class, “verb” is
+another) there are a certain number of dimensions of
+categorization (in the English noun there are two:
+possessive-versus-common, and singular-versus-plural);
+and now, for every dimension thus introduced into the
+
+utterance, the listener will react to exactly one of the
+categories in that dimension—he will not react to more
+than one, or to none, whether the utterance is am-
+biguous or not. The reader can check this fact easily.
+Without looking back to the sentence about the
+councillors, let him ask himself whether it referred to
+present time or to past time. He will find that he has
+made up his mind one way or the other; and yet, on
+checking the wording, he will find that he was not told.
+The English categorization, past-versus-present, forced
+him to decide, even though the decision had to be made
+at random. Each language does this within the range of
+its own categories, which will not be the same range as in
+our language. In Chinese, for example, the translation
+lacks both the past-versus-present dimension and the
+singular-versus-plural dimension ; these ‘‘meanings”’ can
+be indicated on occasion, but when they are not, the
+Chinese listener leaves the question open—he says he
+is not even aware that it is a question.
+
+The linguistic categories, then, are absolutes which
+admit of no compromise. They correspond roughly to
+favorite categorizations in the real world, and it is
+generally held that every community subdivides the
+phenomena in the real world according to the categories
+of its language, rather than the reverse. But the corre-
+spondence between the discrete categories of the lan-
+guage and the continuous phenomena of the real world
+is not and cannot be precise. Our reaction, as linguists,
+to this situation, is very simple: all phenomena, whether
+popularly regarded as linguistic (such as the tone of
+anger in an utterance) or not, which we find we cannot
+describe precisely with a finite number of absolute
+categories, we classify as non-linguistic elements of the
+real world and expel them from linguistic science. Let
+sociologists and others do what they like with such
+things—we may wish them luck in their efforts to
+describe them precisely in their own terminology, but
+no matter whether they describe them with discrete
+categories or not, for us they remain vague, protean,
+fluctuating phenomena—in a word, for us they repre-
+sent that “continuity” which we refuse to tolerate in
+our own science.
+
+Have we ever had any choice? Could we have chosen
+to use a continuous rather than a discrete mathematics
+for describing language-design? Or perhaps an am-
+biguous mathematics which can be read both ways?
+Our experience with the analysis of a few hundred of
+the world’s several thousand languages makes us very
+sure that we must answer negatively. When we hear
+of an imaginative child who has identified the “too”’ of
+“this one is too big” with the “two” of “two big ones”
+and then has experimented with saying “one-and-a-half
+big” and “three big” by way of weakening or strengthen-
+ing the notion of “too big,” we recognize that this is
+not the way languages work and we decide that that
+child was not only imaginative but probably also
+imaginary.
+
+So much for the semantic end of language, with its
+
+704 | M. Joos:
+
+intuitive bridge between language and the real outside
+world, the bridge across which we banish continuity.
+We do exactly the same thing at the other end, the
+phonetic end of language. But there we are not dealing
+with philosophers; in the phonetic field we have to put
+our case to telephone engineers, experimental pho-
+neticians, and other hard-headed citizens who will not
+be easy to convince. Let us state our view first, then
+discuss it.
+
+Here we have “phonemics”’ inside linguistic science;
+and “phonetics,” which is not so very different from
+and may even be considered a division of the physicist’s
+“acoustics,” in the realm of overt speech-behavior,
+which is not the realm of linguistics but belongs to
+the real world outside linguistics. When a physicist
+analyzes speech he finds a continuum of articulatory
+activity, of sound, and of events in the ear—at least
+until, working both ways from the sound, he comes to
+the all-or-none discharging of single nerve-fibers—and
+for describing any or all of this he uses a continuous
+mathematics, for instance Fourier analysis or the auto-
+correlation function. On the other hand, linguists have
+found it appropriate always to describe every language
+so far studied as having, and every act of speech as
+corresponding to, combinations of an astonishingly small
+number of smallest signalling units called “phonemes”
+which recur identically insofar as they can be said to
+occur at all. Thus the word hotel cannot be spoken the
+same twice, from the physicist’s viewpoint, no matter
+whether the same person or different persons should
+utter it; and yet from the linguist’s viewpoint it always
+has in the middle a phoneme /é/ which is identically
+the same every time. And it is not considered identical
+through neglect of unimportant variations in reality;
+rather, it is identical by definition, simply because it is
+a linguistic atom, a category, and these are either
+identically the same or absolutely different.
+
+Here, then, we have another case where linguistics
+insists upon being atomistic and banishes continuity to
+the world outside language. Is this the right and only
+thing for a linguist to do? Telephone engineers have
+been known to protest at this point and say something
+like this: “When you were discussing linguistic dis-
+creteness and non-linguistic continuity in the semantic
+field you had me where you wanted me, for how should
+an engineer know anything about semantics? But now
+you are talking about sound, and here I am perfectly
+at home; I have even made extensive and precise ob-
+servations upon normal speakers and listeners: for in-
+stance, I have gathered statistics about the variations
+in vowel qualities. Your mathematically identical pho-
+nemes are a delusion; what you’ve got are statistical
+norms, clusterings around averages which you take as
+norms and then arbitrarily make into absolutes. We are
+both talking about phonetics ; and when you admit that
+I can prove continuity, you can’t claim to prove dis-
+creteness.
+
+“Let us agree to neglect the least important features
+
+of speech sound, so that at any moment we can de-
+scribe it sufficiently well with » measurements, a point
+in n-dimensional continuous space, ” being not only
+finite but a fairly small number, say six. You agree?
+Good. Now the quality of the sound becomes a point
+which moves continuously in this 6-space, sometimes
+faster and sometimes slower, so that it spends more or
+less time in different regions, or visits a certain
+region more or less often. In the long run, then, we
+get a probability-density for the presence of the moving
+point anywhere in the 6-space. This probability-density
+varies continuously all over the space. Now wherever
+you can find a local maximum of probability-density,
+a place where the probability-density does not increase
+for short distances in any direction away from the
+place in question, I will let you call that place a
+‘phoneme’; and I expect, just as you do, that there will
+be not only a finite but a fairly small number of such
+points, say less than a hundred. Thus you see that
+there is no need to use a discrete mathematics to get a
+finite number of phonemes out of the phonetic con-
+tinuum.”
+
+We could answer that our name for that would be,
+not ‘“‘phoneme,”’ but ‘‘allophone,” and allophones belong
+to phonetics while phonemes belong to linguistics. But
+that would be evading the issue. The engineer’s argu-
+ment is a formidable one, and deserves to be met
+squarely. According to our view concerning the rela-
+tionship between any mathematical map and the real
+phenomena to which it corresponds, it is not possible
+to argue logically in this field; therefore we have to
+argue by means of analogy. Fortunately a suitable
+analogy lies ready to hand.
+
+Let us consider telegraphy, using Morse or Baudot
+coding. The units are the mark and the space; it doesn’t
+matter whether the “space”’ is an electrical impulse of
+opposite polarity to the “mark,” or an electrically
+neutral period. A Morse dash could be considered as
+three integrally sequent marks, and a letter-space as
+three spaces; then the units differ in only one dimen-
+sion. Or the dash and the letter-space may be con-
+sidered as independent signals; then there are four
+signals, differing from each other in two dimensions,
+namely electrical intensity (or polarity) and duration.
+Thus there are at least two ways of describing the
+Morse code, both discrete and both correct, each by
+its own axioms.
+
+A Morse S is mark-space-mark-space-mark. A Baudot
+Y is mark-space-mark-space-mark—shall we say ‘“‘also”’?
+That depends; we can settle it later. At the far end of a
+long line, the marks and spaces are slurred together
+into a continuous smooth fluctuation so that on first
+inspection it may be far from easy to tell what the
+original signals must have been. Then a regenerative
+repeater is used to square up the marks and spaces so
+that they can be read or will operate an ordinary tele-
+typewriter. But if the line is very long, not much noise
+will be needed to cause occasional errors in the re-
+
+LANGUAGE DESIGN 705
+
+peater’s operation. A regenerative repeater for Baudot
+signals will in general not handle Morse signals, or
+vice versa.
+
+Now let us find a telephone engineer who knows
+nothing about telegraphy, and give him the output of
+a long telegraph line. What does he do with it? He does
+Fourier analysis and autocorrelation and perhaps some-
+thing else—at any rate, at first he works on it with
+continuous mathematics, for the material is obviously
+continuous. But as long as he does that, he can make
+no sense out of it. In desperation he next differentiates
+the output voltage, so that he has two data for every
+instant, the voltage and its first time-derivative. Now
+for each five milliseconds he averages each of these,
+and plots the two averages as a single point on a sheet
+of graph-paper. When he has put a few thousand points
+on his paper, he sees a continuous variation of point-
+density, with a number of local maxima—perhaps a few
+dozen of them. To each maximum he assigns a label,
+a letter or a number, arbitrarily. Now he interprets his
+original data, his voltage and derivative data, in terms
+of these labels: every time the line-output and its
+derivative come close to one of those maximum-density
+points, he will write down the label of that point, so
+that finally he has replaced the original data by a
+string of those labels. Now he can turn this result over
+to a cryptanalyst, who will be able to read the original
+plain-language text out of it—not quite completely on
+first reading, but probably he will be able to reconstruct
+a good text if he knows the language well. Ridiculous?
+Not at all. This is exactly what our telephone engineer
+wanted to do with phonetics and phonemics.
+
+Now we also know what that same telephone engi-
+neer will do after we tell him of the existence of tele-
+graph codes employing molecular signals made up of
+atomic units, each unit being identically one or another
+of a very small number of atoms. He will not use
+Fourier analysis or any other continuous mathematics
+at first. Rather, he will start out by looking for wave-
+trains that look nearly alike, their slight differences
+being explicable, as he can easily see, either as the
+effects of noise or as the effects of context. He will see
+many occurrences of a three-peaked wave-train, no two
+occurrences precisely alike. But when the first peak is
+rather low, then there will be a long hollow before it;
+when there is no hollow, the first peak is as high as the
+second or a bit higher. This is a context-effect. Once the
+context-effects have been spotted, the remaining varia-
+tions will be ascribed to noise. In this fashion he will
+learn to identify the three-peaked wave for Morse S or
+Baudot Y, and also all the other common molecular
+signals.
+
+Next he will set up the hypothesis that there are
+just ~ atomic signalling units, and that not only the
+inter-molecular context-effects but also the intra-mo-
+lecular smoothings can be accounted for by low-pass
+filtering. Here he can use continuous mathematics for
+a while, and the result will be that this hypothesis
+
+works best if m equals two. Now it won’t take him long
+to reconstruct the entire telegraphic code; quite easily
+if it is Baudot, not so easily or swiftly if it is Morse,
+but in either case with absolute certainty.
+
+Finally he will describe the design of the telegraphic
+code, and he will describe it in terms of absolutely
+identical square-wave signalling atoms, even though he
+has never observed anything that could be called ab-
+solute identity, and even though he knows that square
+waves are impossible. And when he has thus finished
+his job, he will be able to convince his colleagues, the
+other telephone engineers who knew nothing about
+telegraphy, that this is the right way to do it. Convince
+them by logic? Not a chance. Nothing but the superior
+elegance of his results will speak for the rightness of
+his method, but that will be enough.
+
+Linguists find themselves so successful in describing
+languages in this fashion that they have elevated their
+descriptive technique to the rank of a theory about
+the nature of language. They say, in effect, that the
+design of any language is essentially telegraphic—that
+the language has the structure of a telegraph-code, using
+molecular signals made up of invariant atoms, and
+differing from e.g. the Morse code principally in two
+ways, one of which has already been hinted at: the
+codes called “languages” have numerous layers of com-
+plexity instead of only two, and in each layer there are
+severe limitations upon the combinations permitted.
+This much, we find, all languages have in common.
+But the particular code is different from one language or
+dialect to another, as the Baudot and Morse codes
+differ. Those two telegraphic codes share, on the phe-
+nomenal level, this molecular signal among others:
+mark-space-mark-space-mark. Now suppose we find this
+signal in the output of one telegraph line, and find it
+again in the output of another telegraph line; are they
+the same or are they not the same? That depends. If
+they are both Morse or both Baudot, then they are
+identically the same signal, no matter whether or not
+they are distorted by different noises or different line
+characteristics, or are sent at different speeds, or by a
+
+well-adjusted or a badly-adjusted transmitter. If one
+
+is Morse and the other is Baudot, then they are not in
+the least the same signal, even when their oscillograms
+come out the same within the limits of instrumental
+error.
+
+This is obvious to any telegraph engineer. But in the
+linguistic field it did not seem obvious or even credible
+to a certain engineer who said to the writer: ‘Surely
+you can tell when two men pronounce the word father
+alike!’ The answer had to be: “On the data you have
+given me, the question has no meaning. First I have to
+find out whether they rhyme father with bother. If they
+both do, or neither does, then I must find out whether
+both of them or neither of them pronounces cot-like
+caught. Then I have a few more questions of the same
+sort, with which I explore their contrasts for some dis-
+tance around the word father in all directions. If I
+
+706 | M. JOOS
+
+always get the same answer from both of them, then I
+say, ‘Yes, they pronounce father alike,’ meaning ‘identi-
+cally the same,’ even if they sound quite different when
+they say the word. But if, during this exploration, I find
+a discrepancy between their systems of phonemic con-
+trasts before I have gone very far from the word father
+itself, then I shall have to say, ‘No, they pronounce it
+differently,’ meaning ‘their pronunciations are incom-
+mensurable,’ even if they sound so much alike that no
+difference can be heard.” This statement was met with
+amazed incredulity, and a request to state honestly
+whether anybody else held similar views. It is to be
+feared that the answer to this request was not accepted
+at face value. The trouble was, of course, that no bridge
+had been built between the engineer’s knowledge of
+telegraphy and the language experience of linguists.
+
+Now let us go on with the design of language. We
+have dealt with the phonemes individually, and shown
+that the most important thing about them is that they
+are either absolutely the same or absolutely different.
+And yet, in another sense it is to be expected that two
+of them can be partly the same and partly different.
+This can be possible in this way. If it is possible to put
+phoneme A into three categories x, y, and z (as the
+word noses simultaneously belongs to the three cate-
+gories “noun,” “common rather than possessive,” and
+“‘plural’’), and to put phoneme B into three categories
+v, w, and z (as the word were belongs to the three cate-
+gories ‘‘verb,” “past,” and “plural’’), then A and B
+can be said to be similar, but of course only in the sense
+that they are partly identical, the degree of similarity
+being quantized as demonstrated. These quantized par-
+tial identities will serve to build up the design of the
+phonemic system. Only one warning needs to be given:
+the worker should at each step ask himself whether it
+would make any difference whether he uses “component
+parts” or “intersecting categories” in dealing with such
+similarities. The phonetician is all too likely to use
+component parts in a field where intersecting categories
+. are alone in order; that is one reason why the phonemic
+pattern was here presented parallel to the grammatical
+instance, for there is little temptation to speak of
+“plural” as component parts of the two words noses
+and were.
+
+The Morse code uses two signalling units, ‘mark’
+and “space,” differing in one dimension; or it can be
+considered as using four units, “‘dot,” “dash,” “space,”
+and “‘letter-space,”’ different in two dimensions, namely
+electrical intensity (or polarity) and duration. On the
+other hand, every known language uses more than a
+dozen or twenty (and less than a hundred) phonemes,
+differing from each other in at least four, or more
+probably at least five, dimensions. Spanish, for ex-
+ample, seems to have at least nine dimensions in its
+phonemic system, and English is known to have more
+than Spanish.
+
+These are so many that a complete catalog would be
+boresome and confusing; but a partial listing will help
+
+make it clear what this is all about. One of the Spanish
+dimensions is ‘“vowel-versus-consonant.” Among the
+five Spanish vowels, two more dimensions are clearly
+evident. In one dimension, the five vowels are cate-
+gorized as high, mid, and low; in the other, as front,
+central, and back. /i/ and /u/ are high, /e/ and /o/ are
+mid, and /a/ is low; /i/ and /e/ are front, /u/ and /o/
+are back, and /a/ is neither, so it is called central. The
+six category-names were borrowed from phonetics into
+phonemics, just as the word ‘‘work”’ was borrowed by
+physicists, and as we borrowed “plural” from every-day
+terminology, where it was a synonym for ‘‘numerous.”
+In phonetics they referred to tongue-position in the
+mouth; in phonemics, of course, we must be careful to
+strip away those denotations of the words, which have
+now become distracting connotations. In phonetics it is
+clear that ¢ is intermediate between 7 and a. But in
+the phonemic structure of Spanish /e/ may or may not
+be intermediate between /i/ and /a/ on the evidence
+already presented here, for the articulatory facts are
+not what we need for deciding the question. In Finnish,
+for example, y is of course phonetically between 7 and u,
+and @ is between e and 0; but in the phonemic system of
+Finnish there is compelling evidence (the diphthongs,
+for instance) to show that /i/ is between /y/ and /u/,
+and /e/ is between /é/ and /o/.
+
+Again telegraphy furnishes an analogy to show how
+this works. In submarine cable use of the Morse code,
+there are three signalling units, all of the same duration,
+ranged in the single dimension of electrical polarity:
+the land-line “dot”? becomes a positive pulse, the land-
+line “dash”’ becomes a negative pulse, and the land-line
+“letter-space” becomes an electrical neutral interval,
+while the land-line short space drops out of the code.
+In practise, the “letter-space” unit is repeated for
+word-space, and repeated indefinitely (nothing is sent)
+for silence, representing for example suspension of
+transmission.
+
+Now suppose we should rearrange the cable code
+again, by a transposition, so that “‘dot’’ is a neutral
+interval, “letter-space”’ is a positive pulse, and ‘‘dash”’ is
+stlll a negative pulse. At first sight it seems that this
+new code ought to work equally well, for it appears to
+be mathematically equivalent to the customary cable
+
+code. But it won’t work at all, for the reason that an —
+
+idle period, a pause between messages or the like,
+would load up the line with an unbroken sequence of
+positive pulses; the line would become heavily charged,
+which would block its functioning for a while when
+transmission was resumed again.
+
+The same sort of thing is found in language, though
+of course we cannot explain “why.” Spanish, for ex-
+ample, has as part of its design the fact that unaccented
+/i/ and /u/ do not occur after a consonant before
+pause (except in the queer word espiritu and perhaps a
+few other rare words). This fact and a few others of
+like sort will suffice to place /e/ between /i/ and /a/ in
+the phonemic system of Spanish. And this is what
+
+LANGUAGE DESIGN - 707
+
+usually turns up; patterns like the Finnish one are
+fairly rare.
+
+A telegraphic “mark” does not signal anything by
+itself. In principle, it takes an assemblage of marks and
+spaces to make up a signal. Then the one-dot Morse E
+is a sort of accident, what the mathematicians call a
+“trivial” or “degenerate” case: it is a monatomic
+molecule, like a molecule of helium.
+
+The same is true of phonemes. Linguistic signalling is
+done, not with phonemes, but with morphemes, like
+either morpheme of the word zoses. It is only when the
+coding has been built up at least to the morpheme level
+that it is permissible to talk of “meaning.” The mor-
+phemes, viewed from the phonemic level, are assemblies ;
+viewed from levels of higher complexity, the morphemes
+appear as unanalyzable units; viewed from the outside,
+the morphemes are sub-assemblies in engineering termi-
+nology. They combine into larger sub-assemblies, and
+these again and again into more and more massive ones,
+until a complete utterance has been built up, through a
+number of stages of assembly. In the English sentence
+about the councillors, at least seven stages of assembly
+can be found, at least seven layers of complexity in the
+coding of a fairly simple message. We shall discuss them
+only summarily.
+
+If we start with the complete utterance and break it
+down by stages until we arrive at the phonemes, a pat-
+tern of analysis emerges which has interesting peculi-
+arities. As a whole it belongs to the category “‘sentence” ;
+nothing less than all of it is thus classified ; this classifi-
+cation is plainly marked by details of rhythm and
+intonation which the spelling does not indicate but
+which are essential structural details of English. Parts
+of it belong to different classes; larger parts of it may
+or may not belong to categories which smaller sub-
+assemblies cannot be put into. First analysis: cut it
+into the councillors and all put their glasses on their noses.
+The first part goes into several categories; similarly, in
+the four-unit analysis of Morse, the “‘dash’’ belongs to
+the two categories ‘“‘long” and “mark.” It is a “‘noun-
+phrase”’ because it fits into the sentence the same way
+as a plain “noun” might, such as the word councillors,
+its further analysis will of course agree with this, for
+example it contains a ‘‘noun” and the word the, and such
+combinations generally make up noun-phrases. It is an
+“actor-expression,” so marked by the absence of any
+other candidate for the job, while the rest of the
+sentence, the “action-expression,” can use one and will
+cause anything to be so classified which is not marked
+as having a different value: this one is rather marked
+as probably being an “‘actor-expression” by the fact
+that it is a “noun-phrase” and stands first, and its
+classification as an “‘actor-expression” is not forbidden
+by any such mark as the s of man’s. Hence it is
+“common” rather than “possessive,”’ although it is not
+marked as such, as the words man and men are: the
+apostrophe of councillor’s or councillors’ belongs to
+spelling, not to the language. Therefore the final s here
+
+marks it as belonging to the “plural” category; this is
+at least not forbidden by the form put, while puts
+would refuse to fit it; therefore, when we later analyze
+the “action-expression”’ we shall classify put as “plural,”’
+whereupon it will be seen that put is not marked as
+either “present” or “‘past,’’ while pués would have been
+marked as “present.’’ It is marked as “definite” by the
+presence of the in it; being “definite,” it will fit a
+“plural” “‘action-expression” containing the word all
+used as it is here, which at least some “indefinite”
+“actor-expressions”’ will not fit, for instance some coun-
+cillors. In summary, this the councillors is a “common
+definite plural noun-phrase” functioning here as an
+“actor-expression”; it will not do simply to call it a
+“common definite plural noun-phrase actor-expression”’
+because then ‘‘common”’ would be rendered redundant
+by “actor-expression.”” On the other hand, “actor-
+expression” is not made redundant by “‘common,” for
+“common rather than possessive” will fit other cate-
+gories besides ‘‘actor-expression,” as in I met the coun-
+cillors. It is precisely such asymmetries, found every-
+where in language, which makes our analysis possible
+and keeps our arguments from being circular. The
+reader may check through this paragraph for other
+asymmetries and see how they were taken advantage of.
+
+Second analysis: cut the councillors into the and
+councillors. The reader can set up the discussion himself
+on the model of the preceding paragraph.
+
+Third analysis: cut councillors into councillor and s.
+Now councillor looks like a word, but not in this sen-
+tence; we can call it a “stem” here; to it is added the
+“morpheme”’ s. Discussion of this would use up our
+space unprofitably.
+
+Fourth analysis: cut councillor into council and or.
+Either one of these is a morpheme. The first of them
+looks like the one-morpheme word council (compare the
+one-dot Morse £), but here it isn’t; call it a “morpheme”
+and stop there. It belongs to the category of morphemes
+defined by the fact that they will combine with or,
+and possibly to other categories similarly defined by
+possibilities of combination, for example it will com-
+bine with s to make either the possessive singular
+council’s or the plural councils or councils’. It will be
+noted that these criteria of classification are essentially
+of the same sort as those used in our first analysis, but
+now the categories are different ones.
+
+Fifth analysis: we may or may not choose to break
+council into two syllables, but it appears that we can
+never get any profit out of doing so in English, so we
+cut it at once into seven phonemes—by an odd accident,
+the same as the number of letters in the spelling—by a
+single act of analysis.
+
+Now we have arrived at the phoneme level, and no
+further analysis is called for by the kind of procedure
+we have been following. We can classify the phonemes
+into different categories of vowels and consonants, as
+was done above for Spanish. Then we could, if we
+chose, treat these intersecting categories as component
+
+708 M.
+
+parts, and this work, known as ‘‘componential analysis,”
+is done by some linguists. But although possible, this
+procedure does not often shed any light on the higher
+organization of the language, and for this reason even
+the practitioners of componential analysis normally use
+phonemic writing, not componential transcription, in
+preference to the orthographic style in which we cited
+the sentence about the councillors. Hence we may as
+well stop here and say that we have reached the lowest
+level of analysis when we have split council into seven
+phonemes. Here it was called the fifth analysis; to get
+to the bottom of the second half of the same sentence
+would have required going to a seventh analysis. This is
+the reason why it would be better to start numbering
+from the bottom, and to speak rather of successive
+sytitheses, from phonemes up to the complete utterance,
+reaching different heights in different parts of it.
+
+Now we note that each act of analysis except the
+bottom one was a dichotomy, a cutting into just two
+parts, never into three or more by a single step. And
+this has been found to be the best style of analysis in
+all languages, from the complete utterance down to the
+morpheme level; but in breaking morphemes up into
+phonemes, any number of components is possible from
+one on up. This looks like it might be connected with
+the point that “meaning” has nothing to do with
+phonemes, but belongs to the morphemics and higher
+levels; and this is conceivably connected with the
+functioning of the brain as a binary computer, but we
+daren’t go into such matters.
+
+Within an English morpheme some sequences of
+phonemes are forbidden. For example, what is com-
+monly spelled ou (as in council) is never followed by
+p, 6, f, v, or m. We have already pointed out, with
+illustrations from Spanish and Finnish, how such re-
+strictions enable us to assign a shape to the phonemic
+system and define its categories. This one, for instance,
+defines the “‘labial” class of English consonants. We
+have shown further that analogous restrictions apply
+at every level of analysis up to the complete utterance.
+Above the level of the phonemic system, these restric-
+tions define for us the “grammar” of the language, and
+all without reference to what is popularly thought of as
+the “meaning,” namely the popular categorizations of
+continuous reality such as “nose” or “numerous,”’ just
+as we find it expedient to define the phonemic system
+independently of the phonetician’s categorizations of
+continuous speech.
+
+Could we perhaps do something further with ‘‘mean-
+ing”’ inside linguistics? Yes, but only on condition that
+
+JOOS
+
+we distinguish sharply between the inside and the
+outside. Let the sociologists keep the outside or practical
+meaning; then we can undertake to describe the pure
+linguistic meaning. We can do it thus:
+
+Among permissible combinations of morphemes, some
+are commoner than others. Thus there are conditional
+probabilities of occurrence of each morpheme in context
+with others. The conditional probability of a forbidden
+occurrence is of course zero and drops out of the picture.
+If we ever found a conditional probability of one, we
+should decide that we had made a miscalculation, and
+that what we thought was composed of two morphemes
+was really unanalyzably one morpheme.
+
+Now the linguist’s “meaning” of a morpheme (or of a
+combination thereof, of any complexity up to a com-
+plete utterance, which might even be a whole book or
+poem) is by definition the set of conditional probabilities
+of its occurrence in context with all other morphemes—
+of course without inquiry into the outside, practical, or
+sociologist’s meaning of any of them. Of course all zero
+probabilities drop out of the set automatically; and in
+practise we should neglect all very small probabilities.
+So far we have done almost nothing with pure linguistic
+“‘meaning” as so defined, for the obvious reason that its
+mathematics is of the continuous sort, which we are
+not accustomed to handling—continuous by statistical
+derivation from discreteness, but still unmanageable, $o
+far, under our working-habits. Still, a beginning hits
+been made on a structural semantics by one linguist.
+He replaces all small conditional probabilities by ze®,
+and all large ones by one, so as to get a discrete mathe-
+matics again, in which he can work with synonymy
+that is absolute by definition. This work is very recertt,
+and is the most exciting thing that has happened in
+linguistics for quite a few years; in spite of its theoretical
+flaw, it has produced some very elegant and illuminating
+results.
+
+We can close with a general characterization of
+linguistics and language. Most well-known mathemati-
+cal maps are connected with the real world by a single
+intuitive bridge; linguistics is connected with reality by
+two of them, so that language makes a real noise corre-
+spond to a real thing or the like. This defines language
+as symbolic. Overt acts of speech alter reality in that
+changes in listener’s behavior correspond to them. This
+defines speech as communication. The technique is
+organized, patterned, as disclosed by linguistic science.
+This defines language as systematic. Altogether, then,
+we have defined a language as a symbolic communica-
+tion system, or in one word, as a “‘code.”’

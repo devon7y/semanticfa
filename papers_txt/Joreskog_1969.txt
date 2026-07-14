@@ -1,0 +1,2037 @@
+PSYCHOMETRIKA--VOL. 34~ NO.
+
+,~uN~, 1969
+
+A G E N E R A L A P P R O A C H TO C O N F I R M A T O R Y M A X I M U M
+LIKELIHOOD FACTOR ANALYSIS*
+
+K. G. J~RESKOG
+EDUCATIONAL TESTING SERVICE
+
+We describe a general procedure by which any number of parameters of
+the factor analytic model can be held fixed at any values and the remaining
+free parameters estimated by the maximum likelihood method. The generality
+of the approach makes it possible to deal with all kinds of solutions: orthogonal, oblique and various mixtures of these. By choosing the fixed parameters
+appropriately, factors can be defined to have desired properties and make
+subsequent rotation unnecessary. The goodness of fit of the maximum likelihood solution under the hypothesis represented by the fixed parameters is
+tested by a large sample x ~test based on the likelihood ratio technique. A byproduct of the procedure is an estimate of the variance-covariance matrix
+of the estimated parameters. From this, approximate confidence intervals
+for the parameters can be obtained. Several examples illustrating the usefulness of the procedure are given.
+
+1. Introduction and Summary
+We shall describe a general procedure for performing factor analysis
+in the following way. A n y values m a y be specified in advance for a n y n u m b e r
+of factor loadings, factor correlations and unique variances. T h e remaining
+free parameters, if any, are estimated by the m a x i m u m likelihood method.
+A typical application of the procedure is in confirmatory factor studies, where
+the experimenter has already obtained a certain a m o u n t of knowledge about
+the variables measured and is therefore in a position to formulate a hypothesis
+t h a t specifies some of the factors involved. F o r exploratory m a x i m u m likelihood factor analysis a c o m p u t e r program has been made available earlier
+[JSreskog, 1967(a-b)]. This can be used to determine an appropriate n u m b e r
+of factors to use and a preliminary interpretation of the data. T h e present
+procedure can then be used for a more precise analysis. We shall give examples
+of how a preliminary interpretation of the factors can be successively modified
+to determine a final solution t h a t is acceptable from the point of view of both
+goodness of fit and psychological interpretation. I t is highly desirable t h a t
+a hypothesis t h a t has been generated in this w a y should subsequently be
+confirmed or disproved b y obtaining new d a t a and subjecting these to a
+confirmatory analysis. JSreskog and Lawley [1967], giving an expository
+*This work was supported by a grant (NSF-GB 1985) from the National Science
+Foundation to Educational Testing Service.
+183
+
+184
+
+PSYCI-IOMETRIKA
+
+account of both exploratory and confirmatory methods, present an example
+where the original sample was randomly divided into two halves, where one
+half was used to generate a hypothesis and the other half was used to test this
+hypothesis.
+The approach of this paper is similar to those of Howe [1955], Anderson
+and Rubin [1956], Lawley [1958] and Jbreskog [1966], but is more general in
+that it is possible to deal with all kinds of solutions: orthogonal, oblique and
+various mixtures of these. The fixed elements need not necessarily be zeros
+and the restrictions need not even be sufficient to make the solution unique.
+Factors can be defined to have desired properties and if a preliminary interpretation is available, the restrictions can be chosen to make any subsequent
+rotation unnecessary. Several examples are given in Sections 4 and 5 to
+illustrate the usefulness of the procedure.
+The computational procedure is based on the minimization method of
+Fletcher and Powell [1963] and yields as a by-product an estimate of the
+variance-covariance matrix of the estimated parameters. From this, approximate confidence intervals for the parameters can easily be obtained.
+2. P r e l i m i n a r y Considerations
+
+In factor analysis the basic model is
+(1)
+
+y = Ax + z,
+
+where y is a vector of order p of observed test scores, x is a vector of order
+k < p of latent common factor scores, z is a vector of order p of unique scores,
+and h = ( ~ ) is a p X k matrix of factor loadings. It is assumed that E ( x ) =
+E ( z ) = O, E ( x x ' ) = ,~ and E ( z z ~) = ~I,, a diagonal matrix. From these assumptions one deduces that the dispersion matrix of y, Z = E ( y y ' ) , is
+(2)
+
+z = hcA' + ~.
+
+The basic idea of the model is that the common factors z sh~I1 account for
+all correlations between the y's. Once factors x have been partialed out,
+there shall remain no correlation between the tests.
+The elements of A, (I, and ~I, are parameters of the model to be estimated
+from the data. Suppose that from a random sample of n + 1 observations
+of y we find the matrix S whose elements are tile usual estimates of variances
+and covariances of the components of y. If y has a multivariate normal distribution, the elements of S follow a Wishart distribution with n degrees of
+freedom. The log-likelihood function, neglecting a function of the observations, is given by
+(3)
+
+log L = --½n[log 12~[ + tr (SZ-')].
+
+Let
+(4)
+
+F ( A , ~, '~) = log IZI + t r ($2~-') -- log [SI -
+
+p.
+
+K. G. JORESKOG
+
+185
+
+Then maximizing log L is equivalent to minimizing F, and n times the
+minimum value of F is equal to the likelihood ratio test statistic of goodness
+of fit [see e.g., J6reskog, 1967b]. I t should be noted, however, that if T is
+any nonsingular k X k matrix, then
+(5)
+
+F(AT -1, T~T', ,Is) = F(A, ~, ~).
+
+This means that the parameters in A and q) are not independent of one another,
+and in order to make the maximum likelihood estimates of A and • unique,
+we must impose k 2 independent restrictions on A and ~. In an exploratory
+factor analysis, where no hypotheses concerning the factors are involved,
+it is convenient to choose these restrictions so that • = I and A'q/-1A is
+diagonal [see e.g., Lawley & Maxwell, 1963; J6reskog, 1967b]. In a confirmatory factor analysis, on the other hand, the investigator has certain
+hypotheses as to which factors are to be involved in certain tests, and it is
+therefore convenient to choose the restrictions by requiring that certain
+elements of A and • have values specified in advance. For example, ~ - 0
+means that the vn-th factor does not enter into the i-th test and ~ , = 0 means
+that factors r and s axe uncorreIated. Values other than zero could be used
+also. Depending on the number, values and positions of the fixed elements
+in A, 4~and ~I,, we may distinguish between two kinds of solutions: unrestricted
+and restricted. An unrestricted solution is one that does not restrict the common
+factor space, i.e., one that leaves h~h' unrestricted. All such solutions can
+be obtained by a rotation of an arbitrary unrestricted orthogonal maximum
+likelihood solution, for example, one obtained by the computational procedure
+of J6reskog [1967a-b]. An unrestricted solution will usually result if the
+number of fixed elements in h and q~ is at most k ~ and if these elements are
+properly distributed over all factors. All unrestricted solutions for the same
+data will have the same communatities and the same uniquenesses, and they
+wilt all yield the same fit to the observed variances and covariances in S.
+In an unrestricted solution no element of • can be held fixed, since clearly
+a restriction on ~I, is a restriction of the common factor space. A restricted
+solution, on the other hand, imposes restrictions on the whole factor space,
+and such a solution, therefore, cannot be obtained by a rotation of an unrestricted solution. Communalities and uniquenesses will not be the same
+for an unrestricted and a restricted solution for the same data. The fit to
+the observed variances and covariances in S, as measured by the function F,
+will, in general, be better for the unrestricted than for the restricted solution.
+However, if differences in number of estimated parameters are taken into
+account this may not be so.
+Both unrestricted and restricted solutions may or may not be unique.
+This depends on the positions and values of the fixed parameters. A solution
+is unique if all linear transformations of the factors that leave the fixed
+parameters unchanged also leave the free parameters unchanged. Various
+
+186
+
+PSYCHOMETRIKA
+
+sufficient conditions for ~t unique solution have been given by Reiers01
+[1950], Howe [1955] and Anderson and Rubin [1956].
+Two simple sufficient conditions, as given by Howe [1955], are as follows.
+In the orthogonal case, let • = I and let the columns of A be arranged so
+that, for s = 1, 2, . . . , l~:, column s contains at least s -- 1 fixed elements.
+I n the oblique case, let di:tg ~ = I and let each column of A have at least
+k - 1 fixed elements. I t should be noted that in the orthogonal case there
+are ½k(k -1- 1) conditions on q~ and a minimum of ½k(k -- 1) conditions
+on A. In the oblique case there are k normalizations in q) and a minimum of
+k(k - 1) conditions on a. Thus, in both cases, there is a minimum of k ~
+specified elements in A and cI,. Let h be a solution under any such conditions
+and let A (~) be the submatrix of A, consisting of those rows of A, that has
+fixed elements in the s-th column. Then A is unique if for all s = 1, 2, • • • , k,
+A (°) has rank equal to the smallest of the numbers m, and k, where m, is
+the number of fixed elements in the s-th column of h. This condition is usually
+fulfilled in practice. I t should be noted that even a restricted solution need
+not be unique. For example, an orthogonal solution with no restrictions on
+the first two columns of A and with more than ½k(k -- 1) fixed elements
+in the other columns is restricted but not unique. Any orthogonal rotation
+in the plane of the first two factors will change these and leave all the fixed
+elements unchanged. In general, if a solution is not unique, transformations
+may exist that change the free parameters while leaving the fixed parameters
+unchanged. To make the solution unique, additional restrictions must be
+imposed.
+I n addition to the two main kinds of restrictions on ~, orlhogo~,al and
+oblique, w~rious mixtures of these can be used. For example, one factor
+may be postulated to be uncorrelated with all the others--these factors
+being correlated among themselves. I t is convenient to refer to all such solutions as mixed solutions.
+Examples of many different kinds of solutions are given in Sections 4
+and 5.
+
+d. Minimization Procedure
+The minimization problem is that of minimizing the function F(A, ~, ~Y)
+with respect to the frec parameters, keeping the others fixed at the given
+wdues. A numerical procedure for obtaining the maximum likelihood estimates, under certain special cases, was first given by Howe [1955]. A very
+similar procedure was later proposed by Lawley [1958] and referred to
+subsequently by Lawley ~md 5'laxwell [1963]. I n both cases the derivatives
+of F are equated to zero and, after some simplification, a numerical solution
+of the resulting equ-~tious is sought. Recent work suggests, however, that
+these procedures do not always converge [JSreskog, 1966]. Even when convergence does occur, it is usually very slow. A better method, for which
+
+1~. (;..J 0RE,~ KO(;
+
+lg7
+
+ultinmte convergence is .i.ssm'c.d. w'L,~ given by Ji)reskog [1966]. Experien('e
+with this method has revealed that it, is sometimes still diflieult to obtain a
+very acem'ate solution unless many iterations are performed. Eftieient
+minimization of F(A, q~, q,) seems impossible without the use of second-order
+derivat ires.
+The present procedure is bnsed on the method of Fletcher and l'owell
+[19(i3], which was u ~ d successfully in the m~rcstrieted maximum likelihood
+pr()t)Iem [.16reskog, 19(i7b!. i t is a rapidly cmlvm'ging iterative 1)rocedure for
+minimizing a function of several variable.-." when analytical expressioIls for
+the tirst-order derivatives are available. The eitieieney of the method is
+obtained by the use of a matrix S, which is evaluated in each iteration.
+Initially, E is any positive definite nmtrix at)proximating the inverse of the
+matrix of second-order derivatives. In subsequent iterations E is improved,
+using the information built up about the function, so that ultimately E
+converges to the inverse of the second-order derivative matrix, evaluated at
+the minimum. If the number of parameters is large, the number of iterations
+required may still be large, but this can be decreased considerably by the
+provision of 't good starting point and good initial estimates of second-order
+derivatives. Since the iteration equations have been given in detail by J6reskog
+[1967b], they are not repeated here. The function F is considered only in the
+region where ~ , > e, i = 1, 2, --- , p, for some arbitrary small positive
+number ~. The treatment of these boundary conditions is the same as is
+given in the paper by JSreskog.
+The real adwmtage with the Fletcher and Powell method, as compared to
+the Newton-Ilaphson method, is that once an initial estimate of E has been
+obtained, the successive modifications of E throughout the iterations can
+be done very rapidly. One variant of the Newton-Raphson method computes
+the matrix of second-order derivatives and its inverse in each iteration, but
+this can be very time-consuming, especially when the number of parameters
+is large. Another variant of the Newton-Raphson method computes the
+matrix of second-order derivatives and its inverse only once and uses this
+inverse in all iterations. Such a procedure may require a large number of
+iter:~tions to converge, especially if the starting point is not close to the solution point. The Fletcher and Powell method is a compromise between these
+two extremes. I t improves the inverse of the matrix of second order derivative~s
+in each iteration at very little cost.
+In the unrestricted maximum likelihood problem it is possible to eliminate
+the parameters in h analytically so that the method of Fletcher and Powell
+is applied to a function of p variables only. Unfortunately, such a two-stage
+minimization procedure is not possible in this case, except under certain
+special conditions. The function F has, therefore, to be minimized simultaneously with respect to all free parameters. In a factor analysis of 40 tests
+and 10 factors, say, the number of free parameters may be almost 400 and,
+
+]88
+
+PSYCHOMETRIKA
+
+consequently, the matrix E, which must be evaluated in each iteration, is
+of order 400 X 400. The handling of such matrices in a computer presents
+many difficuIties, even with present-day computers.
+The function F is considered as a function of the free parameters in A,
+the free parameters in the lower hall o] eb, including the diagonal, and the
+free parameters in the diagonal of ,I,. Expressions for the first-order derivatives
+of F have been given elsewhere [see e.g., Lawley & Maxwell, 1963; J6reskog,
+1966]. These expressions are
+
+(6)
+
+OF/OA =
+
+2~-'(~ -- S ) ~ - ' A ,
+
+(7) OF/0¢ = cA'Z-'(Z - s)~-~h~ c_
+kv
+
+= 1
+= 2
+
+for diagonal elements
+\
+for non-diagonal elements
+
+(8) OF/O,~ -- diag [ ~ - ' ( 2 - S)Z-'],
+with the understanding that elements in the matrices on the left that correspond to fixed values of A, ¢ and ~I, are zero. The above matrices may be
+simplified for computational purposes by use of the identities
+(9)
+
+5 - ' = xI"-1 -- , I , - 1 A ( / + ~A',I,-'A)-'cI, A'xI,-'
+
+(10)
+
+~ - ' A = ,I,-'A(I + ~h'~I,-'h)-'.
+
+The free parameters in A, (~, ,I, are arranged in a vector 0 as follows.
+Let O~ , i = 1, 2, • • • , k, be a vector containing the free parameters in column
+i of A and let Ok+~ and 0k+2 be vectors containing the free parameters in
+and • respectively. Then 0' = (0~ , ~' , . . . , 0~+2). Formally we may now
+regard F as a function of 0 and write F(O). Similarly we may arrange all
+nonvanishing derivatives as a gradient vector OF/00. If there are q free
+parameters all together, 0 and OF~aS are vectors of order q.
+T h e Fletcher and Powetl method requires repeated computation of
+function values F(8) and gradient vectors OF/O0. For the iterative procedure
+to work satisfactorily it is necessary that this be done rapidly and accurately.
+The follow,ring method is used.
+1. Compute F -- A'~-~A and I + ~F. The last matrix is unsymmetric,
+nonsingular and of order/~ X k. Invert this to give A = (I + q~F)-'.
+This also gives [[ + ~r[.
+2. Comlmte
+
+3. Compute B = A ~
+4. Compute C = g'-' - q ~ - ~ A B A ' ~ - ' = ~ - '
+5. Compute D = SC = $ 2 -1 and tr D = tr (SX-')
+
+6. ( ' o m p u t e F fr,,m (4) using IZi from st,ep 2 amt It' (SY~-') from
+step 5. (The quantity log i,~i + p is a eonst:mt computed before
+t he minimization begins.)
+7. Compute E = C CD = Z-'(Z - S)Z-'
+s. Compute (7 = EA
+.~k Compute 2G~ = OF/OA
+10. Compute eA'G = OF/O¢
+11. ( ' o m p u t e di~g E = OF/'O,I,
+I~. F o r m the vector OF'O0 from the quantities . f steps 9-I 1.
+I,'ormulas for Nrge-s:tmple approximations of seeond-order derivat, ives
+¢,f F were derived by Lawley [1967] and independently by Loekhart [19671.
+Imwley derived them by differentiation of the elements of the first order
+derivative matrices ignoring contributions arising from t,he differentiation
+of elements of 2; -- S. Another way to derive these formulas is to make
+use of the eowu'ianee structure of a Wish~rt matrix 8 [see e.g., Ande~on,
+19;58, Theorem 4.2.4],
+(11)
+
+,,E[(s~
+
+-
+
+~o,~)(s.~.
+
+~.,)1 = ~ o , ~
+
+-
+
++ ~o~,.
+
+As shown by Lawley [1967], the formulas for second-order derival~ives
+e:m best. be expressed in terms of the elements of the following matriees
+(12)
+
+~
+
+Z-'A
+
+(la)
+
+,7 =
+
+(14)
+
+c~ = A ' Z - ' A = A'~e
+
+(1~)
+
+~ = ~ , A ' Z - ' A = ~,,~
+
+(16)
+
+"y = c~k'Z-~Acb = Bel'.
+
+=
+
+z-'a,~
+
+= ~
+
+The formulas then become
+07)
+
+l;(O~F/a×,.a~3
+
+= 2 ( ¢ ~ v . + ,7,0,7,.,)
+
+(18)
+
+£'(02F/Ok,,04~,,) = ( 2 -
+
+09)
+
+E(O'/OX,~O~b,,)
+" "
+
+(20)
+
+E(O'eF/O4~..&b,.) = ½(2 -
+
+&.)(2 -- 6,,,)(a~,a.. + c~.~c~.,)
+
+(21)
+
+E(O~'F/Oc~,,OCJ,,) = ( 2 -
+
+6,,)~;~,,
+
+(22)
+
+E(021~/0¢/,,0¢/~)
+
+= 2,
+
+=
+
+~st)(~i~rt Jr ~itOr,)
+
+"
+
+( ,~)2.
+
+Here b,, is Kroneeker's delta, which is 1 if r = s and zero otherwise. Exeep~
+for (18), (20) and (21), these formulas agree with the results obtained by
+Loekhart who gives these results without the faetors involving the Ys.
+
+190
+
+PSYCI-IOMETRIKA
+
+However, these factors are necessary if some factor is not scaled to unit
+variance. This will usually be the case whenever there are fixed non-zero
+values in A.
+
+As an examI)le of how these formulas are derived from (1 l), ~'e prove
+the last formula. The i-th and j-th diagonal elements of OF/O~ are
+
+a=l
+
+(24)
+
+0r/0 ,. =
+
+u=l
+
+~=1
+
+2; .
+
+(.~,,.
+
+-
+
+.o3.
+
+°;.
+
+v=l
+
+Multiplying these and using (11) then gives
+li(O 2 F/Og,,,O~b,) = (n/2)E(OF/O~,
+~
+
+"/
+
+u
+
+= E E 2 Z o ' o , $ i i u ~ i ,o.,,.
+a
+
+=
+
+~
+
+u
+
+(~-):,
+
+where the first step follows from a general formula for likelitmod functions
+[see e.g., Kendall & Stuart, 1961, eq. 18.60].
+The eomputation'd method starts with arbitrary initial estimates of
+A, ~, ,I,. The better these are, the fewer iterations will be required. If most
+of the restricted t)arameters are in A and these are sufficient to define A
+uniquely, such initial estimates can be obtained by rotating an unrotated
+orthogonal factor matrix using some Procrusies method, e.g. that of Lawley
+and Maxwell [196t]. In our computer program [J6reskog & Gruvaeus, 1967],
+we generate initial estimates by a moditicd centroid method, if lhey are not
+provided by thc user. ]"tom the initi'd starting point five steepest descent
+iterations are performed. Steepest descent iterations have been found to be
+very effective in the begimfing but very ineffeelive in the neighborhood of
+the minimum. After these tive iterations one has usually come so eh)se lo
+the minimum thai it i.~ worthwhile h) compute the above al)proxinmlions
+for secoml-order derivatives.
+When suitably arr:mtzed these form a symm(qvi(: positive (lelinile nmtrix
+G. The inv(,r,o nmlrix t; ~ lhen serv(,s :~s :m inilial al)tW~)ximali(m to 1'.',
+and in sut)s(.qm'nl il(,ralirms the l"h'.l('hvv :rod l',m~.t] nwil.)d is ,.,ml)t~yed
+and the mutrix E is too(tiffed a(.(t~)l'tlingly.
+When lh(. mmd)(,r ()f free l)arameh~vs to l)e estimaled is large so lhat
+the ord(u" ,,i' lhe matrix (; is large, lho inversion of (; is very ditficult and
+time-consuming..In this cqs(' an "q)l)r()ximati(m for (,'-~ which is sufficient
+t,~ (h;lermim, :m iaitial (.slimale ~t Ix' can be obtaim',l :~ follows. I.('1
+
+191
+
+K. (L .I()RI';SKq)(
+
+-Gl,
+
+"" •
+
+0
+
+0
+
+...
+
+G~
+
+0
+
+o
+I
+
+(25)
+
+B =
+
+. . . .
+
+I
+. . .
+(;I,...
+
+2 . I,.-~ 2 , J
+
+where
+
+(26)
+
+G,, = O'F/O0,OO~,
+
+i =
+
+l , "'
+
+...
+
+k +
+
+')
+
+Then B-' can be taken as an initial estimate of E. This is reasonable because
+earlier studies on sampling variability have indicated that a factor loading
+in one column of h correlates little with a factor loading in another column,
+with a factor correlation and with a unique variance. This reduces the problem
+to that of inverting k -}- 2 small matrices instead of one large matrix. In the
+Fletcher and Powell iterations the full E matrix is used.
+The above method has been programmed in F O R T R A N IV and tested
+out on the IBM 7044 [JSreskog & Gruvaeus, 1967]. The program performs
+all computations in memory and is limited to at most 30 variables, 10 factors
+and 120 free parameters. The program is quite feasible for all the sets of
+data that it can handle. In computers with larger storage capacities than that
+of the IBM 7044, the above limits can be increased so that larger data can
+be handled.
+When the minimum of F has been found, the minimizing values of A,
+4~and ~I, are the maximum likelihood estimates ~,, ~ and ~,, and the hypothesis
+implied by the fixed parameters can be statistically tested. The maximum
+likelihood estimate of ~ under the hypothesis is
+(27)
+
+£ = 3.~:~' q- ~,
+
+and the likelihood ratio test statistic for testing the hypothesis is
+(28)
+
+n[log [~l -- log IS I + tr ( S £ - ' ) - p].
+
+This is simply n times the minimum value F(A, ~), ~) of F(A, ~, ~I,). If
+n is large, this is distributed as x ~ with
+(29) d = ~ ( p +
+
+1) - - p k -
+
+½k(k +
+
+1) - - p + m. -F- k m a x
+
+{m, ,k}
+
+i=l
+
+degrees of freedom, where m, is the number of independent restrictions on
+factor i, including restrictions on the ~b, and the ¢~ , and m . is the number
+of fixed parameters in ~I,. In some cases the evaluation of the last term of
+(29) may be ambiguous. For example a restriction on 0,~ may be counted as
+a restriction either on factor i or on factor j. The rule to follow is to distribute
+
+0.0~
+
+0.05
+
+Word Meaning
+
+Add~ tio~
+
+Co~nting D,~'[:;:,
+
+Stra~ ght-O]rvcd CS~:~t[,,l~
+
+6,
+
+7.
+
+8.
+
+9,
+o.~
+
+o.58
+
+0.26
+
+-0,i~
+
+o.~5
+
+0.58
+
+0.7~
+
+0.25
+
+o.~8
+
+o.~8
+
+-o.o3
+
+o.01 0.82 -0.0!
+0.00. 0.00" 0.78
+
+Paragraph Ccr pro} eLsion
+
+Sentence Completion
+
+Word Meani~
+
+4,
+
+5.
+
+6.
+
+0.04
+
+o.~
+o.91
+
+o.~
+o.~9
+
+o.7o
+
+0.75
+
+-0.01
+
+0.00"
+
+0.oo*
+
+0.00"
+
+i.oo~
+I.(D~
+
+= o.6~
+
+X 2 = 9.77 with 12 degrees of freedom
+
+0,56
+
+0.01
+0.08
+
+0.]2
+
+0.oo* 1.00-
+
+-0.08
+
+0.28
+
+1.00.
+
+0.24
+
+0.~6
+
+0.32
+
+0.52
+0.39
+
+0.30
+
+o.87
+
+o.cO*
+
+o.oo*
+
+o.00-
+
+o.o0.
+
+0.OO*
+
+0.00"
+
+l.oo*
+o.~
+
+0.~*
+
+0.00"
+
+0.8O
+0.00" 0.70
+
+0.00"
+
+0.00- 0.83
+o.o0- 0.52
+0.00" 0.00. 0.66
+
+0.0o* o.83
+
+0.oo*
+
+0.69
+
+0.00"
+O.00,
+
+0.34
+
+i.oo*
+1.00~
+
+=0.64
+
+0.00
+
+P -
+
+0.24
+
+l.oo*
+
+0.68
+0.52
+
+X 2 = 51.19 with 24 degrees of freedom
+
+0.~I
+
+0.7)
+
+i.oo*
+0.9~
+
+o.~
+
+0.7~
+
+P
+
+-0.06
+
+-0.30
+
+0.13
+
+o.oo*
+
+-o.09
+
+(~ = 9)
+
+X 2 = 9.77 with 12 degrees of freedcm
+
+0.96
+
+0.~2
+
+o.81
+
+o.oo* 0.87
+
+0.67
+
+i~zenges
+
+5.
+
+-0.08
+
+0.00" 0.00"
+-o.05
+
+0.71
+
+0.5~
+
+Straight-Ctu-,.edCapitals
+
+0.82
+0.~
+
+-o.01
+
+o.oo*
+-O.07
+
+(d) R~stricted Obllq~Je Solution (m ~ 2~)
+Independent Cluster Solution
+0.~0
+
+o.~6
+
+o.~
+
+0.~9
+
+0.~2
+
+0.83
+
+0.00"
+
+o.~6
+
+o.~4
+
+(c) ,'T~restricted 0bliq~e g n S ~ o n
+I~eferenee Variables Solution
+
+Cubes
+
+9.
+
+1.00"
+
+o.~0
+
+0.87
+
+0.58
+
+0.~
+
+0.59
+
+0.~I
+
+0:37
+
+0.97
+
+o.31
+
+o.31
+
+0.29
+
+0.52
+
+0.7)
+
+0.~
+
+o.~6
+
+o.~
+
+0.~9
+
+0.3~
+
+0.~0
+
+0.~
+
+o.~
+
+o.74
+
+0.5o
+
+(b) Unrestricted Orthogonal Solution (m = 9)
+Three-factor General Triangular Solution
+0.59
+
+P
+
+] . VL<iial prr, oi ', n
+
+Co!roting i~ts
+
+0.00"
+
+I..00-
+
+o.~
+
+o.~
+
+0.7~
+
+0.50
+
+(m = 6)
+
+P =0.6~
+
+2.
+
+8,
+
+0.00"
+
+0.oo*
+
+1.00.
+
+x~ = 9-77 with 12 degrees of freedom
+
+o.~6
+
+0.77
+
+-0.I~
+
+Sentence C,?mp~~hi; !~
+
+b.
+
+0.7~
+
+o.~,~ -o.o9
+-o.15
+
+o.~
+
+0.81
+
+Lozenc~es
+~ra~r~ph C<~mpr~h-usJon
+
+5,
+h.
+
+~O.iO
+
+0.36
+
+0.35
+
+Cubes
+
+2,
+
+-0.o2
+
+0.49
+
+0.~i
+
+(a) Unrestricted Orthogonal Solution
+
+(Datm from Holzinger & Swineford [1939]. An asterisk indicates that the parameter was fixed at this value.)
+
+], Visual Perception
+
+7. Addit~ on
+
+TABLE 1
+
+Examples of Variotla Maximum Likelihood Solutions for Nine Psychological Variables
+
+O
+
+K. O. JORESKOG
+
+193
+
+such ~mbiguous restrictions so as to make the last term in (29) minimum.
+Examples of this rule are given in the next section.
+The final matrix E that lms been built up during the iterations is an
+approximation to the inverse of the matrix of second-order derivatives at
+the minimum. When multiplied by (2In) this gives an estimate of the variance-covariance matrix of the maximum likelihood estimates of the free
+parameters. Substantial experience with the method, however, has revealed
+that this estimate is not sufficiently accurate for most purposes. This is due
+to the fact that the matrix E is built up assuming the function to be exactly
+quadratic [see Fletcher & Powell, 1963]. Our function F is not quadratic,
+however, but is approximately so in a small region around the minimum.
+It should be noted that the matrix E is used essentially for the purpose of
+obtaining fast convergence and not of providing an estimate of the information matrix. Convergence is usually obtained in less th~n q iterations, often
+much less. However, at least q iterations in a quadratic region ~re necessary
+to build up numerically an accurate estimate of the inverse of the secondorder derivative matrix. To obtain an accurate estimate of the variancecovariance matrix of the estimated parameters it is best, therefore, to recompute the second-order derlv~tive matrix at the minimum and invert
+this. Denoting the matrix so obtained by E*, only the diagonal elements of
+this, corresponding to variances of estimates, would normally be of interest.
+For any parameter e~ with corresponding maximum likelihood estimate 0~
+and variance of estimate e* , an approximate 95% confidence interval is
+(30)
+
+0, - 2 X/(2/n)e~ < e, < O, + 2 X/(2/n)e,* .
+
+This formula should be used only when the restrictions ~re such that the
+solution is unique.
+
+/j. An Analysis el Nine Mental Ability Tests
+We shall illustrate the preceding ideas and methods and indicate some
+possible uses of the approach on the basis of two sets of empirical data.
+The analysis of the first d~ta is reported in this section and that of the second
+in the next section.
+The first set of dat~ consists of nine mental ability tests selected from a
+battery of 26 tests previously analysed by Holzinger and Swineford [1939].
+The nine tests are listed in Table 1. They can be thought of as measuring
+essentially visu.dization (tests 1, 2, 3), verbal intelligence (tests 4, 5, 6) .rod
+speed (tests 7, 8, 9). A full description of the tests is given in the above
+reference, where misccll'~mous descriptive statistics are given .'dso. Data
+were obtained on seventh- and eighth-grade children from two different
+schools. Only the data from the Grant-White school sample of 145 children
+are used here. The correlations were computed directly from the r:~w scores
+given by ttolzinger and Swineford.
+
+Cubes
+Lozenges
+Paragraph Comprehension
+Sentence Completion
+~ord Meaning
+0.82
+0.00"
+0.00
+0.0~
+
+O.00"
+0.00"
+0.29
+
+0.56
+
+=
+
+0.28
+
+0 . 0 0 ~"
+
+0.00*
+
+0.00*
+0.57
+0.49
+
+0.78
+0.70
+0.42
+
+0.53
+0.00"
+0.00" 0.00"
+0.00" 0.00"
+0.00* 0.00"
+
+0.62
+0.42
+1.00*
+0,00"
+0.00"
+1.00"
+0,00"
+1.00"
+
+p
+
+= 0.80
+
+0.32
+0.56
+O.4~
+
+0.57
+0.2~
+0.52
+0,52
+
+0.47
+0,77
+
+(m = 16)
+
+X 2 = 13.81 with 19 degrees of freedom
+
+0.29
+O.16
+0.37
+
+0.38
+0.87
+0.85
+0.82
+
+0.58
+
+(S) Restricted Orthogon~l Solution
+
+3.
+4.
+9.
+6.
+
+7. Addition
+8. Counting Dots
+9. Straight-Curved Capitals
+
+-0.13
+
+0.43
+
+0.15
+
+0.56 0.59 -O.g2
+
+0.57
+0.34
+
+0.00" 1.00~
+
+=0.84
+
+p
+
+0.4~
+
+0.52
+0.30
+0.44
+
+-0.13 0.06 0.00" 1.00"
+0.28
+0.04 -o.o2 0.00" 0.oo* l.co~
+0.32
+o.00" 0.95 0.00" 0.00" 0.00" 1.00, 0.05
+
+0.52
+
+0.56
+
+0.4~
+
+0.6~
+0.48
+0.25
+
+0.83 0.01
+0.83 0.oi
+0.24 0.02
+
+0.00*
+
+0.24 0.41
+0.58 0.93
+0.87 0.00"
+
+0.00"
+~.o3
+
+0.00*
+
+0.35
+0.30
+0.03
+
+0.38 0.58
+
+p
+
+1.00"
+
+0.56
+0.~
+0.5!
+
+0.47
+0.76
+
+(f) UnreStricted 0rthogonal Solution (m = 16)
+Four-factor General Triangular Solution
+
+X 2 = 2.7~ with 6 desrees of freedom
+
+0.~
+
+0.24
+
+1.00"
+
+(m = 20)
+
+X 2 = 26.47 wlth 23 degrees of freedom
+
+0.24
+
+Lozenges
+~ragraph Comprehension
+Sentence Completion
+Word Meaning
+
+1.00"
+0.49
+
+0.00~ 0,00*
+0.84
+0.67
+
+0.000.00"
+0.00"
+
+0.86
+0.8~
+
+0.67
+0.00"
+0.00"
+0.00"
+
+0.00* O.00*
+0.00" 0.0o*
+
+0.73
+0.50
+
+I. Visual Perception
+2. Cubes
+
+7. Addition
+8. Counting Dots
+9. Straight-Curved Capitals
+
+2.
+3.
+4.
+D.
+6.
+
+i, Visual perception
+
+(e) Restricted Mixed Solution
+
+TA~LEI (cuntd)
+
+K, G, JORESKOG
+
+195
+
+Tables l a - g show seven different maximum likelihood solutions for
+these data obtained under different identification conditions imposed on
+the factors. The fixed values of the parameters are marked with asterisks,
+and the number of fixed parameters is denoted m and is listed above each
+table. The value of x ~ and the degrees of freedom as computed by (28) and
+(29) respectively are given below each solution. The probability level P of
+the x ~ value is also given. This is defined as the probability of getting a
+x 2 value larger than the value actually obtained, given that the hypothesized
+pattern is true. Thus, small values of P correspond to poor fit and large
+values to good fit.
+In Table la we have postulated that the factors be uncorrelated and
+have unit variances. The latter, of course, is just an arbitrary scaling of
+the factors and will be used throughout. This gives m = 6 fixed parameters.
+Since k = 3, we should normally require m = k 2 = 9 independent restrictions
+to obtain a unique solution. The solution of Table la is therefore not unique
+but is just an arbitrary orthogonal solution. It happens to be the first one
+that the computer program found. It can be rotated orthogonally or obliquely
+to an), other unrestricted maximum likelihood solution for the same data.
+To obtain an orthogonal solution, for example, we postmultiply the factor
+matrix by an orthogonal matrix of order 3 X 3. Since this matrix has three
+independent elements, it can be chosen to satisfy three independent restrictions on the factor Ioadings.
+A particular set of such restrictions is used in Table lb. It is seen that
+three factor ioadings have been postulated to be zero. Test 1 (Visual Perception) is postulated not to load on factor 3, and test 4 (Paragraph Comprehension) is postulated to load only on factor 1, the idea being that factor 3
+should be a speed factor, factor 2 a visualization factor and factor 1 a general
+factor. The solution of Table lb represents an unrestricted orthogonal solution with nine tixed parameters. Given these fixed values, the solution is
+unique. It can be verified readily that the conditions for uniqueness, given
+in Section 2, are satisfied. The rows of the factor matrix can be permuted
+so that the zeros appear in the upper right triangle, hence the term gmmral
+triangular solution. Table lb serves to illustrate one important point, namely,
+that one has nothing to lose but may have much to gain by fixing the three
+zero h)adings. By choosing these zero loadings appropriately, the sohltion
+will be directly interpretable, thus making subsequent rotations mmccess'~ry.
+However, if furlhcr r,)tation is still found to be preferable, the so]uth)n can
+be r,)tatcd orth~)gonally or obliquely by ~mv of 1he avail,~ble melho(ls. If
+the zero loadings arc not t()o unreasonable, the rotation can probably be
+d(me by hand. W,, .~lm}Ireturn to the interpret ation of the soluti,m ~,f Table I b
+:~iter eXallliUil|g seine other solutions.
+Another um'cslricled solution is shown in Table lc. Here the faetm's
+arc permitted l,) be correlated. To make the solution uniquely determined,
+
+] 96
+
+P~YCHOMETRIKA
+
+we have chosen three reference variables, tests I, 4 und 7, to r(*present the
+factors. These reference tests are postulated to bc pure in lheir respective
+factors. Thus Table lc represents an unrestricted oblique unique solution
+with m = 9 fixed elements. T h a t the solution is unrestricted and unique is
+readily verified by showing that there is a unique transformation from the
+solution of Table la to that of Table lc. Reference variables solutions are
+particularly useful since they impose just enough restrictions to make the
+solution unique, and if the reference tests are carefully chosen to tap the
+factors of interest, the solution will be directly interpretable in most cases.
+The solution in Table lc exhibits a fairly clear simple structure. It is seen
+that the first seven tests are all loaded in one factor only, whereas the last
+two tests are more complex, being loaded not only in the speed factor but
+also in the visualization factor. One interpretation of this might be that
+the material in tests 8 and 9 consists of configurations in the plane in a way
+similar to tests 1 and 3. T h a t test 9, in particular, should involve some
+visualization factor is evident from the fact that it is necessary here to break
+up a letter into straight and curved lines. Test 8, on the other hand, has
+its highest loading on the speed factor.
+The solutions of Tables la, lb and lc are three different unrestricted
+solutions for the same data. This is reflected in two ways in the tables: the
+unique variances are the same, and the x 2 values and the corresponding degrees
+of freedom are also the same for the three solutions. The probability level of
+0.64, in this case, merely indicates that three factors are sufficient to account
+for the intercorrelations between the tests.
+Let us now assume that it has been hypothesized in advance that the
+tests form three independent clusters so that tests 1, 2 and 3 are loaded in
+the visualization factor only, tests 4, 5 and 6 in the verbal factor only and
+tests 7, 8 and 9 in the speed factor only. This leads to the solution of Table ld,
+where the free parameters have been estimated by the maximum likelihood
+method. This is a restricted oblique solution with m = 21 fixed parameters.
+Only nine of these restrictions are necessary to make the solution unique;
+the additional 12 restrictions affect the whole factor space. This is demonstrated b y the differences in unique variances between Tables lc and l d
+and also by the large increase in x 2. The x ~ value is 51.19 which, with 24
+degrees of freedom, is highly significant. The hypothesized factor structure
+must therefore be rejected as being untenable.
+The question now arises as to what is causing the poor fit of the solution
+in Table ld. In general, poor fit may be due to the fact that either the number
+of factors is untenable or the hypothesized structure is untenable, or both.
+In this case, we know from any one of the solutions of Tables la, l b and lc
+that three factors are tenable, so the poor fit must be due to a too restrictive
+structure. Which of the hypothesized zero loadings are then untenable?
+There are several ways to find this out. One way is to examine the residual
+
+K. G. JORESKOG
+
+197
+
+TABLE 2
+ApFroximate 95% Confidence Intervals for the Parameters in the Solution of Table ib
+
+0.71 + 0.1.7
+
+0.00"
+
+0.00-
+
+0.90 + 0.18
+
+0.54 + 0.29
+
+-o.03 _+ 0.1~
+
+-o.08 ± 0.19
+
+0.7~ +_ 0.20
+
+0.67 + 0.2~
+
+0.0~ t 0.19
+
+-0.09 + 0.25
+
+0,00"
+
+0.87 + 0.18
+
+0.00"
+
+l.CO*
+
+o.94_+ o.19
+0.2~ _+ 0.i0
+
+0.50 + 0.11
+
++ 0.21
+
+0.81 + 0.15
+
+0.13 + 0.22
+
+0 . ~ + 0.22
+
+1,00"
+
+0.01 + 0.29
+
+0.~2 + 0.18
+
+-0.01 + 0.22
+
+0.24 + 0.~0
+
+0.28 + 0.23
+
+o.oo*
+
+o.o0-
+
+0.78 +. o.2,5
+
+o,39 + o.2~
+
+0,42 -+ 0.24
+
+-0.~0~ + 0.18
+
+0.73 * 0.22
+
+0.52__+ 0.19
+
+0.56 +_ o.~2
+
+-0.06 +_ 0.15
+
+o.~l + o.19
+
+o.~6 +_ o.~L
+
+-0.03
+
+1.00"
+
+0.32 + 0.ii
+
+correlations obtained after the three factors have been removed. A better,
+more direct, way is to compute approximate confidence intervals for all the
+free parameters of the solution of Table lc. These confidence intervals are
+given in Table 2. I t is seen that several of the loadings that were set equal
+to zero in Table ld are indeed not signific-mtly different from zero but a
+few of them are. l~elaxing two of the zeros in the first factor of Table l d
+and adding the restriction ¢,3 = 0 yields the solution of Table le. Since
+one of the factor correlations is postulated to be zero, whereas the other
+fact,r correlations are free, this represents a restricted mixed solution with
+m = 20 fixed parameters. It should be noted that we have relaxed two of
+the zero f'mt,)r loadings but have added % zero factor correl'~tion. Thus the
+number of tixed parameters is only one less th'm before. The value of x ~ is
+now 26.47 with 23 degrees of h'eedom. This has a probability level of 0.28.
+The solution is therefore acceptable, and it h:ts also been verified th'tt the
+values of all the free l)arameters are statistic'lily significantly different
+from zero. The interpretatiou of the solution is very similar to that of Table
+lc. In terms of the three factors, visualization, verbal and speed, the first
+seven t(,sts are pure tests, whereas tile last two tests are more complex.
+The }oadings of these on the visu'dization f-rotor have already been commented
+upon. It should be noted that factors 1 and 3 are uncorrelated but both of
+them correlated with factor 2. This suggests that the verbal factor is more
+general than the .ther two factors and that one might try to split this factor
+up into :~ general factor which influences all the tests and a more specific
+factor which is associated only with tests 4, 5 and 6.
+The solution of Table If represents the results of such an attempt.
+It was postulated that there should be an orthogonal solution with a generM
+factor and three group factors, the first olin not loaded in test 4, the second
+one m)t loaded ia tests 1 and 7 and the third one not loaded in tests i, 2 and 4.
+It is seen th-d |he visualization and speed factors appear as before, but the
+
+Suffixes
+
+Vocabulary
+
+2.
+
+3.
+
+0.00"-0.01
+
+o.00"-0.13
+
+0-73
+
+0.79
+
+o.iI~
+
+Ss~e or opposite
+
+9,
+
+0.20
+
+Completion
+
+8.
+
+0.14
+
+0.~6
+
+Four-letter words
+
+0.00" 0.00" 0.05
+
+7.
+
+o.oo* 0.oo* 0.35
+
+0.75
+
+First Letters
+
+0.68
+
+First and Last Letters
+
+9.
+
+0.84
+
+6.
+
+0.00"
+
+0.91
+
+0.00"
+
+Sentences
+
+0,00"
+
+Vocabulary
+
+3.
+
+0.00" 0.39
+
+0.71
+
+. Suffixes
+
+4.
+
+0.00*
+
+0 . 0 0 " O,21
+
+0.67
+
+Prefixes
+
+i.
+
+0.67
+
+0,48
+
+Same or Opposite
+
+0.65
+
+9.
+
+0-09
+
+Completion
+
+8.
+
+0.51
+
+Fox,r-letter Words
+
+7.
+
+0.60
+
+First Letters
+
+= 0.75
+
+0.17
+
+1.oo*
+
+(m = 24)
+
+0.4~
+
+o.h3
+
+0.29
+
+0.15
+
+0.55
+
+0.51
+
+0,~2
+
+0.32
+
+0.00"
+
+0.90 0.53
+1.00~
+
+0.00~-0.12
+
+0.75
+
+0.00"-O.20
+0.89
+0.82
+
+0.79
+0,00"
+0.00"
+
+0.00" 0 00* O. 00" i. On* O. 55
+
+p
+
+0.01
+
+22 = 3~ 5~ "gith 17 degrees of freedom
+=
+
+0.46
+
+0.48
+
+0.77
+0.81
+
+0,20
+0.20
+
+0-33
+
+0.81
+
+0,00"
+0.00"
+
+1.00"
+
+O.49
+0.59
+
+0.00" 0.06
+
+0.00" O. 00" O, 55
+
+O, 98
+
+0.47
+
+0.00 * 0.00 * i.(~0"
+
+(m = 7()
+
+0.}2
+
+0.32
+
+0.00" 0.2~
+
+0.00" 0.00" 0 . ~
+0.00" 0.00" 0.26
+
+0.68
+
+0.00" 1.00"
+
+0.00 ~
+
+O.00"
+
+0.O0"
+
+0.65
+
+0.36
+
+0.12
+
+O. 00*-0,15
+
+(d) ~estzicted Mixed Soh:ti,m
+
+= 0.75
+
+0.02
+
+P
+
+0.00" 0.35
+0.00"
+
+O.l~
+
+0.71~
+
+p
+
+= 0.80
+
+0.~
+0.46
+
+O.CO* 0.00" 0.00* 1.00" 0.92
+
+0.58
+
+0,O0" 0,00* 1.00 ~
+
+0.00" 0,37
+
+0.31
+
+0-09
+
+0.~1
+
+0.~8
+
+0.00" 0.00* 0.19
+
+O.01
+
+0.83
+
+0.00" 1.O0*
+
+0.00"
+
+-0.04
+0.08
+
+0.00"
+
+0,15
+0.22
+
+(b) Restricted Hixcd Zoiw,:[',n (m = ZV)
+-0.08
+
+0,70
+
+O.19
+
+0.19
+
+O-5 h
+
+0.72
+
+0.6~
+
+0.00
+
+0.00"
+
+0.75
+
+O.73
+
+>.~ = 9J~5 ::U~h :.h decrees of freedcm
+
+0.33
+
+0.32
+
+0 . 0 0 " 0.00 ~ 0 . 0 0 " 1.00" 0.53
+
+0.00" 0.00" 1.O0*
+
+o.59
+
+0.00" 1.00*
+
+0.00 ~ 0.~9
+
+0.03
+
+0.00"
+
+(c) Restricted /,;[xed Solution
+
+P
+
+0.46
+
+O.44
+
+0.31
+
+0.09
+
+O.hl
+
+O.~8
+
+O.00* 0,00" 0.00 ~ i.OO~ 0.52
+
+0.00" 0.00" 1.00 ~
+
+(m = 19)
+
+×Z = 6.73 ',~ith 10 degr~c~ of freedom
+
+0.00"-0.12
+
+0,00* 0.02
+
+0.00 ~ O,35
+
+0.00" 0.19
+
+First and Last Letters
+
+O.00" 1.O0*
+
+0.00 ~ 1.00"
+
+0.00"
+
+0.00"
+
+O.00*
+
+0.00* 0.37
+
+0.08
+
+0.53
+
+0.22
+
+0.19
+
+6.
+
+-O.03
+
+0-75
+
+0.57
+-0.05
+
+0.81
+
+0.39
+
+0,69
+
+-0.08
+
+0.74
+
+0.72
+
+-0.12
+
+(a) Restricted Orthogenal Solution
+
+0.70
+
+9.
+
+. Sentences
+
+Prefixes
+
+I.
+
+Batteries of Tests into Interbattery an~l B~.ttery Speci fic F~qtor~
+
+(Original data from Thursben~ & Thou'stone [191L]]. All asterisk indicates th~.l; 54,,"l~ram , ~'r w~J £i::~d "!i I~hJ~ ';~hW )
+
+An Analys~s of ~ o
+
+TABLE 3
+
+C
+
+K. G. JORESKOG
+
+199
+
+a t t e m p t to isolate one general and one verbal factor was not successful.
+Tests 4, 5 and 6 load only in the general factor, and the second group factor
+is a very weak one having no psychological interpretation. This solution,
+therefore, is an example of overfactoring. I f the second group factor is omitted
+and zero loadings postulated to identify the other two group factors as before,
+we arrive at the unrestricted orthogonal three-factor general triangular solution as in Table lb. In this solution, all the small loadings are not significant.
+I f these are set to zero, we get the restricted orthogonal solution of Table lg.
+The solutions of Tables le and lg are two alternative final solutions for
+these data. Both solutions are final in the sense that all nonzero parameters
+are significant. The solution of Table le is slightly more restrictive than that
+of Table lg, but the latter has a much better fit. The choice between the
+solutions, of course, is a m a t t e r of psychological theory [e.g., cf. Thurstone,
+1947; Vernon, 1951].
+The above examples show how the procedure of Section 3 can be used in
+an exploratory way to determine a solution t h a t is reasonable from the point
+of view of both goodness of fit and psychological interpretation.
+
+5. Inlerbaltery Analysis
+The second example serves to illustrate how our method Call be used
+to analyse two batteries of tests into interbattery factors and battery specific
+factors. Tucker [1958] developed a method for determining factors that is
+common to the two batteries. These factors, c'llled interbattery factors,
+account for the correlations between batteries but may ,lot account for correlations within batteries. This example shows how factors that are specific
+to each battery can also be determined.
+We shall use the same data as were used b y Tucker. The d~ta consist
+of nine tests from Thurstone and Thurstone [1941] listed in Tables 3a-d.
+The first four tests constitute battery 1 and the last five battery 2. Within
+and between correlations are given in Tucker's Table 2. The correlations are
+based on a sample of 710. Tucker found two interbattery factors that account
+for the correlations between batteries. This was also supported by a statistical
+test. However, two factors do not adequately account for all the correlations
+in the whole 9 X 9 correlatioi~ matrix. We checked this by performing an
+unrestricted maximum likelihood analysis with two factors. This gave x ~ =
+50.10 with 19 degrees of freedom which is highly significant. The hypothesis
+of only two common factors in the two batteries must therefore be rejected.
+This suggests that there are factors specific to each battery but common to
+two or more tests within the battery. I t is therefore postulated that there
+are four factors in the two batteries, that the first two are interbattery
+factors, that the third is specific to batter), 1 and that the fourth is specific
+to battery 2. The two battery specific factors are postulated to be uncorrelated and uncorrelated with the two interbattery factors. Otherwise the)
+
+200
+
+PSYCIIOMETRIKA
+
+would contribute to correlations between tests and hence not be battery
+specific. In addition we arbitrarily set the correlation between factors 1 and
+2 equal to zero. The maximum likelihood solution under the above restrictions is given in Table 3a. This solution has acceptable fit, thus confirming
+the hypothesis that correlations between and within the two batteries can be
+accounted for by four factors with the above structure. It should be noted
+that this solution, regarded as a solution for all the nine tests, is a restricted
+orthogonal nonunique solution. It is restricted because too many restrictions
+have been imposed on factors 3 and 4, and it is not unique because too few
+restrictions have been imposed on factors 1 and 2. The latter can be rotated,
+orthogonally or obliquely, without changing the former. For example, such a
+rotation can be done to give two correlated interbattery factors with one
+zero loading for each factor. An example of this kind of solution is given in
+Table 3b, where test 3 (vocabulary) and test 6 (first letters) have been used
+as reference variables. A refinement of this solution, obtained by setting to
+zero the small loadings for the interbattery factors, is given in Table 3c.
+This imposes additional restrictions, and, as a consequence, factor loadings
+for the battery specific factors and the unique variances are changed. The
+solution of Table 3c fits the data well, and the two interbattery factors can
+be interpreted as a word-fluency and a verbal factor. Considering these two
+factors only, the first six tests are loaded on only one of them, whereas the
+last three are loaded on both. The three loadings ~2 = 0.14, ~8, = 0.20 and
+~9, = 0.14, though small, appear to be significant. If all three are postulated
+to be zero, the solution of Table 3d is obtained.
+The interbattery factors of Table 3d agree fairly well with the rotated
+solution obtained by Tucker [1958], but there are some differences for some
+of the loadings. Although battery specific factors may not be of direct interest, this example shows t h a t they may be important in determining the
+interbattery factors.
+
+6. The Question o] Goodness el Fit
+I t was stated in Section 3 that n times the minimum value of F can be
+used as a large sample x 2 statistic to test the hypothesis that the population
+variance-covariance matrix ~ is of the form (2) with specified values for
+certain parameters in A, 4~, ~I,. Such a hypothesis may be quite unrealistic
+in most empirical work with test data. If a sufficiently large sample were
+obtained this x 2 statistic would, no doubt, indicate that any such non-trivial
+hypothesis is statistically untenable. The hypothesis of the experimenter
+rather is that (2) represents the variance-eovariance matrix of the major
+factors that the experimenter is interested in, but that there are also a lot of
+minor factors which influence the test scores and which the experimenter
+has little or no control over [Tucker et al., 1968]. These minor factors e~use
+the lack of agreement between the formal mathematical model (2) and the
+
+K . G . JORESKOG
+
+201
+
+variance-covariance matrix of the entire population. From this point of view
+the statistical problem is not one of testing a given hypothesis but rather one
+of fitting models with different numbers of parameters and of deciding when
+to stop fitting. T h e meaning and use of x 2 in such problems are as follows.
+I f a value of x 2 is obtained, which is large compared to the number of degrees
+of freedom, this is an indication t h a t more information can be e x t r ~ t e d
+from the data. One m a y then try to relax the model somewhat by introducing
+more p a r a m e ~ r s . This can be done by relaxing some restrictions on the
+common factor space or b y introducing additional factors or both. If, on the
+other hand, a value of x 2 is obtained which is close to the number of degrees
+of freedom, this is an indication that the model "fits too well". Such a model
+is not likely to remain stable in future samples and all parameters m a y not
+have real meaning. When to stop fitting additional parameters cannot be
+decided on a purely statistical basis. This is largely a m a t t e r of the experimenter's interpretations of the data based on substantive theoretical and
+conceptual considerations. Ultimately the criteria for goodness of the model
+depends on the usefulness of it and the results it produces.
+Examining the solutions of Table 1 from this point of view, we m a y say
+t h a t for these data the solutions of Tables la, b, c, f, g are examples of overfitting whereas the solution of Table l d is too restrictive. The solution of
+Table l e represents a reasonable compromise. For the other data, the solution
+of Table 3d is the most reasonable, the other three solutions being fitted too
+well.
+REFERENCES
+Anderson, T. W. An introduction to multivariate statistical analysis. New York: Wiley, 1958.
+Anderson, T. W., & Rubin, H. Statistical inference in factor analysis. In J. Neyman (Ed.),
+Proceedings of the Third Berkeley Symposium on Mathematical Statistics and Probability,
+
+Vol. V. Berkeley: University of California Press, 1956. pp. 111-150.
+Fletcher, R., & Powell, M. J. D. A rapidly convergent descent method for minimization.
+Computer Journal, 1963, 2, 163-168.
+Holzinger, K. J., & Swineford, F. A study in faclor analysis: The stability of a bi-factor solution. University of Chicago: Supplementary Educational Monographs, No. 48, 1939.
+Howe, W. G. Some contributions to factor analysis. Report No. 0RNL-191% Oak Ridge
+National Laboratory, Oak Ridge, Tennessee, 1955.
+J6reskog, K. G. Testing a simple structure hypothesis in factor analysis. Psychometrika,
+1966, 31, 165-178.
+J6reskog, K. G. UMLFA - A computer program for unrestricted maximum likelihood
+factor analysis. Research h~Iemorandum66-20. Princeton, N. J.: Educational Testing
+Service. Revised Edition, 1967. (a)
+J6reskog, K. G. Some contributions to maximum likelihood factor analysis. Psychometrika,
+1967, 32, 443-482. (b)
+J6reskog, K. G., & Gruvaeus, G. RMLFA - A computer program for restricted maximum
+likelihood factor analysis. Research Memorandum 67-21. Princeton, N. J.: Educational
+Testing Service, 1967.
+J6reskog, K. G, & Lawley, D. N. New methods in maximum likelihood factor analysis.
+British Journal of Mathematical and Statistical Psychology, 1968, 21, in press.
+
+202
+
+PSYCHOMETRIKA
+
+Kendall, M. G., & Stuart, A. The advanced theory of statistics, vol. 2. London: Charles
+Griffin and Co., 1961.
+Lawley, D. N. Estimation in factor analysis under various initial assumptions. British
+Journal of Statistical Psychology, 1958, I1, 1-12.
+Lawley, D. N. Some new results in maximum likelihood factor analysis. Proceedings of the
+Royal Society of Edinburgh, Section A, 1967, 67, 256-264.
+Lawley, D. N., & Maxwell, A. E. Factor analysis as a statistical method. London: Butterworth, 1963.
+Lawley, D. N., & Maxwell, A. E. Factor transformation methods. British Journal of Statistical Psychology, 1964, 17, 97-103.
+Lockhart, R. S. Asymptotic sampling variances for factor analytic models identified by
+specified zero parameters. Psychometrika, 1967, 32, 265-277.
+Reiers¢l, O. On the identifiability of parameters in Thurstone's multiple factor analysis.
+Psychometrika, 1950, 15, 121-149.
+Thurstone, L. L. Multiple-factor analysis. Chicago: University of Chicago Press, 1947.
+Thurstone, L. L., & Thurstone, T. G. Factorial studies of intelligence. Psychometric Monographs No. 2, 1941. Chicago: University of Chicago Press.
+Tucker, L. R. An inter-batteD" method of factor analysis. Psychometrika, 1958, 23, 111-136.
+Tucker~ L. R, Koopman, R. F., & Linn, R. L. Evaluation of factor analytic research procedures by means of simulated correlation matrices. Psychometrika, 1968, in press.
+Vernon, P. E. The structure of bunyan abilities. London: Methuen, 1951.
+
+Manuscript received 10/~/67
+Revised manuscript received 6/21/68
+
+

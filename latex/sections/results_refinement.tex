@@ -3,8 +3,8 @@
 
 Three functions refine a scale before any respondent is recruited.
 \texttt{sfa\_redundancy()} detects locally dependent item pairs with
-Unique Variable Analysis---wTO on an EBICglasso
-network \citep{christensen-etal-2023}:
+Unique Variable Analysis (wTO on an EBICglasso
+network) \citep{christensen-etal-2023}:
 
 {\scriptsize
 \begin{verbatim}
@@ -33,9 +33,9 @@ Redundant-item detection
 }
 
 Every displayed pair among the \valUvaPairsWord{} (in \valUvaClustersWord{} clusters) joins items from
-one domain; the simpler cosine criterion (threshold 0.85) flagged a
+one domain. The simpler cosine criterion (threshold 0.85) flagged a
 largely overlapping set of \valCosPairsWord{} pairs in \valCosClustersWord{} clusters, led by
-N16~$\sim$~N19 (\valCosTopA) and A24~$\sim$~A29 (\valCosTopB)---near-paraphrases, the
+N16~$\sim$~N19 (\valCosTopA) and A24~$\sim$~A29 (\valCosTopB): near-paraphrases, the
 ``cheating by repeating'' that inflates internal consistency without
 broadening coverage \citep{christensen-etal-2023}.
 
@@ -72,16 +72,16 @@ Scale simplification (response-free)
 }
 
 Halving the scale to 25 items \emph{improved} theoretical-partition
-recovery (NMI \valSfNmiFull{} to \valSfNmiRed; ARI \valSfAriFull{} to \valSfAriRed): pruning semantically
+recovery (NMI \valSfNmiFull{} to \valSfNmiRed, ARI \valSfAriFull{} to \valSfAriRed): pruning semantically
 peripheral items sharpens boundaries the full pool blurs. Parallel
-analysis now suggested \valSfKRedWord{} factors; per the printed caveat, a semantic
+analysis now suggested \valSfKRedWord{} factors. Per the printed caveat, a semantic
 short form is a candidate for psychometric validation, not a finished
 instrument.
 
 \texttt{sfa\_item\_fit()} vets newly written items against an existing
 fit, extending \citet{wulff-mata-2025}. Live
-embedding confines the demonstration to the default-model (0.6B) space;
-the reference fit omits the scoring column for the \emph{anti-topic}
+embedding confines the demonstration to the default-model (0.6B) space,
+and the reference fit omits the scoring column for the \emph{anti-topic}
 reasons given in the Method section.
 
 {\scriptsize

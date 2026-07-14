@@ -1,0 +1,2004 @@
+Acta Psychologica 261 (2025) 105813
+
+Contents lists available at ScienceDirect
+
+Acta Psychologica
+journal homepage: www.elsevier.com/locate/actpsy
+
+Act as an expert in psychometry. The evaluation of large language models
+utility in psychological tests cross-cultural adaptations
+Jaroslaw Grobelny a,* , Kacper Szymański a , Zuzanna Strozyk a
+a
+
+Faculty of Psychology and Cognitive Science, Adam Mickiewicz University, Poznan, Poland
+
+A R T I C L E I N F O
+
+A B S T R A C T
+
+Keywords:
+Large language model
+Psychometrics
+Cross-cultural adaptation
+
+The introduction of Large Language Models (LLMs) has transformed research, particularly in psychometrics,
+where cross-cultural adaptation of psychological tests presents significant challenges. Traditional adaptations
+require precise translation and cultural adjustments to ensure measurement validity, making them resourceintensive. LLMs, with their linguistic capabilities, have the potential to streamline this process. However, their
+risks, including biases and reliability issues, require empirical evaluation. Despite these risks, systematic studies
+on LLMs' role in test adaptation remain limited. This study assessed the feasibility of adapting psychological tests
+using LLMs, illustrated by adapting an organizational commitment scale from English to Polish. ChatGPT-4 was
+employed with a zero-shot learning approach, using structured prompts and psychometric guidelines. The LLMadapted scale was compared to a human-adapted version through an observational study with 785 participants.
+The study results indicate that the LLM-adapted scale demonstrated satisfactory psychometric properties,
+including factor structure, measurement invariance, and convergent and divergent validity, comparable to or
+exceeding those of the human-adapted version. Although the reliability of the LLM-adapted scale was slightly
+lower than that of the human-adapted version, it remained within acceptable standards. These findings suggest
+that LLMs can perform efficient and psychometrically sound test adaptations. This study contributes to the
+growing discourse on integrating AI into psychological research, offering a scalable method to reduce cultural
+barriers while emphasizing the importance of oversight to mitigate biases and ensure scientific rigor.
+
+1. Introduction
+The introduction of Large Language Models (LLMs) to the public
+domain, exemplified by the release of ChatGPT, has reshaped the
+landscape across numerous disciplines, including scientific research
+(Van Noorden & Perkel, 2023). The application of AI, particularly LLMs,
+has steadily gained traction among researchers seeking to enhance
+various facets of their work (Gray, 2024; Kobak et al., 2024) within a
+growing array of scientific fields, including engineering, medicine, so­
+cial sciences, and psychology (Fan et al., 2024; Yu et al., 2024). Within
+psychology, psychometrics—a subfield dedicated to the theory and
+methodology of psychological measurement (Hornowska, 2018)—has
+shown particular interest in the integration of advanced statistical
+techniques and algorithms to refine research methodologies and prac­
+tices (Dixon-Román, 2024; Galatzer-Levy & Onnela, 2023). Among the
+numerous challenges psychometrics faces, the cross-cultural adaptation
+of psychological assessments (i.e., the translation and adjustment of tests
+for culturally distinct contexts) is notably well-suited for improvement
+
+through LLMs. Ensuring the reliability and validity of adapted psycho­
+logical measures is crucial to robust scientific and practical outcomes;
+however, the adaptation process is often so resource-intensive that it
+may be more feasible to develop a new test from scratch (Hambleton &
+de Jong, 2003; Krach et al., 2017). Given these demands, psychome­
+tricians could greatly benefit from incorporating AI and LLMs to
+streamline the cross-cultural adaptation process, thus enabling more
+efficient and accurate test adaptations.
+Psychological tests are essential for advancing social science. As
+research globalizes (Bolaños-Medina & González-Ruiz, 2013), crosscultural adaptation of these tests is critical to maintaining scientific
+rigor and fairness (Hambleton & de Jong, 2003). However, the adap­
+tation process presents considerable challenges. Cultural factors can
+significantly influence both the measurement process and how test items
+are perceived by respondents (Mirza et al., 2023; Thomas-Presswood
+et al., 1997). For instance, the measured construct may differ between
+the culture in which the test was initially developed and the target
+culture (Hambleton & de Jong, 2003). Additionally, translation can
+
+* Corresponding author at: Faculty of Psychology and Cognitive Science, Szamarzewskiego 89AB, 60-578, Poznan, Poland.
+E-mail address: jaroslaw.grobelny@amu.edu.pl (J. Grobelny).
+https://doi.org/10.1016/j.actpsy.2025.105813
+Received 6 February 2025; Received in revised form 14 October 2025; Accepted 16 October 2025
+Available online 25 October 2025
+0001-6918/© 2025 The Authors. Published by Elsevier B.V. This is an open access article under the CC BY-NC license (http://creativecommons.org/licenses/bync/4.0/).
+
+J. Grobelny et al.
+
+Acta Psychologica 261 (2025) 105813
+
+result in the loss of essential connotations or alter the perceived diffi­
+culty of the items (Krach et al., 2017). Furthermore, items related to
+behaviors or opinions may be interpreted differently within the new
+cultural context, impacting the test's validity. These challenges highlight
+the potential of LLMs to enhance cross-cultural test adaptations.
+Through advanced linguistic processing, they facilitate accurate trans­
+lations while preserving the intended meaning, connotations, and dif­
+ficulty of test items across cultural contexts.
+However, the use of LLMs is not without significant risks. LLMs have
+been reported to be prone to misuse with excessive reliance, potentially
+undermining the rigor and quality of scientific inquiry (Abdurahman
+et al., 2024; Binz et al., 2023). LLMs can generate fabricated data,
+perpetuate biases, risk plagiarism, and lack reproducibility and trans­
+parency (Binz et al., 2023; Van Noorden & Perkel, 2023; Weidinger
+et al., 2022). Concerns also include their limited representation of
+human psychology's diversity and insufficient depth in psychological
+expertise, questioning their suitability for test adaptation (Abdurahman
+et al., 2024; Wang et al., 2024). Assessing LLMs' feasibility in crosscultural test adaptation is crucial, as their limitations may affect val­
+idity and reliability. Controlled studies are needed to ensure they
+enhance adaptation without added risks.
+Despite this, to our knowledge, the potential of LLMs in supporting
+the cross-cultural adaptation of psychological tests has yet to be sys­
+tematically investigated. Nevertheless, the field of psychometrics has
+already begun leveraging AI and LLMs in various capacities. AI-driven
+methods have been successfully applied to interpreting test results
+(Wang et al., 2024; Yu et al., 2024), detecting cheating or inattentive
+responding (Pan & Wollack, 2021, 2023; Xi et al., 2024), and integrating
+diverse data sources like social media and wearable data into psycho­
+metric inference (Galatzer-Levy & Onnela, 2023; Peters & Matz, 2024).
+Although the potential of LLMs in supporting cross-cultural adaptation
+of psychological tests remains unexplored, the field of psychometrics
+increasingly applies AI in various domains. AI-driven methods have
+been used to interpret test results (Wang et al., 2024; Yu et al., 2024),
+detect careless or dishonest responding (Pan & Wollack, 2021, 2023; Xi
+et al., 2024), and integrate social media or wearable data into psycho­
+metric inference (Galatzer-Levy & Onnela, 2023; Peters & Matz, 2024).
+Recent studies also demonstrate the automatic scoring of open-text data
+such as interview transcripts and blogs to assess individuals' values,
+mood, and depression (Kebe et al., 2025; Ye et al., 2025), as well as the
+use of LLMs to define and develop new psychological constructs tradi­
+tionally addressed through psychometric tools (Götz et al., 2023; Hoff­
+mann et al., 2024; Marmolejo-Ramos et al., 2025). AI has also been
+applied to adaptive testing, dynamically adjusting items to respondents'
+previous answers to improve reliability and validity (Safeer, 2025).
+Despite this variety, LLMs are primarily used as test item generators,
+capable of substantially reducing development time while maintaining
+content quality. They successfully produce knowledge- (Chan et al.,
+2025; Zeeshan et al., 2024) and skill-based (Kowal et al., 2025; Shin
+et al., 2024) questions, though these tend to be easier than those written
+by humans (Young et al., 2025). Automated item generation (AIG)
+continues to yield results comparable to expert methods (Falcão et al.,
+2023; Gierl et al., 2016). LLMs are also used to generate items for selfreport and situational judgment tests (Götz et al., 2023; Krumm et al.,
+2024; Li et al., 2024), producing construct-aligned items, realistic sce­
+narios, and behaviorally anchored options (Marmolejo-Ramos et al.,
+2025; Oeljeklaus et al., 2025). These efforts employ templating, ratio­
+nale prompting, and constrained generation to enhance coherence
+(Hernandez & Nie, 2022; Lee et al., 2025; Russell-Lasalandra et al.,
+2024; Symeonaki et al., 2024; Terry et al., 2025). Beyond generation,
+LLMs evaluate items for clarity, bias, and psychometric quality in­
+dicators such as difficulty and discrimination (Laverghetta et al., 2024;
+Lee et al., 2025; Russell-Lasalandra et al., 2024), effectively prescreening item pools and streamlining expert review. Nevertheless,
+limitations persist: LLM-generated items may lack content validity (Ho,
+2024), show linguistic or contextual inaccuracies, inconsistencies, and
+
+remain dependent on domain-specific prompting and expert supervision
+(Chan et al., 2025; Shin et al., 2025; Kowal et al., 2025).
+This study aims to conduct an initial empirical investigation into the
+feasibility of using LLMs for the cross-cultural adaptation of psycho­
+logical tests while preserving key psychometric properties, such as
+reliability and validity. In this research, ChatGPT 4 was employed using
+a zero-shot learning approach to adapt an English-language psycholog­
+ical test into Polish. Through a structured prompt, ChatGPT 4 was
+guided to modify the test items based on provided resources, which
+included examples of previously adapted tests and established psycho­
+metric guidelines for cross-cultural adaptation. This adaptation was
+performed without additional fine-tuning or training. The LLMgenerated Polish version was subsequently evaluated in an observa­
+tional study (n = 785) to assess its psychometric properties, comparing
+them to an established, human-adapted Polish version of the same, wellvalidated psychological test (Bańka et al., 2002). The findings indicate
+that the LLM-adapted test retained essential psychometric characteris­
+tics, matching or exceeding those of the human-adapted version. This
+study is among the first to demonstrate the potential of LLMs in crosscultural psychological test adaptation, offering significant efficiency
+gains while preserving psychometric integrity. It further advances dis­
+cussions on AI's role in research, reducing cultural barriers and
+enhancing replicability in psychology.
+2. Literature review and hypotheses development
+This section formulates the study's hypotheses, beginning with the
+rationale for employing LLMs in cross-cultural adaptation, followed by
+an assessment of key psychometric properties, including factorial
+structure, measurement invariance, reliability, and validity. The evalu­
+ation framework adheres to the International Test Commission (ITC)
+guidelines (Hernández et al., 2020), recognized for their rigor and
+comprehensive validation by psychometric experts. The Organizational
+Commitment Scale (OCS; Meyer & Allen, 1991) was selected for crosscultural adaptation. To rigorously evaluate the capability of LLMs in
+cross-cultural adaptation, it was deemed essential not only to assess the
+psychometric properties of the LLM-adapted test in isolation but also to
+compare these results against the psychometric outcomes of a validated
+human-adapted version of the same tool. Our theoretical framework
+builds on the concept of universal semantics, which posits that all
+human languages share a core set of meaning primitives enabling con­
+ceptual equivalence across linguistic boundaries (Goddard & Wierz­
+bicka, 2014). Recent evidence suggests that LLMs approximate this
+universal semantic space through multilingual training, creating latent
+representations that preserve meaning beyond surface-level linguistic
+variation (Baartmans et al., 2025). In this view, LLMs function as
+computational meta-semantic systems capable of interpreting and
+regenerating text while maintaining conceptual integrity across lan­
+guages. Applied to psychometrics, this capacity supports the preserva­
+tion of construct equivalence—central to valid cross-cultural adaptation.
+Accordingly, our hypotheses are grounded in the assumption that LLMs
+encode meaning within a universal semantic space, enabling them to
+preserve the conceptual essence of psychological constructs across
+languages.
+2.1. Factor structure
+The factor structure of a psychological test refers to the underlying
+organization or arrangement of the constructs it is designed to measure.
+This structure ensures that the test assesses conceptually coherent and
+distinct constructs aligned with its theoretical foundation, thereby
+supporting its construct validity (Geisinger, 1994). Maintaining a
+consistent factor structure is essential for the reliability and compara­
+bility of cross-cultural assessments (Bullinger et al., 1993). It ensures
+uniform construct measurement across cultures, enabling valid com­
+parisons. Factor analysis helps establish construct equivalence and
+2
+
+J. Grobelny et al.
+
+Acta Psychologica 261 (2025) 105813
+
+identify cultural differences, enhancing the validity of adapted tests
+(Hahn et al., 2005).
+It is proposed that LLMs can translate and adapt psychological tests
+for new cultural contexts while preserving the factorial structure of the
+original tool. With their advanced linguistic abilities, particularly con­
+cerning discourse-related tasks (Zhu et al., 2024), LLMs can transfer the
+relationships between test items and their underlying factors into a new
+language. This capability is further enhanced by the decent semantic
+abilities demonstrated by novel models (Chang et al., 2024). Addition­
+ally, LLMs excel at adapting to instructions through zero- or few-shot
+learning (Naveed et al., 2024). By employing prompt engineering,
+they can be directed to consider cultural norms and values relevant to
+the measured psychological constructs. This approach minimizes cul­
+tural bias and misinterpretation, ensuring the stability of the test's
+factorial structure across cultures. Based on this, we hypothesize:
+
+contextual abilities of LLMs (Chang et al., 2024) enables them to capture
+item-specific nuances and cultural subtleties essential for maintaining
+adapted tests' psychometric equivalence. Moreover, techniques like
+tokenization and controlled language modeling ensure that adaptations
+align with the grammatical norms of the Polish language, contributing to
+consistency across items. Multilingual LLMs trained on extensive data­
+sets demonstrate robustness in cross-lingual tasks, even when lowresource languages are involved (Conneau et al., 2020), reflecting
+their ability to handle complex linguistic relationships and preserve
+meaning across diverse languages, which is essential for adapting psy­
+chological tests while maintaining their intended consistency.
+H3. The version of the OCS adapted using generative AI will exhibit a
+reliability equivalent to the original version's reliability while adminis­
+tered in the Polish population.
+
+H1. The version of the OCS adapted using LLMs will exhibit a level of fit to
+the three-factor model that is equivalent to the fit of the original version while
+administered in the Polish population.
+
+2.4. Convergent and divergent validity
+Convergent validity ensures that multiple indicators reliably mea­
+sure the same underlying construct, while divergent validity requires
+that measures of distinct constructs exhibit sufficiently low correlations
+after correcting for measurement error to be considered empirically
+separate (Geisinger, 2003). Convergent validity is essential for complex
+constructs and cross-cultural adaptation, ensuring indicators align with
+the intended construct and that the nomological network is replicated
+across cultures (Geisinger, 2003; Lim, 2024). Divergent validity defines
+conceptual boundaries between related constructs, ensures scale multi­
+dimensionality, and helps address multicollinearity in structural equa­
+tion modeling (Lim, 2024; Shiu et al., 2011). Both convergent and
+divergent validity facilitate cross-cultural comparisons of nomological
+networks, serving as a key strategy to mitigate construct and method
+bias in psychological assessments (van de Vijver & Tanzer, 2004).
+Since a test's validity relies on its reliability—an unreliable test
+cannot be valid (de Souza et al., 2017)—demonstrating LLMs' ability to
+produce reliable adaptations directly supports their potential to
+generate valid psychological tests in AI-driven cross-cultural adaptation.
+LLMs not only enhance reliability but also contribute to the validity of
+psychological test adaptations. Instruction-tuning, shown to yield robust
+results (Choi et al., 2023), aligns model outputs with user-defined task
+requirements, ensuring consistency with the original psychological
+constructs. Additionally, LLMs' capacity for contextual inference
+(Ferrara, 2023) supports the preservation of construct meaning across
+diverse cultural contexts. Furthermore, advanced tokenization tech­
+niques segment text into smaller, contextually relevant units (Mielke
+et al., 2021), maintaining coherence throughout the adaptation process
+and preventing overlap between unrelated constructs, thereby safe­
+guarding validity.
+
+2.2. Measurement invariance
+Measurement invariance ensures that a measurement instrument
+assesses the same construct consistently across different groups, so any
+differences in scores reflect true variations in the construct rather than
+biases in measurement (Xu & Tracey, 2017). In cross-cultural adapta­
+tions, measurement invariance analysis is essential for identifying and
+addressing cultural biases in the instrument (Bullinger et al., 1993). It
+ensures that constructs are interpreted consistently across cultural
+contexts, maintaining the validity and reliability of the measure (Han
+et al., 2019; Putnick & Bornstein, 2016).
+While fine-tuned supervised models demonstrate a better inclusion
+of social context than LLMs (Choi et al., 2023), LLMs still offer a notable
+ability to interpret social and cultural nuances. They can identify and
+adapt to cultural influences on interpreting psychological constructs by
+incorporating norms, idiomatic expressions, and context-specific con­
+notations. This enables LLMs to modify test items to align with the target
+culture while preserving their conceptual foundation. Despite the
+recognized risks of social and cultural bias in LLMs (Ferrara, 2023), their
+training on multilingual datasets allows them to generate text in diverse
+styles and levels of complexity (Nesmeyanov & Petrova, 2019). This
+capacity extends to simplifying content to ensure comprehension across
+varied audiences, reducing group differences in understanding psycho­
+logical test items, and enhancing their accessibility. Overall, it should
+justify the capacity of LLMs to adapt psychological tests while main­
+taining measurement invariance.
+H2. The version of the OCS adapted using LLMs will exhibit a mea­
+surement invariance level equivalent to the original version's measure­
+ment invariance while administered in the Polish population.
+
+H4. The version of the OCS adapted using generative AI will exhibit a
+level of convergent validity that is equivalent to the convergent validity
+of the original version while administered in the Polish population, as
+represented by a significant and positive correlation with self-efficacy,
+job satisfaction, job involvement, and current job tenure and negative
+correlation with turnover intention.
+
+2.3. Reliability
+Reliability refers to the consistency and stability of a psychological
+test in measuring its intended construct (Geisinger, 2003). In crosscultural test adaptation, it determines whether the adapted version
+produces stable results within a new cultural context (Nichols et al.,
+2000). Ensuring reliability is particularly crucial, as cultural and lin­
+guistic differences may influence item interpretation and response pat­
+terns, potentially introducing measurement error and compromising the
+test's validity. Additionally, inadequate translations or variations in
+cultural norms can lead to item bias, further affecting the consistency of
+test outcomes across populations (Geisinger, 1994).
+LLMs enhanced through reinforcement learning and human feedback
+(Naveed et al., 2024) demonstrate significant potential to reduce
+translation errors, which are critical for preserving the reliability of
+psychological tests across different populations. The advanced
+
+H5. The version of the OCS adapted using generative AI will exhibit a
+level of divergent validity that is equivalent to the divergent validity of
+the original version while administered in the Polish population, as
+represented by a weaker correlation with total job tenure.
+3. Method
+3.1. Sample characteristics and sampling
+Eligibility criteria specified that participants must be employed in
+organizations with a minimum of 10 staff members and have at least one
+year of tenure in their current organization. Individuals occupying
+3
+
+J. Grobelny et al.
+
+Acta Psychologica 261 (2025) 105813
+
+leadership roles, platform workers, and those whose entire career was
+confined to their current positions were excluded from participation. Of
+the 1393 individuals who initiated the study, 43.65 % were excluded,
+with the majority (57.9 % of excluded cases) being disqualified due to
+leadership roles.
+The final sample consisted of 785 participants, with a gender dis­
+tribution of 51 % female, 43.9 % male, and 5.1 % categorized as other or
+not specified. The mean age of participants was 38.23 years (SD =
+12.25), with an average of 16.08 years of total work experience (SD =
+11.32) and 11.32 years in their current position (SD = 8.24). A sub­
+stantial proportion of participants were employed in the service sector
+(49.6 %) or industry (16.6 %), while 33.9 % did not specify their field of
+work. Regarding occupational roles, 55.8 % were engaged in officebased jobs, 20.6 % performed manual or physical labor, and 18.5 %
+reported mixed roles. Regarding work arrangements, 58.9 % worked
+exclusively on-site, 36.1 % engaged in remote or hybrid work, and 5.1 %
+did not respond. The study used a mixed sampling approach. A research
+panel provided 61.9 % of participants, selected randomly and incen­
+tivized with non-monetary rewards to reduce fraudulent responses.
+Additional participants were recruited via targeted social media sam­
+pling through groups linked to major cities and occupations. Both
+methods yielded similar completion rates and demographics.
+The intended sample size was determined based on the requirements
+for confirmatory factor analysis (CFA), the primary statistical method
+planned for the study. Assuming three latent variables and 18 observ­
+able variables, with a Type I error probability of 0.01, statistical power
+of 0.99, and a moderate effect size (informed by prior research, Bańka
+et al., 2002), the recommended minimum sample size was 312 (Soper,
+2023). To account for potential data loss, outliers, and in line with
+Comrey and Lee's (1992) recommendations, the target sample size was
+increased by 20 % to 375. As the study design involved presenting each
+adaptation (original and AI-based) to half of the participants, the
+required sample size was doubled to 750. A stopping rule was imple­
+mented to conclude data collection at the end of the day when the target
+sample size was reached.
+
+LLM (OCSLLM) was developed as a derivative of the original English scale
+to facilitate a comparative analysis of psychometric properties.
+ChatGPT-4, a generative AI model, was employed for the adaptation
+task, guided by a custom-designed instruction set (prompt) and supple­
+mentary resources. The model was provided with a detailed set of 24
+adaptation guidelines formulated based on established psychometric
+literature on cross-cultural adaptations (Daouk-Öyry & Zeinoun, 2017;
+Davoodi et al., 2020; Geisinger, 1994; Hambleton & de Jong, 2003; Nye
+et al., 2008). These guidelines aimed to enhance the cultural trans­
+ferability and validity of the adapted construct. For example, one
+directive emphasized achieving equivalence in the psychological effect
+of items between the original and adapted versions to mitigate psy­
+chological item bias. Another rule focused on preventing errors such as
+mistranslations, improper word usage, and misinterpretation of idioms
+or colloquialisms, thereby minimizing linguistic item bias. The
+comprehensive list of adaptation rules is available in Appendix A.
+Then, an adaptation reference set was provided to the LLM to support
+the cultural translation process. This dataset comprised items from
+psychological tests that had previously undergone cultural adaptation,
+serving as a contextual guide for the LLM, by incorporating 213 items
+from 12 adapted tests in work psychology and organizational behav­
+ior—spanning constructs such as work engagement, performance, wellbeing, or the meaning of work (e.g., Chirkowska-Smolak, 2018; Jasiński
+et al., 2023; Puchalska-Kamińska et al., 2019)—the resource aimed to
+enhance the zero-shot learning capabilities of the model. The zero-shot
+approach was selected to assess the model's intrinsic generalization
+ability, relying on its capacity to infer task structure and translation
+principles from the instruction itself (Brown et al., 2020; Kojima et al.,
+2022). Using a zero-shot design ensured methodological neutrality by
+preventing potential bias or stylistic contamination from specific human
+input, allowing for a clearer evaluation of the model's independent
+competence in cross-linguistic adaptation.
+Following the preparation phase, a single prompt was given to the
+LLM, accompanied by the list of English OCSORIG items and the two
+previously mentioned attached files:
+Act as an expert in psychometrics and cross-cultural psychological
+test adaptations. Work in a context of adapting organization
+commitment scale (measuring “a psychological state of affective
+attachment to the organization, perceived costs associated with
+leaving the organization, and obligation to remain with the organi­
+zation that characterizes the employee's relationship with the orga­
+nization and has implications for the decision to continue or
+discontinue membership in the organization”) into the Polish cul­
+tural context.
+Take the items from the list below and adapt them to the Polish
+cultural context. While translating items for the purpose of adapta­
+tion, follow strictly the rules stated in the attached file "rules". Make
+sure to follow all the rules during the translation of each item. At the
+end of your task, evaluate how well you've applied the rules.
+
+3.2. Measurements
+3.2.1. Original and LLM-adapted version of psychological test
+The Organizational Commitment Scale (OCS) by Allen and Meyer
+(1996) was selected as the original questionnaire for cultural adaptation
+using generative AI. Several premises informed this choice. First, orga­
+nizational commitment is a well-established construct in the fields of
+work psychology and organizational behavior (Al-Jabari & Ghazzawi,
+2019; Mercurio, 2015), featuring a clear and well-defined structure
+(Mustafa et al., 2019; Wnuk, 2017) and demonstrating conceptual
+distinctiveness from related constructs such as job satisfaction and
+organizational identity (Ng, 2015; Velde, 2021). Second, OCS is a widely
+recognized and empirically validated instrument, with extensive
+research supporting its reliability and validity across diverse populations
+and organizational contexts (Karim & Noor, 2006; Meyer & Allen, 1991;
+Vandenberghe, 1996). Third, assessments of construct and convergent
+validity have confirmed the scale's applicability in various cultural set­
+tings (e.g., Abdullah, 2011; Kanning & Hill, 2013; Karim & Noor, 2006;
+Wnuk, 2017), highlighting its cultural transferability and suitability for
+this research. Lastly, the scale has previously been successfully adapted
+by human researchers with expertise in cross-cultural studies without
+the aid of AI or large language models (Bańka et al., 2002). This prior
+adaptation (OCSORIG), with established reliability, validity, and factor
+structure, provides a robust benchmark for evaluating the LLMgenerated adaptation in this study. OCSORIG comprises 18 items evenly
+distributed across three subscales: affective commitment, continuance
+commitment, and normative commitment. Participants respond to each
+item using a seven-point Likert scale. A sample item is, “I would feel
+guilty if I left my organization now.”
+The Organizational Commitment Scale adapted to Polish culture by a
+
+Also, align your translation and wording of adapted items with ex­
+amples of already successful adaptations listed in the attached file
+"examples".
+Present only results as a number list, with only adapted items
+included. Below is the list of items.
+This prompt not only defined the model's role and task but also
+specified the format and scope of its response. The LLM was explicitly
+instructed to return only a numbered list containing the adapted Polish
+items, without reproducing the original English versions or providing
+commentary. The instructions emphasized strict adherence to the pro­
+vided adaptation rules and alignment with previously validated exam­
+ples, both of which were embedded as reference documents in the
+prompt. This approach addressed known limitations of LLMs, particu­
+larly their reliance on pretraining data, which is broad in scope, general4
+
+J. Grobelny et al.
+
+Acta Psychologica 261 (2025) 105813
+
+purpose, and potentially outdated (Naveed et al., 2024). Leveraging incontext learning (Dong et al., 2024), the model utilized the reference set
+to refine its process of the adaptation task and produce a culturally
+tailored translation in a single pass without fine-tuning. The objective
+was to achieve satisfactory results on the initial trial without gradient
+updates or fine-tuning. The provided resources played a pivotal role in
+this process, as LLMs are recognized for their exceptional performance
+as few-shot learners (Brown et al., 2020; Hou et al., 2024), leveraging
+contextual examples to adapt effectively to specific tasks.
+Additionally, we developed a third version of the ques­
+tionnaire—OCSSIMPLE—by prompting GPT-4o mini to translate the
+original English items into Polish without the use of any prompt engi­
+neering, contextual instructions, or adaptation guidelines. The prompt
+used was a simple directive: “Translate this into Polish.” The full output
+is presented in Table B.1 in Appendix B. This version was generated to
+evaluate whether the use of structured translation guidelines meaning­
+fully improved the quality of the adaptation. A comparison between the
+OCSLLM and OCSSIMPLE versions revealed that 14 items differed in minor
+or stylistic ways, typically in favor of OCSLLM. For instance, in Item 9, the
+word “disrupted” was translated into a more contextually appropriate
+Polish term, and in Item 14, the OCSLLM version featured a simpler and
+more comprehensible sentence structure. Two items were identical
+across both versions, while two items (Items 4 and 13) exhibited sub­
+stantial discrepancies that we classified as clear translation errors in the
+OCSSIMPLE version. For example, the item “I owe a great deal to my or­
+ganization” was translated in the OCSSIMPLE version using phrasing that
+conveys a sense of burden or obligation, potentially suggesting an un­
+wanted duty toward the organization. In contrast, the OCSLLM version
+rendered the item using language more consistent with an expression of
+gratitude, aligning more closely with the original intent of the English
+item. Thus, the OCSLLM translation better preserved the intended
+meaning of the source material.
+We also examined the linguistic differences between the humantranslated version and OCSLLM. One of the most prominent distinctions
+is the consistent use of the term “firma” in OCSORIG to translate the word
+“organization.” This choice effectively narrows the scope of the item by
+implying a “company” or private-sector entity, thereby excluding noncommercial or public-sector organizations. Beyond this systematic dif­
+ference, we identified fourteen items with minor or stylistic variations
+between the two versions. No items were identical. Four items (Items 9,
+10, 13, and 17) were classified as substantially different, with the
+OCSLLM versions judged to better preserve the original meaning. For
+example, the item “This organization deserves my loyalty” was trans­
+lated in OCSORIG using a phrase that could be back-translated as “This
+company deserves to be treated fairly by me,” which shifts the tone away
+from the concept of loyalty. In contrast, the OCSLLM version provided a
+direct translation that retained the core term “loyalty” and more accu­
+rately reflected the intent of the original item. Another noteworthy
+example is Item 11, where the OCSORIG version refers specifically to
+working until retirement, while the OCSLLM version uses a more inclu­
+sive phrase that aligns with the idea of staying for the remainder of one's
+career, thereby offering a closer match to the original item's intent.
+Accordingly, OCSLLM appears to be the most accurate adaptation of the
+original scale, as it consistently preserved the intended meaning more
+effectively than OCSORIG or OCSSIMPLE in all cases involving substantial
+differences.
+The LLM-generated output consisted of 18 translated items in Polish,
+which were directly subjected to further testing without any manual
+modifications. All items were rated using a seven-point Likert scale.
+
+The scale consists of 12 items, each rated on a five-point Likert scale. A
+sample item from the scale is, “Overall, I am satisfied with myself.”
+The Job Satisfaction Scale (JSS; Zalewska, 2003) assessed the cogni­
+tive component of the general attitude toward one's job. This scale was
+selected based on the well-established evidence of a relationship be­
+tween job satisfaction and organizational commitment, which, while
+related, remain distinct constructs (Tett & Meyer, 1993). This relation­
+ship was also replicated in the adaptation study for OCSLLM (Bańka et al.,
+2002). The JSS comprises five items, each rated on a seven-point Likert
+scale. A sample item from the scale is “I am satisfied with my job.”
+The Job Involvement Scale (JIS; Lodahl & Kejnar, 1965), which
+measures the extent to which an individual's self-esteem is influenced by
+their work performance, was employed in its short form. This scale was
+selected due to its established relationship with organizational
+commitment while demonstrating a notably weaker relationship with
+the continuance commitment dimension in a prior validation study
+(Bańka et al., 2002). The scale comprises six items, each rated on a
+seven-point Likert scale. A sample item is, “I live, eat, and breathe my
+job.”
+Turnover intention, an employee's self-reported willingness to leave
+their organization within a specified period (Lazzari et al., 2022), was
+assessed using two custom-developed items. These items were rated on a
+ten-point scale. The first item was, “If you were offered a better-paying
+job right now, in the same position at another company, how likely are
+you to accept it?” The second item was, “What is the likelihood that you
+will leave your current job within the next three months?”
+Finally, participants' job experience was assessed using two mea­
+sures. Total job experience was evaluated as the overall number of years
+across all previous jobs. Additionally, current job experience was re­
+ported, referring to the number of years an employee had worked in
+their current organization.
+3.3. Procedure
+The study procedure consisted of two primary phases. First, the
+adaptation of the OCS was conducted using a LLM to develop a culturally
+adapted version—OCSLLM—with the adaptation process described in
+detail in the Method section. The OCSLLM was created to compare its
+psychometric properties to those of a human-adapted version. The sec­
+ond phase involved a cross-sectional study designed to collect data for
+psychometric validation.
+In this phase, participants were invited to an online testing platform,
+where they were first informed about their rights and provided with
+detailed instructions. Afterward, informed consent was obtained, and
+eligibility criteria were assessed through a series of closed-ended ques­
+tions. Eligible participants were then randomly assigned to complete
+either the OCSORIG or OCSLLM version of the scale. Following this, all
+participants proceeded with the same subsequent steps: completing
+additional questionnaires measuring self-efficacy, job satisfaction, job
+involvement, and turnover intention, followed by demographic
+information.
+4. Results
+Of the 785 participants, 393 were randomly assigned to complete
+OCSORIG and 392 to OCSLLM. Given that demographic attributes and
+sample composition can influence the psychometric properties of psy­
+chological tests (Wasserman & Bracken, 2003), it was essential to assess
+potential differences between groups to ensure that random assignment
+produced an even distribution of covariates. Hypothesis testing specif­
+ically required balanced groups for valid comparisons. Significance
+testing was conducted using either Student's t-test for continuous vari­
+ables or χ 2 tests for categorical variables, with appropriate effect size
+calculations. All subsequent analyses were performed in R (R Core
+Team, 2021). Results indicated no significant differences between the
+groups in terms of gender distribution (χ 2(1) = 0.004; p = .951; V =
+
+3.2.2. Additional variables
+The Core Self-Evaluation Scale (CSES; Walczak & Derbis, 2017) was
+employed to assess a meta-trait of personality related to self-efficacy.
+This construct was selected due to its demonstrated positive correla­
+tion with organizational commitment, particularly its affective dimen­
+sion, as established in the original adaptation study (Bańka et al., 2002).
+5
+
+J. Grobelny et al.
+
+Acta Psychologica 261 (2025) 105813
+
+0.002), average age (t(743) = 0.65; p = .517; d = 0.048), current job
+tenure (t(743) = − 0.28; p = .780; d = − 0.02), or total job tenure (t(743)
+= 1.08; p = .280; d = 0.079). Similarly, no significant differences were
+found for the industry of employment (χ 2(3) = 2.28; p = .516; V =
+0.055), type of work (χ 2(2) = 5.27; p = .072; V = 0.084), or frequency of
+remote work (t(743) = 0.43; p = .670; d = 0.031). These findings
+indicate that the random assignment successfully created balanced and
+comparable groups, strengthening the validity of subsequent psycho­
+metric analyses and hypothesis testing for OCSORIG and OCSLLM.
+In the subsequent preliminary analysis stage, common method bias
+was assessed for both subsamples, OCSORIG and OCSLLM. Since selfreported measures were used to collect data for all variables simulta­
+neously, there was a potential risk of inflated relationships between
+variables due to common method variance (Podsakoff et al., 2003).
+Since Hypotheses 4 and 5 pertain to correlations between additional
+variables and the two versions of OCS, it was critical to evaluate the
+potential impact of common method bias in both subsamples and
+confirm that it was both minimal and consistent across the two groups.
+To assess this, a single-factor model was tested for both OCSORIG and
+OCSLLM using factor analysis conducted with the psych package (Revelle
+& Revelle, 2015). The analysis included all variables referenced in Hy­
+potheses 4 and 5 alongside the OCS scales. Although the results were
+statistically significant (χ 2(14) = 338.852; p < .001 and χ 2(14) =
+111.903; p < .001 for OCSORIG and OCSLLM respectively), the proportion
+of variance explained by the single factor in both cases did not exceed
+the threshold suggested by Podsakoff et al. (2003), remaining at an
+equivalent level of 32 %. Thus, the level of common method bias was
+considered negligible and unlikely to impact the validity of hypothesis
+testing.
+Following the preliminary steps, descriptive statistics were calcu­
+lated, as shown in Table 1. The original and LLM-generated versions of
+the OCS yielded highly similar results, with mean scores and their 95 %
+confidence intervals falling within the comparable ranges. The OCSLLM
+displayed slightly lower variability (SD = 0.99 compared to 1.08 for
+OCSORIG), also reflected in its marginally higher kurtosis. Conversely,
+the OCSLLM exhibited a lower level of skewness. Both versions demon­
+strated distributions of overall commitment scores that did not signifi­
+cantly deviate from normality, as indicated by the results of the ShapiroWilk test (W = 0.99; p = .25 and W = 0.99; p = .60 for OCSORIG and
+OCSLLM, respectively). Additionally, although the average variance
+extracted (AVE) was slightly higher for the OCSORIG, the correlation
+coefficients between subscales were nearly identical for both versions.
+The descriptive statistics indicate that the negligible and unsystematic
+differences observed between OCSORIG and OCSLLM do not suggest
+meaningful disparities, supporting the overall comparability of the two
+
+versions.
+4.1. Confirmatory factor analysis
+The first hypothesis, concerning the factorial structure, was evalu­
+ated using CFA conducted with the lavaan package (Rosseel, 2012). For
+both versions of OCS, a three-factor model was specified, corresponding
+to the three dimensions of organizational commitment (Meyer & Allen,
+1991). The analysis employed the Weighted Least Squares Mean and
+Variance Adjusted (WLSMV) estimator, well-suited for Likert-scale data.
+A comprehensive set of fit indices was calculated, encompassing abso­
+lute, relative, and parsimonious fit indices, as well as noncentrality and
+absolute residual-based indices. To support Hypothesis 1, the fit indices
+for the OCSLLM should meet or exceed those observed for the OCSORIG.
+The results of CFA are presented in Table 2. Several fit indices,
+including the GFI, AGFI, and PGFI, were identical for both versions of
+OCS. The TLI, a relative fit measure, was marginally lower for the AIgenerated version. In contrast, both error-based fit indices were
+improved for OCSLLM compared to the human-adapted version. Notably,
+both versions achieved satisfactory levels across all fit indices (Awang,
+2012; Hooper et al., 2008), indicating an adequate fit to the data. These
+findings provide empirical support for Hypothesis 1.
+4.2. Measurement invariance analysis
+Measurement invariance was subsequently tested by fitting the
+previously specified model to subgroups of respondents divided ac­
+cording to key demographic characteristics, specifically gender and total
+job tenure. This analysis was conducted for both OCSORIG and OCSLLM.
+For total tenure, respondents were divided into two groups based on the
+median value (14 years for OCSORIG and 13 years for OCSLLM), resulting
+in comparable subgroup sizes (189 and 188 for OCSORIG; 186 and 182 for
+OCSLLM). The same fit indices used to evaluate Hypothesis 1 were
+calculated and compared. For Hypothesis 2 to be supported, the differ­
+ences between the fit indices, representing the level of measurement
+invariance, should be at least equivalent for OCSLLM compared to
+OCSORIG.
+The results of the measurement invariance analysis are presented in
+Table 2. A degree of invariance was observed in both versions of OCS
+across certain metrics. It is important to note that this analysis aimed to
+evaluate whether the AI-generated version exhibits a level of invariance
+comparable to or greater than that of the human-adapted version. As
+such, regarding the gender-based division, OCSORIG demonstrated a
+better fit for one group (males), as indicated by GFI, AGFI, TLI (with a
+substantial difference of 0.06), and both error metrics. In contrast, while
+
+Table 1
+Descriptive statistics, reliability and correlation coefficients.
+Scale
+
+M [95 % CI: LL, UL]
+
+SD
+
+W
+
+Skew
+
+Kurt
+
+α [95 % CI: LL, UL] [boot 95 % CI]
+
+ωh
+
+ωt
+
+AVE
+
+OC
+
+AC
+
+CC
+
+OCSORIG
+OC
+AC
+CC
+NC
+
+3.71 [3.6, 3.82]
+3.97 [3.84, 4.09]
+3.8 [3.68, 3.93]
+3.37 [3.23, 3.5]
+
+1.08
+1.27
+1.25
+1.38
+
+0.99
+0.99*
+0.99*
+0.98***
+
+0.17
+− 0.11
+0.02
+0.27
+
+− 0.15
+− 0.47
+− 0.39
+− 0.39
+
+0.92 [0.91, 0.93] [0.90, 0.93]
+0.87 [0.85, 0.89] [0.85, 0.89]
+0.82 [0.79, 0.85] [0.78, 0.85]
+0.90 [0.88, 0.92] [0.88, 0.92]
+
+0.72
+–
+–
+–
+
+0.95
+–
+–
+–
+
+0.64
+0.73
+0.67
+0.78
+
+–
+0.87***
+0.75***
+0.87***
+
+–
+0.47***
+0.71***
+
+–
+0.44***
+
+OCSLLM
+OC
+AC
+CC
+NC
+
+3.73 [3.63, 3.83]
+3.93 [3.81, 4.05]
+3.95 [3.83, 4.07]
+3.31 [3.19, 3.43]
+
+0.99
+1.2
+1.19
+1.23
+
+1
+0.99
+0.99
+0.99**
+
+0.03
+− 0.02
+− 0.03
+0.18
+
+− 0.27
+− 0.44
+− 0.36
+− 0.49
+
+0.89 [0.87, 0.91] [0.87, 0.90]
+0.82 [0.79, 0.85] [0.78, 0.85]
+0.78 [0.75, 0.82] [0.74, 0.82]
+0.83 [0.80, 0.85] [0.79, 0.85]
+
+0.66
+–
+–
+–
+
+0.92
+–
+–
+–
+
+0.58
+0.68
+0.63
+0.70
+
+–
+0.85***
+0.77***
+0.84***
+
+–
+0.46***
+0.63***
+
+–
+0.44***
+
+Note. OC = organizational commitment; AC = affective commitment; CC = continuance commitment; NC = normative commitment; CI = confidence interval; boot CI
+= bootstrap-based confidence interval; LL = lower limit; UL = upper limit; W = Shapiro-Wilk test results; Skew = skewness; Kurt = kurtosis; α = Cronbach's α; ωh =
+McDonald's hierarchical ω; ωt = McDonald's total ω; AVE = average variance extracted.
+*
+p < .05.
+**
+p < .01.
+***
+p < .001.
+6
+
+J. Grobelny et al.
+
+Acta Psychologica 261 (2025) 105813
+
+Table 2
+Confirmatory factor analysis with measurement invariance analysis results.
+Model
+
+Group
+
+N
+
+χ2
+
+df
+
+GFI
+
+AGFI
+
+TLI
+
+PGFI
+
+RMSEA
+
+SRMR
+
+OCSORIG
+OCSLLM
+OCSORIG
+
+–
+–
+Female
+Males
+Female
+Males
+Low tenure
+High tenure
+Low tenure
+High tenure
+
+393
+392
+202
+175
+195
+170
+189
+188
+186
+182
+
+595.63***
+488.79***
+418.85***
+205.62***
+305.15***
+201.92***
+309.58***
+325.23***
+285.64***
+254.56***
+
+132
+132
+132
+132
+132
+132
+132
+132
+132
+132
+
+0.96
+0.96
+0.94
+0.97
+0.95
+0.97
+0.95
+0.96
+0.95
+0.96
+
+0.95
+0.95
+0.93
+0.96
+0.94
+0.96
+0.94
+0.94
+0.94
+0.95
+
+0.94
+0.93
+0.92
+0.98
+0.94
+0.97
+0.94
+0.95
+0.93
+0.96
+
+0.74
+0.74
+0.73
+0.75
+0.74
+0.75
+0.74
+0.74
+0.73
+0.74
+
+0.09
+0.08
+0.10
+0.06
+0.08
+0.06
+0.08
+0.09
+0.08
+0.07
+
+0.10
+0.09
+0.12
+0.09
+0.10
+0.09
+0.10
+0.11
+0.10
+0.10
+
+OCSLLM
+OCSORIG
+OCSLLM
+
+Note. χ2 = chi-square; df = degrees of freedom; GFI = goodness-of-fit index; AGFI = adjusted goodness-of-fit index; TLI = Tucker-Lewis index; PGFI = parsimony
+goodness-of-fit index; RMSEA = root mean square error of approximation; SRMR = standardized root mean square residual.
+
+the factor model for OCSLLM also exhibited a better fit for males, the
+metric differences between genders were smaller than those for
+OCSORIG, mostly ranging from 0.01 to 0.02, with only TLI showing a
+higher difference of 0.03. However, this difference in TLI was twice as
+large for OCSORIG compared to OCSLLM. For the tenure-based division, no
+evidence of invariance was found for most metrics in either test version.
+GFI, AGFI, PGFI, RMSEA, and SRMR for both versions remained within
+the threshold of 0.01, which is suggested as the upper limit for identi­
+fying invariance (Chen, 2007; Cheung & Rensvold, 2002). The only
+notable difference was observed for TLI, where OCSLLM exhibited a
+difference of 0.03. However, OCSLLM demonstrated better invariance as
+indicated by RMSEA, with a difference of less than 0.01 compared to
+0.01 for OCSORIG.
+Because some differences in fit indices for the OCSLLM measure
+exceeded conventional thresholds (e.g., < 0.01; Cheung & Rensvold,
+2002), formal invariance testing was conducted to obtain stronger evi­
+dence regarding the equivalence of the scale across groups. Specifically,
+configural invariance (equal factor structure), metric invariance (equal
+factor loadings), and scalar invariance (equal item intercepts) were
+tested using multigroup CFA with the lavaan package (Rosseel, 2012).
+For gender, the configural model demonstrated acceptable fit, χ 2(264)
+= 1019.4. Adding equality constraints on loadings (metric model) did
+not significantly worsen model fit, χ 2(279) = 1031.4; Δχ 2(15) = 11.99,
+p = .679. Further constraining intercepts (scalar model) also did not lead
+to a significant loss of fit, χ 2(294) = 1038.6; Δχ 2(15) = 7.26, p = .950.
+Similarly, for tenure groups, the configural model yielded a good fit,
+χ 2(264) = 1002.6. The metric model showed no significant degradation
+in fit, χ 2(279) = 1008.8; Δχ 2(15) = 6.20, p = .976, and the scalar model
+also remained nonsignificantly different from the metric model, χ 2(294)
+= 1027.1; Δχ 2(15) = 18.35, p = .245. Overall, the non-significant chisquare difference tests indicate that the OCSLLM demonstrates config­
+ural, metric, and scalar invariance across gender and tenure groups,
+supporting its use for meaningful latent score comparisons.
+Taken together, the results support Hypothesis 2. OCSLLM showed
+lower variance than OCSORIG in the gender comparison, consistent with
+multigroup CFA indicating invariance. In the tenure comparison, both
+measures performed comparably, with CFA again suggesting acceptable
+invariance for OCSLLM.
+
+were initially derived using the Duhachek and Iacobucci (2004) for­
+mula, which has been noted for its tendency to produce overly narrow
+intervals (Revelle & Revelle, 2015). Bootstrap-based confidence in­
+tervals with 5000 iterations were calculated to address this limitation,
+yielding comparable ranges of [0.87, 0.90] for OCSLLM and [0.90, 0.93]
+for OCSORIG. Notably, the α coefficient for OCSLLM fell below the 95 %
+confidence interval for OCSORIG, indicating a statistically significant
+difference in internal consistency. This pattern was similarly observed in
+two of the subscale reliability coefficients. To increase the robustness of
+this conclusion, Feldt's test for independent samples was conducted on
+the overall scores of both scales, confirming further a significant dif­
+ference between their reliability estimates, F(392, 391) = 1.34, p =
+.0039.
+McDonald's hierarchical (ωh) and total (ωt) coefficients were
+computed to evaluate reliability further. For OCSLLM, ωh was 0.66, and
+ωt was 0.92, compared to ωh = 0.72 and ωt = 0.95 for OCSORIG. Both
+measures were consistently higher for the human-adapted version,
+demonstrating superior reliability.
+These findings do not support Hypothesis 3. However, it is essential
+to note that the AI-adapted version still exhibited robust reliability. The
+Cronbach's α for the main score was near 0.90, with the majority of
+subscale α exceeding 0.80. Additionally, the ωt, which is particularly
+relevant for evaluating the reliability of multi-dimensional scales
+(Malkewitz et al., 2023), exceeded 0.90 for OCSLLM. While the AIadapted version did not achieve parity with the human adaptation, it
+nonetheless represents a highly reliable psychological instrument.
+Although the observed differences in reliability were minor and all
+coefficients remained within established thresholds, we conducted an
+additional exploratory analysis to better understand the sources of these
+discrepancies. Specifically, we calculated the item-level values of
+Cronbach's α if each item were removed from the scale, for both OCSLLM
+and OCSORIG. The results are presented in Table 3. Out of the 18 items,
+six showed a pattern in which removing the item from OCSLLM would
+lead to a relatively greater improvement in reliability compared to
+removing the same item from OCSORIG. For example, in the case of item
+18, excluding it from OCSLLM resulted in a slight increase in reliability,
+whereas its removal from OCSORIG led to a slightly greater decrease.
+However, the opposite pattern was observed for 10 items: removing
+these items from OCSLLM resulted in relatively larger decreases in reli­
+ability compared to OCSORIG. Importantly, the differences were minimal
+in all cases; none of the changes in the αdropped coefficients exceeded
+0.01. These results suggest that, despite its lower overall internal con­
+sistency, the OCSLLM was comparably well-constructed as an integrated
+scale. Therefore, the observed differences in reliability are unlikely to be
+attributable to individual item characteristics.
+As a subsequent step in this exploratory investigation, potential de­
+mographic differences were examined. Cronbach's α coefficients were
+calculated separately for female and male participants for both test
+versions. For OCSLLM, the α coefficient was 0.88 [95 % CI: 0.85, 0.90] for
+the female subsample and 0.90 [95 % CI: 0.88, 0.92] for the male
+
+4.3. Reliability analysis
+Reliability coefficients for the AI-adapted and human-adapted ver­
+sions of the OCS were calculated and compared. To support Hypothesis
+3, the reliability coefficients for OCSLLM were required to demonstrate
+no significant differences compared to those of OCSORIG. The results,
+detailed in Table 1, were computed using the psych library (Revelle &
+Revelle, 2015).
+Cronbach's α, a widely recognized measure of internal consistency
+and an indicator of test reliability was 0.89 [95 % CI: 0.87, 0.91] for
+OCSLLM and 0.92 [95 % CI: 0.91, 0.93] for OCSORIG. Confidence intervals
+7
+
+J. Grobelny et al.
+
+Acta Psychologica 261 (2025) 105813
+
+0.15; p < .01), however, the difference was not statistically significant,
+as indicated by the results of Fisher's r-to-z test for independent samples
+(z = − 0.72; p = .47).. Both versions demonstrated significant and strong
+positive correlations with job identity (r = 0.57; p < .001 and r = 0.59; p
+< .001 for OCSLLM and OCSORIG respectively, with no significant dif­
+ference between the two: z = − 0.42; p = .67), with the continuance
+dimension consistently showing a weaker relationship than the overall
+commitment score (r = 0.30; p < .001 and r = 0.33; p < .001). Similarly,
+both OCS versions displayed strong positive correlations with job
+satisfaction, with nearly identical coefficients (r = 0.53; p < .001 for
+OCSLLM and r = 0.52; p < .001 for OCSORIG, with no significant differ­
+ence: z = − 0.19; p = .85). Years of experience within the current
+organization—a tangible outcome of commitment—showed a stronger
+positive correlation with commitment as measured by OCSLLM (r = 0.30;
+p < .001) than by OCSORIG (r = 0.24; p < .001), suggesting greater
+validity for the LLM-adapted version. However, the difference between
+the two coefficients was not significant (z = − 0.90; p = .37). Regarding
+turnover intention, both OCSLLM and OCSORIG demonstrated significant
+negative correlations, indicating that higher commitment scores,
+regardless of the test version, were associated with lower intentions to
+leave the organization. However, this relationship was stronger (but not
+significantly: z = − 0.92; p = .36) when commitment was measured with
+OCSLLM (r = − 0.52; p < .001) compared to OCSORIG (r = − 0.47; p <
+.001). Overall, the consistency in the pattern of correlations, their
+alignment with theoretical expectations, and instances where the
+OCSLLM showed stronger relationships with additional variables provide
+robust support for Hypothesis 4.
+Divergent validity was then evaluated. Initial evidence for this aspect
+was derived from comparing the AVE values for the OCS dimensions
+with the intercorrelations between these dimensions. For neither version
+of the scale was the AVE for any dimension lower than the correlation
+coefficients with other dimensions, as shown in Table 1. Additionally,
+none of the correlation coefficients between OCS scores (both AI- and
+human-adapted) and the additional variables exceeded 0.85, which
+both, according to Hair Jr et al. (2019), support divergent validity.
+Notably, only OCSLLM could differentiate the relationship between
+current organizational tenure (theoretically an outcome of commit­
+ment) and total job tenure. While overall job tenure is not theoretically
+related to organizational commitment, an empirical relationship may
+occur since total job tenure includes years spent in the current organi­
+zation. This bias is particularly expected for less experienced partici­
+pants despite excluding individuals with experience in only a single
+organization. Despite that, for OCSLLM, the correlation with current
+organizational tenure was positive and moderate (r = 0.30; p < .001),
+while the relationship with total job tenure was insignificant (r = 0.08; p
+= .12). These two correlation coefficients differed significantly, as
+indicated by Steiger's z-test for dependent correlations with overlapping
+
+Table 3
+Item-level reliability analysis: Cronbach's alpha if item deleted for OCSORIG and
+OCSLLM versions.
+Item no.
+
+αLLM
+
+αORIG
+
+Δα
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+
+0.004
+− 0.011
+− 0.012
+− 0.011
+− 0.003
+− 0.009
+0
+0.002
+− 0.005
+− 0.007
+− 0.011
+− 0.003
+− 0.012
+− 0.01
+− 0.007
+− 0.009
+− 0.009
+0.003
+
+0.001
+− 0.006
+− 0.008
+− 0.006
+− 0.007
+− 0.007
+0.004
+0.002
+− 0.006
+− 0.001
+− 0.006
+− 0.004
+− 0.006
+− 0.006
+− 0.008
+− 0.009
+− 0.003
+− 0.006
+
+0.003
+0.005
+0.004
+0.005
+0.004
+0.002
+0.004
+0
+0.001
+0.006
+0.005
+0.001
+0.006
+0.004
+0.001
+0
+0.006
+0.009
+
+Note. αLLM = Cronbach's α if item deleted for the LLM-based version (OCSLLM);
+αORIG = Cronbach's α if item deleted for the human-translated version (OCSORIG);
+Δα = absolute difference between αLLM and αORIG.
+
+subsample. In the case of OCSORIG, the coefficients were 0.90 [95 % CI:
+0.88, 0.92] for females and 0.93 [95 % CI: 0.92, 0.95] for males. In both
+test versions, the male subsample exhibited higher internal consistency.
+It should be noted that OCSLLM demonstrated greater consistency again,
+as no significant differences in reliability coefficients were observed
+between the gender groups. In contrast, for OCSORIG, the Cronbach's α
+for the male subsample exceeded the upper bound of the confidence
+interval for the female subsample, indicating a statistically significant
+difference in internal consistency across groups. However, the differ­
+ences in general were relatively small. Therefore, it was concluded that
+the observed differences in overall reliability between OCSLLM and
+OCSORIG are more likely the result of an accumulation of minor factors
+rather than the influence of a single dominant cause.
+4.4. Convergent and divergent validity analysis
+Finally, correlation coefficients between both versions of the OCS
+and additional variables were calculated to evaluate Hypotheses 4 and
+5. These analyses, conducted with psych package (Revelle & Revelle,
+2015), are summarized in Table 4. All job attitude variables were
+significantly correlated with both versions of the OCS, aligning with
+theoretical expectations. Notably, self-efficacy exhibited a slightly
+stronger positive correlation with organizational commitment when
+measured with OCSLLM (r = 0.20; p < .001) compared to OCSORIG (r =
+Table 4
+Correlation coefficient for validity analysis.
+Self-efficacy
+
+Job satisfaction
+
+Job identity
+
+Turnover intention
+
+Current job experience
+
+Total job experience
+
+OCSORIG
+OC
+AC
+CC
+NC
+
+0.15**
+0.28***
+− 0.08
+0.16**
+
+0.53***
+0.64***
+0.20***
+0.49***
+
+0.59***
+0.58***
+0.33***
+0.32***
+
+− 0.47***
+− 0.44***
+− 0.34***
+− 0.40***
+
+0.24***
+0.17***
+0.30***
+0.15**
+
+0.15**
+0.14**
+0.15**
+0.10*
+
+OCSLLM
+OC
+AC
+CC
+NC
+
+0.20***
+0.24***
+− 0.02
+0.26***
+
+0.52***
+0.56***
+0.26***
+0.45***
+
+0.57***
+0.53***
+0.30***
+0.34***
+
+− 0.52***
+− 0.44***
+− 0.40***
+− 0.44***
+
+0.30***
+0.17***
+0.31***
+0.26***
+
+0.08
+0.12*
+0.06
+0.03
+
+Note. OC = organizational commitment; AC = affective commitment; CC = continuance commitment; NC = normative commitment.
+*
+p < .05.
+**
+p < .01.
+***
+p < .001.
+8
+
+J. Grobelny et al.
+
+Acta Psychologica 261 (2025) 105813
+
+variables (z = 3.40; p < .001). In contrast, for OCSORIG, both relation­
+ships were significant, though the correlation with total job tenure was
+weaker (r = 0.24; p < .001 and r = 0.15; p < .01). In this case, the two
+correlation coefficients did not differ significantly (z = 1.39; p = .16).
+These findings suggest that the AI-adapted version demonstrated supe­
+rior discriminant validity by more effectively differentiating between
+constructs, providing strong support for Hypothesis 5.
+
+negligible magnitude and inconsistent pattern of the observed differ­
+ences, further elaboration was deemed unwarranted. Expanding this
+discussion could imply cultural or semantic effects unsupported by the
+data, as the variations observed are most plausibly attributable to
+random measurement fluctuations rather than systematic construct
+divergence.
+Hypotheses 4 and 5 results showed that the AI-adapted questionnaire
+maintained strong validity, preserving its nomological network. This
+aligns with Geisinger's (1994) emphasis on the importance of main­
+taining correlations among variables to ensure theoretical coherence.
+The consistent replication of correlation patterns after adaptation en­
+hances scientific replicability, addressing key challenges in crosscultural psychology (Milfont & Klein, 2018) by reducing errors due to
+methodological differences (Bolaños-Medina & González-Ruiz, 2013).
+The strong convergent validity highlights the AI's ability to accurately
+measure constructs, addressing concerns about the negative impact of
+weak convergent validity on research outcomes (Carlson & Herdman,
+2012). Additionally, the appropriate divergent validity enables clear
+distinctions between constructs, as critical for culturally comparing
+nomological networks (van de Vijver & Tanzer, 2004). These findings
+reinforce AI-driven adaptations as tools for mitigating biases and
+improving the replicability of psychological assessments.
+
+5. Discussion
+This study aimed to empirically evaluate the feasibility of using LLMs
+for the cross-cultural adaptation of psychological tests, focusing on
+preserving key psychometric properties. ChatGPT-4 was employed to
+adapt the OCS from English to Polish using a zero-shot learning
+approach guided by structured prompts and established psychometric
+guidelines to achieve this. The LLM-adapted version was then compared
+to a human-adapted version through an observational study involving
+785 participants. The results demonstrated that the OCSLLM retained
+essential psychometric properties, with hypotheses largely supported:
+the AI-adapted version's factorial structure (H1) and measurement
+invariance (H2) were equivalent to or exceeded those of the humanadapted version. While the reliability of the OCSLLM (H3) was slightly
+lower, it remained within acceptable standards. Notably, the AI-adapted
+version exhibited superior convergent (H4) and discriminant validity
+(H5). These findings underscore the potential of LLMs to enhance the
+efficiency and precision of cross-cultural test adaptation while main­
+taining psychometric integrity.
+The support for Hypothesis 1, showing that the LLM-adapted version
+of the OCS preserved the original three-factor structure, highlights the
+importance of maintaining psychological constructs' conceptual integ­
+rity in cross-cultural adaptations (Bullinger et al., 1993). Preserving
+factor structure ensures the test measures intended constructs consis­
+tently, enabling valid cross-cultural comparisons. LLMs, with advanced
+semantic processing (Chang et al., 2024), effectively capture itemconstruct relationships during adaptation. Human adaptations, while
+effective, may struggle with replicating the original factor structure due
+to subjective biases or subtle translation deviations, potentially affecting
+construct equivalence in cross-cultural assessments (e.g., Chaudhary
+et al., 2012; Kulikowski, 2019). By preserving factor structure, LLMs
+offer a complementary, systematic approach to test adaptation.
+The support for Hypothesis 2, demonstrating that OCSLLM main­
+tained measurement invariance, highlights the potential of LLMs to
+handle psychometric tools across demographic boundaries reliably.
+While LLMs have been shown to internalize, spread, and sometimes
+magnify biases present in their training data (e.g., Chang et al., 2024;
+Nadeem et al., 2020), testing their ability to produce unbiased adapta­
+tions was essential in this context. The results suggest that LLMs can
+effectively mitigate such risks when guided with appropriate prompts
+and contextual information, preserving the integrity and fairness of
+cross-cultural psychological assessments.
+The results for Hypothesis 3 revealed an intriguing paradox: while
+the AI-adapted version demonstrated better validity, it exhibited slightly
+lower reliability than the human-adapted version. This finding suggests
+a potential trade-off between consistency and validity in AI-driven test
+adaptations. Similar concerns about LLMs' inconsistency have been
+raised in other contexts (Deroy et al., 2023; Xie et al., 2024), high­
+lighting that while LLMs can achieve impressive validity outcomes, their
+responses may vary in ways that affect internal consistency. While
+reliability is traditionally seen as a necessary condition for validity, the
+possibility of validity exceeding reliability has been previously theorized
+in psychometric literature (Moss, 1994); nevertheless, such cases remain
+challenging to interpret. Although the AI-adapted test met established
+reliability criteria and aligned with previous research on AI-generated
+tests (Götz et al., 2023; Hernandez & Nie, 2022), the human-adapted
+version appeared more consistent in certain aspects, underscoring the
+value of human expertise in ensuring robust reliability. Given the
+
+5.1. Theoretical contribution
+This study combines insights from psychometrics and AI studies,
+offering a multidisciplinary perspective on psychological testing. By
+exploring the potential of LLMs to adapt psychological assessments
+while maintaining key psychometric properties it contributes to the
+growing discussion on the reliability and applicability of LLMs in psy­
+chological science (e.g., Abdurahman et al., 2024; Williams et al., 2023).
+This study is among the first to demonstrate the feasibility of using
+LLMs for cross-cultural adaptation of psychological tests. By showing
+that AI can maintain comparable or even superior psychometric prop­
+erties, such as factorial structure and measurement invariance, to
+human-adapted versions, it challenges traditional approaches to test
+adaptation. This finding is particularly significant as it addresses the
+time and resource demands associated with conventional methods, as
+highlighted in prior literature(Hambleton & de Jong, 2003). Moreover,
+the study contributes to reducing biases inherent in human-led trans­
+lations, which can alter the conceptual equivalence of constructs
+(Geisinger, 2003).
+The paper introduces a novel methodological approach combining
+zero-shot learning with structured prompts and reference datasets,
+setting a new standard for integrating AI into psychometric practices.
+This method ensures that LLMs adapt tests while preserving construct
+validity and linguistic precision, addressing common issues like trans­
+lation loss and cultural misinterpretation (Hahn et al., 2005; Krach et al.,
+2017). It provides a replicable framework for future research, promoting
+more efficient and transparent psychometric adaptations. The study also
+highlights the scalability of AI-driven methods across cultural and lin­
+guistic contexts, demonstrating their potential to create adaptable tools
+for global psychological research. Advanced algorithms increase acces­
+sibility and reduce methodological errors, making psychometric tools
+more robust (Galatzer-Levy & Onnela, 2023).
+This study contributes to the expanding discourse on incorporating
+AI and LLMs into science and psychology. This validation reinforces the
+need to maintain scientific rigor when incorporating AI into sensitive
+fields, as highlighted in prior research (Binz et al., 2023; Wang et al.,
+2024). The findings also redefine the role of psychologists, shifting their
+focus from manually adapting tests to supervising AI-driven processes,
+which raises important ethical and practical considerations. These
+include risks such as bias, lack of transparency, and potential overreliance on AI-generated outputs, all of which have been extensively
+discussed in the broader context of LLM applications (Abdurahman
+et al., 2024; Fecher et al., 2023). By emphasizing the psychometric
+9
+
+J. Grobelny et al.
+
+Acta Psychologica 261 (2025) 105813
+
+reliability of AI-adapted tools, the study advocates for a balanced
+approach to AI adoption, one that leverages technological advancements
+while ensuring scientific rigor and ethical responsibility in psychological
+science.
+Although the present findings demonstrate the potential of LLMs to
+improve psychometric adaptation, their application requires careful
+consideration due to documented risks of bias and ethical concern.
+Research shows that LLMs may reproduce or amplify social and cultural
+stereotypes present in training data, resulting in representational bias
+and differential item functioning across demographic groups
+(Abdurahman et al., 2024; Wang et al., 2024). Moreover, ethical risks
+such as data leakage, model hallucination, and limited transparency in
+content generation remain significant challenges (Binz et al., 2023;
+Fecher et al., 2023; Weidinger et al., 2022). These issues call for
+continuous human oversight, transparent documentation, and system­
+atic bias auditing to ensure that the integration of LLMs into psycho­
+metric research adheres to principles of fairness, accountability, and
+scientific integrity.
+
+LLMs in the cross-cultural adaptation of psychological tests, highlighting
+their ability to preserve critical psychometric properties such as reli­
+ability, validity, factorial structure, and measurement invariance. By
+introducing a replicable methodology combining zero-shot learning
+with structured prompts and reference datasets, the study paves the way
+for integrating AI into psychometric practices, offering efficient and
+scalable solutions to challenges traditionally associated with test
+adaptation.
+CRediT authorship contribution statement
+Jaroslaw Grobelny: Writing – review & editing, Writing – original
+draft, Supervision, Project administration, Methodology, Investigation,
+Formal analysis, Data curation, Conceptualization. Kacper Szymański:
+Writing – original draft, Methodology, Investigation, Funding acquisi­
+tion, Conceptualization. Zuzanna Strozyk: Methodology, Investigation,
+Funding acquisition, Conceptualization.
+Pre-registration
+
+5.2. Limitations and future guidelines
+
+Both the hypotheses and the procedural methodology of the study
+were pre-registered with the Open Science Framework at https://osf.
+io/hksmp. No significant deviation were identified between preregistration and the study.
+
+Despite its contributions, this study has certain limitations that
+warrant careful consideration. First, the reliance on a single LLM and
+adaptation task limits the generalizability of the findings. Different LLMs
+may vary in their ability to preserve psychometric properties, and
+broader validation across various models and adaptation contexts is
+necessary. Second, while the AI-adapted test demonstrated promising
+psychometric properties, the study did not account for the potential
+influence of cultural nuances that LLMs may not fully capture. This
+raises questions about the depth of contextual abilities and cultural
+sensitivity inherent in AI-driven adaptations. Lastly, the study primarily
+focused on quantitative measures, such as reliability and validity, but
+lacked qualitative insights from end-users, such as psychologists or testtakers, regarding the usability and appropriateness of the AI-adapted
+tests.
+Looking ahead, future research should focus on evaluating the per­
+formance of multiple LLMs across diverse psychological constructs and
+cultural contexts. Comparative studies could help identify best practices
+for selecting and fine-tuning LLMs for specific adaptation tasks. Addi­
+tionally, researchers should explore hybrid methodologies that combine
+AI-driven adaptation with human oversight to address potential biases
+and ensure cultural and linguistic nuances are adequately represented.
+By integrating qualitative feedback from diverse stakeholders, future
+work can ensure that AI-driven psychometric tools are both scientifically
+rigorous and practically applicable. Future studies may also explore
+prompting LLMs not only to produce adapted items but to explicitly
+articulate the cultural reasoning underlying each adaptation, which
+could enhance transparency and interpretability of the adaptation pro­
+cess. Additionally, it would be valuable to assess whether the psycho­
+metric performance of LLM-adapted tests generalizes to cultural
+contexts that are more distant from the source culture than the one
+examined in this study. Finally, the psychological test adaptation
+detailed in this paper was conducted from English to Polish, represent­
+ing a cross-cultural translation between two nations that, while pos­
+sessing distinct cultural profiles, share a broad Western European
+heritage. Although the Anglosphere's more individualistic and indulgent
+orientation differs from Poland's more collectivistic and duty-focused
+values, these distinctions exist within a relatively short cultural dis­
+tance (Beugelsdijk & Welzel, 2018; Wierzbicka, 1985). To fully evaluate
+the capacities of Large Language Models in cultural adaptation, future
+research would necessitate testing across cultures with a more sub­
+stantial divergence in their fundamental value structures.
+
+Declaration of Generative AI and AI-assisted technologies in the
+writing process
+During the preparation of this work the authors used ChatGPT-4 in
+order to proof-read the text. After using this tool, the authors reviewed
+and edited the content as needed and take full responsibility for the
+content of the publication.
+Declaration of competing interest
+The authors have no conflict of interest to disclose.
+Supplementary data
+Supplementary data to this article can be found online at https://doi.
+org/10.1016/j.actpsy.2025.105813.
+Data availability
+The data that support the findings of this study are openly available
+in Open Science Framework at doi:10.17605/OSF.IO/6HRDB.
+References
+Abdullah, A. (2011). Evaluation of Allen and Meyer’s organizational commitment scale:
+A cross-cultural application in Pakistan. Journal of Education and Vocational Research,
+1(3), 80–86. https://doi.org/10.22610/jevr.v1i3.13
+Abdurahman, S., Atari, M., Karimi-Malekabadi, F., Xue, M. J., Trager, J., Park, P. S., …
+Dehghani, M. (2024). Perils and opportunities in using large language models in
+psychological research. PNAS Nexus, 3(7), Article pgae245. https://doi.org/
+10.1093/pnasnexus/pgae245
+Al-Jabari, B., & Ghazzawi, I. (2019). Organizational commitment: A review of the
+conceptual and empirical literature and a research agenda. International Leadership
+Journal, 11(1).
+Allen, N. J., & Meyer, J. P. (1996). Affective, continuance, and normative commitment to
+the organization: An examination of construct validity. Journal of Vocational
+Behavior, 49(3), 252–276. https://doi.org/10.1006/jvbe.1996.0043
+Awang, Z. (2012). A handbook on SEM structural equation modelling: SEM using AMOS
+graphic (5th ed.). Universiti Teknologi Mara Kelantan.
+Baartmans, R., Raffel, M., Vikram, R., Deringer, A., & Chen, L. (2025). Towards universal
+semantics with large language models. no. arXiv:2505.11764 arXiv. https://doi.org/
+10.48550/arXiv.2505.11764.
+Bańka, A., Bazińska, R., & Wołowska, A. (2002). Polska wersja Meyera i Allen skali
+przywiązania do organizacji. Czasopismo Psychologiczne, 8(1), 65–74.
+
+6. Conclusion
+This study provides compelling evidence for the feasibility of using
+10
+
+J. Grobelny et al.
+
+Acta Psychologica 261 (2025) 105813
+
+Beugelsdijk, S., & Welzel, C. (2018). Dimensions and dynamics of National Culture:
+Synthesizing Hofstede with Inglehart. Journal of Cross-Cultural Psychology, 49(10),
+1469–1505. https://doi.org/10.1177/0022022118798505
+Binz, M., Alaniz, S., Roskies, A., Aczel, B., Bergstrom, C. T., Allen, C., … Schulz, E.
+(2023). How should the advent of large language models affect the practice of
+science?. arXiv:2312.03759 arXiv. https://doi.org/10.48550/arXiv.2312.03759.
+Bolaños-Medina, A., & González-Ruiz, V. (2013). Deconstructing the translation of
+psychological tests. Meta, 57(3), 715–739. https://doi.org/10.7202/1017088ar
+Brown, T., Mann, B., Ryder, N., Subbiah, M., Kaplan, J. D., Dhariwal, P., … Amodei, D.
+(2020). Language models are few-shot learners. Advances in Neural Information
+Processing Systems, 33, 1877–1901.
+Bullinger, M., Anderson, R., Cella, D., & Aaronson, N. (1993). Developing and evaluating
+cross-cultural instruments from minimum requirements to optimal models. Quality of
+Life Research, 2(6), 451–459. https://doi.org/10.1007/BF00422219
+Carlson, K. D., & Herdman, A. O. (2012). Understanding the impact of convergent
+validity on research results. Organizational Research Methods, 15(1), 17–32. https://
+doi.org/10.1177/1094428110392383
+Chan, K. W., Ali, F., Park, J., Sham, K. S. B., Tan, E. Y. T., Chong, F. W. C., … Sze, G. K.
+(2025). Automatic item generation in various STEM subjects using large language
+model prompting. Computers and Education: Artificial Intelligence, 8, Article 100344.
+https://doi.org/10.1016/j.caeai.2024.100344
+Chang, Y., Wang, X., Wang, J., Wu, Y., Yang, L., Zhu, K., … Xie, X. (2024). A survey on
+evaluation of large language models. ACM Transactions on Intelligent Systems and
+Technology, 15(3), 1–39, 39. 45 https://doi.org/10.1145/3641289.
+Chaudhary, R., Rangnekar, S., & Barua, M. K. (2012). Psychometric evaluation of Utrecht
+work engagement scale in an Indian sample. Asia-Pacific Journal of Management
+Research and Innovation, 8(3), 343–350. https://doi.org/10.1177/
+2319510X1200800314
+Chen, F. F. (2007). Sensitivity of goodness of fit indexes to lack of measurement
+invariance. Structural Equation Modeling, 14(3), 464–504. https://doi.org/10.1080/
+10705510701301834
+Cheung, G. W., & Rensvold, R. B. (2002). Evaluating goodness-of-fit indexes for testing
+measurement invariance. Structural Equation Modeling: A Multidisciplinary Journal, 9
+(2), 233–255. https://doi.org/10.1207/S15328007SEM0902_5
+Chirkowska-Smolak, T. (2018). Polska adaptacja kwestionariusza do pomiaru wypalenia
+zawodowego OLBI (The Oldenburg Burnout Inventory). Studia Oeconomica
+Posnaniensia, 6(3), 27–47.
+Choi, M., Pei, J., Kumar, S., Shu, C., & Jurgens, D. (2023). Do llms understand social
+knowledge? Evaluating the sociability of large language models with socket
+benchmark. arXiv Preprint. arXiv:2305.14938.
+Comrey, A. L., & Lee, H. B. (1992). A first course in factor analysis (2nd ed.). Lawrence
+Erlbaum Associates, Inc.
+Conneau, A., Khandelwal, K., Goyal, N., Chaudhary, V., Wenzek, G., Guzmán, F., …
+Stoyanov, V. (2020). Unsupervised cross-lingual representation learning at scale. In
+D. Jurafsky, J. Chai, N. Schluter, & J. Tetreault (Eds.), proceedings of the 58th annual
+meeting of the Association for Computational Linguistics (pp. 8440–8451). Association
+for Computational Linguistics. https://doi.org/10.18653/v1/2020.acl-main.747.
+Daouk-Öyry, L., & Zeinoun, P. (2017). Testing across cultures: Translation, adaptation
+and indigenous test development. In Psychometric testing (pp. 221–233). John Wiley
+& Sons, Ltd. https://doi.org/10.1002/9781119183020.ch16.
+Davoodi, T., Soley, G., Harris, P. L., & Blake, P. R. (2020). Essentialization of social
+categories across development in two cultures. Child Development, 91(1), 289–306.
+https://doi.org/10.1111/cdev.13209
+Deroy, A., Ghosh, K., & Ghosh, S. (2023). How ready are pre-trained abstractive models
+and LLMs for legal case judgement summarization?. arXiv:2306.01248 arXiv.
+https://doi.org/10.48550/arXiv.2306.01248.
+Dixon-Román, E. (2024). AI and psychometrics: Epistemology, process, and politics.
+Journal of Educational and Behavioral Statistics, 49(5), 709–714. https://doi.org/
+10.3102/10769986241280623
+Dong, Q., Li, L., Dai, D., Zheng, C., Ma, J., Li, R., … Sui, Z. (2024). A survey on in-context
+learning (arXiv:2301.00234). arXiv. https://doi.org/10.48550/arXiv.2301.00234
+Duhachek, A., & Iacobucci, D. (2004). Alpha’s standard error (ASE): An accurate and
+precise confidence interval estimate. Journal of Applied Psychology, 89(5), 792–808.
+https://doi.org/10.1037/0021-9010.89.5.792
+Falcão, F., Pereira, D. M., & Gonçalves, N. (2023). A suggestive approach for assessing
+item quality, usability and validity of automatic item generation. Advances in Health
+Sciences Education, 28, 1441–1465. https://doi.org/10.1007/s10459-023-10225-y
+Fan, L., Li, L., Ma, Z., Lee, S., Yu, H., & Hemphill, L. (2024). A bibliometric review of
+large language models research from 2017 to 2023. ACM Transactions on Intelligent
+Systems and Technology, 15(5), 1–25.
+Fecher, B., Hebing, M., Laufer, M., Pohle, J., & Sofsky, F. (2023). Friend or foe? Exploring
+the implications of large language models on the science system (arXiv:2306.09928).
+arXiv. https://doi.org/10.48550/arXiv.2306.09928
+Ferrara, E. (2023). Should chatgpt be biased? challenges and risks of bias in large
+language models. arXiv. preprint arXiv:2304.03738.
+Galatzer-Levy, I. R., & Onnela, J.-P. (2023). Machine learning and the digital
+measurement of psychological health. Annual Review of Clinical Psychology, 19,
+133–154. https://doi.org/10.1146/annurev-clinpsy-080921-073212
+Geisinger, K. F. (1994). Cross-cultural normative assessment: Translation and adaptation
+issues influencing the normative interpretation of assessment instruments.
+Psychological Assessment, 6(4), 304–312. https://doi.org/10.1037/10403590.6.4.304
+Geisinger, K. F. (2003). Testing and assessment in cross-cultural psychology. In Handbook
+of psychology (pp. 95–117). John Wiley & Sons, Ltd. https://doi.org/10.1002/
+0471264385.wei1005.
+
+Gierl, M. J., Lai, H., Pugh, D., Touchie, C., Boulais, A. P., & De Champlain, A. (2016).
+Evaluating the psychometric characteristics of generated multiple-choice test items.
+Applied Measurement in Education, 29(3), 196–210.
+Goddard, C., & Wierzbicka, A. (2014). Semantic fieldwork and lexical universals. Studies
+in Language, 38(1), 80–127. https://doi.org/10.1075/sl.38.1.03god
+Götz, F., Maertens, R., Loomba, S., & van der Linden, S. (2023). Let the algorithm speak:
+How to use neural networks for automatic item generation in psychological scale
+development. Psychological Methods. https://doi.org/10.1037/met0000540
+Gray, A. (2024). ChatGPT “contamination”: Estimating the prevalence of LLMs in the
+scholarly literature (No. arXiv:2403.16887). arXiv. https://doi.org/10.48550/
+arXiv.2403.16887
+Hahn, E. A., Holzner, B., Kemmler, G., Sperner-Unterweger, B., Hudgens, S. A., &
+Cella, D. (2005). Cross-cultural evaluation of health status using item response
+theory: FACT-B comparisons between Austrian and U.S. patients with breast Cancer.
+Evaluation & the Health Professions, 28(2), 233–259. https://doi.org/10.1177/
+0163278705275343
+Hair, J. F., Jr., Black, W. C., Babin, B. J., & Anderson, R. E. (2019). Multivariate data
+analysis. In Multivariate data analysis (eighth edition, p. 785). Cengage Learning.
+Hambleton, R. K., & de Jong, J. H. A. L. (2003). Advances in translating and adapting
+educational and psychological tests. Language Testing, 20(2), 127–134. https://doi.
+org/10.1191/0265532203lt247xx
+Han, K., Colarelli, S. M., & Weed, N. C. (2019). Methodological and statistical advances
+in the consideration of cultural diversity in assessment: A critical review of group
+classification and measurement invariance testing. Psychological Assessment, 31(12),
+1481.
+Hernández, A., Hidalgo, M. D., Hambleton, R. K., & Gómez Benito, J. (2020).
+International test commission guidelines for test adaptation: A criterion checklist.
+Psicothema, 32(3), 390–398.
+Hernandez, I., & Nie, W. (2022). The AI-IP: Minimizing the guesswork of personality
+scale item development through artificial intelligence. Personnel Psychology, 76(4),
+1011–1035. https://doi.org/10.1111/peps.12543
+Ho, B. G. (2024). The power of language: GPT-4’s role in personality item generation and its
+psychometric properties. Bowling Green State University.
+Hoffmann, S., Lasarov, W., & Dwivedi, Y. K. (2024). AI-empowered scale development:
+Testing the potential of ChatGPT. Technological Forecasting and Social Change, 205,
+Article 123488. https://doi.org/10.1016/j.techfore.2024.123488
+Hooper, D., Coughlan, J., & Mullen, M. (2008). Evaluating model fit: A synthesis of the
+structural equation modelling literature (pp. 195–200).
+Hornowska, E. (2018). Testy psychologiczne: Teoria i praktyka. Wydawnictwo Naukowe“
+Scholar”.
+Hou, Y., Zhang, J., Lin, Z., Lu, H., Xie, R., McAuley, J., & Zhao, W. X. (2024). Large
+Language Models are Zero-Shot Rankers for Recommender Systems. In N. Goharian,
+N. Tonellotto, Y. He, A. Lipani, G. McDonald, C. Macdonald, & I. Ounis (Eds.),
+Advances in information retrieval (pp. 364–381). Springer Nature Switzerland.
+https://doi.org/10.1007/978-3-031-56060-6_24.
+Jasiński, A. M., Derbis, R., & Koopmans, L. (2023). Polish adaptation and validation of
+the individual work performance questionnaire (IWPQ). Medycyna Pracy. Workers’
+Health and Safety, 74(5), 389–398. https://doi.org/10.13075/mp.5893.01419
+Kanning, U. P., & Hill, A. (2013). Validation of the organizational commitment
+questionnaire (OCQ) in six languages. Journal of Business and Media Psychology, 4(2),
+11–20.
+Karim, N. H. A., & Noor, N. H. N. M. (2006). Evaluating the psychometric properties of
+Allen and Meyer’s organizational commitment scale: A cross cultural application
+among Malaysian academic librarians. Malaysian Journal of Library & Information
+Science, 11(1), 89–101.
+Kebe, G. Y., Girard, J. M., Liebenthal, E., Baker, J., Torre, F. D.l., & Morency, L.-P.
+(2025). LlaMADRS: Prompting large language models for interview-based depression
+assessment. no. arXiv:2501.03624 arXiv. https://doi.org/10.48550/
+arXiv.2501.03624.
+Kobak, D., González-Márquez, R., Horvát, E.-Á., & Lause, J. (2024). Delving into ChatGPT
+usage in academic writing through excess vocabulary (No. arXiv:2406.07016). arXiv.
+https://doi.org/10.48550/arXiv.2406.07016
+Kojima, T., Gu, S.(S.), Reid, M., Matsuo, Y., & Iwasawa, Y. (2022). Large language models
+are zero-shot reasoners. Advances in Neural Information Processing Systems, 35,
+22199–22213.
+Kowal, J. M., Hurley Bryant, K., Segall, D., & Kantrowitz, T. (2025). Harnessing
+generative AI for assessment item development: Comparing AI-generated and
+human-authored items. International Journal of Selection and Assessment, 33(3),
+Article e70021.
+Krach, S. K., McCreery, M. P., & Guerard, J. (2017). Cultural-linguistic test adaptations:
+Guidelines for selection, alteration, use, and review. School Psychology International,
+38(1), 3–21. https://doi.org/10.1177/0143034316684672
+Krumm, S., Thiel, A. M., Reznik, N., Freudenstein, J.-P., Schäpers, P., & Mussel, P.
+(2024). Creating a psychological test in a few seconds: Can ChatGPT develop a
+psychometrically sound situational judgment test? European Journal of Psychological
+Assessment. Advance online publication https://doi.org/10.1027/1015-575
+9/a000878.
+Kulikowski, K. (2019). One, two or three dimensions of work engagement? Testing the
+factorial validity of the Utrecht work engagement scale on a sample of polish
+employees. International Journal of Occupational Safety and Ergonomics, 25(2),
+241–249.
+Laverghetta, A. J., Luchini, S., Linell, A., Reiter-Palmon, R., & Beaty, R. (2024). The
+creative psychometric item generator: A framework for item generation and
+validation using large language models. no. arXiv:2409.00202 arXiv. https://doi.
+org/10.48550/arXiv.2409.00202.
+
+11
+
+J. Grobelny et al.
+
+Acta Psychologica 261 (2025) 105813
+
+Lazzari, M., Alvarez, J. M., & Ruggieri, S. (2022). Predicting and explaining employee
+turnover intention. International Journal of Data Science and Analytics, 14(3),
+279–292.
+Lee, P., Son, M., & Jia, Z. (2025). AI-powered automatic item generation for
+psychological tests: A conceptual framework for an LLM-based multi-agent AIG
+system. Journal of Business and Psychology. https://doi.org/10.1007/s10869-02510067-y
+Li, C.-J., Zhang, J., Tang, Y., & Li, J. (2024). Automatic item generation for personality
+situational judgment tests with large language models (arXiv:2412.12144). arXiv.
+https://doi.org/10.48550/arXiv.2412.12144
+Lim, W. M. (2024). A typology of validity: Content, face, convergent, discriminant,
+nomological and predictive validity. Journal of Trade Science, 12(3), 155–179.
+https://doi.org/10.1108/JTS-03-2024-0016
+Lodahl, T. M., & Kejnar, M. (1965). The definition and measurement of job involvement.
+Journal of Applied Psychology, 49(1), 24–33. https://doi.org/10.1037/h0021692
+Malkewitz, C. P., Schwall, P., Meesters, C., & Hardt, J. (2023). Estimating reliability: A
+comparison of Cronbach’s α, McDonald’s ωt and the greatest lower bound. Social
+Sciences & Humanities Open, 7(1), Article 100368. https://doi.org/10.1016/j.
+ssaho.2022.100368
+Marmolejo-Ramos, F., Bulut, O., Anunciaçáo, L., Marques, L., Barthakur, A., Kundrat, J.,
+… Pinos-Ullauri, L. A. (2025). From human artefact to machine output: Automating
+the “art” of psychological measurement. Journal of Psychology and AI, 1(1), Article
+2561692.
+Mercurio, Z. A. (2015). Affective commitment as a core essence of organizational
+commitment: An integrative literature review. Human Resource Development Review,
+14(4), 389–414.
+Meyer, J. P., & Allen, N. J. (1991). A three-component conceptualization of
+organizational commitment. Human Resource Management Review, 1(1), 61–89.
+https://doi.org/10.1016/1053-4822(91)90011-Z
+Mielke, S. J., Alyafeai, Z., Salesky, E., Raffel, C., Dey, M., Gallé, M., … Tan, S. (2021).
+Between words and characters: A brief history of open-vocabulary modeling and
+tokenization in NLP (arXiv:2112.10508). arXiv. https://doi.org/10.48550/
+arXiv.2112.10508
+Milfont, T. L., & Klein, R. A. (2018). Replication and reproducibility in cross-cultural
+psychology. Journal of Cross-Cultural Psychology, 49(5), 735–750. https://doi.org/
+10.1177/0022022117744892
+Mirza, N., Waheed, M. W., & Waheed, W. (2023). A new tool for assessing the cultural
+adaptation of cognitive tests: Demonstrating the utility of the Manchester
+Translation Evaluation Checklist (MTEC) through the Mini-Mental State
+Examination Urdu. BJPsych Open, 9(1), e5. https://doi.org/10.1192/bjo.2022.620
+Moss, P. A. (1994). Can there be validity without reliability? Educational Researcher, 23
+(2), 5–12. https://doi.org/10.3102/0013189X023002005
+Mustafa, M. Z., Buntat, Y., Omar, M. A., Razzaq, A. R. A., & Ahad, R. (2019).
+Organizational commitment survey: A confirmatory factorial analysis based on
+vocational colleges teachers sample. International Journal of Engineering and Advanced
+Technology, 8(5C), 279–288.
+Nadeem, M., Bethke, A., & Reddy, S. (2020). StereoSet: Measuring stereotypical bias in
+pretrained language models (arXiv:2004.09456). arXiv. https://doi.org/10.48550/
+arXiv.2004.09456
+Naveed, H., Khan, A. U., Qiu, S., Saqib, M., Anwar, S., Usman, M., … Mian, A. (2024). A
+comprehensive overview of large language models (arXiv:2307.06435). arXiv. https://
+doi.org/10.48550/arXiv.2307.06435
+Nesmeyanov, E., & Petrova, Y. (2019). Cross functional effect between language and
+culture in the understanding of the context in the educational process. SHS Web of
+Conferences, 70, Article 05006.
+Ng, T. W. (2015). The incremental validity of organizational commitment, organizational
+trust, and organizational identification. Journal of Vocational Behavior, 88, 154–163.
+Nichols, D. S., Padilla, J., & Gomez-Maqueo, E. L. (2000). Issues in the cross-cultural
+adaptation and use of the MMPI-2. In Handbook of cross-cultural and multicultural
+personality assessment (pp. 247–266). Routledge.
+Nye, C. D., Roberts, B. W., Saucier, G., & Zhou, X. (2008). Testing the measurement
+equivalence of personality adjective items across cultures. Journal of Research in
+Personality, 42(6), 1524–1536. https://doi.org/10.1016/j.jrp.2008.07.004
+Oeljeklaus, L., Höft, S., & Danner, D. (2025). Comparing psychometric properties of
+expert-developed and AI-generated personality scales. Psychological Test Adaptation
+and Development.. https://doi.org/10.1027/2698-1866/a000095
+Pan, Y., & Wollack, J. A. (2021). An unsupervised-learning-based approach to
+compromised items detection. Journal of Educational Measurement, 58(3), 413–433.
+https://doi.org/10.1111/jedm.12299
+Pan, Y., & Wollack, J. A. (2023). A machine learning approach for the simultaneous
+detection of preknowledge in examinees and items when both are unknown.
+Educational Measurement: Issues and Practice, 42(1), 76–98. https://doi.org/10.1111/
+emip.12543
+Peters, H., & Matz, S. C. (2024). Large language models can infer psychological
+dispositions of social media users. PNAS Nexus, 3(6), Article gae231. https://doi.
+org/10.1093/pnasnexus/pgae231
+Podsakoff, P. M., MacKenzie, S. B., Lee, J.-Y., & Podsakoff, N. P. (2003). Common method
+biases in behavioral research: A critical review of the literature and recommended
+remedies. Journal of Applied Psychology, 88, 879–903. https://doi.org/10.1037/
+0021-9010.88.5.879
+Puchalska-Kamińska, M., Czerw, A., & Roczniewska, M. (2019). Work meaning in self
+and world perspective: A new outlook on the WAMI scale. Social Psychological
+Bulletin, 14(1), 1–29.
+Putnick, D. L., & Bornstein, M. H. (2016). Measurement invariance conventions and
+reporting: The state of the art and future directions for psychological research.
+Developmental Review, 41, 71–90. https://doi.org/10.1016/j.dr.2016.06.004
+
+R Core Team. (2021). R: A language and environment for statistical computing. R
+Foundation for Statistical Computing. https://www.R-project.org/.
+Revelle, W., & Revelle, M. W. (2015). Package ‘psych.’ The Comprehensive R Archive
+Network. 337 p. 338).
+Rosseel, Y. (2012). lavaan: An R package for structural equation modeling. Journal of
+Statistical Software, 48, 1–36.
+Russell-Lasalandra, L. L., Christensen, A. P., & Golino, H. (2024). Generative
+psychometrics via AI-GENIE: Automatic item generation and validation via networkintegrated evaluation. PsyArXiv. Preprints https://doi.org/10.31234/osf.io
+/fgbj4_v2.
+Safeer, A. (2025). Evaluating an AI-driven computerized adaptive testing platform for
+psychological assessment: A randomized controlled trial. International Journal of
+Innovative Research in Computer and Communication Engineering, 13(05). https://doi.
+org/10.15680/IJIRCCE.2025.1305005
+Shin, D., Kim, H., Lee, S., Cho, Y., & Jung, W. (2024). Using large language models to
+detect depression from user-generated diary text data as a novel approach in digital
+mental health screening: Instrument validation study. Journal of Medical Internet
+Research, 26(1), Article e54617. https://doi.org/10.2196/54617
+Shin, D., Kwon, S. K., & Lee, Y. (2025). Examining the efficacy of generative artificial
+intelligence in item generation: Comparative analysis of human-developed and AIgenerated reading tests. Education and Information Technologies, 1–27.
+Shiu, E., Pervan, S. J., Bove, L. L., & Beatty, S. E. (2011). Reflections on discriminant
+validity: Reexamining the Bove et al. (2009) findings. Journal of Business Research, 64
+(5), 497–500. https://doi.org/10.1016/j.jbusres.2010.04.004
+Soper, D. S. (2023). A-priori sample size calculator for structural equation models [computer
+software]. https://www.danielsoper.com/statcalc.
+Souza, A. C.d., Alexandre, N. M. C., & Guirardello, E.d. B. (2017). Psychometric
+properties in instruments evaluation of reliability and validity. Epidemiologia e
+Servicos de Saude: Revista do Sistema Unico de Saude do Brasil, 26(3), 649–659.
+https://doi.org/10.5123/S1679-49742017000300022
+Symeonaki, M., Stamou, G., Kazani, A., Tsouparopoulou, E., & Stamatopoulou, G. (2024).
+Examining the development of attitude scales using large language models (LLMs) (No.
+arXiv:2405.19011). arXiv. https://doi.org/10.48550/arXiv.2405.19011
+Terry, J., Strait, G., Alsarraf, S., Weinmann, E., & Waychoff, A. (2025). Artificial
+intelligence in scale development: Evaluating AI-generated survey items against gold
+standard measures. Current Psychology. https://doi.org/10.1007/s12144-025-08240w
+Tett, R. P., & Meyer, J. P. (1993). Job satisfaction, organizational commitment, turnover
+intention, and turnover: Path analyses based on meta-analytic findings. Personnel
+Psychology, 46(2), 259–293.
+Van Noorden, R., & Perkel, J. M. (2023). AI and science: What 1,600 researchers think.
+Nature, 621(7980), 672–675. https://doi.org/10.1038/d41586-023-02980-0
+Vandenberghe, C. (1996). Assessing organisational commitment in a Belgian context:
+Evidence for the three-dimensional model. Applied Psychology, 45(4), 371–386.
+Velde, D. N. (2021). Job satisfaction and organizational commitment. A case study:
+Professors and administrative staff of the Al Dar university college. International
+journal of research in Human Resource Management, 3(2), 10–19. https://doi.org/
+10.33545/26633213.2021.v3.i2a.65
+Thomas-Presswood, T. N., Sasso, J., & Gin, G. (1997). Cultural issues in the intellectual
+assessment of children from diverse cultural backgrounds. Journal of Social Distress
+and Homelessness, 6(2), 113–127. https://doi.org/10.1007/BF02938531
+van de Vijver, F., & Tanzer, N. K. (2004). Bias and equivalence in cross-cultural
+assessment: An overview. European Review of Applied Psychology, 54(2), 119–135.
+https://doi.org/10.1016/j.erap.2003.12.004
+Walczak, R., & Derbis, R. (2017). Podstawowe samowartościowanie-walidacja polskiej
+wersji skali do pomiaru Core Self-Evaluations. Czasopismo Psychologiczne, 23(1).
+Wang, X., Zhou, Y., & Zhou, G. (2024). Enhancing health assessments with large
+language models: A methodological approach. Applied Psychology. Health and WellBeing, 1–23. https://doi.org/10.1111/aphw.12602
+Wasserman, J. D., & Bracken, B. A. (2003). Psychometric characteristics of assessment
+procedures. In Handbook of psychology (pp. 43–66). John Wiley & Sons, Ltd. https://
+doi.org/10.1002/0471264385.wei1003.
+Weidinger, L., Uesato, J., Rauh, M., Griffin, C., Huang, P.-S., Mellor, J., … Gabriel, I.
+(2022). Taxonomy of Risks posed by Language Models. Proceedings of the 2022 ACM
+conference on fairness, Accountability, and Transparency, 214–229. https://doi.org/
+10.1145/3531146.3533088
+Wierzbicka, A. (1985). Different cultures, different languages, different speech acts:
+Polish vs. English. Journal of Pragmatics, 9(2), 145–178. https://doi.org/10.1016/
+0378-2166(85)90023-2
+Williams, N., Ivanov, S., & Buhalis, D. (2023). Algorithmic ghost in the research shell: Large
+language models and academic knowledge creation in management research (arXiv:
+2303.07304). arXiv. https://doi.org/10.48550/arXiv.2303.07304
+Wnuk, M. (2017). Właściwości psychometryczne polskiej wersji skali przywiązania do
+organizacji. Organizacja i Kierowanie, 177(3), 109–125.
+Xi, C., Guo, W., Tan, Q., Tu, D., & Cai, Y. (2024). A Mixture Response Model for
+Identifying Item Preknowledge. Journal of Educational and Behavioral Statistics, 0(0).
+https://doi.org/10.3102/10769986241268460
+Xie, Q., Wang, Z., Feng, Y., & Xia, R. (2024). Ask Again, Then Fail: Large Language Models’
+Vacillations in Judgment (arXiv:2310.02174). arXiv. https://doi.org/10.48550/
+arXiv.2310.02174
+Xu, H., & Tracey, T. J. (2017). Use of multi-group confirmatory factor analysis in
+examining measurement invariance in counseling psychology research. The European
+Journal of Counselling Psychology, 6(1), 75–82.
+Ye, H., Xie, Y., Ren, Y., Fang, H., Zhang, X., & Song, G. (2025). Measuring human and AI
+values based on generative psychometrics with large language models. Proceedings of
+
+12
+
+J. Grobelny et al.
+
+Acta Psychologica 261 (2025) 105813
+
+the AAAI Conference on Artificial Intelligence, 39(25), 26400–26408. https://doi.org/
+10.1609/aaai.v39i25.34839
+Young, R., Courtney, E., Kah, A., Wilkerson, M., & Chen, Y.-H. (2025). Content and item
+response theory analysis of ChatGPT-4-generated multiple-choice items. Teaching of
+Psychology, 52(3), 305–313. https://doi.org/10.1177/00986283241311220
+Yu, H., Yu, C., Wang, Z., Zou, D., & Qin, H. (2024, July). Enhancing healthcare through
+large language models: A study on medical question answering. In In 2024 IEEE 6th
+international conference on power, intelligent computing and systems (ICPICS) (pp.
+895–900). IEEE.
+
+Zalewska, A. (2003). Skala Satysfakcji z Pracy–pomiar poznawczego aspektu ogólnego
+zadowolenia z pracy. Acta Universitatis Lodziensis, 7, 49–61.
+Zeeshan, M., Iqbal, M., Shamim-ur-Rasul, S., Sami, F., Malik, G. M., Imdad, D., &
+Sherazi, G. Z. (2024). A comparative analysis of psychometric properties in AIgenerated and teacher-made MCQs test. Kurdish Studies, 12(4), 1808–1820. https://
+doi.org/10.53555/ks.v12i4.3653
+Zhu, Y., Moniz, J. R. A., Bhargava, S., Lu, J., Piraviperumal, D., Zhang, Y., … Tseng, B. H.
+(2024). Can large language models understand context? arXiv. preprint arXiv:
+2402.00858.
+
+13
+
+

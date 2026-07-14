@@ -1,0 +1,889 @@
+Behavior Research Methods (2024) 56:1838–1851
+https://doi.org/10.3758/s13428-023-02122-4
+
+
+
+
+The comparison data forest: A new comparison data approach
+to determine the number of factors in exploratory factor analysis
+David Goretzko1,2 · John Ruscio3
+
+Accepted: 3 April 2023 / Published online: 15 June 2023
+© The Author(s) 2023
+
+
+Abstract
+Developing psychological assessment instruments often involves exploratory factor analyses, during which one must determine
+the number of factors to retain. Several factor-retention criteria have emerged that can infer this number from empirical data.
+Most recently, simulation-based procedures like the comparison data approach have shown the most accurate estimation of
+dimensionality. The factor forest, an approach combining extensive data simulation and machine learning modeling, showed
+even higher accuracy across various common data conditions. Because this approach is very computationally costly, we
+combine the factor forest and the comparison data approach to present the comparison data forest. In an evaluation study, we
+compared this new method with the common comparison data approach and identified optimal parameter settings for both
+methods given various data conditions. The new comparison data forest approach achieved slightly higher overall accuracy,
+though there were some important differences under certain data conditions. The CD approach tended to underfactor and the
+CDF tended to overfactor, and their results were also complementary in that for the 81.7% of instances when they identified
+the same number of factors, these results were correct 96.6% of the time.
+
+Keywords Exploratory factor analysis · Comparison data · Factor retention · Number of factors · Factor forest ·
+Machine learning
+
+
+Introduction                                                      of utmost importance, especially when an EFA is used to
+                                                                  construct or validate an instrument used for psychological
+Psychological research relies heavily on latent variables that    assessment. In cases where too few factors are extracted, the-
+are unobservable and therefore measured using manifest indi-      oretically interesting subscales of psychological constructs
+cators. Exploratory factor analysis (EFA) models the links        could be missed, while overfactoring (i.e., extracting too
+between one or more latent variables, or factors, and a set of    many factors) may lead to blurred concepts with an artificially
+manifest indicators. Hence, it is frequently used in the devel-   increased number of subfacets. A clear conceptualization of
+opment of psychological scales and assessment tools. When         the respective latent variables and an accurate factor reten-
+performing an EFA, several methodological decisions have          tion are essential prerequisites for trustworthy psychological
+to be made by the researcher (see Fabrigar, Wegener, Mac-         assessment and valid measurement instruments for use in
+Callum, & Strahan, 1999; Goretzko, Pham, & Bühner, 2019),         clinical settings. Thus, researchers who develop these instru-
+and determining the number of factors seems to be the most        ments have to be very careful when determining the number
+difficult (Henson & Roberts, 2006; Zwick & Velicer, 1986).        of factors to retain in EFA.
+That said, retaining the correct number of factors should be         Since EFA is often used in contexts in which theoretical
+                                                                  guidance about dimensionality is not available, the number
+                                                                  of factors has to be estimated from the data. Traditional
+B David Goretzko
+    d.goretzko@uu.nl                                              approaches like the Kaiser–Guttman rule (Kaiser, 1960) –
+                                                                  also known as the eigenvalue-greater-one rule – or the scree
+1   LMU Munich, Department of Psychology, Munich, Germany         test (Cattell, 1966) are heuristic rules based on the empiri-
+2   Utrecht University, Department of Methodology and             cal eigenvalue distribution. Parallel analysis (Horn, 1965), as
+    Statistics, Padualaan 14, 3584 Utrecht, CH, The Netherlands   well as more modern approaches like comparison data (CD,
+3   The College of New Jersey, Ewing, USA                         Ruscio & Roche, 2012), make use of the larger computational
+
+
+123
+Behavior Research Methods (2024) 56:1838–1851                                                                                          1839
+
+
+resources now available to simulate reference eigenvalues          ical data that exceed the mean eigenvalues for the parallel
+based on characteristics of the empirical data. Another new        analysis of all samples of random data. The parallel anal-
+and promising method, the empirical Kaiser criterion (EKC,         ysis approach works comparably well because it takes into
+Braeken & Van Assen, 2017) also compares the empirical             account sampling error (Turner, 1998). Simulation studies
+eigenvalues with reference values that are a function of the       (e.g., Auerswald & Moshagen, 2019; Zwick & Velicer, 1986)
+variables-to-sample-size ratio and a correction term for the       usually show that parallel analysis is among the most accu-
+variance that previous factors have already accounted for.         rate factor retention criteria.
+   Focusing on the eigenvalue distribution to determine the           The CD approach also generates a large number of data
+number of factors makes sense because eigenvalues of a cor-        sets in order to obtain reference eigenvalues, but it differs
+relation matrix are directly linked to the explained variance of   from parallel analysis in three ways. First, whereas the ran-
+a component in principal component analysis (PCA). How-            dom data in parallel analysis are normally distributed1 , the
+ever, as Braeken and Van Assen (2017) point out, sampling          CD approach reproduces each empirical indicator’s distribu-
+error deteriorates the informational value of the empirical        tion by using bootstrap methods (Efron & Tibshirani, 1993).
+eigenvalue distribution. Hence, Goretzko and Bühner (2020)         Second, whereas the random data in parallel analysis are
+developed a new factor retention criterion that is based on        uncorrelated, the CD approach reproduces the indicator cor-
+an extensive simulation step and a subsequent step where           relation matrix. Third, whereas parallel analysis provides one
+a machine learning model is trained to predict the number          set of reference eigenvalues, the CD approach provides multi-
+of factors based on the empirical eigenvalues and additional       ple sets of reference eigenvalues by incrementing the number
+data characteristics. Their evaluation study showed that this      of factors used to reproduce the indicator correlation matrix.
+new approach, called a factor forest, is superior to common        The first population of comparison data is generated using
+retention criteria reaching almost perfect accuracy over a         one factor, many random samples are drawn from this popu-
+broad range of conditions. However, because the creation of        lation, and a set of reference eigenvalues is obtained in order
+a factor forest is computationally costly, pre-trained machine     to calculate their fit to those of the empirical data. Next, a
+learning models would have to be provided for practitioners        new population of comparison data is generated using two
+(Goretzko & Bühner, 2022). Accordingly, if the empirical           factors, random samples are drawn, reference eigenvalues are
+data do not meet the distributional assumptions of the training    obtained, and fit is calculated. Goodness of fit is described by
+data used to generate these pre-trained models, their applica-     the eigenvalues’ root mean squared residuals (RMSR) where
+bility might be impaired and a new model would have to be          the residuals are defined as the difference between an eigen-
+trained using newly simulated training data. The complete          value and its corresponding reference eigenvalue (i.e., the
+process would be very time-consuming.                              eigenvalue of a comparison data set). This iterative process of
+   To circumvent this issue, we combine the factor forest with     increasing the number of factors used to reproduce the indi-
+the CD approach that is able to adapt to the empirical data        cator correlation matrix continues until fit fails to improve
+and does not require strong distributional assumptions. In an      significantly (i.e., until the RMSR values of the k-factor solu-
+extensive simulation study, we compare this new combined           tion are not deemed significantly higher on average than those
+approach, called a comparison data forest (CDF), with the          of the (k+1)-factor solution). For example, if using three fac-
+traditional CD approach. We derive recommendations for             tors fails to improve fit relative to what was observed using
+the hyperparameter settings of both factor retention criteria      two factors, this suggests that one should retain only two
+as well as suggestions for when to use which approach.             factors. In their evaluation study, Ruscio and Roche (2012)
+                                                                   found that the CD approach outperformed parallel analysis,
+Comparison data – Using reference eigenvalues                      as well as the many other techniques (Kaiser–Guttman rule,
+to determine the number of factors                                 optimal coordinates, the minimum average partial test, AIC,
+                                                                   BIC, and sequential χ 2 tests) they tested, across a wide range
+Ruscio and Roche (2012) introduced the CD approach as              of challenging data conditions.
+a way to improve what was then widely considered the
+best available method for determining the number of fac-
+tors to retain in EFA, namely parallel analysis. When using
+parallel analysis, one generates a large number of random          1 This distinction between CD and parallel analysis only holds if the
+
+data sets with the same number of cases and variables as           classic version of parallel analysis is considered. There are also imple-
+                                                                   mentations of parallel analysis using resampled data (i.e., permutation-
+the empirical data, but in which the data are normally dis-
+                                                                   based parallel analysis) that keep intact the marginal distributions of
+tributed, uncorrelated variables. One estimates the number of      the variables. For a comparison of parallel analysis implementations,
+factors to retain as the number of eigenvalues for the empir-      interested readers are referred to Lim and Jahng (2019).
+
+
+
+
+                                                                                                                               123
+1840                                                                                                  Behavior Research Methods (2024) 56:1838–1851
+
+
+The factor forest – Using machine learning models                             independent variables. Training a machine learning model
+to determine the number of factors                                            means that the multidimensional link between the features
+                                                                              (data characteristics) and the number of underlying factors
+Goretzko and Bühner (2020) proposed a new approach to                         is learned based on the fully labeled training data. In other
+factor retention that makes use of the predictive power of                    words, the relationship between data characteristics that can
+machine learning algorithms. The first step of their approach                 be observed for every empirical data set and the number of
+is to simulate numerous data sets with a known factorial struc-               underlying factors is statistically modeled and reflected by
+ture that cover all important data conditions of the application              the complex model structure of the trained model. To validate
+context2 . Data characteristics (the predictor variables which                this model, it must be successfully evaluated using a new test
+are called features in the context of machine learning appli-                 sample of simulated data sets. Once validated, it can be used
+cations) that are relevant in the factor retention process are                to determine (i.e., to predict) the number of factors on new
+then extracted for each simulated data set (inter alia eigenval-              samples of empirical data.
+ues and matrix norms of the correlation matrix, the sample
+size, and the number of manifest variables). As described                     The comparison data forest – A combined approach
+above, the eigenvalues of the empirical correlation matrix
+are directly related to the variance explained by the respective              In this paper, we want to evaluate whether the machine
+component in PCA (equivalently, eigenvalues of a reduced                      learning modeling approach can be used within the CD
+correlation matrix with communalities in the diagonal are                     framework. We call the new, combined approach the com-
+indicative of the variance explained by the respective factor in              parison data forest (CDF) as it is a combination of CD and
+an EFA model). Braeken and Van Assen (2017) also consider                     the factor forest, or rather a similar random forest implemen-
+the size of previous eigenvalues and the sample size when cal-                tation (see the pseudo-code below). For CDF, populations
+culating the reference eigenvalues for their criterion, which                 with a known factorial structure are simulated as described
+is why the latter and features that describe the explained vari-              for the original CD approach using the GenData function
+ance are also included in the feature set. Furthermore, since                 provided by Ruscio and Roche (2012). GenData is an iter-
+EFA can simply be described as a decomposition of the mani-                   ative algorithm that aims at finding a k-factor solution that
+fest correlation matrix, other features that describe the “size”              best reproduces the empirical correlation matrix assuming
+and composition of the correlation matrix are calculated. One                 normally distributed latent factors and an unrotated solu-
+example is the Gini coefficient (Gini, 1921) which is usually                 tion (i.e., orthogonal factors and potentially cross-loadings),
+used to quantify inequalities in distributions. In this context,              but taking into account skewed item distributions contrary
+it can be used to assess the inequality of all bivariate manifest             to parallel analysis. Specifically, populations ranging from 1
+correlations, since if unidimensionality holds, all correlations              to kmax factors are simulated and then Nr ep samples (each
+should be similar and the more latent factors, the more clus-                 with the same sample size as the empirical data set) are drawn
+ters can be found in the correlation matrix. All features are                 from each population. Several features (e.g., eigenvalues and
+described more thoroughly in the original article by Goretzko                 matrix norms)4 are calculated for these Nr ep × kmax com-
+and Bühner (2020).
+    These features and the known number of factors are then                   4 The following features were used for the comparison data forest
+
+stored as the columns in one combined training data set,                      implementation in this study: the sample size, the number of items
+which contains one row for each data set simulated in the                     p, the number of eigenvalues of the correlation matrix that are greater
+                                                                              than one (which is the Kaiser–Guttman rule), the relative size of each of
+first step (i.e., each simulated data set is one observation in               the first three eigenvalues in a cumulative manner (i.e., the first eigen-
+the training data). A machine learning model is trained3 to                   value alone, the first two eigenvalues together, the first three eigenvalues
+predict the number of factors using the extracted features as                 together), the number of eigenvalues greater than 0.7 (which is a modi-
+                                                                              fied variant of the Kaiser–Guttman rule that is sometimes used instead),
+2 In their paper, Goretzko and Bühner (2020) simulated multivariate
+                                                                              the standard deviation of the eigenvalues, the number of eigenvalues that
+                                                                              explain 50%/75% of indicator variance, the L 1 -norm/ the Frobenius-
+normal data with varying sample sizes (N ∈ [200, 1000]), numbers              norm / the maximum-norm / the spectral-norm / the determinant of
+of manifest variables (k ∈ [4, 80]), numbers of underlying factors            the empirical correlation matrix, the number of correlations below 0.1,
+( p ∈ [1, 8]), different loading patterns (patterns following simple          the average of the initial communality estimates based on the squared
+structure with varying communalities, but also complex patterns with          multiple correlations, the average of the off-diagonal correlations, the
+cross-loadings and correlated factors). They used the mvtnorm package         measure of sampling adequacy by Kaiser (1970), the Gini-coefficient
+(Genz et al., 2018) for data simulation. We oriented ourselves to their       (Gini, 1921) of the correlation matrix, the Kolm measure of inequality
+simulation approach for comparisons (see also our “Methods” section).         of the correlation matrix (Kolm, 1999), all p eigenvalues of the cor-
+3 Depending on the machine learning algorithm, some hyperparameters           relation matrix as well as all p eigenvalues of the reduced correlation
+(parameters of the algorithm that determine how the model structure is        matrix. We decided to rely on the full feature set of Goretzko and Büh-
+formed – in tree-based models, for example, this could be the maximum         ner (2020) that has proven to result in a very accurate prediction of
+depth a tree can grow) can be tuned in this step to increase the predictive   the number of factors (excluding only the two resource-intensive factor
+performance of the resulting model.                                           retention criteria; i.e., parallel analysis and comparison data).
+
+
+123
+Behavior Research Methods (2024) 56:1838–1851                                                                                                  1841
+
+
+parison data sets and used to train a machine learning model.                  there is obviously a limit in usefulness when increasing Nr ep
+We used the feature set suggested by Goretzko and Bühner                       and N population (especially, since increasing these numbers
+(2020) and chose a random forest, as implemented in the                        will increase computational costs as well). When choosing
+ranger package (Wright & Ziegler, 2017), as the machine                        N population , the sample size of the empirical data set has to
+learning modeling method due to its predictive power and                       be considered as well, since all comparison data sets that
+relatively low computational costs. To further reduce the                      are drawn from the simulated populations have the same
+computational costs of this approach, we relied on the well-                   size as the empirical data set. Accordingly, samples that are
+established default settings of the random forest in the ranger                much larger than those considered in this paper may call for
+package (Wright & Ziegler, 2017) – namely, setting the num-                    greater population sizes N population . Since machine learning
+ber of trees to 500 and using the (rounded down) square root                   models “learn” patterns from large numbers of examples,
+                                                          √
+of the number of features for each split (m tr y =  p)                       the number of comparison data sets Nr ep that yields a good
+as suggested by Breiman (1999). Subsequently, the trained                      performance might actually be higher for CDF than for CD.
+model can be used to predict the number of factors to retain                   While α is no longer a hyperparameter for CDF, the new
+for an empirical data set using the same features as indepen-                  approach has additional hyperparameters that determine how
+dent variables (i.e., the same features have to be calculated                  the internal machine learning model (i.e., the random forest
+for the empirical data set).                                                   in this case) actually looks like. For a random forest, the
+                                                                               number of decision trees, the tree depth or the proportion
+                                                                               of variables considered for each split are the most important
+Algorithm 1 Comparison data forest                                             hyperparameters. Contrary to other machine learning algo-
+Simulation:
+                                                                               rithms, random forests perform comparably well with default
+for all k ∈ [1, kmax ] do
+   Use GenData to create Population with N Pop observations based on           hyperparameters (e.g., Probst, Wright, & Boulesteix, 2019)
+   k Factors                                                                   and are therefore considered a good “off-the-shelf” option
+   for all j ∈ [1, Nr ep ] do                                                  that does not require extensive tuning (e.g., Sterner, Goret-
+      Draw Sample DTk j (same Size as Empirical Data Set) from Pop-
+                                       f eat
+                                                                               zko, & Pargent, 2021). In our implementation, we set the
+ulation and Calculate Feature Set X k j
+                                                                               number of trees to 500 and the number of variables consid-
+for all k, j do
+   traindata = bind(X k j )
+                            f eat                                              ered for each split to the (rounded down) square root of the
+Training:                                                                      number of features (Breiman, 2001).
+Train Random Forest (rf) on traindata
+Prediction:
+                                                     f eat                     Aim of the study
+Step 1: Calculate Feature Set for Empirical Data X emp
+                                                                       f eat
+Step 2: Predict k with trained rf and Extracted Features: k̂ = r f (X emp )
+                                                                               In this paper, we want to find optimal default hyperparameters
+                                                                               for both comparison data approaches (CD and CDF) and
+                                                                               evaluate their performance under various data conditions.
+                                                                               Hence, the aim of this study is to establish a new variant
+Hyperparameters of the comparison data                                         of comparison data-based factor retention and to compare
+approaches                                                                     it to the initial CD method. For sake of clarity and to save
+                                                                               computational costs, we do not expand the simulation study
+Both CD and CDF have hyperparameters that influence how                        to the previously described factor forest approach5 .
+each method performs and how computationally costly the
+respective approach is. When using the initial CD approach,
+researchers have to set three parameters – the significance                    Methods
+level for the internal Mann–Whitney U test (α), the size of
+the population N population that is simulated for each fac-                    To evaluate under which conditions CDF is a useful new
+tor solution and the number of comparison data sets that are                   approach to determine the number of factors in EFA and
+drawn from each of these populations Nr ep . While the impact                  to find appropriate default values for Nr ep and N population ,
+of α appears to be quite clear – higher values increase the                    we simulated multivariate normal data using the mvtnorm
+statistical power of the test, but also increase the probabil-                 package (Genz et al., 2018) for various data conditions. We
+ity for a Type I error, therefore yielding a stronger tendency                 varied the true number of factors k ∈ {1, 3, 5}, the sample
+of overfactoring (and vice versa for smaller values) – both                    size N ∈ {250, 500, 1000}, the number of variables per factor
+the population size N population and Nr ep have a less clear
+influence on CD. In both cases (CD and CDF), higher val-                       5 Since we used comparable data conditions as Goretzko and Bühner
+ues seem beneficial as they promise less randomness in the                     (2020), interested readers can compare the performance of the compar-
+comparison data sets (i.e., a reduced sampling error), but                     ison data approaches to the more cumbersome factor forest approach.
+
+
+                                                                                                                                        123
+1842                                                                                            Behavior Research Methods (2024) 56:1838–1851
+
+
+Table 1 Overall accuracy of CD with different parameter settings           lation and all our analyses as well as writing the manuscript.
+α      Nr ep = 250      Nr ep = 500     Nr ep = 1000      Nr ep = 2000     For each data condition and each parameter setting of both
+                                                                           methods, we calculated the accuracy of the factor retention
+.05    0.843            0.848           0.850             0.849            process (i.e., the relative frequency of the correctly deter-
+.10    0.836            0.842           0.844             0.844            mined number of factors) as well as bias (i.e., the relative
+.20    0.818            0.826           0.832             0.833            frequency and magnitude of over- or underfactoring). The
+.30    0.797            0.813           0.819             0.822            code for our simulation study as well as the implementation
+Note. α is significance level used in the internal Mann–Whitney U test     of the comparison data forest can be found in the electronic
+in the CD approach, while Nr ep denotes the number of replications or      supplementary material.
+comparison data sets
+
+
+vp f ∈ {4, 7}, the inter-factor correlation ρ ∈ {0, 0.2, 0.5}, as          Results
+well as the loading magnitudes of primary and cross-loadings
+according to the simulation settings of Goretzko and Bühner                Comparison data
+(2020). Standardized primary loadings were sampled from
+three categories (small: [0.35, 0.5], medium: [0.5, 0.65] and              Table 1 shows the overall accuracy of CD for all combinations
+large [0.65, 0.8]) and cross-loadings were sampled/selected                of evaluated parameter values. Averaged over all conditions,
+from three categories (zero cross-loadings, small: [0, 0.1],               CD attained the highest overall accuracy with a comparably
+and medium: [0.1, 0.2]). In total, we evaluated 3726 data                  low significance level α and a large value of comparison data
+conditions with 500 replications each.                                     sets Nr ep . However, differences were very small, especially
+   We analyzed the simulated data with common CD (using                    with α ≤ .10. Interestingly, the lower α was, the more biased
+the R code provided by Ruscio & Roche, 2012) vary-                         the estimation (average bias for α = .05: −0.26 and for α =
+ing the parameters α ∈ {0.05, 0.1, 0.2, 0.3} and Nr ep ∈                   .30: −0.17). Put differently, CD tended to underfactor with
+{250, 500, 1000, 2000} and the new CDF approach with                       all parameter settings, and this tendency that was stronger
+five different parameter settings for Nr ep and two values                 with low α-levels (on average CD suggested too few factors
+for N population (nr ep ∈ {100, 1000, 2000, 4000, 5000} and                in 13.10% of the cases when α = .05 compared to 11.90%
+N population ∈ {10000, 25000}). To assess the performance                  when α = .30). Given that the criterion for advancing to
+of CD and CDF in comparison to non-simulation-based fac-                   a larger number of factors is significant improvement in fit,
+tor retention criteria, we also calculated the EKC for each                and that using a lower α-level makes it more difficult to attain
+simulated data set.                                                        statistical significance, it is not surprising that underfactoring
+                                                                           was more common with lower α-levels.
+                                                                              Figure 1 presents the accuracy of CD in greater detail for
+Data analysis
+                                                                           different sample sizes, numbers of factors, variables per fac-
+                                                                           tor, and between-factor correlations. The differences between
+We used R (Version 4.2.2; R Core Team, 2020) and the
+                                                                           the four α-level settings were rather small, though in single-
+R-packages batchtools (Bischl, Lang, Mersmann, Rahnen-
+                                                                           factor conditions a smaller α seems to be clearly favorable.
+führer, & Weihs, 2015; Version 0.9.15; Lang, Bischl, & Sur-
+                                                                           Oddly, when k = 1, CD showed a higher accuracy with
+mann, 2017), dae (Version 3.2.13; Brien, 2020), data.table
+                                                                           smaller sample sizes; for k ≥ 3 larger samples yielded
+(Version 1.14.6; Dowle & Srinivasan, 2019), ggplot2 (Ver-
+                                                                           higher accuracies. Higher amounts of overdetermination
+sion 3.4.0; Wickham, 2016), mvtnorm (Version 1.1.3; Genz
+                                                                           (more variables per factor), as well as smaller between-factor
+& Bretz, 2009), papaja (Version 0.1.1; Aust & Barth, 2020),
+                                                                           correlations, fostered more accurate factor retention.
+and tinylabels (Version 0.2.3; Barth, 2022) for the data simu-
+
+6 We analyzed all conditions that can be defined when crossing all
+                                                                           Comparison data forest
+design factors: 3 numbers of factors × 3 sample sizes × 2 numbers of
+variables per factor × 3 between-factor correlations × 3 different load-   In Table 2, the overall accuracy of the new CDF approach
+ing magnitudes for primary loadings × 3 different loading magnitudes       is displayed for the parameter values of N population (num-
+for cross-loadings = 486 conditions. Excluding conditions that are not     ber of observations in each simulated population) and Nr ep
+meaningful (i.e., unidimensionality and correlated factors or high pri-
+mary loadings and medium-sized cross-loadings in combination with          (number of comparison data sets simulated for each fac-
+highly correlated factors and five latent variables which would yield      tor solution). As expected, the number of comparison data
+communalities greater than one), we ended up with 372 conditions.          sets drawn from each simulated population (Nr ep ) was pos-
+
+
+
+
+123
+Behavior Research Methods (2024) 56:1838–1851                                                                                                                              1843
+
+
+                   k: 1      k: 1      k: 3      k: 3      k: 3      k: 3      k: 3      k: 3      k: 5      k: 5         k: 5      k: 5        k: 5       k: 5
+
+                  vpf: 4    vpf: 7    vpf: 4    vpf: 4    vpf: 4    vpf: 7    vpf: 7    vpf: 7    vpf: 4    vpf: 4       vpf: 4    vpf: 7      vpf: 7     vpf: 7
+
+                   ρ:0       ρ:0       ρ:0      ρ:0.2     ρ:0.5      ρ:0      ρ:0.2     ρ:0.5      ρ:0      ρ:0.2        ρ:0.5      ρ:0        ρ:0.2      ρ:0.5
+
+            1.0
+
+
+
+
+            0.8                                                                                                                                                        α
+
+
+
+ Accuracy
+                                                                                                                                                                           .05
+                                                                                                                                                                           .10
+                                                                                                                                                                           .20
+                                                                                                                                                                           .30
+
+
+
+            0.6
+
+
+
+
+              25 0         0
+                          25 0
+                             0       0
+                                    25 0
+                                       0       0
+                                              25 0
+                                                 0       0
+                                                        25 0
+                                                          0        0
+                                                                  25 0
+                                                                     0       0
+                                                                            25 0
+                                                                               0       0
+                                                                                      25 0
+                                                                                         0       0
+                                                                                                25 0
+                                                                                                   0       0
+                                                                                                          25 0
+                                                                                                            0        0
+                                                                                                                    25 0
+                                                                                                                       0          0
+                                                                                                                                 25 0
+                                                                                                                                   0        0
+                                                                                                                                           25 0
+                                                                                                                                              0         0
+                                                                                                                                                       25 0
+                                                                                                                                                          0       00
+              50 0   10   50 0   10 50 0   10 50 0   10 50 0   10 50 0   10 50 0   10 50 0   10 50 0   10 50 0   10 50 0    10   50 0   10 50 0    10  50 0   10
+
+                                                                              Sample Size
+
+Fig. 1 Accuracy of CD for different sample sizes, α-levels, numbers of factors (k), variables per factor (vpf) and between-factor correlations (ρ)
+
+
+itively associated with the overall accuracy of the approach.                                a rather small but positive bias, which means a small ten-
+Increasing this number from 100 to 1000 boosted the per-                                     dency for overfactoring (i.e., extracting too many factors).
+formance by 3.7 percentage points, but increasing it further                                 Table 3 displays the average bias of the CDF approach
+led to much smaller improvement (i.e., going all the way to                                  given different parameter settings. CDF with Nr ep = 100
+Nr ep = 5000 only yielded an additional 0.5 percentage point                                 showed a substantial tendency to overfactor (it suggested
+improvement). Increasing the size of the simulated popula-                                   too many factors in 10.81% of the cases), with an overall
+tions from 10, 000 to 25, 000 did not improve accuracy; in                                   bias of 0.07 when N population = 10, 000 and 0.09 when
+fact, accuracy was lower by up to 0.33 percentage points.                                    N population = 25, 000. In comparison to CD, this average
+Contrary to the classical CD approach, the CDF showed
+
+
+Table 2 Overall accuracy of
+                                                 N population        Nr ep = 100         Nr ep = 1000            Nr ep = 2000              Nr ep = 4000            Nr ep = 5000
+CDF with different parameter
+settings                                         10000               0.821               0.858                   0.860                     0.863                   0.863
+                                                 25000               0.818               0.856                   0.860                     0.862                   0.862
+                                                 Note. N population is the population size within the CDF approach, while Nr ep denotes the number of replica-
+                                                 tions or comparison data sets that are drawn per factor solution
+
+Table 3 Bias of CDF with
+                                                 N population        Nr ep = 100         Nr ep = 1000            Nr ep = 2000              Nr ep = 4000            Nr ep = 5000
+different parameter settings
+                                                 10000               0.069               0.018                   0.013                     0.011                   0.010
+                                                 25000               0.090               0.035                   0.028                     0.025                   0.025
+                                                 Note. N population is the population size within the CDF approach, while Nr ep denotes the number of replica-
+                                                 tions or comparison data sets that are drawn per factor solution
+
+
+                                                                                                                                                                       123
+1844                                                                                                                       Behavior Research Methods (2024) 56:1838–1851
+
+
+                   k: 1      k: 1      k: 3      k: 3      k: 3      k: 3      k: 3      k: 3        k: 5      k: 5         k: 5      k: 5      k: 5       k: 5
+
+                  vpf: 4    vpf: 7    vpf: 4    vpf: 4    vpf: 4    vpf: 7    vpf: 7    vpf: 7      vpf: 4    vpf: 4       vpf: 4    vpf: 7    vpf: 7     vpf: 7
+
+                   ρ:0       ρ:0       ρ:0      ρ:0.2     ρ:0.5      ρ:0      ρ:0.2     ρ:0.5        ρ:0      ρ:0.2        ρ:0.5      ρ:0      ρ:0.2      ρ:0.5
+
+            1.0
+
+
+
+
+            0.8
+                                                                                                                                                                       Nrep
+
+                                                                                                                                                                              100
+
+
+ Accuracy
+                                                                                                                                                                              1000
+                                                                                                                                                                              2000
+
+            0.6                                                                                                                                                               4000
+                                                                                                                                                                              5000
+
+
+
+
+            0.4
+
+
+
+
+              25 0         0
+                          25 0
+                             0       0
+                                    25 0
+                                       0       0
+                                              25 0
+                                                 0       0
+                                                        25 0
+                                                          0        0
+                                                                  25 0
+                                                                     0       0
+                                                                            25 0
+                                                                               0       0
+                                                                                      25 0
+                                                                                         0       0
+                                                                                                25 0
+                                                                                                  0          0
+                                                                                                            25 0
+                                                                                                               0       0
+                                                                                                                      2500          0
+                                                                                                                                   25 0
+                                                                                                                                     0        0
+                                                                                                                                             25 0
+                                                                                                                                                0       0
+                                                                                                                                                       25 0
+                                                                                                                                                          0       00
+              50 0   10   50 0   10 50 0   10 50 0   10 50 0   10 50 0   10 50 0   10 50 0   10 50 0     10 50 0   10 50 0    10   50 0   10 50 0   10 50 0   10
+
+                                                                              Sample Size
+
+Fig. 2 Accuracy of CDF for different sample sizes, Nr ep values, number of factors (k), variables per factor (vpf) and between-factor correlations (ρ)
+
+
+deviation from the true number of factors was rather small,                                  as conditions with k = 5, high between-factor correlations
+though (bias between −0.292 and −0.168).                                                     (ρ = 0.5) and greater sample sizes. For k ≥ 3, the impact of
+    Figure 2 presents the accuracy of CDF in greater detail                                  Nr ep was negligible (if one excludes Nr ep = 100) – only a
+for varying Nr ep -settings against the sample sizes given                                   minor tendency that smaller values (i.e., Nr ep = 1000) could
+the different numbers of factors, variables per factor, and                                  be preferable in cases with k = 3 could be identified.
+between-factor correlations. For most conditions, there was                                     However, in single-factor conditions (k = 1), immense
+little to no difference in performance with regard to different                              differences in accuracy were present. In conditions with very
+values of Nr ep , though Nr ep = 100 was an exception in that                                few manifest variables, CDF struggled to correctly iden-
+accuracy was notably lower in conditions with k = 3 and lit-                                 tify unidimensionality. The tendency to overfactor was more
+tle overdetermination (variables per factor vp f = 4) as well                                severe the smaller Nr ep and the greater the sample size (bias
+
+
+Table 4 Accuracy and Bias of
+                                                 Method                       Acc1               Bias1             Acc3              Bias3               Acc5            Bias5
+CD and CDF with selected
+parameter settings (EKC as                       C D.30/2000                  0.852              0.177             0.871             −0.104              0.761           −0.354
+baseline)
+                                                 C D.05/1000                  0.924              0.079             0.886             −0.144              0.787           −0.466
+                                                 C D F5000/10000              0.783              0.428             0.895             0.004               0.857           −0.132
+                                                 EKC                          0.998              0.002             0.852             −0.216              0.750           −0.635
+                                                 Note. C D.30/2000 stands for the classical comparison data approach with α = .30 and 2000 comparison data
+                                                 sets per factor solution. C D F5000/10000 stands for the comparison data forest with 5000 comparison data
+                                                 sets per factor solution and a population size of 10000. EKC is the empirical Kaiser criterion. Acc1 is the
+                                                 accuracy in conditions with one true factor, Acc3 and Acc5 the accuracy in conditions with three and five
+                                                 factors respectively. Bias1 shows the bias of each method in conditions with one underlying factor, Bias3
+                                                 and Bias5 the bias in conditions with three and five underlying factors accordingly
+
+
+123
+Behavior Research Methods (2024) 56:1838–1851                                                                                              1845
+
+
+of CDF with Nr ep = 100 and a sample size of 1000 was                           the accuracy and bias of CD and CDF (using these selected
+1.32; bias with Nr ep = 5000 and a sample size of 250 was                       hyperparameters) for different numbers of factors k (inter-
+0.46). Even though larger sample sizes were associated with                     ested readers who want to investigate the rates of under-
+lower accuracy in these special conditions, more generally an                   and overfactoring more thoroughly can find this informa-
+increase in the number of observations was related to a more                    tion in additional tables in the online supplemental material).
+accurate factor retention (comparable to the results of CD).                    In conditions with k = 1, CD clearly outperformed CDF
+As expected, a higher rate of overdetermination (i.e., a higher                 (e.g., accuracy of CD with α = .05 and Nr ep = 1000 was
+variables-per-factor ratio) as well as smaller between-factor                   92.37%) and a smaller bias than CDF (e.g., accuracy of CDF
+correlations were beneficial for the factor retention process.                  with Nr ep = 5000 and N population = 10, 000 was 78.27%),
+                                                                                while in conditions with k = 3 CD and CDF yielded com-
+                                                                                parably high accuracies and CDF showed almost no bias,
+Comparison of CD and CDF
+                                                                                whereas CD underestimated the number of factors. In con-
+                                                                                ditions with k = 5, CDF was clearly superior to CD as it
+For a detailed comparison of the general approaches, we                         showed a higher accuracy (85.70 vs. 78.68%) and a smaller
+focus on the hyperparameter settings that yielded the highest                   bias (here a smaller tendency of underfactoring). Accord-
+overall accuracy (CD with α = .05 and Nr ep = 1000 and                          ingly, averaged over all conditions with the same true number
+CDF with Nr ep = 5000 and N population = 10, 000) as well                       of factors, CD performed better in single-factor conditions,
+as the settings that yielded the smallest bias (CD with α = .30                 CD and CDF performed comparably well with k = 3, and
+and Nr ep = 2000 and, again, CDF with Nr ep = 5000 and                          CDF performed better with k = 5. The non-simulation-based
+N population = 10, 000). Although these settings showed the                     EKC reached almost perfect accuracy in single-factor con-
+best performance, other parameter settings did not perform                      ditions, while being out-performed by the comparison data
+substantially worse (see also Tables 1 – 3). Table 4 displays                   approaches in multi-factor cases.
+
+
+
+                         k: 1           k: 1               k: 3            k: 3                 k: 5              k: 5
+                        vpf: 4         vpf: 7             vpf: 4          vpf: 7               vpf: 4            vpf: 7
+
+            1.0
+
+
+
+
+            0.8
+                                                                                                                                Method
+
+
+
+ Accuracy
+                                                                                                                                      CD0.3 2000
+                                                                                                                                     CD0.05 1000
+                                                                                                                                   CDF5000 10000
+
+                                                                                                                                           EKC
+
+
+            0.6
+
+
+
+
+                  0.    0.       0.5   2        0. 5     0.          5    0.              5    2        0.5     0.        0.
+                    0     2      0.0   0.       0.0        2       0.
+                                                                   0. 0     2          0.
+                                                                                      0. 0    0.        0. 0      2         5
+                                                       Between−Factor Correlations
+
+Fig. 3 Comparison of CD and CDF with selected hyperparameters (and EKC as a baseline) across conditions with different between-factor
+correlations (ρ), variables per factor (vp f ) and numbers of factors (k)
+
+
+                                                                                                                                    123
+1846                                                                                              Behavior Research Methods (2024) 56:1838–1851
+
+
+   Figure 3 shows the performance of both CD and CDF                          Discussion
+across conditions with different between-factor correlations
+(ρ), variables per factor (vp f ), and numbers of factors (k). In             In the present paper, we compared the comparison data approach
+data conditions with higher rates of overdetermination (i.e.,                 with a new method called comparison data forest which
+more variables per factor) as well as in conditions with higher               combines the comparison data (Ruscio & Roche, 2012) and
+between-factor correlations, CDF yielded higher accuracies                    factor forest (Goretzko & Bühner, 2020) approaches. These
+than CD, especially when k = 5. While CD reached a                            findings enable us to assess which hyperparameter settings
+comparable accuracy in conditions with k = 3 and orthog-                      yielded higher accuracy in factor retention for each method,
+onal factors (ρ = 0; in cases with only four variables per                    compare their results with regard to their accuracy and bias,
+factor, CD had an even slightly higher accuracy), its per-                    derive recommendations for which method to prefer under
+formance decreased more with increasing between-factor                        which conditions, and suggest ideas for future research.
+correlations. The non-simulation-based EKC shows compa-                       Accordingly, the aim of this study was to refine the exist-
+rably high accuracy in orthogonal data conditions in general                  ing comparison data approach (Ruscio & Roche, 2012) and
+but reached substantially lower accuracy than CD or CDF in                    develop a more complex variant – the comparison data forest.
+conditions with between-factor correlations. This tendency                        As the performance differences across CDF with different
+was particularly pronounced in conditions with few indica-                    parameter settings were rather small (at least in cases with
+tors per factor.                                                              Nr ep ≥ 1000) and considering the computation time of the
+   The loading patterns in the data generating process also                   new approach, it might be a good choice to rely on CDF
+had a substantial impact on accuracy.7 In Table 5, the accu-                  with Nr ep = 1000 and N population = 10, 000 and use the
+racy of CD and CDF is displayed for all combinations of                       classical CD approach (with Nr ep = 1000 and α = .05) for
+primary loading categories (small, medium, large) and cross-                  comparison. This choice of hyperparameters seems to be a
+loading categories (zero, small, medium). CD (with α = .05                    good trade-off between accuracy and computational costs.
+and Nr ep = 1000) outperformed CDF in conditions with                         A larger population (N population ) might be necessary when
+large and medium-sized primary loadings (i.e., primary load-                  the sample size of the empirical data becomes substantially
+ings of [0.5, 0.8]), while CDF reached higher accuracies                      higher than the sample sizes evaluated in this study (i.e.,
+when primary loadings were small, especially in conditions                    n >> 1000), but for common sample sizes, N population =
+where cross-loadings were present. In conditions with small                   10, 000 is superior.
+primary loadings, CD with a more liberal significance level                       Compared to the results of Ruscio and Roche (2012), who
+(α = .30) showed higher accuracy than CD with α = .05, but                    reported an accuracy for CD of 87.1%, in this study the over-
+was clearly inferior to CDF. EKC, for comparison, reached                     all accuracy of CD was slightly smaller (with α = .30 and
+very high accuracy in conditions with clear simple structure                  Nr ep = 500 which was used by Ruscio & Roche, 2012, accu-
+patterns (i.e., independent cluster patterns without cross-                   racy = 81.27%; accuracy varied from 79.74% for CD with
+loadings) and performed relatively poorly when substantive                    α = .30 and Nr ep = 250 and 84.99% for CD with α = .05
+cross-loadings were present. In addition, EKC was outper-                     and Nr ep = 500). This suggests that the conditions in our
+formed by CDF in conditions with small primary loadings                       study might have been slightly more difficult, which can also
+(except for simple structure conditions) reaching similar                     explain why other hyperparameters performed best in our
+accuracy as CD.                                                               study (α = 0.05 instead of α = 0.30). Our findings that
+                                                                              the optimal hyperparameters settings appear to be dependent
+7 In fact, when conducting an ANOVA with all design factors as pre-
+                                                                              on the respective data conditions may be a little unsettling
+dictors (including all interaction terms) and factor retention accuracy as
+                                                                              for users. However, because this study was the first to sys-
+the dependent variable, the size of the primary loadings has the largest
+impact (η̂2 = 0.183) followed by the main effect of the cross-loadings        tematically evaluate different hyperparameter values for CD,
+and the second order interaction of sample size and primary loadings.         researchers using the approach could start with the suggested
+A model with all interaction terms can explain roughly 80% of the vari-       hyperparameters from this study as default values. Depend-
+ance of the factor retention accuracy, while a simpler main effects model
+                                                                              ing on their data conditions, a less strict α could be chosen
+can only explain ~40% of the variance. In comparison, a model that also
+includes the factor retention method as a factor (CD vs. CDF vs. EKC)         to avoid underfactoring though.
+explains 92% of the variance. Hence, this analysis illustrates the sub-           While the overall accuracy of the CDF approach was
+stantial influence of the data characteristics (i.e., the design factors of   slightly higher than that of the CD approach, there were sub-
+the simulation study) on the factor retention process. The size of the
+                                                                              stantial performance differences in some conditions. The CD
+primary loadings appears to be especially important as its interaction
+with the factor retention criterion (η̂2 = 0.015) is the most important       approach performed better in single-factor conditions and
+predictor of factor retention accuracy involving the method itself.           when primary loadings were relatively high (and hence the
+
+
+
+
+123
+Behavior Research Methods (2024) 56:1838–1851                                                                                                                 1847
+
+
+manifest variables were reliable indicators of the latent fac-                             number of factors in EFA (e.g., Fabrigar et al., 1999; Goret-
+tors). CDF, on the other hand, was superior in conditions                                  zko et al., 2019; Henson & Roberts, 2006). Along these lines,
+with five factors, with three factors and sufficient overde-                               using both CD and CDF could be advisable. In the 81.7% of
+termination (i.e., when there were relatively large numbers                                cases where CD and CDF agreed on the number of factors in
+of indicators per factor), when primary loadings were small                                our study, the overall accuracy of this solution was 96.6%.
+(i.e., the indicators were less reliable representations of the                            This is even higher (97.5%) in conditions with at least 500
+latent factors), when substantial between-factor correlations                              observations. Therefore, when using both CD and CDF and
+were present, and in small sample conditions (N ≤ 500,                                     comparing their results, agreement between methods implies
+especially in cases with N = 250).                                                         a very high chance of determining the number of factors cor-
+    Accordingly, CD seems to be the better choice if one                                   rectly.
+assumes few latent factors (unidimensionality) and/or in                                      In addition, CD and CDF may be complementary in that
+cases where high primary loadings can be expected (e.g.,                                   CD tends to underfactor (especially when k becomes larger)
+when constructing cognitive ability tests). However, if sev-                               and CDF shows signs of overfactoring (especially when k is
+eral latent variables can be expected (e.g., when developing                               small). In Fig. 4, the performance of CD (with Nr ep = 1000
+clinically relevant personality scales) and in cases with                                  and α = .05) and CDF (with Nr ep = 5000 and N population =
+rather small samples that are quite common in psychologi-                                  25, 000) is presented for different scenarios. Fortunately, in
+cal research (around 50% of papers conducting an EFA have                                  the 18.3% of cases where the CD and CDF methods disagreed
+sample sizes smaller than 400, see Goretzko et al., 2019;                                  about the number of factors to retain, we can offer some
+Henson & Roberts, 2006 reported a median sample size of                                    general guidelines about when to trust one method more than
+267), CDF may lead to more trustworthy results. Besides, as                                the other. When CDF suggests fewer factors than CD, CDF
+Peterson (2000) reported that primary factor loadings were                                 attains nearly perfect accuracy, whereas in conditions where
+0.32 on average (with approximately 25% smaller than 0.23)                                 CDF suggests way more factors than CD (mostly conditions
+in studies presenting complete pattern matrices, it seems to be                            with k = 1 in this study), CD seems to be more trustworthy.
+meaningful to consult CDF due to its superior performance                                     The tendency of CD to underfactor can be explained by
+in conditions with small loadings.                                                         the sequential design of the method. For example, the three-
+    Many authors recommend that more than one factor reten-                                factor solution is tested only if the two-factor solution attains
+tion criterion should be consulted when determining the                                    statistically significantly better fit than the one-factor solu-
+
+
+                                          CD suggests fewer factors                                       CD and            CD suggests more factors
+                                                 than CDF                                                CDF agree                 than CDF
+                                                                                                                             0.99        1             1
+                                                                                                         0.97 0.97
+
+
+
+                       0.79
+
+                                   0.72
+
+                                                        0.64
+                                                                                                                                                           Method
+
+ Accuracy
+                                                                                                                                                              CD
+                                                                                                                                                              CDF
+
+
+                                                                                    0.39   0.39
+                                                               0.35                               0.36
+                                                                      0.32
+
+                                                                             0.22
+                                                 0.19
+
+
+
+
+            0     0           0             0                                                                        0.01            0          0
+
+                −7          −6          −5             −4           −3            −2            −1            0           1              2          3
+            (0.002%)    (0.057%)    (0.218%)       (0.627%)     (2.022%)      (4.175%)      (9.979%)     (81.665%)    (1.233%)       (0.02%)    (0.001%)
+                                                                             ^     ^
+                                                                             kCD − kCDF
+
+Fig. 4 Accuracy of CD and CDF with selected hyperparameters depending on the level of their agreement (k̂C D − k̂C D F ) [relative frequency of
+the scenario in brackets]
+
+
+                                                                                                                                                           123
+                                                                                                                                                                                                       1848
+
+123
+
+
+
+
+      Table 5 Accuracy of CD and CDF with selected parameter settings for different loading patterns (EKC as baseline)
+      Method             Accsmall/zer o    Accsmall/small    Accsmall/medium      Accmedium/zer o    Accmedium/small      Accmedium/medium      Acclarge/zer o    Acclarge/small    Acclarge/medium
+
+      C D.30/2000        0.808            0.710              0.405               0.951               0.953               0.906                  0.899            0.908              0.865
+      C D.05/1000        0.805            0.699              0.370               0.970               0.972               0.961                  0.958            0.967              0.962
+      C D F5000/10000    0.839            0.791              0.588               0.942               0.943               0.910                  0.937            0.941              0.874
+      EKC                0.848            0.763              0.377               0.989               0.946               0.678                  1.000            0.988              0.895
+      Note. C D.30/2000 stands for the comparison data approach with α = .30 and 2000 comparison data sets per factor solution. C D F5000/10000 stands for the comparison data forest with 5000
+      comparison data sets per factor solution and a population size of 10000. EKC means empirical Kaisre criterion. Accsmall/zer o is the accuracy in conditions with small primary and zero cross-
+      loadings, Accsmall/small is the accuracy in conditions with small primary and small cross-loadings and so forth
+
+
+
+
+                                                                                                                                                                                                       Behavior Research Methods (2024) 56:1838–1851
+Behavior Research Methods (2024) 56:1838–1851                                                                                                 1849
+
+
+tion, so if this iterative procedure stops at any point the               (e.g., parallelization, exclusion of features without predic-
+potentially superior fit of models with even more factors is              tive power). One promising way to develop new features
+never tested. Decreasing the α-level of the Mann–Whitney                  that might improve the performance of CDF could be inte-
+U test used to check for a significant improvement in fit                 grating other common factor retention criteria. In doing
+exacerbates this bias, and choosing a higher α mitigates it.              so, simulation-based approaches (such as parallel analysis)
+On the contrary, the CDF approach simulates data for all                  may be too computationally costly, but methods such as the
+factor solutions up to the predefined maximum number of                   minimum average partial test (MAP, Velicer, 1976) or the
+factors (here eight). Therefore, CDF more easily suggests a               non-graphical scree test (Raîche, Walls, Magis, Riopel, &
+higher dimensionality than CD. Although, these differences                Blais, 2013) could be tried as features within CDF to increase
+help CDF when the true number of factors is large (k ≥ 3),                its predictive performance. Future research on CDF may also
+they lead to a less accurate factor retention with CDF when               evaluate its performance for various other data conditions
+the latent construct is unidimensional (k = 1). Surprisingly,             (e.g., non-normal data, missing data, etc.) and compare it
+in single-factor conditions, CDF becomes less accurate with               to other state-of-the-art factor retention criteria. Additional
+larger samples while factor retention criteria (including CDF             analyses (reported in the online supplemental material) indi-
+in conditions with k > 1) usually benefit from larger sam-                cate that CDF may provide more robust results with ordinal
+ples. One explanation, again, could be that CDF simulates                 data (especially if the number of categories is comparably
+data for all population models from a one-factor model to                 large) than common non-simulation-based methods. How-
+a kmax -factor model. Internally, some important features for             ever, the respective results are only based on very narrow
+the machine learning model could be correlated to the sam-                data conditions and thus have to be interpreted rather care-
+ple size, so that larger samples are indirectly associated with           fully. Future research should expand the simulation design
+a higher dimensionality within the model. Future research                 in this paper and evaluate both comparison data approaches
+could investigate this rather strange behavior of the CDF                 under much broader conditions that are typical for psycho-
+approach, for example, by using interpretable machine learn-              logical research.
+ing methods (e.g., Molnar, 2020).                                             Older methods for determining the number of factors to
+   Since overfactoring often is considered less severe com-               retain in an EFA, such as Kaiser’s criterion or the subjec-
+pared to underfactoring (e.g., Fabrigar et al., 1999), it could           tive examination of a scree plot, eventually gave way to
+be reasonable to weigh the suggestion of CDF slightly more                the demonstrably superior performance of parallel analy-
+strongly than the result of CD in a combined approach.                    sis, which entails the generation of artificial comparison
+However, when combining several factor retention crite-                   data to provide reference eigenvalues. The comparison data
+ria anyway, one might also consider the results of other                  approach builds on this to provide even more useful reference
+approaches such as parallel analysis, the empirical Kaiser                eigenvalues (by holding constant the distributions9 and corre-
+criterion, or the Hull method (a combination of these meth-               lations among items) and to provide sequential tests between
+ods was suggested by Auerswald & Moshagen, 2019).                         structural models with increasing numbers of factors. The
+   Although CDF was developed as a computationally less                   comparison data forest builds on this to take advantage of
+costly alternative to the factor forest (Goretzko & Bühner,               machine learning capabilities to examine even more data fea-
+2020), it takes substantially more time to conduct CDF than               tures when identifying the number of factors to retain. These
+the classical CD approach. In a serial computation, CDF                   simulation-intensive approaches enhance accuracy, are now
+with Nr ep = 5000 and N population = 25, 000 applied to                   feasible to implement in research on psychological assess-
+empirical data with N = 500 and 35 manifest variables can                 ment, and may be improved further by refining (through
+take around 25–30 min depending on the computer system.8                  empirically tested expansion and pruning) the set of addi-
+This is considerably slower than other commonly used factor               tional features to train the machine learning algorithm.
+retention criteria. Future research could focus on improv-
+ing the performance of CDF both in terms of its accuracy
+(e.g., introducing new features that improve the predictions              Open Practices Statement
+of the internal random forest implementation, implement-
+ing an option that allows for hyperparameter tuning of the                This article does not contain any empirical data. No prereg-
+random forest) and with regard to its computational speed                 istration was created. All R-code to run the simulation study
+
+                                                                          9 This distinction between CD and parallel analysis only holds if the
+8 Note that this estimated run time is based on normal data conditions.   classic version of parallel analysis is considered. There are also imple-
+For ordinal data with unfavorable item distributions, the generation of   mentations of parallel analysis using resampled data (i.e., permutation-
+population data from which the comparison data sets are drawn can take    based parallel analysis) that keep intact the marginal distributions of
+much longer and the convergence criterion within the GenData function     the variables. For a comparison of parallel analysis implementations,
+has to be adjusted to keep the run time within a reasonable range.        interested readers are referred to Lim and Jahng (2019).
+
+
+                                                                                                                                      123
+1850                                                                                                Behavior Research Methods (2024) 56:1838–1851
+
+
+in this paper (and to apply the new method) is presented in                 Genz, A., Bretz, F., Miwa, T., Mi, X., Leisch, F., Scheipl, F., & Hothorn,
+the supplemental material.                                                       T. (2018). mvtnorm: Multivariate normal and t distributions.
+                                                                                 Retrieved from https://CRAN.R-project.org/package=mvtnorm
+Author Note David Goretzko, Department of Psychology, LMU                   Gini, C. (1921). Measurement of inequality of incomes. The Economic
+Munich, Department of Methodology and Statistics, Utrecht Univer-                Journal, 31(121), 124–126.
+sity, Netherlands; John Ruscio, Psychology Department, The College          Goretzko, D., & Bühner, M. (2020). One model to rule them all? Using
+of New Jersey, NJ. R code for implementing the comparison data forest            machine learning algorithms to determine the number of factors in
+as well as the simulation code can be found in the online supplementary          exploratory factor analysis. Psychological Methods, 25(6), 776–
+material.                                                                        786. https://doi.org/10.1037/met0000262
+                                                                            Goretzko, D., & Bühner, M. (2022). Factor retention using machine
+Open Access This article is licensed under a Creative Commons                    learning with ordinal data. Applied Psychological Measurement,
+Attribution 4.0 International License, which permits use, sharing, adap-         46(5), 406–421.
+tation, distribution and reproduction in any medium or format, as           Goretzko, D., Pham, T. T. H., & Bühner, M. (2019). Exploratory factor
+long as you give appropriate credit to the original author(s) and the            analysis: Current use, methodological developments and recom-
+source, provide a link to the Creative Commons licence, and indi-                mendations for good practice. Current Psychology, 40, 3510–3521.
+cate if changes were made. The images or other third party material              https://doi.org/10.1007/s12144-019-00300-2
+in this article are included in the article’s Creative Commons licence,     Henson, R. K., & Roberts, J. K. (2006). Use of exploratory factor anal-
+unless indicated otherwise in a credit line to the material. If material         ysis in published research: Common errors and some comment on
+is not included in the article’s Creative Commons licence and your               improved practice. Educational and Psychological Measurement,
+intended use is not permitted by statutory regulation or exceeds the             66(3), 393–416. https://doi.org/10.1177/0013164405282485
+permitted use, you will need to obtain permission directly from the copy-   Horn, J. L. (1965). A rationale and test for the number of factors in factor
+right holder. To view a copy of this licence, visit http://creativecomm          analysis. Psychometrika, 30(2), 179–185. https://doi.org/10.1007/
+ons.org/licenses/by/4.0/.                                                        BF02289447
+                                                                            Kaiser, H. F. (1960). The application of electronic computers to fac-
+                                                                                 tor analysis. Educational and Psychological Measurement, 20(1),
+                                                                                 141–151.
+                                                                            Kaiser, H. F. (1970). A second generation little jiffy. Psychometrika,
+                                                                                 35(4), 401–415.
+References                                                                  Kolm, S.-C. (1999). The rational foundations of income inequality mea-
+                                                                                 surement. In Handbook of income inequality measurement (pp.
+Auerswald, M., & Moshagen, M. (2019). How to determine the number                19–100). Springer.
+     of factors to retain in exploratory factor analysis: A comparison      Lang, M., Bischl, B., & Surmann, D. (2017). Batchtools: Tools for r
+     of extraction methods under realistic conditions. Psychological             to work on batch systems. The Journal of Open Source Software,
+     Methods, 24(4), 468–491. https://doi.org/10.1037/met0000200                 (10). https://doi.org/10.21105/joss.00135
+Aust, F., & Barth, M. (2020). papaja: Create APA manuscripts with           Lim, S., & Jahng, S. (2019). Determining the number of factors using
+     R Markdown. Retrieved August 5, 2021 from https://github.com/               parallel analysis and its recent variants. Psychological Methods,
+     crsh/papaja                                                                 24(4), 452–467. https://doi.org/10.1037/met0000230
+Barth, M. (2022). tinylabels: Lightweight variable labels. Retrieved        Molnar, C. (2020). Interpretable machine learning. Lulu.com.
+     August 5, 2021 from https://cran.r-project.org/package=tinylabels      Peterson, R. A. (2000). A meta-analysis of variance accounted for and
+Bischl, B., Lang, M., Mersmann, O., Rahnenführer, J., & Weihs, C.                factor loadings in exploratory factor analysis. Marketing Letters,
+     (2015). BatchJobs and BatchExperiments: Abstraction mecha-                  11(3), 261–275. https://doi.org/10.1023/A:1008191211004
+     nisms for using R in batch environments. Journal of Statistical        Probst, P., Wright, M. N., & Boulesteix, A.-L. (2019). Hyperparameters
+     Software, 64(11), 1–25. Retrieved May 19, 2021 from http://www.             and tuning strategies for random forest. Wiley Interdisciplinary
+     jstatsoft.org/v64/i11/                                                      Reviews: Data Mining and Knowledge Discovery, 9(3), e1301.
+Braeken, J., & Van Assen, M. A. (2017). An empirical kaiser criterion.      R Core Team. (2020). R: A language and environment for statistical
+     Psychological Methods, 22(3), 450–466. https://doi.org/10.1037/             computing. Vienna, Austria: R Foundation for Statistical Comput-
+     met0000074                                                                  ing. Retrieved from https://www.R-project.org/
+Breiman, L. (1999). Random forest. Retrieved August 21, 2019 from           Raîche, G., Walls, T. A., Magis, D., Riopel, M., & Blais, J.-G. (2013).
+     http://machinelearning202.pbworks.com/w/file/fetch/60606349/                Non-graphical solutions for Cattell’s scree test. Methodology, 9,
+     breiman_randomforests.pdf                                                   23–29. https://doi.org/10.1027/1614-2241/a000051
+Breiman, L. (2001). Random forests. Machine Learning, 45(1), 5–32.          Ruscio, J., & Roche, B. (2012). Determining the number of factors to
+Brien, C. (2020). Dae: Functions useful in the design and ANOVA                  retain in an exploratory factor analysis using comparison data of
+     of experiments. Retrieved from https://CRAN.R-project.org/                  known factorial structure. Psychological Assessment, 24(2), 282–
+     package=dae                                                                 292.
+Cattell, R. B. (1966). The scree test for the number of factors. Multi-     Sterner, P., Goretzko, D., & Pargent, F. (2021). Everything has its price:
+     variate Behavioral Research, 1(2), 245–276.                                 Foundations of cost-sensitive learning and its application in psy-
+Dowle, M., & Srinivasan, A. (2019). Data.table: Extension                        chology. [Preprint]. PsyArXiv. https://doi.org/10.31234/Osf.Io/
+     of ‘data.frame’. Retrieved from https://CRAN.R-project.org/                 7asgz.
+     package=data.table                                                     Turner, N. E. (1998). The effect of common variance and structure
+Efron, B., & Tibshirani, R. J. (1993). An introduction to the bootstrap.         pattern on random data eigenvalues: Implications for the accuracy
+     CRC Press.                                                                  of parallel analysis. Educational and Psychological Measurement,
+Fabrigar, L. R., Wegener, D. T., MacCallum, R. C., & Strahan, E. J.              58(4), 541–568. https://doi.org/10.1177/0013164498058004001
+     (1999). Evaluating the use of exploratory factor analysis in psy-      Velicer, W. F. (1976). Determining the number of components from
+     chological research. Psychological Methods, 4(3), 272–299.                  the matrix of partial correlations. Psychometrika, 41(3), 321–327.
+Genz, A., & Bretz, F. (2009). Computation of multivariate normal and             https://doi.org/10.1007/BF02293557
+     t probabilities. Heidelberg: Springer-Verlag.
+
+
+123
+Behavior Research Methods (2024) 56:1838–1851                                                                                              1851
+
+
+Wickham, H. (2016). ggplot2: Elegant graphics for data analy-             Zwick, W. R., & Velicer, W. F. (1986). Comparison of five rules for
+    sis. Springer-Verlag New York. Retrieved from https://ggplot2.            determining the number of components to retain. Psychological
+    tidyverse.org                                                             Bulletin, 99(3), 432–442.
+Wright, M. N., & Ziegler, A. (2017). ranger: A fast implementation of
+    random forests for high dimensional data in C++ and R. Journal
+    of Statistical Software, 77(1), 1–17. https://doi.org/10.18637/jss.   Publisher’s Note Springer Nature remains neutral with regard to juris-
+    v077.i01                                                              dictional claims in published maps and institutional affiliations.
+
+
+
+
+                                                                                                                                    123
+

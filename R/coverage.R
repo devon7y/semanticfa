@@ -216,8 +216,11 @@
 #' the scale does not reach), or *narrow the construct claim* (the covered
 #' subregion's distinctive terms describe what the items actually measure).
 #' Narrowing is cheap to test: re-run `sfa_coverage()` on the same region
-#' with a narrower `definition` (for example "academic procrastination"),
-#' which re-applies the sense gate at audit time - no new extraction.
+#' with a narrower `definition` (for example "academic procrastination")
+#' and a `keep_frac`, which restricts the region at audit time - no new
+#' extraction. Hold `radius` at the un-narrowed audit's value so the
+#' narrowed claim is scored against the same yardstick (see the two
+#' parameters below).
 #'
 #' @param items Character vector of item text, or a data frame with an
 #'   `item`/`text` column (and optionally `code`), as in [sfa()]. When the
@@ -249,16 +252,42 @@
 #'   states this caveat. [sfa_cross_matrix()] extracts the numeric matrix.
 #' @param definition Optional definition overriding the region's stored
 #'   one - the construct-narrowing workflow. When supplied, the region is
-#'   first restricted to the sentences that the narrower definition explains
-#'   better than the region's original definition (higher embedding
-#'   similarity), then the usual filters apply with the new definition as
-#'   seed. Default `NULL` uses `region$definition` with no restriction.
+#'   first restricted to the sentences the narrower definition explains
+#'   best, then the usual filters apply with the new definition as seed.
+#'   How the restriction is made depends on `keep_frac` (see below).
+#'   Default `NULL` uses `region$definition` with no restriction.
+#' @param keep_frac How much of the region a supplied `definition` keeps.
+#'   `NULL` (default) uses the comparative rule: keep the sentences more
+#'   similar to the narrower definition than to the region's original one.
+#'   That rule is strict - when the narrower definition is a close
+#'   paraphrase of the original, sentences containing the construct term
+#'   hug the original definition and the rule can keep almost nothing. A
+#'   number in (0, 1] switches to **rank narrowing**: keep the `keep_frac`
+#'   fraction of the region most similar to the narrower definition, which
+#'   always yields a region of known size. Rank narrowing is the
+#'   recommended workflow for testing a narrowed construct claim, usually
+#'   together with a fixed `radius` from the un-narrowed audit (narrowing
+#'   shrinks the region, and recalibrating on the shrunken region would
+#'   change the yardstick along with the claim).
 #' @param construct Optional display label for the (possibly narrowed)
 #'   construct. Default: the region's construct, or the first words of a
 #'   supplied `definition`.
 #' @param radius_q Null quantile defining the coverage radius. Default 0.95
 #'   (ideal scale covers ~95% of the region; each gap call is a test at
 #'   `alpha = 1 - radius_q`).
+#' @param radius Optional fixed coverage radius, overriding the calibrated
+#'   one - the anchoring workflow, the analogue of holding a test's cut
+#'   score fixed when equating forms. Calibration ties the radius to the
+#'   audited condition, so any comparison that changes the item set or the
+#'   region (deleting items, auditing a short form, rank narrowing) would
+#'   otherwise move the yardstick along with the thing being measured:
+#'   deleting items *grows* the calibrated radius and can raise coverage.
+#'   For such comparisons, take `$radius` from the reference audit and pass
+#'   it here so every condition is scored against the same yardstick. The
+#'   item-relevance null is drawn at the fixed radius, and bootstrap
+#'   resamples hold it fixed rather than recalibrating. The calibrated
+#'   radius is still computed and returned as `$radius_calibrated` for
+#'   comparison. Default `NULL` calibrates as usual.
 #' @param alpha Per-item test level against the ideal-item null. Default
 #'   0.05. An item is flagged when its corroboration count's empirical
 #'   p-value is at most `alpha`.
@@ -336,19 +365,28 @@
 #' battery$Depression         # full report for one subscale
 #' sfa_coverage(dass_items, reg_dep, factor = "Depression")  # just one
 #'
-#' # test a narrower claim against the same region - no new extraction
-#' sfa_coverage(my_items, region,
+#' # test a narrower claim against the same region - no new extraction.
+#' # Rank narrowing keeps the half of the region the narrower definition
+#' # explains best; the fixed radius anchors the comparison to the full
+#' # audit's calibration.
+#' sfa_coverage(my_items, region, keep_frac = 0.5, radius = audit$radius,
 #'              definition = "Academic procrastination is the delay of
 #'                            study-related tasks despite expecting costs.")
+#'
+#' # the same anchoring applies to any item-set comparison, e.g. a
+#' # deletion study: score the reduced scale at the full scale's radius
+#' sfa_coverage(my_items[-drop_idx, ], region, radius = audit$radius)
 #' }
 #' @export
 sfa_coverage <- function(items,
                          region,
                          definition = NULL,
+                         keep_frac = NULL,
                          construct = NULL,
                          factor = NULL,
                          cross = FALSE,
                          radius_q = 0.95,
+                         radius = NULL,
                          alpha = 0.05,
                          p_adjust = c("none", "BH"),
                          n_draws = 20L,
@@ -377,6 +415,21 @@ sfa_coverage <- function(items,
     warning("'k_precision' is deprecated and ignored: the fixed-count rule ",
             "was region-size dependent. Items are now flagged by empirical ",
             "p-value against the ideal-item null at 'alpha'.", call. = FALSE)
+  }
+  if (!is.null(radius) &&
+      (!is.numeric(radius) || length(radius) != 1L || radius <= 0)) {
+    stop("'radius' must be a single positive number (take it from a ",
+         "reference audit's $radius).", call. = FALSE)
+  }
+  if (!is.null(keep_frac)) {
+    if (!is.numeric(keep_frac) || length(keep_frac) != 1L ||
+        keep_frac <= 0 || keep_frac > 1) {
+      stop("'keep_frac' must be a single number in (0, 1].", call. = FALSE)
+    }
+    if (is.null(definition)) {
+      stop("'keep_frac' narrows the region toward a supplied 'definition'; ",
+           "pass the narrower definition too.", call. = FALSE)
+    }
   }
   resolved <- .resolve_items(items)
   item_text <- resolved$items
@@ -421,8 +474,10 @@ sfa_coverage <- function(items,
       sub <- data.frame(item = item_text[idx], code = item_codes[idx],
                         stringsAsFactors = FALSE)
       sfa_coverage(sub, reg,
-                   definition = definition, construct = construct,
-                   radius_q = radius_q, alpha = alpha, p_adjust = p_adjust,
+                   definition = definition, keep_frac = keep_frac,
+                   construct = construct,
+                   radius_q = radius_q, radius = radius,
+                   alpha = alpha, p_adjust = p_adjust,
                    n_draws = n_draws, n_null = n_null,
                    sense_gate = sense_gate,
                    min_silhouette = min_silhouette, trim = trim,
@@ -509,14 +564,24 @@ sfa_coverage <- function(items,
   C <- region$embeddings
   region_text <- region$sentences$text
 
-  # ---- narrowing (explicit override definition): keep the sentences the
-  # narrower definition explains better than the region's original one.
+  # ---- narrowing (explicit override definition). Rank rule (keep_frac
+  # supplied): keep the fraction of the region most similar to the
+  # narrower definition. Comparative rule (default): keep the sentences
+  # the narrower definition explains better than the region's original
+  # one - strict, and can keep almost nothing when the narrower
+  # definition paraphrases the original (see ?sfa_coverage 'keep_frac').
   n_narrowed <- 0L
   if (narrowing) {
-    base_vec <- .cvg_normalize(sfa_embed(
-      .cvg_wrap_instruction(region$definition, instr),
-      embed = embed, model = model, cache = cache))[1L, ]
-    keep <- as.numeric(C %*% seed_vec) > as.numeric(C %*% base_vec)
+    sims_narrow <- as.numeric(C %*% seed_vec)
+    if (!is.null(keep_frac)) {
+      cut <- stats::quantile(sims_narrow, 1 - keep_frac, names = FALSE)
+      keep <- sims_narrow >= cut
+    } else {
+      base_vec <- .cvg_normalize(sfa_embed(
+        .cvg_wrap_instruction(region$definition, instr),
+        embed = embed, model = model, cache = cache))[1L, ]
+      keep <- sims_narrow > as.numeric(C %*% base_vec)
+    }
     n_narrowed <- sum(!keep)
     C <- C[keep, , drop = FALSE]
     region_text <- region_text[keep]
@@ -573,18 +638,24 @@ sfa_coverage <- function(items,
             "validity.", call. = FALSE)
   }
 
-  # ---- the audit: construct coverage
+  # ---- the audit: construct coverage. The radius is calibrated on the
+  # audited region unless a fixed 'radius' anchors the comparison to a
+  # reference audit's calibration (the calibrated one is still computed
+  # and returned for comparison).
+  anchored <- !is.null(radius)
   cal <- .cvg_calibrate(C, n_ref = nrow(S), draws = n_draws,
                         radius_q = radius_q, seed = seed)
+  radius_used <- if (anchored) radius else cal$radius
   d_region <- .cvg_nn_dist(C, S)
   curve <- vapply(cal$grid, function(t) mean(d_region <= t), numeric(1))
-  covered <- d_region <= cal$radius
+  covered <- d_region <= radius_used
   coverage <- mean(covered)
   auc <- mean(curve)
 
-  # ---- the audit: item relevance (per-item test vs the ideal-item null)
-  corrob <- .cvg_corroboration(C, S, cal$radius)
-  null_counts <- .cvg_null_counts(C, n_ref = nrow(S), radius = cal$radius,
+  # ---- the audit: item relevance (per-item test vs the ideal-item null,
+  # drawn at whichever radius the coverage decisions use)
+  corrob <- .cvg_corroboration(C, S, radius_used)
+  null_counts <- .cvg_null_counts(C, n_ref = nrow(S), radius = radius_used,
                                   draws = n_null, seed = seed)
   p_values <- .cvg_pval(corrob, null_counts)
   p_used <- if (p_adjust == "BH") stats::p.adjust(p_values, "BH") else
@@ -602,20 +673,22 @@ sfa_coverage <- function(items,
   } else 1
 
   # ---- bootstrap CIs over the region sample (radius and critical count
-  # recalibrated inside every resample)
+  # recalibrated inside every resample; an anchored radius stays fixed -
+  # it is the yardstick, not an estimate from this region)
   boot <- NULL
   if (n_boot > 0L) {
     set.seed(seed)
     stats_b <- vapply(seq_len(n_boot), function(b) {
       idx <- sample.int(nrow(C), nrow(C), replace = TRUE)
       Cb <- C[idx, , drop = FALSE]
-      cal_b <- .cvg_calibrate(Cb, n_ref = nrow(S), draws = 5L,
-                              radius_q = radius_q, seed = seed + b)
-      null_b <- .cvg_null_counts(Cb, n_ref = nrow(S), radius = cal_b$radius,
+      r_b <- if (anchored) radius_used else
+        .cvg_calibrate(Cb, n_ref = nrow(S), draws = 5L,
+                       radius_q = radius_q, seed = seed + b)$radius
+      null_b <- .cvg_null_counts(Cb, n_ref = nrow(S), radius = r_b,
                                  draws = 5L, seed = seed + b)
-      p_b <- .cvg_pval(.cvg_corroboration(Cb, S, cal_b$radius), null_b)
+      p_b <- .cvg_pval(.cvg_corroboration(Cb, S, r_b), null_b)
       if (p_adjust == "BH") p_b <- stats::p.adjust(p_b, "BH")
-      c(mean(.cvg_nn_dist(Cb, S) <= cal_b$radius), mean(p_b > alpha))
+      c(mean(.cvg_nn_dist(Cb, S) <= r_b), mean(p_b > alpha))
     }, numeric(2))
     boot <- list(
       coverage_ci  = stats::quantile(stats_b[1, ], c(0.025, 0.975),
@@ -668,9 +741,11 @@ sfa_coverage <- function(items,
     sense_gate = list(applied = gate$applied, silhouette = gate$sil,
                       dropped = n_gated),
     narrowed = narrowing, narrowed_dropped = n_narrowed,
+    keep_frac = keep_frac,
     trim = trim, trim_dropped = n_trimmed,
     item_screen_dropped = n_screened,
-    radius = cal$radius, radius_q = radius_q, alpha = alpha,
+    radius = radius_used, radius_anchored = anchored,
+    radius_calibrated = cal$radius, radius_q = radius_q, alpha = alpha,
     p_adjust = p_adjust, small_region = small_region,
     grid = cal$grid, grid_quantiles = cal$quantiles, curve = curve,
     coverage = coverage, auc = auc,
@@ -682,7 +757,8 @@ sfa_coverage <- function(items,
     evenness = evenness, boot = boot,
     d_region = d_region, covered = covered,
     gaps = gaps, covered_terms = covered_terms,
-    call_params = list(radius_q = radius_q, alpha = alpha,
+    call_params = list(radius_q = radius_q, radius = radius,
+                       keep_frac = keep_frac, alpha = alpha,
                        p_adjust = p_adjust, n_draws = n_draws,
                        n_null = n_null, seed = seed)
   ), class = "sfa_coverage")
@@ -723,8 +799,11 @@ print.sfa_coverage <- function(x, digits = 2, ...) {
       x$construct, "\"\n", sep = "")
   cat("  region: ", x$region_n, " sentences (",
       x$region_provenance$corpus, ")",
-      if (x$narrowed) paste0("; narrowed to the supplied definition (-",
-                             x$narrowed_dropped, ")") else "",
+      if (x$narrowed) paste0("; narrowed to the supplied definition (",
+                             if (!is.null(x$keep_frac))
+                               paste0("top ", format(x$keep_frac),
+                                      " by rank, ") else "",
+                             "-", x$narrowed_dropped, ")") else "",
       if (x$sense_gate$applied) paste0("; sense gate dropped ",
                                        x$sense_gate$dropped) else "",
       if (x$trim_dropped > 0) paste0("; trim (", x$trim, ") dropped ",
@@ -733,6 +812,11 @@ print.sfa_coverage <- function(x, digits = 2, ...) {
                                             x$item_screen_dropped) else "",
       "\n", sep = "")
   cat("  encoder: ", x$region_provenance$encoder, "\n", sep = "")
+  if (isTRUE(x$radius_anchored)) {
+    cat("  radius: fixed at ", format(round(x$radius, 4)),
+        " (anchored to a reference audit; this region's own calibration ",
+        "gives ", format(round(x$radius_calibrated, 4)), ")\n", sep = "")
+  }
   if (isTRUE(x$small_region)) {
     cat("  CAUTION: region below the ~200-sentence saturation threshold - ",
         "limited corpus\n  data for this construct name (not a validity ",

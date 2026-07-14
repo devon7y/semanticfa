@@ -1,0 +1,543 @@
+PSYCHOMETRICA--VOL. 30, NO. 2
+
+JU~E, 1965
+
+A RATIONALE AND TEST FOR THE NUMBER
+FACTORS IN FACTOR ANALYSIS
+
+OF
+
+JOHN L. HORN*
+UNIVERSITY OF DENVER
+It is suggested that if Guttman's latent-root-one lower bound estimate
+for the rank of a correlation matrix is accepted as a psychometric upper
+bound, following the proofs and arguments of Kaiser and Dickman, then the
+rank for a sample matrix should be estimated by subtracting out the component in the latent roots which can be attributed to sampling error, and leastsquares "capitalization" on this error, in the calculation of the correlations
+and the roots. A procedure based on the generation of random variables is
+given for estimating the component which needs to be subtracted.
+
+1. The Rationale
+If m sets of very large samples of size N are drawn independently from
+a normally distributed population of r a n d o m numbers and the resulting m
+"variables" are intercorrelated, it is to be expected t h a t the m by m matrix
+of correlation coefficients, R, will approximate an identity matrix. (If the
+distribution is not normal, the expectations outlined here need to be modified.)
+Sampling theory would argue t h a t the closeness of the approximation is a
+direct function of both N and m. Likewise, theory would predict t h a t the
+average correlation is zero and t h a t the variance of the correlation is inversely related to N. (In this development, although the m sets t r e a t e d as
+variables are drawn independently in a univariate sense, the bivariate
+samples upon which the correlations are based are not independent. T h e
+standard error for the zero correlation is therefore not t h a t usually employed,
+but rather a m u c h more complex function (see Kendall and S t u a r t [5]).)
+T h e latent roots for a matrix of correlations m a y be viewed as variances
+for variables t h a t are derived from m intercorrelated variables. T h e first
+of these derived variables is the one " b e s t " given b y a weighted linear combination of the m original v a r i a b l e s - - " b e s t " in the sense t h a t all nonzero
+correlation is assumed to furnish a basis for estimation of the weights in
+the linear composite. T h e first component takes up as m u c h of the total
+matrix variance, given in p a r t b y the intercorrelations, as is linearly possible.
+Successively determined roots h a v e like interpretations a m o n g residual
+matrices. T h e roots t h a t are first calculated on a n R m a y thus be said to
+t a k e a d v a n t a g e of chance fluctuations in a particular sample, since t h e y
+*I wish to acknowledge the valuable help given by J. Jaspers and L. G. Humphreys
+in the development of the ideas presented in this paper.
+179
+
+180
+
+PSYCIIOMETRIKA
+
+are inflated by whatever chance correlation may occur among the set of
+variables.
+If R is determined on m random variables, it is expected to have rn
+nonzero, positive roots, all nearly equal to 1.0. But insofar as the sample is
+less than infinite, the curve showing values of roots for successively calculated components is not a horizontal straight line at L = 1.0 (see Fig. 1)
+but a curve with slope indicating the extent to which saznpling error and
+least-squares "bias" have combined to increase the value of the correlations
+and, thence, of the first m/2 roots. (In Fig. 1, curves R, and Rb depict this
+expectation for large and small samples, respectively.) At the point m/2
+FIGURE 1
+LATENT
+
+ROOT
+
+CURVES
+
+EXPECTED
+
+FOR
+
+D
+
+VARIOUS
+
+KINDS OF DATA
+
+A = Sample curve ( N large )
+B = Sample curve ( N small )
+R = Random curve ( N large )
+cRY: R a n d o m c u r v e ( N s m a l l )
+Population curve
+E = A m o u n t by w h i c h s a m p l e
+--2
+curve A is raised by
+s a m p l i n g e r r o r and
+least-squares bias.
+D = Curve expected under
+a s s u m p t i o n of inflection
+at r, the "true"number
+
+B
+
+A
+
+of factors.
+
+%
+
+E
+1.0
+!
+
+l!
+
+!i
+!
+
+!
+
+0.0
+
+!
+IZ
+
+3...
+
+r..
+
+...............!
+,
+
+m/Z...
+
+Root Number
+
+m
+
+J O H N L. HORN
+
+181
+
+(on the average for many matrices) the curve is expected to cross the point
+L = 1.0 and thereafter, since the trace must equal m, the curve must decrease below 1.0, approaching but never reaching zero.
+Guttman [3] has shown that the "weakest" of three lower bound estimates for the minimum rank of a Gramian R is given by the number of
+roots of R (with ones in the principal diagonal) which are greater than or
+equal to unity. This proof is based on an assumption that there is no error
+due to sampling in the population of subjects, that sampling takes place
+only in the universe of measures (tests): "We assume throughout that population parameters are used, and not sample statistics" (p. 151). Kaiser [4]
+and Dickman [2] have argued that this lower bound for the number of factors
+is also a psychometric upper bound. Kaiser shows that for a "principal
+component to have positive KR-20 internal consistency, it is necessary and
+sufficient that the associated eigenvalue be greater than one" ([4], p. 6).
+Dickman argues that it is not psychometrically reasonable to allow a factor,
+which is supposed to be a broad, "fundamental" dimension, to have less
+variance than the unity which is accorded a variable in the standard score
+space. The widely used "latent-root-one" criterion for when to stop factoring
+is based on these psychometric considerations.
+If data are random, the latent-root-one criterion should (on the average)
+lead to the decision to estimate m/2 factors. But if the data are not random
+but are not infallible either, the variance of the component must be regarded
+as due in part to true correlation and in part to correlation resulting from
+sampling error and least-squares bias. Thus the plot showing the values of
+successive latent roots calculated in a sample (depicted in Fig. 1 by curves
+A and B for samples of different size) is expected to be above the curve for
+the population (curve C in Fig. 1). Therefore, if one accepts the argument
+that the lower bound, by Guttman's proof, or the most reasonable psychometric upper bound, by Kaiser's and Dickman's arguments, for the number
+of factors in the population is given at the point where curve C crosses
+L = 1.0, then it is apparent that this bound is given at some point where
+the latent root for a sample is larger than 1.0--how much larger depends
+upon the size of the sample. In particular, allowing the curve R~ to represent
+the extent to which sampling error and least-squares bias have increased
+the roots in the fallible sample A, the number of factors is given at the point
+where A -- E , crosses L = 1.0. The curve A - E , , which is C, could theoretically be obtained by subtracting R, - 1.0 from A at each point along
+the curve. The abscissa of the point at which C crosses L = 1.0 is the same
+as the abscissa of the point of intersection of R, and A. Hence, if R. were
+known, the number of factors could be determined.
+
+2. A Test Based on Generated Random Variables
+As far as the writer knows, the statistical theory needed to handle the
+above problem at a purely analytical level does not exist. Anderson, in
+
+182
+
+PSYCttOMETRIKA
+
+his survey of advanced multivariate statistical procedures ([1], p. 307 ft.),
+gives the joint and marginal distributions for the set of roots of the random
+vector having a given covariance matrix, but these developments do not
+lead directly to the equations needed to estimate the expected values of
+the ordered roots for the model of the rationale outlined above. Other texts
+(e.g., Rao [6]) and the journals likewise appear to lack an adequate solution
+for this problem. Several persons are now looking into this problem more
+fully. Meanwhile, since the values needed to construct the curve R, cannot
+yet be obtained directly from formulas, the method below is suggested as a
+temporary expediency designed to furnish a large-sample solution which
+may serve until such thne as the general statistical problem is solved.
+Suppose that an investigator has obtained m measurements on N subjects. Call these measurements "real data." Now generate K matrices of
+random variables, each matrix of order m by N; intercorrelate the rows of
+these matrices; find the latent roots for the resulting R matrices; average
+(over K) the first root values, the second root values, etc. Insofar as K is
+reasonably large, these averages give the curve R° in Fig. 1. For a given
+sample size and a given number of variables, the extent to which the real
+data latent roots are inflated by sampling error can now be estimated as the
+value E o , the amount by which the "empirically obtained" R~ differs from
+1.0. The number of factors can then be estimated as the abscissa of the point
+where Ra intersects A, i.e., by inference, the abscissa of the point where the
+population curve h::ts the ordinate L = 1.0.
+
+3. An Example
+For purposes of illustration, the above test was tried out on an actual
+sample of "real data," using one matrix of random variables and comparing
+the results with those based on another rationale.
+Sixty-five ability and nonability behavioral measures were obtained on
+a sample of 297 adults. These variables were converted to normal distribution form insofar as the ranges and distributions of raw scores permitted.
+In most cases there were more than 10 different scores in the raw score
+distributions and the transformed distributions were at least clearly symmetrical and bell-shaped, if not truly normal in form.
+A 65 by 297 matrix of numbers from a normally distributed universe
+of random numbers was generated row by row using a 7090 program written
+for this purpose. The 65 distributions for rows were again clearly symmetrical
+and bell-shaped. The approximation to normality for these "variables"
+appeared to be slightly better than that for the real variables, but tests
+were not run to establish this as fact. The 65 by 65 matrices of productmoment correlations were determined for both sets of data. Unit values
+were inserted in the principal diagonals of these R matrices, and all latent
+
+JOHN L. HORN
+
+183
+
+r o o t s w e r e c a l c u l a t e d . T h e r o o t s a r e listed in T a b l e 1 a n d p o r t r a y e d
+g r a p h i c a l l y in Fig. 2.
+I n t h e real d a t a , 16 of t h e r o o t s a r e g r e a t e r t h a n 1.0. I f t h e r e s u l t s
+g i v i n g t h e c u r v e Ro a r e a c c e p t e d a t face v a l u e , h o w e v e r , a n d t h e r a t i o n a l e
+o u t l i n e d a b o v e is used, o n l y n i n e f a c t o r s w o u l d be i n d i c a t e d . I n t e r e s t i n g l y ,
+t h e r e is s o m e t h i n g of a n inflection i n t h e real d a t a c u r v e a t t h i s p o i n t . T h e
+r a t i o of t h e t e n t h r o o t t o t h e n i n t h is small. S o m e r u l e s f o r w h e n t o s t o p
+f a c t o r i n g are, in effect, b a s e d o n t h e a s s u m p t i o n t h a t t h e r e should b e a r a t h e r
+TABLE 1
+Latent Roots for Random and Real Data
+Root
+Number
+1
+
+2
+3
+4
+5
+6
+7
+8
+9
+
+10
+tt
+t2
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+
+Real Data Random Data
+Root
+Root
+12.29
+4.86
+3.75
+2.83
+2.i4
+i.84
+1.78
+1.69
+i.62
+1.39
+1.33
+1.25
+1.21
+1.15
+1.09
+1.03
+.98
+.96
+.92
+.88
+.85
+
+2.10
+1.95
+1.9i
+i.83
+1.76
+1.72
+1.67
+i.64
+1.61
+i.56
+i.54
+i.52
+i.50
+1.42
+i.40
+t.38
+1.34
+t.3t
+1.28
+i.25
+1,23
+
+.80
+
+1.18
+
+.79
+.77
+.76
+.73
+.70
+.68
+.66
+
+i.t7
+i.il
+1.t0
+1.07
+1.07
+1.03
+i.Ol
+
+.64
+
+1.00
+
+.63
+.62
+.59
+
+.99
+.92
+,91
+
+Root
+Number
+34
+35
+36
+37
+38
+39
+40
+4i
+42
+43
+44
+45
+46
+47
+48
+49
+50
+5i
+52
+53
+54
+55
+56
+57
+58
+59
+60
+6t
+62
+63
+64
+65
+
+Real Data Random Data
+Root
+Root
+.55
+.53
+.52
+.5i
+.49
+.48
+.47
+.45
+.44
+.42
+.4O
+.39
+.38
+.38
+.36
+.34 ~
+.32
+,31
+.30
+.30
+.27
+.27
+.24
+• 22
+.21
+.i9
+.19
+.18
+.18
+.16
+.i4
+.13
+
+.90
+.87
+.85
+.83
+.8i
+.80
+.79
+.75
+.75
+.73
+.71
+.67
+.66
+.65
+.63
+.62
+.60
+.59
+.58
+.56
+.54
+.5t
+.50
+.49
+.47
+.46
+.42
+.40
+.40
+.36
+.32
+.31
+
+184
+
+PSYCHOMETRIKA
+
+F I GUILE 2
+L A T E N T ROOTS FOB. R E A L AND RANDOM D A T A
+
+12.3
+
+A
+
+A
+
+= Sample curve (N=297)
+
+R
+
+= Random
+
+curve
+
+(N=297)
+
+5.0
+
+4.0
+
+3.0
+
+2.0
+
+1.01
+
+!
+1
+i
+
+I
+
+I
+
+!}.0
+9
+
+I
+16
+
+2:4
+
+3:'
+
+RoOt
+
+40
+
+48
+
+55
+
+64
+
+Number
+
+sudden drop in the variance accounted for by a factor after the last true
+factor has been calculated. In the present case, application of this kind of
+rule leads to the estimation of the same number of factors as is suggested
+by the method developed in this paper. While this is an interesting outcome
+and suggests a hypothesis to be examined, the results here are not presented
+as a test of the hypothesis of congruency of the two approaches. Such a
+test would require variation over several samples of real data as well as
+variation over several samples of random variables.
+I t is to be hoped, of course, that the sampling theory required by the
+rationale given here will soon be developed to the point where the generation of samples of random variables will not be needed. Meanwhile, however, the procedures illustrated above can be rather easily adopted at any
+institution where fast computer facilities are available. The test based on
+random variables can be included in standard programs and used routinely.
+REFERENCES
+[1] Anderson, T. W. A n introduction to multivariate statistical analysis. New York: Wiley,
+1958.
+[2] Dickman, K. W. Factorial validity of a rating instrument. Unpublished doctoral dissertation, Univ. Illinois, 1960.
+
+JOHN L. HORN
+
+185
+
+[3] Guttman, L. Some necessary conditions for common-factor analysis. Psychometrika,
+1954, 19, 149-161.
+[4] Kaisert H. The application of electronic computers to factor analysis. (Paper read at
+a symposium on application of computers to psychological problems. Meeting of Amer.
+Psychol. Ass., 1959).
+[5] Kendall, M. G. and Stuart, A. The advanced theory of statistics (Vols. I and II). London~
+Eng.: Griffin, 1958.
+[6] Rao, C. R. Advanced statistical methods in biornetric research. New York: Wiley, 1952.
+Original manuscript received 1/16/64
+Revised manuscript received 3 / ~5/ 64
+
+
