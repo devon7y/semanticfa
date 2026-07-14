@@ -621,7 +621,7 @@ sfa_coverage <- function(items,
   }
   if (nrow(C) < 25L) {
     stop("Only ", nrow(C), " region sentences survive the filters - too ",
-         "few to audit against. This does not mean the construct is ",
+         "few to evaluate against. This does not mean the construct is ",
          "invalid: there is not enough natural-language data about it ",
          "(under this name, in this corpus) to estimate content validity ",
          "with this method. Rebuild the region with a higher 'target'/",
@@ -630,7 +630,7 @@ sfa_coverage <- function(items,
   }
   small_region <- nrow(C) < 200L
   if (small_region) {
-    warning("The audited region has only ", nrow(C), " sentences after ",
+    warning("The evaluated region has only ", nrow(C), " sentences after ",
             "filtering - below the ~200-sentence saturation threshold. ",
             "Estimates are noisy and coverage is biased favorable at small ",
             "region sizes; interpret with caution. This reflects limited ",
@@ -868,7 +868,7 @@ print.sfa_coverage <- function(x, digits = 2, ...) {
     if (is.null(ci_v)) "" else
       paste0(" [", fmt(ci_v[1]), ", ", fmt(ci_v[2]), "]")
   }
-  cat("Content-validity audit: ", x$n_items, " items vs \"",
+  cat("Content-validity evaluation: ", x$n_items, " items vs \"",
       x$construct, "\"\n", sep = "")
   cat("  region: ", x$region_n, " sentences (",
       x$region_provenance$corpus, ")",
@@ -958,7 +958,7 @@ print.sfa_coverage <- function(x, digits = 2, ...) {
 print.sfa_coverage_battery <- function(x, digits = 2, ...) {
   fmt <- function(v) formatC(v, digits = digits, format = "f")
   n_items <- sum(vapply(x, `[[`, numeric(1), "n_items"))
-  cat("Content-validity audit battery: ", length(x), " factors, ",
+  cat("Content-validity evaluation battery: ", length(x), " factors, ",
       n_items, " items\n", sep = "")
   cat("  encoder: ", x[[1L]]$region_provenance$encoder, "\n\n", sep = "")
   w <- max(nchar(names(x)), 6L)
