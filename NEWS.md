@@ -1,3 +1,23 @@
+# semanticfa 0.4.0
+
+## Leximax: lexical target rotation
+
+* New rotation option `rotate = "leximax"` in `sfa()`: orients factor axes
+  toward the construct lexicon by maximizing nameability, the mean cosine
+  between each factor's naming target and its retrieved construct term.
+  The optimizer alternates the package's deterministic naming machinery
+  with oblique target rotation (GPArotation) from multiple seeded starts,
+  returns the best self-consistent (recurrent) orientation, and re-names
+  the winner through the canonical pool path. Model fit is invariant by
+  construction.
+* New `sfa_leximax()`: post-hoc leximax rotation of any fitted solution
+  (an `sfa` fit, a `psych::fa` fit, or a plain pattern matrix with item
+  texts), for rotating existing solutions without refitting.
+* New `sfa_lexmap()` and `sfa_nameability()`: the reusable pool-by-item
+  lexical map, and the retrieved labels plus nameability of any
+  orientation of the mapped items (also the engine for Monte Carlo
+  calibration of nameability).
+
 # semanticfa 0.3.0
 
 ## Content-validity audit: one 95% convention, per-item p-values

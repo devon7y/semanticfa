@@ -131,6 +131,7 @@ sfa <- function(items,
                 calibrate        = FALSE,
                 calibrate_iter   = 100L,
                 label_factors    = FALSE,
+                leximax          = list(),
                 ...) {
   cl <- match.call()
 
@@ -273,8 +274,41 @@ sfa <- function(items,
   }
 
   # --- Step 4: Factor analysis via psych ---
-  fa_obj <- psych::fa(sim_matrix, nfactors = nfactors, rotate = rotate,
-                      fm = fm, n.obs = n.obs, warnings = FALSE, ...)
+  # rotate = "leximax" is handled by this package (psych does not know it):
+  # fit unrotated, then optimize the orientation toward the construct
+  # lexicon (see R/leximax.R). All other rotations pass through to psych.
+  lexi <- NULL
+  if (identical(rotate, "leximax")) {
+    fa_obj <- psych::fa(sim_matrix, nfactors = nfactors, rotate = "none",
+                        fm = fm, n.obs = n.obs, warnings = FALSE, ...)
+    if (nfactors >= 2L) {
+      lexmap <- leximax$lexmap %||%
+        sfa_lexmap(item_text,
+                   model = leximax$model %||% model,
+                   instruction = leximax$instruction,
+                   pool = leximax$pool,
+                   block_size = leximax$block_size %||% 50000L)
+      lexi <- do.call(sfa_leximax, c(
+        list(x = unclass(fa_obj$loadings), Phi = diag(nfactors),
+             lexmap = lexmap),
+        leximax[intersect(names(leximax),
+                          c("n_random", "seed", "col_scale", "rotation",
+                            "normalize", "max_iter"))]))
+      lx <- lexi$loadings
+      class(lx) <- "loadings"
+      fa_obj$loadings <- lx
+      fa_obj$Phi <- lexi$Phi
+      fa_obj$rot.mat <- t(solve(lexi$Th))
+      fa_obj$Structure <- lexi$loadings %*% lexi$Phi
+      vx <- diag(lexi$Phi %*% crossprod(lexi$loadings))
+      fa_obj$Vaccounted <- rbind(`SS loadings` = vx,
+                                 `Proportion Var` = vx / n_items,
+                                 `Cumulative Var` = cumsum(vx / n_items))
+    }
+  } else {
+    fa_obj <- psych::fa(sim_matrix, nfactors = nfactors, rotate = rotate,
+                        fm = fm, n.obs = n.obs, warnings = FALSE, ...)
+  }
 
   # --- Step 5: Heywood check ---
   hw <- .check_heywood(fa_obj$communality)
@@ -376,6 +410,7 @@ sfa <- function(items,
     # internal
     .fa           = fa_obj
   )
+  if (!is.null(lexi)) out$leximax <- lexi
 
   class(out) <- "sfa"
   if (isTRUE(label_factors)) {
