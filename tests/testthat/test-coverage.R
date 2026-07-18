@@ -283,7 +283,7 @@ test_that("a multi-factor scale audits per factor by default", {
   expect_named(battery, c("Delay", "Guilt"))
   expect_s3_class(battery$Delay, "sfa_coverage")
   expect_equal(battery$Delay$n_items, 8L)
-  expect_output(print(battery), "audit battery")
+  expect_output(print(battery), "evaluation battery")
   grDevices::pdf(NULL)
   on.exit(grDevices::dev.off(), add = TRUE)
   expect_invisible(plot(battery, factor = "Guilt", type = "relevance"))
