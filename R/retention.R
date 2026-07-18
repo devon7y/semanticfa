@@ -362,16 +362,22 @@ print.sfa_map <- function(x, ...) {
 #' @param methods Character vector of retention methods to run. Supported:
 #'   \code{"parallel"} ([sfa_parallel()]), \code{"kaiser"} (latent-root
 #'   criterion), \code{"TEFI"}, \code{"EGA"} (requires EGAnet),
-#'   \code{"EKC"} ([sfa_ekc()]), and \code{"MAP"} ([sfa_map()]). The
+#'   \code{"EKC"} ([sfa_ekc()]), \code{"MAP"} ([sfa_map()]), and
+#'   \code{"semk"} ([sfa_semk()], the calibrated learned rule; requires
+#'   Python and a one-time model download). The
 #'   default runs parallel analysis alone, matching the field's conventional
 #'   retention default; request the multi-criterion battery explicitly (the
 #'   package's own demonstration uses
 #'   \code{c("parallel", "kaiser", "TEFI", "EGA", "EKC")}). Notes for
 #'   choosing: EGA needs the suggested EGAnet package; the latent-root rule
 #'   is retained for reference despite its known liberal bias; TEFI tends to
-#'   run low on embedding similarity matrices; and MAP tends to track
+#'   run low on embedding similarity matrices; MAP tends to track
 #'   reliable minor structure well past the interpretable factor count,
-#'   which would pull the modal consensus deep.
+#'   which would pull the modal consensus deep; and sem-k is the only
+#'   criterion with validated planted-truth error rates on embedding
+#'   matrices (its classical battery votes are consumed internally as
+#'   features, so a consensus mixing sem-k with those same criteria
+#'   double-counts them).
 #' @param seed Random seed for parallel analysis.
 #' @param parallel_iter Iterations for parallel analysis.
 #' @param max_factors Maximum factors to test for TEFI (default: auto).
@@ -405,7 +411,8 @@ sfa_nfactors <- function(sim_matrix, embeddings = NULL,
     sim_matrix <- fit$sim_matrix
   }
   methods <- match.arg(methods,
-                       c("parallel", "kaiser", "TEFI", "EGA", "EKC", "MAP"),
+                       c("parallel", "kaiser", "TEFI", "EGA", "EKC", "MAP",
+                         "semk"),
                        several.ok = TRUE)
   parallel_iter <- .assert_count(parallel_iter, "parallel_iter")
 
@@ -436,7 +443,14 @@ sfa_nfactors <- function(sim_matrix, embeddings = NULL,
         }
         sfa_ekc(sim_matrix, embeddings)$n_factors
       },
-      MAP = sfa_map(sim_matrix)$n_factors
+      MAP = sfa_map(sim_matrix)$n_factors,
+      semk = {
+        if (is.null(embeddings)) {
+          stop("'embeddings' is required for sem-k retention.",
+               call. = FALSE)
+        }
+        sfa_semk(sim_matrix, embeddings, seed = seed)$n_factors
+      }
     ), error = function(e) {
       warning("Retention method '", m, "' failed: ", conditionMessage(e),
               call. = FALSE)

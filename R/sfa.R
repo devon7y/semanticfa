@@ -42,7 +42,9 @@
 #'   to all +1 with an informative message for encoding methods that use it.
 #' @param n_factors_method Retention rule when \code{nfactors = NULL}:
 #'   \code{"parallel"} (embedding-adapted, default), \code{"kaiser"},
-#'   \code{"EGA"}, or \code{"TEFI"}.
+#'   \code{"EGA"}, \code{"TEFI"}, or \code{"semk"} (calibrated semantic
+#'   retention via the learned sem-k rule; see [sfa_semk()] --- requires
+#'   Python and a one-time model download).
 #' @param dim_select Embedding-dimension selection before analysis:
 #'   \code{"none"} (default, use the full vector) or \code{"dynega"} (select the
 #'   leading-coordinate depth that best recovers structure by EGA-based depth
@@ -138,7 +140,7 @@ sfa <- function(items,
   encoding <- match.arg(encoding,
     c("atomic_reversed", "atomic", "squid", "mean_centered_pearson"))
   n_factors_method <- match.arg(n_factors_method,
-    c("parallel", "kaiser", "EGA", "TEFI"))
+    c("parallel", "kaiser", "EGA", "TEFI", "semk"))
   dim_select <- match.arg(dim_select)
 
   # validate numeric controls up front for clear error messages
@@ -204,9 +206,10 @@ sfa <- function(items,
     embed_dim     <- NA_integer_
     dimnames(sim_matrix) <- list(codes, codes)
     sim_matrix <- .check_psd(sim_matrix)
-    if (is.null(nfactors) && n_factors_method == "parallel") {
-      message("Embedding-adapted parallel analysis needs embeddings; with ",
-              "'similarity' supplied, using 'kaiser' retention instead.")
+    if (is.null(nfactors) && n_factors_method %in% c("parallel", "semk")) {
+      message("The '", n_factors_method, "' retention rule needs ",
+              "embeddings; with 'similarity' supplied, using 'kaiser' ",
+              "retention instead.")
       n_factors_method <- "kaiser"
     }
     # scoring is not used for a precomputed matrix; default silently (the matrix
@@ -252,6 +255,7 @@ sfa <- function(items,
 
   # --- Step 3: Determine nfactors ---
   pa_result <- NULL
+  semk_result <- NULL
   if (is.null(nfactors)) {
     nfactors <- switch(n_factors_method,
       parallel = {
@@ -264,7 +268,11 @@ sfa <- function(items,
       ),
       EGA = .retention_ega(sim_matrix),
       TEFI = .retention_tefi(sim_matrix, max_factors = NULL,
-                             rotate = rotate, fm = fm)
+                             rotate = rotate, fm = fm),
+      semk = {
+        semk_result <- sfa_semk(sim_matrix, transformed, seed = seed)
+        semk_result$n_factors
+      }
     )
   }
   nfactors <- max(1L, as.integer(nfactors))
@@ -403,6 +411,7 @@ sfa <- function(items,
     omega         = omega,
     daal          = daal,
     parallel      = pa_result,
+    semk          = semk_result,
     calibration   = calibration,
     heywood       = hw,
     item_data     = item_data,

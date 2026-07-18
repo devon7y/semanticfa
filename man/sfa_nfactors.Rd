@@ -25,16 +25,22 @@ Required when \code{"parallel"} or \code{"EKC"} is in \code{methods}.}
 \item{methods}{Character vector of retention methods to run. Supported:
 \code{"parallel"} (\code{\link[=sfa_parallel]{sfa_parallel()}}), \code{"kaiser"} (latent-root
 criterion), \code{"TEFI"}, \code{"EGA"} (requires EGAnet),
-\code{"EKC"} (\code{\link[=sfa_ekc]{sfa_ekc()}}), and \code{"MAP"} (\code{\link[=sfa_map]{sfa_map()}}). The
+\code{"EKC"} (\code{\link[=sfa_ekc]{sfa_ekc()}}), \code{"MAP"} (\code{\link[=sfa_map]{sfa_map()}}), and
+\code{"semk"} (\code{\link[=sfa_semk]{sfa_semk()}}, the calibrated learned rule; requires
+Python and a one-time model download). The
 default runs parallel analysis alone, matching the field's conventional
 retention default; request the multi-criterion battery explicitly (the
 package's own demonstration uses
 \code{c("parallel", "kaiser", "TEFI", "EGA", "EKC")}). Notes for
 choosing: EGA needs the suggested EGAnet package; the latent-root rule
 is retained for reference despite its known liberal bias; TEFI tends to
-run low on embedding similarity matrices; and MAP tends to track
+run low on embedding similarity matrices; MAP tends to track
 reliable minor structure well past the interpretable factor count,
-which would pull the modal consensus deep.}
+which would pull the modal consensus deep; and sem-k is the only
+criterion with validated planted-truth error rates on embedding
+matrices (its classical battery votes are consumed internally as
+features, so a consensus mixing sem-k with those same criteria
+double-counts them).}
 
 \item{seed}{Random seed for parallel analysis.}
 

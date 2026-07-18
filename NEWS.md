@@ -1,3 +1,34 @@
+# semanticfa 0.5.0
+
+## sem-k: calibrated semantic factor retention
+
+* New retention criterion `sfa_semk()`: sem-k, a learned retention rule
+  for embedding similarity matrices with validated error rates. The rule
+  (a random-forest hybrid in the factor-forest lineage) was trained on a
+  planted-truth corpus of ~700 LLM-written item sets with known factor
+  structure spanning construct proximity, redundancy, reverse-keying,
+  cross-loadings, and minor-factor contamination, and reaches 65.7%
+  exact / 73.9% within-25% accuracy on held-out configurations under
+  the default encoder, with 61.6-69.0% exact replicated across nine
+  encoders from six providers. Every verdict carries a 90%
+  split-conformal interval (empirical coverage 91-96%).
+* `sfa()` gains `n_factors_method = "semk"`; the fitted object stores
+  the full verdict (interval, floor, battery votes) under `$semk`.
+* `sfa_nfactors()` gains `methods = "semk"`.
+* The estimand is semantic dimensionality: across 35 scales with large
+  response archives, sem-k verdicts track empirical human-data
+  dimensionality (Spearman rho .83) far better than documented textbook
+  counts do (rho .55), and verdicts agree across encoder providers at
+  mean pairwise rho .89.
+* Implementation: the frozen model artifact (consensus_rule_v1.0,
+  ~17 MB) is downloaded once from the `semk-v1` GitHub release and
+  cached under `tools::R_user_dir("semanticfa", "cache")`, with sha256
+  verification; the feature-extraction pipeline is vendored under
+  `inst/python/semk/` and driven through reticulate (numpy, scipy,
+  scikit-learn, joblib, declared via `py_require()` on first use).
+  Per-encoder register-floor calibration files ship as release assets
+  (pass `floor=` for non-default encoders).
+
 # semanticfa 0.4.0
 
 ## Leximax: lexical target rotation

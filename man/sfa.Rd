@@ -23,6 +23,7 @@ sfa(
   calibrate = FALSE,
   calibrate_iter = 100L,
   label_factors = FALSE,
+  leximax = list(),
   ...
 )
 }
@@ -74,7 +75,9 @@ to all +1 with an informative message for encoding methods that use it.}
 
 \item{n_factors_method}{Retention rule when \code{nfactors = NULL}:
 \code{"parallel"} (embedding-adapted, default), \code{"kaiser"},
-\code{"EGA"}, or \code{"TEFI"}.}
+\code{"EGA"}, \code{"TEFI"}, or \code{"semk"} (calibrated semantic
+retention via the learned sem-k rule; see \code{\link[=sfa_semk]{sfa_semk()}} --- requires
+Python and a one-time model download).}
 
 \item{dim_select}{Embedding-dimension selection before analysis:
 \code{"none"} (default, use the full vector) or \code{"dynega"} (select the
