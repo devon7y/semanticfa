@@ -13,3 +13,4 @@ DASS_walkthrough.html
 semfa/
 semanticfa_*.tar.gz
 semanticfa.Rcheck/
+inst/python/**/__pycache__/
