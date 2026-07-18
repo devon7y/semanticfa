@@ -25,7 +25,8 @@
   cached under `tools::R_user_dir("semanticfa", "cache")`, with sha256
   verification; the feature-extraction pipeline is vendored under
   `inst/python/semk/` and driven through reticulate (numpy, scipy,
-  scikit-learn, joblib, declared via `py_require()` on first use).
+  scikit-learn pinned to the artifact's training series (1.8.*), and
+  joblib, declared via `py_require()` on first use).
   Per-encoder register-floor calibration files ship as release assets
   (pass `floor=` for non-default encoders).
 

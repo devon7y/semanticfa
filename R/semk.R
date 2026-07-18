@@ -58,7 +58,11 @@
 #' @keywords internal
 .semk_py <- function() {
   if (!is.null(.semk_env$mod)) return(.semk_env$mod)
-  .sfa_py_require(c("numpy", "scipy", "scikit-learn", "joblib"))
+  # scikit-learn pinned to the training series of consensus_rule_v1.0
+  # (trained under 1.8.0): keeps unpickling exact and silences the
+  # InconsistentVersionWarning newer series emit. Bump only together with
+  # a re-trained, re-validated artifact.
+  .sfa_py_require(c("numpy", "scipy", "scikit-learn==1.8.*", "joblib"))
   path <- system.file("python", "semk", package = "semanticfa")
   if (!nzchar(path)) {
     stop("Vendored sem-k python module not found in the installed package.",
@@ -100,8 +104,9 @@
 #' \code{floor} (see the calibration files distributed with the sem-k
 #' release).
 #'
-#' Requires Python with \code{numpy}, \code{scipy}, \code{scikit-learn},
-#' and \code{joblib} (declared automatically via
+#' Requires Python with \code{numpy}, \code{scipy}, \code{scikit-learn}
+#' (pinned to the 1.8 series, matching the artifact's training version),
+#' and \code{joblib} (all declared automatically via
 #' \code{reticulate::py_require()} on first use), and a one-time ~17 MB
 #' artifact download (cached under
 #' \code{tools::R_user_dir("semanticfa", "cache")}).

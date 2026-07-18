@@ -80,8 +80,9 @@ model; for other encoders pass the encoder's register floor via
 \code{floor} (see the calibration files distributed with the sem-k
 release).
 
-Requires Python with \code{numpy}, \code{scipy}, \code{scikit-learn},
-and \code{joblib} (declared automatically via
+Requires Python with \code{numpy}, \code{scipy}, \code{scikit-learn}
+(pinned to the 1.8 series, matching the artifact's training version),
+and \code{joblib} (all declared automatically via
 \code{reticulate::py_require()} on first use), and a one-time ~17 MB
 artifact download (cached under
 \code{tools::R_user_dir("semanticfa", "cache")}).
