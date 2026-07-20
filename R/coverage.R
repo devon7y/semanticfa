@@ -1138,44 +1138,54 @@ plot.sfa_coverage_battery <- function(x, factor = names(x)[1L], ...) {
 # Per-item relevance chart: corroboration counts on a log1p axis, the
 # calibrated critical count as a dashed line, every bar labeled with its
 # count and empirical p-value, flagged items in red.
-.cvg_plot_relevance <- function(x) {
+.cvg_plot_relevance <- function(x, wrap = 52L) {
   ord <- order(x$corroboration)          # worst first, drawn at the top
   vals <- x$corroboration[ord]
   pv <- x$p_values[ord]
   flg <- !x$relevant_items[ord]
+  # Full item text, wrapped to fit the left margin (never truncated).
   labs <- vapply(x$item_text[ord], function(t)
-    if (nchar(t) > 46) paste0(substr(t, 1, 45), "…") else t,
-    character(1))
+    paste(strwrap(t, width = wrap), collapse = "\n"), character(1))
+  nlines <- vapply(strsplit(labs, "\n", fixed = TRUE), length, integer(1))
   tr <- function(v) log10(1 + v)
   n <- length(vals)
   ticks <- c(0, 1, 3, 10, 30, 100, 300, 1000)
   ticks <- ticks[tr(ticks) <= tr(max(vals)) + 0.3]
 
-  op <- graphics::par(mar = c(4, 16, 4, 4), mgp = c(2.4, 0.6, 0))
+  # Row pitch grows with the tallest label so multi-line text never
+  # collides with the neighboring bar.
+  pitch <- max(1.5, 0.7 * max(nlines))
+  op <- graphics::par(mar = c(4, 26, 2, 4), oma = c(0, 0, 2.5, 0),
+                      mgp = c(2.4, 0.6, 0))
   on.exit(graphics::par(op))
   graphics::plot.new()
   graphics::plot.window(xlim = c(0, tr(max(vals)) * 1.18),
-                        ylim = c(n + 0.6, 0.4))
-  y <- seq_len(n)
-  graphics::rect(0, y - 0.31, pmax(tr(vals), 0.02), y + 0.31,
+                        ylim = c((n + 0.7) * pitch, 0.3 * pitch))
+  y <- seq_len(n) * pitch
+  graphics::rect(0, y - 0.34 * pitch, pmax(tr(vals), 0.02), y + 0.34 * pitch,
                  col = ifelse(flg, "#e34948", "#2a78d6"), border = NA)
   graphics::abline(v = tr(x$critical_count), lty = 2, col = "grey30")
   graphics::axis(1, at = tr(ticks), labels = ticks, cex.axis = 0.8)
-  graphics::mtext(labs, side = 2, at = y, las = 1, cex = 0.62, line = 0.4,
-                  col = ifelse(flg, "#b13231", "grey20"))
+  # Full wrapped labels drawn in the left margin, right-aligned to the
+  # axis and vertically centered on each bar (text() honors "\n").
+  graphics::text(graphics::grconvertX(-0.01, "npc", "user"), y, labels = labs,
+                 adj = c(1, 0.5), cex = 0.62, xpd = NA,
+                 col = ifelse(flg, "#b13231", "grey20"))
   graphics::text(pmax(tr(vals), 0.02) + 0.04, y,
                  paste0(vals, "  ·  p = ",
                         formatC(pv, digits = 2, format = "f")),
                  adj = 0, cex = 0.6, col = "grey25", xpd = NA)
   graphics::title(
-    xlab = "construct texts within the coverage radius (log scale)",
-    main = paste0("item relevance = ",
-                  formatC(x$item_relevance, digits = 2, format = "f"),
-                  " (", sum(x$relevant_items), "/", x$n_items,
-                  " items pass at alpha = ", x$alpha,
-                  ")  ·  ideal ~ ",
-                  formatC(x$ideal_relevance, digits = 2, format = "f")),
-    adj = 0, cex.main = 0.95)
+    xlab = "construct texts within the coverage radius (log scale)")
+  # Title spans the full device width (the wide left margin would push a
+  # plot-region-aligned title off the right edge).
+  graphics::mtext(
+    paste0("item relevance = ",
+           formatC(x$item_relevance, digits = 2, format = "f"),
+           " (", sum(x$relevant_items), "/", x$n_items,
+           " items pass at alpha = ", x$alpha, ")  ·  ideal ~ ",
+           formatC(x$ideal_relevance, digits = 2, format = "f")),
+    side = 3, line = 0.4, adj = 0, cex = 0.95, font = 2, outer = TRUE)
   invisible(x)
 }
 
