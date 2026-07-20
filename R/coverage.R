@@ -1153,9 +1153,13 @@ plot.sfa_coverage_battery <- function(x, factor = names(x)[1L], ...) {
   ticks <- ticks[tr(ticks) <= tr(max(vals)) + 0.3]
 
   # Row pitch grows with the tallest label so multi-line text never
-  # collides with the neighboring bar.
+  # collides with the neighboring bar; the left margin grows with the
+  # widest label line so full item text fits (single line when `wrap`
+  # is large, as in the manuscript figure).
   pitch <- max(1.5, 0.7 * max(nlines))
-  op <- graphics::par(mar = c(4, 26, 2, 4), oma = c(0, 0, 2.5, 0),
+  maxchars <- max(nchar(unlist(strsplit(labs, "\n", fixed = TRUE))))
+  leftmar <- max(16, min(48, 6 + 0.36 * maxchars))
+  op <- graphics::par(mar = c(4, leftmar, 2, 4), oma = c(0, 0, 2.5, 0),
                       mgp = c(2.4, 0.6, 0))
   on.exit(graphics::par(op))
   graphics::plot.new()
@@ -1185,7 +1189,7 @@ plot.sfa_coverage_battery <- function(x, factor = names(x)[1L], ...) {
            " (", sum(x$relevant_items), "/", x$n_items,
            " items pass at alpha = ", x$alpha, ")  ·  ideal ~ ",
            formatC(x$ideal_relevance, digits = 2, format = "f")),
-    side = 3, line = 0.4, adj = 0, cex = 0.95, font = 2, outer = TRUE)
+    side = 3, line = 0.4, adj = 0.5, cex = 0.95, font = 2, outer = TRUE)
   invisible(x)
 }
 
@@ -1226,7 +1230,10 @@ plot.sfa_coverage_battery <- function(x, factor = names(x)[1L], ...) {
 #'   the matched-size null.
 #' @param seed Seed for the (arbitrary, uniform) within-region point
 #'   placement in the `"coverage"` diagram. Default 20260711.
-#' @param ... Passed to the base plotting calls (`"curve"` only).
+#' @param ... Passed to the type-specific plotter. For
+#'   `type = "relevance"`, `wrap` sets the character width at which item
+#'   labels wrap (default 52; a large value such as 200 keeps every item
+#'   on one line, and the left margin widens to fit).
 #' @returns `x`, invisibly.
 #' @export
 plot.sfa_coverage <- function(x, type = c("coverage", "relevance", "curve"),
@@ -1234,6 +1241,6 @@ plot.sfa_coverage <- function(x, type = c("coverage", "relevance", "curve"),
   type <- match.arg(type)
   switch(type,
          coverage = .cvg_plot_coverage(x, seed = seed),
-         relevance = .cvg_plot_relevance(x),
+         relevance = .cvg_plot_relevance(x, ...),
          curve = .cvg_plot_curve(x, ...))
 }
