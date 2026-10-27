@@ -1,0 +1,24 @@
+NVIDIA H100 80GB HBM3, 81559 MiB
+bundled 8B: 50 x 4096
+python 3.11.5 | numpy 2.4.2 | torch 2.12.1 | transformers 5.12.1 | sentence-transformers 5.2.0
+Qwen/Qwen3-Embedding-0.6B loaded from local snapshot, revision 97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3
+model Qwen/Qwen3-Embedding-0.6B on cuda; modules: ['Transformer', 'Pooling', 'Normalize']
+0.6B: 50 items x 1024 dims
+  norms of new vectors: min 1.000000, max 1.000000
+  cosine(new, stored): min 1.00000000, median 1.00000000
+  max |new - stored| over all coordinates: 3.384e-07
+python 3.11.5 | numpy 2.4.2 | torch 2.12.1 | transformers 5.12.1 | sentence-transformers 5.2.0
+Qwen/Qwen3-Embedding-4B loaded from local snapshot, revision 5cf2132abc99cad020ac570b19d031efec650f2b
+model Qwen/Qwen3-Embedding-4B on cuda; modules: ['Transformer', 'Pooling', 'Normalize']
+4B: 50 items x 2560 dims
+  norms of new vectors: min 1.000000, max 1.000000
+  cosine(new, stored): min 1.00000000, median 1.00000000
+  max |new - stored| over all coordinates: 3.129e-07
+python 3.11.5 | numpy 2.4.2 | torch 2.12.1 | transformers 5.12.1 | sentence-transformers 5.2.0
+Qwen/Qwen3-Embedding-8B loaded from local snapshot, revision 1d8ad4ca9b3dd8059ad90a75d4983776a23d44af
+model Qwen/Qwen3-Embedding-8B on cuda; modules: ['Transformer', 'Pooling', 'Normalize']
+8B: 50 items x 4096 dims
+  norms of new vectors: min 1.000000, max 1.000000
+  cosine(new, stored): min 0.99999824, median 0.99999829
+  max |new - stored| over all coordinates: 5.006e-05
+JOB_EXIT:0

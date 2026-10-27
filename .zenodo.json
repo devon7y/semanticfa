@@ -1,0 +1,10 @@
+{
+  "title": "semanticfa: reproduction archive for \"semanticfa: An R Package for Response-Free Semantic Factor Analysis of Psychometric Scales\"",
+  "upload_type": "software",
+  "description": "<p>Release of the semanticfa R package repository whose <code>reproduce</code> folder regenerates every number, table, and figure of the worked example in the paper \"semanticfa: An R Package for Response-Free Semantic Factor Analysis of Psychometric Scales\" (Yanitski and Westbury, submitted to Behavior Research Methods). The folder holds the master script (<code>reproduce.R</code>), its full console transcript (<code>reproduce.Rout</code>), the archived embeddings, the outputs, and the figures; see <code>reproduce/README.md</code>. The human response file is not redistributed; the README says where to download it.</p>",
+  "creators": [
+    {"name": "Yanitski, Devon", "affiliation": "University of Alberta", "orcid": "0009-0006-1568-3387"},
+    {"name": "Westbury, Chris", "affiliation": "University of Alberta", "orcid": "0000-0001-7788-0278"}
+  ],
+  "keywords": ["semantic factor analysis", "language models", "embeddings", "psychometrics", "R package", "reproducibility"]
+}
