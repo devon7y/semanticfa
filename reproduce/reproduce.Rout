@@ -155,7 +155,7 @@ mean_centered_pearson  0.394 0.938
 
 > 
 > sim_nli <- sfa_nli_matrix(big5$items)   # cross-encoder/nli-deberta-v3-base
-Loading weights:   0%|          | 0/202 [00:00<?, ?it/s]Loading weights:  16%|█▌        | 32/202 [00:00<00:00, 300.39it/s]Loading weights:  31%|███       | 63/202 [00:00<00:00, 243.92it/s]Loading weights: 100%|██████████| 202/202 [00:00<00:00, 794.88it/s]
+Loading weights:   0%|          | 0/202 [00:00<?, ?it/s]Loading weights:  28%|██▊       | 57/202 [00:00<00:00, 544.61it/s]Loading weights:  55%|█████▌    | 112/202 [00:00<00:00, 325.68it/s]Loading weights: 100%|██████████| 202/202 [00:00<00:00, 515.56it/s]
 > dimnames(sim_nli) <- list(big5$codes, big5$codes)
 > 
 > ## the canonical example: an extraversion item vs. its reverse-keyed sibling
@@ -1041,10 +1041,25 @@ factor Agreeableness Conscientiousness Extraversion Neuroticism Openness
 > ## Qwen/Qwen3-Embedding-8B (identical settings to the item vectors; see
 > ## data-raw/embed_candidates_8B.py) and ship in the reproduction archive,
 > ## and the five construct-name vectors are the auxiliary 8B vectors loaded
-> ## in Section 1. sfa_item_fit() uses only the item embeddings, their
-> ## theoretical labels, and the construct-name vectors, so this reference fit
-> ## is equivalent to the main one; the scoring column is left out because the
-> ## keying-free mean_centered_pearson encoding does not use it.
+> ## in Section 1. Both sets are written to the package's embedding cache,
+> ## in a temporary directory rather than the user's own cache, so that the
+> ## sfa_item_fit() call below, written as a user would write it, reads them
+> ## from the cache instead of running the model (no live model, no Python).
+> cand8 <- sfa_load_npz(CAND_NPZ)
+> constructs8 <- unique(big5$factors)
+> Sys.setenv(R_USER_CACHE_DIR = file.path(tempdir(), "sfa_cache"))
+> cache8 <- tools::R_user_dir("semanticfa", "cache")
+> dir.create(cache8, recursive = TRUE, showWarnings = FALSE)
+> cache_file8 <- function(texts)
++   file.path(cache8, paste0(semanticfa:::.cache_key(texts, "Qwen/Qwen3-Embedding-8B",
++                                                    "sbert"), ".rds"))
+> saveRDS(cand8$embeddings, cache_file8(cand8$items))
+> saveRDS(aux$embeddings[match(tolower(constructs8), tolower(aux$codes)), , drop = FALSE],
++         cache_file8(constructs8))
+> ## sfa_item_fit() uses only the item embeddings, their theoretical labels,
+> ## and the construct-name vectors, so this reference fit is equivalent to
+> ## the main one; the scoring column is left out because the keying-free
+> ## mean_centered_pearson encoding does not use it.
 > fit_ns <- sfa(big5_df[, c("code", "item", "factor")],
 +               embeddings = E8,
 +               encoding = "mean_centered_pearson", nfactors = 5)
@@ -1053,18 +1068,7 @@ factor Agreeableness Conscientiousness Extraversion Neuroticism Openness
 > cand <- c("I make friends easily.",
 +           "I am the life of every party.",
 +           "I finish what I start.")
-> cand8 <- sfa_load_npz(CAND_NPZ)
-> stopifnot(identical(cand8$items, cand))
-> ## offline lookup embedder: candidate vectors from the archive, construct
-> ## names from the auxiliary vectors (no live model, no Python)
-> embed_lookup8 <- function(texts) {
-+   pool_texts <- c(cand8$items, aux$codes)
-+   pool_emb   <- rbind(cand8$embeddings, aux$embeddings)
-+   idx <- match(tolower(trimws(texts)), tolower(trimws(pool_texts)))
-+   stopifnot(!anyNA(idx))
-+   pool_emb[idx, , drop = FALSE]
-+ }
-> ifit <- sfa_item_fit(fit_ns, cand, embed = embed_lookup8,
+> ifit <- sfa_item_fit(fit_ns, cand, model = "Qwen/Qwen3-Embedding-8B",
 +                      redundancy_cutoff = 0.85)
 > ifit
 Candidate item fit
@@ -1109,6 +1113,16 @@ Candidate 3: "I finish what I start."
   Redundancy     : closest item C35 "I get chores done right away." (0.75) -> distinct
   Verdict        : good fit for Conscientiousness - clean and non-redundant
 
+> ## check: the call read exactly the archived vectors (the cache keys match
+> ## the candidates and the construct names it embeds), and passing the same
+> ## vectors through a custom embed function gives the same report
+> stopifnot(identical(cand8$items, cand),
++           identical(unique(fit_ns$item_data$factor), constructs8),
++           file.exists(cache_file8(cand)), file.exists(cache_file8(constructs8)))
+> ifit_chk <- sfa_item_fit(fit_ns, cand, redundancy_cutoff = 0.85,
++   embed = function(texts) rbind(cand8$embeddings, aux$embeddings)[
++     match(tolower(texts), tolower(c(cand8$items, aux$codes))), , drop = FALSE])
+> stopifnot(identical(capture.output(print(ifit)), capture.output(print(ifit_chk))))
 > results$item_fit <- ifit
 > 
 > ## ---------------------------------------------------------------------------
@@ -1144,6 +1158,19 @@ null device
 null device 
           1 
 > 
+> ## the four item maps as a user draws them; their coordinates feed the
+> ## neighbor shares below (drawn to a null device: the paper's figure is
+> ## drawn next, from the same maps)
+> pdf(NULL)
+> maps <- list()
+> for (m in c("tsne", "umap", "pca", "mds")) {
++   maps[[m]] <- sfa_itemplot(fit, method = m, seed = 42)$Y
++ }
+> dev.off()
+null device 
+          1 
+> 
+> ## Figure 5: the same maps redrawn for the paper.
 > ## larger panels and smaller labels limit overprinting; xpd = NA keeps labels
 > ## at the panel edges from being clipped; one shared legend sits below the
 > ## panels (sfa_itemplot colors domains in alphabetical order with "Dark 3").
@@ -1212,14 +1239,13 @@ null device
 +   invisible(pos)
 + }
 > dom_cols <- grDevices::hcl.colors(5, "Dark 3")[as.integer(factor(big5$factors))]
-> maps <- list()
 > pdf("figures/fig_itemmap.pdf", width = 9.5, height = 10)
 > op <- par(mfrow = c(2, 2), mar = c(4.1, 4.1, 2.5, 1), mgp = c(2.4, 0.8, 0),
 +           oma = c(2.2, 0, 0, 0), xpd = NA)
 > for (m in c("tsne", "umap", "pca", "mds")) {
 +   mp <- sfa_itemplot(fit, method = m, seed = 42, legend = FALSE,
 +                      cex = 0.75, labels = rep("", 50))
-+   maps[[m]] <- mp$Y
++   stopifnot(isTRUE(all.equal(unname(mp$Y), unname(maps[[m]]))))
 +   if (m %in% c("tsne", "umap")) place_labels(mp$Y, big5$codes, dom_cols)
 + }
 > dom_lv <- levels(factor(big5$factors))
@@ -1988,7 +2014,7 @@ Human parallel analysis suggests 10 factors
 +             random   = human_pa$fa.sim[1:12]), 3)
           [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10] [,11]
 observed 6.858 4.142 3.112 2.737 1.992 0.617 0.386 0.175 0.082 0.051 0.003
-random   0.015 0.013 0.012 0.012 0.011 0.010 0.010 0.009 0.008 0.008 0.007
+random   0.015 0.013 0.013 0.012 0.011 0.010 0.010 0.009 0.009 0.008 0.007
           [,12]
 observed -0.028
 random    0.007
@@ -2163,7 +2189,7 @@ random_max    0.785 0.656
 > ## (g) the NLI matrix: how far the two orders of each pair disagree before
 > ##     averaging, and how its scores fall by keying and domain
 > sim_nli_dir <- sfa_nli_matrix(big5$items, symmetric = FALSE)
-Loading weights:   0%|          | 0/202 [00:00<?, ?it/s]Loading weights: 100%|██████████| 202/202 [00:00<00:00, 7215.67it/s]
+Loading weights:   0%|          | 0/202 [00:00<?, ?it/s]Loading weights: 100%|██████████| 202/202 [00:00<00:00, 7556.70it/s]
 > nli_sym_diff <- max(abs((sim_nli_dir + t(sim_nli_dir)) / 2 - unname(sim_nli)))
 > cat("Largest difference between the averaged orders and sim_nli:",
 +     signif(nli_sym_diff, 3), "\n")
@@ -2762,13 +2788,14 @@ other attached packages:
 [1] semanticfa_0.5.1
 
 loaded via a namespace (and not attached):
- [1] igraph_2.1.4         EGAnet_2.4.1         Rtsne_0.17          
- [4] Matrix_1.7-4         lattice_0.22-7       magrittr_2.0.5      
- [7] GPArotation_2026.4-1 reticulate_1.43.0    parallel_4.5.0      
-[10] glasso_1.11          pkgconfig_2.0.3      png_0.1-9           
-[13] lifecycle_1.0.5      cli_3.6.6            grid_4.5.0          
-[16] withr_3.0.2          mnormt_2.1.2         compiler_4.5.0      
-[19] psych_2.6.5          tools_4.5.0          RSpectra_0.16-2     
-[22] uwot_0.2.4           nlme_3.1-168         Rcpp_1.1.1-1.1      
-[25] FNN_1.1.4.1          rlang_1.2.0          jsonlite_2.0.0      
+ [1] digest_0.6.39        igraph_2.1.4         EGAnet_2.4.1        
+ [4] Rtsne_0.17           Matrix_1.7-4         lattice_0.22-7      
+ [7] magrittr_2.0.5       GPArotation_2026.4-1 reticulate_1.43.0   
+[10] parallel_4.5.0       glasso_1.11          pkgconfig_2.0.3     
+[13] png_0.1-9            lifecycle_1.0.5      cli_3.6.6           
+[16] grid_4.5.0           withr_3.0.2          mnormt_2.1.2        
+[19] compiler_4.5.0       psych_2.6.5          tools_4.5.0         
+[22] RSpectra_0.16-2      uwot_0.2.4           nlme_3.1-168        
+[25] Rcpp_1.1.1-1.1       FNN_1.1.4.1          rlang_1.2.0         
+[28] jsonlite_2.0.0      
 > 
