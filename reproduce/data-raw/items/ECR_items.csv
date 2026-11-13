@@ -1,0 +1,37 @@
+code,item,factor,scoring
+AV1,I prefer not to show a partner how I feel deep down.,Avoidance,1
+AX2,I worry about being abandoned.,Anxiety,1
+AV3,I am very comfortable being close to romantic partners.,Avoidance,-1
+AX4,I worry a lot about my relationships.,Anxiety,1
+AV5,Just when my partner starts to get close to me I find myself pulling away.,Avoidance,1
+AX6,I worry that romantic partners wont care about me as much as I care about them.,Anxiety,1
+AV7,I get uncomfortable when a romantic partner wants to be very close.,Avoidance,1
+AX8,I worry a fair amount about losing my partner.,Anxiety,1
+AV9,I don't feel comfortable opening up to romantic partners.,Avoidance,1
+AX10,I often wish that my partner's feelings for me were as strong as my feelings for him/her.,Anxiety,1
+AV11,"I want to get close to my partner, but I keep pulling back.",Avoidance,1
+AX12,"I often want to merge completely with romantic partners, and this sometimes scares them away.",Anxiety,1
+AV13,I am nervous when partners get too close to me.,Avoidance,1
+AX14,I worry about being alone.,Anxiety,1
+AV15,I feel comfortable sharing my private thoughts and feelings with my partner.,Avoidance,-1
+AX16,My desire to be very close sometimes scares people away.,Anxiety,1
+AV17,I try to avoid getting too close to my partner.,Avoidance,1
+AX18,I need a lot of reassurance that I am loved by my partner.,Anxiety,1
+AV19,I find it relatively easy to get close to my partner.,Avoidance,-1
+AX20,"Sometimes I feel that I force my partners to show more feeling, more commitment.",Anxiety,1
+AV21,I find it difficult to allow myself to depend on romantic partners.,Avoidance,1
+AX22,I do not often worry about being abandoned.,Anxiety,-1
+AV23,I prefer not to be too close to romantic partners.,Avoidance,1
+AX24,"If I can't get my partner to show interest in me, I get upset or angry.",Anxiety,1
+AV25,I tell my partner just about everything.,Avoidance,-1
+AX26,I find that my partner(s) don't want to get as close as I would like.,Anxiety,1
+AV27,I usually discuss my problems and concerns with my partner.,Avoidance,-1
+AX28,"When I'm not involved in a relationship, I feel somewhat anxious and insecure.",Anxiety,1
+AV29,I feel comfortable depending on romantic partners.,Avoidance,-1
+AX30,I get frustrated when my partner is not around as much as I would like.,Anxiety,1
+AV31,"I don't mind asking romantic partners for comfort, advice, or help.",Avoidance,-1
+AX32,I get frustrated if romantic partners are not available when I need them.,Anxiety,1
+AV33,It helps to turn to my romantic partner in times of need.,Avoidance,-1
+AX34,"When romantic partners disapprove of me, I feel really bad about myself.",Anxiety,1
+AV35,"I turn to my partner for many things, including comfort and reassurance.",Avoidance,-1
+AX36,I resent it when my partner spends time away from me.,Anxiety,1

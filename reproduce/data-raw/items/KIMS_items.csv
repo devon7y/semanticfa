@@ -1,0 +1,40 @@
+code,item,factor,scoring
+O1,"I notice changes in my body, such as whether my breathing slows down or speeds up.",Observe,1
+D2,I'm good at finding the words to describe my feelings.,Describe,1
+AA3,"When I do things, my mind wanders off and I'm easily distracted.",Act With Awareness,-1
+AJ4,I criticize myself for having irrational or inappropriate emotions.,Accept Without Judgment,-1
+O5,I pay attention to whether my muscles are tense or relaxed.,Observe,1
+D6,"I can easily put my beliefs, opinions, and expectations into words.",Describe,1
+AA7,"When I'm doing something, I'm only focused on what I'm doing, nothing else.",Act With Awareness,1
+AJ8,I tend to evaluate whether my perceptions are right or wrong.,Accept Without Judgment,-1
+O9,"When I'm walking, I deliberately notice the sensations of my body moving.",Observe,1
+D10,"I'm good at thinking of words to express my perceptions, such as how things taste, smell, or sound.",Describe,1
+AA11,"I drive on ""automatic pilot"" without paying attention to what I'm doing.",Act With Awareness,-1
+AJ12,I tell myself that I shouldn't be feeling the way I'm feeling.,Accept Without Judgment,-1
+O13,"When I take a shower or bath, I stay alert to the sensations of water on my body.",Observe,1
+D14,It's hard for me to find the words to describe what I'm thinking.,Describe,-1
+AA15,"When I'm reading, I focus all my attention on what I'm reading.",Act With Awareness,1
+AJ16,I believe some of my thoughts are abnormal or bad and I shouldn't think that way.,Accept Without Judgment,-1
+O17,"I notice how foods and drinks affect my thoughts, bodily sensations, and emotions.",Observe,1
+D18,I have trouble thinking of the right words to express how I feel about things.,Describe,-1
+AA19,"When I do things, I get totally wrapped up in them and don't think about anything else.",Act With Awareness,1
+AJ20,I make judgments about whether my thoughts are good or bad.,Accept Without Judgment,-1
+O21,"I pay attention to sensations, such as the wind in my hair or sun on my face",Observe,1
+D22,"When I have a sensation in my body, it's difficult for me to describe it because I can't find the right words.",Describe,-1
+AA23,"I don't pay attention to what I'm doing because I'm daydreaming, worrying, or otherwise distracted.",Act With Awareness,-1
+AJ24,I tend to make judgments about how worthwhile or worthless my experiences are.,Accept Without Judgment,-1
+O25,"I pay attention to sounds, such as clocks ticking, birds chirping, or cars passing.",Observe,1
+D26,"Even when I'm feeling terribly upset, I can find a way to put it into words.",Describe,1
+AA27,"When I'm doing chores, such as cleaning or laundry, I tend to daydream or think of other things.",Act With Awareness,-1
+AJ28,I tell myself that I shouldn't be thinking the way I'm thinking.,Accept Without Judgment,-1
+O29,I notice the smells and aromas of things.,Observe,1
+O30,I intentionally stay aware of my feelings.,Observe,1
+AA31,I tend to do several things at once rather than focusing on one thing at a time.,Act With Awareness,-1
+AJ32,I think some of my emotions are bad or inappropriate and I shouldn't feel them.,Accept Without Judgment,-1
+O33,"I notice visual elements in art or nature, such as colors, shapes, textures, or patterns of light and shadow.",Observe,1
+D34,My natural tendency is to put my experiences into words.,Describe,1
+AA35,"When I'm working on something, part of my mind is occupied with other topics, such as what I'll be doing later, or things I'd rather be doing.",Act With Awareness,-1
+AJ36,I disapprove of myself when I have irrational ideas.,Accept Without Judgment,-1
+O37,I pay attention to how my emotions affect my thoughts and behavior.,Observe,1
+AA38,"I get completely absorbed in what I'm doing, so that all my attention is focused on it.",Act With Awareness,1
+O39,I notice when my moods begin to change.,Observe,1

@@ -1,0 +1,27 @@
+code,item,factor,scoring
+NI1,I use my hands and arms to gesture while talking to people.,Nonverbal Immediacy,1
+NI2,I touch others on the shoulder or arm while talking to them.,Nonverbal Immediacy,1
+NI3,I use a monotone or dull voice while talking to people.,Nonverbal Immediacy,-1
+NI4,I look over or away from others while talking to them.,Nonverbal Immediacy,-1
+NI5,I move away from others when they touch me while we are talking.,Nonverbal Immediacy,-1
+NI6,I have a relaxed body position when I talk to people.,Nonverbal Immediacy,1
+NI7,I frown while talking to people.,Nonverbal Immediacy,-1
+NI8,I avoid eye contact while talking to people.,Nonverbal Immediacy,-1
+NI9,I have a tense body position while talking to people.,Nonverbal Immediacy,-1
+NI10,I sit close or stand close to people while talking with them.,Nonverbal Immediacy,1
+NI11,My voice is monotonous or dull when I talk to people.,Nonverbal Immediacy,-1
+NI12,I use a variety of vocal expressions when I talk to people.,Nonverbal Immediacy,1
+NI13,I gesture when I talk to people.,Nonverbal Immediacy,1
+NI14,I am animated when I talk to people.,Nonverbal Immediacy,1
+NI15,I have a bland facial expression when I talk to people.,Nonverbal Immediacy,-1
+NI16,I move closer to people when I talk to them.,Nonverbal Immediacy,1
+NI17,I look directly at people while talking to them.,Nonverbal Immediacy,1
+NI18,I am stiff when I talk to people.,Nonverbal Immediacy,-1
+NI19,I have a lot of vocal variety when I talk to people.,Nonverbal Immediacy,1
+NI20,I avoid gesturing while I am talking to people.,Nonverbal Immediacy,-1
+NI21,I lean toward people when I talk to them.,Nonverbal Immediacy,1
+NI22,I maintain eye contact with people when I talk to them.,Nonverbal Immediacy,1
+NI23,I try not to sit or stand close to people when I talk with them.,Nonverbal Immediacy,-1
+NI24,I lean away from people when I talk to them.,Nonverbal Immediacy,-1
+NI25,I smile when I talk to people.,Nonverbal Immediacy,1
+NI26,I avoid touching people when I talk to them.,Nonverbal Immediacy,-1

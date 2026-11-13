@@ -37,6 +37,25 @@
 ##                          Scales embedded offline with the three sizes and
 ##                          the same settings, for the model-size comparison
 ##                          with a second scale (Section 11c).
+##   ECR_items_8B.npz, KIMS_items_8B.npz, HSQ_items_8B.npz, NIS_items_8B.npz,
+##   RSE_items_8B.npz, TMA_items_8B.npz, BAI_items_8B.npz
+##                        - the items of the further inventories of Section
+##                          11d, embedded offline with Qwen3-Embedding-8B and
+##                          the same settings (data-raw/embed_inventory.py,
+##                          from the item files in data-raw/items/). Each
+##                          holds the item codes, scales, and scoring key.
+##                          The BAI archive holds no item wording, which is
+##                          copyrighted.
+##   DASS_data.csv, ECR_data.csv, KIMS_data.csv, HSQ_data.csv, NIS_data.csv,
+##   RSE_data.csv, TMA_data.csv
+##                        - human responses to those inventories from the
+##                          Open-Source Psychometrics Project
+##                          (https://openpsychometrics.org/_rawdata/), one
+##                          column per item, named by the item codes, in the
+##                          order of the public file (see the README). Read
+##                          from the folder named by the environment variable
+##                          SFA_INVENTORY_DIR (default data/). BAI_data.csv is
+##                          read from the same folder if it is there.
 ##   Big5FM_data.csv      - human responses to the same 50 items from the
 ##                          Open-Source Psychometrics Project "BIG5" dataset
 ##                          (https://openpsychometrics.org/_rawdata/), columns
@@ -44,7 +63,7 @@
 ##                          the validation target for the semantic structure;
 ##                          no response data enters the semantic analysis.
 ##
-## Requirements: semanticfa (>= 0.5.1), psych, EGAnet, Rtsne, uwot, and a
+## Requirements: semanticfa (>= 0.6.0), psych, EGAnet, Rtsne, uwot, and a
 ## Python with numpy (for reading .npz) and sentence-transformers (only for
 ## the NLI matrix in Section 3; reticulate provisions this automatically on
 ## first use, and the cross-encoder is downloaded on first run).
@@ -302,6 +321,13 @@ L_sf <- unclass(short$reduced_fit$loadings)
 table(factor = colnames(L_sf)[apply(abs(L_sf), 1, which.max)],
       domain = short$reduced_fit$item_data$factor)
 results$shortform <- short
+
+## the opposite rule (Kilmen & Bulut, 2025): within each domain, keep the
+## five items least similar in meaning to the other items of the domain
+short_d <- sfa_simplify(fit, target_n = 5, method = "distinct")
+short_d
+short_d$keep
+results$shortform_distinct <- short_d
 
 ## Vetting brand-new candidate items runs in the SAME 8B space as every
 ## other analysis: the three candidates were embedded offline with
@@ -1014,12 +1040,22 @@ sf_random <- withr::with_seed(42, t(replicate(200, {
   cg <- sfa_congruence(f, target = big5$factors[idx], metrics = c("nmi", "ari"))
   c(nmi = cg$nmi, ari = cg$ari)
 })))
+## the short form of Kilmen and Bulut's rule (Section 8), fitted the same way
+sd_idx <- match(short_d$keep, big5$codes)
+fit_sd5 <- sfa(items_df[sd_idx, ], embeddings = E8[sd_idx, ],
+               encoding = "mean_centered_pearson", nfactors = 5)
+cg_sd5 <- sfa_congruence(fit_sd5, target = big5$factors[sd_idx],
+                         metrics = c("nmi", "ari"))
 sf_null <- rbind(short_form_5 = c(nmi = cg_sf5$nmi, ari = cg_sf5$ari),
+                 distinct_5   = c(nmi = cg_sd5$nmi, ari = cg_sd5$ari),
                  random_median = apply(sf_random, 2, median),
                  random_95th   = apply(sf_random, 2, quantile, .95),
                  random_max    = apply(sf_random, 2, max))
 round(sf_null, 3)
+## items the two rules share, per domain
+table(domain = big5$factors[sf_idx[sf_idx %in% sd_idx]])
 results$shortform_null <- list(short_form_5 = c(nmi = cg_sf5$nmi, ari = cg_sf5$ari),
+                               distinct_5 = c(nmi = cg_sd5$nmi, ari = cg_sd5$ari),
                                random = sf_random)
 
 ## (g) the NLI matrix: how far the two orders of each pair disagree before
@@ -1347,6 +1383,351 @@ results$dass_modelsize <- list(
   perm_max = apply(dass_perm, 2, max), color_floor = dass_floor,
   retention = lapply(dass_nf, function(x)
     list(methods = x$methods, consensus = x$consensus)))
+
+## ---------------------------------------------------------------------------
+## 11d. Further inventories
+## ---------------------------------------------------------------------------
+banner("11d. Further inventories")
+
+## The retention, fitting, and human-comparison steps repeated with further
+## inventories, each with the settings of the main analysis: item vectors
+## from Qwen3-Embedding-8B (data-raw/embed_inventory.py), the mean-centered
+## Pearson encoding, the five retention criteria, factors extracted at the
+## number of scales, and the responses of the Open-Source Psychometrics
+## Project, prepared as the README describes. inv_range gives the valid
+## responses of each file, and a response outside that range marks a skipped
+## item. Each inventory was chosen before it was analyzed, and every one
+## that is run is reported. The TMA's items are answered true (1) or false
+## (2). The wording of the BAI's items is copyrighted, so its archive holds
+## the vectors and the item codes only, and it is analyzed when its response
+## file is present. This section comes last so that it changes none of the
+## numbers printed above.
+INV_DIR <- Sys.getenv("SFA_INVENTORY_DIR", "data")
+inv_range <- list(DASS = c(1, 4), ECR = c(1, 5), KIMS = c(1, 5), HSQ = c(1, 5),
+                  NIS = c(1, 5), RSE = c(1, 4), TMA = c(1, 2), BAI = c(0, 3))
+inv_names <- names(inv_range)[file.exists(
+  file.path(INV_DIR, sprintf("%s_data.csv", names(inv_range))))]
+stopifnot(all(c("DASS", "ECR", "KIMS", "HSQ", "NIS", "RSE", "TMA") %in% inv_names))
+
+## the factor on which each item loads most strongly
+dominant <- function(L) {
+  L <- unclass(L)
+  colnames(L)[apply(abs(L), 1, which.max)]
+}
+
+inventory_run <- function(nm) {
+  z <- sfa_load_npz(sprintf("data/%s_items_8B.npz", nm))
+  f <- z$factors
+  key <- z$scoring
+  p <- length(f)
+  k <- length(unique(f))
+  E <- z$embeddings
+  sim <- sfa_similarity(E, "mean_centered_pearson")
+  lt <- lower.tri(sim)
+  cat(sprintf("\n\n----- %s: %d items, %d scale(s), %d reverse-keyed -----\n",
+              nm, p, k, sum(key < 0)))
+  print(table(scale = f, key = ifelse(key < 0, "reverse", "forward")))
+
+  ## (a) retention from the embeddings, with the criteria of Section 5
+  nf <- sfa_nfactors(sim, embeddings = E,
+                     methods = c("parallel", "kaiser", "TEFI", "EGA", "EKC"))
+  print(nf)
+
+  ## (b) the responses: complete records within the valid range, as given
+  ##     (raw) and with the reverse-keyed items reverse-scored (keyed)
+  rng <- inv_range[[nm]]
+  raw <- read.csv(file.path(INV_DIR, sprintf("%s_data.csv", nm)))
+  stopifnot(identical(names(raw), z$codes))
+  keep <- rowSums(is.na(raw) | raw < rng[1] | raw > rng[2]) == 0
+  resp <- raw[keep, ]
+  n <- nrow(resp)
+  cat("Respondents after cleaning:", n, "of", nrow(raw), "\n")
+  keyed <- resp
+  if (any(key < 0)) keyed[, key < 0] <- sum(rng) - keyed[, key < 0]
+  R_raw <- cor(resp)
+  R_keyed <- cor(keyed)
+  human_pa <- withr::with_seed(42, psych::fa.parallel(R_keyed, n.obs = n,
+                                                      fa = "fa", plot = FALSE))
+  cat("Human parallel analysis suggests", human_pa$nfact, "factors\n")
+
+  ## (c) factors at the number of scales, from the embeddings and from the
+  ##     responses. psych starts the oblimin rotation from several random
+  ##     orientations, so each fit has its own seed.
+  fit_k <- withr::with_seed(42, sfa(z, nfactors = k,
+                                    encoding = "mean_centered_pearson"))
+  human_k <- withr::with_seed(42, psych::fa(R_keyed, nfactors = k, n.obs = n,
+                                            rotate = "oblimin", fm = "minres"))
+  print(fit_k)
+  phi <- psych::factor.congruence(fit_k$loadings, human_k$loadings)
+  cat("\nTucker congruence, semantic factors (rows) by response factors:\n")
+  print(round(phi, 2))
+  out <- list(
+    n_items = p, n_scales = k, n_reverse = sum(key < 0), n_raw = nrow(raw),
+    n = n, retention = list(methods = nf$methods, consensus = nf$consensus),
+    human_pa = human_pa$nfact, tucker = phi,
+    tucker_matched = apply(abs(phi), 1, max),
+    diagnostics = c(kmo = fit_k$kmo$total, tefi = fit_k$tefi,
+                    rmsr = fit_k$rmsr, caf = fit_k$caf),
+    sim = sim, R_raw = R_raw, R_keyed = R_keyed)
+
+  ## (d) agreement of each solution with the scales (NMI, ARI), the largest
+  ##     values under 1,000 permutations of the scale labels, the solutions
+  ##     under other seeds, and the two solutions' agreement with each other
+  if (k > 1) {
+    agree <- function(a, b) {
+      cg <- sfa_congruence(a, target = b, metrics = c("nmi", "ari"))
+      c(nmi = cg$nmi, ari = cg$ari)
+    }
+    out$agreement <- rbind(semantic_scales = agree(fit_k, f),
+                           human_scales    = agree(human_k, f),
+                           semantic_human  = agree(fit_k, human_k))
+    out$perm_max <- apply(withr::with_seed(42, t(replicate(1000,
+      agree(fit_k, sample(f))))), 2, max)
+    out$assign_semantic <- table(scale = f, factor = dominant(fit_k$loadings))
+    out$assign_human    <- table(scale = f, factor = dominant(human_k$loadings))
+    cat("\nAgreement (NMI, ARI):\n")
+    print(round(out$agreement, 3))
+    cat("Largest values with permuted scale labels:", round(out$perm_max, 3), "\n")
+    cat("\nScale by dominant semantic factor:\n")
+    print(out$assign_semantic)
+    cat("\nScale by dominant response factor:\n")
+    print(out$assign_human)
+    out$seed_semantic <- seed_sols(function() suppressWarnings(
+      sfa(z, nfactors = k, encoding = "mean_centered_pearson")), f)$solutions
+    cat("\nSemantic solutions under 40 seeds:\n")
+    print(round(out$seed_semantic, 4))
+    out$seed_human <- table(sapply(1:10, function(s) {
+      a <- agree(withr::with_seed(s, psych::fa(R_keyed, nfactors = k, n.obs = n,
+                                               rotate = "oblimin", fm = "minres")), f)
+      sprintf("%.3f %.3f", a["nmi"], a["ari"])
+    }))
+    cat("\nResponse solutions under 10 seeds (NMI ARI with the scales):\n")
+    print(out$seed_human)
+    if (any(key < 0)) {
+      ## do the factors follow the keying instead of the scales?
+      kd_k <- ifelse(key < 0, "reverse", "forward")
+      out$key_agreement <- rbind(semantic_keying = agree(fit_k, kd_k),
+                                 human_keying    = agree(human_k, kd_k))
+      cat("\nAgreement with the keying (NMI, ARI):\n")
+      print(round(out$key_agreement, 3))
+      print(table(key = kd_k, factor = dominant(fit_k$loadings)))
+    }
+  }
+
+  ## (e) item-pair agreement: similarity against the response correlations,
+  ##     with the item-level bootstrap of Section 11b
+  y <- sim[lt]
+  x_raw <- R_raw[lt]
+  x_key <- R_keyed[lt]
+  out$pair_r <- c(raw = cor(y, x_raw), keyed = cor(y, x_key),
+                  absolute = cor(y, abs(x_raw)))
+  same_scale <- outer(f, f, "==")
+  same_key <- outer(key, key) > 0
+  boot <- withr::with_seed(42, t(replicate(1000, {
+    s <- sample(p, replace = TRUE)
+    kp <- upper.tri(diag(p)) & outer(s, s, "!=")
+    yb <- sim[s, s][kp]
+    ss <- same_scale[s, s][kp]
+    sk <- same_key[s, s][kp]
+    c(raw = cor(yb, R_raw[s, s][kp]), keyed = cor(yb, R_keyed[s, s][kp]),
+      absolute = cor(yb, abs(R_raw[s, s][kp])),
+      same_minus_opp  = mean(yb[ss & sk]) - mean(yb[ss & !sk]),
+      opp_minus_cross = mean(yb[ss & !sk]) - mean(yb[!ss]))
+  })))
+  out$boot_ci <- apply(boot, 2, quantile, c(.025, .975), na.rm = TRUE)
+  cat("\nItem-pair r (raw, keyed, absolute raw):", round(out$pair_r, 3), "\n")
+  print(round(out$boot_ci, 3))
+
+  ## (f) the item pairs by scale and keying, as in Section 11b (k)
+  groups <- list(same_scale_same_key = (same_scale & same_key)[lt],
+                 same_scale_opp_key  = (same_scale & !same_key)[lt],
+                 cross_scale         = (!same_scale)[lt])
+  out$pair_groups <- t(sapply(groups, function(g)
+    c(n = sum(g), mean_sim = mean(y[g]), mean_human_r = mean(x_raw[g]),
+      share_negative = mean(x_raw[g] < 0))))
+  print(round(out$pair_groups, 3))
+  out$pairs <- data.frame(sim = y, r_raw = x_raw, r_keyed = x_key,
+                          same_scale = same_scale[lt], same_key = same_key[lt])
+
+  if (any(key < 0)) {
+    ## (g) cosines before and after the sign flip of the reverse-keyed
+    ##     items, with the same item-level bootstrap for the change in r
+    sim_a <- sfa_similarity(E, "atomic")
+    sim_f <- sfa_similarity(E, "atomic_reversed", scoring = key)
+    out$flip_r <- rbind(
+      atomic          = c(raw = cor(sim_a[lt], x_raw), keyed = cor(sim_a[lt], x_key)),
+      atomic_reversed = c(raw = cor(sim_f[lt], x_raw), keyed = cor(sim_f[lt], x_key)))
+    cat("\nItem-pair r of the cosines, plain and sign-flipped:\n")
+    print(round(out$flip_r, 3))
+    boot_f <- withr::with_seed(42, t(replicate(1000, {
+      s <- sample(p, replace = TRUE)
+      kp <- upper.tri(diag(p)) & outer(s, s, "!=")
+      xr <- R_raw[s, s][kp]
+      xk <- R_keyed[s, s][kp]
+      c(raw   = cor(sim_f[s, s][kp], xr) - cor(sim_a[s, s][kp], xr),
+        keyed = cor(sim_f[s, s][kp], xk) - cor(sim_a[s, s][kp], xk))
+    })))
+    out$flip_change_ci <- apply(boot_f, 2, quantile, c(.025, .975), na.rm = TRUE)
+    cat("Change in r after the sign flip, 95% bootstrap intervals:\n")
+    print(round(out$flip_change_ci, 3))
+  }
+  if (k == 1 && any(key < 0)) {
+    ## (h) a single scale with items keyed in both directions: do two factors
+    ##     separate the items by keying, in the embeddings and in the responses?
+    kd <- ifelse(key < 0, "reverse", "forward")
+    fit_2 <- withr::with_seed(42, sfa(z, nfactors = 2,
+                                      encoding = "mean_centered_pearson"))
+    human_2 <- withr::with_seed(42, psych::fa(R_keyed, nfactors = 2, n.obs = n,
+                                              rotate = "oblimin", fm = "minres"))
+    two <- function(a) {
+      cg <- sfa_congruence(a, target = kd, metrics = c("nmi", "ari"))
+      c(nmi = cg$nmi, ari = cg$ari)
+    }
+    out$two_factor <- list(
+      agreement = rbind(semantic = two(fit_2), human = two(human_2)),
+      semantic = table(key = kd, factor = dominant(fit_2$loadings)),
+      human    = table(key = kd, factor = dominant(human_2$loadings)),
+      phi_semantic = fit_2$Phi[1, 2], phi_human = human_2$Phi[1, 2])
+    cat("\nTwo factors against the keying (NMI, ARI):\n")
+    print(round(out$two_factor$agreement, 3))
+    print(out$two_factor$semantic)
+    print(out$two_factor$human)
+    cat("Factor correlations, semantic and response:",
+        round(c(out$two_factor$phi_semantic, out$two_factor$phi_human), 3), "\n")
+  }
+
+  ## the loadings of both solutions, for the Supplement
+  Ls <- unclass(fit_k$loadings)
+  Lh <- unclass(human_k$loadings)
+  colnames(Ls) <- paste0("semantic_", colnames(Ls))
+  colnames(Lh) <- paste0("human_", colnames(Lh))
+  write.csv(data.frame(code = z$codes, scale = f, key = key, round(Ls, 3),
+                       round(Lh, 3)),
+            sprintf("output/inventory_%s_loadings.csv", tolower(nm)),
+            row.names = FALSE)
+  out
+}
+inv <- lapply(setNames(inv_names, inv_names), inventory_run)
+summary(warnings())
+results$inventories <- inv
+
+## the three-factor DASS solution repeats the 8B fit of Section 11c
+stopifnot(isTRUE(all.equal(unname(inv$DASS$agreement["semantic_scales", ]),
+                           unname(dass_agree["8B", ]))))
+
+## the same statistics for the Big Five markers, from the fits and matrices
+## of Sections 6, 10, and 11, for comparison with the further inventories
+b5_agree <- function(a, b) {
+  cg <- sfa_congruence(a, target = b, metrics = c("nmi", "ari"))
+  c(nmi = cg$nmi, ari = cg$ari)
+}
+b5_key <- ifelse(big5$scoring < 0, "reverse", "forward")
+b5_boot <- withr::with_seed(42, t(replicate(1000, {
+  s <- sample(50, replace = TRUE)
+  kp <- upper.tri(diag(50)) & outer(s, s, "!=")
+  xr <- R_human_raw[s, s][kp]
+  xk <- R_human[s, s][kp]
+  yb <- sim_mcp[s, s][kp]
+  c(raw = cor(yb, xr), keyed = cor(yb, xk), absolute = cor(yb, abs(xr)),
+    flip_raw   = cor(sim_ar[s, s][kp], xr) - cor(sim_at[s, s][kp], xr),
+    flip_keyed = cor(sim_ar[s, s][kp], xk) - cor(sim_at[s, s][kp], xk))
+})))
+big5_row <- list(
+  agreement = rbind(semantic_scales = b5_agree(fit, big5$factors),
+                    human_scales    = b5_agree(human_fa, big5$factors),
+                    semantic_human  = b5_agree(fit, human_fa)),
+  key_agreement = rbind(semantic_keying = b5_agree(fit, b5_key),
+                        human_keying    = b5_agree(human_fa, b5_key)),
+  pair_r = c(raw = cor(sim_mcp[lt], R_human_raw[lt]),
+             keyed = cor(sim_mcp[lt], R_human[lt]),
+             absolute = cor(sim_mcp[lt], abs(R_human_raw[lt]))),
+  boot_ci = apply(b5_boot, 2, quantile, c(.025, .975)),
+  flip_r = pair_tab[c("atomic", "atomic_reversed"), c("r_raw", "r_keyed")])
+lapply(big5_row, round, 3)
+## these repeat the values of Sections 7 and 11
+stopifnot(
+  isTRUE(all.equal(unname(big5_row$agreement["semantic_scales", ]),
+                   unname(c(cong_theory$nmi, cong_theory$ari)))),
+  isTRUE(all.equal(unname(big5_row$boot_ci[, "raw"]), unname(pair_r_ci))),
+  isTRUE(all.equal(big5_row$pair_r[["raw"]],
+                   pair_tab["mean_centered_pearson", "r_raw"])))
+results$inventories_big5 <- big5_row
+
+## one row per inventory
+inv_summary <- do.call(rbind, lapply(inv_names, function(nm) {
+  v <- inv[[nm]]
+  ag <- if (is.null(v$agreement)) matrix(NA_real_, 3, 2) else v$agreement
+  data.frame(inventory = nm, items = v$n_items, scales = v$n_scales,
+             reverse = v$n_reverse, n = v$n,
+             k_semantic = v$retention$consensus, k_human = v$human_pa,
+             nmi_semantic = ag[1, 1], nmi_human = ag[2, 1],
+             tucker_mean = mean(v$tucker_matched),
+             tucker_min = min(v$tucker_matched),
+             r_raw = v$pair_r[["raw"]], r_raw_lo = v$boot_ci[1, "raw"],
+             r_raw_hi = v$boot_ci[2, "raw"], r_keyed = v$pair_r[["keyed"]])
+}))
+print(format(inv_summary, digits = 3), row.names = FALSE)
+write.csv(inv_summary, "output/inventory_summary.csv", row.names = FALSE)
+
+## figure for the Supplement: similarity against the raw-response correlation
+## for every item pair, by whether the two items share a scale and a keying
+n_inv <- length(inv_names)
+inv_title <- setNames(inv_names, inv_names)
+inv_title[c("RSE", "TMA")] <- c("RSES", "TMAS")   # the abbreviations of the paper
+pdf("figures/fig_inventories.pdf", width = 9, height = 3.1 * ceiling(n_inv / 3))
+op <- par(mfrow = c(ceiling(n_inv / 3), 3), mar = c(4.2, 4.2, 2.2, 0.8),
+          mgp = c(2.4, 0.8, 0))
+for (nm in inv_names) {
+  d <- inv[[nm]]$pairs
+  grp <- ifelse(!d$same_scale, 1, ifelse(d$same_key, 2, 3))
+  plot(d$r_raw, d$sim, pch = c(1, 19, 17)[grp], cex = 0.5,
+       col = grDevices::adjustcolor(c("grey45", "steelblue4", "firebrick"), 0.6)[grp],
+       xlab = "Correlation between raw responses", ylab = "Semantic similarity",
+       main = sprintf("%s (r = %.2f)", inv_title[[nm]], inv[[nm]]$pair_r[["raw"]]))
+  abline(lm(sim ~ r_raw, d), lwd = 1.5)
+}
+par(op)
+dev.off()
+
+## --- figure for the Results: the DASS's semantic similarities and response correlations
+## The two matrices of the DASS side by side, the items grouped by factor as in
+## the model-size heatmaps of Section 11c. The DASS has no reverse-keyed items,
+## so its raw and reverse-scored correlations are the same. The semantic
+## similarities are higher overall than the response correlations, so each
+## matrix is standardized: from each value off the diagonal, the mean of those
+## values in the same matrix is subtracted and the difference divided by their
+## standard deviation. That leaves the item-pair correlation between the two
+## matrices unchanged. Both panels share one color range, from the lowest to the
+## highest standardized value of the two (rounded outward to whole numbers), and
+## the diagonal is drawn in the darkest color.
+dass_std <- function(m) {
+  m <- unclass(m)
+  attributes(m) <- list(dim = dim(m))
+  off <- m[lower.tri(m)]
+  (m - mean(off)) / sd(off)
+}
+dass_cmp <- lapply(list(semantic = inv$DASS$sim, responses = inv$DASS$R_raw), dass_std)
+dass_lt <- lower.tri(dass_cmp$semantic)
+stopifnot(inv$DASS$n_reverse == 0,
+          all(vapply(dass_cmp, nrow, 0L) == length(dass_f)),
+          isTRUE(all.equal(cor(dass_cmp$semantic[dass_lt], dass_cmp$responses[dass_lt]),
+                           inv$DASS$pair_r[["raw"]])))
+dass_cmp_range <- c(floor(min(vapply(dass_cmp, function(m) min(m[dass_lt]), 0))),
+                    ceiling(max(vapply(dass_cmp, function(m) max(m[dass_lt]), 0))))
+dass_cmp_title <- c(semantic = "Semantic similarity, standardized",
+                    responses = "Correlation between responses, standardized")
+for (nm in names(dass_cmp)) {
+  m <- dass_cmp[[nm]]
+  diag(m) <- dass_cmp_range[2]
+  pdf(sprintf("figures/fig_dass_%s.pdf", nm), width = 7.5, height = 7.5)
+  sfa_corplot(m, factors = dass_f, order = c("D", "A", "S"),
+              main = dass_cmp_title[[nm]], labels = dass_axis,
+              cex.axis = 1.6, xlas = 1, zlim = dass_cmp_range,
+              n.legend = diff(dass_cmp_range), group = TRUE, gr = seq_gr)
+  dev.off()
+}
+cat("Standardized DASS heatmaps share the color range", dass_cmp_range, "\n")
+## --- end figure for the Results
 
 ## ---------------------------------------------------------------------------
 ## 12. Save everything

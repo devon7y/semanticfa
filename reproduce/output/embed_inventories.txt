@@ -1,0 +1,49 @@
+NVIDIA H100 80GB HBM3, 81559 MiB
+python 3.11.5 | numpy 2.4.2 | torch 2.12.1 | transformers 5.12.1 | sentence-transformers 5.2.0
+Qwen/Qwen3-Embedding-8B loaded from local snapshot, revision 1d8ad4ca9b3dd8059ad90a75d4983776a23d44af
+
+model Qwen/Qwen3-Embedding-8B on cuda; modules: ['Transformer', 'Pooling', 'Normalize']
+ECR_items.csv, 8B: 36 items x 4096 dims
+  norms: min 1.000000, max 1.000000
+  wrote data/ECR_items_8B.npz
+KIMS_items.csv, 8B: 39 items x 4096 dims
+  norms: min 1.000000, max 1.000000
+  wrote data/KIMS_items_8B.npz
+HSQ_items.csv, 8B: 32 items x 4096 dims
+  norms: min 1.000000, max 1.000000
+  wrote data/HSQ_items_8B.npz
+NIS_items.csv, 8B: 26 items x 4096 dims
+  norms: min 1.000000, max 1.000000
+  wrote data/NIS_items_8B.npz
+RSE_items.csv, 8B: 10 items x 4096 dims
+  norms: min 1.000000, max 1.000000
+  wrote data/RSE_items_8B.npz
+PUBLIC_EXIT:0
+python 3.11.5 | numpy 2.4.2 | torch 2.12.1 | transformers 5.12.1 | sentence-transformers 5.2.0
+Qwen/Qwen3-Embedding-8B loaded from local snapshot, revision 1d8ad4ca9b3dd8059ad90a75d4983776a23d44af
+
+model Qwen/Qwen3-Embedding-8B on cuda; modules: ['Transformer', 'Pooling', 'Normalize']
+BAI_items.csv, 8B: 21 items x 4096 dims
+  norms: min 1.000000, max 1.000000
+  wrote data/BAI_items_8B.npz (without item wording)
+BAI_EXIT:0
+python 3.11.5 | numpy 2.4.2 | torch 2.12.1 | transformers 5.12.1 | sentence-transformers 5.2.0
+Qwen/Qwen3-Embedding-8B loaded from local snapshot, revision 1d8ad4ca9b3dd8059ad90a75d4983776a23d44af
+
+model Qwen/Qwen3-Embedding-8B on cuda; modules: ['Transformer', 'Pooling', 'Normalize']
+8B: 42 items x 4096 dims
+  norms of new vectors: min 1.000000, max 1.000000
+  cosine(new, stored): min 1.00000000, median 1.00000000
+  max |new - stored| over all coordinates: 4.247e-07
+JOB_EXIT:0
+
+# TMA, embedded in a second job with the same script and model snapshot
+NVIDIA H100 80GB HBM3, 81559 MiB
+python 3.11.5 | numpy 2.4.2 | torch 2.12.1 | transformers 5.12.1 | sentence-transformers 5.2.0
+Qwen/Qwen3-Embedding-8B loaded from local snapshot, revision 1d8ad4ca9b3dd8059ad90a75d4983776a23d44af
+
+model Qwen/Qwen3-Embedding-8B on cuda; modules: ['Transformer', 'Pooling', 'Normalize']
+TMA_items.csv, 8B: 50 items x 4096 dims
+  norms: min 1.000000, max 1.000000
+  wrote data/TMA_items_8B.npz
+TMA_EXIT:0

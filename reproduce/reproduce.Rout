@@ -54,6 +54,25 @@ Type 'q()' to quit R.
 > ##                          Scales embedded offline with the three sizes and
 > ##                          the same settings, for the model-size comparison
 > ##                          with a second scale (Section 11c).
+> ##   ECR_items_8B.npz, KIMS_items_8B.npz, HSQ_items_8B.npz, NIS_items_8B.npz,
+> ##   RSE_items_8B.npz, TMA_items_8B.npz, BAI_items_8B.npz
+> ##                        - the items of the further inventories of Section
+> ##                          11d, embedded offline with Qwen3-Embedding-8B and
+> ##                          the same settings (data-raw/embed_inventory.py,
+> ##                          from the item files in data-raw/items/). Each
+> ##                          holds the item codes, scales, and scoring key.
+> ##                          The BAI archive holds no item wording, which is
+> ##                          copyrighted.
+> ##   DASS_data.csv, ECR_data.csv, KIMS_data.csv, HSQ_data.csv, NIS_data.csv,
+> ##   RSE_data.csv, TMA_data.csv
+> ##                        - human responses to those inventories from the
+> ##                          Open-Source Psychometrics Project
+> ##                          (https://openpsychometrics.org/_rawdata/), one
+> ##                          column per item, named by the item codes, in the
+> ##                          order of the public file (see the README). Read
+> ##                          from the folder named by the environment variable
+> ##                          SFA_INVENTORY_DIR (default data/). BAI_data.csv is
+> ##                          read from the same folder if it is there.
 > ##   Big5FM_data.csv      - human responses to the same 50 items from the
 > ##                          Open-Source Psychometrics Project "BIG5" dataset
 > ##                          (https://openpsychometrics.org/_rawdata/), columns
@@ -61,7 +80,7 @@ Type 'q()' to quit R.
 > ##                          the validation target for the semantic structure;
 > ##                          no response data enters the semantic analysis.
 > ##
-> ## Requirements: semanticfa (>= 0.5.1), psych, EGAnet, Rtsne, uwot, and a
+> ## Requirements: semanticfa (>= 0.6.0), psych, EGAnet, Rtsne, uwot, and a
 > ## Python with numpy (for reading .npz) and sentence-transformers (only for
 > ## the NLI matrix in Section 3; reticulate provisions this automatically on
 > ## first use, and the cross-encoder is downloaded on first run).
@@ -155,7 +174,7 @@ mean_centered_pearson  0.394 0.938
 
 > 
 > sim_nli <- sfa_nli_matrix(big5$items)   # cross-encoder/nli-deberta-v3-base
-Loading weights:   0%|          | 0/202 [00:00<?, ?it/s]Loading weights:  28%|██▊       | 57/202 [00:00<00:00, 544.61it/s]Loading weights:  55%|█████▌    | 112/202 [00:00<00:00, 325.68it/s]Loading weights: 100%|██████████| 202/202 [00:00<00:00, 515.56it/s]
+Loading weights:   0%|          | 0/202 [00:00<?, ?it/s]Loading weights:  21%|██        | 42/202 [00:00<00:00, 211.37it/s]Loading weights:  40%|████      | 81/202 [00:00<00:00, 275.01it/s]Loading weights: 100%|██████████| 202/202 [00:00<00:00, 649.25it/s]
 > dimnames(sim_nli) <- list(big5$codes, big5$codes)
 > 
 > ## the canonical example: an extraversion item vs. its reverse-keyed sibling
@@ -1011,7 +1030,7 @@ Scale simplification (response-free)
   Selection: anchor | groups: theoretical | target_n = 5 per group
   Items: 50 -> 25
   Factors retained (parallel analysis): 5 -> 3
-  Structure recovery vs theory (NMI / ARI):
+  Agreement with the theoretical grouping (NMI / ARI):
     full:    NMI=0.527  ARI=0.402
     reduced: NMI=0.810  ARI=0.571
   Items kept per construct:
@@ -1035,6 +1054,33 @@ factor Agreeableness Conscientiousness Extraversion Neuroticism Openness
    MR2             0                 0            0           5        0
    MR3             5                 0            5           0        0
 > results$shortform <- short
+> 
+> ## the opposite rule (Kilmen & Bulut, 2025): within each domain, keep the
+> ## five items least similar in meaning to the other items of the domain
+> short_d <- sfa_simplify(fit, target_n = 5, method = "distinct")
+> short_d
+Scale simplification (response-free)
+  Method: lowest mean similarity within each group (Kilmen & Bulut 2025)
+  Note: candidate short form -- validate psychometrically before use
+  Selection: distinct | groups: theoretical | target_n = 5 per group
+  Items: 50 -> 25
+  Factors retained (parallel analysis): 5 -> 2
+  Agreement with the theoretical grouping (NMI / ARI):
+    full:    NMI=0.527  ARI=0.402
+    reduced: NMI=0.203  ARI=0.021
+  Items kept per construct:
+    Extraversion         5
+    Neuroticism          5
+    Agreeableness        5
+    Conscientiousness    5
+    Openness             5
+
+  Dropped 25 item(s); see $drop. Reduced fit in $reduced_fit.
+> short_d$keep
+ [1] "E1"  "E4"  "E6"  "E7"  "E9"  "N12" "N13" "N14" "N18" "N20" "A23" "A25"
+[13] "A26" "A27" "A30" "C31" "C32" "C36" "C38" "C39" "O41" "O44" "O46" "O47"
+[25] "O49"
+> results$shortform_distinct <- short_d
 > 
 > ## Vetting brand-new candidate items runs in the SAME 8B space as every
 > ## other analysis: the three candidates were embedded offline with
@@ -1583,7 +1629,7 @@ Summary of (a total of 48) warning messages:
  1x : In pchisq(df = result$dof, ncp = x, q = result$STATISTIC) :
   pnchisq(x=2.62487e+06, f=985, theta=2.60788e+06, ..): not converged in 1000000 iter.
 > print(psych::fa.sort(unclass(human_fa$loadings)), digits = 2, cutoff = 0.3)
-        MR4      MR1     MR3      MR2      MR5
+        MR3      MR4     MR1      MR5      MR2
 E4   0.7550 -2.3e-02 -0.0395  0.01791 -0.02689
 E7   0.7209 -4.4e-03  0.0687  0.01201 -0.01883
 E5   0.7141  1.2e-02  0.1229  0.06666  0.03404
@@ -1838,7 +1884,7 @@ null device
 Factor structure congruence
 
 Tucker phi (factor-by-factor):
-     MR4   MR1  MR3  MR2  MR5
+     MR3   MR4  MR1  MR5  MR2
 MR3 0.03  0.80 0.30 0.13 0.12
 MR1 0.27  0.11 0.10 0.84 0.28
 MR2 0.41 -0.01 0.52 0.05 0.27
@@ -1853,7 +1899,7 @@ MR4 0.18  0.02 0.17 0.14 0.92
 > ## factor-by-factor Tucker phi after matching
 > phi <- psych::factor.congruence(fit$loadings, human_fa$loadings)
 > round(phi, 2)
-     MR4   MR1  MR3  MR2  MR5
+     MR3   MR4  MR1  MR5  MR2
 MR3 0.03  0.80 0.30 0.13 0.12
 MR1 0.27  0.11 0.10 0.84 0.28
 MR2 0.41 -0.01 0.52 0.05 0.27
@@ -2014,7 +2060,7 @@ Human parallel analysis suggests 10 factors
 +             random   = human_pa$fa.sim[1:12]), 3)
           [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10] [,11]
 observed 6.858 4.142 3.112 2.737 1.992 0.617 0.386 0.175 0.082 0.051 0.003
-random   0.015 0.013 0.013 0.012 0.011 0.010 0.010 0.009 0.009 0.008 0.007
+random   0.015 0.013 0.012 0.012 0.011 0.010 0.010 0.009 0.008 0.008 0.007
           [,12]
 observed -0.028
 random    0.007
@@ -2173,23 +2219,35 @@ max_converged 0.0134 0.5121 -18.7973
 +   c(nmi = cg$nmi, ari = cg$ari)
 + })))
 There were 50 or more warnings (use warnings() to see the first 50)
+> ## the short form of Kilmen and Bulut's rule (Section 8), fitted the same way
+> sd_idx <- match(short_d$keep, big5$codes)
+> fit_sd5 <- sfa(items_df[sd_idx, ], embeddings = E8[sd_idx, ],
++                encoding = "mean_centered_pearson", nfactors = 5)
+> cg_sd5 <- sfa_congruence(fit_sd5, target = big5$factors[sd_idx],
++                          metrics = c("nmi", "ari"))
 > sf_null <- rbind(short_form_5 = c(nmi = cg_sf5$nmi, ari = cg_sf5$ari),
++                  distinct_5   = c(nmi = cg_sd5$nmi, ari = cg_sd5$ari),
 +                  random_median = apply(sf_random, 2, median),
 +                  random_95th   = apply(sf_random, 2, quantile, .95),
 +                  random_max    = apply(sf_random, 2, max))
 > round(sf_null, 3)
                 nmi   ari
 short_form_5  0.810 0.707
+distinct_5    0.490 0.166
 random_median 0.600 0.367
 random_95th   0.734 0.559
 random_max    0.785 0.656
+> ## items the two rules share, per domain
+> table(domain = big5$factors[sf_idx[sf_idx %in% sd_idx]])
+< table of extent 0 >
 > results$shortform_null <- list(short_form_5 = c(nmi = cg_sf5$nmi, ari = cg_sf5$ari),
++                                distinct_5 = c(nmi = cg_sd5$nmi, ari = cg_sd5$ari),
 +                                random = sf_random)
 > 
 > ## (g) the NLI matrix: how far the two orders of each pair disagree before
 > ##     averaging, and how its scores fall by keying and domain
 > sim_nli_dir <- sfa_nli_matrix(big5$items, symmetric = FALSE)
-Loading weights:   0%|          | 0/202 [00:00<?, ?it/s]Loading weights: 100%|██████████| 202/202 [00:00<00:00, 7556.70it/s]
+Loading weights:   0%|          | 0/202 [00:00<?, ?it/s]Loading weights: 100%|██████████| 202/202 [00:00<00:00, 4406.19it/s]
 > nli_sym_diff <- max(abs((sim_nli_dir + t(sim_nli_dir)) / 2 - unname(sim_nli)))
 > cat("Largest difference between the averaged orders and sim_nli:",
 +     signif(nli_sym_diff, 3), "\n")
@@ -2714,6 +2772,1437 @@ DASS heatmaps share the color range 0.2 to 1
 +     list(methods = x$methods, consensus = x$consensus)))
 > 
 > ## ---------------------------------------------------------------------------
+> ## 11d. Further inventories
+> ## ---------------------------------------------------------------------------
+> banner("11d. Further inventories")
+
+
+===== 11d. Further inventories =====
+
+> 
+> ## The retention, fitting, and human-comparison steps repeated with further
+> ## inventories, each with the settings of the main analysis: item vectors
+> ## from Qwen3-Embedding-8B (data-raw/embed_inventory.py), the mean-centered
+> ## Pearson encoding, the five retention criteria, factors extracted at the
+> ## number of scales, and the responses of the Open-Source Psychometrics
+> ## Project, prepared as the README describes. inv_range gives the valid
+> ## responses of each file, and a response outside that range marks a skipped
+> ## item. Each inventory was chosen before it was analyzed, and every one
+> ## that is run is reported. The TMA's items are answered true (1) or false
+> ## (2). The wording of the BAI's items is copyrighted, so its archive holds
+> ## the vectors and the item codes only, and it is analyzed when its response
+> ## file is present. This section comes last so that it changes none of the
+> ## numbers printed above.
+> INV_DIR <- Sys.getenv("SFA_INVENTORY_DIR", "data")
+> inv_range <- list(DASS = c(1, 4), ECR = c(1, 5), KIMS = c(1, 5), HSQ = c(1, 5),
++                   NIS = c(1, 5), RSE = c(1, 4), TMA = c(1, 2), BAI = c(0, 3))
+> inv_names <- names(inv_range)[file.exists(
++   file.path(INV_DIR, sprintf("%s_data.csv", names(inv_range))))]
+> stopifnot(all(c("DASS", "ECR", "KIMS", "HSQ", "NIS", "RSE", "TMA") %in% inv_names))
+> 
+> ## the factor on which each item loads most strongly
+> dominant <- function(L) {
++   L <- unclass(L)
++   colnames(L)[apply(abs(L), 1, which.max)]
++ }
+> 
+> inventory_run <- function(nm) {
++   z <- sfa_load_npz(sprintf("data/%s_items_8B.npz", nm))
++   f <- z$factors
++   key <- z$scoring
++   p <- length(f)
++   k <- length(unique(f))
++   E <- z$embeddings
++   sim <- sfa_similarity(E, "mean_centered_pearson")
++   lt <- lower.tri(sim)
++   cat(sprintf("\n\n----- %s: %d items, %d scale(s), %d reverse-keyed -----\n",
++               nm, p, k, sum(key < 0)))
++   print(table(scale = f, key = ifelse(key < 0, "reverse", "forward")))
++ 
++   ## (a) retention from the embeddings, with the criteria of Section 5
++   nf <- sfa_nfactors(sim, embeddings = E,
++                      methods = c("parallel", "kaiser", "TEFI", "EGA", "EKC"))
++   print(nf)
++ 
++   ## (b) the responses: complete records within the valid range, as given
++   ##     (raw) and with the reverse-keyed items reverse-scored (keyed)
++   rng <- inv_range[[nm]]
++   raw <- read.csv(file.path(INV_DIR, sprintf("%s_data.csv", nm)))
++   stopifnot(identical(names(raw), z$codes))
++   keep <- rowSums(is.na(raw) | raw < rng[1] | raw > rng[2]) == 0
++   resp <- raw[keep, ]
++   n <- nrow(resp)
++   cat("Respondents after cleaning:", n, "of", nrow(raw), "\n")
++   keyed <- resp
++   if (any(key < 0)) keyed[, key < 0] <- sum(rng) - keyed[, key < 0]
++   R_raw <- cor(resp)
++   R_keyed <- cor(keyed)
++   human_pa <- withr::with_seed(42, psych::fa.parallel(R_keyed, n.obs = n,
++                                                       fa = "fa", plot = FALSE))
++   cat("Human parallel analysis suggests", human_pa$nfact, "factors\n")
++ 
++   ## (c) factors at the number of scales, from the embeddings and from the
++   ##     responses. psych starts the oblimin rotation from several random
++   ##     orientations, so each fit has its own seed.
++   fit_k <- withr::with_seed(42, sfa(z, nfactors = k,
++                                     encoding = "mean_centered_pearson"))
++   human_k <- withr::with_seed(42, psych::fa(R_keyed, nfactors = k, n.obs = n,
++                                             rotate = "oblimin", fm = "minres"))
++   print(fit_k)
++   phi <- psych::factor.congruence(fit_k$loadings, human_k$loadings)
++   cat("\nTucker congruence, semantic factors (rows) by response factors:\n")
++   print(round(phi, 2))
++   out <- list(
++     n_items = p, n_scales = k, n_reverse = sum(key < 0), n_raw = nrow(raw),
++     n = n, retention = list(methods = nf$methods, consensus = nf$consensus),
++     human_pa = human_pa$nfact, tucker = phi,
++     tucker_matched = apply(abs(phi), 1, max),
++     diagnostics = c(kmo = fit_k$kmo$total, tefi = fit_k$tefi,
++                     rmsr = fit_k$rmsr, caf = fit_k$caf),
++     sim = sim, R_raw = R_raw, R_keyed = R_keyed)
++ 
++   ## (d) agreement of each solution with the scales (NMI, ARI), the largest
++   ##     values under 1,000 permutations of the scale labels, the solutions
++   ##     under other seeds, and the two solutions' agreement with each other
++   if (k > 1) {
++     agree <- function(a, b) {
++       cg <- sfa_congruence(a, target = b, metrics = c("nmi", "ari"))
++       c(nmi = cg$nmi, ari = cg$ari)
++     }
++     out$agreement <- rbind(semantic_scales = agree(fit_k, f),
++                            human_scales    = agree(human_k, f),
++                            semantic_human  = agree(fit_k, human_k))
++     out$perm_max <- apply(withr::with_seed(42, t(replicate(1000,
++       agree(fit_k, sample(f))))), 2, max)
++     out$assign_semantic <- table(scale = f, factor = dominant(fit_k$loadings))
++     out$assign_human    <- table(scale = f, factor = dominant(human_k$loadings))
++     cat("\nAgreement (NMI, ARI):\n")
++     print(round(out$agreement, 3))
++     cat("Largest values with permuted scale labels:", round(out$perm_max, 3), "\n")
++     cat("\nScale by dominant semantic factor:\n")
++     print(out$assign_semantic)
++     cat("\nScale by dominant response factor:\n")
++     print(out$assign_human)
++     out$seed_semantic <- seed_sols(function() suppressWarnings(
++       sfa(z, nfactors = k, encoding = "mean_centered_pearson")), f)$solutions
++     cat("\nSemantic solutions under 40 seeds:\n")
++     print(round(out$seed_semantic, 4))
++     out$seed_human <- table(sapply(1:10, function(s) {
++       a <- agree(withr::with_seed(s, psych::fa(R_keyed, nfactors = k, n.obs = n,
++                                                rotate = "oblimin", fm = "minres")), f)
++       sprintf("%.3f %.3f", a["nmi"], a["ari"])
++     }))
++     cat("\nResponse solutions under 10 seeds (NMI ARI with the scales):\n")
++     print(out$seed_human)
++     if (any(key < 0)) {
++       ## do the factors follow the keying instead of the scales?
++       kd_k <- ifelse(key < 0, "reverse", "forward")
++       out$key_agreement <- rbind(semantic_keying = agree(fit_k, kd_k),
++                                  human_keying    = agree(human_k, kd_k))
++       cat("\nAgreement with the keying (NMI, ARI):\n")
++       print(round(out$key_agreement, 3))
++       print(table(key = kd_k, factor = dominant(fit_k$loadings)))
++     }
++   }
++ 
++   ## (e) item-pair agreement: similarity against the response correlations,
++   ##     with the item-level bootstrap of Section 11b
++   y <- sim[lt]
++   x_raw <- R_raw[lt]
++   x_key <- R_keyed[lt]
++   out$pair_r <- c(raw = cor(y, x_raw), keyed = cor(y, x_key),
++                   absolute = cor(y, abs(x_raw)))
++   same_scale <- outer(f, f, "==")
++   same_key <- outer(key, key) > 0
++   boot <- withr::with_seed(42, t(replicate(1000, {
++     s <- sample(p, replace = TRUE)
++     kp <- upper.tri(diag(p)) & outer(s, s, "!=")
++     yb <- sim[s, s][kp]
++     ss <- same_scale[s, s][kp]
++     sk <- same_key[s, s][kp]
++     c(raw = cor(yb, R_raw[s, s][kp]), keyed = cor(yb, R_keyed[s, s][kp]),
++       absolute = cor(yb, abs(R_raw[s, s][kp])),
++       same_minus_opp  = mean(yb[ss & sk]) - mean(yb[ss & !sk]),
++       opp_minus_cross = mean(yb[ss & !sk]) - mean(yb[!ss]))
++   })))
++   out$boot_ci <- apply(boot, 2, quantile, c(.025, .975), na.rm = TRUE)
++   cat("\nItem-pair r (raw, keyed, absolute raw):", round(out$pair_r, 3), "\n")
++   print(round(out$boot_ci, 3))
++ 
++   ## (f) the item pairs by scale and keying, as in Section 11b (k)
++   groups <- list(same_scale_same_key = (same_scale & same_key)[lt],
++                  same_scale_opp_key  = (same_scale & !same_key)[lt],
++                  cross_scale         = (!same_scale)[lt])
++   out$pair_groups <- t(sapply(groups, function(g)
++     c(n = sum(g), mean_sim = mean(y[g]), mean_human_r = mean(x_raw[g]),
++       share_negative = mean(x_raw[g] < 0))))
++   print(round(out$pair_groups, 3))
++   out$pairs <- data.frame(sim = y, r_raw = x_raw, r_keyed = x_key,
++                           same_scale = same_scale[lt], same_key = same_key[lt])
++ 
++   if (any(key < 0)) {
++     ## (g) cosines before and after the sign flip of the reverse-keyed
++     ##     items, with the same item-level bootstrap for the change in r
++     sim_a <- sfa_similarity(E, "atomic")
++     sim_f <- sfa_similarity(E, "atomic_reversed", scoring = key)
++     out$flip_r <- rbind(
++       atomic          = c(raw = cor(sim_a[lt], x_raw), keyed = cor(sim_a[lt], x_key)),
++       atomic_reversed = c(raw = cor(sim_f[lt], x_raw), keyed = cor(sim_f[lt], x_key)))
++     cat("\nItem-pair r of the cosines, plain and sign-flipped:\n")
++     print(round(out$flip_r, 3))
++     boot_f <- withr::with_seed(42, t(replicate(1000, {
++       s <- sample(p, replace = TRUE)
++       kp <- upper.tri(diag(p)) & outer(s, s, "!=")
++       xr <- R_raw[s, s][kp]
++       xk <- R_keyed[s, s][kp]
++       c(raw   = cor(sim_f[s, s][kp], xr) - cor(sim_a[s, s][kp], xr),
++         keyed = cor(sim_f[s, s][kp], xk) - cor(sim_a[s, s][kp], xk))
++     })))
++     out$flip_change_ci <- apply(boot_f, 2, quantile, c(.025, .975), na.rm = TRUE)
++     cat("Change in r after the sign flip, 95% bootstrap intervals:\n")
++     print(round(out$flip_change_ci, 3))
++   }
++   if (k == 1 && any(key < 0)) {
++     ## (h) a single scale with items keyed in both directions: do two factors
++     ##     separate the items by keying, in the embeddings and in the responses?
++     kd <- ifelse(key < 0, "reverse", "forward")
++     fit_2 <- withr::with_seed(42, sfa(z, nfactors = 2,
++                                       encoding = "mean_centered_pearson"))
++     human_2 <- withr::with_seed(42, psych::fa(R_keyed, nfactors = 2, n.obs = n,
++                                               rotate = "oblimin", fm = "minres"))
++     two <- function(a) {
++       cg <- sfa_congruence(a, target = kd, metrics = c("nmi", "ari"))
++       c(nmi = cg$nmi, ari = cg$ari)
++     }
++     out$two_factor <- list(
++       agreement = rbind(semantic = two(fit_2), human = two(human_2)),
++       semantic = table(key = kd, factor = dominant(fit_2$loadings)),
++       human    = table(key = kd, factor = dominant(human_2$loadings)),
++       phi_semantic = fit_2$Phi[1, 2], phi_human = human_2$Phi[1, 2])
++     cat("\nTwo factors against the keying (NMI, ARI):\n")
++     print(round(out$two_factor$agreement, 3))
++     print(out$two_factor$semantic)
++     print(out$two_factor$human)
++     cat("Factor correlations, semantic and response:",
++         round(c(out$two_factor$phi_semantic, out$two_factor$phi_human), 3), "\n")
++   }
++ 
++   ## the loadings of both solutions, for the Supplement
++   Ls <- unclass(fit_k$loadings)
++   Lh <- unclass(human_k$loadings)
++   colnames(Ls) <- paste0("semantic_", colnames(Ls))
++   colnames(Lh) <- paste0("human_", colnames(Lh))
++   write.csv(data.frame(code = z$codes, scale = f, key = key, round(Ls, 3),
++                        round(Lh, 3)),
++             sprintf("output/inventory_%s_loadings.csv", tolower(nm)),
++             row.names = FALSE)
++   out
++ }
+> inv <- lapply(setNames(inv_names, inv_names), inventory_run)
+
+
+----- DASS: 42 items, 3 scale(s), 0 reverse-keyed -----
+            key
+scale        forward
+  Anxiety         14
+  Depression      14
+  Stress          14
+Factor retention analysis (embedding-adapted)
+
+  Method       n_factors
+  parallel     4
+  kaiser       5
+  TEFI         4
+  EGA          3
+  EKC          5
+  ------------------------
+  Consensus    4
+
+Eigenvalues: 25.28   2.91   1.84   1.46   1.08   0.80   0.66   0.63   0.56   0.55  ... 
+Respondents after cleaning: 39775 of 39775 
+Parallel analysis suggests that the number of factors =  9  and the number of components =  NA 
+Human parallel analysis suggests 9 factors
+Semantic Factor Analysis
+  Encoding: mean_centered_pearson 
+  Embedding dim: 4096 
+  Factors:3 (minres + oblimin)
+
+Diagnostics:
+  KMO:  0.967 (marvelous - higher is better)
+  TEFI: -45.3954 (lower is better)
+  RMSR: 0.0424 (good - lower is better)
+  CAF:  0.3239 (marginal - higher is better)
+
+Factor loadings:
+
+Loadings:
+    MR2    MR3    MR1   
+S11  0.954              
+S39  0.898              
+S27  0.889              
+S32  0.861              
+S29  0.846              
+S1   0.844              
+S6   0.837              
+S14  0.786              
+S35  0.765              
+S18  0.695              
+S8   0.626              
+S22  0.612              
+S12  0.551              
+S33  0.534         0.391
+A9   0.489              
+A30  0.416              
+A40  0.366              
+D10         0.948       
+D21         0.925       
+D38         0.891       
+D34         0.855       
+D37         0.851       
+D16         0.802       
+D31         0.799       
+D24         0.797       
+D17         0.776       
+D13         0.746       
+D3          0.741       
+D26         0.733       
+D5   0.379  0.548       
+D42  0.367  0.517       
+A7                 0.748
+A41                0.659
+A19                0.591
+A15         0.410  0.512
+A20                0.505
+A25                0.505
+A36                0.484
+A4                 0.467
+A28  0.387         0.401
+A23                0.378
+A2          0.312  0.371
+
+                 MR2   MR3   MR1
+SS loadings    9.929 9.570 3.774
+Proportion Var 0.236 0.228 0.090
+Cumulative Var 0.236 0.464 0.554
+
+Factor correlations (Phi):
+      MR2   MR3   MR1
+MR2 1.000 0.712 0.572
+MR3 0.712 1.000 0.462
+MR1 0.572 0.462 1.000
+
+Variance accounted for:
+                         MR2    MR3   MR1
+SS loadings           12.300 11.431 5.421
+Proportion Var         0.293  0.272 0.129
+Cumulative Var         0.293  0.565 0.694
+Proportion Explained   0.422  0.392 0.186
+Cumulative Proportion  0.422  0.814 1.000
+
+Tucker congruence, semantic factors (rows) by response factors:
+     MR2  MR1  MR3
+MR2 0.16 0.96 0.40
+MR3 0.98 0.16 0.22
+MR1 0.09 0.21 0.93
+
+Agreement (NMI, ARI):
+                  nmi   ari
+semantic_scales 0.834 0.801
+human_scales    0.717 0.692
+semantic_human  0.872 0.862
+Largest values with permuted scale labels: 0.249 0.195 
+
+Scale by dominant semantic factor:
+            factor
+scale        MR1 MR2 MR3
+  Anxiety     11   3   0
+  Depression   0   0  14
+  Stress       0  14   0
+
+Scale by dominant response factor:
+            factor
+scale        MR1 MR2 MR3
+  Anxiety      3   0  11
+  Depression   0  14   0
+  Stress      12   0   2
+
+Semantic solutions under 40 seeds:
+     nmi    ari criterion seeds
+1 0.8342 0.8006    0.4423    40
+
+Response solutions under 10 seeds (NMI ARI with the scales):
+
+0.717 0.692 
+         10 
+
+Item-pair r (raw, keyed, absolute raw): 0.732 0.732 0.732 
+        raw keyed absolute same_minus_opp opp_minus_cross
+2.5%  0.616 0.616    0.616             NA              NA
+97.5% 0.838 0.838    0.838             NA              NA
+                      n mean_sim mean_human_r share_negative
+same_scale_same_key 273    0.672        0.510              0
+same_scale_opp_key    0      NaN          NaN            NaN
+cross_scale         588    0.548        0.398              0
+
+
+----- ECR: 36 items, 2 scale(s), 10 reverse-keyed -----
+           key
+scale       forward reverse
+  Anxiety        17       1
+  Avoidance       9       9
+Factor retention analysis (embedding-adapted)
+
+  Method       n_factors
+  parallel     3
+  kaiser       4
+  TEFI         2
+  EGA          5
+  EKC          4
+  ------------------------
+  Consensus    4
+
+Eigenvalues: 23.41   1.92   1.48   1.12   0.82   0.71   0.61   0.56   0.51   0.45  ... 
+Respondents after cleaning: 46610 of 51491 
+Parallel analysis suggests that the number of factors =  8  and the number of components =  NA 
+Human parallel analysis suggests 8 factors
+Semantic Factor Analysis
+  Encoding: mean_centered_pearson 
+  Embedding dim: 4096 
+  Factors:2 (minres + oblimin)
+
+Diagnostics:
+  KMO:  0.963 (marvelous - higher is better)
+  TEFI: -36.8389 (lower is better)
+  RMSR: 0.0507 (acceptable - lower is better)
+  CAF:  0.3370 (marginal - higher is better)
+
+Factor loadings:
+
+Loadings:
+     MR1    MR2   
+AV5   0.996       
+AV13  0.996       
+AV17  0.961       
+AV7   0.948       
+AX16  0.946       
+AX26  0.832       
+AV23  0.825       
+AV11  0.822       
+AX36  0.755       
+AX28  0.725       
+AX12  0.693       
+AX14  0.691       
+AX30  0.690       
+AV9   0.677       
+AV1   0.677       
+AX24  0.665       
+AX2   0.658       
+AX32  0.580       
+AX4   0.570       
+AX34  0.548       
+AX6   0.534  0.330
+AV21  0.517  0.375
+AX20  0.505       
+AX8   0.504  0.365
+AX22  0.389  0.383
+AV31         0.919
+AV29         0.888
+AV15         0.855
+AV25         0.846
+AV35         0.820
+AV27         0.806
+AV33         0.805
+AV3          0.671
+AX18         0.601
+AV19  0.334  0.516
+AX10  0.387  0.417
+
+                  MR1   MR2
+SS loadings    13.649 7.382
+Proportion Var  0.379 0.205
+Cumulative Var  0.379 0.584
+
+Factor correlations (Phi):
+      MR1   MR2
+MR1 1.000 0.772
+MR2 0.772 1.000
+
+Variance accounted for:
+                         MR1   MR2
+SS loadings           15.515 9.249
+Proportion Var         0.431 0.257
+Cumulative Var         0.431 0.688
+Proportion Explained   0.627 0.373
+Cumulative Proportion  0.627 1.000
+
+Tucker congruence, semantic factors (rows) by response factors:
+     MR1  MR2
+MR1 0.49 0.72
+MR2 0.62 0.28
+
+Agreement (NMI, ARI):
+                  nmi  ari
+semantic_scales 0.145 0.13
+human_scales    1.000 1.00
+semantic_human  0.145 0.13
+Largest values with permuted scale labels: 0.252 0.231 
+
+Scale by dominant semantic factor:
+           factor
+scale       MR1 MR2
+  Anxiety    16   2
+  Avoidance   9   9
+
+Scale by dominant response factor:
+           factor
+scale       MR1 MR2
+  Anxiety     0  18
+  Avoidance  18   0
+
+Semantic solutions under 40 seeds:
+     nmi    ari criterion seeds
+1 0.1447 0.1301    0.2438    40
+
+Response solutions under 10 seeds (NMI ARI with the scales):
+
+1.000 1.000 
+         10 
+
+Agreement with the keying (NMI, ARI):
+                  nmi   ari
+semantic_keying 0.546 0.679
+human_keying    0.214 0.179
+         factor
+key       MR1 MR2
+  forward  24   2
+  reverse   1   9
+
+Item-pair r (raw, keyed, absolute raw): 0.426 0.392 0.421 
+        raw keyed absolute same_minus_opp opp_minus_cross
+2.5%  0.268 0.261    0.275          0.037          -0.048
+97.5% 0.594 0.530    0.565          0.126           0.024
+                      n mean_sim mean_human_r share_negative
+same_scale_same_key 208    0.687        0.421          0.000
+same_scale_opp_key   98    0.606       -0.413          1.000
+cross_scale         324    0.618        0.031          0.389
+
+Item-pair r of the cosines, plain and sign-flipped:
+                  raw keyed
+atomic          0.426 0.392
+atomic_reversed 0.631 0.263
+Change in r after the sign flip, 95% bootstrap intervals:
+        raw  keyed
+2.5%  0.043 -0.359
+97.5% 0.365  0.116
+
+
+----- KIMS: 39 items, 4 scale(s), 18 reverse-keyed -----
+                         key
+scale                     forward reverse
+  Accept Without Judgment       0       9
+  Act With Awareness            4       6
+  Describe                      5       3
+  Observe                      12       0
+Factor retention analysis (embedding-adapted)
+
+  Method       n_factors
+  parallel     4
+  kaiser       5
+  TEFI         3
+  EGA          4
+  EKC          5
+  ------------------------
+  Consensus    4
+
+Eigenvalues: 22.58   2.46   1.97   1.74   1.13   0.85   0.72   0.58   0.51   0.49  ... 
+Respondents after cleaning: 521 of 601 
+Parallel analysis suggests that the number of factors =  6  and the number of components =  NA 
+Human parallel analysis suggests 6 factors
+Semantic Factor Analysis
+  Encoding: mean_centered_pearson 
+  Embedding dim: 4096 
+  Factors:4 (minres + oblimin)
+
+Diagnostics:
+  KMO:  0.964 (marvelous - higher is better)
+  TEFI: -33.1629 (lower is better)
+  RMSR: 0.0343 (good - lower is better)
+  CAF:  0.3679 (marginal - higher is better)
+
+Factor loadings:
+
+Loadings:
+     MR3    MR4    MR2    MR1   
+AJ16  0.899                     
+AJ32  0.895                     
+AJ36  0.864                     
+AJ4   0.839                     
+AJ28  0.786                     
+AJ12  0.760                     
+AJ20  0.690                     
+AJ8   0.520                     
+O37   0.499                0.371
+AJ24  0.471                     
+AA23         0.844              
+AA19         0.842              
+AA38         0.822              
+AA7          0.800              
+AA35         0.786              
+AA27         0.743              
+AA3          0.728              
+AA31         0.677              
+AA15         0.622              
+AA11         0.583              
+D2                  0.888       
+D18                 0.865       
+D14                 0.812       
+D10                 0.810       
+D26                 0.760       
+D22                 0.756       
+D34                 0.693       
+D6                  0.653       
+O9                         0.668
+O21                        0.662
+O1                         0.657
+O13                        0.606
+O5                         0.562
+O30   0.329                0.545
+O29                        0.535
+O25          0.349         0.488
+O17   0.316                0.472
+O39   0.335                0.464
+O33                        0.463
+
+                 MR3   MR4   MR2   MR1
+SS loadings    6.109 6.038 5.240 3.997
+Proportion Var 0.157 0.155 0.134 0.102
+Cumulative Var 0.157 0.311 0.446 0.548
+
+Factor correlations (Phi):
+      MR3   MR4   MR2   MR1
+MR3 1.000 0.611 0.650 0.490
+MR4 0.611 1.000 0.616 0.565
+MR2 0.650 0.616 1.000 0.561
+MR1 0.490 0.565 0.561 1.000
+
+Variance accounted for:
+                        MR3   MR4   MR2   MR1
+SS loadings           7.694 7.502 6.677 5.780
+Proportion Var        0.197 0.192 0.171 0.148
+Cumulative Var        0.197 0.390 0.561 0.709
+Proportion Explained  0.278 0.271 0.241 0.209
+Cumulative Proportion 0.278 0.550 0.791 1.000
+
+Tucker congruence, semantic factors (rows) by response factors:
+     MR4  MR2  MR3  MR1
+MR3 0.91 0.20 0.11 0.01
+MR4 0.18 0.23 0.08 0.92
+MR2 0.11 0.20 0.95 0.07
+MR1 0.07 0.92 0.04 0.10
+
+Agreement (NMI, ARI):
+                  nmi   ari
+semantic_scales 0.938 0.925
+human_scales    0.937 0.922
+semantic_human  0.874 0.847
+Largest values with permuted scale labels: 0.307 0.166 
+
+Scale by dominant semantic factor:
+                         factor
+scale                     MR1 MR2 MR3 MR4
+  Accept Without Judgment   0   0   9   0
+  Act With Awareness        0   0   0  10
+  Describe                  0   8   0   0
+  Observe                  11   0   1   0
+
+Scale by dominant response factor:
+                         factor
+scale                     MR1 MR2 MR3 MR4
+  Accept Without Judgment   0   0   0   9
+  Act With Awareness        9   1   0   0
+  Describe                  0   0   8   0
+  Observe                   0  12   0   0
+
+Semantic solutions under 40 seeds:
+     nmi    ari criterion seeds
+1 0.9377 0.9249    0.3851    40
+
+Response solutions under 10 seeds (NMI ARI with the scales):
+
+0.937 0.922 
+         10 
+
+Agreement with the keying (NMI, ARI):
+                  nmi   ari
+semantic_keying 0.306 0.220
+human_keying    0.314 0.239
+         factor
+key       MR1 MR2 MR3 MR4
+  forward  11   5   1   4
+  reverse   0   3   9   6
+
+Item-pair r (raw, keyed, absolute raw): 0.504 0.609 0.674 
+        raw keyed absolute same_minus_opp opp_minus_cross
+2.5%  0.346 0.456    0.567          0.015           0.040
+97.5% 0.660 0.762    0.783          0.150           0.139
+                      n mean_sim mean_human_r share_negative
+same_scale_same_key 136    0.704        0.431          0.000
+same_scale_opp_key   39    0.622       -0.342          0.974
+cross_scale         566    0.529        0.026          0.530
+
+Item-pair r of the cosines, plain and sign-flipped:
+                  raw keyed
+atomic          0.504 0.609
+atomic_reversed 0.847 0.560
+Change in r after the sign flip, 95% bootstrap intervals:
+        raw  keyed
+2.5%  0.169 -0.298
+97.5% 0.518  0.171
+
+
+----- HSQ: 32 items, 4 scale(s), 11 reverse-keyed -----
+                key
+scale            forward reverse
+  Affiliative          3       5
+  Aggressive           4       4
+  Self-Defeating       7       1
+  Self-Enhancing       7       1
+Factor retention analysis (embedding-adapted)
+
+  Method       n_factors
+  parallel     3
+  kaiser       3
+  TEFI         3
+  EGA          4
+  EKC          3
+  ------------------------
+  Consensus    3
+
+Eigenvalues: 21.24   1.52   1.17   0.90   0.79   0.67   0.60   0.50   0.45   0.41  ... 
+Respondents after cleaning: 993 of 1071 
+Parallel analysis suggests that the number of factors =  7  and the number of components =  NA 
+Human parallel analysis suggests 7 factors
+Semantic Factor Analysis
+  Encoding: mean_centered_pearson 
+  Embedding dim: 4096 
+  Factors:4 (minres + oblimin)
+
+Diagnostics:
+  KMO:  0.965 (marvelous - higher is better)
+  TEFI: -23.7979 (lower is better)
+  RMSR: 0.0287 (good - lower is better)
+  CAF:  0.4624 (marginal - higher is better)
+
+Factor loadings:
+
+Loadings:
+     MR4    MR1    MR3    MR2   
+SD8   0.942                     
+SD4   0.881                     
+SD24  0.881                     
+SD20  0.834                     
+AG3   0.779                     
+AG27  0.745                     
+SD12  0.735                     
+SD32  0.692                     
+AG15  0.572                     
+AF13  0.483                0.355
+AF21  0.448                0.316
+AG11  0.408  0.346              
+AG19  0.337                     
+AF1          0.994              
+AF25         0.910              
+AF17         0.873              
+AF9          0.793              
+AF29         0.610              
+SD16  0.353  0.596              
+AG23         0.561              
+AG31         0.432              
+AG7          0.357              
+SE10                0.979       
+SE18                0.912       
+SE2                 0.843       
+SE14                0.750       
+SE26                0.734       
+SE30                0.569  0.347
+SE6                 0.568  0.304
+SE22         0.389  0.538       
+SD28                0.396       
+AF5   0.304                0.312
+
+                 MR4   MR1   MR3   MR2
+SS loadings    6.833 5.149 5.126 0.859
+Proportion Var 0.214 0.161 0.160 0.027
+Cumulative Var 0.214 0.374 0.535 0.561
+
+Factor correlations (Phi):
+      MR4   MR1   MR3   MR2
+MR4 1.000 0.770 0.779 0.304
+MR1 0.770 1.000 0.678 0.267
+MR3 0.779 0.678 1.000 0.209
+MR2 0.304 0.267 0.209 1.000
+
+Variance accounted for:
+                        MR4   MR1   MR3   MR2
+SS loadings           8.932 6.942 6.827 1.218
+Proportion Var        0.279 0.217 0.213 0.038
+Cumulative Var        0.279 0.496 0.709 0.747
+Proportion Explained  0.373 0.290 0.285 0.051
+Cumulative Proportion 0.373 0.664 0.949 1.000
+
+Tucker congruence, semantic factors (rows) by response factors:
+     MR1   MR3  MR4  MR2
+MR4 0.19  0.80 0.10 0.46
+MR1 0.71  0.10 0.10 0.43
+MR3 0.21  0.09 0.96 0.17
+MR2 0.41 -0.11 0.24 0.16
+
+Agreement (NMI, ARI):
+                  nmi   ari
+semantic_scales 0.478 0.341
+human_scales    1.000 1.000
+semantic_human  0.478 0.341
+Largest values with permuted scale labels: 0.341 0.187 
+
+Scale by dominant semantic factor:
+                factor
+scale            MR1 MR2 MR3 MR4
+  Affiliative      5   1   0   2
+  Aggressive       3   0   0   5
+  Self-Defeating   1   0   1   6
+  Self-Enhancing   0   0   8   0
+
+Scale by dominant response factor:
+                factor
+scale            MR1 MR2 MR3 MR4
+  Affiliative      8   0   0   0
+  Aggressive       0   8   0   0
+  Self-Defeating   0   0   8   0
+  Self-Enhancing   0   0   0   8
+
+Semantic solutions under 40 seeds:
+    nmi    ari criterion seeds
+1 0.478 0.3411    0.3603    40
+
+Response solutions under 10 seeds (NMI ARI with the scales):
+
+1.000 1.000 
+         10 
+
+Agreement with the keying (NMI, ARI):
+                  nmi   ari
+semantic_keying 0.498 0.391
+human_keying    0.123 0.056
+         factor
+key       MR1 MR2 MR3 MR4
+  forward   0   1   8  12
+  reverse   9   0   1   1
+
+Item-pair r (raw, keyed, absolute raw): 0.458 0.398 0.414 
+        raw keyed absolute same_minus_opp opp_minus_cross
+2.5%  0.273 0.196    0.218          0.053          -0.022
+97.5% 0.642 0.594    0.608          0.148           0.050
+                      n mean_sim mean_human_r share_negative
+same_scale_same_key  67    0.746        0.380          0.000
+same_scale_opp_key   45    0.647       -0.342          1.000
+cross_scale         384    0.635        0.019          0.458
+
+Item-pair r of the cosines, plain and sign-flipped:
+                  raw keyed
+atomic          0.458 0.398
+atomic_reversed 0.794 0.194
+Change in r after the sign flip, 95% bootstrap intervals:
+        raw  keyed
+2.5%  0.134 -0.363
+97.5% 0.524 -0.037
+
+
+----- NIS: 26 items, 1 scale(s), 13 reverse-keyed -----
+                     key
+scale                 forward reverse
+  Nonverbal Immediacy      13      13
+Factor retention analysis (embedding-adapted)
+
+  Method       n_factors
+  parallel     3
+  kaiser       3
+  TEFI         2
+  EGA          5
+  EKC          3
+  ------------------------
+  Consensus    3
+
+Eigenvalues: 18.33   1.34   1.14   0.75   0.61   0.56   0.47   0.39   0.37   0.30  ... 
+Respondents after cleaning: 149444 of 151864 
+Parallel analysis suggests that the number of factors =  8  and the number of components =  NA 
+Human parallel analysis suggests 8 factors
+Semantic Factor Analysis
+  Encoding: mean_centered_pearson 
+  Embedding dim: 4096 
+  Factors:1 (minres + oblimin)
+
+Diagnostics:
+  KMO:  0.951 (marvelous - higher is better)
+  TEFI: 0.0000 (lower is better)
+  RMSR: 0.0655 (acceptable - lower is better)
+  CAF:  0.3428 (marginal - higher is better)
+
+Factor loadings:
+
+Loadings:
+     MR1  
+NI21 0.901
+NI10 0.879
+NI4  0.874
+NI13 0.867
+NI16 0.861
+NI14 0.858
+NI24 0.854
+NI17 0.853
+NI26 0.849
+NI1  0.845
+NI20 0.842
+NI18 0.839
+NI2  0.839
+NI5  0.826
+NI22 0.825
+NI9  0.824
+NI15 0.822
+NI23 0.819
+NI12 0.818
+NI6  0.814
+NI8  0.811
+NI7  0.810
+NI25 0.810
+NI3  0.796
+NI19 0.752
+NI11 0.746
+
+                  MR1
+SS loadings    18.031
+Proportion Var  0.694
+
+Variance accounted for:
+                  MR1
+SS loadings    18.031
+Proportion Var  0.694
+
+Tucker congruence, semantic factors (rows) by response factors:
+     MR1
+MR1 0.99
+
+Item-pair r (raw, keyed, absolute raw): 0.491 0.522 0.522 
+        raw keyed absolute same_minus_opp opp_minus_cross
+2.5%  0.360 0.385    0.385          0.047              NA
+97.5% 0.643 0.655    0.655          0.096              NA
+                      n mean_sim mean_human_r share_negative
+same_scale_same_key 156    0.728        0.369              0
+same_scale_opp_key  169    0.659       -0.326              1
+cross_scale           0      NaN          NaN            NaN
+
+Item-pair r of the cosines, plain and sign-flipped:
+                  raw keyed
+atomic          0.491 0.522
+atomic_reversed 0.955 0.194
+Change in r after the sign flip, 95% bootstrap intervals:
+        raw  keyed
+2.5%  0.302 -0.503
+97.5% 0.596 -0.163
+
+Two factors against the keying (NMI, ARI):
+           nmi    ari
+semantic 0.434  0.357
+human    0.018 -0.015
+         factor
+key       MR1 MR2
+  forward  13   0
+  reverse   5   8
+         factor
+key       MR1 MR2
+  forward   7   6
+  reverse   9   4
+Factor correlations, semantic and response: 0.78 0.43 
+
+
+----- RSE: 10 items, 1 scale(s), 5 reverse-keyed -----
+             key
+scale         forward reverse
+  Self-Esteem       5       5
+Factor retention analysis (embedding-adapted)
+
+  Method       n_factors
+  parallel     1
+  kaiser       1
+  TEFI         2
+  EGA          1
+  EKC          1
+  ------------------------
+  Consensus    1
+
+Eigenvalues: 7.17  0.81  0.48  0.34  0.30  0.27  0.22  0.19  0.12  0.11 
+Respondents after cleaning: 46546 of 47974 
+Parallel analysis suggests that the number of factors =  4  and the number of components =  NA 
+Human parallel analysis suggests 4 factors
+Semantic Factor Analysis
+  Encoding: mean_centered_pearson 
+  Embedding dim: 4096 
+  Factors:1 (minres + oblimin)
+
+Diagnostics:
+  KMO:  0.935 (marvelous - higher is better)
+  TEFI: 0.0000 (lower is better)
+  RMSR: 0.0624 (acceptable - lower is better)
+  CAF:  0.2983 (low - higher is better)
+
+Factor loadings:
+
+Loadings:
+     MR1  
+RS10 0.871
+RS1  0.871
+RS6  0.862
+RS7  0.856
+RS5  0.845
+RS3  0.821
+RS2  0.814
+RS9  0.812
+RS4  0.776
+RS8  0.747
+
+                 MR1
+SS loadings    6.865
+Proportion Var 0.686
+
+Variance accounted for:
+                 MR1
+SS loadings    6.865
+Proportion Var 0.686
+
+Tucker congruence, semantic factors (rows) by response factors:
+    MR1
+MR1   1
+
+Item-pair r (raw, keyed, absolute raw): 0.584 0.724 0.724 
+        raw keyed absolute same_minus_opp opp_minus_cross
+2.5%  0.174 0.499    0.499          0.016              NA
+97.5% 0.910 0.890    0.890          0.158              NA
+                     n mean_sim mean_human_r share_negative
+same_scale_same_key 20    0.732        0.564              0
+same_scale_opp_key  25    0.647       -0.479              1
+cross_scale          0      NaN          NaN            NaN
+
+Item-pair r of the cosines, plain and sign-flipped:
+                  raw keyed
+atomic          0.584 0.724
+atomic_reversed 0.993 0.480
+Change in r after the sign flip, 95% bootstrap intervals:
+        raw  keyed
+2.5%  0.086 -0.535
+97.5% 0.819  0.088
+
+Two factors against the keying (NMI, ARI):
+           nmi   ari
+semantic 0.619 0.597
+human    1.000 1.000
+         factor
+key       MR1 MR2
+  forward   0   5
+  reverse   4   1
+         factor
+key       MR1 MR2
+  forward   0   5
+  reverse   5   0
+Factor correlations, semantic and response: 0.785 0.704 
+
+
+----- TMA: 50 items, 1 scale(s), 12 reverse-keyed -----
+                  key
+scale              forward reverse
+  Manifest Anxiety      38      12
+Factor retention analysis (embedding-adapted)
+
+  Method       n_factors
+  parallel     5
+  kaiser       6
+  TEFI         4
+  EGA          6
+  EKC          6
+  ------------------------
+  Consensus    6
+
+Eigenvalues: 28.57   2.13   1.59   1.26   1.19   1.03   0.95   0.87   0.81   0.73  ... 
+Respondents after cleaning: 4474 of 5410 
+Parallel analysis suggests that the number of factors =  14  and the number of components =  NA 
+Human parallel analysis suggests 14 factors
+Semantic Factor Analysis
+  Encoding: mean_centered_pearson 
+  Embedding dim: 4096 
+  Factors:1 (minres + oblimin)
+
+Diagnostics:
+  KMO:  0.971 (marvelous - higher is better)
+  TEFI: 0.0000 (lower is better)
+  RMSR: 0.0582 (acceptable - lower is better)
+  CAF:  0.3246 (marginal - higher is better)
+
+Factor loadings:
+
+Loadings:
+     MR1  
+TM27 0.852
+TM44 0.851
+TM42 0.839
+TM23 0.823
+TM48 0.822
+TM25 0.820
+TM13 0.812
+TM31 0.808
+TM11 0.803
+TM46 0.798
+TM33 0.797
+TM6  0.796
+TM2  0.787
+TM26 0.780
+TM34 0.774
+TM40 0.774
+TM43 0.773
+TM41 0.769
+TM30 0.767
+TM45 0.765
+TM36 0.763
+TM17 0.761
+TM1  0.758
+TM29 0.758
+TM39 0.755
+TM3  0.754
+TM22 0.752
+TM21 0.751
+TM5  0.750
+TM35 0.748
+TM9  0.747
+TM47 0.743
+TM49 0.738
+TM19 0.734
+TM37 0.733
+TM24 0.732
+TM32 0.729
+TM16 0.725
+TM7  0.712
+TM8  0.702
+TM14 0.699
+TM12 0.697
+TM20 0.686
+TM18 0.681
+TM38 0.680
+TM4  0.663
+TM28 0.646
+TM50 0.618
+TM15 0.610
+TM10 0.558
+
+                  MR1
+SS loadings    28.148
+Proportion Var  0.563
+
+Variance accounted for:
+                  MR1
+SS loadings    28.148
+Proportion Var  0.563
+
+Tucker congruence, semantic factors (rows) by response factors:
+     MR1
+MR1 0.96
+
+Item-pair r (raw, keyed, absolute raw): 0.479 0.497 0.499 
+        raw keyed absolute same_minus_opp opp_minus_cross
+2.5%  0.328 0.346    0.348          0.053              NA
+97.5% 0.624 0.629    0.635          0.107              NA
+                      n mean_sim mean_human_r share_negative
+same_scale_same_key 769    0.589        0.181          0.000
+same_scale_opp_key  456    0.509       -0.133          0.976
+cross_scale           0      NaN          NaN            NaN
+
+Item-pair r of the cosines, plain and sign-flipped:
+                  raw keyed
+atomic          0.479 0.496
+atomic_reversed 0.902 0.295
+Change in r after the sign flip, 95% bootstrap intervals:
+        raw  keyed
+2.5%  0.283 -0.348
+97.5% 0.579 -0.051
+
+Two factors against the keying (NMI, ARI):
+           nmi   ari
+semantic 0.581 0.625
+human    0.054 0.061
+         factor
+key       MR1 MR2
+  forward  33   5
+  reverse   0  12
+         factor
+key       MR1 MR2
+  forward  14  24
+  reverse   8   4
+Factor correlations, semantic and response: 0.775 0.584 
+
+
+----- BAI: 21 items, 1 scale(s), 0 reverse-keyed -----
+         key
+scale     forward
+  Anxiety      21
+Factor retention analysis (embedding-adapted)
+
+  Method       n_factors
+  parallel     2
+  kaiser       3
+  TEFI         2
+  EGA          4
+  EKC          3
+  ------------------------
+  Consensus    2
+
+Eigenvalues: 12.55   1.68   1.06   0.69   0.60   0.53   0.51   0.47   0.38   0.38  ... 
+Respondents after cleaning: 1507 of 1507 
+Parallel analysis suggests that the number of factors =  6  and the number of components =  NA 
+Human parallel analysis suggests 6 factors
+Semantic Factor Analysis
+  Encoding: mean_centered_pearson 
+  Embedding dim: 4096 
+  Factors:1 (minres + oblimin)
+
+Diagnostics:
+  KMO:  0.953 (marvelous - higher is better)
+  TEFI: 0.0000 (lower is better)
+  RMSR: 0.0783 (acceptable - lower is better)
+  CAF:  0.2836 (low - higher is better)
+
+Factor loadings:
+
+Loadings:
+     MR1  
+BA12 0.865
+BA13 0.847
+BA17 0.809
+BA2  0.807
+BA8  0.805
+BA19 0.793
+BA16 0.787
+BA10 0.787
+BA3  0.775
+BA9  0.775
+BA14 0.767
+BA5  0.766
+BA4  0.763
+BA7  0.757
+BA11 0.747
+BA20 0.743
+BA21 0.736
+BA6  0.722
+BA1  0.663
+BA15 0.636
+BA18 0.553
+
+                  MR1
+SS loadings    12.140
+Proportion Var  0.578
+
+Variance accounted for:
+                  MR1
+SS loadings    12.140
+Proportion Var  0.578
+
+Tucker congruence, semantic factors (rows) by response factors:
+     MR1
+MR1 0.99
+
+Item-pair r (raw, keyed, absolute raw): 0.428 0.428 0.428 
+        raw keyed absolute same_minus_opp opp_minus_cross
+2.5%  0.211 0.211    0.211             NA              NA
+97.5% 0.631 0.631    0.631             NA              NA
+                      n mean_sim mean_human_r share_negative
+same_scale_same_key 210    0.573          0.4              0
+same_scale_opp_key    0      NaN          NaN            NaN
+cross_scale           0      NaN          NaN            NaN
+Warning messages:
+1: 'scoring' has reverse-keyed items but is ignored for encoding = "mean_centered_pearson": this method is keying-free by design. Use "atomic_reversed" for keyed sign-flipping. 
+2: 'scoring' has reverse-keyed items but is ignored for encoding = "mean_centered_pearson": this method is keying-free by design. Use "atomic_reversed" for keyed sign-flipping. 
+3: 'scoring' has reverse-keyed items but is ignored for encoding = "mean_centered_pearson": this method is keying-free by design. Use "atomic_reversed" for keyed sign-flipping. 
+4: 'scoring' has reverse-keyed items but is ignored for encoding = "mean_centered_pearson": this method is keying-free by design. Use "atomic_reversed" for keyed sign-flipping. 
+5: 'scoring' has reverse-keyed items but is ignored for encoding = "mean_centered_pearson": this method is keying-free by design. Use "atomic_reversed" for keyed sign-flipping. 
+6: 'scoring' has reverse-keyed items but is ignored for encoding = "mean_centered_pearson": this method is keying-free by design. Use "atomic_reversed" for keyed sign-flipping. 
+7: 'scoring' has reverse-keyed items but is ignored for encoding = "mean_centered_pearson": this method is keying-free by design. Use "atomic_reversed" for keyed sign-flipping. 
+8: 'scoring' has reverse-keyed items but is ignored for encoding = "mean_centered_pearson": this method is keying-free by design. Use "atomic_reversed" for keyed sign-flipping. 
+9: 'scoring' has reverse-keyed items but is ignored for encoding = "mean_centered_pearson": this method is keying-free by design. Use "atomic_reversed" for keyed sign-flipping. 
+> summary(warnings())
+9 identical warnings:
+'scoring' has reverse-keyed items but is ignored for encoding = "mean_centered_pearson": this method is keying-free by design. Use "atomic_reversed" for keyed sign-flipping.
+> results$inventories <- inv
+> 
+> ## the three-factor DASS solution repeats the 8B fit of Section 11c
+> stopifnot(isTRUE(all.equal(unname(inv$DASS$agreement["semantic_scales", ]),
++                            unname(dass_agree["8B", ]))))
+> 
+> ## the same statistics for the Big Five markers, from the fits and matrices
+> ## of Sections 6, 10, and 11, for comparison with the further inventories
+> b5_agree <- function(a, b) {
++   cg <- sfa_congruence(a, target = b, metrics = c("nmi", "ari"))
++   c(nmi = cg$nmi, ari = cg$ari)
++ }
+> b5_key <- ifelse(big5$scoring < 0, "reverse", "forward")
+> b5_boot <- withr::with_seed(42, t(replicate(1000, {
++   s <- sample(50, replace = TRUE)
++   kp <- upper.tri(diag(50)) & outer(s, s, "!=")
++   xr <- R_human_raw[s, s][kp]
++   xk <- R_human[s, s][kp]
++   yb <- sim_mcp[s, s][kp]
++   c(raw = cor(yb, xr), keyed = cor(yb, xk), absolute = cor(yb, abs(xr)),
++     flip_raw   = cor(sim_ar[s, s][kp], xr) - cor(sim_at[s, s][kp], xr),
++     flip_keyed = cor(sim_ar[s, s][kp], xk) - cor(sim_at[s, s][kp], xk))
++ })))
+> big5_row <- list(
++   agreement = rbind(semantic_scales = b5_agree(fit, big5$factors),
++                     human_scales    = b5_agree(human_fa, big5$factors),
++                     semantic_human  = b5_agree(fit, human_fa)),
++   key_agreement = rbind(semantic_keying = b5_agree(fit, b5_key),
++                         human_keying    = b5_agree(human_fa, b5_key)),
++   pair_r = c(raw = cor(sim_mcp[lt], R_human_raw[lt]),
++              keyed = cor(sim_mcp[lt], R_human[lt]),
++              absolute = cor(sim_mcp[lt], abs(R_human_raw[lt]))),
++   boot_ci = apply(b5_boot, 2, quantile, c(.025, .975)),
++   flip_r = pair_tab[c("atomic", "atomic_reversed"), c("r_raw", "r_keyed")])
+> lapply(big5_row, round, 3)
+$agreement
+                  nmi   ari
+semantic_scales 0.527 0.402
+human_scales    1.000 1.000
+semantic_human  0.527 0.402
+
+$key_agreement
+                  nmi    ari
+semantic_keying 0.332  0.157
+human_keying    0.023 -0.013
+
+$pair_r
+     raw    keyed absolute 
+   0.456    0.434    0.528 
+
+$boot_ci
+        raw keyed absolute flip_raw flip_keyed
+2.5%  0.340 0.316    0.428   -0.190     -0.424
+97.5% 0.582 0.565    0.639    0.142     -0.163
+
+$flip_r
+                r_raw r_keyed
+atomic          0.456   0.434
+atomic_reversed 0.444   0.137
+
+> ## these repeat the values of Sections 7 and 11
+> stopifnot(
++   isTRUE(all.equal(unname(big5_row$agreement["semantic_scales", ]),
++                    unname(c(cong_theory$nmi, cong_theory$ari)))),
++   isTRUE(all.equal(unname(big5_row$boot_ci[, "raw"]), unname(pair_r_ci))),
++   isTRUE(all.equal(big5_row$pair_r[["raw"]],
++                    pair_tab["mean_centered_pearson", "r_raw"])))
+> results$inventories_big5 <- big5_row
+> 
+> ## one row per inventory
+> inv_summary <- do.call(rbind, lapply(inv_names, function(nm) {
++   v <- inv[[nm]]
++   ag <- if (is.null(v$agreement)) matrix(NA_real_, 3, 2) else v$agreement
++   data.frame(inventory = nm, items = v$n_items, scales = v$n_scales,
++              reverse = v$n_reverse, n = v$n,
++              k_semantic = v$retention$consensus, k_human = v$human_pa,
++              nmi_semantic = ag[1, 1], nmi_human = ag[2, 1],
++              tucker_mean = mean(v$tucker_matched),
++              tucker_min = min(v$tucker_matched),
++              r_raw = v$pair_r[["raw"]], r_raw_lo = v$boot_ci[1, "raw"],
++              r_raw_hi = v$boot_ci[2, "raw"], r_keyed = v$pair_r[["keyed"]])
++ }))
+> print(format(inv_summary, digits = 3), row.names = FALSE)
+ inventory items scales reverse      n k_semantic k_human nmi_semantic
+      DASS    42      3       0  39775          4       9        0.834
+       ECR    36      2      10  46610          4       8        0.145
+      KIMS    39      4      18    521          4       6        0.938
+       HSQ    32      4      11    993          3       7        0.478
+       NIS    26      1      13 149444          3       8           NA
+       RSE    10      1       5  46546          1       4           NA
+       TMA    50      1      12   4474          6      14           NA
+       BAI    21      1       0   1507          2       6           NA
+ nmi_human tucker_mean tucker_min r_raw r_raw_lo r_raw_hi r_keyed
+     0.717       0.957       0.93 0.732    0.616    0.838   0.732
+     1.000       0.670       0.62 0.426    0.268    0.594   0.392
+     0.937       0.925       0.91 0.504    0.346    0.660   0.609
+     1.000       0.720       0.41 0.458    0.273    0.642   0.398
+        NA       0.990       0.99 0.491    0.360    0.643   0.522
+        NA       1.000       1.00 0.584    0.174    0.910   0.724
+        NA       0.960       0.96 0.479    0.328    0.624   0.497
+        NA       0.990       0.99 0.428    0.211    0.631   0.428
+> write.csv(inv_summary, "output/inventory_summary.csv", row.names = FALSE)
+> 
+> ## figure for the Supplement: similarity against the raw-response correlation
+> ## for every item pair, by whether the two items share a scale and a keying
+> n_inv <- length(inv_names)
+> inv_title <- setNames(inv_names, inv_names)
+> inv_title[c("RSE", "TMA")] <- c("RSES", "TMAS")   # the abbreviations of the paper
+> pdf("figures/fig_inventories.pdf", width = 9, height = 3.1 * ceiling(n_inv / 3))
+> op <- par(mfrow = c(ceiling(n_inv / 3), 3), mar = c(4.2, 4.2, 2.2, 0.8),
++           mgp = c(2.4, 0.8, 0))
+> for (nm in inv_names) {
++   d <- inv[[nm]]$pairs
++   grp <- ifelse(!d$same_scale, 1, ifelse(d$same_key, 2, 3))
++   plot(d$r_raw, d$sim, pch = c(1, 19, 17)[grp], cex = 0.5,
++        col = grDevices::adjustcolor(c("grey45", "steelblue4", "firebrick"), 0.6)[grp],
++        xlab = "Correlation between raw responses", ylab = "Semantic similarity",
++        main = sprintf("%s (r = %.2f)", inv_title[[nm]], inv[[nm]]$pair_r[["raw"]]))
++   abline(lm(sim ~ r_raw, d), lwd = 1.5)
++ }
+> par(op)
+> dev.off()
+null device 
+          1 
+> 
+> ## --- figure for the Results: the DASS's semantic similarities and response correlations
+> ## The two matrices of the DASS side by side, the items grouped by factor as in
+> ## the model-size heatmaps of Section 11c. The DASS has no reverse-keyed items,
+> ## so its raw and reverse-scored correlations are the same. The semantic
+> ## similarities are higher overall than the response correlations, so each
+> ## matrix is standardized: from each value off the diagonal, the mean of those
+> ## values in the same matrix is subtracted and the difference divided by their
+> ## standard deviation. That leaves the item-pair correlation between the two
+> ## matrices unchanged. Both panels share one color range, from the lowest to the
+> ## highest standardized value of the two (rounded outward to whole numbers), and
+> ## the diagonal is drawn in the darkest color.
+> dass_std <- function(m) {
++   m <- unclass(m)
++   attributes(m) <- list(dim = dim(m))
++   off <- m[lower.tri(m)]
++   (m - mean(off)) / sd(off)
++ }
+> dass_cmp <- lapply(list(semantic = inv$DASS$sim, responses = inv$DASS$R_raw), dass_std)
+> dass_lt <- lower.tri(dass_cmp$semantic)
+> stopifnot(inv$DASS$n_reverse == 0,
++           all(vapply(dass_cmp, nrow, 0L) == length(dass_f)),
++           isTRUE(all.equal(cor(dass_cmp$semantic[dass_lt], dass_cmp$responses[dass_lt]),
++                            inv$DASS$pair_r[["raw"]])))
+> dass_cmp_range <- c(floor(min(vapply(dass_cmp, function(m) min(m[dass_lt]), 0))),
++                     ceiling(max(vapply(dass_cmp, function(m) max(m[dass_lt]), 0))))
+> dass_cmp_title <- c(semantic = "Semantic similarity, standardized",
++                     responses = "Correlation between responses, standardized")
+> for (nm in names(dass_cmp)) {
++   m <- dass_cmp[[nm]]
++   diag(m) <- dass_cmp_range[2]
++   pdf(sprintf("figures/fig_dass_%s.pdf", nm), width = 7.5, height = 7.5)
++   sfa_corplot(m, factors = dass_f, order = c("D", "A", "S"),
++               main = dass_cmp_title[[nm]], labels = dass_axis,
++               cex.axis = 1.6, xlas = 1, zlim = dass_cmp_range,
++               n.legend = diff(dass_cmp_range), group = TRUE, gr = seq_gr)
++   dev.off()
++ }
+> cat("Standardized DASS heatmaps share the color range", dass_cmp_range, "\n")
+Standardized DASS heatmaps share the color range -3 5 
+> ## --- end figure for the Results
+> 
+> ## ---------------------------------------------------------------------------
 > ## 12. Save everything
 > ## ---------------------------------------------------------------------------
 > banner("12. Save outputs")
@@ -2785,7 +4274,7 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] semanticfa_0.5.1
+[1] semanticfa_0.6.0
 
 loaded via a namespace (and not attached):
  [1] digest_0.6.39        igraph_2.1.4         EGAnet_2.4.1        

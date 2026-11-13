@@ -566,6 +566,43 @@ add("valSfRandAriMax", r3(max(sfr[, "ari"])), "results$shortform_null random set
 # the prose says the short form beat every random set on both metrics
 stopifnot(sfn$short_form_5[["nmi"]] > max(sfr[, "nmi"]),
           sfn$short_form_5[["ari"]] > max(sfr[, "ari"]))
+## the second short form, by Kilmen and Bulut's rule (Sections 8 and 9f)
+sdres <- res$shortform_distinct
+sdf <- sdres$fidelity
+add("valSdNmiRed", r3(sdf$nmi_reduced), "results$shortform_distinct nmi reduced")
+add("valSdAriRed", r3(sdf$ari_reduced), "results$shortform_distinct ari reduced")
+add("valSdKRedWord", wd(sdf$nfactors_reduced), "results$shortform_distinct factors reduced")
+add("valSdFiveNmi", r3(sfn$distinct_5[["nmi"]]), "results$shortform_null distinct short form fitted with five factors, NMI")
+add("valSdFiveAri", r3(sfn$distinct_5[["ari"]]), "results$shortform_null distinct short form fitted with five factors, ARI")
+## the prose says the two rules rank each domain's items in the same order and
+## keep opposite ends, so the two 25-item forms share no item. The order check
+## asks that, within each domain, the distinct index never falls as the anchor
+## score rises (with a small tolerance, so a near-tie cannot flip it)
+sd_shared <- intersect(res$shortform$keep, sdres$keep)
+stopifnot(length(sd_shared) == 0,
+          setequal(union(res$shortform$keep, sdres$keep), big5$codes),
+          all(vapply(unique(big5$factors), function(g) {
+            in_g <- big5$factors == g
+            d_by_a <- sdres$scores[in_g][order(res$shortform$scores[in_g])]
+            all(diff(d_by_a) > -1e-12)
+          }, logical(1))))
+rev_codes <- big5$codes[big5$scoring < 0]
+add("valSfRevKeptWord", wd(sum(res$shortform$keep %in% rev_codes)), "reverse-keyed items in the anchor short form (word)")
+add("valSdRevKeptWord", wd(sum(sdres$keep %in% rev_codes)), "reverse-keyed items in the distinct short form (word)")
+add("valSdNmiRandRank", as.character(sum(sfr[, "nmi"] < sfn$distinct_5[["nmi"]])),
+    "random sets with a lower NMI than the distinct short form")
+add("valSdAriRandRank", as.character(sum(sfr[, "ari"] < sfn$distinct_5[["ari"]])),
+    "random sets with a lower ARI than the distinct short form")
+stopifnot(identical(sdres$method, "distinct"), length(sdres$keep) == 25,
+          all(sdf$per_construct == 5))
+## the prose says the second short form agreed much less with the domains
+## (here: less than half the first form's NMI and ARI), fell below the median
+## random set on both metrics, and kept more reverse-keyed items than the first
+stopifnot(sdf$nmi_reduced < res$shortform$fidelity$nmi_reduced / 2,
+          sdf$ari_reduced < res$shortform$fidelity$ari_reduced / 2,
+          sfn$distinct_5[["nmi"]] < median(sfr[, "nmi"]),
+          sfn$distinct_5[["ari"]] < median(sfr[, "ari"]),
+          sum(sdres$keep %in% rev_codes) > sum(res$shortform$keep %in% rev_codes))
 ## (g) NLI structure
 ns <- res$nli_structure
 add("valNliOrdersR", r2(ns[["r_orders"]]), "results$nli_structure r between the two orders of each pair")
@@ -868,6 +905,258 @@ stopifnot(round(min(ecd_cos), 6) == 1)
 add("valDassEmbCheckCos", sprintf("%.6f", round(min(ecd_cos), 6)),
     "output/embed_items_check_dass.txt smallest cosine between re-embedded and stored DASS item vectors (six decimals)")
 
+## --- further inventories (Section 11d): macros --------------------------------
+## Set REPORT_BAI to FALSE to leave the BAI out of every macro, table, and
+## figure panel list (it is reported only if its response data can be cited).
+REPORT_BAI <- TRUE
+inv <- res$inventories
+b5r <- res$inventories_big5
+stopifnot(!is.null(inv), !is.null(b5r))
+if (!REPORT_BAI) inv$BAI <- NULL
+inv_tag <- c(DASS = "Dass", ECR = "Ecr", KIMS = "Kims", HSQ = "Hsq",
+             NIS = "Nis", RSE = "Rse", TMA = "Tma", BAI = "Bai")
+inv_label <- c(DASS = "DASS", ECR = "ECR", KIMS = "KIMS", HSQ = "HSQ",
+               NIS = "NIS", RSE = "RSES", TMA = "TMAS", BAI = "BAI")
+stopifnot(all(names(inv) %in% names(inv_tag)))
+inv_multi <- names(inv)[vapply(inv, function(v) v$n_scales > 1, TRUE)]
+inv_keyed <- names(inv)[vapply(inv, function(v) v$n_reverse > 0, TRUE)]
+inv_single_keyed <- setdiff(inv_keyed, inv_multi)
+add_ci <- function(a, suffix, m, col, what) {
+  a(paste0(suffix, "Lo"), r2(m[1, col]), paste(what, "2.5th percentile"))
+  a(paste0(suffix, "Hi"), r2(m[2, col]), paste(what, "97.5th percentile"))
+}
+for (nm in names(inv)) {
+  v <- inv[[nm]]
+  a <- local({
+    X <- inv_tag[[nm]]; nm0 <- nm
+    function(suffix, value, what)
+      add(sprintf("valInv%s%s", X, suffix), value,
+          sprintf("results$inventories %s %s", nm0, what))
+  })
+  a("Items", as.character(v$n_items), "number of items")
+  a("Rev", as.character(v$n_reverse), "reverse-keyed items")
+  a("NRaw", cm(v$n_raw), "response records")
+  a("N", cm(v$n), "complete records within the valid range")
+  a("RemovedPct", sprintf("%.1f", 100 * (v$n_raw - v$n) / v$n_raw),
+    "percentage of records removed")
+  a("Pairs", cm(choose(v$n_items, 2)), "item pairs")
+  a("Cons", as.character(v$retention$consensus), "retention consensus")
+  a("ConsWord", wd(v$retention$consensus), "retention consensus (word)")
+  a("HumanPa", as.character(v$human_pa), "parallel analysis of the responses")
+  a("HumanPaWord", wd(v$human_pa), "parallel analysis of the responses (word)")
+  a("PhiMean", r2(mean(v$tucker_matched)), "mean matched Tucker phi")
+  a("PhiMin", r2(min(v$tucker_matched)), "smallest matched Tucker phi")
+  a("PhiMax", r2(max(v$tucker_matched)), "largest matched Tucker phi")
+  a("PairR", r2(v$pair_r[["raw"]]), "item-pair r, raw responses")
+  add_ci(a, "PairR", v$boot_ci, "raw", "item-pair r, raw responses, bootstrap")
+  a("PairRKeyed", r2(v$pair_r[["keyed"]]), "item-pair r, reverse-scored responses")
+  add_ci(a, "PairRKeyed", v$boot_ci, "keyed", "item-pair r, reverse-scored responses, bootstrap")
+  a("PairRAbs", r2(v$pair_r[["absolute"]]), "item-pair r, absolute raw-response correlations")
+  add_ci(a, "PairRAbs", v$boot_ci, "absolute", "item-pair r, absolute raw-response correlations, bootstrap")
+  pg <- v$pair_groups
+  a("SimSame", r2(pg["same_scale_same_key", "mean_sim"]), "pair_groups same scale and keying: mean similarity")
+  a("RSame", r2(pg["same_scale_same_key", "mean_human_r"]), "pair_groups same scale and keying: mean raw-response r")
+  if (v$n_scales > 1) {
+    ag <- v$agreement
+    a("NmiSem", r3(ag["semantic_scales", "nmi"]), "agreement semantic solution with the scales, NMI")
+    a("AriSem", r3(ag["semantic_scales", "ari"]), "agreement semantic solution with the scales, ARI")
+    a("NmiHum", r3(ag["human_scales", "nmi"]), "agreement response solution with the scales, NMI")
+    a("AriHum", r3(ag["human_scales", "ari"]), "agreement response solution with the scales, ARI")
+    a("NmiSemHum", r3(ag["semantic_human", "nmi"]), "agreement of the two solutions, NMI")
+    a("AriSemHum", r3(ag["semantic_human", "ari"]), "agreement of the two solutions, ARI")
+    a("PermNmi", r3(v$perm_max[["nmi"]]), "largest NMI under 1,000 permutations of the scale labels")
+    a("PermAri", r3(v$perm_max[["ari"]]), "largest ARI under 1,000 permutations of the scale labels")
+    a("SimCross", r2(pg["cross_scale", "mean_sim"]), "pair_groups different scales: mean similarity")
+    a("RCross", r2(pg["cross_scale", "mean_human_r"]), "pair_groups different scales: mean raw-response r")
+    ## every seed gave the reported solutions
+    stopifnot(nrow(v$seed_semantic) == 1, length(v$seed_human) == 1)
+  }
+  if (v$n_reverse > 0) {
+    a("NOpp", as.character(pg["same_scale_opp_key", "n"]), "pair_groups same scale, opposite keying: pairs")
+    a("SimOpp", r2(pg["same_scale_opp_key", "mean_sim"]), "pair_groups same scale, opposite keying: mean similarity")
+    a("ROpp", r2(pg["same_scale_opp_key", "mean_human_r"]), "pair_groups same scale, opposite keying: mean raw-response r")
+    add_ci(a, "SameOpp", v$boot_ci, "same_minus_opp", "similarity, keyed alike minus keyed oppositely, bootstrap")
+    if (v$n_scales > 1)
+      add_ci(a, "OppCross", v$boot_ci, "opp_minus_cross", "similarity, keyed oppositely minus different scales, bootstrap")
+    fr <- v$flip_r
+    a("PlainRaw", r2(fr["atomic", "raw"]), "flip_r plain cosines, raw responses")
+    a("FlipRaw", r2(fr["atomic_reversed", "raw"]), "flip_r sign-flipped cosines, raw responses")
+    a("PlainKeyed", r2(fr["atomic", "keyed"]), "flip_r plain cosines, reverse-scored responses")
+    a("FlipKeyed", r2(fr["atomic_reversed", "keyed"]), "flip_r sign-flipped cosines, reverse-scored responses")
+    add_ci(a, "FlipRaw", v$flip_change_ci, "raw", "change in r after the sign flip, raw responses, bootstrap")
+    add_ci(a, "FlipKeyed", v$flip_change_ci, "keyed", "change in r after the sign flip, reverse-scored responses, bootstrap")
+  }
+  if (!is.null(v$key_agreement)) {
+    a("NmiSemKey", r3(v$key_agreement["semantic_keying", "nmi"]), "agreement semantic solution with the keying, NMI")
+    a("NmiHumKey", r3(v$key_agreement["human_keying", "nmi"]), "agreement response solution with the keying, NMI")
+  }
+  if (!is.null(v$two_factor)) {
+    tf <- v$two_factor
+    a("TwoNmiSem", r3(tf$agreement["semantic", "nmi"]), "two semantic factors against the keying, NMI")
+    a("TwoNmiHum", r3(tf$agreement["human", "nmi"]), "two response factors against the keying, NMI")
+    a("TwoPhiSem", r2(tf$phi_semantic), "correlation of the two semantic factors")
+    a("TwoPhiHum", r2(tf$phi_human), "correlation of the two response factors")
+  }
+}
+## where the reverse-keyed items of the keyed multi-scale inventories fall:
+## the semantic factor that holds most of them, from the loadings table
+for (nm in intersect(inv_multi, inv_keyed)) {
+  d <- read.csv(sprintf("output/inventory_%s_loadings.csv", tolower(nm)), check.names = FALSE)
+  sem <- grep("^semantic_", names(d), value = TRUE)
+  dom <- sem[apply(abs(as.matrix(d[, sem])), 1, which.max)]
+  n_rev <- tapply(d$key < 0, dom, sum)
+  top <- names(which.max(n_rev))
+  X <- inv_tag[[nm]]
+  add(sprintf("valInv%sRevFacRev", X), wd(sum(d$key < 0 & dom == top)),
+      sprintf("output/inventory_%s_loadings.csv reverse-keyed items on the semantic factor that holds most of them (word)", tolower(nm)))
+  add(sprintf("valInv%sRevFacFwd", X), wd(sum(d$key > 0 & dom == top)),
+      sprintf("output/inventory_%s_loadings.csv forward-keyed items on that factor (word)", tolower(nm)))
+  add(sprintf("valInv%sRevFacScales", X), wd(length(unique(d$scale[d$key < 0 & dom == top]))),
+      sprintf("output/inventory_%s_loadings.csv scales of the reverse-keyed items on that factor (word)", tolower(nm)))
+  add(sprintf("valInv%sRevWord", X), wd(sum(d$key < 0)),
+      sprintf("output/inventory_%s_loadings.csv reverse-keyed items (word)", tolower(nm)))
+}
+## the Big Five markers, from the main analysis, for the same table
+ab <- function(suffix, value, what)
+  add(paste0("valInvBig", suffix), value, paste("results$inventories_big5", what))
+ab("NmiHum", r3(b5r$agreement["human_scales", "nmi"]), "agreement response solution with the domains, NMI")
+ab("NmiSemKey", r3(b5r$key_agreement["semantic_keying", "nmi"]), "agreement semantic solution with the keying, NMI")
+ab("NmiHumKey", r3(b5r$key_agreement["human_keying", "nmi"]), "agreement response solution with the keying, NMI")
+ab("PairRKeyed", r2(b5r$pair_r[["keyed"]]), "item-pair r, reverse-scored responses")
+ab("PairRAbs", r2(b5r$pair_r[["absolute"]]), "item-pair r, absolute raw-response correlations")
+ab("PlainRaw", r2(b5r$flip_r["atomic", "r_raw"]), "plain cosines, raw responses")
+ab("FlipRaw", r2(b5r$flip_r["atomic_reversed", "r_raw"]), "sign-flipped cosines, raw responses")
+ab("PlainKeyed", r2(b5r$flip_r["atomic", "r_keyed"]), "plain cosines, reverse-scored responses")
+ab("FlipKeyed", r2(b5r$flip_r["atomic_reversed", "r_keyed"]), "sign-flipped cosines, reverse-scored responses")
+add_ci(ab, "FlipRaw", b5r$boot_ci, "flip_raw", "change in r after the sign flip, raw responses, bootstrap")
+add_ci(ab, "FlipKeyed", b5r$boot_ci, "flip_keyed", "change in r after the sign flip, reverse-scored responses, bootstrap")
+## counts and ranges over the further inventories
+inv_r <- vapply(inv, function(v) v$pair_r[["raw"]], 0)
+add("valInvCount", wd(length(inv)), "number of further inventories (word)")
+add("valInvCountMulti", wd(length(inv_multi)), "further inventories with several scales (word)")
+add("valInvCountSingle", wd(length(inv) - length(inv_multi)), "further inventories with one scale (word)")
+add("valInvCountKeyed", wd(length(inv_keyed)), "further inventories with reverse-keyed items (word)")
+add("valInvCountAll", wd(length(inv) + 1), "inventories including the Big Five markers (word)")
+add("valInvPairRMin", r2(min(inv_r)), sprintf("smallest item-pair r, raw responses (%s)", names(which.min(inv_r))))
+add("valInvPairRMax", r2(max(inv_r)), sprintf("largest item-pair r, raw responses (%s)", names(which.max(inv_r))))
+flip_gain <- vapply(inv[inv_keyed], function(v) v$flip_r["atomic_reversed", "raw"] - v$flip_r["atomic", "raw"], 0)
+add("valInvFlipRawMin", r2(min(vapply(inv[inv_keyed], function(v) v$flip_r["atomic_reversed", "raw"], 0))),
+    "smallest sign-flipped r with raw responses over the keyed inventories")
+add("valInvFlipRawMax", r2(max(vapply(inv[inv_keyed], function(v) v$flip_r["atomic_reversed", "raw"], 0))),
+    "largest sign-flipped r with raw responses over the keyed inventories")
+plain_raw <- vapply(inv[inv_keyed], function(v) v$flip_r["atomic", "raw"], 0)
+add("valInvPlainRawMin", r2(min(plain_raw)), "smallest plain-cosine r with raw responses over the keyed inventories")
+add("valInvPlainRawMax", r2(max(plain_raw)), "largest plain-cosine r with raw responses over the keyed inventories")
+cons_diff <- vapply(inv, function(v) v$retention$consensus - v$n_scales, 0)
+add("valInvConsMatch", wd(sum(cons_diff == 0)), "inventories whose retention consensus equals the number of scales (word)")
+add("valInvConsAbove", wd(sum(cons_diff > 0)), "inventories whose retention consensus exceeds the number of scales (word)")
+add("valInvConsBelow", wd(sum(cons_diff < 0)), "inventories whose retention consensus is below the number of scales (word)")
+stopifnot(sum(cons_diff == 0) >= 1, sum(cons_diff > 0) >= 1, sum(cons_diff < 0) >= 1,
+          max(plain_raw) < min(vapply(inv[inv_keyed], function(v) v$flip_r["atomic_reversed", "raw"], 0)))
+add("valInvFlipKeyedInclZero", wd(sum(vapply(inv[inv_keyed], function(v)
+      v$flip_change_ci[1, "keyed"] < 0 && v$flip_change_ci[2, "keyed"] > 0, TRUE))),
+    "keyed inventories whose interval for the sign-flip change with reverse-scored responses includes zero (word)")
+## prose guards for the Results subsection on the further inventories
+gci <- function(nm, col) inv[[nm]]$boot_ci[, col]
+stopifnot(
+  setequal(inv_multi, c("DASS", "ECR", "KIMS", "HSQ")),
+  setequal(inv_keyed, c("ECR", "KIMS", "HSQ", "NIS", "RSE", "TMA")),
+  ## the KIMS and the DASS recovered about as well as the responses, the HSQ and the ECR not
+  inv$KIMS$agreement["semantic_scales", "nmi"] > 0.8, inv$DASS$agreement["semantic_scales", "nmi"] > 0.8,
+  inv$HSQ$agreement["semantic_scales", "nmi"] < 0.6, inv$ECR$agreement["semantic_scales", "nmi"] < 0.6,
+  inv$ECR$agreement["semantic_scales", "nmi"] < inv$ECR$perm_max[["nmi"]],
+  isTRUE(all.equal(inv$HSQ$agreement["human_scales", "nmi"], 1, check.attributes = FALSE)),
+  isTRUE(all.equal(inv$ECR$agreement["human_scales", "nmi"], 1, check.attributes = FALSE)),
+  inv$ECR$key_agreement["semantic_keying", "nmi"] > inv$ECR$agreement["semantic_scales", "nmi"],
+  ## the two solutions group the items in nearly the same way for the DASS and
+  ## the KIMS, and not for the HSQ and the ECR
+  inv$DASS$agreement["semantic_human", "nmi"] > 0.8, inv$KIMS$agreement["semantic_human", "nmi"] > 0.8,
+  inv$HSQ$agreement["semantic_human", "nmi"] < 0.5, inv$ECR$agreement["semantic_human", "nmi"] < 0.5,
+  ## for the DASS and the KIMS the semantic solution agrees with the scored factors
+  ## at least as closely as the response solution
+  inv$DASS$agreement["semantic_scales", "nmi"] >= inv$DASS$agreement["human_scales", "nmi"],
+  inv$KIMS$agreement["semantic_scales", "nmi"] >= inv$KIMS$agreement["human_scales", "nmi"],
+  ## item-pair r: the ECR lowest, the DASS highest, the Big Five within the range
+  names(which.min(inv_r)) == "ECR", names(which.max(inv_r)) == "DASS",
+  ## at two decimals the ECR and the BAI share the smallest value
+  setequal(names(inv_r)[r2(inv_r) == r2(min(inv_r))], c("ECR", "BAI")),
+  b5r$pair_r[["raw"]] > min(inv_r), b5r$pair_r[["raw"]] < max(inv_r),
+  ## with reverse-scored responses the ECR is again lowest and the DASS highest
+  names(which.min(vapply(inv, function(v) v$pair_r[["keyed"]], 0))) == "ECR",
+  names(which.max(vapply(inv, function(v) v$pair_r[["keyed"]], 0))) == "DASS",
+  ## the consensus for the BAI is two factors, the number its authors reported
+  inv$BAI$retention$consensus == 2,
+  ## every record of the BAI's public file meets the cleaning rule
+  inv$BAI$n == inv$BAI$n_raw,
+  ## the RSES has the widest interval
+  names(which.max(vapply(inv, function(v) diff(v$boot_ci[, "raw"]), 0))) == "RSE",
+  ## opposite-keyed pairs: answered oppositely, still similar, less similar than same-keyed pairs
+  names(which.min(vapply(inv[inv_keyed], function(v) v$pair_groups["same_scale_opp_key", "mean_human_r"], 0))) == "RSE",
+  names(which.max(vapply(inv[inv_keyed], function(v) v$pair_groups["same_scale_opp_key", "mean_human_r"], 0))) == "TMA",
+  all(vapply(inv[inv_keyed], function(v) v$pair_groups["same_scale_opp_key", "mean_human_r"], 0) < 0),
+  names(which.min(vapply(inv[inv_keyed], function(v) v$pair_groups["same_scale_opp_key", "mean_sim"], 0))) == "TMA",
+  names(which.max(vapply(inv[inv_keyed], function(v) v$pair_groups["same_scale_opp_key", "mean_sim"], 0))) == "NIS",
+  all(vapply(inv_keyed, function(nm) gci(nm, "same_minus_opp")[1] > 0, TRUE)),
+  gci("ECR", "opp_minus_cross")[1] < 0, gci("ECR", "opp_minus_cross")[2] > 0,
+  gci("HSQ", "opp_minus_cross")[1] < 0, gci("HSQ", "opp_minus_cross")[2] > 0,
+  gci("KIMS", "opp_minus_cross")[1] > 0,
+  ## the sign flip: a gain with raw responses in every further inventory, none in the Big Five
+  all(vapply(inv[inv_keyed], function(v) v$flip_change_ci[1, "raw"] > 0, TRUE)),
+  b5r$boot_ci[1, "flip_raw"] < 0, b5r$boot_ci[2, "flip_raw"] > 0,
+  all(vapply(inv[inv_keyed], function(v) v$flip_r["atomic_reversed", "keyed"] < v$flip_r["atomic", "keyed"], TRUE)),
+  b5r$flip_r["atomic_reversed", "r_keyed"] < b5r$flip_r["atomic", "r_keyed"],
+  ## two factors of the single-scale inventories against the keying
+  isTRUE(all.equal(inv$RSE$two_factor$agreement["human", "nmi"], 1, check.attributes = FALSE)),
+  inv$NIS$two_factor$agreement["human", "nmi"] < 0.1, inv$TMA$two_factor$agreement["human", "nmi"] < 0.1,
+  all(vapply(inv[inv_single_keyed], function(v) v$two_factor$agreement["semantic", "nmi"] > 0.3, TRUE)),
+  setequal(inv_single_keyed, c("NIS", "RSE", "TMA")))
+## prose guards for the Supplement's section on the further inventories
+stopifnot(
+  all(vapply(inv, function(v) v$human_pa > v$n_scales, TRUE)),
+  identical(inv_multi[vapply(inv[inv_multi], function(v)
+    v$agreement["semantic_scales", "nmi"] <= v$perm_max[["nmi"]], TRUE)], "ECR"))
+## the reverse-keyed factor of the HSQ holds no forward-keyed item
+local({
+  d <- read.csv("output/inventory_hsq_loadings.csv", check.names = FALSE)
+  sem <- grep("^semantic_", names(d), value = TRUE)
+  dom <- sem[apply(abs(as.matrix(d[, sem])), 1, which.max)]
+  top <- names(which.max(tapply(d$key < 0, dom, sum)))
+  stopifnot(sum(d$key > 0 & dom == top) == 0)
+})
+## the standardized DASS heatmaps of the Results (reproduce.R draws them the same
+## way): the shared color range, the overall means that motivate standardizing,
+## and guards for what the caption and the text say the two panels show
+local({
+  d <- read.csv("output/inventory_dass_loadings.csv", check.names = FALSE)
+  m <- list(semantic = unclass(inv$DASS$sim), responses = unclass(inv$DASS$R_raw))
+  lt <- lower.tri(m$semantic)
+  z <- lapply(m, function(x) (x[lt] - mean(x[lt])) / sd(x[lt]))
+  rng <- c(floor(min(unlist(z))), ceiling(max(unlist(z))))
+  add("valDassStdLo", sprintf("%d", rng[1]), "results$inventories DASS standardized heatmaps, lower end of the color range")
+  add("valDassStdHi", sprintf("%d", rng[2]), "results$inventories DASS standardized heatmaps, upper end of the color range")
+  add("valDassSimMean", r2(mean(m$semantic[lt])), "results$inventories DASS mean off-diagonal semantic similarity")
+  add("valDassRMean", r2(mean(m$responses[lt])), "results$inventories DASS mean off-diagonal response correlation")
+  ## each item's mean similarity and mean correlation with the other items
+  row_mean <- function(x) { diag(x) <- NA; rowMeans(x, na.rm = TRUE) }
+  pale <- lapply(m, function(x) d$code[order(row_mean(x))[1:10]])
+  shared <- intersect(pale$semantic, pale$responses)
+  ## block means by factor, off the diagonal
+  blk <- function(x, a, b) { diag(x) <- NA; mean(x[d$scale == a, d$scale == b], na.rm = TRUE) }
+  d_gap <- vapply(m, function(x) blk(x, "Depression", "Depression") -
+                    max(blk(x, "Depression", "Anxiety"), blk(x, "Depression", "Stress")), 0)
+  stopifnot(
+    ## the semantic similarities are higher overall than the response correlations
+    mean(m$semantic[lt]) > mean(m$responses[lt]),
+    ## the Depression items form a clear block in both panels
+    all(d_gap > 0.1),
+    ## several of the same items, most of them Anxiety items, are pale in both
+    length(shared) >= 5,
+    mean(d$scale[match(shared, d$code)] == "Anxiety") > 0.5,
+    ## the DASS has the largest item-pair correlation of the further inventories
+    names(which.max(vapply(inv, function(v) v$pair_r[["raw"]], 0))) == "DASS")
+})
+## --- end further inventories: macros -------------------------------------------
+
 writeLines(unlist(L), file.path(gen_dir, "values.tex"))
 
 ## --- item-to-factor assignment by theoretical domain (main fit) --------------
@@ -981,7 +1270,7 @@ writeLines(c(
   "% AUTOGENERATED by reproduce/make_paper_assets.R from output/results.rds. Do not edit.",
   "\\begin{tabular}{llrcrrrr}",
   "\\toprule",
-  "Scale & Model & $r_{\\text{pb}}$ & 95\\% interval & Gap & NMI & ARI & Consensus \\\\",
+  "Inventory & Model & $r_{\\text{pb}}$ & 95\\% interval & Gap & NMI & ARI & Consensus \\\\",
   "\\midrule",
   big5_rows,
   "\\midrule",
@@ -1036,7 +1325,7 @@ loading_note <- function(dom_map) paste(
   "correlate. Bold marks each item's largest absolute loading. Item codes",
   "give the item's domain initial and its position in the 50-item",
   "inventory, and Domain is the domain the inventory assigns it to.",
-  "MR = minimum residual, the prefix of the psych package's automatic",
+  "MR = minimum residual, the prefix of the \\texttt{psych} package's automatic",
   "factor labels. Each factor is matched to the domain on whose items its",
   "mean absolute loading is largest (columns in table order):",
   paste0(paste(sprintf("%s = %s", names(dom_map), dom_map), collapse = ", "), "."))
@@ -1060,6 +1349,238 @@ writeLines(loading_longtable(
   "tab:s-human-loadings", loading_note(hum_dom[setdiff(names(hload), c("code", "factor"))])),
   file.path(gen_dir, "table_human_loadings.tex"))
 
+## --- further inventories (Section 11d): tables ---------------------------------
+gen_note <- "% AUTOGENERATED by reproduce/make_paper_assets.R from output/results.rds. Do not edit."
+dash <- "--"
+ci_cell <- function(m, col) sprintf("[%s, %s]", texneg(r2(m[1, col])), texneg(r2(m[2, col])))
+
+## main-text table: one row per inventory, the Big Five markers first
+inv_row <- function(label, items, scales, rev, n, k, nmi_s, nmi_h, phi, r, lo, hi)
+  sprintf("%s & %s & %s & %s & %s & %s & %s & %s & %s & %s & [%s, %s] \\\\",
+          label, items, scales, rev, n, k, nmi_s, nmi_h, phi, r, lo, hi)
+big5_line <- inv_row("Big Five markers", nrow(big5$embeddings), 5, sum(big5$scoring < 0),
+                     cm(n_human), nf$consensus,
+                     r3(b5r$agreement["semantic_scales", "nmi"]),
+                     r3(b5r$agreement["human_scales", "nmi"]),
+                     r2(mean(matched)), r2(b5r$pair_r[["raw"]]),
+                     r2(b5r$boot_ci[1, "raw"]), r2(b5r$boot_ci[2, "raw"]))
+inv_lines <- vapply(names(inv), function(nm) {
+  v <- inv[[nm]]
+  multi <- v$n_scales > 1
+  inv_row(inv_label[[nm]], v$n_items, v$n_scales, v$n_reverse, cm(v$n),
+          v$retention$consensus,
+          if (multi) r3(v$agreement["semantic_scales", "nmi"]) else dash,
+          if (multi) r3(v$agreement["human_scales", "nmi"]) else dash,
+          r2(mean(v$tucker_matched)), r2(v$pair_r[["raw"]]),
+          r2(v$boot_ci[1, "raw"]), r2(v$boot_ci[2, "raw"]))
+}, "")
+writeLines(c(gen_note,
+  "\\begin{tabular}{lrrrrrrrrrc}", "\\toprule",
+  "& & & & & & \\multicolumn{2}{c}{NMI} & & & \\\\",
+  "\\cmidrule(lr){7-8}",
+  "Inventory & Items & Factors & Reverse & $N$ & $k$ & Semantic & Responses & $\\bar{\\phi}$ & $r$ & 95\\% interval \\\\",
+  "\\midrule", big5_line, "\\midrule", inv_lines, "\\bottomrule", "\\end{tabular}"),
+  file.path(gen_dir, "table_inventories_body.tex"))
+
+## Supplement: the five retention criteria and the responses' parallel analysis
+ret_lines <- vapply(names(inv), function(nm) {
+  v <- inv[[nm]]
+  m <- setNames(v$retention$methods$n_factors, v$retention$methods$method)
+  sprintf("%s & %s & %d & %d & %d & %d & %d & %d & %d \\\\", inv_label[[nm]],
+          v$n_scales, m[["parallel"]], m[["kaiser"]], m[["TEFI"]], m[["EGA"]],
+          m[["EKC"]], v$retention$consensus, v$human_pa)
+}, "")
+writeLines(c(gen_note,
+  "\\begin{tabular}{lrrrrrrrr}", "\\toprule",
+  "& & \\multicolumn{6}{c}{Embeddings} & Responses \\\\",
+  "\\cmidrule(lr){3-8} \\cmidrule(lr){9-9}",
+  "Inventory & Factors & Parallel & Kaiser & TEFI & EGA & EKC & Consensus & Parallel \\\\",
+  "\\midrule", ret_lines, "\\bottomrule", "\\end{tabular}"),
+  file.path(gen_dir, "table_inv_retention_body.tex"))
+
+## Supplement: item pairs by scale and keying
+grp_cell <- function(pg, g) {
+  if (pg[g, "n"] == 0) return(rep(dash, 3))
+  c(cm(pg[g, "n"]), r2(pg[g, "mean_sim"]), texneg(r2(pg[g, "mean_human_r"])))
+}
+pg_lines <- c(
+  sprintf("Big Five markers & %s \\\\", paste(c(
+    grp_cell(res$pair_by_group, "same_domain_same_key"),
+    grp_cell(res$pair_by_group, "same_domain_opp_key"),
+    grp_cell(res$pair_by_group, "cross_domain")), collapse = " & ")),
+  "\\midrule",
+  vapply(names(inv), function(nm) {
+    pg <- inv[[nm]]$pair_groups
+    sprintf("%s & %s \\\\", inv_label[[nm]], paste(c(
+      grp_cell(pg, "same_scale_same_key"), grp_cell(pg, "same_scale_opp_key"),
+      grp_cell(pg, "cross_scale")), collapse = " & "))
+  }, ""))
+writeLines(c(gen_note,
+  "\\begin{tabular}{lrrrrrrrrr}", "\\toprule",
+  "& \\multicolumn{3}{c}{Same factor, keyed alike} & \\multicolumn{3}{c}{Same factor, keyed oppositely} & \\multicolumn{3}{c}{Different factors} \\\\",
+  "\\cmidrule(lr){2-4} \\cmidrule(lr){5-7} \\cmidrule(lr){8-10}",
+  "Inventory & Pairs & Sim. & $r$ & Pairs & Sim. & $r$ & Pairs & Sim. & $r$ \\\\",
+  "\\midrule", pg_lines, "\\bottomrule", "\\end{tabular}"),
+  file.path(gen_dir, "table_inv_pairs_body.tex"))
+
+## Supplement: cosines before and after the sign flip, and factors against keying
+flip_line <- function(label, fr, raw_c, key_c, ci, cr, ck, nmi_s, nmi_h)
+  sprintf("%s & %s & %s & %s & %s & %s & %s & %s & %s \\\\", label,
+          r2(fr[1, raw_c]), r2(fr[2, raw_c]), ci_cell(ci, cr),
+          r2(fr[1, key_c]), r2(fr[2, key_c]), ci_cell(ci, ck), nmi_s, nmi_h)
+key_nmi <- function(v) {
+  if (!is.null(v$key_agreement))
+    return(c(r3(v$key_agreement["semantic_keying", "nmi"]), r3(v$key_agreement["human_keying", "nmi"])))
+  c(r3(v$two_factor$agreement["semantic", "nmi"]), r3(v$two_factor$agreement["human", "nmi"]))
+}
+flip_lines <- c(
+  flip_line("Big Five markers", b5r$flip_r, "r_raw", "r_keyed", b5r$boot_ci,
+            "flip_raw", "flip_keyed", r3(b5r$key_agreement["semantic_keying", "nmi"]),
+            r3(b5r$key_agreement["human_keying", "nmi"])),
+  "\\midrule",
+  vapply(inv_keyed, function(nm) {
+    v <- inv[[nm]]
+    kn <- key_nmi(v)
+    flip_line(inv_label[[nm]], v$flip_r, "raw", "keyed", v$flip_change_ci,
+              "raw", "keyed", kn[1], kn[2])
+  }, ""))
+writeLines(c(gen_note,
+  "\\begin{tabular}{lrrcrrcrr}", "\\toprule",
+  "& \\multicolumn{3}{c}{$r$ with raw responses} & \\multicolumn{3}{c}{$r$ with reverse-scored responses} & \\multicolumn{2}{c}{NMI with the scoring key} \\\\",
+  "\\cmidrule(lr){2-4} \\cmidrule(lr){5-7} \\cmidrule(lr){8-9}",
+  "Inventory & Plain & Flipped & Change & Plain & Flipped & Change & Semantic & Responses \\\\",
+  "\\midrule", flip_lines, "\\bottomrule", "\\end{tabular}"),
+  file.path(gen_dir, "table_inv_keying_body.tex"))
+
+## Supplement: scale by dominant factor, for the inventories with several scales
+scale_order <- list(DASS = c("Depression", "Anxiety", "Stress"),
+                    ECR = c("Avoidance", "Anxiety"),
+                    KIMS = c("Observe", "Describe", "Act With Awareness", "Accept Without Judgment"),
+                    HSQ = c("Affiliative", "Self-Enhancing", "Aggressive", "Self-Defeating"))
+## order the factors by the scale each holds most of, each factor used once
+match_order <- function(tab, scales) {
+  out <- character(0)
+  for (sc in scales) {
+    cand <- setdiff(colnames(tab), out)
+    out <- c(out, cand[which.max(tab[sc, cand])])
+  }
+  out
+}
+k_max <- max(vapply(inv[inv_multi], function(v) v$n_scales, 0))
+pad <- function(x) c(x, rep("", k_max - length(x)))
+asg_lines <- unlist(lapply(inv_multi, function(nm) {
+  v <- inv[[nm]]
+  sc <- scale_order[[nm]]
+  stopifnot(setequal(sc, rownames(v$assign_semantic)))
+  ts <- v$assign_semantic[sc, match_order(v$assign_semantic, sc), drop = FALSE]
+  th <- v$assign_human[sc, match_order(v$assign_human, sc), drop = FALSE]
+  bold_diag <- function(tab, i) {
+    cells <- as.character(tab[i, ])
+    cells[i] <- sprintf("\\textbf{%s}", cells[i])
+    pad(cells)
+  }
+  c(sprintf("\\multicolumn{%d}{l}{\\textit{%s}} \\\\", 1 + 2 * k_max, inv_label[[nm]]),
+    vapply(seq_along(sc), function(i)
+      sprintf("\\quad %s & %s & %s \\\\", sc[i],
+              paste(bold_diag(ts, i), collapse = " & "),
+              paste(bold_diag(th, i), collapse = " & ")), ""))
+}))
+writeLines(c(gen_note,
+  sprintf("\\begin{tabular}{l%s}", strrep("r", 2 * k_max)), "\\toprule",
+  sprintf("& \\multicolumn{%d}{c}{Semantic factor} & \\multicolumn{%d}{c}{Response factor} \\\\", k_max, k_max),
+  sprintf("\\cmidrule(lr){2-%d} \\cmidrule(lr){%d-%d}", 1 + k_max, 2 + k_max, 1 + 2 * k_max),
+  sprintf("Inventory's factor & %s & %s \\\\", paste(seq_len(k_max), collapse = " & "),
+          paste(seq_len(k_max), collapse = " & ")),
+  "\\midrule", asg_lines, "\\bottomrule", "\\end{tabular}"),
+  file.path(gen_dir, "table_inv_assignment_body.tex"))
+
+## Supplement: loadings of both solutions, one long table per inventory
+inv_full <- c(DASS = "Depression Anxiety Stress Scales",
+              ECR = "Experiences in Close Relationships inventory",
+              KIMS = "Kentucky Inventory of Mindfulness Skills",
+              HSQ = "Humor Styles Questionnaire",
+              NIS = "Nonverbal Immediacy Scale",
+              RSE = "Rosenberg Self-Esteem Scale",
+              TMA = "Taylor Manifest Anxiety Scale",
+              BAI = "Beck Anxiety Inventory")
+inv_codes <- c(
+  DASS = "D = Depression, A = Anxiety, and S = Stress",
+  ECR = "AV = Avoidance and AX = Anxiety",
+  KIMS = "O = Observe, D = Describe, AA = Act With Awareness, and AJ = Accept Without Judgment",
+  HSQ = "AF = Affiliative, SE = Self-Enhancing, AG = Aggressive, and SD = Self-Defeating",
+  NIS = "NI", RSE = "RS", TMA = "TM", BAI = "BA")
+inventory_longtable <- function(nm) {
+  v <- inv[[nm]]
+  d <- read.csv(sprintf("output/inventory_%s_loadings.csv", tolower(nm)), check.names = FALSE)
+  sem <- grep("^semantic_", names(d), value = TRUE)
+  hum <- grep("^human_", names(d), value = TRUE)
+  k <- length(sem)
+  if (k > 1) {
+    sc <- scale_order[[nm]]
+    dom <- function(cols) factor(cols[apply(abs(as.matrix(d[, cols])), 1, which.max)], levels = cols)
+    sem <- match_order(table(factor(d$scale, levels = sc), dom(sem)), sc)
+    hum <- match_order(table(factor(d$scale, levels = sc), dom(hum)), sc)
+  }
+  keyed <- any(d$key < 0)
+  set_cells <- function(i, cols) {
+    cells <- vapply(cols, function(m) texneg(r3(d[i, m])), "")
+    if (length(cols) > 1) {
+      top <- which.max(abs(unlist(d[i, cols])))
+      cells[top] <- sprintf("\\textbf{%s}", cells[top])
+    }
+    cells
+  }
+  rows <- vapply(seq_len(nrow(d)), function(i)
+    sprintf("%s%s & %s & %s \\\\", d$code[i],
+            if (keyed) sprintf(" & %s", if (d$key[i] < 0) "R" else "") else "",
+            paste(set_cells(i, sem), collapse = " & "),
+            paste(set_cells(i, hum), collapse = " & ")), "")
+  lead <- if (keyed) "Item & Key" else "Item"
+  n_lead <- if (keyed) 2 else 1
+  ncol_all <- n_lead + 2 * k
+  head1 <- sprintf("%s\\multicolumn{%d}{c}{Semantic} & \\multicolumn{%d}{c}{Responses} \\\\",
+                   strrep("& ", n_lead), k, k)
+  head2 <- sprintf("\\cmidrule(lr){%d-%d} \\cmidrule(lr){%d-%d}", n_lead + 1, n_lead + k,
+                   n_lead + k + 1, ncol_all)
+  head3 <- sprintf("%s & %s & %s \\\\", lead, paste(sub("^semantic_", "", sem), collapse = " & "),
+                   paste(sub("^human_", "", hum), collapse = " & "))
+  label <- sprintf("tab:s-loadings-%s", tolower(nm))
+  caption <- sprintf(paste("Factor loadings of the %d items of the %s in the semantic",
+                           "solution and in the solution of the responses, each with %s"),
+                     nrow(d), inv_full[[nm]], if (k == 1) "one factor" else paste(wd(k), "factors"))
+  note <- paste0(
+    "Entries are ", if (k > 1) "oblimin pattern loadings" else "loadings on the single factor",
+    " (minimum residual extraction). The semantic solution is from the mean-centered Pearson",
+    " encoding of the Qwen3-Embedding-8B embeddings, and the response solution from the",
+    " correlations of ", if (keyed) "reverse-scored responses" else "the responses",
+    sprintf(" ($N = %s$).", cm(v$n)),
+    if (k > 1) " Bold marks each item's largest absolute loading in each solution, and the factors of each solution are ordered by the inventory's factor whose items they hold most of." else "",
+    " Item codes give ", if (k > 1) "the factor on which the item is scored (" else "the inventory (",
+    inv_codes[[nm]], ") and the item's position in the inventory.",
+    if (keyed) " R marks a reverse-keyed item." else "",
+    if (nm == "BAI") " The wording of this inventory's items is copyrighted and is not reproduced in the archive." else "",
+    if (nm == "TMA") " The items were taken from the Minnesota Multiphasic Personality Inventory, and their wording is not reproduced in the archive." else "",
+    " MR = minimum residual, the prefix of the \\texttt{psych} package's automatic factor labels.")
+  c("% AUTOGENERATED by reproduce/make_paper_assets.R. Do not edit.",
+    "{\\renewcommand{\\baselinestretch}{1}\\footnotesize",
+    "\\par\\addvspace{\\bigskipamount}",
+    sprintf("\\captionof{table}{%s}", caption),
+    sprintf("\\label{%s}", label),
+    "\\addtocounter{table}{-1}% longtable steps the table counter as well",
+    "\\renewcommand{\\theHtable}{\\arabic{table}.lt}% its own link target, not a duplicate",
+    "\\setlength{\\LTleft}{0pt}\\setlength{\\LTright}{0pt}",
+    sprintf("\\begin{longtable}{@{\\extracolsep{\\fill}}%s%s@{}}", strrep("l", n_lead), strrep("r", 2 * k)),
+    "\\toprule", head1, head2, head3, "\\midrule", "\\endfirsthead",
+    sprintf("\\multicolumn{%d}{l}{Table~\\ref{%s} (continued)}\\\\", ncol_all, label),
+    "\\toprule", head1, head2, head3, "\\midrule", "\\endhead",
+    "\\bottomrule", "\\endfoot", "\\bottomrule", "\\endlastfoot",
+    rows, "\\end{longtable}",
+    sprintf("\\noindent\\textit{Note}. %s\\par\\addvspace{\\bigskipamount}}", note))
+}
+writeLines(unlist(lapply(names(inv), function(nm) c(inventory_longtable(nm), ""))),
+           file.path(gen_dir, "table_inv_loadings.tex"))
+## --- end further inventories: tables --------------------------------------------
+
 ## --- figures: stage under the manuscript's canonical names -------------------
 
 fig_map <- c(fig_corplot.pdf          = "corplot.pdf",
@@ -1075,7 +1596,10 @@ fig_map <- c(fig_corplot.pdf          = "corplot.pdf",
              fig_depth.pdf            = "depth.pdf",
              fig_dass_corplot_06B.pdf = "dass_corplot_06b.pdf",
              fig_dass_corplot_4B.pdf  = "dass_corplot_4b.pdf",
-             fig_dass_corplot_8B.pdf  = "dass_corplot_8b.pdf")
+             fig_dass_corplot_8B.pdf  = "dass_corplot_8b.pdf",
+             fig_inventories.pdf      = "inventories.pdf",
+             fig_dass_semantic.pdf    = "dass_semantic.pdf",
+             fig_dass_responses.pdf   = "dass_responses.pdf")
 for (src in names(fig_map)) {
   from <- file.path("figures", src)
   if (!file.exists(from)) stop("missing figure: ", from)

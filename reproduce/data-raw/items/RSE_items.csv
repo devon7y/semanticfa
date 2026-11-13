@@ -1,0 +1,11 @@
+code,item,factor,scoring
+RS1,"I feel that I am a person of worth, at least on an equal plane with others.",Self-Esteem,1
+RS2,I feel that I have a number of good qualities.,Self-Esteem,1
+RS3,"All in all, I am inclined to feel that I am a failure.",Self-Esteem,-1
+RS4,I am able to do things as well as most other people.,Self-Esteem,1
+RS5,I feel I do not have much to be proud of.,Self-Esteem,-1
+RS6,I take a positive attitude toward myself.,Self-Esteem,1
+RS7,"On the whole, I am satisfied with myself.",Self-Esteem,1
+RS8,I wish I could have more respect for myself.,Self-Esteem,-1
+RS9,I certainly feel useless at times.,Self-Esteem,-1
+RS10,At times I think I am no good at all.,Self-Esteem,-1
